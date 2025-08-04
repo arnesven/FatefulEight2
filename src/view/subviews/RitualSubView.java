@@ -41,7 +41,6 @@ public class RitualSubView extends SubView implements Animation {
         this.ritual = ritual;
         selected = 0;
         AnimationManager.register(this);
-        // TODO: Unregister when done with
         
         MyColors color = convertColor(magicColor);
         beamParticle = new ParticleSprite(0x00, color);

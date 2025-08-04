@@ -55,7 +55,7 @@ public class BeanGameSubView extends SubView implements Animation {
 
     public BeanGameSubView(BeanGameBoard beanGameBoard, GameCharacter player) {
         this.gameBoard = beanGameBoard;
-        this.numberOfScreens = 2 + (gameBoard.boardLength() - (ROWS_PER_SCREEN - 4)) / ROWS_PER_SCREEN; // TODO: This isn't quite right...
+        this.numberOfScreens = 2 + (gameBoard.boardLength() - (ROWS_PER_SCREEN - 4)) / ROWS_PER_SCREEN;
         this.beanInHand = new Sprite32x16("beaninhand", "bean.png", 0x10,
                 MyColors.DARK_GRAY, player.getRace().getColor(), MyColors.GREEN, MyColors.ORC_GREEN);
     }
