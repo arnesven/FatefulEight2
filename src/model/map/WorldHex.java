@@ -297,6 +297,7 @@ public abstract class WorldHex {
             events.add(new DogEvent(model));
             events.add(new CampSiteEvent(model));
             events.add(new CampSiteEvent(model));
+            // FEATURE: BrigandInBurgundyEvent
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
