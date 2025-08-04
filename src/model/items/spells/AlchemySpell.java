@@ -83,8 +83,8 @@ public class AlchemySpell extends ImmediateSpell {
                 return false;
             }
             subView.setContents(selectedPotion, ingredientCost);
-            if (distill) { // TODO: Reduce the amount of ingredients you get from distill, otherwise you can get inf ingredients when you have a recipe
-                state.print("Are you sure you want to use up " + selectedPotion.getName() + " to recover " + ingredientCost + " ingredients");
+            if (distill) {
+                state.print("Are you sure you want to use up " + selectedPotion.getName() + " to recover " + distillAmount(selectedPotion) + " ingredients");
             } else {
                 int maxNumber = model.getParty().getInventory().getIngredients() / ingredientCost;
                 if (maxNumber > 1) {
@@ -153,13 +153,13 @@ public class AlchemySpell extends ImmediateSpell {
         Set<String> setOfPotions = new HashSet<>();
         for (Potion p : model.getParty().getInventory().getPotions()) {
             if (standardCostForPotion(p) <= model.getParty().getInventory().getIngredients() || distill) {
-                setOfPotions.add(nameAndStandardBrewingCost(p));
+                setOfPotions.add(nameAndStandardBrewingCost(p, distill));
             }
         }
         if (!distill) {
             for (PotionRecipe recipe : model.getParty().getPotionRecipes()) {
                 Potion p = recipe.getBrewable();
-                setOfPotions.remove(nameAndStandardBrewingCost(p));
+                setOfPotions.remove(nameAndStandardBrewingCost(p, false));
                 setOfPotions.add(p.getName() + " (" + recipeCost(recipe.getBrewable()) + ")");
             }
         }
@@ -184,7 +184,10 @@ public class AlchemySpell extends ImmediateSpell {
         return !cancelled[0];
     }
 
-    private String nameAndStandardBrewingCost(Potion p) {
+    private String nameAndStandardBrewingCost(Potion p, boolean distill) {
+        if (distill) {
+            return p.getName() + " (" + distillAmount(p) + ")";
+        }
         return p.getName() + " (" + standardCostForPotion(p) + ")";
     }
 
@@ -196,12 +199,16 @@ public class AlchemySpell extends ImmediateSpell {
         return Math.max(1, p.getCost() / 3);
     }
 
+    private int distillAmount(Potion p) {
+        return Math.max(1, standardCostForPotion(p) / 2);
+    }
+
     @Override
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
         if (distill) {
-            state.println(caster.getName() + " distilled " + selectedPotion.getName() + " and recovered " + ingredientCost + " ingredients.");
+            state.println(caster.getName() + " distilled " + selectedPotion.getName() + " and recovered " + distillAmount(selectedPotion) + " ingredients.");
             model.getParty().getInventory().remove(selectedPotion);
-            model.getParty().getInventory().addToIngredients(ingredientCost);
+            model.getParty().getInventory().addToIngredients(distillAmount(selectedPotion));
             if (MyRandom.rollD6() == 6 &&
                     !MyLists.any(model.getParty().getPotionRecipes(),
                             r -> r.getBrewable().getName().equals(selectedPotion.getName()))) {
