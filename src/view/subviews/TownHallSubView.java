@@ -58,9 +58,13 @@ public class TownHallSubView extends DailyActionSubView {
                 } else if (row == 7) {
                     model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
                 } else {
-                    // TODO: If !drawLord, make dark grass sprites.
-                    model.getScreenHandler().put(p.x, p.y,
-                            GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+                    if (!drawLord) {
+                        model.getScreenHandler().put(p.x, p.y,
+                                GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.darkGrassSprites.length)]);
+                    } else {
+                        model.getScreenHandler().put(p.x, p.y,
+                                GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+                    }
                 }
             }
         }

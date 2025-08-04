@@ -86,10 +86,6 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
-        Item p = new HealthPotion().makeHigherTierCopy(1);
-        p.addYourself(getInventory());
-        new RejuvenationPotion().makeHigherTierCopy(1).addYourself(getInventory());
-        new HealthPotion().makeHigherTierCopy(2).addYourself(getInventory());
     }
 
     public void setStartingPosition(Point position) {
