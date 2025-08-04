@@ -9,7 +9,10 @@ public class SpelunkersNotesBook extends BookItem {
                 "Exploration Notes on the FatUE", "Francis Alesiay", makeContent());
     }
 
-    // TODO: Make unsellable
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
 
     private static String makeContent() {
         return "26th of Frostburn\n" +
