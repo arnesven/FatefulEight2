@@ -88,6 +88,7 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
                 passAb -> passAb instanceof SkillAbilityCombatAction),
                 passAb -> (SkillAbilityCombatAction)passAb));
 
+        Set<SkillAbilityCombatAction> oldAbilities = new HashSet<>();
         for (int level = 1; level <= 10; ++level) {
             bld.append(String.format("%2d  ", level));
             List<MyPair<Skill, Integer>> newRanks = new ArrayList<>();
@@ -98,40 +99,69 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
                     if (!oldRanks.containsKey(s.getShortName()) || oldRanks.get(s.getShortName()) != rank) {
                         oldRanks.put(s.getShortName(), rank);
                         newRanks.add(new MyPair<>(s, rank));
-                        int finalLevel = level;
-                        newAbilities.addAll(MyLists.filter(skillAbilities, // TODO: This shows Combat Prowess at the wrong level for some classes (e.g. Amazon)
-                                skiAb -> skiAb.getLinkedSkills().contains(s) &&
-                                        (skiAb.getRequiredRanks() == rank || (finalLevel == 1 && skiAb.getRequiredRanks() <= rank))));
                     }
+                    newAbilities.addAll(findNewAbilitiesForLevel(skillAbilities, s, rank, level));
                 }
             }
 
-
-            if (newRanks.isEmpty()) {
+            Set<SkillAbilityCombatAction> setIntersection = new HashSet<>(newAbilities);
+            setIntersection.removeAll(oldAbilities);
+            if (newRanks.isEmpty() && setIntersection.isEmpty()) {
                 bld.append("-\n");
             } else {
-                int column = 0;
-                for (MyPair<Skill, Integer> newRank : newRanks) {
-                    if (column == 4) {
-                        bld.append("\n    ");
-                        column = 0;
-                    }
-                    bld.append(String.format("%-4s%2d ", newRank.first.getShortName(), newRank.second));
-                    column++;
+                if (!newRanks.isEmpty()) {
+                    printRanks(bld, newRanks);
                 }
-                if (!newAbilities.isEmpty()) {
-                    String abiStr = MyStrings.makeString(newAbilities.stream().toList(), e -> e.getName() + ", ");
-                    for (String part : MyStrings.partition(abiStr, DIALOG_WIDTH - 5)) {
-                        if (part.endsWith(", ")) {
-                            part = part.substring(0, part.length() - 2);
-                        }
-                        bld.append("\n    ").append(part);
-                    }
+                if (!setIntersection.isEmpty()) {
+                    printAbilities(bld, setIntersection);
                 }
             }
-            bld.append("\n\n");
+            bld.append("\n");
+            oldAbilities.addAll(newAbilities);
         }
         return bld.toString();
+    }
+
+    private static void printRanks(StringBuilder bld, List<MyPair<Skill, Integer>> newRanks) {
+        int column = 0;
+        for (MyPair<Skill, Integer> newRank : newRanks) {
+            if (column == 4) {
+                bld.append("\n    ");
+                column = 0;
+            }
+            bld.append(String.format("%-4s%2d ", newRank.first.getShortName(), newRank.second));
+            column++;
+        }
+        if (column > 0) {
+            bld.append("\n    ");
+        }
+    }
+
+    private static void printAbilities(StringBuilder bld, Set<SkillAbilityCombatAction> setIntersection) {
+        String abiStr = MyStrings.makeString(setIntersection.stream().toList(), e -> e.getName() + ", ");
+        for (String part : MyStrings.partition(abiStr, DIALOG_WIDTH - 5)) {
+            if (part.endsWith(", ")) {
+                part = part.substring(0, part.length() - 2);
+            }
+            bld.append(part).append("\n    ");
+        }
+    }
+
+    private static List<SkillAbilityCombatAction> findNewAbilitiesForLevel(List<SkillAbilityCombatAction> skillAbilities, Skill s, int rank, int level) {
+        List<SkillAbilityCombatAction> result = new ArrayList<>();
+        for (SkillAbilityCombatAction skiAb : skillAbilities) {
+            if (skiAb.getLinkedSkills().contains(s)) {
+                boolean hasRequiredRanks = rank >= skiAb.getRequiredRanks();
+                if (skiAb.hasRequiredLevel()) {
+                    if (level >= skiAb.getRequiredLevel() && hasRequiredRanks) {
+                        result.add(skiAb);
+                    }
+                } else if (hasRequiredRanks) {
+                    result.add(skiAb);
+                }
+            }
+        }
+        return result;
     }
 
 }

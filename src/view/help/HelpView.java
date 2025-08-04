@@ -69,11 +69,11 @@ public class HelpView extends TwoPaneSelectableListMenu {
                     madeChanges();
                 }
             }
-        } else {
-            chapters.get(index).specificHandleEvent(keyEvent, model);
-            if (chapters.get(index).hasChanges()) {
-                madeChanges();
-            }
+
+        }
+        chapters.get(index).specificHandleEvent(keyEvent, model);
+        if (chapters.get(index).hasChanges()) {
+            madeChanges();
         }
     }
 
@@ -98,7 +98,8 @@ public class HelpView extends TwoPaneSelectableListMenu {
         for (HelpDialog chap : chapters) {
             if (chap.getText().contains(searchKey) || // FEATURE: Make search also look at other pages.
                     chap.getText().contains(cap) ||
-                    chap.getText().contains(lowerCase)) {
+                    chap.getText().contains(lowerCase) ||
+                    chap.getTitle().toUpperCase().contains(searchKey.toUpperCase())) {
                 searchResults.add(chap);
             }
             addSearchResults(searchResults, chap.getSubSections(), searchKey);

@@ -22,6 +22,11 @@ public class CombatProwessAbility extends PassiveCombatAction implements SkillAb
     }
 
     @Override
+    public int getRequiredLevel() {
+        return REQUIRED_LEVEL;
+    }
+
+    @Override
     public boolean canDoAbility(GameCharacter gc) {
         return gc.getLevel() >= REQUIRED_LEVEL && hasRequiredRanks(gc);
     }

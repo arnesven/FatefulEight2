@@ -15,4 +15,12 @@ public interface SkillAbilityCombatAction {
         return MyLists.any(getLinkedSkills(),
                 s -> gc.getUnmodifiedRankForSkill(s) >= getRequiredRanks());
     }
+
+    default boolean hasRequiredLevel() {
+        return getRequiredLevel() > 0;
+    }
+
+    default int getRequiredLevel() {
+        return 0;
+    }
 }
