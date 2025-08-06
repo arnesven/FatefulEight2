@@ -5,6 +5,7 @@ import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
 import view.sprites.Sprite;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.Random;
@@ -22,8 +23,8 @@ public class LeverObject extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override

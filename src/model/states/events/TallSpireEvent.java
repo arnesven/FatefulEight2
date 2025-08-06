@@ -20,6 +20,7 @@ import view.sprites.HermitSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
 import view.combat.CombatTheme;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -112,8 +113,8 @@ public class TallSpireEvent extends DailyEventState {
         }
 
         @Override
-        public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-            inner.drawYourself(model, xPos, yPos, theme);
+        public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+            inner.drawYourself(drawer, xPos, yPos, theme);
         }
     }
 
@@ -275,8 +276,8 @@ public class TallSpireEvent extends DailyEventState {
         }
 
         @Override
-        public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-            model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
+        public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+            drawer.register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
         }
 
         @Override

@@ -4,6 +4,7 @@ import model.Model;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import view.sprites.Sprite;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -20,8 +21,8 @@ public abstract class DungeonObject implements Serializable {
         return internalPosition;
     }
 
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().put(xPos, yPos, getSprite(theme));
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.put(xPos, yPos, getSprite(theme));
     }
 
     protected abstract Sprite getSprite(DungeonTheme theme);

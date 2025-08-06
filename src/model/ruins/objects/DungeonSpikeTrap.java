@@ -11,6 +11,7 @@ import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,11 +34,11 @@ public class DungeonSpikeTrap extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
-        model.getScreenHandler().register(HORI_PATH.getName(), new Point(xPos, yPos-4), HORI_PATH);
-        model.getScreenHandler().register(VERTI_PATH.getName(), new Point(xPos-4, yPos), VERTI_PATH);
-        model.getScreenHandler().register(BOTH_PATH.getName(), new Point(xPos-4, yPos-4), BOTH_PATH);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
+        drawer.register(HORI_PATH.getName(), new Point(xPos, yPos-4), HORI_PATH);
+        drawer.register(VERTI_PATH.getName(), new Point(xPos-4, yPos), VERTI_PATH);
+        drawer.register(BOTH_PATH.getName(), new Point(xPos-4, yPos-4), BOTH_PATH);
     }
 
     @Override

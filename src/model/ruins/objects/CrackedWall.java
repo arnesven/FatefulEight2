@@ -15,6 +15,7 @@ import view.sprites.ExplosionAnimation;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -43,10 +44,10 @@ public class CrackedWall extends DungeonDoor {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        super.drawYourself(model, xPos, yPos, theme);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        super.drawYourself(drawer, xPos, yPos, theme);
         if (explo != null && !explo.isDone()) {
-            model.getScreenHandler().register(explo.getName(), new Point(xPos, yPos), explo);
+            drawer.register(explo.getName(), new Point(xPos, yPos), explo);
         }
     }
 

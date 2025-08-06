@@ -6,6 +6,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 
@@ -28,7 +29,7 @@ public class SkyBackground extends PositionableRoomDecoration {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(sprite.getName(), new Point(xPos + xShift, yPos), sprite);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(sprite.getName(), new Point(xPos + xShift, yPos), sprite);
     }
 }

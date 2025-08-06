@@ -8,13 +8,9 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class DungeonMapIcon extends DungeonObject {
+public class DungeonMapIcon extends UIDungeonObject {
     private static final Sprite32x32 SPRITE = new Sprite32x32("mapiconn", "dungeon.png", 0x50,
             MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, MyColors.DARK_GRAY);
-
-    public DungeonMapIcon() {
-        super(0, 0);
-    }
 
     @Override
     protected Sprite getSprite(DungeonTheme theme) {

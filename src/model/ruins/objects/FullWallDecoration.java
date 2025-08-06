@@ -5,6 +5,7 @@ import model.ruins.themes.DungeonTheme;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 public class FullWallDecoration extends PositionableRoomDecoration {
     private static final Sprite SPRITE = new Sprite32x32("fullwall", "dungeon.png", 0x74,
@@ -15,7 +16,7 @@ public class FullWallDecoration extends PositionableRoomDecoration {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().put(xPos-2, yPos, SPRITE);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.put(xPos-2, yPos, SPRITE);
     }
 }

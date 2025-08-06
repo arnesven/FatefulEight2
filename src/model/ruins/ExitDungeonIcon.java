@@ -8,14 +8,10 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class ExitDungeonIcon extends DungeonObject {
+public class ExitDungeonIcon extends UIDungeonObject {
 
     private static final Sprite32x32 SPRITE = new Sprite32x32("exiticon", "dungeon.png", 0x40,
             MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, MyColors.DARK_GRAY);
-
-    public ExitDungeonIcon() {
-        super(0, 0);
-    }
 
     @Override
     protected Sprite getSprite(DungeonTheme theme) {

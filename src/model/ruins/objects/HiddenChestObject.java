@@ -9,6 +9,7 @@ import model.states.ExploreRuinsState;
 import sound.SoundEffects;
 import view.sprites.AnimationManager;
 import view.sprites.SmokePuffAnimation;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.Random;
@@ -32,15 +33,15 @@ public class HiddenChestObject extends DungeonChest {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
         if (!isHidden) {
-            super.drawYourself(model, xPos, yPos, theme);
+            super.drawYourself(drawer, xPos, yPos, theme);
         } else if (animation != null) {
             if (animation.isDone()) {
                 isHidden = false;
                 AnimationManager.unregister(animation);
             } else {
-                model.getScreenHandler().register(animation.getName(), new Point(xPos, yPos), animation);
+                drawer.register(animation.getName(), new Point(xPos, yPos), animation);
             }
         }
     }

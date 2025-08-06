@@ -15,6 +15,7 @@ import model.quests.QuestEdge;
 import model.quests.scenes.DummyQuestNode;
 import model.races.Race;
 import model.ruins.objects.DungeonChest;
+import model.states.events.LottoHouseChest;
 import view.MyColors;
 import view.sprites.CombatCursorSprite;
 import view.sprites.Sprite;
@@ -37,7 +38,7 @@ public class LottoHouseSubView extends AvatarSubView {
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
     private Point avatarInitialPos;
     private final SteppingMatrix<Item> matrix;
-    private final Map<Item, DungeonChest> chests = new HashMap<>();
+    private final Map<Item, LottoHouseChest> chests = new HashMap<>();
     private boolean avatarEnabled = true;
     private boolean cursorEnabled = false;
     private Point itemRevealPoint;
@@ -48,7 +49,7 @@ public class LottoHouseSubView extends AvatarSubView {
         this.matrix = matrix;
         Random random = new Random();
         for (Item it : matrix.getElementList()) {
-            chests.put(it, new DungeonChest(random));
+            chests.put(it, new LottoHouseChest(random));
         }
         resetAvatarPosition();
     }
@@ -98,12 +99,13 @@ public class LottoHouseSubView extends AvatarSubView {
     }
 
     private void drawChests(Model model) {
+        DungeonDrawer drawer = DungeonDrawer.getInstance(model.getScreenHandler());
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 if (matrix.getElementAt(x, y) != null) {
                     Point p = convertToScreen(new Point(x+1, y+1));
                     p.translate(2, 0);
-                    chests.get(matrix.getElementAt(x, y)).drawYourself(model, p.x, p.y, null);
+                    chests.get(matrix.getElementAt(x, y)).drawYourself(drawer, p.x, p.y, null);
                 }
             }
         }

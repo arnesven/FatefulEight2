@@ -5,6 +5,7 @@ import model.ruins.themes.DungeonTheme;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 public class StairsRondel extends PositionableRoomDecoration {
     private static final Sprite SPRITE_LEFT = new Sprite32x32("stairsrondelleft", "dungeon.png", 0x86,
@@ -19,7 +20,7 @@ public class StairsRondel extends PositionableRoomDecoration {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().put(xPos-2, yPos, sprite);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.put(xPos-2, yPos, sprite);
     }
 }

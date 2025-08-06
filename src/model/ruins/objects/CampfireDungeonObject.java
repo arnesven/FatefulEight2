@@ -6,6 +6,7 @@ import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.List;
@@ -20,8 +21,8 @@ public class CampfireDungeonObject extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override

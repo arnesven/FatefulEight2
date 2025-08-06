@@ -8,6 +8,7 @@ import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 
@@ -50,9 +51,9 @@ public class FatueKeyObject extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
         Sprite spr = getSprite(theme);
-        model.getScreenHandler().register(spr.getName(), new Point(xPos, yPos), spr);
+        drawer.register(spr.getName(), new Point(xPos, yPos), spr);
     }
 
     @Override

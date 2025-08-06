@@ -26,6 +26,8 @@ public class GardenDungeonTheme implements DungeonTheme {
     
     public GardenDungeonTheme(MyColors treeColor, MyColors shadeColor, MyColors highLight,
                             MyColors groundColor, MyColors groundDetail, MyColors gateColor) {
+        final Sprite BLACK = new Sprite32x32("gardendungeonul", "dungeon.png", 0xE6,
+                BASE_COLOR, BASE_COLOR, BASE_COLOR, BASE_COLOR);
         final Sprite LEFT_CORNER = new Sprite32x32("gardendungeonul", "dungeon.png", 0xE6,
                 BASE_COLOR, treeColor, shadeColor, highLight);
         final Sprite RIGHT_CORNER = new Sprite32x32("gardendungeonur", "dungeon.png", 0xF6,
@@ -73,16 +75,18 @@ public class GardenDungeonTheme implements DungeonTheme {
         left = new Sprite[]{
                 LEFT_CORNER,
                 VERTI_WALL,
-                LEFT_CORNER
+                LEFT_CORNER,
+                VERTI_WALL
         };
 
         right = new Sprite[]{
                 RIGHT_CORNER,
                 VERTI_WALL,
-                RIGHT_CORNER
+                RIGHT_CORNER,
+                VERTI_WALL
         };
 
-        MID = new Sprite[]{HORI_WALL, FLOOR, HORI_WALL};
+        MID = new Sprite[]{HORI_WALL, FLOOR, HORI_WALL, HORI_WALL};
     }
 
 

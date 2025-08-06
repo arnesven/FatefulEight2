@@ -5,6 +5,7 @@ import model.ruins.themes.DungeonTheme;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.List;
@@ -73,8 +74,8 @@ public class RoomDecoration extends DungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(sprite.getName(), new Point(xPos+offset.x*2, yPos+offset.y*2), sprite, 1);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(sprite.getName(), new Point(xPos+offset.x*2, yPos+offset.y*2), sprite, 1);
     }
 
     @Override

@@ -14,6 +14,7 @@ import view.sprites.Animation;
 import view.sprites.LoopingSprite;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
+import view.subviews.DungeonDrawer;
 import view.subviews.StripedTransition;
 
 import java.awt.*;
@@ -100,16 +101,16 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
-        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
+        drawer.register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
         if (isSleeping) {
             if (getSprite(theme) instanceof Animation) {
                 ((Animation) getSprite(theme)).synch();
             }
-            model.getScreenHandler().register(SLEEP_ANIMATION.getName(), new Point(xPos, yPos), SLEEP_ANIMATION);
+            drawer.register(SLEEP_ANIMATION.getName(), new Point(xPos, yPos), SLEEP_ANIMATION);
         }
         if (smoke != null && !smoke.isDone()) {
-            model.getScreenHandler().register(smoke.getName(), new Point(xPos, yPos), smoke);
+            drawer.register(smoke.getName(), new Point(xPos, yPos), smoke);
         }
     }
 

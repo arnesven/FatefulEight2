@@ -265,8 +265,8 @@ public class SecretGardenEvent extends DailyEventState {
         }
 
         @Override
-        public void drawYourself(Model model, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
-            model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
+        public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
+            drawer.register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
         }
 
         @Override

@@ -5,6 +5,7 @@ import model.ruins.themes.DungeonTheme;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class GrassBackground extends PositionableRoomDecoration {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos + shift, yPos), SPRITE);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(SPRITE.getName(), new Point(xPos + shift, yPos), SPRITE);
     }
 }

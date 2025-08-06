@@ -1,6 +1,6 @@
 package model.ruins.objects;
 
-import model.Model;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 
@@ -13,7 +13,7 @@ public class TowerExit extends DungeonExit {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
-        inner.drawYourself(model, xPos, yPos, theme);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
+        inner.drawYourself(drawer, xPos, yPos, theme);
     }
 }

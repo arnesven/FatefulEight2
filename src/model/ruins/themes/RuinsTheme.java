@@ -34,7 +34,9 @@ public class RuinsTheme implements DungeonTheme {
                 new Sprite32x32("leftvertidungeonwall", "dungeon.png", 0xC5,
                         BASE_COLOR, BASE_COLOR, floorColor, wallColor),
                 new Sprite32x32("dungeonll", "dungeon.png", 0xD5,
-                        BASE_COLOR, brickColor, BASE_COLOR, wallColor)
+                        BASE_COLOR, brickColor, BASE_COLOR, wallColor),
+                new Sprite32x32("dungeonhoricorleft", "dungeon.png", 0xC6,
+                        BASE_COLOR, BASE_COLOR, floorColor, BASE_COLOR),
         };
 
         right = new Sprite[] {
@@ -43,7 +45,9 @@ public class RuinsTheme implements DungeonTheme {
                 new Sprite32x32("rightvertidungeonwall", "dungeon.png", 0xC5,
                         BASE_COLOR, floorColor, BASE_COLOR, wallColor),
                 new Sprite32x32("dungeonlr", "dungeon.png", 0xD7,
-                        BASE_COLOR, brickColor, BASE_COLOR, wallColor)
+                        BASE_COLOR, brickColor, BASE_COLOR, wallColor),
+                new Sprite32x32("dungeonur", "dungeon.png", 0xD6,
+                        BASE_COLOR, BASE_COLOR, floorColor, BASE_COLOR),
         };
 
         final Sprite HORI_WALL = new Sprite32x32("horidungeonwall", "dungeon.png", 0xC7,
@@ -52,7 +56,9 @@ public class RuinsTheme implements DungeonTheme {
                 HORI_WALL,
                 new Sprite32x32("dungeonfloor", "dungeon.png", 0xC0,
                         floorDetail, DONT_CARE, DONT_CARE, floorColor),
-                HORI_WALL
+                HORI_WALL,
+                new Sprite32x32("horicornerleft", "dungeon.png", 0xC6,
+                        BASE_COLOR, BASE_COLOR, BASE_COLOR, BASE_COLOR)
         };
 
         stairsUp = new Sprite32x32("stairsup", "dungeon.png", 0xD1,

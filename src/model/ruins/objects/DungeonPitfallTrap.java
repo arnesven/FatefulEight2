@@ -15,6 +15,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.BlankSubView;
 import view.subviews.CollapsingTransition;
+import view.subviews.DungeonDrawer;
 import view.subviews.SubView;
 
 import java.awt.*;
@@ -41,11 +42,11 @@ public class DungeonPitfallTrap extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(SPRITES[3].getName(), new Point(xPos, yPos), SPRITES[3]);
-        model.getScreenHandler().register(SPRITES[1].getName(), new Point(xPos, yPos-4), SPRITES[1]);
-        model.getScreenHandler().register(SPRITES[2].getName(), new Point(xPos-4, yPos), SPRITES[2]);
-        model.getScreenHandler().register(SPRITES[0].getName(), new Point(xPos-4, yPos-4), SPRITES[0]);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(SPRITES[3].getName(), new Point(xPos, yPos), SPRITES[3]);
+        drawer.register(SPRITES[1].getName(), new Point(xPos, yPos-4), SPRITES[1]);
+        drawer.register(SPRITES[2].getName(), new Point(xPos-4, yPos), SPRITES[2]);
+        drawer.register(SPRITES[0].getName(), new Point(xPos-4, yPos-4), SPRITES[0]);
     }
 
     @Override

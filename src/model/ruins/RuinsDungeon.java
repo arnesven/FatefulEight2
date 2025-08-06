@@ -8,6 +8,7 @@ import util.MyPair;
 import util.MyRandom;
 import view.sprites.LoopingSprite;
 import view.sprites.QuestCursorSprite;
+import view.subviews.DungeonDrawer;
 import view.subviews.SubView;
 
 import java.awt.*;
@@ -61,36 +62,80 @@ public class RuinsDungeon implements Serializable {
     }
 
     private void drawRoomBackgrounds(Model model, Point currentPosition, int currentLevel) {
+        DungeonDrawer drawer = DungeonDrawer.getInstance(model.getScreenHandler());
         int minX = (currentPosition.x / 2) * 2;
         int minY = (currentPosition.y / 2) * 2;
         DungeonRoom[][] rooms = getLevel(currentLevel).getRooms();
         DungeonTheme theme = getLevel(currentLevel).getTheme();
-        for (int y = minY; y < minY+2 && y < rooms.length; ++y) {
-            for (int x = minX; x < minX+2 && x < rooms.length; ++x) {
+        for (int y = Math.max(0, minY-1); y < minY+3 && y < rooms.length; ++y) {
+            for (int x = Math.max(0, minX-1); x < minX+3 && x < rooms.length; ++x) {
+                Point pos = convertToScreen(new Point(3*(x - minX), 3*(y - minY)));
                 if (rooms[x][y] != null) {
-                    boolean leftCorner = false;
-                    boolean rightCorner = false;
+                    boolean ulCorner = false;
+                    boolean urCorner = false;
                     if (y > 0) {
-                        leftCorner = connectsLeft(rooms, x, y-1);
-                        rightCorner = connectsRight(rooms, x, y-1);
+                        ulCorner = leftCornerConnect(rooms, x, y);
+                        urCorner = rightCornerConnects(rooms, x, y);
                     }
-                    Point pos = convertToScreen(new Point(3*(x - minX), 3*(y - minY)));
-                    rooms[x][y].drawYourself(model, pos, connectsLeft(rooms, x, y), connectsRight(rooms, x, y), leftCorner, rightCorner, theme);
+                    boolean corridorLeft = isCorridorLeft(rooms, x, y);
+                    boolean corridorRight = isCorridorRight(rooms, x, y);
+                    boolean roomToTheLeft = connectsLeft(rooms, x, y);
+                    boolean roomToTheRight = connectsRight(rooms, x, y);
+
+                    if (rooms[x][y].isVerticalCorridor()) {
+                        rooms[x][y].drawVerticalCorridor(drawer, pos, roomToTheLeft, ulCorner, theme);
+                    } else if (rooms[x][y].isHorizontalCorridor()) {
+                        rooms[x][y].drawHorizontalCorridor(drawer, pos, roomToTheLeft, roomToTheRight,
+                                ulCorner, urCorner, corridorLeft, corridorRight, theme);
+                    } else {
+                        rooms[x][y].drawYourself(drawer, pos, roomToTheLeft, roomToTheRight,
+                                ulCorner, urCorner, corridorLeft, corridorRight, theme);
+                    }
 
                     if (!(currentPosition.x == x && currentPosition.y == y)) {
                         for (DungeonObject dObj : rooms[x][y].getObjects()) {
-                            dObj.drawYourself(model,
+                            dObj.drawYourself(drawer,
                                     pos.x + dObj.getInternalPosition().x*4,
                                     pos.y + dObj.getInternalPosition().y*4, theme);
                         }
                     }
-
                 }
             }
         }
     }
 
+    private boolean rightCornerConnects(DungeonRoom[][] rooms, int x, int y) {
+        return connectsRight(rooms, x, y-1) && !isCorridorRight(rooms, x, y-1);
+    }
+
+    private boolean leftCornerConnect(DungeonRoom[][] rooms, int x, int y) {
+        return connectsLeft(rooms, x, y-1) && x > 0 && !isVerticalCorridor(rooms, x-1, y) &&
+                !isCorridorLeft(rooms, x, y-1);
+    }
+
+    private boolean isVerticalCorridor(DungeonRoom[][] rooms, int x, int y) {
+        if (rooms[x][y] == null) {
+            return false;
+        }
+        return rooms[x][y].isVerticalCorridor();
+    }
+
+    private boolean isCorridorRight(DungeonRoom[][] rooms, int x, int y) {
+        if (x == rooms.length-1) {
+            return false;
+        }
+        return rooms[x+1][y] != null && rooms[x+1][y].isHorizontalCorridor();
+    }
+
+    private boolean isCorridorLeft(DungeonRoom[][] rooms, int x, int y) {
+        if (x == 0) {
+            return false;
+        }
+        return rooms[x-1][y] != null && rooms[x-1][y].isHorizontalCorridor();
+    }
+
     private void drawRoomObjects(Model model, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
+        DungeonDrawer drawer = DungeonDrawer.getInstance(model.getScreenHandler());
         DungeonTheme theme = getLevel(currentLevel).getTheme();
         for (int row = 0; row < matrix.getRows(); ++row) {
             for (int col = 0; col < matrix.getColumns(); ++col) {
@@ -98,7 +143,7 @@ public class RuinsDungeon implements Serializable {
                     Point conv = convertToScreen(new Point(col, row));
                     int xPos = conv.x;
                     int yPos = conv.y;
-                    matrix.getElementAt(col, row).drawYourself(model, xPos, yPos, theme);
+                    matrix.getElementAt(col, row).drawYourself(drawer, xPos, yPos, theme);
 
                     if (matrix.getSelectedElement() == matrix.getElementAt(col, row) && drawCursor) {
                         model.getScreenHandler().register("questcursor", new Point(xPos, yPos),
@@ -134,14 +179,14 @@ public class RuinsDungeon implements Serializable {
         if (x == rooms.length - 1) {
             return false;
         }
-        return rooms[x+1][y] != null;
+        return rooms[x+1][y] != null && !rooms[x+1][y].isVerticalCorridor();
     }
 
     private boolean connectsLeft(DungeonRoom[][] rooms, int x, int y) {
         if (x == 0) {
             return false;
         }
-        return rooms[x-1][y] != null;
+        return rooms[x-1][y] != null && !rooms[x-1][y].isVerticalCorridor();
     }
 
     public void setAvatarEnabled(boolean b) {

@@ -21,6 +21,8 @@ public class CaveDungeonTheme implements DungeonTheme {
                             MyColors floorColor, MyColors floorDetail, MyColors doorColor) {
         final Sprite LEFT_CORNER = new Sprite32x32("cavedungeonul", "dungeon.png", 0x96,
                 BASE_COLOR, stoneColor, shadeColor, BASE_COLOR);
+        final Sprite BLACK = new Sprite32x32("cavedungeonul", "dungeon.png", 0x96,
+                BASE_COLOR, BASE_COLOR, BASE_COLOR, BASE_COLOR);
         final Sprite RIGHT_CORNER = new Sprite32x32("cavedungeonur", "dungeon.png", 0xA6,
                 BASE_COLOR, stoneColor, shadeColor, BASE_COLOR);
         final Sprite HORI_WALL = new Sprite32x32("cave horidungeonwall", "dungeon.png", 0x97,
@@ -67,17 +69,21 @@ public class CaveDungeonTheme implements DungeonTheme {
                 LEFT_CORNER,
                 new Sprite32x32("caveleftvertidungeonwall", "dungeon.png", 0x95,
                         BASE_COLOR, shadeColor, floorColor, stoneColor),
-                LEFT_CORNER
+                LEFT_CORNER,
+                new Sprite32x32("cavedungeonul", "dungeon.png", 0x96,
+                        BASE_COLOR, BASE_COLOR, BASE_COLOR, floorColor)
         };
 
         right = new Sprite[]{
                 RIGHT_CORNER,
                 new Sprite32x32("caverightvertidungeonwall", "dungeon.png", 0xA5,
                         BASE_COLOR, shadeColor, floorColor, stoneColor),
-                RIGHT_CORNER
+                RIGHT_CORNER,
+                new Sprite32x32("cavedungeonur", "dungeon.png", 0xA6,
+                        BASE_COLOR, BASE_COLOR, BASE_COLOR, floorColor)
         };
 
-        MID = new Sprite[]{HORI_WALL, FLOOR, HORI_WALL};
+        MID = new Sprite[]{HORI_WALL, FLOOR, HORI_WALL, BLACK};
     }
 
 

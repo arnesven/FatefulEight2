@@ -4,7 +4,10 @@ import model.Model;
 import model.ruins.objects.*;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
+import view.MyColors;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -13,13 +16,16 @@ import java.util.List;
 
 public class DungeonRoom implements Serializable {
 
+    private static final Sprite32x32 HORI_CORNER = new Sprite32x32("horicorner", "dungeon.png", 0x06,
+            MyColors.BLACK, MyColors.WHITE, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     private final ArrayList<DungeonObject> otherObjects;
     private final ArrayList<RoomDecoration> decorations;
+                                              // North, East, South, West
     private final DungeonDoor[] connections = new DungeonDoor[4];
     private final int width;
     private final int height;
     private int cardinality;
-    private boolean revealedOnMap = false;
+    private boolean revealedOnMap = true; // TODO: Repair: false
 
     public DungeonRoom(int width, int height) {
         this.otherObjects = new ArrayList<>();
@@ -32,46 +38,75 @@ public class DungeonRoom implements Serializable {
         this(2, 2);
     }
 
-    public void drawYourself(Model model, Point position, boolean connectLeft, boolean connectRight,
-                             boolean leftCorner, boolean rightCorner, DungeonTheme theme) {
+    public void drawYourself(DungeonDrawer drawer, Point position, boolean connectLeft, boolean connectRight,
+                             boolean leftCorner, boolean rightCorner, boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
         int xStart = position.x;
         int yStart = position.y;
+        innerDrawRoom(drawer, xStart, yStart, width, height,
+                connectLeft, connectRight, leftCorner, rightCorner,
+                corridorLeft, corridorRight, theme);
+        drawDecorations(drawer, decorations, xStart, yStart, theme);
+    }
 
-        // TOP ROW
-        Sprite corner = leftCorner ? theme.getConnect()[0] : (connectLeft ? theme.getConnect()[0] : theme.getLeft()[0]);
-        model.getScreenHandler().put(xStart, yStart, corner);
-        for (int w = 1; w < width+1; ++w) {
-            model.getScreenHandler().put(xStart + 4 * w, yStart, theme.getMid()[0]);
+    private static void drawDecorations(DungeonDrawer drawer, ArrayList<RoomDecoration> decorations, int xStart, int yStart, DungeonTheme theme) {
+        for (RoomDecoration decor : decorations) {
+            decor.drawYourself(drawer, xStart+decor.getInternalPosition().x*4, yStart+decor.getInternalPosition().y*4, theme);
         }
-        corner = rightCorner ? theme.getConnect()[0] : (connectRight ? theme.getConnect()[0] : theme.getRight()[0]);
-        model.getScreenHandler().put(xStart + 4*(width+1), yStart, corner);
+    }
 
-        // MIDDLE ROWS
+    private static void innerDrawRoom(DungeonDrawer drawer, int xStart, int yStart, int width, int height,
+                                      boolean connectLeft, boolean connectRight,
+                                      boolean leftCorner, boolean rightCorner,
+                                      boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
+        drawTopRow(drawer, xStart, yStart, width, connectLeft, connectRight, leftCorner, rightCorner, theme);
+        drawMiddleRows(drawer, xStart, yStart, width, height, connectLeft, connectRight, corridorLeft, corridorRight, theme);
+        drawBottomRow(drawer, xStart, yStart, width, height, connectLeft, connectRight, theme);
+    }
+
+    private static void drawMiddleRows(DungeonDrawer drawer, int xStart, int yStart,
+                                       int width, int height, boolean connectLeft, boolean connectRight,
+                                       boolean corridorLeft, boolean corridorRight,
+                                       DungeonTheme theme) {
+        Sprite corner;
         for (int yCurr = 1; yCurr < height+1; yCurr++) {
             corner = connectLeft ? theme.getConnect()[1] : theme.getLeft()[1];
-            model.getScreenHandler().put(xStart, yStart + 4 * yCurr, corner);
+            if (yCurr > 1 && corridorLeft) {
+                corner = theme.getRight()[3];
+            }
+            drawer.put(xStart, yStart + 4 * yCurr, corner);
 
             for (int w = 1; w < width+1; ++w) {
-                model.getScreenHandler().put(xStart + 4 * w, yStart + 4 * yCurr, theme.getMid()[1]);
+                drawer.put(xStart + 4 * w, yStart + 4 * yCurr, theme.getMid()[1]);
             }
 
             corner = connectRight ? theme.getConnect()[1] : theme.getRight()[1];
-            model.getScreenHandler().put(xStart + 4 * (width+1), yStart + 4 * yCurr, corner);
+            if (yCurr > 1 && corridorRight) {
+                corner = theme.getLeft()[3];
+            }
+            drawer.put(xStart + 4 * (width+1), yStart + 4 * yCurr, corner);
         }
+    }
 
-        // BOTTOM ROW
-        corner = (connectLeft ? theme.getConnect()[2] : theme.getLeft()[2]);
-        model.getScreenHandler().put(xStart, yStart + 4 * (height+1), corner);
+    private static void drawTopRow(DungeonDrawer drawer, int xStart, int yStart, int width,
+                                   boolean connectLeft, boolean connectRight, boolean leftCorner, boolean rightCorner, DungeonTheme theme) {
+        Sprite corner = leftCorner ? theme.getConnect()[0] : (connectLeft ? theme.getConnect()[0] : theme.getLeft()[0]);
+        drawer.put(xStart, yStart, corner);
         for (int w = 1; w < width+1; ++w) {
-            model.getScreenHandler().put(xStart + 4 * w, yStart + 4 * (height+1), theme.getMid()[2]);
+            drawer.put(xStart + 4 * w, yStart, theme.getMid()[0]);
+        }
+        corner = rightCorner ? theme.getConnect()[0] : (connectRight ? theme.getConnect()[0] : theme.getRight()[0]);
+        drawer.put(xStart + 4*(width+1), yStart, corner);
+    }
+
+    private static void drawBottomRow(DungeonDrawer drawer, int xStart, int yStart, int width, int height,
+                                      boolean connectLeft, boolean connectRight, DungeonTheme theme) {
+        Sprite corner = (connectLeft ? theme.getConnect()[2] : theme.getLeft()[2]);
+        drawer.put(xStart, yStart + 4 * (height+1), corner);
+        for (int w = 1; w < width+1; ++w) {
+            drawer.put(xStart + 4 * w, yStart + 4 * (height+1), theme.getMid()[2]);
         }
         corner = (connectRight ? theme.getConnect()[2] : theme.getRight()[2]);
-        model.getScreenHandler().put(xStart + 4*(width+1), yStart + 4 * (height+1), corner);
-
-
-        for (RoomDecoration decor : decorations) {
-            decor.drawYourself(model, xStart+decor.getInternalPosition().x*4, yStart+decor.getInternalPosition().y*4, theme);
-        }
+        drawer.put(xStart + 4*(width+1), yStart + 4 * (height+1), corner);
     }
 
     public List<DungeonObject> getObjects() {
@@ -145,6 +180,12 @@ public class DungeonRoom implements Serializable {
             case 1:
                 return 0xC3 + firstConnection;
             case 2:
+                if (isVerticalCorridor()) {
+                    return 0x146;
+                }
+                if (isHorizontalCorridor()) {
+                    return 0x147;
+                }
                 if (!connectionBlocked((firstConnection + 2) % 4)) { // TODO : or cracked wall
                     return 0xD7 + firstConnection;
                 } else {
@@ -204,5 +245,42 @@ public class DungeonRoom implements Serializable {
 
     public DungeonDoor getConnection(int index) {
         return connections[index];
+    }
+
+    public boolean isVerticalCorridor() {
+        return otherObjects.isEmpty() && connections[1] == null && connections[3] == null &&
+                connections[0] instanceof OpenDoor && connections[2] instanceof OpenDoor;
+    }
+
+    public boolean isHorizontalCorridor() {
+        return otherObjects.isEmpty() && connections[1] instanceof OpenDoor && connections[3] instanceof OpenDoor &&
+                connections[0] == null && connections[2] == null;
+    }
+
+    public void drawVerticalCorridor(DungeonDrawer drawer, Point position, boolean connectLeft,
+                             boolean leftCorner, DungeonTheme theme) {
+        int xStart = position.x;
+        int yStart = position.y;
+        innerDrawRoom(drawer, xStart, yStart, 1, height,
+                connectLeft, false, leftCorner, false, false, false, theme);
+    }
+
+    public void drawHorizontalCorridor(DungeonDrawer drawer, Point position, boolean connectLeft, boolean connectRight,
+                                       boolean leftCorner, boolean rightCorner,
+                                       boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
+        int xStart = position.x;
+        int yStart = position.y;
+        innerDrawRoom(drawer, xStart, yStart, width, 1,
+                connectLeft, connectRight, leftCorner, rightCorner, false, false, theme);
+
+        Sprite corner = corridorLeft ? theme.getMid()[3] : theme.getLeft()[3];
+        drawer.put(xStart, yStart + 8, corner);
+        drawer.put(xStart, yStart + 12, theme.getRight()[2]);
+        for (int w = 1; w < width+1; ++w) {
+            drawer.put(xStart + 4 * w, yStart + 8, theme.getMid()[3]);
+        }
+        corner = corridorRight ? theme.getMid()[3] : theme.getRight()[3];
+        drawer.put(xStart + 4*(1+width), yStart + 8, corner);
+        drawer.put(xStart + 4*(1+width), yStart + 12, theme.getLeft()[2]);
     }
 }

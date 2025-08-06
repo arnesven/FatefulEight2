@@ -10,6 +10,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.List;
@@ -28,8 +29,8 @@ public class CorpseObject extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        drawer.register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override

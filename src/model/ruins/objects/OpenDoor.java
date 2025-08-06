@@ -4,6 +4,7 @@ import model.Model;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import view.sprites.Sprite;
+import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,15 +35,15 @@ public class OpenDoor extends DungeonDoor {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        super.drawYourself(model, xPos, yPos, theme);
+    public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
+        super.drawYourself(drawer, xPos, yPos, theme);
         if (isHorizontal) {
             Sprite spr = theme.getDoorOverlay();
-            model.getScreenHandler().register(spr.getName(), new Point(xPos, yPos), spr, 3);
+            drawer.register(spr.getName(), new Point(xPos, yPos), spr, 3);
         }
         if (!levers.isEmpty() && leversWrong()) {
             Sprite spr = theme.getDoor(isHorizontal, true);
-            model.getScreenHandler().register(spr.getName(), new Point(xPos, yPos), spr, 1);
+            drawer.register(spr.getName(), new Point(xPos, yPos), spr, 1);
         }
     }
 
