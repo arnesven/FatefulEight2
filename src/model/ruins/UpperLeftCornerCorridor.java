@@ -6,19 +6,20 @@ import view.subviews.DungeonDrawer;
 
 import java.awt.*;
 
-public class HorizontalCorridorRoom extends DungeonRoom {
-    public HorizontalCorridorRoom(DungeonRoom dungeonRoom) {
+public class UpperLeftCornerCorridor extends DungeonRoom {
+    public UpperLeftCornerCorridor(DungeonRoom dungeonRoom) {
         super(dungeonRoom);
     }
 
     @Override
     public void drawYourself(DungeonDrawer drawer, Point position, boolean connectLeft, boolean connectRight,
-                             boolean leftCorner, boolean rightCorner,
-                             boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
+                             boolean leftCorner, boolean rightCorner, boolean corridorLeft, boolean corridorRight,
+                             DungeonTheme theme) {
         int xStart = position.x;
         int yStart = position.y;
-        innerDrawRoom(drawer, xStart, yStart, getWidth(), 1,
-                connectLeft, connectRight, leftCorner, rightCorner, false, false, theme);
+        innerDrawRoom(drawer, xStart, yStart, 1, 1,
+                connectLeft, false, leftCorner, false, false, false, theme);
+        drawer.put(xStart + 4 * (1+getWidth()), yStart, rightCorner ? theme.getLeft()[2] : theme.getMid()[3]);
 
         Sprite corner = corridorLeft ? theme.getMid()[3] : theme.getLeft()[3];
         drawer.put(xStart, yStart + 8, corner);
@@ -26,9 +27,13 @@ public class HorizontalCorridorRoom extends DungeonRoom {
         for (int w = 1; w < getWidth()+1; ++w) {
             drawer.put(xStart + 4 * w, yStart + 8, theme.getMid()[3]);
         }
-        corner = corridorRight ? theme.getMid()[3] : theme.getRight()[3];
-        drawer.put(xStart + 4*(1+getWidth()), yStart + 8, corner);
+        drawer.put(xStart + 4*(1+getWidth()), yStart + 8, theme.getMid()[3]);
         drawer.put(xStart + 4*(1+getWidth()), yStart + 12, theme.getMid()[3]);
+    }
+
+    @Override
+    public boolean hasUpperRightCorner() {
+        return false;
     }
 
     @Override

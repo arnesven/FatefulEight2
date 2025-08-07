@@ -98,11 +98,11 @@ public class RuinsDungeon implements Serializable {
     }
 
     private boolean rightCornerConnects(DungeonRoom[][] rooms, int x, int y) {
-        return y > 0 && x < rooms.length - 1 && rooms[x+1][y-1] != null && rooms[x+1][y-1].hasLowerLeftCorner();
+        return x < rooms.length - 1 && rooms[x+1][y] != null && rooms[x+1][y].hasUpperRightCorner();
     }
 
     private boolean leftCornerConnect(DungeonRoom[][] rooms, int x, int y) {
-        return y > 0 && x > 0 && rooms[x-1][y-1] != null && rooms[x-1][y-1].hasLowerRightCorner();
+        return x > 0 && rooms[x-1][y] != null && rooms[x-1][y].hasUpperRightCorner();
     }
 
     private boolean isCorridorRight(DungeonRoom[][] rooms, int x, int y) {

@@ -200,6 +200,9 @@ public class DungeonRoom implements Serializable {
                 if (isHorizontalCorridor()) {
                     return 0x147;
                 }
+                if (isUpperLeftCornerCorridor()) {
+                    return 0x156;
+                }
                 if (!connectionBlocked((firstConnection + 2) % 4)) { // TODO : or cracked wall
                     return 0xD7 + firstConnection;
                 } else {
@@ -269,6 +272,11 @@ public class DungeonRoom implements Serializable {
     public boolean isHorizontalCorridor() {
         return otherObjects.isEmpty() && connections[1] instanceof OpenDoor && connections[3] instanceof OpenDoor &&
                 connections[0] == null && connections[2] == null;
+    }
+
+    public boolean isUpperLeftCornerCorridor() {
+        return otherObjects.isEmpty() && connections[0] instanceof OpenDoor && connections[3] instanceof OpenDoor &&
+                connections[1] == null && connections[2] == null;
     }
 
     public boolean hasLowerLeftCorner() {

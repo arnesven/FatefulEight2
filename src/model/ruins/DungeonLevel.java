@@ -74,6 +74,8 @@ public class DungeonLevel implements Serializable {
                         rooms[x][y] = new VerticalCorridorRoom(rooms[x][y]);
                     } else if (rooms[x][y].isHorizontalCorridor()) {
                         rooms[x][y] = new HorizontalCorridorRoom(rooms[x][y]);
+                    } else if (rooms[x][y].isUpperLeftCornerCorridor()) {
+                        rooms[x][y] = new UpperLeftCornerCorridor(rooms[x][y]);
                     }
                 }
             }
