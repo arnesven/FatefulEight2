@@ -21,7 +21,7 @@ public class DungeonRoom implements Serializable {
     private final ArrayList<DungeonObject> otherObjects;
     private final ArrayList<RoomDecoration> decorations;
                                               // North, East, South, West
-    private final DungeonDoor[] connections = new DungeonDoor[4];
+    private DungeonDoor[] connections = new DungeonDoor[4];
     private final int width;
     private final int height;
     private int cardinality;
@@ -37,6 +37,20 @@ public class DungeonRoom implements Serializable {
     public DungeonRoom() {
         this(2, 2);
     }
+
+    protected DungeonRoom(DungeonRoom other) {
+        this.width = other.width;
+        this.height = other.height;
+        this.otherObjects = other.otherObjects;
+        this.decorations = other.decorations;
+        this.connections = other.connections;
+        this.cardinality = other.cardinality;
+        this.revealedOnMap = other.revealedOnMap;
+    }
+
+    protected int getWidth() { return width; }
+
+    protected int getHeight() { return height; }
 
     public void drawYourself(DungeonDrawer drawer, Point position, boolean connectLeft, boolean connectRight,
                              boolean leftCorner, boolean rightCorner, boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
@@ -54,7 +68,7 @@ public class DungeonRoom implements Serializable {
         }
     }
 
-    private static void innerDrawRoom(DungeonDrawer drawer, int xStart, int yStart, int width, int height,
+    protected static void innerDrawRoom(DungeonDrawer drawer, int xStart, int yStart, int width, int height,
                                       boolean connectLeft, boolean connectRight,
                                       boolean leftCorner, boolean rightCorner,
                                       boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
@@ -257,30 +271,15 @@ public class DungeonRoom implements Serializable {
                 connections[0] == null && connections[2] == null;
     }
 
-    public void drawVerticalCorridor(DungeonDrawer drawer, Point position, boolean connectLeft,
-                             boolean leftCorner, DungeonTheme theme) {
-        int xStart = position.x;
-        int yStart = position.y;
-        innerDrawRoom(drawer, xStart, yStart, 1, height,
-                connectLeft, false, leftCorner, false, false, false, theme);
+    public boolean hasLowerLeftCorner() {
+        return true;
     }
 
-    public void drawHorizontalCorridor(DungeonDrawer drawer, Point position, boolean connectLeft, boolean connectRight,
-                                       boolean leftCorner, boolean rightCorner,
-                                       boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
-        int xStart = position.x;
-        int yStart = position.y;
-        innerDrawRoom(drawer, xStart, yStart, width, 1,
-                connectLeft, connectRight, leftCorner, rightCorner, false, false, theme);
+    public boolean hasLowerRightCorner() {
+        return true;
+    }
 
-        Sprite corner = corridorLeft ? theme.getMid()[3] : theme.getLeft()[3];
-        drawer.put(xStart, yStart + 8, corner);
-        drawer.put(xStart, yStart + 12, theme.getRight()[2]);
-        for (int w = 1; w < width+1; ++w) {
-            drawer.put(xStart + 4 * w, yStart + 8, theme.getMid()[3]);
-        }
-        corner = corridorRight ? theme.getMid()[3] : theme.getRight()[3];
-        drawer.put(xStart + 4*(1+width), yStart + 8, corner);
-        drawer.put(xStart + 4*(1+width), yStart + 12, theme.getLeft()[2]);
+    public boolean hasUpperRightCorner() {
+        return true;
     }
 }

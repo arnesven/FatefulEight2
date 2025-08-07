@@ -42,14 +42,14 @@ public class DungeonLevelConfig implements Serializable {
                               double lockedDoors, double spikeTraps, double pitfallTraps, double campfires) {
         this.theme = theme;
         this.monsterFactory = monsterFactory;
-        this.chests = chests;
-        this.levers = levers;
-        this.corpses = corpses;
-        this.monsters = monsters;
-        this.lockedDoors = lockedDoors;
-        this.spikeTraps = spikeTraps;
-        this.pitfallTraps = pitfallTraps;
-        this.campFires = campfires;
+        this.chests = 0;
+        this.levers = 0;
+        this.corpses = 0;
+        this.monsters = 0;
+        this.lockedDoors = 0; // TODO: Repair
+        this.spikeTraps = 0;
+        this.pitfallTraps = 0;
+        this.campFires = 0;
     }
 
     public DungeonLevelConfig(DungeonTheme theme, MonsterFactory monsterFactory) {

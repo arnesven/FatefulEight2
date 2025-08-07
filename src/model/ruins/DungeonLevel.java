@@ -62,7 +62,22 @@ public class DungeonLevel implements Serializable {
         }
         config.addContent(model, this, visitedRooms, random);
         addCrackedWalls();
+        replaceCorridors();
         return true;
+    }
+
+    private void replaceCorridors() {
+        for (int x = 0; x < rooms.length; ++x) {
+            for (int y = 0; y < rooms[0].length; ++y) {
+                if (rooms[x][y] != null) {
+                    if (rooms[x][y].isVerticalCorridor()) {
+                        rooms[x][y] = new VerticalCorridorRoom(rooms[x][y]);
+                    } else if (rooms[x][y].isHorizontalCorridor()) {
+                        rooms[x][y] = new HorizontalCorridorRoom(rooms[x][y]);
+                    }
+                }
+            }
+        }
     }
 
 

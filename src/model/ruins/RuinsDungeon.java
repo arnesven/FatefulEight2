@@ -82,15 +82,8 @@ public class RuinsDungeon implements Serializable {
                     boolean roomToTheLeft = connectsLeft(rooms, x, y);
                     boolean roomToTheRight = connectsRight(rooms, x, y);
 
-                    if (rooms[x][y].isVerticalCorridor()) {
-                        rooms[x][y].drawVerticalCorridor(drawer, pos, roomToTheLeft, ulCorner, theme);
-                    } else if (rooms[x][y].isHorizontalCorridor()) {
-                        rooms[x][y].drawHorizontalCorridor(drawer, pos, roomToTheLeft, roomToTheRight,
+                    rooms[x][y].drawYourself(drawer, pos, roomToTheLeft, roomToTheRight,
                                 ulCorner, urCorner, corridorLeft, corridorRight, theme);
-                    } else {
-                        rooms[x][y].drawYourself(drawer, pos, roomToTheLeft, roomToTheRight,
-                                ulCorner, urCorner, corridorLeft, corridorRight, theme);
-                    }
 
                     if (!(currentPosition.x == x && currentPosition.y == y)) {
                         for (DungeonObject dObj : rooms[x][y].getObjects()) {
@@ -105,33 +98,19 @@ public class RuinsDungeon implements Serializable {
     }
 
     private boolean rightCornerConnects(DungeonRoom[][] rooms, int x, int y) {
-        return connectsRight(rooms, x, y-1) && !isCorridorRight(rooms, x, y-1);
+        return y > 0 && x < rooms.length - 1 && rooms[x+1][y-1] != null && rooms[x+1][y-1].hasLowerLeftCorner();
     }
 
     private boolean leftCornerConnect(DungeonRoom[][] rooms, int x, int y) {
-        return connectsLeft(rooms, x, y-1) && x > 0 && !isVerticalCorridor(rooms, x-1, y) &&
-                !isCorridorLeft(rooms, x, y-1);
-    }
-
-    private boolean isVerticalCorridor(DungeonRoom[][] rooms, int x, int y) {
-        if (rooms[x][y] == null) {
-            return false;
-        }
-        return rooms[x][y].isVerticalCorridor();
+        return y > 0 && x > 0 && rooms[x-1][y-1] != null && rooms[x-1][y-1].hasLowerRightCorner();
     }
 
     private boolean isCorridorRight(DungeonRoom[][] rooms, int x, int y) {
-        if (x == rooms.length-1) {
-            return false;
-        }
-        return rooms[x+1][y] != null && rooms[x+1][y].isHorizontalCorridor();
+        return x < rooms.length - 1 && rooms[x+1][y] != null && !rooms[x+1][y].hasLowerLeftCorner();
     }
 
     private boolean isCorridorLeft(DungeonRoom[][] rooms, int x, int y) {
-        if (x == 0) {
-            return false;
-        }
-        return rooms[x-1][y] != null && rooms[x-1][y].isHorizontalCorridor();
+        return x > 0 && rooms[x-1][y] != null && !rooms[x-1][y].hasLowerRightCorner();
     }
 
     private void drawRoomObjects(Model model, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
@@ -179,14 +158,14 @@ public class RuinsDungeon implements Serializable {
         if (x == rooms.length - 1) {
             return false;
         }
-        return rooms[x+1][y] != null && !rooms[x+1][y].isVerticalCorridor();
+        return rooms[x+1][y] != null && rooms[x+1][y].hasUpperRightCorner();
     }
 
     private boolean connectsLeft(DungeonRoom[][] rooms, int x, int y) {
         if (x == 0) {
             return false;
         }
-        return rooms[x-1][y] != null && !rooms[x-1][y].isVerticalCorridor();
+        return rooms[x-1][y] != null && rooms[x-1][y].hasUpperRightCorner();
     }
 
     public void setAvatarEnabled(boolean b) {
