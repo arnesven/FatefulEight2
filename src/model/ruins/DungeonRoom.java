@@ -74,7 +74,7 @@ public class DungeonRoom implements Serializable {
                                       boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
         drawTopRow(drawer, xStart, yStart, width, connectLeft, connectRight, leftCorner, rightCorner, theme);
         drawMiddleRows(drawer, xStart, yStart, width, height, connectLeft, connectRight, corridorLeft, corridorRight, theme);
-        drawBottomRow(drawer, xStart, yStart, width, height, connectLeft, connectRight, theme);
+        //drawBottomRow(drawer, xStart, yStart, width, height, connectLeft, connectRight, theme);
     }
 
     private static void drawMiddleRows(DungeonDrawer drawer, int xStart, int yStart,
@@ -194,15 +194,6 @@ public class DungeonRoom implements Serializable {
             case 1:
                 return 0xC3 + firstConnection;
             case 2:
-                if (isVerticalCorridor()) {
-                    return 0x146;
-                }
-                if (isHorizontalCorridor()) {
-                    return 0x147;
-                }
-                if (isUpperLeftCornerCorridor()) {
-                    return 0x156;
-                }
                 if (!connectionBlocked((firstConnection + 2) % 4)) { // TODO : or cracked wall
                     return 0xD7 + firstConnection;
                 } else {
@@ -277,6 +268,21 @@ public class DungeonRoom implements Serializable {
     public boolean isUpperLeftCornerCorridor() {
         return otherObjects.isEmpty() && connections[0] instanceof OpenDoor && connections[3] instanceof OpenDoor &&
                 connections[1] == null && connections[2] == null;
+    }
+
+    public boolean isUpperRightCornerCorridor() {
+        return otherObjects.isEmpty() && connections[0] instanceof OpenDoor && connections[1] instanceof OpenDoor &&
+                connections[2] == null && connections[3] == null;
+    }
+
+    public boolean isLowerLeftCornerCorridor() {
+        return otherObjects.isEmpty() && connections[0] == null && connections[1] == null &&
+                connections[2] instanceof OpenDoor && connections[3] instanceof OpenDoor;
+    }
+
+    public boolean isLowerRightCornerCorridor() {
+        return otherObjects.isEmpty() && connections[1] instanceof OpenDoor && connections[2] instanceof OpenDoor &&
+                connections[0] == null && connections[3] == null;
     }
 
     public boolean hasLowerLeftCorner() {

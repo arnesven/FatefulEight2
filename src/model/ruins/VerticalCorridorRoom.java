@@ -15,8 +15,16 @@ public class VerticalCorridorRoom extends DungeonRoom {
         int xStart = position.x;
         int yStart = position.y;
         innerDrawRoom(drawer, xStart, yStart, 1, getHeight(),
-                connectLeft, false, leftCorner, false, false, false, theme);
+                connectLeft, false, leftCorner, false, corridorLeft, false, theme);
         drawer.put(xStart + 4 * (1+getWidth()), yStart, rightCorner ? theme.getLeft()[2] : theme.getMid()[3]);
+    }
+
+    @Override
+    public int getMapRoomSpriteNumber() {
+        if (isLowerLeftCornerCorridor()) {
+            return 0x158;
+        }
+        return 0x146; // Vertical corridor
     }
 
     @Override

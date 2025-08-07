@@ -70,12 +70,17 @@ public class DungeonLevel implements Serializable {
         for (int x = 0; x < rooms.length; ++x) {
             for (int y = 0; y < rooms[0].length; ++y) {
                 if (rooms[x][y] != null) {
-                    if (rooms[x][y].isVerticalCorridor()) {
+                    if (rooms[x][y].isVerticalCorridor() ||
+                            rooms[x][y].isLowerLeftCornerCorridor()) {
                         rooms[x][y] = new VerticalCorridorRoom(rooms[x][y]);
                     } else if (rooms[x][y].isHorizontalCorridor()) {
                         rooms[x][y] = new HorizontalCorridorRoom(rooms[x][y]);
                     } else if (rooms[x][y].isUpperLeftCornerCorridor()) {
                         rooms[x][y] = new UpperLeftCornerCorridor(rooms[x][y]);
+                    } else if (rooms[x][y].isUpperRightCornerCorridor()) {
+                        rooms[x][y] = new UpperRightCornerCorridor(rooms[x][y]);
+                    } else if (rooms[x][y].isLowerRightCornerCorridor()) {
+                        rooms[x][y] = new LowerRightCornerCorridor(rooms[x][y]);
                     }
                 }
             }
