@@ -14,12 +14,13 @@ public class GardenDungeonLevelConfig extends DungeonLevelConfig {
     private static final double CAMPFIRE_PREVALENCE = 0.2;
     private static final double NO_TRAPS = 0.0;
     private static final double NO_CORPSES = 0.0;
+    private static final double CORRIDOR_PREVALENCE = 0.25;
 
     public GardenDungeonLevelConfig(MonsterFactory monsterFactory) {
         super(new GardenDungeonTheme(), monsterFactory,
                 CHEST_PREVALENCE, LEVER_PREVALENCE, NO_CORPSES,
                 MONSTER_PREVALENCE, LOCKED_DOOR_PREVALENCE,
-                NO_TRAPS, NO_TRAPS, CAMPFIRE_PREVALENCE);
+                NO_TRAPS, NO_TRAPS, CAMPFIRE_PREVALENCE, CORRIDOR_PREVALENCE);
     }
 
     public GardenDungeonLevelConfig() {

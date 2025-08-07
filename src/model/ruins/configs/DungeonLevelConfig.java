@@ -36,25 +36,30 @@ public class DungeonLevelConfig implements Serializable {
     private static final double SPIKE_TRAP_PREVALENCE = 0.1;
     private static final double PITFALL_TRAP_PREVALENCE = 0.0;
     private static final double CAMPFIRE_PREVALENCE = 0.0;
+    private static final double CORRIDOR_PREVALENCE = 1.0;
+    private double corridorPrevalence;
 
     public DungeonLevelConfig(DungeonTheme theme, MonsterFactory monsterFactory,
                               double chests, double levers, double corpses, double monsters,
-                              double lockedDoors, double spikeTraps, double pitfallTraps, double campfires) {
+                              double lockedDoors, double spikeTraps, double pitfallTraps, double campfires,
+                              double corridorPrevalence) {
         this.theme = theme;
         this.monsterFactory = monsterFactory;
-        this.chests = 0;
-        this.levers = 0;
-        this.corpses = 0;
-        this.monsters = 0;
-        this.lockedDoors = 0; // TODO: Repair
-        this.spikeTraps = 0;
-        this.pitfallTraps = 0;
-        this.campFires = 0;
+        this.chests = chests;
+        this.levers = levers;
+        this.corpses = corpses;
+        this.monsters = monsters;
+        this.lockedDoors = lockedDoors;
+        this.spikeTraps = spikeTraps;
+        this.pitfallTraps = pitfallTraps;
+        this.campFires = campfires;
+        this.corridorPrevalence = corridorPrevalence;
     }
 
     public DungeonLevelConfig(DungeonTheme theme, MonsterFactory monsterFactory) {
         this(theme, monsterFactory, CHEST_PREVALENCE, LEVER_PREVALENCE, CORPSE_PREVALENCE, MONSTER_PREVALENCE,
-                LOCKED_DOOR_PREVALENCE, SPIKE_TRAP_PREVALENCE, PITFALL_TRAP_PREVALENCE, CAMPFIRE_PREVALENCE);
+                LOCKED_DOOR_PREVALENCE, SPIKE_TRAP_PREVALENCE, PITFALL_TRAP_PREVALENCE, CAMPFIRE_PREVALENCE, 
+                CORRIDOR_PREVALENCE);
     }
 
     public void addRequiredDeadEndObject(DungeonObject object, double prevalence) {
@@ -159,5 +164,9 @@ public class DungeonLevelConfig implements Serializable {
         } else if (roll < chests + levers + corpses) {
             room.addObject(new CorpseObject());
         }
+    }
+
+    public double getCorridorPrevalence() {
+        return corridorPrevalence;
     }
 }

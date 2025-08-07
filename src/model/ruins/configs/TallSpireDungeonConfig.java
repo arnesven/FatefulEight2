@@ -18,11 +18,12 @@ public class TallSpireDungeonConfig extends DungeonLevelConfig {
     private static final double NO_CORPSES = 0.0;
     private static final double NO_SPIKE_TRAPS = 0.0;
     private static final double NO_CAMPFIRES = 0.0;
+    private static final double NO_CORRIDORS = 0.0;
 
     public TallSpireDungeonConfig() {
         super(new GrayBrickTheme(), new MonsterFactory(),
                 CHEST_PREVALENCE, NO_LEVERS, NO_CORPSES, MONSTER_PREVALENCE,
-                LOCKED_DOOR_PREVALENCE, NO_SPIKE_TRAPS, TRAP_PREVALENCE, NO_CAMPFIRES);
+                LOCKED_DOOR_PREVALENCE, NO_SPIKE_TRAPS, TRAP_PREVALENCE, NO_CAMPFIRES, NO_CORRIDORS);
     }
 
     @Override

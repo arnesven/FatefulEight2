@@ -6,6 +6,7 @@ import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.*;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
+import util.MyRandom;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -69,7 +70,7 @@ public class DungeonLevel implements Serializable {
     private void replaceCorridors() {
         for (int x = 0; x < rooms.length; ++x) {
             for (int y = 0; y < rooms[0].length; ++y) {
-                if (rooms[x][y] != null) {
+                if (rooms[x][y] != null && MyRandom.nextDouble() < config.getCorridorPrevalence()) {
                     if (rooms[x][y].isVerticalCorridor() ||
                             rooms[x][y].isLowerLeftCornerCorridor()) {
                         rooms[x][y] = new VerticalCorridorRoom(rooms[x][y]);

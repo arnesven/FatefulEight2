@@ -25,7 +25,7 @@ public class DungeonRoom implements Serializable {
     private final int width;
     private final int height;
     private int cardinality;
-    private boolean revealedOnMap = true; // TODO: Repair: false
+    private boolean revealedOnMap = false;
 
     public DungeonRoom(int width, int height) {
         this.otherObjects = new ArrayList<>();
