@@ -17,6 +17,7 @@ import java.util.Set;
 public class DungeonLevelConfig implements Serializable {
 
     private final double chests;
+    private final double crackedWallRatio;
     private double levers;
     private final double corpses;
     private double monsters;
@@ -37,12 +38,13 @@ public class DungeonLevelConfig implements Serializable {
     private static final double PITFALL_TRAP_PREVALENCE = 0.0;
     private static final double CAMPFIRE_PREVALENCE = 0.0;
     private static final double CORRIDOR_PREVALENCE = 1.0;
+    private static final double DEFAULT_CRACKED_WALL_RATIO = 0.125;
     private double corridorPrevalence;
 
     public DungeonLevelConfig(DungeonTheme theme, MonsterFactory monsterFactory,
                               double chests, double levers, double corpses, double monsters,
                               double lockedDoors, double spikeTraps, double pitfallTraps, double campfires,
-                              double corridorPrevalence) {
+                              double corridorPrevalence, double crackedWallRatio) {
         this.theme = theme;
         this.monsterFactory = monsterFactory;
         this.chests = chests;
@@ -54,12 +56,13 @@ public class DungeonLevelConfig implements Serializable {
         this.pitfallTraps = pitfallTraps;
         this.campFires = campfires;
         this.corridorPrevalence = corridorPrevalence;
+        this.crackedWallRatio = crackedWallRatio;
     }
 
     public DungeonLevelConfig(DungeonTheme theme, MonsterFactory monsterFactory) {
         this(theme, monsterFactory, CHEST_PREVALENCE, LEVER_PREVALENCE, CORPSE_PREVALENCE, MONSTER_PREVALENCE,
                 LOCKED_DOOR_PREVALENCE, SPIKE_TRAP_PREVALENCE, PITFALL_TRAP_PREVALENCE, CAMPFIRE_PREVALENCE, 
-                CORRIDOR_PREVALENCE);
+                CORRIDOR_PREVALENCE, DEFAULT_CRACKED_WALL_RATIO);
     }
 
     public void addRequiredDeadEndObject(DungeonObject object, double prevalence) {
@@ -168,5 +171,9 @@ public class DungeonLevelConfig implements Serializable {
 
     public double getCorridorPrevalence() {
         return corridorPrevalence;
+    }
+
+    public double getDefaultCrackedWallRatio() {
+        return crackedWallRatio;
     }
 }

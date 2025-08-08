@@ -170,7 +170,7 @@ public class DungeonLevel implements Serializable {
 
 
     private void addCrackedWalls() {
-        int numberToAdd = (levelSize * levelSize) / 8;
+        int numberToAdd = (int)Math.round(config.getDefaultCrackedWallRatio() * (levelSize * levelSize));
         for (int i = 0; i < numberToAdd; ++i) {
             boolean added = false;
             for (int tries = 0; tries < 100 && !added; ++tries) {
