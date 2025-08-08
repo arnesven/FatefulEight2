@@ -2,10 +2,17 @@ package model.ruins.objects;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.items.Item;
 import model.items.potions.Potion;
 import model.items.potions.UnstablePotion;
 import model.items.spells.ErodeSpell;
 import model.items.spells.Spell;
+import model.items.weapons.GrandMaul;
+import model.items.weapons.Pickaxe;
+import model.items.weapons.RustyPickaxe;
+import model.items.weapons.Weapon;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
@@ -23,6 +30,7 @@ import java.util.List;
 
 public class CrackedWall extends DungeonDoor {
 
+    private static final int BREAK_DOWN_DIFFICULTY = 8;
     private final boolean isHorizontal;
     private ExplosionAnimation explo;
     private final String direction;
@@ -68,14 +76,18 @@ public class CrackedWall extends DungeonDoor {
 
         List<String> options = new ArrayList<>();
         if (pot != null) {
-            options.add("Use " + pot.getName());
+            options.add("Throw " + pot.getName());
         }
         if (erodeSpell != null) {
             options.add("Cast " + erodeSpell.getName());
         }
+        if (MyLists.any(model.getParty().getPartyMembers(), this::hasBreakDownWeapon)) {
+            options.add("Use Weapon");
+        }
 
         if (options.isEmpty()) {
-            state.println("This wall is cracked and could probably be breached if you had some kind of explosives.");
+            state.println("This wall is cracked and could probably be breached if " +
+                    "you had some mining gear or explosives.");
             return;
         }
         state.println("What do you want to use on the cracked wall?");
@@ -90,7 +102,7 @@ public class CrackedWall extends DungeonDoor {
             }
         });
         state.waitForReturnSilently();
-        if (selected[0].contains("Use")) {
+        if (selected[0].contains("Throw")) {
             model.getParty().getInventory().remove(pot);
             explodeAndSound(state);
             state.println("The " + pot.getName() + " explodes on contact with the wall. " +
@@ -105,8 +117,34 @@ public class CrackedWall extends DungeonDoor {
                 state.println("The wall crumbles to dust before your eyes.");
                 state.unlockDoor(model, direction);
             }
+        } else if (selected[0].contains("Use")) {
+            state.println("Who should attempt to break down the wall with his or her equipped weapon?");
+            GameCharacter user = model.getParty().partyMemberInput(model, state, model.getParty().getPartyMember(0));
+            if (!hasBreakDownWeapon(user)) {
+                state.println(user.getName() + " doesn't have a suitable weapon for this.");
+                return;
+            }
+            if (user.getSP() == 0) {
+                state.println(user.getFirstName() + " is too exhausted to break down the cracked wall.");
+            } else {
+                state.println(user.getFirstName() + " lost 1 SP.");
+                user.addToSP(-1);
+                SkillCheckResult result = user.testSkill(model, Skill.Labor, BREAK_DOWN_DIFFICULTY);
+                if (result.isSuccessful()) {
+                    state.println(user.getName() + " broke down the wall with " +
+                            user.getEquipment().getWeapon().getName() + ". (Labor " + result.asString() + ")");
+                    explodeAndSound(state);
+                    state.unlockDoor(model, direction);
+                } else {
+                    state.println(user.getName() + " failed to brake down the wall. (Labor " + result.asString() + ")");
+                }
+            }
         }
+    }
 
+    private boolean hasBreakDownWeapon(GameCharacter user) {
+        return MyLists.any(List.of(GrandMaul.class, Pickaxe.class, RustyPickaxe.class),
+                cls -> user.getEquipment().getWeapon().isOfType(cls));
     }
 
     private void explodeAndSound(GameState state) {
