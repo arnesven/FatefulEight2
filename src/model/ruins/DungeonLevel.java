@@ -39,7 +39,7 @@ public class DungeonLevel implements Serializable {
             if (buildRandomLevel(model, firstLevel)) {
                 break;
             } else {
-                System.err.println("Unsuccessfully built dungeon level");
+                System.err.println("Unsuccessfully built dungeon level, retrying");
             }
         }
     }
