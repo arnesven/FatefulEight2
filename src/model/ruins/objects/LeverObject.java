@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class LeverObject extends CenterDungeonObject {
     private boolean on;
+    private OpenDoor connectedDoor;
 
     public LeverObject(Random random) {
         on = random.nextDouble() > 0.667;
@@ -36,7 +37,11 @@ public class LeverObject extends CenterDungeonObject {
     public void doAction(Model model, ExploreRuinsState state) {
         on = !on;
         state.println("You pulled the lever. Did anything happen?");
-        SoundEffects.playSound("lever");
+        if (connectedDoor != null && !connectedDoor.leversWrong()) {
+            SoundEffects.playSound("lever");
+        } else {
+            SoundEffects.playSound("unlock");
+        }
     }
 
     public boolean isOn() {
@@ -45,5 +50,9 @@ public class LeverObject extends CenterDungeonObject {
 
     public void setOn(boolean b) {
         on = b;
+    }
+
+    public void setDoor(OpenDoor door) {
+        this.connectedDoor = door;
     }
 }

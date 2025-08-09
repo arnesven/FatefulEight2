@@ -47,7 +47,7 @@ public class OpenDoor extends DungeonDoor {
         }
     }
 
-    private boolean leversWrong() {
+    public boolean leversWrong() {
         for (LeverObject lever : levers) {
             if (!lever.isOn()) {
                 return true;
@@ -84,6 +84,7 @@ public class OpenDoor extends DungeonDoor {
 
     public void addLeverConnection(LeverObject lever) {
         this.levers.add(lever);
+        lever.setDoor(this);
     }
 
     public void setBlocked(boolean blocked) {
