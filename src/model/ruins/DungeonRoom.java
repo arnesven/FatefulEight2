@@ -296,4 +296,15 @@ public class DungeonRoom implements Serializable {
     public boolean hasUpperRightCorner() {
         return true;
     }
+
+    public boolean shouldObjectBeDrawnFromCurrent(DungeonObject obj) {
+        for (int i = 1; i <= 2; ++i) { // EAST AND SOUTH
+            if (obj == connections[i]) {
+                if (connections[i].getLinkedDoor().getLinkedDoor() == obj) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

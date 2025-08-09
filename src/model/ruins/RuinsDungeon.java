@@ -5,7 +5,6 @@ import model.SteppingMatrix;
 import model.ruins.objects.DungeonObject;
 import model.ruins.themes.*;
 import util.MyPair;
-import util.MyRandom;
 import view.sprites.LoopingSprite;
 import view.sprites.QuestCursorSprite;
 import view.subviews.DungeonDrawer;
@@ -40,7 +39,9 @@ public class RuinsDungeon implements Serializable {
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
         drawRoomBackgrounds(model, currentPosition, currentLevel);
-        drawRoomObjects(model, currentLevel, matrix);
+        DungeonRoom currentRoom = levels.get(currentLevel).getRoom(currentPosition);
+        levels.get(currentLevel).getTheme().setRoom(currentRoom);
+        drawRoomObjects(model, currentLevel, matrix, currentRoom);
         if (drawAvatar) {
             drawAvatar(model, currentPosition, currentLevel);
         }
@@ -81,7 +82,7 @@ public class RuinsDungeon implements Serializable {
                     boolean corridorRight = isCorridorRight(rooms, x, y);
                     boolean roomToTheLeft = connectsLeft(rooms, x, y);
                     boolean roomToTheRight = connectsRight(rooms, x, y);
-
+                    theme.setRoom(rooms[x][y]);
                     rooms[x][y].drawYourself(drawer, pos, roomToTheLeft, roomToTheRight,
                                 ulCorner, urCorner, corridorLeft, corridorRight, theme);
 
@@ -113,16 +114,18 @@ public class RuinsDungeon implements Serializable {
         return x > 0 && rooms[x-1][y] != null && !rooms[x-1][y].hasLowerRightCorner();
     }
 
-    private void drawRoomObjects(Model model, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
+    private void drawRoomObjects(Model model, int currentLevel, SteppingMatrix<DungeonObject> matrix, DungeonRoom currentRoom) {
         DungeonDrawer drawer = DungeonDrawer.getInstance(model.getScreenHandler());
         DungeonTheme theme = getLevel(currentLevel).getTheme();
         for (int row = 0; row < matrix.getRows(); ++row) {
             for (int col = 0; col < matrix.getColumns(); ++col) {
                 if (matrix.getElementAt(col, row) != null) {
-                    Point conv = convertToScreen(new Point(col, row));
-                    int xPos = conv.x;
-                    int yPos = conv.y;
-                    matrix.getElementAt(col, row).drawYourself(drawer, xPos, yPos, theme);
+                        Point conv = convertToScreen(new Point(col, row));
+                        int xPos = conv.x;
+                        int yPos = conv.y;
+                    if (currentRoom.shouldObjectBeDrawnFromCurrent(matrix.getElementAt(col, row))) {
+                        matrix.getElementAt(col, row).drawYourself(drawer, xPos, yPos, theme);
+                    }
 
                     if (matrix.getSelectedElement() == matrix.getElementAt(col, row) && drawCursor) {
                         model.getScreenHandler().register("questcursor", new Point(xPos, yPos),

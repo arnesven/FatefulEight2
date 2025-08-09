@@ -5,7 +5,7 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public abstract class BrickDungeonTheme implements DungeonTheme {
+public class BrickDungeonTheme implements DungeonTheme {
 
     private static final Sprite ON_SPRITE = new Sprite32x32("onlever", "dungeon.png", 0x43,
             MyColors.BLACK, MyColors.GRAY, MyColors.DARK_BROWN, MyColors.PINK);

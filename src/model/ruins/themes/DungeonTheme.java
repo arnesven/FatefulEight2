@@ -1,5 +1,6 @@
 package model.ruins.themes;
 
+import model.ruins.DungeonRoom;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
@@ -21,4 +22,6 @@ public interface DungeonTheme extends Serializable {
     Sprite32x32 getLockedDoor(boolean isHorizontal);
 
     Sprite getLever(boolean on);
+
+    default void setRoom(DungeonRoom dungeonRoom) {}
 }

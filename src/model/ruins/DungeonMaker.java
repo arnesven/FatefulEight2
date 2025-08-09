@@ -17,14 +17,20 @@ import java.util.Random;
 public class DungeonMaker {
 
     private static final List<DungeonTheme> ALL_BRICK_THEMES =
-            List.of(new GrayBrickTheme(), new PurpleBrickTheme(), new RedBrickTheme(),
+            List.of(new PurpleAndRedBrickTheme(), new BlueAndWhiteBrickTheme(),
+                    new GreenAndYellowBrickTheme(),
+                    new GrayBrickTheme(), new PurpleBrickTheme(), new RedBrickTheme(),
                     new BlueBrickTheme(), new GreenBrickTheme());
     private static final List<DungeonTheme> ALL_CAVE_THEMES =
-            List.of(new GrayCaveTheme(), new PurpleCaveTheme(), new RedCaveTheme(),
+            List.of(new BeigeAndGrayCaveTheme(), new BlueAndGreenCaveTheme(),
+                    new RedAndOrangeCaveTheme(), new GrayCaveTheme(),
+                    new PurpleCaveTheme(), new RedCaveTheme(),
                     new BlueCaveTheme(), new GreenCaveTheme());
     private static final List<DungeonTheme> ALL_RUINS_THEMES =
-            List.of(new GrayRuinsTheme(), new PurpleRuinsTheme(), new RedRuinsTheme(),
-                    new BlueRuinsTheme(), new GreenRuinsTheme());
+            List.of(new BlueAndGrayRuinsTheme(),
+            new GreenAndRedDungeonTheme(), new PurpleAndBlackTheme(),
+            new GrayRuinsTheme(), new PurpleRuinsTheme(), new RedRuinsTheme(),
+            new BlueRuinsTheme(), new GreenRuinsTheme());
     public static final int NUMBER_OF_UPPER_LEVELS = 2;
 
     public static List<DungeonLevel> makeRandomDungeon(Model model, int roomsTarget, int levelMinSize, int levelMaxSize, boolean isRuins) {
