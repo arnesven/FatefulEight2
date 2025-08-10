@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
@@ -34,6 +35,12 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
 
     public SmugglersEvent(Model model) {
         super(model);
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(SmugglersEvent.class.getCanonicalName(), "Busted Smugglers",
+                "You helped the constables expose and arrested a ring of smugglers, moving a lethal " +
+                        "and illegal poison called 'Devil's Draught'.");
     }
 
     @Override
@@ -182,8 +189,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
                     portraitSay("I'll make sure people in high places hear about this. " +
                             "This will open up some doors for you and your company.");
                     leaderSay("I appreciate that!");
-                    model.getParty().addToReputation(1);
-                    println("The party gains 1 reputation!");
+                    completeAchievement(SmugglersEvent.class.getCanonicalName());
                     portraitSay("Good bye then.");
                 }
             } else {

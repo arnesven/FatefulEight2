@@ -365,7 +365,9 @@ public abstract class GameState implements GameStateConstants {
     }
 
     public void completeAchievement(String key) {
-        model.getAchievements().setCompleted(key);
-        model.getLog().addAnimated(LogView.GOLD_COLOR + "You have gained an achievement!" + LogView.DEFAULT_COLOR);
+        if (!model.getAchievements().isCompleted(key)) {
+            model.getAchievements().setCompleted(key);
+            model.getLog().addAnimated(LogView.GOLD_COLOR + "You have gained an achievement!" + LogView.DEFAULT_COLOR);
+        }
     }
 }

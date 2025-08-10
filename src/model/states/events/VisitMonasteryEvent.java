@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.items.Item;
@@ -47,6 +48,12 @@ public class VisitMonasteryEvent extends DailyEventState {
             prevRep = 0;
         }
         return prevDon + prevRep * GOLD_PER_REP;
+    }
+
+    public static Achievement.Data getAchievmentData() {
+        return new Achievement.Data(VisitMonasteryEvent.class.getCanonicalName(), "Monastary on Isle of Faith",
+                "You donated at least 1000 gold to the Sixth Order monks to support them in their work " +
+                        "of restoring the monastary on the Isle of Faith.");
     }
 
     @Override
@@ -184,8 +191,8 @@ public class VisitMonasteryEvent extends DailyEventState {
             if (repIncreases > 0) {
                 portraitSay("You have given so much to our cause. " +
                         "People far and wide will hear of your generosity!");
-                println("Your reputation has increased by " + repIncreases + "!");
-                model.getParty().addToReputation(repIncreases);
+                completeAchievement(VisitMonasteryEvent.class.getCanonicalName());
+
                 donation -= repIncreases * GOLD_PER_REP;
                 leaderSay("I'm just glad we could help.");
 

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.races.Race;
@@ -36,6 +37,11 @@ public class GardenMazeEvent extends DailyEventState {
 
     public GardenMazeEvent(Model model) {
         this(model, Race.randomRace());
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(GardenMazeEvent.class.getCanonicalName(), "Garden Maze Madness",
+                "You successfully navigated the gardener's maze at the toughest level.");
     }
 
     @Override
@@ -169,8 +175,7 @@ public class GardenMazeEvent extends DailyEventState {
         model.getSettings().getMiscCounters().put(MAZE_WINS_KEY, wins);
         if (wins == MAX_WINS) {
             println("Congratulations! You have mastered the gardener's maze!");
-            println("You gain 1 reputation!");
-            model.getParty().addToReputation(1);
+            completeAchievement(GardenMazeEvent.class.getCanonicalName());
         }
     }
 

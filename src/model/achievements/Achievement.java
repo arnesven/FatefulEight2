@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Achievement implements Serializable {
 
-    public static class Data {
+    public static class Data implements Serializable {
         private String key;
         private String name;
         private String description;
@@ -25,7 +25,7 @@ public class Achievement implements Serializable {
 
     public Achievement(Achievement.Data data) {
         this.data = data;
-        completed = false;
+        completed = true;
     }
 
     public String getName() {

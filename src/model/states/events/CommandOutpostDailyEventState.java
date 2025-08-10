@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.Party;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -14,6 +15,7 @@ import model.items.weapons.*;
 import model.journal.JournalEntry;
 import model.map.CastleLocation;
 import model.map.wars.KingdomWar;
+import model.map.wars.WarHandler;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -32,6 +34,7 @@ import java.util.*;
 
 public class CommandOutpostDailyEventState extends DailyEventState {
 
+    private static final String KINGDOM_WAR_ACHIEVEMENT_KEY = "KingdomWarAchievement";
     private final KingdomWar war;
     private final boolean givenByAggressor;
     private final BattleDestinationTask task;
@@ -42,6 +45,16 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         this.war = war;
         this.givenByAggressor = givenByAggressor;
         this.task = battleDestinationTask;
+    }
+
+    public static List<Achievement.Data> getAchievementDatas() {
+        List<Achievement.Data> result = new ArrayList<>();
+        for (String kingdom : WarHandler.getAllKingdomNames()) {
+            result.add(new Achievement.Data(KINGDOM_WAR_ACHIEVEMENT_KEY + kingdom,
+                    "War Campaign: " + CastleLocation.placeNameShort(kingdom), "You helped the " + CastleLocation.placeNameToKingdom(kingdom) +
+                    " fight a military campaign."));
+        }
+        return result;
     }
 
     @Override
@@ -115,10 +128,11 @@ public class CommandOutpostDailyEventState extends DailyEventState {
                 leaderSay("I'm happy to hear it. We are weary of war general.");
                 portraitSay("So am I. Farewell friend, until we meet again.");
                 leaderSay("Goodbye general.");
-                println("Your party gains 1 Reputation and each party member gains 100 XP!");
-                model.getParty().addToReputation(1);
+                println("Each party member gains 100 XP!");
                 MyLists.forEach(model.getParty().getPartyMembers(),
                         (GameCharacter gc) -> model.getParty().giveXP(model, gc, 100));
+                String winner = givenByAggressor ? war.getAggressor() : war.getDefender();
+                completeAchievement(KINGDOM_WAR_ACHIEVEMENT_KEY + winner);
             } else {
                 portraitSay("What a glorious day, victory is ours!");
                 leaderSay("Yes. The troops fought well.");

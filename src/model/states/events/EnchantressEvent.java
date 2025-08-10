@@ -48,7 +48,7 @@ public class EnchantressEvent extends DailyEventState {
 
     public static Achievement.Data getAchievementData() {
         return new Achievement.Data(EnchantressEvent.class.getCanonicalName(), "Magical Control Freak",
-                "Break the Enchantress's magical hold on the hamlet without killing her.");
+                "You broke the Enchantress's magical hold on the hamlet without killing her.");
     }
 
     @Override

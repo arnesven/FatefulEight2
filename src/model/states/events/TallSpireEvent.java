@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.items.ItemDeck;
@@ -30,6 +31,12 @@ import java.util.List;
 public class TallSpireEvent extends DailyEventState {
     public TallSpireEvent(Model model) {
         super(model);
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(TallSpireEvent.class.getCanonicalName(), "Recluse in the Tall Spire",
+                "You climbed to the top of the tall spire and found a recluse. " +
+                        "As a test, he asked you a question, which you answered correctly.");
     }
 
     @Override
@@ -200,7 +207,7 @@ public class TallSpireEvent extends DailyEventState {
                     exploreRuinsState.printQuote("Recluse", "All questions are easy when one knows the answer.");
                     exploreRuinsState.leaderSay("That's true I guess. I think we'll be going now. Thanks for everything!");
                     exploreRuinsState.printQuote("Recluse", "Farewell.");
-                    model.getParty().addToReputation(1);
+                    exploreRuinsState.completeAchievement(TallSpireEvent.class.getCanonicalName());
                 } else {
                     exploreRuinsState.printQuote("Recluse", "Alas. You are not correct. Now you must be punished!");
                     exploreRuinsState.println("A mysterious force violently grips hold of the party and pushes it out from an open " +

@@ -21,7 +21,7 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
     public static Achievement.Data getAchievementData() {
         return new Achievement.Data(BurningBuildingEvent.class.getCanonicalName(),
                 "Burning Building",
-                "Found a child trapped in the burning building and rescued it by jumping out of a window.");
+                "You found a child trapped in the burning building and rescued it by jumping out of a window.");
     }
 
     @Override

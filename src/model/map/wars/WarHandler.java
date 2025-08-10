@@ -25,6 +25,11 @@ public class WarHandler implements Serializable {
         siteMap = buildSiteMap();
     }
 
+    public static String[] getAllKingdomNames() {
+        return new String[]{BogdownCastle.CASTLE_NAME, ArkvaleCastle.CASTLE_NAME,
+                SunblazeCastle.CASTLE_NAME, ArdhCastle.CASTLE_NAME};
+    }
+
     private void startWar(CastleLocation loc1, CastleLocation loc2) {
         List<PitchedBattleSite> battleSites = getBattleSites(loc1, loc2);
 

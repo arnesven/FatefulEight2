@@ -1,9 +1,6 @@
 package model.achievements;
 
-import model.states.events.BurningBuildingEvent;
-import model.states.events.DiggingGameEvent;
-import model.states.events.DwarvenCityEvent;
-import model.states.events.EnchantressEvent;
+import model.states.events.*;
 import util.MyLists;
 
 import java.io.Serializable;
@@ -18,6 +15,13 @@ public class GameAchievements implements Serializable {
         registerAchievement(DiggingGameEvent.getAchievementData());
         registerAchievement(DwarvenCityEvent.getAchievementData());
         registerAchievement(EnchantressEvent.getAchievementData());
+        registerAchievement(GardenMazeEvent.getAchievementData());
+        registerAchievement(SmugglersEvent.getAchievementData());
+        registerAchievement(TallSpireEvent.getAchievementData());
+        registerAchievement(VisitMonasteryEvent.getAchievmentData());
+        for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
+            registerAchievement(data);
+        }
     }
 
     private void registerAchievement(Achievement.Data achievementData) {
@@ -40,5 +44,9 @@ public class GameAchievements implements Serializable {
 
     public void setCompleted(String key) {
         partyAchievements.get(key).setCompleted(true);
+    }
+
+    public boolean isCompleted(String key) {
+        return partyAchievements.get(key).isCompleted();
     }
 }
