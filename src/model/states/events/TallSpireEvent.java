@@ -98,6 +98,15 @@ public class TallSpireEvent extends DailyEventState {
         }
 
         @Override
+        public void drawYourself(DungeonDrawer drawer, Point position, boolean connectLeft, boolean connectRight, boolean leftCorner, boolean rightCorner, boolean corridorLeft, boolean corridorRight, DungeonTheme theme) {
+            super.drawYourself(drawer, position, connectLeft, connectRight, leftCorner, rightCorner,
+                    corridorLeft, corridorRight, theme);
+            int xStart = position.x;
+            int yStart = position.y;
+            drawBottomRow(drawer, xStart, yStart, getWidth(), getHeight(), connectLeft, connectRight, theme);
+        }
+
+        @Override
         public Point getRelativeAvatarPosition() {
             return new Point(4, 4);
         }

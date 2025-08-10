@@ -110,7 +110,7 @@ public class DungeonRoom implements Serializable {
         drawer.put(xStart + 4*(width+1), yStart, corner);
     }
 
-    private static void drawBottomRow(DungeonDrawer drawer, int xStart, int yStart, int width, int height,
+    protected static void drawBottomRow(DungeonDrawer drawer, int xStart, int yStart, int width, int height,
                                       boolean connectLeft, boolean connectRight, DungeonTheme theme) {
         Sprite corner = (connectLeft ? theme.getConnect()[2] : theme.getLeft()[2]);
         drawer.put(xStart, yStart + 4 * (height+1), corner);
