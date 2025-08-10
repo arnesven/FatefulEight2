@@ -75,7 +75,8 @@ public class RoomDecoration extends DungeonObject {
 
     @Override
     public void drawYourself(DungeonDrawer drawer, int xPos, int yPos, DungeonTheme theme) {
-        drawer.register(sprite.getName(), new Point(xPos+offset.x*2, yPos+offset.y*2), sprite, 1);
+        Sprite sprToUse = getSprite(theme);
+        drawer.register(sprToUse.getName(), new Point(xPos+offset.x*2, yPos+offset.y*2), sprToUse, 1);
     }
 
     @Override

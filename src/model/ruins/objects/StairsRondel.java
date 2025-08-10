@@ -1,6 +1,5 @@
 package model.ruins.objects;
 
-import model.Model;
 import model.ruins.themes.DungeonTheme;
 import view.MyColors;
 import view.sprites.Sprite;

@@ -217,15 +217,15 @@ public class DungeonLevel implements Serializable {
         DungeonRoom room = new DungeonRoom();
         if (random.nextDouble() > 0.5) {
             if (random.nextDouble() > 0.5) {
-                room.addDecoration(new RoomDecoration(RoomDecoration.LOWER_LEFT, random));
+                room.addDecoration(config.getTheme().makeDecoration(RoomDecoration.LOWER_LEFT, random));
             } else {
-                room.addDecoration(new RoomDecoration(RoomDecoration.UPPER_LEFT, random));
+                room.addDecoration(config.getTheme().makeDecoration(RoomDecoration.UPPER_LEFT, random));
             }
         } else {
             if (random.nextDouble() > 0.5) {
-                room.addDecoration(new RoomDecoration(RoomDecoration.LOWER_RIGHT, random));
+                room.addDecoration(config.getTheme().makeDecoration(RoomDecoration.LOWER_RIGHT, random));
             } else {
-                room.addDecoration(new RoomDecoration(RoomDecoration.UPPER_RIGHT, random));
+                room.addDecoration(config.getTheme().makeDecoration(RoomDecoration.UPPER_RIGHT, random));
             }
         }
 

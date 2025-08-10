@@ -23,6 +23,10 @@ public class DualColorDungeonTheme implements DungeonTheme {
         switchProbability = 0.5 + MyRandom.nextDouble() / 2;
     }
 
+    protected DungeonTheme getCurrentTheme() {
+        return currentTheme;
+    }
+
     @Override
     public void setRoom(DungeonRoom dungeonRoom) {
         if (!roomMap.containsKey(dungeonRoom)) {

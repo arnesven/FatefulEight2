@@ -1,8 +1,12 @@
 package model.ruins.themes;
 
+import model.ruins.objects.CaveDecoration;
+import model.ruins.objects.RoomDecoration;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+
+import java.util.Random;
 
 public class CaveDungeonTheme implements DungeonTheme {
     private static final MyColors BASE_COLOR = MyColors.BLACK;
@@ -15,10 +19,12 @@ public class CaveDungeonTheme implements DungeonTheme {
     private final Sprite stairsUp;
     private final Sprite32x32[] doorArray;
     private final Sprite[] crackedWalls;
+    private RoomDecoration decoration;
 
 
     public CaveDungeonTheme(MyColors stoneColor, MyColors shadeColor, 
                             MyColors floorColor, MyColors floorDetail, MyColors doorColor) {
+        decoration = new CaveDecoration(0, new Random(), stoneColor, shadeColor);
         final Sprite LEFT_CORNER = new Sprite32x32("cavedungeonul", "dungeon.png", 0x96,
                 BASE_COLOR, stoneColor, shadeColor, BASE_COLOR);
         final Sprite BLACK = new Sprite32x32("cavedungeonul", "dungeon.png", 0x96,
@@ -143,5 +149,10 @@ public class CaveDungeonTheme implements DungeonTheme {
     @Override
     public Sprite getLever(boolean on) {
         return BrickDungeonTheme.getLeverForOn(on);
+    }
+
+    @Override
+    public RoomDecoration makeDecoration(int position, Random random) {
+        return decoration;
     }
 }

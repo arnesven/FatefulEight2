@@ -148,9 +148,18 @@ public class CrackedWall extends DungeonDoor {
     }
 
     private void explodeAndSound(GameState state) {
-        explo = new ExplosionAnimation();
-        SoundEffects.playBoom();
-        state.waitUntil(explo, RunOnceAnimationSprite::isDone);
+        if (state instanceof ExploreRuinsState) {
+            ExploreRuinsState ruinsState = (ExploreRuinsState) state;
+            if (ruinsState.getCurrentRoom().shouldObjectBeDrawnFromCurrent(this)) {
+                explo = new ExplosionAnimation();
+                SoundEffects.playBoom();
+                state.waitUntil(explo, RunOnceAnimationSprite::isDone);
+            } else {
+                if (getLinkedDoor() instanceof CrackedWall) {
+                    ((CrackedWall) getLinkedDoor()).explodeAndSound(state);
+                }
+            }
+        }
     }
 
 }

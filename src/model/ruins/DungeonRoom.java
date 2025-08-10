@@ -16,8 +16,6 @@ import java.util.List;
 
 public class DungeonRoom implements Serializable {
 
-    private static final Sprite32x32 HORI_CORNER = new Sprite32x32("horicorner", "dungeon.png", 0x06,
-            MyColors.BLACK, MyColors.WHITE, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     private final ArrayList<DungeonObject> otherObjects;
     private final ArrayList<RoomDecoration> decorations;
                                               // North, East, South, West

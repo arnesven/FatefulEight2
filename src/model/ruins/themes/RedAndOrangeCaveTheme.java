@@ -2,7 +2,7 @@ package model.ruins.themes;
 
 import view.MyColors;
 
-public class RedAndOrangeCaveTheme extends DualColorDungeonTheme {
+public class RedAndOrangeCaveTheme extends CaveDualDungeonTheme {
 
     public RedAndOrangeCaveTheme() {
         super(new RedCaveTheme(),
