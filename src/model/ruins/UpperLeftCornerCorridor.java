@@ -19,14 +19,13 @@ public class UpperLeftCornerCorridor extends DungeonRoom {
         int yStart = position.y;
         innerDrawRoom(drawer, xStart, yStart, 1, 1,
                 connectLeft, false, leftCorner, false, false, false, theme);
-        drawer.put(xStart + 4 * (1+getWidth()), yStart, rightCorner ? theme.getLeft()[2] : theme.getMid()[3]);
+        drawer.put(xStart + 4 * (1+getWidth()), yStart, rightCorner ? theme.getLeft()[2] : DungeonTheme.DARK_SPRITE);
 
         Sprite corner = corridorLeft ? theme.getMid()[3] : theme.getLeft()[3];
         drawer.put(xStart, yStart + 8, corner);
-        for (int w = 1; w < getWidth()+1; ++w) {
-            drawer.put(xStart + 4 * w, yStart + 8, theme.getMid()[3]);
-        }
-        drawer.put(xStart + 4*(1+getWidth()), yStart + 8, theme.getMid()[3]);
+        drawer.put(xStart + 4, yStart + 8, theme.getMid()[3]);
+        drawer.put(xStart + 8, yStart + 8, theme.getRight()[2]);
+        drawer.put(xStart + 4*(1+getWidth()), yStart + 8, DungeonTheme.DARK_SPRITE);
     }
 
     @Override
@@ -46,6 +45,6 @@ public class UpperLeftCornerCorridor extends DungeonRoom {
 
     @Override
     public boolean hasLowerRightCorner() {
-        return false;
+        return true;
     }
 }

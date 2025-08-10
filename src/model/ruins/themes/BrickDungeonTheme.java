@@ -98,9 +98,9 @@ public class BrickDungeonTheme implements DungeonTheme {
                 baseColor, baseColor, floorColor, detailColor);
         Sprite32x32 LL_CORNER = new Sprite32x32("dungeonll", "dungeon.png", 0x15,
                 baseColor, brickColor, baseColor, detailColor);
-        Sprite32x32 HORI_COR = new Sprite32x32("dungeonhoricor", "dungeon.png", 0x06,
-                baseColor, baseColor, floorColor, baseColor);
-        return new Sprite32x32[] {UL_CORNER, VERTI_WALL_LEFT, LL_CORNER, HORI_COR};
+        Sprite32x32 darkSprite = new Sprite32x32("dark", "dungeon.png", 0x02,
+                MyColors.BLACK, MyColors.BLACK, MyColors.BLACK, detailColor);
+        return new Sprite32x32[] {UL_CORNER, VERTI_WALL_LEFT, LL_CORNER, darkSprite};
     }
 
     protected static Sprite32x32[] makeConnectArray(MyColors baseColor, MyColors brickColor, MyColors floorColor, MyColors detailColor) {
@@ -120,9 +120,9 @@ public class BrickDungeonTheme implements DungeonTheme {
                 baseColor, brickColor, baseColor, detailColor);
         Sprite32x32 VERTI_WALL_RIGHT = new Sprite32x32("rightvertidungeonwall", "dungeon.png", 0x05,
                 baseColor, floorColor, baseColor, detailColor);
-        Sprite32x32 HORI_COR = new Sprite32x32("dungeonhoricor", "dungeon.png", 0x16,
-                baseColor, baseColor, floorColor, baseColor);
-        return new Sprite32x32[] {UR_CORNER, VERTI_WALL_RIGHT, LR_CORNER, HORI_COR};
+        Sprite32x32 darkSprite = new Sprite32x32("dark", "dungeon.png", 0x02,
+                MyColors.BLACK, MyColors.BLACK, MyColors.BLACK, detailColor);
+        return new Sprite32x32[] {UR_CORNER, VERTI_WALL_RIGHT, LR_CORNER, darkSprite};
     }
 
     protected static Sprite32x32[] makeMidArray(MyColors baseColor, MyColors brickColor, MyColors floorColor, MyColors detailColor, MyColors floorDetailColor) {
@@ -130,9 +130,9 @@ public class BrickDungeonTheme implements DungeonTheme {
                 baseColor, brickColor, baseColor, detailColor);
         Sprite32x32 FLOOR = new Sprite32x32("dungeonfloor", "dungeon.png", 0x00,
                 floorDetailColor, floorDetailColor, baseColor, floorColor);
-        Sprite32x32 DARK = new Sprite32x32("horidungeonwall", "dungeon.png", 0x07,
-                baseColor, baseColor, baseColor, baseColor);
-        return new Sprite32x32[] {HORI_WALL, FLOOR, HORI_WALL, DARK};
+        Sprite32x32 darkSprite = new Sprite32x32("dark", "dungeon.png", 0x02,
+                MyColors.BLACK, MyColors.BLACK, MyColors.BLACK, detailColor);
+        return new Sprite32x32[] {HORI_WALL, FLOOR, HORI_WALL, darkSprite};
     }
 
     protected static Sprite32x32 makeStairsDown(MyColors baseColor, MyColors brickColor, MyColors floorColor, MyColors detailColor) {

@@ -15,11 +15,15 @@ public class RedBrickTheme extends BrickDungeonTheme {
         super(MyColors.DARK_RED, MyColors.DARK_BROWN, MyColors.DARK_GRAY, MyColors.GRAY_RED);
     }
 
-    @Override
-    public Sprite getLever(boolean on) {
+    public static Sprite getLeverSpriteFor(boolean on) {
         if (on) {
             return ON_SPRITE;
         }
         return OFF_SPRITE;
+    }
+
+    @Override
+    public Sprite getLever(boolean on) {
+        return getLeverSpriteFor(on);
     }
 }

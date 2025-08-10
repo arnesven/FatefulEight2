@@ -16,7 +16,7 @@ public class VerticalCorridorRoom extends DungeonRoom {
         int yStart = position.y;
         innerDrawRoom(drawer, xStart, yStart, 1, getHeight(),
                 connectLeft, false, leftCorner, false, corridorLeft, false, theme);
-        drawer.put(xStart + 4 * (1+getWidth()), yStart, rightCorner ? theme.getLeft()[2] : theme.getMid()[3]);
+        drawer.put(xStart + 4 * (1+getWidth()), yStart, rightCorner ? theme.getLeft()[2] : DungeonTheme.DARK_SPRITE);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class VerticalCorridorRoom extends DungeonRoom {
 
     @Override
     public boolean hasLowerRightCorner() {
-        return false;
+        return true;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class HorizontalCorridorRoom extends DungeonRoom {
         innerDrawRoom(drawer, xStart, yStart, getWidth(), 1,
                 connectLeft, connectRight, leftCorner, rightCorner, false, false, theme);
 
-        Sprite corner = corridorLeft ? theme.getMid()[3] : (connectLeft ? theme.getLeft()[3] : theme.getMid()[3]);
+        Sprite corner = corridorLeft ? theme.getMid()[3] : (connectLeft ? theme.getLeft()[3] : theme.getLeft()[2]);
         drawer.put(xStart, yStart + 8, corner);
         for (int w = 1; w < getWidth()+1; ++w) {
             drawer.put(xStart + 4 * w, yStart + 8, theme.getMid()[3]);

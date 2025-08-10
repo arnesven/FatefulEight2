@@ -20,8 +20,8 @@ public class HouseDungeonTheme implements DungeonTheme {
                     BASE_COLOR, WOOD, DONT_CARE, DETAIL);
     private static final Sprite UNUSED_SPRITE = new Sprite32x32("unused", "dungeon.png", 0x137,
             DONT_CARE, DONT_CARE, DONT_CARE, DONT_CARE);
-    private static final Sprite DARK_SPRITE = new Sprite32x32("dark", "dungeon.png", 0x07,
-            MyColors.BLACK, MyColors.BLACK, MyColors.BLACK, MyColors.BLACK);
+    private static final Sprite DARK_SPRITE = new Sprite32x32("dark", "dungeon.png", 0x02,
+            BASE_COLOR, MyColors.BLACK, MyColors.BLACK, DETAIL);
     private static final Sprite CRACKED_WALL_HORI = new Sprite32x32("cracekdwallh", "dungeon.png",
             0x127, BASE_COLOR, WOOD, DONT_CARE, DETAIL);
     private static final Sprite32x32 CRACKED_WALL_VERTI = new Sprite32x32("crackedwallv", "dungeon.png",
@@ -141,6 +141,6 @@ public class HouseDungeonTheme implements DungeonTheme {
 
     @Override
     public Sprite getLever(boolean on) {
-        return RedBrickTheme.getLeverForOn(on);
+        return RedBrickTheme.getLeverSpriteFor(on);
     }
 }
