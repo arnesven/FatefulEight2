@@ -162,7 +162,12 @@ public class ConstableEvent extends DailyEventState {
         }
         println("The party gets -1 reputation!");
         model.getParty().addToReputation(-1);
-        runCombat(List.of(new ConstableEnemy('A')));
+        ConstableEnemy enm = new ConstableEnemy('A');
+        runCombat(List.of(enm));
+        if (enm.isDead()) {
+            GeneralInteractionEvent.addMurdersToNotoriety(model, this, 1);
+        }
+
     }
 
     public void goToJail(Model model) {
