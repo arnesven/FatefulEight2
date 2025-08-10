@@ -2,6 +2,7 @@ package model.achievements;
 
 import model.states.events.BurningBuildingEvent;
 import model.states.events.DiggingGameEvent;
+import model.states.events.DwarvenCityEvent;
 import model.states.events.EnchantressEvent;
 import util.MyLists;
 
@@ -15,6 +16,7 @@ public class GameAchievements implements Serializable {
         partyAchievements = new HashMap<>();
         registerAchievement(BurningBuildingEvent.getAchievementData());
         registerAchievement(DiggingGameEvent.getAchievementData());
+        registerAchievement(DwarvenCityEvent.getAchievementData());
         registerAchievement(EnchantressEvent.getAchievementData());
     }
 

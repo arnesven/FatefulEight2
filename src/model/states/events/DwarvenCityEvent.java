@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -23,6 +24,11 @@ public class DwarvenCityEvent extends DailyEventState {
     private boolean parkVisited = false;
     private boolean palaceVisited = false;
     private final boolean[] haggleFlag = new boolean[]{true};
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(DwarvenCityEvent.class.getCanonicalName(), "Dwarven City Lord",
+                "You impressed the king of the Dwarven City in the caves with your grand tales of adventure.");
+    }
 
     @Override
     public GuideData getGuideData() {
@@ -196,8 +202,7 @@ public class DwarvenCityEvent extends DailyEventState {
             } else {
                 println("The king is impressed by the tales of your exploits and promises to use his influence to " +
                         "open doors for you in the future.");
-                println("The party gains 1 reputation!");
-                model.getParty().addToReputation(1);
+                completeAchievement(DwarvenCityEvent.class.getCanonicalName());
             }
             model.getParty().randomPartyMemberSay(model, List.of("I like him."));
             this.palaceVisited = true;

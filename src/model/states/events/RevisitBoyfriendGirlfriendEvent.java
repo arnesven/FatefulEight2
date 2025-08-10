@@ -289,8 +289,8 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
                     model.getLog().waitForAnimationToFinish();
                     removePortraitSubView(model);
                     findTask(model).setCompleted(true);
-                    println(main.getName() + " has settled down with " + hisOrHer(main.getGender()) + " love. You have gained 1 Reputation!");
-                    model.getParty().addToReputation(1);
+                    println(main.getName() + " has settled down with " + hisOrHer(main.getGender()) + " love.");
+                    completeAchievement(RevisitBoyfriendGirlfriendEvent.class.getCanonicalName());
                 }
             } else {
                 partyMemberSay(main, "Actually, no... I was thinking you could come with me?");

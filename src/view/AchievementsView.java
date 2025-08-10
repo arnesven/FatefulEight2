@@ -22,7 +22,7 @@ public class AchievementsView extends SelectableListMenu {
         return List.of(new DrawableObject(xStart + 1, yStart + 1) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                BorderFrame.drawCentered(model.getScreenHandler(), "Achievements", y, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawCentered(model.getScreenHandler(), "- Achievements -", y, MyColors.WHITE, MyColors.BLUE);
             }
         });
     }

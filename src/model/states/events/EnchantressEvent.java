@@ -346,7 +346,7 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     private void possiblyRecruitEnchantress(Model model, GameCharacter other) {
-        model.getAchievements().setCompleted(EnchantressEvent.class.getCanonicalName());
+        completeAchievement(EnchantressEvent.class.getCanonicalName());
         showExplicitPortrait(model, enchantress.getAppearance(), "Enchantress");
         if (enchantedPartyMember) {
             println(other.getFirstName() + " suddenly comes rushing inside the hut.");

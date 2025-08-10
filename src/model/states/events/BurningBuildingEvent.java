@@ -128,7 +128,7 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
         partyMemberSay(main, "Thanks " + model.getParty().getLeader().getFirstName() + ".");
         leaderSay("Let me just ask you. What were you thinking when you were running into the building?");
         partyMemberSay(main, "Thinking? I didn't think anything... I just did what I had to do.");
-        model.getAchievements().setCompleted(BurningBuildingEvent.class.getCanonicalName());
+        completeAchievement(BurningBuildingEvent.class.getCanonicalName());
     }
 
     private void unsuccessful(Model model, GameCharacter main) {
