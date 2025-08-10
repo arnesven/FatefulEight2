@@ -3,11 +3,8 @@ package view;
 import model.GameStatistics;
 import model.Model;
 import model.Summon;
-import model.headquarters.HeadquarterAppearance;
 import model.headquarters.Headquarters;
-import model.headquarters.HeadquartersAction;
 import model.items.Item;
-import model.items.PotionRecipe;
 import model.map.TempleLocation;
 import model.map.UrbanLocation;
 import model.states.GameState;
@@ -22,8 +19,6 @@ import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
-
-import static model.headquarters.Headquarters.*;
 
 public class StatisticsView extends SelectableListMenu {
     public static final int WIDTH = 60;
@@ -94,6 +89,14 @@ public class StatisticsView extends SelectableListMenu {
         int row = yStart + 1;
         List<ListContent> result = new ArrayList<>();
         result.add(makeTitleLine(leftColumn, row++, "PARTY"));
+        String achievements = model.getAchievements().numberOfCompleted()  + "/" + model.getAchievements().getTotal();
+        result.add(new PermanentlyEnabledListContent(leftColumn, row++, format(46, 10, "Achievements", achievements)) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                setInnerMenu(new AchievementsView(model), model);
+            }
+        });
+
         String partySize = model.getParty().size() + "/" + model.getParty().getInventory().getTentSize();
         result.add(new PermanentlyEnabledListContent(leftColumn, row++, format(46, 10, "Current party size", partySize)) {
             @Override

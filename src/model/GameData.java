@@ -1,5 +1,6 @@
 package model;
 
+import model.achievements.GameAchievements;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.ItemDeck;
@@ -40,4 +41,8 @@ public class GameData implements Serializable {
     public List<MapObject> mapObjects = new ArrayList<>();
     public WarHandler warHandler = new WarHandler();
     public List<GameCharacter> lingeringRecruitables = new ArrayList<>();
+
+    // this should always be the last member of Game Data,
+    // since it is dependent on other thing in game data!
+    public GameAchievements achievements = new GameAchievements();
 }

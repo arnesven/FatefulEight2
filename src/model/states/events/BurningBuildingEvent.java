@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
@@ -10,10 +11,17 @@ import util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BurningBuildingEvent extends PersonalityTraitEvent {
     public BurningBuildingEvent(Model model, PersonalityTrait personalityTrait, GameCharacter mainCharacter) {
         super(model, personalityTrait, mainCharacter);
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(BurningBuildingEvent.class.getCanonicalName(),
+                "Burning Building",
+                "Found a child trapped in the burning building and rescued it by jumping out of a window.");
     }
 
     @Override
@@ -120,8 +128,7 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
         partyMemberSay(main, "Thanks " + model.getParty().getLeader().getFirstName() + ".");
         leaderSay("Let me just ask you. What were you thinking when you were running into the building?");
         partyMemberSay(main, "Thinking? I didn't think anything... I just did what I had to do.");
-        model.getParty().addToReputation(1);
-        println("The party gains 1 reputation!");
+        model.getAchievements().setCompleted(BurningBuildingEvent.class.getCanonicalName());
     }
 
     private void unsuccessful(Model model, GameCharacter main) {

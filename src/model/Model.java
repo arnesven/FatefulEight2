@@ -1,6 +1,7 @@
 package model;
 
 import control.FatefulEight;
+import model.achievements.GameAchievements;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
@@ -611,5 +612,9 @@ public class Model {
             return world;
         }
         return lastWorld;
+    }
+
+    public GameAchievements getAchievements() {
+        return gameData.achievements;
     }
 }

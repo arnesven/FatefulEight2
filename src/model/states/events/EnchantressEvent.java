@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
+import model.achievements.GameAchievements;
 import model.characters.PersonalityTrait;
 import model.characters.special.EnchantressCharacter;
 import model.characters.GameCharacter;
@@ -26,10 +28,12 @@ import view.combat.MansionTheme;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class EnchantressEvent extends DailyEventState {
 
     private static final int INITIAL_PERSUADE_DIFFICULTY = 13;
+    private static final String ACHIEVEMENT_KEY = EnchantressEvent.class.getCanonicalName();
     private GameCharacter enchantress = new EnchantressCharacter();
     private boolean enchantmentDetected = false;
     private boolean enchantedPartyMember = false;
@@ -39,6 +43,12 @@ public class EnchantressEvent extends DailyEventState {
 
     public EnchantressEvent(Model model) {
         super(model);
+    }
+
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(EnchantressEvent.class.getCanonicalName(), "Magical Control Freak",
+                "Break the Enchantress's magical hold on the hamlet without killing her.");
     }
 
     @Override
@@ -336,6 +346,7 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     private void possiblyRecruitEnchantress(Model model, GameCharacter other) {
+        model.getAchievements().setCompleted(EnchantressEvent.class.getCanonicalName());
         showExplicitPortrait(model, enchantress.getAppearance(), "Enchantress");
         if (enchantedPartyMember) {
             println(other.getFirstName() + " suddenly comes rushing inside the hut.");

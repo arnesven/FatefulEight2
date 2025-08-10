@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -37,6 +38,12 @@ public class DiggingGameEvent extends DailyEventState {
 
     public DiggingGameEvent(Model model) {
         super(model);
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(DiggingGameEvent.class.getCanonicalName(), "Farmer's Digging Game",
+                "Mastered the Farmer's digging game on the highest difficulty (" +
+                        BOULDER_COUNTS[BOULDER_COUNTS.length-1] +" boulders).");
     }
 
     @Override
@@ -335,8 +342,7 @@ public class DiggingGameEvent extends DailyEventState {
         model.getSettings().getMiscCounters().put(COUNTER_KEY, winCount);
         if (winCount == BOULDER_COUNTS.length) {
             println("Congratulations! You have mastered the farmer's digging game!");
-            println("You gain 1 reputation!");
-            model.getParty().addToReputation(1);
+            model.getAchievements().setCompleted(DiggingGameEvent.class.getCanonicalName());
             println("From now on, when encountering the digging game, " +
                     "you will be allowed to choose the difficulty of the game.");
         }
