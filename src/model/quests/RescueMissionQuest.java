@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -39,7 +40,12 @@ public class RescueMissionQuest extends MainQuest {
 
     public RescueMissionQuest() {
         super(QUEST_NAME, "", QuestDifficulty.MEDIUM,
-                new Reward(1, 175), 2, TEXT, ENDING);
+                new Reward(175), 2, TEXT, ENDING);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You rescued Caid from a fort where he had been imprisoned.");
     }
 
     @Override

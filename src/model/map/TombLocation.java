@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.actions.DailyAction;
 import model.map.locations.AncientCityLocation;
 import model.states.ExploreTombState;
@@ -80,6 +81,12 @@ public class TombLocation extends HexLocation {
     @Override
     public List<DailyAction> getDailyActions(Model model) {
         return List.of(new ExploreTombDailyAction(model, getName()));
+    }
+
+    public Achievement.Data getAchievementData() {
+        return new Achievement.Data(getName(), getName(),
+                "You successfully cleared the dungeon under the " + getName() +
+                        " and vanquished the evil that dwelt there.");
     }
 
     private static class ExploreTombDailyAction extends DailyAction {

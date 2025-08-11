@@ -36,7 +36,7 @@ public class AchievementsView extends SelectableListMenu {
             int xExtra = (count % 2) * COLUMN_RIGHT;
             int finalX = xStart + 2 + xExtra;
             int finalY = 3 + yStart + row * 2;
-            if (a.isCompleted()) {
+            if (a.isCompleted(model)) {
                 contents.add(new SelectableListContent(finalX, finalY, (char) 0xB6 + a.getName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
@@ -97,9 +97,7 @@ public class AchievementsView extends SelectableListMenu {
 
         @Override
         public void handleKeyEvent(KeyEvent keyEvent, Model model) {
-            if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                super.handleKeyEvent(keyEvent, model);
-            }
+            setTimeToTransition(true);
         }
 
         @Override

@@ -30,7 +30,7 @@ public class SpecialDeliveryQuest extends MainQuest {
 
     public SpecialDeliveryQuest() {
         super("Special Delivery", "", QuestDifficulty.MEDIUM, 
-                new Reward(0, 175, 50), 2, INTRO_TEXT, END_TEXT);
+                new Reward(175, 50), 2, INTRO_TEXT, END_TEXT);
         this.fightInTown = false;
     }
 

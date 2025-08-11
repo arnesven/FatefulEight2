@@ -59,7 +59,7 @@ public class ConstableEvent extends DailyEventState {
             return;
         }
         print("The constable is attempting to arrest you. You could fight the " +
-                "constable, but doing so will give you a -1 penalty to your reputation. Do you resist arrest? (Y/N) ");
+                "constable, but doing so will give increase your notoriety. Do you resist arrest? (Y/N) ");
         if (yesNoInput()) {
             resistArrest(model);
         } else {
@@ -160,12 +160,12 @@ public class ConstableEvent extends DailyEventState {
         if (!didSay) {
             model.getParty().randomPartyMemberSay(model, List.of("We're in over our heads here..."));
         }
-        println("The party gets -1 reputation!");
-        model.getParty().addToReputation(-1);
         ConstableEnemy enm = new ConstableEnemy('A');
         runCombat(List.of(enm));
         if (enm.isDead()) {
             GeneralInteractionEvent.addMurdersToNotoriety(model, this, 1);
+        } else {
+            GeneralInteractionEvent.addToNotoriety(model, this, 30);
         }
 
     }

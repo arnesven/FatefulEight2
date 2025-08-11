@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -39,7 +40,7 @@ public class SwampOgreQuest extends Quest {
 
     public SwampOgreQuest() {
         super("Swamp Ogre", "Albedan the Mage", QuestDifficulty.MEDIUM,
-                new Reward(1, 175), 2, INTRO, ENDING);
+                new Reward(175), 2, INTRO, ENDING);
         getScenes().get(2).get(0).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
@@ -54,6 +55,11 @@ public class SwampOgreQuest extends Quest {
                 return new QuestEdge(getSuccessEndingNode());
             }
         });
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You rescued the mage " + getProvider() + " from a Oleg, the smelly swamp ogre.");
     }
 
     @Override

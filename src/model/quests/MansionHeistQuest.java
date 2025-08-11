@@ -55,7 +55,7 @@ public class MansionHeistQuest extends Quest {
 
     public MansionHeistQuest() {
         super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM,
-                new Reward(0, 175, 0, NOTORIETY_REWARD), 0, text, endText);
+                new Reward(175, 0, NOTORIETY_REWARD), 0, text, endText);
     }
 
     @Override

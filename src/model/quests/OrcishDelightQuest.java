@@ -37,7 +37,7 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
 
     public OrcishDelightQuest() {
         super("Orcish Delight", "Mysterious Baker", QuestDifficulty.EASY,
-                new Reward(0, 50, 50), 0, INTRO, ENDING);
+                new Reward( 50, 50), 0, INTRO, ENDING);
         orcPortrait = new OrcAppearance();
         orcPortrait.setClass(Classes.BAKER);
     }

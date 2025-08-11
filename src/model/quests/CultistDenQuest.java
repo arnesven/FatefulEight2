@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -40,7 +41,13 @@ public class CultistDenQuest extends Quest {
 
     public CultistDenQuest() {
         super("Cultist Den", "Cleric", QuestDifficulty.MEDIUM,
-                new Reward(1, 75), 1, INTRO, ENDING);
+                new Reward( 75), 1, INTRO, ENDING);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You were hired by some clerics to root out some cultist from a " +
+                "den who were trying to summon an other-wordly demi-god.");
     }
 
     @Override

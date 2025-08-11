@@ -118,8 +118,6 @@ public class Traveller implements Serializable {
         travellerSay(model, state,   "I'm fed up with you. I'm going to " + destination + " on my own.");
         state.println(name + " stomps off. You are no longer escorting " + name + ".");
         model.getParty().abandonTraveller(this);
-        model.getParty().addToReputation(-1);
-        state.printAlert("Your reputation has decreased.");
         JournalEntry.printJournalUpdateMessage(model);
     }
 

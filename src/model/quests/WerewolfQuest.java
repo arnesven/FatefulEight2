@@ -47,7 +47,7 @@ public class WerewolfQuest extends Quest {
 
     public WerewolfQuest() {
         super("Werewolf", "Boyfriend Benny", QuestDifficulty.EASY,
-                new Reward(0, 80), 1, INTRO, ENDING);
+                new Reward(80), 1, INTRO, ENDING);
     }
 
     @Override

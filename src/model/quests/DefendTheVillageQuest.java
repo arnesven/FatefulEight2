@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -43,6 +44,12 @@ public class DefendTheVillageQuest extends Quest {
     public DefendTheVillageQuest() {
         super("Defend the Village", "Desperate Peasants", QuestDifficulty.MEDIUM,
                 new Reward(1, 150), 2, TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You were contracted to help defend a village from a band of raiding orcs.");
     }
 
     @Override

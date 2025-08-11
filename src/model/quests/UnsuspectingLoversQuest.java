@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.preset.DeniseBoyd;
 import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
@@ -43,7 +44,12 @@ public class UnsuspectingLoversQuest extends Quest {
 
     public UnsuspectingLoversQuest() {
         super("Unsuspecting Lovers", "Jason and Tamara's parents", QuestDifficulty.EASY,
-                new Reward(0, 125, 50), 0, text, endText);
+                new Reward(125, 50), 0, text, endText);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You fixed up the lovebirds Jason and Tamara.");
     }
 
     @Override

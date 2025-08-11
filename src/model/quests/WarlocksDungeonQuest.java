@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -38,7 +39,12 @@ public class WarlocksDungeonQuest extends Quest {
 
     public WarlocksDungeonQuest() {
         super("Warlock's Dungeon", "Warlock", QuestDifficulty.MEDIUM,
-                new Reward(1, 0, 100), 0, INTRO, OUTRO);
+                new Reward(0, 100), 0, INTRO, OUTRO);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You successfully manage to navigate the Warlock's Dungeon.");
     }
 
     @Override

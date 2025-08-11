@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.TimeOfDay;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
@@ -49,6 +50,11 @@ public abstract class Quest {
         this.text = text;
         this.endingText = endText;
         resetQuest();
+    }
+
+    protected static Achievement.Data makeAchievement(Quest quest, String description) {
+        return new Achievement.Data(quest.getClass().getCanonicalName(), quest.name,
+                description);
     }
 
     protected void resetQuest() {
@@ -266,5 +272,13 @@ public abstract class Quest {
 
     public boolean hasBlackCursor() {
         return false;
+    }
+
+    public boolean givesAchievement() {
+        return getAchievementData() != null;
+    }
+
+    public Achievement.Data getAchievementData() {
+        return null;
     }
 }

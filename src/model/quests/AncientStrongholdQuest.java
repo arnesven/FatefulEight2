@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -49,9 +50,15 @@ public class AncientStrongholdQuest extends MainQuest {
 
     public AncientStrongholdQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD,
-                new Reward(2, 0, 100), 0, TEXT, END_TEXT);
+                new Reward(0, 100), 0, TEXT, END_TEXT);
         strongholdModel = new AncientStrongholdModel();
         updateDecorations();
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You solved the puzzle of the magical machinery and the colored pearls in the Ancient Stronghold.");
     }
 
     @Override

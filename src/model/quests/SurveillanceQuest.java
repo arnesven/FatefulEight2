@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -41,7 +42,13 @@ public class SurveillanceQuest extends Quest {
 
     public SurveillanceQuest() {
         super("Surveillance", "General", QuestDifficulty.MEDIUM,
-                new Reward(1, 175), 2, START_TEXT, END_TEXT);
+                new Reward(175), 2, START_TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You were contracted by a general to gathered " +
+                "intel on a military camp.");
     }
 
     @Override

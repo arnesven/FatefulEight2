@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -36,7 +37,7 @@ public class HauntedMansionQuest extends Quest {
 
     public HauntedMansionQuest() {
         super("Haunted Mansion", "Nobleman", QuestDifficulty.HARD,
-                new Reward(1, 250), 0, INTRO, ENDING);
+                new Reward(250), 0, INTRO, ENDING);
         getScenes().get(4).get(0).addSpellCallback(new DispelSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
@@ -44,6 +45,11 @@ public class HauntedMansionQuest extends Quest {
                 return new QuestEdge(getSuccessEndingNode());
             }
         });
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You helped a nobleman purge his mansion from a dark pestilence.");
     }
 
     @Override

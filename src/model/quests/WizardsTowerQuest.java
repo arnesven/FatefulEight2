@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -40,7 +41,12 @@ public class WizardsTowerQuest extends Quest {
 
     public WizardsTowerQuest() {
         super("Wizard's Tower", "Local Bookie", QuestDifficulty.HARD,
-                new Reward(1, 250), 0, INTRO_TEXT, END_TEXT);
+                new Reward(250), 0, INTRO_TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You helped a local bookie collect a debt from a troublesome mage, Rastomel.");
     }
 
     @Override

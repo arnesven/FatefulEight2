@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
@@ -55,7 +56,13 @@ public class EscapeTheDungeonQuest extends MainQuest {
 
     public EscapeTheDungeonQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD,
-                new Reward(1, 0, 50), 0, INTRO, OUTRO);
+                new Reward( 0, 50), 0, INTRO, OUTRO);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You managed to defeat the dungeon guards and " +
+                "escape from the prison cells below a castle");
     }
 
     @Override

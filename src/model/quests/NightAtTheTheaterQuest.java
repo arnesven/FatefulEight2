@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -44,8 +45,14 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
     private static final List<QuestBackground> DECORATIONS = makeDecorations();
 
     public NightAtTheTheaterQuest() {
-        super(QUEST_NAME, "Lord Shingen", QuestDifficulty.VERY_HARD, new Reward(1, 200, 0),
+        super(QUEST_NAME, "Lord Shingen", QuestDifficulty.VERY_HARD, new Reward( 200, 0),
                 0, INTRO_TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You attended the theatre in the Eastern Palace, but the show was " +
+                "interrupted by orcish ninjas.");
     }
 
     @Override

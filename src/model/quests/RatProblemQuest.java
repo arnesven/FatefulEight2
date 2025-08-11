@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -39,7 +40,13 @@ public class RatProblemQuest extends Quest {
 
     public RatProblemQuest() {
         super("Rat Problem", "Granny Petronella", QuestDifficulty.MEDIUM,
-                new Reward(1, 175), 0, TEXT, END_TEXT);
+                new Reward(175), 0, TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You helped " + getProvider() + " exterminate the rats in her basement, " +
+                "then sold a cartload of rat carcases to an eager merchant.");
     }
 
     @Override

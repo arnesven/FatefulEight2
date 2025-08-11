@@ -34,8 +34,8 @@ public class BossRoom extends LargeDungeonRoom {
 
         super.entryTrigger(model, exploreRuinsState);
         if (!exploreRuinsState.isDungeonExited()) {
-            exploreRuinsState.println("Congratulations! You have vanquished the boss of this ruin. The party gains 1 reputation.");
-            model.getParty().addToReputation(1);
+            exploreRuinsState.println("Congratulations! You have vanquished the boss of this ruin.");
+            exploreRuinsState.completeAchievement();
             exploreRuinsState.setDungeonExited(true);
             exploreRuinsState.getDungeon().setCompleted(true);
         }

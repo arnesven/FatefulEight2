@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.items.spells.TeleportSpell;
 import model.map.WorldBuilder;
 import model.states.GameState;
@@ -30,7 +31,12 @@ public class MindMachineQuest extends MainQuest {
 
     public MindMachineQuest() {
         super(QUEST_NAME, "Yourself", QuestDifficulty.VERY_HARD,
-                new Reward(1, 0, 0), 0, INTRO_TEXT, ENDING_TEXT);
+                new Reward( 0, 0), 0, INTRO_TEXT, ENDING_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "TODO");
     }
 
     @Override

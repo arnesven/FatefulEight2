@@ -105,7 +105,7 @@ public class VampireFeedingHouse {
         this.subScenes = new ArrayList<>();
 
         this.failNode = new VampireFeedingFailedNode();
-        this.successfulNode = new QuestSuccessfulNode(new Reward(0, 0,0 ), "");
+        this.successfulNode = new QuestSuccessfulNode(new Reward( 0,0 ), "");
         successfulNode.move(7, 3);
 
         StakeOutSubScene stakeOut = new StakeOutSubScene(0, 3, vampire, this);

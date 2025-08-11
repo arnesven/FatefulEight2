@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -38,7 +39,12 @@ public class TreasureHuntQuest extends Quest {
 
     public TreasureHuntQuest() {
         super("Treasure Hunt", "Junk Seller", QuestDifficulty.HARD,
-                new Reward(1, 250), 3, TEXT, END_TEXT);
+                new Reward(250), 3, TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, END_TEXT);
     }
 
     @Override

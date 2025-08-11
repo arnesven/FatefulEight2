@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.achievements.Achievement;
 import model.classes.Skill;
 import model.enemies.*;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -31,8 +32,13 @@ public class SavageVikingsQuest extends RemotePeopleQuest {
 
     public SavageVikingsQuest() {
         super("Savage Vikings", "Yourself", QuestDifficulty.VERY_HARD,
-                new Reward(1, 0, 250), 0,
+                new Reward( 0, 250), 0,
                 INTRO_TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You convinced the Vikings of the North that you were not their enemy.");
     }
 
     @Override

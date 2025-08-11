@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.preset.JordynStrong;
 import model.characters.appearance.CharacterAppearance;
@@ -54,7 +55,7 @@ public class AbandonedMineQuest extends Quest {
 
     public AbandonedMineQuest() {
         super("Abandoned Mine", "Murak", QuestDifficulty.HARD,
-                new Reward(1, 250, 0), 2, INTRO, OUTRO);
+                new Reward( 250, 0), 2, INTRO, OUTRO);
         getScenes().get(1).get(0).addSpellCallback(new LevitateSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
@@ -69,6 +70,13 @@ public class AbandonedMineQuest extends Quest {
                 return new QuestEdge(getScenes().get(1).get(0));
             }
         });
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You escorted " + getProvider() + ", a dwarven miner into a deep mine to " +
+                        "recover some mining equipment. " + getProvider() + " didn't tell you about the daemon down there.");
     }
 
     @Override

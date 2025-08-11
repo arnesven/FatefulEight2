@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.classes.Skill;
 import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
@@ -50,7 +51,12 @@ public class TroubleInTheLibraryQuest extends MainQuest {
 
     public TroubleInTheLibraryQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD,
-                new Reward(1, 0), 0, INTRO_TEXT, ENDING_TEXT);
+                new Reward(0), 0, INTRO_TEXT, ENDING_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You helped Willis shut down her renegade automatons that were wrecking the library.");
     }
 
     @Override

@@ -54,7 +54,7 @@ public class BrrbitsReward extends Quest {
 
     public BrrbitsReward() {
         super(FROGMAN_NAME + "'s Reward", "Brrbit", QuestDifficulty.EASY,
-                new Reward(0, 0, 50), 3, INTRO, ENDING);
+                new Reward(0, 50), 3, INTRO, ENDING);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -29,7 +30,13 @@ public class MurderMysteryQuest extends Quest implements CountingQuest {
 
     public MurderMysteryQuest() {
         super("Murder Mystery", "Sheriff", QuestDifficulty.HARD,
-                new Reward(1, 250),0, INTRO, ENDING);
+                new Reward(250),0, INTRO, ENDING);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You helped a " + getProvider() + " to solve a particularly difficult homicide case.");
     }
 
     @Override

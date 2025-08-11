@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -63,7 +64,13 @@ public class MissingBrotherQuest extends Quest {
 
     public MissingBrotherQuest() {
         super("Missing Brother", "Ghania", QuestDifficulty.EASY,
-                new Reward(1, 125), 3, text, endText);
+                new Reward(125), 3, text, endText);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You helped " + getProvider() +
+                " by finding her missing brother, who was being held captive in a bandit camp.");
     }
 
     @Override

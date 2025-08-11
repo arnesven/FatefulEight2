@@ -8,28 +8,22 @@ import util.MyLists;
 import java.io.Serializable;
 
 public class Reward implements Serializable {
-    private final int rep;
     private final int gold;
     private final int exp;
     private final int notoriety;
 
-    public Reward(int partyRep, int gold, int exp, int notoriety) {
-        this.rep = partyRep;
+    public Reward(int gold, int exp, int notoriety) {
         this.gold = gold;
         this.exp = exp;
         this.notoriety = notoriety;
     }
 
-    public Reward(int partyRep, int gold, int exp) {
-        this(partyRep, gold, exp, 0);
+    public Reward(int gold, int exp) {
+        this(gold, exp, 0);
     }
 
-    public Reward(int partyRep, int gold) {
-        this(partyRep, gold, 0);
-    }
-
-    public int getReputation() {
-        return rep;
+    public Reward(int gold) {
+        this(gold, 0);
     }
 
     public int getGold() {
@@ -43,7 +37,6 @@ public class Reward implements Serializable {
     public void giveYourself(Model model) {
         Party party = model.getParty();
         party.addToGold(gold);
-        party.addToReputation(rep);
         party.addToNotoriety(notoriety);
         MyLists.forEach(party.getPartyMembers(), (GameCharacter gc) -> party.giveXP(model, gc, exp));
     }
@@ -57,13 +50,7 @@ public class Reward implements Serializable {
         if (notoriety > 0) {
             noto = ", your notoriety increased";
         }
-        String reputation = ".";
-        if (rep > 0) {
-            reputation = ", and your reputation will increase.";
-        } else if (rep < 0) {
-            reputation = ", but your reputation will DECREASE.";
-        }
-        return "you will be paid " + gold + " gold" + experience + noto + reputation;
+        return "you will be paid " + gold + " gold" + experience + noto + ".";
     }
 
     public int getNotoriety() {

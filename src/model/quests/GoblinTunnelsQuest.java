@@ -45,7 +45,7 @@ public class GoblinTunnelsQuest extends Quest {
 
     public GoblinTunnelsQuest() {
         super("Goblin Tunnels", "Map Maker", QuestDifficulty.MEDIUM,
-                new Reward(0, 0), 0, INTRO, ENDING);
+                new Reward( 0), 0, INTRO, ENDING);
     }
 
     @Override

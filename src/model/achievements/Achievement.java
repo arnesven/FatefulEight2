@@ -1,5 +1,7 @@
 package model.achievements;
 
+import model.Model;
+
 import java.io.Serializable;
 
 public class Achievement implements Serializable {
@@ -25,7 +27,7 @@ public class Achievement implements Serializable {
 
     public Achievement(Achievement.Data data) {
         this.data = data;
-        completed = true;
+        completed = false;
     }
 
     public String getName() {
@@ -36,7 +38,11 @@ public class Achievement implements Serializable {
         return data.description;
     }
 
-    public boolean isCompleted() {
+    public String getKey() {
+        return data.key;
+    }
+
+    public boolean isCompleted(Model model) {
         return completed;
     }
 

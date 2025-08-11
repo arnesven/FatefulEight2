@@ -23,7 +23,7 @@ public class HelpWillisQuest extends MainQuest {
 
     public HelpWillisQuest() {
         super(QUEST_NAME, "", QuestDifficulty.EASY,
-                new Reward(0, 75), 0, INTRO_TEXT, ENDING_TEXT);
+                new Reward(75), 0, INTRO_TEXT, ENDING_TEXT);
     }
 
     @Override

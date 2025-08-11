@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.*;
@@ -64,7 +65,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
 
     public AvertTheMutinyQuest() {
         super(QUEST_NAME, "Captain Blackbone", QuestDifficulty.VERY_HARD,
-                new Reward(1, 200, 0), 0, INTRO_TEXT, END_TEXT);
+                new Reward(200, 0), 0, INTRO_TEXT, END_TEXT);
         MainStorySpawnWest storySpawn = new MainStorySpawnWest(); // Get this from the main story
         this.potentialMutineers = storySpawn.getPotentialMutineers();
         this.realMutineer = storySpawn.getRealMutineer();
@@ -76,6 +77,11 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
                 (realMutineer.getGender() ? "female":"male") + " " + realMutineer.getRace().getName() +
                 ". IsTrans=" + realMutineer.isTrans() + ", likesRum=" + realMutineer.likesRum() +
                 ",usesPistol=" + realMutineer.usesPistol() + ", weaponFlippsed=" + realMutineer.isFlippedWeapon() + ".");
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You helped Captain Blackbone uncover who was the mutineer on the ship.");
     }
 
     @Override

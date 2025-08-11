@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.achievements.Achievement;
 import model.headquarters.Headquarters;
 import model.mainstory.FugitiveTownEvent;
 import model.races.Race;
@@ -241,5 +242,11 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     @Override
     public HexLocation makePastSelf() {
         return null;
+    }
+
+    public Achievement.Data getDungeonAchievement() {
+        return new Achievement.Data(getName(), "Dungeons of " + getName(),
+                "You successfully cleared the dungeon under " + getName() +
+                        " and vanquished the evil that dwelt there.");
     }
 }

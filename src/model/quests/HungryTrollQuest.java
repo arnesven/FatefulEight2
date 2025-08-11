@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -31,7 +32,13 @@ public class HungryTrollQuest extends Quest {
 
     public HungryTrollQuest() {
         super("Hungry Troll", "Elder", QuestDifficulty.EASY,
-                new Reward(1, 75), 2, INTRO, OUTRO);
+                new Reward(75), 2, INTRO, OUTRO);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You stopped a abnormally large troll from eating all the livestock from a village.");
     }
 
     @Override

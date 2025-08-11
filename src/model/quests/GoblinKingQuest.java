@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.enemies.GoblinKingEnemy;
@@ -39,7 +40,7 @@ public class GoblinKingQuest extends Quest {
 
     public GoblinKingQuest() {
         super("Goblin King", "Nobody", QuestDifficulty.MEDIUM,
-                new Reward(2, 300), 2, INTRO, ENDING);
+                new Reward(300), 2, INTRO, ENDING);
         waves = new ArrayList<>();
         waves.add(new ArrayList<>(List.of(new GoblinKingEnemy('A'), new GoblinSpearman('B'),
                 new GoblinSpearman('B'), new GoblinSpearman('B'), new GoblinSpearman('B'))));
@@ -48,6 +49,11 @@ public class GoblinKingQuest extends Quest {
         waves.add(new ArrayList<>(List.of(new GoblinSpearman('B'), new GoblinSpearman('B'),
                 new GoblinSpearman('B'))));
         currentEnemySet = new ArrayList<>();
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You defeated Aboz, the dreadful goblin king (and many of his minions too).");
     }
 
     @Override

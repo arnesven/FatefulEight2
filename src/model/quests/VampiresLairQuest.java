@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -37,7 +38,12 @@ public class VampiresLairQuest extends MainQuest {
 
     public VampiresLairQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD,
-                new Reward(1, 120), 0, TEXT, END_TEXT);
+                new Reward( 120), 0, TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You accompanied Caid down into a vampire's lair and uncovered a lord's family secret.");
     }
 
     @Override

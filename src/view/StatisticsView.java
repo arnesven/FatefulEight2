@@ -89,7 +89,7 @@ public class StatisticsView extends SelectableListMenu {
         int row = yStart + 1;
         List<ListContent> result = new ArrayList<>();
         result.add(makeTitleLine(leftColumn, row++, "PARTY"));
-        String achievements = model.getAchievements().numberOfCompleted()  + "/" + model.getAchievements().getTotal();
+        String achievements = model.getAchievements().numberOfCompleted(model)  + "/" + model.getAchievements().getTotal();
         result.add(new PermanentlyEnabledListContent(leftColumn, row++, format(46, 10, "Achievements", achievements)) {
             @Override
             public void performAction(Model model, int x, int y) {

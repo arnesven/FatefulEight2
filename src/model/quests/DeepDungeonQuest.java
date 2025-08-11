@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -35,7 +36,12 @@ public class DeepDungeonQuest extends Quest {
 
     public DeepDungeonQuest() {
         super("Deep Dungeon", "Antiques Dealer", QuestDifficulty.HARD,
-                new Reward(1, 250), 0, text, endText);
+                new Reward(250), 0, text, endText);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You entered a dungeon and defeated the Count of Vizmeria, a vampire lord.");
     }
 
     @Override

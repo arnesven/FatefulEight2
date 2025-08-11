@@ -20,6 +20,7 @@ import java.util.List;
 public class ExploreRuinsState extends GameState {
 
     private final String dungeonType;
+    private final String dungeonName;
     private RuinsDungeon dungeon;
     private int currentLevel = 0;
     private Point partyPosition;
@@ -34,6 +35,7 @@ public class ExploreRuinsState extends GameState {
 
     public ExploreRuinsState(Model model, String ruinsName, String dungeonType) {
         super(model);
+        this.dungeonName = ruinsName;
         dungeon = model.getDungeon(ruinsName, dungeonType.equals("Ruins"));
         currentLevel = 0;
         partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
@@ -43,6 +45,7 @@ public class ExploreRuinsState extends GameState {
 
     public ExploreRuinsState(Model model, RuinsDungeon dungeon, String dungeonType) {
         super(model);
+        this.dungeonName = "Unknown";
         this.dungeon = dungeon;
         currentLevel = 0;
         partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
@@ -315,5 +318,9 @@ public class ExploreRuinsState extends GameState {
 
     public void mapsFound(int currentLevel) {
         this.mapsFound.add(currentLevel);
+    }
+
+    public void completeAchievement() {
+        super.completeAchievement(dungeonName);
     }
 }

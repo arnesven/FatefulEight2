@@ -56,10 +56,8 @@ public class QuestSuccessfulNode extends QuestNode {
             goldPart += " each party member receives " + reward.getExp() + " XP,";
         }
         state.print("Quest completed!" + goldPart);
-        if (reward.getReputation() > 0) {
-            state.println(" and your reputation increases!");
-        } else if (reward.getReputation() < 0) {
-            state.println(" but your reputation has decreased!");
+        if (reward.getNotoriety() > 0) {
+            state.println(" and your notoriety increases!");
         } else {
             state.println(".");
         }
@@ -68,6 +66,9 @@ public class QuestSuccessfulNode extends QuestNode {
             model.getQuestDeck().setSuccessfulIn(model, state.getQuest(), hex.getLocation());
         }
         reward.giveYourself(model);
+        if (state.getQuest().givesAchievement()) {
+            state.completeAchievement(state.getQuest().getAchievementData().getKey());
+        }
         return new QuestEdge(this);
     }
 

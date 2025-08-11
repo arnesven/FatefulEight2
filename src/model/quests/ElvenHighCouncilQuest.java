@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -58,7 +59,12 @@ public class ElvenHighCouncilQuest extends Quest {
 
     public ElvenHighCouncilQuest() {
         super("Elven High Council", "Human Lords", QuestDifficulty.HARD,
-                new Reward(1, 175, 35), 0, INTRO, ENDING);
+                new Reward(175, 35), 0, INTRO, ENDING);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this, "You managed to convince the Elven High Council to unite under the threat of war.");
     }
 
     @Override

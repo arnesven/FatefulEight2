@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -41,7 +42,7 @@ public class OrcWarCampQuest extends MainQuest {
 
     public OrcWarCampQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD,
-                new Reward(1, 0), 0, INTRO_TEXT, ENDING_TEXT);
+                new Reward(0), 0, INTRO_TEXT, ENDING_TEXT);
         archers = List.of(new OrcArcherEnemy('C'), new OrcArcherEnemy('C'), new OrcArcherEnemy('C'),
                 new OrcArcherEnemy('C'), new OrcArcherEnemy('C'), new OrcArcherEnemy('C'));
         otherEnemies = new ArrayList<>();
@@ -49,6 +50,12 @@ public class OrcWarCampQuest extends MainQuest {
             otherEnemies.add(new OrcWarrior('B'));
         }
         otherEnemies.add(new OrcChieftain('A'));
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You got into the Orc War camp and found information about the Quad and the Ancient Stronghold.");
     }
 
     @Override

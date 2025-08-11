@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.actions.DailyAction;
 import model.actions.ExploreRuinsDailyAction;
 import model.map.locations.AncientCityLocation;
@@ -85,5 +86,11 @@ public class RuinsLocation extends HexLocation {
     @Override
     public HexLocation makePastSelf() {
         return new AncientCityLocation(getName().replace("Ruins of ", ""));
+    }
+
+    public Achievement.Data getAchievementData() {
+        return new Achievement.Data(getName(), getName(),
+                "You successfully cleared the dungeon under the " + getName() +
+                        " and vanquished the evil that dwelt there.");
     }
 }

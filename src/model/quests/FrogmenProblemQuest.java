@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.FrogmanChiefEnemy;
@@ -41,7 +42,13 @@ public class FrogmenProblemQuest extends MainQuest {
 
     public FrogmenProblemQuest() {
         super(QUEST_NAME, "Uncle", QuestDifficulty.EASY,
-                new Reward(1, 0, 25), 2, TEXT, END_TEXT);
+                new Reward(0, 25), 2, TEXT, END_TEXT);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You solved the problem of a rampart population of frogmen and found a curious red pearl in the process.");
     }
 
     @Override

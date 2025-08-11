@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -61,7 +62,13 @@ public class MasqueradeQuest extends Quest {
 
     public MasqueradeQuest() {
         super("Masquerade", "Bounty Office", QuestDifficulty.MEDIUM,
-                new Reward(1, 175), 0, INTRO, OUTRO);
+                new Reward(175), 0, INTRO, OUTRO);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You tracked down a wanted person who thought they could blend into the crowd at a masquerade.");
     }
 
     @Override

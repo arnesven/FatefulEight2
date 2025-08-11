@@ -45,7 +45,7 @@ public class TownFairQuest extends Quest {
 
     public TownFairQuest() {
         super("Town Fair", "Townsfolk", QuestDifficulty.EASY,
-                new Reward(0, 0), 0, INTRO, ENDING);
+                new Reward(0), 0, INTRO, ENDING);
         getScenes().get(2).get(0).addSpellCallback(new FireworksSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {

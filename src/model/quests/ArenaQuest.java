@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -58,7 +59,14 @@ public class ArenaQuest extends Quest {
 
     public ArenaQuest() {
         super("The Arena", "Arena Promoter", QuestDifficulty.HARD,
-                new Reward(1, 225, 0), 0, INTRO, ENDING);
+                new Reward(225, 0), 0, INTRO, ENDING);
+    }
+
+    @Override
+    public Achievement.Data getAchievementData() {
+        return makeAchievement(this,
+                "You didn't quite know what to expect when you entered the ring at the arena. " +
+                        "But you came out as the champion and a bag of gold!");
     }
 
     @Override
