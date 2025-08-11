@@ -104,7 +104,7 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                 @Override
                 public void drawDecorations(Model model, int x, int y) {
                     if (data != null) {
-                        String title = data.party.getLeader().getName() + "'s Company, DAY " + data.day + ", REP " + data.party.getReputation();
+                        String title = data.party.getLeader().getName() + "'s Company, DAY " + data.day;
                         BorderFrame.drawString(model.getScreenHandler(), title, x + 7, y, MyColors.WHITE, MyColors.BLUE);
                         int xShift = 7;
                         for (GameCharacter gc : data.party.getPartyMembers()) {

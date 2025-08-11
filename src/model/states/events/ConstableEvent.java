@@ -78,7 +78,7 @@ public class ConstableEvent extends DailyEventState {
         portraitSay("You're not from around here are you?");
         println("The " + lawMan + " squints and carefully looks at the party members...");
         int sum = calculatePartyAlignment(model, this);
-        sum += model.getParty().getReputation() - model.getParty().getNotoriety() / 10;
+        sum -= model.getParty().getNotoriety() / 10;
         String wordToDescribe = null;
         if (sum <= -5) {
             wordToDescribe = "downright evil!";

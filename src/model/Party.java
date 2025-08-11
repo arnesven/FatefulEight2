@@ -62,7 +62,6 @@ public class Party implements Serializable {
     private final Map<String, HeldQuestData> heldQuests = new HashMap<>();
     private Point position;
     private Point previousPosition;
-    private int reputation = 0;
     private boolean onRoad = true;
     private final LoopingSprite[] cursorSprites;
     private GameCharacter leader;
@@ -201,10 +200,6 @@ public class Party implements Serializable {
 
     public int getGold() {
         return inventory.getGold();
-    }
-
-    public int getReputation() {
-        return reputation;
     }
 
     public int getFood() {
@@ -712,10 +707,6 @@ public class Party implements Serializable {
         for (CombatLoot l : combatLoot) {
             l.giveYourself(this);
         }
-    }
-
-    public void addToReputation(int rep) {
-        reputation += rep;
     }
 
     public Point getPreviousPosition() {

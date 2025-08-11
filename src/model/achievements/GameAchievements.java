@@ -25,7 +25,9 @@ public class GameAchievements implements Serializable {
     }
 
     private void addMiscAchievements() {
-        partyAchievements.put("TEST", new AlwaysDoneAchievement());
+        partyAchievements.put("TEST", new AlwaysDoneAchievement()); // TODO: Fix
+        // TODO: Fatue
+        // TODO: Spells collecting
     }
 
     private void addDungeonAchievements() {

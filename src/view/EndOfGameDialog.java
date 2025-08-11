@@ -19,11 +19,6 @@ public class EndOfGameDialog extends SelectableListMenu {
     private static final int DIALOG_HEIGHT = 41;
     private String title = "";
     private String text = "";
-    private static final String TIME_TEXT =
-            "You have been an adventurer for a long time. You have seen many " +
-            "fantastic things but unfortunately you have not achieved the fame " +
-            "and glory to which you once aspired. This saddens you a bit but " +
-            "at least you had fun and made some friends along the way.";
     private static final String REPUTATION_TEXT =
             "You have achieved marvelous things. You have explored the world. " +
             "You have defeated mighty foes. You have done many good deeds " +
@@ -44,13 +39,8 @@ public class EndOfGameDialog extends SelectableListMenu {
         super.transitionedTo(model);
         ClientSoundManager.stopPlayingBackgroundSound();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.endingSong);
-        if (model.getParty().getReputation() == Model.REP_TO_WIN) {
-            title = "congratulations!";
-            text = REPUTATION_TEXT;
-        } else {
-            title = "the end of your adventures";
-            text = TIME_TEXT;
-        }
+        title = "the end of your adventures";
+        text = REPUTATION_TEXT;
     }
 
     @Override

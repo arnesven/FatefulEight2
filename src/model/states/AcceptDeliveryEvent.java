@@ -63,7 +63,7 @@ public class AcceptDeliveryEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        if (model.getParty().getReputation() < 1) {
+        if (model.getParty().getNotoriety() > 40) {
             new NoEventState(model).doTheEvent(model);
             return false;
         }

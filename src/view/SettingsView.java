@@ -131,7 +131,6 @@ public class SettingsView extends SelectableListMenu {
         y = addTopBarSettings(model, result, x, y, "Horses        ", TopText.HORSE_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Alignment     ", TopText.ALIGNMENT_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Notoriety     ", TopText.NOTORIETY_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Reputation    ", TopText.REPUTATION_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Ingredients   ", TopText.INGREDIENTS_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Materials     ", TopText.MATERIALS_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Lockpicks     ", TopText.LOCKPICKS_SETTINGS_FLAG);

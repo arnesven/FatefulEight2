@@ -306,7 +306,7 @@ public class Model {
     }
 
     private boolean endOfGameReached() {
-        return getParty().getReputation() >= REP_TO_WIN || gameData.day > 100;
+        return gameData.day > 100;
     }
 
     public void setGameOver(boolean wipedOut) {

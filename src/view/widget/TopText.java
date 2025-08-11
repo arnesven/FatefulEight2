@@ -17,7 +17,6 @@ public class TopText {
     public static final String HORSE_SETTINGS_FLAG = "showHorsesInTopBar";
     public static final String ALIGNMENT_SETTINGS_FLAG = "showAlignmentInTopBar";
     public static final String NOTORIETY_SETTINGS_FLAG = "showNotorietyInTopBar";
-    public static final String REPUTATION_SETTINGS_FLAG = "showReputationInTopBar";
     public static final String MATERIALS_SETTINGS_FLAG = "showMaterialsInTopBar";
     public static final String LOCKPICKS_SETTINGS_FLAG = "showLockpicksInTopBar";
     public static final String INGREDIENTS_SETTINGS_FLAG = "showIngredientsInTopBar";
@@ -74,9 +73,6 @@ public class TopText {
         }
         if (isFlagSet(model, LOCKPICKS_SETTINGS_FLAG)) {
             col = addLockpicks(model, col);
-        }
-        if (isFlagSet(model, REPUTATION_SETTINGS_FLAG)) {
-            col = addReputation(model, col);
         }
         if (isFlagSet(model, KEY_REMINDERS_SETTINGS_FLAG)) {
             drawKeyTexts(model);
@@ -151,12 +147,6 @@ public class TopText {
     private int addIngredients(Model model, int col) {
         return printWithIcon(model, col, String.format("%3d", model.getParty().getInventory().getIngredients()),
                 INGREDIENTS_ICON_SPRITE, MyColors.LIGHT_GREEN);
-    }
-
-    private int addReputation(Model model, int col) {
-        return printWithIcon(model, col,
-                String.format("%3d",  model.getParty().getReputation()),
-                REP_ICON_SPRITE, MyColors.WHITE);
     }
 
     private int printWithIcon(Model model, int col, String format, CharSprite icon, MyColors textColor) {

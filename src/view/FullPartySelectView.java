@@ -52,7 +52,6 @@ public class FullPartySelectView extends SelectableListMenu {
     private int startingMaterials = 0;
     private int startingIngredients = 0;
     private int startingLockpicks = 0;
-    private int startingRep = 0;
     private int startingNotoriety = 0;
     private int expandDirection = 0;
     private int startingDay = 1;
@@ -117,8 +116,6 @@ public class FullPartySelectView extends SelectableListMenu {
                 }
 
                 y = yStart + 2;
-                BorderFrame.drawString(model.getScreenHandler(), "Party ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
-                BorderFrame.drawString(model.getScreenHandler(), "Rep: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Notoriety: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 y++;
                 BorderFrame.drawString(model.getScreenHandler(), "World ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
@@ -232,18 +229,7 @@ public class FullPartySelectView extends SelectableListMenu {
                 }
             });
         }
-        int partyRow = yStart + 3;
-        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 4, partyRow++, String.format("%3d", startingRep)) {
-            @Override
-            public void turnLeft(Model model) {
-                startingRep = Arithmetics.decrementWithWrap(startingRep, 11);
-            }
-
-            @Override
-            public void turnRight(Model model) {
-                startingRep = Arithmetics.incrementWithWrap(startingRep, 11);
-            }
-        });
+        int partyRow = yStart + 2;
         content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 4, partyRow++, String.format("%3d", startingNotoriety)) {
             @Override
             public void turnLeft(Model model) {
@@ -548,7 +534,6 @@ public class FullPartySelectView extends SelectableListMenu {
                 it.addYourself(model.getParty().getInventory());
             }
         }
-        model.getParty().addToReputation(startingRep - model.getParty().getReputation());
         model.getParty().addToNotoriety(startingNotoriety - model.getParty().getNotoriety());
         model.setWorldState(expandDirection);
         model.setDay(startingDay);

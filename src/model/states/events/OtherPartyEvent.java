@@ -287,7 +287,7 @@ public class OtherPartyEvent extends DailyEventState {
     private OtherPartySubView makeOtherPartySubView(Model model) {
         this.otherPartyMembers = new ArrayList<>();
         this.otherPartyLevel = MyRandom.randInt(2, 5);
-        int baseAttitude = MyRandom.randInt(-35, Math.min(20, model.getParty().getReputation()*5));
+        int baseAttitude = MyRandom.randInt(-model.getParty().getNotoriety() / 2, 20);
         System.out.println("Base attitude of other party is: " + baseAttitude);
         int maxLeadership = -100;
         this.leader = null;
