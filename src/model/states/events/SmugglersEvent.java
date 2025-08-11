@@ -175,7 +175,6 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
                 portraitSay("Yes. This is 'Devil's Draught', it will kill anybody who has the tiniest sip. " +
                         "I better get this stored away safely.");
                 leaderSay("Yes. Don't want that stuff to get lost.");
-                // Reduce notoriety or gain reputation
                 portraitSay("You've done a great service for our town.");
                 if (model.getParty().getNotoriety() > 0) {
                     portraitSay("To tell you the truth, I know you've had trouble with the law in the past. " +

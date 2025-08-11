@@ -19,7 +19,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     private static final int DIALOG_HEIGHT = 41;
     private String title = "";
     private String text = "";
-    private static final String REPUTATION_TEXT =
+    private static final String ENDING_TEXT =
             "You have achieved marvelous things. You have explored the world. " +
             "You have defeated mighty foes. You have done many good deeds " +
             "(and perhaps some bad ones too). You are now one of the most " +
@@ -40,7 +40,7 @@ public class EndOfGameDialog extends SelectableListMenu {
         ClientSoundManager.stopPlayingBackgroundSound();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.endingSong);
         title = "the end of your adventures";
-        text = REPUTATION_TEXT;
+        text = ENDING_TEXT;
     }
 
     @Override

@@ -11,8 +11,8 @@ public class TutorialGoingOnQuests extends SubChapterHelpDialog {
             "successfully perform all the tasks required to reach the green star node. A quest " +
             "is failed if the party reaches the red X node.\n\n" +
             "You cannot always flee from combat during quests, so be very careful.\n\n" +
-            "When a quest is successfully completed rewards usually include increased " +
-            "party reputation, gold and or experience points for the party members.";
+            "When a quest is successfully completed rewards usually include gold and/or experience " +
+            "points for the party members and perhaps unlocked achievements.";
 
     public TutorialGoingOnQuests(GameView view) {
         super(view, "Going on Quests", text);

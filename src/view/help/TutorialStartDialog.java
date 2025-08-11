@@ -17,7 +17,7 @@ public class TutorialStartDialog extends HelpDialog {
 
     private static final String text =
             "You've decided to leave your old life behind to become an adventurer.\n\n" +
-            "Your objective is to achieve a Party Reputation of " + Model.REP_TO_WIN + " within 100 days.\n\n\n\n" +
+            "Can you become a famous adventurer " + Model.REP_TO_WIN + " within 100 days?\n\n\n\n" +
             "You have many things to learn about adventuring, but perhaps you already know it? " +
             "Would you like to enable the tutorial?";
     private static final String EXTRA = "\n\nThere are many help pages to browse. Press F3 to enter search mode.";

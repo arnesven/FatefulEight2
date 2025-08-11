@@ -16,7 +16,6 @@ public class GameScore extends HashMap<String, Integer> {
 
     public static GameScore calculate(Model model) {
         GameScore gs = new GameScore();
-        gs.put("Days Remaining", (101 - model.getDay()) * 10);
         gs.put("Party Members", model.getParty().partyStrength() * 2);
         int totalGold = totalEquipmentValue(model);
         gs.put("Wealth", totalGold);

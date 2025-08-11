@@ -202,7 +202,6 @@ public class TallSpireEvent extends DailyEventState {
                     exploreRuinsState.printQuote("Recluse", "Yes, you are correct!");
                     exploreRuinsState.printQuote("Recluse", "What a joyous day this is. I shall send my pigeons far " +
                             "and wide to tell of your deed this day!");
-                    exploreRuinsState.println("The party gains 1 reputation!");
                     exploreRuinsState.leaderSay("That's it? That was kind of easy.");
                     exploreRuinsState.printQuote("Recluse", "All questions are easy when one knows the answer.");
                     exploreRuinsState.leaderSay("That's true I guess. I think we'll be going now. Thanks for everything!");

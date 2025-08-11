@@ -4,7 +4,6 @@ import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.conditions.VampirismCondition;
 import model.items.Inventory;
 import model.map.*;
 import model.quests.Quest;
@@ -19,7 +18,6 @@ import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.LogView;
-import view.help.HalfTimeDialog;
 import view.subviews.*;
 
 import java.awt.*;
@@ -63,9 +61,6 @@ public class EveningState extends GameState {
         checkForVampireFeeding(model, this instanceof LodgingState);
         checkForNightTimeEvent(model);
         locationSpecificEvening(model);
-        if (model.getDay() == 50) {
-            model.transitionToDialog(new HalfTimeDialog(model.getView()));
-        }
         super.stepToNextDay(model);
         return nextState(model);
     }

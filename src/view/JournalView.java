@@ -38,7 +38,6 @@ public class JournalView extends TwoPaneSelectableListMenu {
         this.questsAndTasks = new ArrayList<>();
         addSummons(model);
         questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
-        addMonasteryTask(model);
         addRareBirdTask(model);
         addPuzzleTubeTasks(model);
         addGenericQuests(model);
@@ -188,13 +187,6 @@ public class JournalView extends TwoPaneSelectableListMenu {
             return nextView;
         }
         return super.getNextView(model);
-    }
-
-
-    private void addMonasteryTask(Model model) {
-        if (VisitMonasteryEvent.hasVisited(model)) {
-            questsAndTasks.add(new DonateAtMonasteryTask(model));
-        }
     }
 
 

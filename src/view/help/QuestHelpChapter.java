@@ -6,9 +6,10 @@ import java.util.List;
 
 public class QuestHelpChapter extends ExpandableHelpDialog {
     private static final String TEXT =
-            "Quests are the main qay of getting Reputation points and can " +
+            "Quests can " +
             "generally be found in towns and castles. Quests are often also a good " +
-            "way of earning some gold and experience points for your party.";
+            "way of earning some gold and experience points for your party. " +
+                    "Most quest also unlock achievements.";
 
     public QuestHelpChapter(GameView view) {
         super(view, "Quests", TEXT, false);
