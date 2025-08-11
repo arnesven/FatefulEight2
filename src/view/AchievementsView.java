@@ -13,8 +13,8 @@ import java.util.List;
 public class AchievementsView extends SelectableListMenu {
     private static final int COLUMN_RIGHT = 30;
 
-    public AchievementsView(Model model) {
-        super(model.getView(), StatisticsView.WIDTH, StatisticsView.HEIGHT);
+    public AchievementsView(GameView previous) {
+        super(previous, StatisticsView.WIDTH, StatisticsView.HEIGHT);
     }
 
     @Override

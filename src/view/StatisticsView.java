@@ -93,7 +93,7 @@ public class StatisticsView extends SelectableListMenu {
         result.add(new PermanentlyEnabledListContent(leftColumn, row++, format(46, 10, "Achievements", achievements)) {
             @Override
             public void performAction(Model model, int x, int y) {
-                setInnerMenu(new AchievementsView(model), model);
+                setInnerMenu(new AchievementsView(StatisticsView.this), model);
             }
         });
 

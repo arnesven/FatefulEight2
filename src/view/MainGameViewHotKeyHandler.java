@@ -9,6 +9,8 @@ public class MainGameViewHotKeyHandler {
     public static GameView handle(MainGameView gameView, KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
             return new PartyView(gameView);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
+            return new AchievementsView(gameView);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
             return new SkillsView(gameView);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_Z) {
