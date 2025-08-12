@@ -4,6 +4,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.spells.SkillBoostingSpell;
 import model.items.spells.Spell;
+import util.MyLists;
 import util.MyPair;
 
 import java.util.*;
@@ -64,5 +65,9 @@ public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
             MyPair<Spell, GameCharacter> pair = getCastSpell();
             pair.first.triggerInterrupt(pair.second);
         }
+    }
+
+    public boolean isAlreadyCasting(GameCharacter gc) {
+        return MyLists.any(this, pair -> pair.second == gc);
     }
 }

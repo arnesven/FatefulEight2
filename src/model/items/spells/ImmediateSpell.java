@@ -10,13 +10,13 @@ public abstract class ImmediateSpell extends AuxiliarySpell {
         super(name, cost, color, difficulty, hpCost);
     }
 
-    public String castFromMenu(Model model, GameCharacter gc) {
+    @Override
+    public String tryCastSpell(Model model, GameCharacter gc) {
         if (model.isInCombat()) {
             return "You cannot cast " + getName() + " right now.";
         }
         model.getSpellHandler().acceptSpell(getName());
-        model.getSpellHandler().tryCast(this, gc);
-        return gc.getFirstName() + " is casting " + getName() + "...";
+        return super.tryCastSpell(model, gc);
     }
 
     @Override

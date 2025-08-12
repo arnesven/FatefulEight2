@@ -16,11 +16,11 @@ public class DimensionDoorSpell extends ImmediateSpell {
         super("Dimenson Door", 38, MyColors.BLUE, 8, 4);
     }
 
-    public String castFromMenu(Model model, GameCharacter gc) {
+    public String tryCastSpell(Model model, GameCharacter gc) {
         if (model.getParty().getHeadquarters() == null) {
             return  "You cannot cast " + getName() + " right now. (You do not have a Headquarters.)";
         }
-        return super.castFromMenu(model, gc);
+        return super.tryCastSpell(model, gc);
     }
 
     @Override

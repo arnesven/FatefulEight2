@@ -50,7 +50,7 @@ public class DragonTamingSpell extends AuxiliarySpell {
         return SPRITE;
     }
 
-    public String castFromMenu(Model model, GameCharacter gc) {
+    public String tryCastSpell(Model model, GameCharacter gc) {
         if (model.isInCombat()) {
             return getName() + " must be cast as a combat action while in combat.";
         }

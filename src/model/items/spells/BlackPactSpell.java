@@ -42,10 +42,9 @@ public class BlackPactSpell extends AuxiliarySpell {
         return "For the remainder of the day, spells cost 2 less HP to cast.";
     }
 
-    public String castFromMenu(Model model, GameCharacter gc) {
+    public String tryCastSpell(Model model, GameCharacter gc) {
         model.getSpellHandler().acceptSpell(getName());
-        model.getSpellHandler().tryCast(this, gc);
-        return gc.getFirstName() + " is casting " + getName() + "...";
+        return super.tryCastSpell(model, gc);
     }
 
     @Override

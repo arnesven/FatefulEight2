@@ -72,13 +72,7 @@ public abstract class Spell extends Item {
         GameStatistics.incrementSpellsAttempts();
         state.println(caster.getName() + " tries to cast " + getName() + "...");
         model.getTutorial().spells(model);
-        int health = hpCost;
-        if (caster.getEquipment().getAccessory() != null) {
-            health = Math.max(0, hpCost - caster.getEquipment().getAccessory().getSpellDiscount(this));
-        }
-        if (caster.hasCondition(BlackPactCondition.class)) {
-            health = Math.max(0, health - 2);
-        }
+        int health = getModifiedHealthCost(caster);
         if (!isCastFromScroll) {
             caster.addToHP(-health);
             if (state instanceof CombatEvent) {
@@ -96,6 +90,17 @@ public abstract class Spell extends Item {
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster,
                 getSkillForColor(color), difficulty, getExperience(), castingBonus);
         return result.isSuccessful();
+    }
+
+    private int getModifiedHealthCost(GameCharacter caster) {
+        int health = hpCost;
+        if (caster.getEquipment().getAccessory() != null) {
+            health = Math.max(0, hpCost - caster.getEquipment().getAccessory().getSpellDiscount(this));
+        }
+        if (caster.hasCondition(BlackPactCondition.class)) {
+            health = Math.max(0, health - 2);
+        }
+        return health;
     }
 
     protected void successfullyCastHook(Model model, GameState state, GameCharacter caster) { }
@@ -158,11 +163,26 @@ public abstract class Spell extends Item {
         return hpCost;
     }
 
-    public String castFromMenu(Model model, GameCharacter gc) {
-        if (!model.getSpellHandler().tryCast(this, gc)) {
-            return "You cannot cast " + getName() + " right now.";
+    public final String castFromMenu(Model model, GameCharacter gc) {
+        if (getModifiedHealthCost(gc) >= gc.getHP()) {
+            return gc.getFirstName() + " refuses to cast the spell, since the effects " +
+                    "would kill " + GameState.hisOrHer(gc.getGender()) + ".";
+        }
+        if (model.getSpellHandler().isAlreadyCasting(gc)) {
+            return gc.getFirstName() + " is already casting a spell!";
+        }
+        String reason = tryCastSpell(model, gc);
+        if (reason != null) {
+            return reason;
         }
         return gc.getFirstName() + " is casting " + getName() + "...";
+    }
+
+    protected String tryCastSpell(Model model,  GameCharacter gc) {
+        if (model.getSpellHandler().tryCast(this, gc)) {
+            return null;
+        }
+        return "You cannot cast " + getName() + " right now.";
     }
 
     public void setCastFromScroll(boolean b) {

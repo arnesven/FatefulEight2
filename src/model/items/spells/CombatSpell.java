@@ -44,7 +44,7 @@ public abstract class CombatSpell extends MasterySpell {
     }
 
     @Override
-    public String castFromMenu(Model model, GameCharacter gc) {
+    public String tryCastSpell(Model model, GameCharacter gc) {
         if (quest) {
             return super.castFromMenu(model, gc);
         }
