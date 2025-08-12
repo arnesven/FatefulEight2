@@ -43,6 +43,11 @@ public class AchievementsView extends SelectableListMenu {
                         setInnerMenu(new AchievementDescriptionView(AchievementsView.this, a.getDescription()),
                                  model);
                     }
+
+                    @Override
+                    public boolean isEnabled(Model model) {
+                        return true;
+                    }
                 });
             } else {
                 contents.add(new ListContent(finalX, finalY, (char)0xBC + a.getName()));
