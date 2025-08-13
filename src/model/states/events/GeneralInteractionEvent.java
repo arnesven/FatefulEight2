@@ -167,9 +167,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                         "'s purse (Security " + result.asString() + ").");
             }
             if (teleUsed || result.isSuccessful()) {
-                GameStatistics.incrementGoldPickpocketed(stealMoney);
+                GameStatistics.incrementGoldStolen(stealMoney);
                 println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");
-                getModel().getParty().addToGold(stealMoney);
+                getModel().getParty().earnGold(stealMoney);
                 leaderSay("Please excuse us " + victim + ", we have pressing matters to attend.");
                 portraitSay(MyRandom.sample(List.of("Oh... alright.", "I see, goodbye.",
                         "Safe travels.", "I understand, farewell")));

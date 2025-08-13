@@ -76,6 +76,6 @@ public class AristocratAssassinationEndingEvent extends AssassinationEndingEvent
 
     private void findCache(Model model) {
         println("You find the cache under the stairs (150 gold) and put it in your pocket.");
-        model.getParty().addToGold(150);
+        model.getParty().earnGold(150);
     }
 }

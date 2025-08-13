@@ -83,7 +83,7 @@ public class PickSamuraiSwordState extends DailyEventState {
         } else {
             print("Pay " + sword.getCost() + " gold for the " + sword.getTypeName() + "? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-sword.getCost());
+                model.getParty().spendGold(sword.getCost());
                 println("You hand " + sword.getCost() + " to the smith.");
                 println("The smith brings the sword down from the wall and hands it over to you.");
                 printQuote("Smith", "It was crafted with the finest precision. Take good care of it.");

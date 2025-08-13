@@ -28,7 +28,7 @@ public class PartyLowOnCashEvent extends DailyEventState {
             partyMemberSay(goodGuy, "The party is worth it.");
         }
         println("The party gains " + amount + " gold.");
-        model.getParty().addToGold(amount);
+        model.getParty().goldTransaction(amount);
         model.getParty().getLeader().addToAttitude(goodGuy, amount);
         model.getLog().waitForAnimationToFinish();
         showPartyAttitudesSubView(model);

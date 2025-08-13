@@ -36,7 +36,7 @@ public class Reward implements Serializable {
 
     public void giveYourself(Model model) {
         Party party = model.getParty();
-        party.addToGold(gold);
+        party.earnGold(gold);
         party.addToNotoriety(notoriety);
         MyLists.forEach(party.getPartyMembers(), (GameCharacter gc) -> party.giveXP(model, gc, exp));
     }

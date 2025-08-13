@@ -82,7 +82,7 @@ public class HorseRaceCup extends TournamentEvent {
         leaderSay("Okay, we're in.");
         if (!sponsored) {
             println("You pay the official " + ENTRY_FEE + " gold.");
-            model.getParty().addToGold(-ENTRY_FEE);
+            model.getParty().spendGold(ENTRY_FEE);
         } else {
             println("The stranger pays the entry fee to the official.");
         }
@@ -172,7 +172,7 @@ public class HorseRaceCup extends TournamentEvent {
             println("The official at the booth smiles at you.");
             showOfficial();
             portraitSay("Here's your prize money! Spend it well.");
-            model.getParty().addToGold(100);
+            model.getParty().earnGold(100);
             println("The party receives 100 gold!");
             if (sponsored) {
                 println("You are about to leave the racing grounds when the mysterious sponsor shows up out of nowhere.");
@@ -181,7 +181,7 @@ public class HorseRaceCup extends TournamentEvent {
                 print("Let the mysterious sponsor have 50 gold? (Y/N) ");
                 if (yesNoInput()) {
                     leaderSay("Oh okay...");
-                    model.getParty().addToGold(-50);
+                    model.getParty().loseGold(50);
                     portraitSay("Much obliged! Toodeloo!");
                     println("The mysterious sponsor then disappears...");
                     leaderSay("How odd...");
@@ -213,7 +213,7 @@ public class HorseRaceCup extends TournamentEvent {
                 partyMemberSay(winner, "Thanks!");
                 println(winner.getName() + " has contributed an extra 25 gold and a horse, a " + horses.get(winner).getName() +
                         ", to the party.");
-                model.getParty().addToGold(25);
+                model.getParty().goldTransaction(25);
                 model.getParty().getHorseHandler().addHorse(horses.get(winner));
             } else {
                 leaderSay("Sorry " + winner.getFirstName() + ". I don't think it's a good match.");

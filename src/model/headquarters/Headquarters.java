@@ -1,5 +1,6 @@
 package model.headquarters;
 
+import model.GameStatistics;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
@@ -152,6 +153,7 @@ public class Headquarters implements Serializable {
         if (investProfit > 0) {
             logEntry.append("A courier from a shop in town came by and deposited ").append(investProfit).append(" gold.\n");
             addToGold(investProfit);
+            GameStatistics.incrementGoldEarned(investProfit);
         }
     }
 

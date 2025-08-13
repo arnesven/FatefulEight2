@@ -65,7 +65,7 @@ public class WagonTravelEvent extends DailyEventState {
                     if (model.getParty().getGold() >= cost) {
                         print("Offer " + cost + " gold? (Y/N) ");
                         if (yesNoInput()) {
-                            model.getParty().addToGold(-cost);
+                            model.getParty().spendGold(cost);
                             rideAndThanks(model, path);
                         } else {
                             leaderSay("I think we'll walk then.");

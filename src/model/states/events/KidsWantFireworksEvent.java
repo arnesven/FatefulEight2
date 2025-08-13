@@ -148,7 +148,7 @@ public class KidsWantFireworksEvent extends DailyEventState {
         portraitSay("Yeah... why don't you take this. It's not much, but you've earned it.");
         println("The man hands you a small bag of coins.");
         println("The party receives " + gold + " gold.");
-        model.getParty().addToGold(gold);
+        model.getParty().earnGold(gold);
         leaderSay("Thanks.");
     }
 

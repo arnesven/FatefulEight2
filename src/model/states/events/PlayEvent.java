@@ -42,7 +42,7 @@ public class PlayEvent extends DailyEventState {
         } else {
             print(" Do you pay? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-cost);
+                model.getParty().spendGold(cost);
                 boolean bardGender = MyRandom.randInt(2) == 0;
                 println("The play features a romantic tale between an elf prince and a human common waif. " +
                         "It is truly very good. You feel your spirits have indeed been lifted by the play.");

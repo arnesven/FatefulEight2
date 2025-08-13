@@ -110,7 +110,9 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Distance travelled", GameStatistics.getDistanceTraveled()));
         result.add(makeIntLine(leftColumn, row++, "Rations consumed", GameStatistics.getRationsConsumed()));
         result.add(makeIntLine(leftColumn, row++, "Gold earned", GameStatistics.getGoldEarned()));
+        result.add(makeIntLine(leftColumn, row++, "Gold spent", GameStatistics.getGoldSpent()));
         result.add(makeIntLine(leftColumn, row++, "Gold lost", GameStatistics.getGoldLost()));
+        result.add(makeIntLine(leftColumn, row++, "Wages paid", GameStatistics.getWagesPaid()));
 
         if (model.getParty().getHeadquarters() != null) {
             row++;
@@ -198,7 +200,7 @@ public class StatisticsView extends SelectableListMenu {
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "CRIME"));
-        result.add(makeIntLine(leftColumn, row++, "Gold pick pocketed", GameStatistics.getPickpocketGold()));
+        result.add(makeIntLine(leftColumn, row++, "Gold stolen", GameStatistics.getGoldStolen()));
         result.add(makeIntLine(leftColumn, row++, "Items stolen", GameStatistics.getItemsStolen()));
         result.add(makeIntLine(leftColumn, row++, "Maximum notoriety", GameStatistics.getMaximumNotoriety()));
         result.add(makeIntLine(leftColumn, row++, "Current Brotherhood loan", getLoanAmount(model)));

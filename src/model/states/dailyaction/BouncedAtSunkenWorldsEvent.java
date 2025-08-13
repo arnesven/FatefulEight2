@@ -49,7 +49,7 @@ public class BouncedAtSunkenWorldsEvent extends DailyEventState {
                 println("You realize you do not have any gold, so you simply walk away from the beggar.");
             } else {
                 println("You hand the beggar a gold piece.");
-                model.getParty().addToGold(-1);
+                model.getParty().loseGold(1);
                 portraitSay("Mighty generous of you " + sirOrMam + ". Say, if you really wanna get " +
                         "into the Sunken Worlds, ya can easily hoodwink that bouncer.");
                 leaderSay("Go on.");

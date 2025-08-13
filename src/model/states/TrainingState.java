@@ -50,7 +50,7 @@ public class TrainingState extends GameState {
         if (cantAfford || !yesNoInput()) {
             return model.getCurrentHex().getDailyActionState(model);
         }
-        model.getParty().addToGold(-TUITION_FEA);
+        model.getParty().spendGold(TUITION_FEA);
 
         this.matrix = new SteppingMatrix<>(TRAINING_COLUMNS, TRAINING_ROWS);
         addPartyRandomlyToMatrix(model);
@@ -94,7 +94,7 @@ public class TrainingState extends GameState {
     private void doTempleChores(Model model, GameCharacter gc) {
         String job = MyRandom.sample(List.of("cleaning floors", "cooking meals", "brewing ale", "peeling potatoes", "doing laundry"));
         println(gc.getName() + " helps the priests by " + job + ", gets paid 1 gold.");
-        model.getParty().addToGold(1);
+        model.getParty().earnGold(1);
         model.getLog().waitForAnimationToFinish();
     }
 

@@ -98,7 +98,7 @@ public class CrimsonAssassinsInvitationEvent extends DailyEventState {
         if (yesNoInput()) {
             leaderSay("Yes. Give me the gold.");
             println("The stranger hands you " + WritOfExecution.getPayment() + " gold.");
-            model.getParty().addToGold(WritOfExecution.getPayment());
+            model.getParty().earnGold(WritOfExecution.getPayment());
             portraitSay("Excellent. Here you go. Remember, you have " + deadlineDays + " days to carry out the order.");
             leaderSay("Don't worry. I'll get it done in time.");
             portraitSay("I'm not worried. Actually I don't care one way or the other. I'm just a messenger.");

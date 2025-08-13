@@ -116,7 +116,7 @@ public class NecromancerRitual extends RitualEvent {
                 }
                 int gold = MyRandom.randInt(10, 30);
                 println("You find " + gold + " gold");
-                model.getParty().addToGold(gold);
+                model.getParty().earnGold(gold);
                 int ingredients = MyRandom.randInt(10, 25);
                 println("You find " + ingredients + " ingredients.");
                 model.getParty().getInventory().addToIngredients(ingredients);

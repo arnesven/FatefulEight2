@@ -127,7 +127,7 @@ public class MineEvent extends DailyEventState {
                 boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, difficulty);
                 if (success) {
                     println("The party gains " + gold + " gold!");
-                    model.getParty().addToGold(gold);
+                    model.getParty().earnGold(gold);
                 }
                 break;
             default: // 10

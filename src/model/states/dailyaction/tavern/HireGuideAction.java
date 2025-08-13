@@ -30,7 +30,7 @@ public class HireGuideAction extends GameState {
                 leaderSay("You've got yourself a deal.");
                 guideSay(model, this, "You won't regret this.");
                 println("You paid " + COST + " gold to the guide.");
-                model.getParty().addToGold(-COST);
+                model.getParty().spendGold(COST);
                 model.getParty().setGuide(DAYS);
             } else {
                 leaderSay("No thanks.");
@@ -75,12 +75,12 @@ public class HireGuideAction extends GameState {
                     "It's not like I really have any other prospects out here.");
             state.println("You paid " + model.getParty().getGold() + " gold to the guide.");
             int days = model.getParty().getGold() + 1;
-            model.getParty().addToGold(-model.getParty().getGold());
+            model.getParty().spendGold(model.getParty().getGold());
             model.getParty().addToGuide(days);
             state.println("The guide will stay with you for an additional " + days + " days.");
         } else if (model.getParty().getGold() >= COST && state.yesNoInput()) {
             state.println("You paid " + COST + " gold to the guide.");
-            model.getParty().addToGold(-COST);
+            model.getParty().spendGold(COST);
             model.getParty().addToGuide(DAYS);
             guideSay(model, state, "Glad to be of service.");
             state.println("The guide will stay with you for an additional " + DAYS + " days.");

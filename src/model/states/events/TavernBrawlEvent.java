@@ -72,7 +72,7 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
             portraitSay("What is this? Are you some kind of comedian?");
             attack(model, main);
         } else {
-            model.getParty().addToGold(-1);
+            model.getParty().loseGold(1);
             println("You lose 1 gold.");
             println("You slap a coin on the bar and the bartender hands you another jug of beer, " +
                     "which you then hand over to the patron.");

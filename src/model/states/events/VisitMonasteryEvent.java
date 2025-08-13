@@ -181,7 +181,7 @@ public class VisitMonasteryEvent extends DailyEventState {
             portraitSay("A donation of " + amount + " gold, that's " + reaction +
                     " This will help make the Monastery into a wonderful place.");
             leaderSay("You're welcome. You need it more than we do.");
-            model.getParty().addToGold(-amount);
+            model.getParty().spendGold(amount);
             Integer previousDonation = model.getSettings().getMiscCounters().get(PREVIOUS_DONATION_KEY);
             int prev = previousDonation == null ? 0 : previousDonation;
 
@@ -247,7 +247,7 @@ public class VisitMonasteryEvent extends DailyEventState {
         println("The monk rushes off into the monastary. After a few moment, the monk returns with a leather sack.");
         portraitSay("This is all we have. I hope it is enough. I think we'll need armor and shields too.");
         println("The party receives 650 gold!");
-        model.getParty().addToGold(650);
+        model.getParty().earnGold(650);
         leaderSay("It's a start at least. " + iOrWeCap() + " will have to travel to the mainland to get the equipment. " +
                 "While " + imOrWere() + " away you should build barricades and work improve the fortifications around the monastary.");
         portraitSay("I'll spread the word. Bless your soul for doing this!");

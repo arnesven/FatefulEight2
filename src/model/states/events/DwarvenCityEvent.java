@@ -79,7 +79,7 @@ public class DwarvenCityEvent extends DailyEventState {
                     print("Do you pay (Y) or do you try to persuade the dwarf (N)? ");
                     if (yesNoInput()) {
                         println("You hand the dwarf 10 gold through the hatch in the door.");
-                        model.getParty().addToGold(-10);
+                        model.getParty().spendGold(10);
                         admitted(model);
                     } else {
                         attemptPersuade(model);
@@ -189,7 +189,7 @@ public class DwarvenCityEvent extends DailyEventState {
             } else if (d10Roll < 5) {
                 println("The king is pleased to meet you and gives you a small stipend.");
                 println("The party gains 20 gold.");
-                model.getParty().addToGold(20);
+                model.getParty().earnGold(20);
             } else if (d10Roll < 7) {
                 println("The king gladly takes you on a tour of the city and you learn much about its culture and history.");
                 println("Each party member gains 20 experience.");
@@ -228,7 +228,7 @@ public class DwarvenCityEvent extends DailyEventState {
         if (model.getParty().getGold() >= cost) {
             print("Pay " + cost + " to stay at the tavern tonight? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-cost);
+                model.getParty().spendGold(cost);
                 EveningState eveningState = new EveningState(model, false, true, false);
                 eveningState.run(model);
                 setCurrentTerrainSubview(model);

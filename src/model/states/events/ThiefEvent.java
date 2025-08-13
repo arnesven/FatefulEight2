@@ -56,7 +56,7 @@ public class ThiefEvent extends DailyEventState {
                 lost = model.getParty().getGold();
             }
             println("The party loses " + lost + " gold.");
-            model.getParty().addToGold(-lost);
+            model.getParty().loseGold(lost);
             boolean didSay = randomSayIfPersonality(PersonalityTrait.irritable, List.of(model.getParty().getLeader()),
                     "Darn it! we need to keep a better eye on things.");
             if (!didSay) {

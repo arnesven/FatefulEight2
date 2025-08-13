@@ -163,7 +163,7 @@ public class LeagueOfMagesEvent extends DailyEventState {
                     } else {
                         print("Pay the fee of " + ENTRANCE_FEE + " gold to become a member of the League of Mages? (Y/N) ");
                         if (yesNoInput()) {
-                            model.getParty().addToGold(-ENTRANCE_FEE);
+                            model.getParty().spendGold(ENTRANCE_FEE);
                             println("You hand over the gold.");
                             portraitSay("Congratulations. You are now a member of the League of Mages. " +
                                     "Our services will now be available at a discount and you and your friends " +

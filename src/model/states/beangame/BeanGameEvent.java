@@ -148,7 +148,7 @@ public class BeanGameEvent extends DailyEventState {
                 leaderSay("I want to play Singles, but I don't have any obols. I have gold though.");
                 gamblerSay("Don't worry. I've got change.");
                 println("You hand the gambler 1 gold and get 5 obols back.");
-                model.getParty().addToGold(-1);
+                model.getParty().goldTransaction(-1);
                 model.getParty().addToObols(5);
             }
         } else {
@@ -203,7 +203,7 @@ public class BeanGameEvent extends DailyEventState {
             leaderSay("Let me try for the Jackpot.");
             gamblerSay("That's the spirit. Show me a golden coin and pick a board.");
             println("You hand the gambler 1 gold.");
-            model.getParty().addToGold(-1);
+            model.getParty().goldTransaction(-1);
         }
 
         model.getLog().waitForAnimationToFinish();
@@ -259,7 +259,7 @@ public class BeanGameEvent extends DailyEventState {
             println("(" + skillResult.asString() + ".)");
             portraitSay("Hmm... yes, congratulations...");
             println("The gambler brings out a bag of money and counts up your prize. You get " + result + " gold.");
-            model.getParty().addToGold(result);
+            model.getParty().earnGold(result);
         } else {
             portraitSay("Let me just calculate your reward. " + MyStrings.numberWord(prizes.get(0)) +
                     " times " + MyStrings.numberWord(prizes.get(1)) + " times " +
@@ -277,13 +277,13 @@ public class BeanGameEvent extends DailyEventState {
                 partyMemberSay(gc, "Hey, that doesn't seem right! I get it to " + result + " gold.");
                 portraitSay("Yes, of course, how silly of me. An honest mistake, here you go.");
                 println("The gambler nervously pulls out some more money. You get " + result + " gold.");
-                model.getParty().addToGold(result);
+                model.getParty().earnGold(result);
                 return;
             }
 
             leaderSay("Thank you!");
             println("You gladly accept the " + fakeResult + " gold.");
-            model.getParty().addToGold(fakeResult);
+            model.getParty().earnGold(fakeResult);
         }
     }
 

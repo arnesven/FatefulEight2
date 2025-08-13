@@ -61,7 +61,7 @@ public class CourseCoordinator extends CareerOfficePersonNode {
                 }
                 print("Do you attend the course? (Y/N) ");
                 if (yesNoInput()) {
-                    model.getParty().addToGold(-cost);
+                    model.getParty().spendGold(cost);
                     SubView subView = model.getSubView();
                     setCurrentTerrainSubview(model);
                     print("You attend the course, which is held by a group of " + cls.getFullName().toLowerCase() + "s. " +

@@ -34,7 +34,7 @@ public class GetPaidForMonstersDailyAction extends GameState {
             lordSay("No! I believe you. Let me get my purse. What was the promised sum again?");
             leaderSay("It was " + dt.getReward() + " gold pieces.");
             println("The " + location.getLordTitle() + " counts out " + dt.getReward() + " gold pieces and hands them to you.");
-            model.getParty().addToGold(dt.getReward());
+            model.getParty().earnGold(dt.getReward());
             lordSay("Thank you. That " + dt.getMonster().getName() + " has been a real nuisance to us.");
             leaderSay("I'm glad " + iOrWe() + " could be of service.");
             dt.setCompleted(true);

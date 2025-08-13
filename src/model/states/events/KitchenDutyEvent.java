@@ -25,7 +25,7 @@ public class KitchenDutyEvent extends DailyEventState {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             gc.addToSP(-1);
         }
-        model.getParty().addToGold(model.getParty().size());
+        model.getParty().earnGold(model.getParty().size());
         println("The party receives " + model.getParty().size() + " gold.");
     }
 }

@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -37,7 +38,8 @@ public class PartySalaryEvent extends DailyEventState {
             leaderSay("Okay. You can have it. But don't talk about it too much. We don't have enough for everybody to get an advance right now.");
             partyMemberSay(other, "Sure thing. Thanks " + model.getParty().getLeader().getFirstName() + ".");
             other.addToAttitude(model.getParty().getLeader(), +amount/2);
-            model.getParty().addToGold(-amount);
+            model.getParty().loseGold(amount);
+            GameStatistics.incrementWagesPaid(amount);
         } else {
             leaderSay("I'm sorry " + other.getFirstName() + " I can't agree to that.");
             partyMemberSay(other, "Why not? I know we have the money. Don't think I haven't been paying attention.");

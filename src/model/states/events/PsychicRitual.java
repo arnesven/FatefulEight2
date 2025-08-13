@@ -60,7 +60,7 @@ public class PsychicRitual extends RitualEvent {
                     "how to get her to wake up.");
             println("The girls parents happily pays you a reward.");
             println("The party gains " + 30*power + " gold!");
-            model.getParty().addToGold(30*power);
+            model.getParty().earnGold(30*power);
             println("You leave the house of the sleepy girl.");
         } else {
             println("The girl remains fast asleep, despite the best efforts of the mages.");

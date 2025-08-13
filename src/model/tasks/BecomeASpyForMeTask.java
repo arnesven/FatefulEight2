@@ -54,7 +54,7 @@ public class BecomeASpyForMeTask extends SummonTask {
             portraitSay("Splendid. Here's your first paycheck. Now go find out what's happening in my town.");
             summon.increaseStep();
             println("The party receives 20 gold.");
-            model.getParty().addToGold(20);
+            model.getParty().earnGold(20);
         } else {
             portraitSay("Uh, okay. But come back if you change your mind.");
         }

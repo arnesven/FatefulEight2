@@ -163,7 +163,7 @@ public class AuctionEvent extends PersonalityTraitEvent {
             } else {
                 partyMemberSay(main, "FINE. I'll pay...");
                 println(main.getFirstName() + " hands over the money.");
-                model.getParty().addToGold(-250);
+                model.getParty().spendGold(250);
                 portraitSay("Thank you. Here is your item.");
                 ((EquipableItem) item).equipYourself(main);
                 partyMemberSay(main, "What a crock...");

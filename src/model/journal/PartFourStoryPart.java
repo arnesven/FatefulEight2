@@ -226,7 +226,7 @@ public class PartFourStoryPart extends StoryPart {
                         "make sure you have the funds to properly prepare for this mission. Here, take this.");
                 println("The " + castle.getLordTitle() + " hands you a rather sizable purse.");
                 println("The party receives 300 gold!");
-                model.getParty().addToGold(300);
+                model.getParty().earnGold(300);
                 portraitSay("Secondly, I've asked my marshall to fetch the finest equipment we have from our armory. " +
                         "Here he comes now.");
                 showExplicitPortrait(model, marshall, "Marshall");

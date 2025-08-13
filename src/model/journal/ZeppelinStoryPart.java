@@ -295,7 +295,7 @@ public class ZeppelinStoryPart extends StoryPart {
 
         private void buyZeppelin(Model model) {
             leaderSay("Okay Xelbi, you've got yourself a deal.");
-            model.getParty().addToGold(-250);
+            model.getParty().spendGold(250);
             if (step == 0) {
                 portraitSay("Okay then. I'll inflate the balloon.");
                 println("Xelbi gets to work connecting a large hose to the balloon. Slowly it inflates while you " +

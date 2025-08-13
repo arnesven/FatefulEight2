@@ -29,7 +29,7 @@ public class MissingGlassesTask extends SummonTask {
                 summon.increaseStep();
                 portraitSay("There they are, thank goodness. Here, let me pay you for your trouble.");
                 println("The party receives 25 gold.");
-                model.getParty().addToGold(25);
+                model.getParty().earnGold(25);
             }
         } else {
             portraitSay("Uh, okay. But come back if you change your mind! " +

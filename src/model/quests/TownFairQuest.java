@@ -123,7 +123,7 @@ public class TownFairQuest extends Quest {
     private static void payOutFromSoloSkillCheckSubScene(Model model, QuestState state) {
         int gold = 50;
         state.println("You received " + gold + " gold!");
-        model.getParty().addToGold(gold);
+        model.getParty().earnGold(gold);
     }
 
     private static class PayOutSoloSkillCheckSubScene extends SoloSkillCheckSubScene {
@@ -167,7 +167,7 @@ public class TownFairQuest extends Quest {
             if (toReturn) {
                 int gold = model.getParty().size() * 10;
                 state.println("You received " + gold + " gold!");
-                model.getParty().addToGold(gold);
+                model.getParty().earnGold(gold);
             }
             return toReturn;
         }

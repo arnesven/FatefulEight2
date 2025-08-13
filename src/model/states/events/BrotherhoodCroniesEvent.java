@@ -41,7 +41,7 @@ public class BrotherhoodCroniesEvent extends DailyEventState {
             if (bribeCost <= model.getParty().getGold()) {
                 print("Pay " + bribeCost + " gold? (Y/N)");
                 if (yesNoInput()) {
-                    model.getParty().addToGold(-bribeCost);
+                    model.getParty().loseGold(bribeCost);
                     println("The party lost " + bribeCost + " gold.");
                     portraitSay("For now...");
                 }

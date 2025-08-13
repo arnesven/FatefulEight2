@@ -32,9 +32,9 @@ public class OutpostEvent extends DailyEventState {
             if (yesNoInput()) {
                 if (model.getParty().getGold() < model.getParty().size()) {
                     println("The proprietor scoffs as you short him.");
-                    model.getParty().addToGold(-model.getParty().getGold());
+                    model.getParty().spendGold(model.getParty().getGold());
                 } else {
-                    model.getParty().addToGold(-model.getParty().size());
+                    model.getParty().spendGold(model.getParty().size());
                 }
                 stayingAtInn = true;
             }

@@ -43,7 +43,7 @@ public class TravelBySeaState extends GameState {
             } else {
                 print("Do you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
                 if (yesNoInput()) {
-                    model.getParty().addToGold(-cost);
+                    model.getParty().spendGold(cost);
                     travelTo(model, ship.first);
                 } else {
                     println("Ok. But come back soon if you change your mind. The ship will not wait for you.");

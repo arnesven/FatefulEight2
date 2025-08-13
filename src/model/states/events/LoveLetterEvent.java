@@ -48,7 +48,7 @@ public class LoveLetterEvent extends LetterOnTheStreetEvent {
                     println("Doug thanks you profusely for finding the letter and rewards you with some gold.");
                 }
                 println("The party receives " + reward + " gold.");
-                model.getParty().addToGold(reward);
+                model.getParty().earnGold(reward);
             } else {
                 println("After spending an hour trying to find the sender of the letter without any luck, you simply give up and " +
                         "put the letter back on the ground where you found it.");
@@ -65,7 +65,7 @@ public class LoveLetterEvent extends LetterOnTheStreetEvent {
                 randomSayIfPersonality(PersonalityTrait.romantic, new ArrayList<>(), "Aaaw, how sweet!");
                 int reward = 10;
                 println("The party gains " + reward + " gold.");
-                model.getParty().addToGold(reward);
+                model.getParty().earnGold(reward);
             } else {
                 println("After spending an hour trying to find Maggie without any luck, you simply give up and " +
                         "put the letter back on the ground where you found it.");

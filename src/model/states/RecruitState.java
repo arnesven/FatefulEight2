@@ -147,7 +147,7 @@ public class RecruitState extends GameState {
             model.getAllCharacters().remove(gc);
             int amount = startingGoldMap.get(gc);
             if (startingGold && amount != 0) {
-                model.getParty().addToGold(amount);
+                model.getParty().goldTransaction(amount);
                 println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
             }
             if (!gc.getCharClass().getStartingItems().isEmpty()) {
@@ -260,7 +260,7 @@ public class RecruitState extends GameState {
         if (roundIncr > 0 && model.getParty().getGold() >= roundIncr) {
             print("Offer to buy the next round (costs " + roundIncr + " gold)? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-roundIncr);
+                model.getParty().spendGold(roundIncr);
                 sum += roundIncr;
             }
         }

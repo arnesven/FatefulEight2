@@ -94,12 +94,12 @@ public class Traveller implements Serializable {
         if (getRemainingDays(model) >= 0) {
             travellerSay(model, state,   "Here's the gold I promised you.");
             state.println("The party receives " + gold + " gold.");
-            model.getParty().addToGold(gold);
+            model.getParty().earnGold(gold);
         } else {
             travellerSay(model, state,   "I just wish we would have gotten here a little sooner. " +
                     "Now there will be consequences and I'm afraid I won't be able to pay you the full amount I promised.");
             state.println("The party receives " + (gold/2) + " gold.");
-            model.getParty().addToGold((gold/2));
+            model.getParty().earnGold((gold/2));
         }
         completionHook.run(model, state, this);
 

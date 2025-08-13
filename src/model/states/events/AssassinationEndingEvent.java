@@ -357,7 +357,7 @@ public abstract class AssassinationEndingEvent extends DailyEventState {
         int gold = MyRandom.rollD10() + 2;
         int obols = MyRandom.randInt(10, 150);
         println("You found " + gold + " gold and " + obols + " obols.");
-        model.getParty().addToGold(gold);
+        model.getParty().earnGold(gold);
         model.getParty().addToObols(obols);
     }
 

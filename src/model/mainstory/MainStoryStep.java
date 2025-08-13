@@ -76,7 +76,7 @@ public enum MainStoryStep {
         mainStory.getStoryParts().get(4).progress(); // Get stuff from lord
         mainStory.addStoryPart(new ZeppelinStoryPart(model.getMainStory().getXelbiPosition(), "FJANT"));
         mainStory.getStoryParts().get(4).transitionStep(model);
-        model.getParty().addToGold(300);
+        model.getParty().earnGold(300);
     }),
     XELBI_MET((model, mainStory) -> {
         mainStory.getStoryParts().get(5).progress();  // Meet Xelbi and find out about zeppelin

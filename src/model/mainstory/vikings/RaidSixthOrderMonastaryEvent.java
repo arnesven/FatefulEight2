@@ -81,7 +81,7 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
         randomSayIfPersonality(PersonalityTrait.lawful, List.of(), "We commited a crime here. We will have to " +
                 "live with the consequences.");
         randomSayIfPersonality(PersonalityTrait.benevolent, List.of(), "Our consciences will be forever burdened by this atrocity.");
-        model.getParty().addToGold(300);
+        model.getParty().earnGold(300);
         model.getParty().addToFood(100);
         model.getParty().getInventory().addToIngredients(100);
         println("The party gains 300 gold, 100 food and 100 ingredients!");

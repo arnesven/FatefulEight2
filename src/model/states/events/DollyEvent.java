@@ -62,7 +62,7 @@ public class DollyEvent extends DailyEventState {
                 print("Do you spend 10 gold on the dolly? (Y/N) ");
                 if (yesNoInput()) {
                     leaderSay("You know, I remember when I was a kid. Some things seemed so important...");
-                    model.getParty().addToGold(-10);
+                    model.getParty().spendGold(10);
                     println("You buy the doll and return to the mother and child. You hand the dolly over to the child, who grabs " +
                             "it and runs off in glee. The mother turns to you with a smile.");
                     getReward(model, childGender);

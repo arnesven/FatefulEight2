@@ -134,7 +134,7 @@ public class DiggingGameEvent extends DailyEventState {
             printQuote("Farmer", "Nah... You were just lucky. Here's your obols and your gold back.");
             gainObols(model, matrix);
             println("You got your 10 gold back.");
-            model.getParty().addToGold(10);
+            model.getParty().earnGold(10);
             increaseWinCount(model);
         }
         model.getLog().waitForAnimationToFinish();
@@ -156,7 +156,7 @@ public class DiggingGameEvent extends DailyEventState {
             if (model.getParty().getGold() >= hintCost && yesNoInput()) {
                 leaderSay("Fine, here.");
                 println("You give the farmer " + hintCost + " gold.");
-                model.getParty().addToGold(-hintCost);
+                model.getParty().spendGold(hintCost);
             } else {
                 leaderSay(hintCost + " gold? Darn, you're really milking me here, aren't you?");
                 printQuote("Farmer", "The only one I'm milking is Old Bessy at dawn. " +
@@ -241,7 +241,7 @@ public class DiggingGameEvent extends DailyEventState {
             print("Pay 10 gold to play the digging game? (Y/N) ");
             if (yesNoInput()) {
                 leaderSay("I'm in. Here's your gold.");
-                model.getParty().addToGold(-10);
+                model.getParty().spendGold(10);
                 portraitSay("If you want, you can mark the spaces where you think the boulders are. I won't mind.");
                 leaderSay("That may be help, thanks for the tip.");
                 portraitSay("Good luck friend!");

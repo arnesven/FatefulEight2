@@ -95,7 +95,7 @@ public class CareerCoachNode extends CareerOfficePersonNode {
                         }
                         println("When it's all over, the career coach approaches you.");
                         coachSay("That was splendid! I think everybody got a real eye opener! Here's your wages.");
-                        model.getParty().addToGold(120);
+                        model.getParty().earnGold(120);
                         println("You receive 120 gold.");
                         model.setTimeOfDay(TimeOfDay.EVENING);
                         model.getLog().waitForAnimationToFinish();

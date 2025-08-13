@@ -71,7 +71,7 @@ public class TakeLoanAction extends GameState {
             if (yesNoInput()) {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "Fine, take it. Now go tell your cronies to back off.");
-                model.getParty().addToGold(-cost);
+                model.getParty().loseGold(cost);
                 model.getParty().setLoan(null);
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Not right now...");
@@ -94,10 +94,10 @@ public class TakeLoanAction extends GameState {
         int choice = multipleOptionArrowMenu(model, 28, 20, List.of("Small Loan (50)", "Large Loan (100)", "No thank you!"));
         if (choice == 0) {
             model.getParty().setLoan(new Loan(50, model.getDay()));
-            model.getParty().addToGold(50);
+            model.getParty().goldTransaction(50);
         } else if (choice == 1) {
             model.getParty().setLoan(new Loan(100, model.getDay()));
-            model.getParty().addToGold(100);
+            model.getParty().goldTransaction(100);
         }
         if (choice < 2) {
             agentSay(model,  "Spend it wisely brother. We expect you to pay us back " +
@@ -123,7 +123,7 @@ public class TakeLoanAction extends GameState {
                 print("Do you agree? (Y/N) ");
                 if (yesNoInput()) {
                     leaderSay("Sounds like a good deal. Here's the coin.");
-                    model.getParty().addToGold(-cost);
+                    model.getParty().spendGold(cost);
                     model.getParty().addToNotoriety(-model.getParty().getNotoriety());
                     agentSay(model,  "Thank you. Go enjoy your innocence. I hope it will last, " +
                             "and if it doesn't, well you know where to find me.");
@@ -153,7 +153,7 @@ public class TakeLoanAction extends GameState {
             if (yesNoInput()) {
                 leaderSay("Yes. Give me the gold.");
                 println("The agent hands you " + WritOfExecution.getPayment() + " gold.");
-                model.getParty().addToGold(WritOfExecution.getPayment());
+                model.getParty().earnGold(WritOfExecution.getPayment());
                 JournalEntry.printJournalUpdateMessage(model);
                 model.getParty().addDestinationTask(new AssassinationDestinationTask(writ));
             } else {

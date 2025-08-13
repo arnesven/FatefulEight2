@@ -5,7 +5,7 @@ import model.Party;
 public abstract class CombatLoot {
     public abstract String getText();
     public final void giveYourself(Party party) {
-        party.addToGold(getGold());
+        party.earnGold(getGold());
         party.addToFood(getRations());
         party.getInventory().addToMaterials(getMaterials());
         party.getInventory().addToIngredients(getIngredients());

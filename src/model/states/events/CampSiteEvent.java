@@ -129,7 +129,7 @@ public class CampSiteEvent extends DailyEventState {
             } else if (roll2 == 4) {
                 int gold = MyRandom.randInt(1, 5);
                 println(gc.getName() + " finds " + gold + " gold.");
-                model.getParty().addToGold(gold);
+                model.getParty().earnGold(gold);
             } else if (roll2 == 5) {
                 int ingredients = MyRandom.randInt(2, 12);
                 println(gc.getName() + " finds " + ingredients + " ingeredients.");

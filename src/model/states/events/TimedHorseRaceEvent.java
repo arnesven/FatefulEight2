@@ -57,7 +57,7 @@ public class TimedHorseRaceEvent extends DailyEventState {
         if (time < model.getParty().getHorseHandler().getTimedRaceRecord()) {
             model.getParty().getHorseHandler().setTimedRaceRecord(time);
             portraitSay("You broke the record! Here's your money.");
-            model.getParty().addToGold(20);
+            model.getParty().earnGold(20);
             println("The party receives 20 gold!");
         } else {
             portraitSay("Better luck next time!");

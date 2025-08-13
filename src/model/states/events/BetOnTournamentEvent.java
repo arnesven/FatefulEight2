@@ -92,7 +92,7 @@ public class BetOnTournamentEvent extends TournamentEvent  {
             leaderSay("Here they are!");
             portraitSay("Congratulations, here are your winnings.");
             println("The party gains " + winnings + " gold!");
-            model.getParty().addToGold(winnings);
+            model.getParty().earnGold(winnings);
         } else {
             println(model.getParty().getLeader().getName() +
                     " looks at the betting tickets.");
@@ -191,7 +191,7 @@ public class BetOnTournamentEvent extends TournamentEvent  {
         print("How much would you like to bet on " + fighter.getName() + "? ");
         int bet = integerInput();
         if (0 < bet && bet <= model.getParty().getGold()) {
-            model.getParty().addToGold(-bet);
+            model.getParty().spendGold(bet);
             placedBets.add(new TournamentBet(fighter, bet, odds.get(fighter)));
             printQuote("Official", "I've registered your wager. Here's your ticket.");
         } else if (0 < bet) {

@@ -35,7 +35,7 @@ public class MuggingEvent extends DailyEventState {
             int goldTaken = MyRandom.randInt(model.getParty().getGold());
             println("The party hands over " + foodTaken + " rations and " + goldTaken + " gold.");
             model.getParty().addToFood(-foodTaken);
-            model.getParty().addToGold(-goldTaken);
+            model.getParty().loseGold(goldTaken);
             randomSayIfPersonality(PersonalityTrait.forgiving, List.of(model.getParty().getLeader()),
                     "That was wise and mature of you. Why fight over such a small prize?");
         }

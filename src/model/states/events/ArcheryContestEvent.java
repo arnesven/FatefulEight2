@@ -86,7 +86,7 @@ public class ArcheryContestEvent extends TournamentEvent {
         partyMemberSay(chosen, "I'll enter the contest.");
         if (!sponsored) {
             println("You pay the official " + ENTRY_FEE + " gold.");
-            model.getParty().addToGold(-ENTRY_FEE);
+            model.getParty().spendGold(ENTRY_FEE);
         } else {
             println("The stranger pays the entry fee to the official.");
         }

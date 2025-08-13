@@ -99,7 +99,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
             println("The orcs are also interested in buying materials from you at a rate of 5 gold per material. Are you interested? (Y/N) ");
             while (yesNoInput()) {
                 model.getParty().getInventory().addToMaterials(-1);
-                model.getParty().addToGold(5);
+                model.getParty().earnGold(5);
                 if (model.getParty().getInventory().getMaterials() == 0) {
                     break;
                 }

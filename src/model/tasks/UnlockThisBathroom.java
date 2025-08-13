@@ -40,7 +40,7 @@ public class UnlockThisBathroom extends SummonTask {
                 portraitSay("Well, I do have a small bladder... good thing the lock is fixed. " +
                         "Here, let me pay you for your trouble.");
                 println("The party receives 5 gold.");
-                model.getParty().addToGold(5);
+                model.getParty().earnGold(5);
             }
         } else {
             portraitSay("Uh, okay. But come back if you change your mind! " +

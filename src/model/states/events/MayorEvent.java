@@ -45,7 +45,7 @@ public class MayorEvent extends DailyEventState {
             print("Accept the gold? (Y/N) ");
             if (yesNoInput()) {
                 println("The party gains 10 gold.");
-                model.getParty().addToGold(10);
+                model.getParty().earnGold(10);
                 leaderSay("Thank you.");
                 portraitSay("Safe journeys friend.");
             } else {

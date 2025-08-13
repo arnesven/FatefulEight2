@@ -521,7 +521,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
             for (Item it : belongings) {
                 it.addYourself(model.getParty().getInventory());
             }
-            model.getParty().addToGold(gold);
+            model.getParty().earnGold(gold);
             model.getParty().addToObols(obols);
             model.getParty().getInventory().addToMaterials(materials);
             model.getParty().getInventory().addToIngredients(ingredients);

@@ -39,7 +39,7 @@ public class LetterFromMotherEvent extends DailyEventState {
         println("Under the letter is a pouch. It clinks in a promising way when you lift it up.");
         leaderSay("Oh mother, you shouldn't have...");
         println("The party gains " + GOLD_FROM_MOTHER + " gold!");
-        model.getParty().addToGold(GOLD_FROM_MOTHER);
+        model.getParty().earnGold(GOLD_FROM_MOTHER);
         if (model.getParty().size() > 1) {
             partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "What does the letter say?");
         }

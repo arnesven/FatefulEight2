@@ -28,7 +28,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
     protected void doEvent(Model model) {
         if (!sponsored) {
             println("The party pays " + ENTRY_FEE + " gold to the official.");
-            model.getParty().addToGold(-ENTRY_FEE);
+            model.getParty().spendGold(ENTRY_FEE);
         }
         print("Which party member do you wish to enter into the tournament?");
         GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
@@ -154,7 +154,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         announcerSay("That means we have a winner ladies and gentlemen... It's " + winner.getName() + "!");
         if (winner == chosen) {
             println(chosen.getName() + " accepts the prize money of 100 gold!");
-            model.getParty().addToGold(100);
+            model.getParty().earnGold(100);
             if (sponsored) {
                 handleSponsorWhenWon(model);
             }
@@ -182,7 +182,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         if (model.getParty().getGold() >= ENTRY_FEE) {
             print("Let the mystery man have " + ENTRY_FEE + " gold? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-ENTRY_FEE);
+                model.getParty().loseGold(ENTRY_FEE);
                 leaderSay("Fine... Now this day can't possibly get any worse.");
                 portraitSay("Much appreciated friend. Well good-bye and good luck next time I suppose.");
             } else {
@@ -203,7 +203,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         portraitSay("Congratulations. I knew you had it in you. Now please, pay me my share.");
         print("Do you hand over 50 gold to the stranger? (Y/N) ");
         if (yesNoInput()) {
-            model.getParty().addToGold(-50);
+            model.getParty().loseGold(50);
             portraitSay("Thank you. The Brotherhood likes it when people pay their dues.");
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);

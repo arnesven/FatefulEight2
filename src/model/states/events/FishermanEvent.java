@@ -45,7 +45,7 @@ public class FishermanEvent extends RiverEvent {
             leaderSay("Fine, we'll take it.");
             portraitSay("Excellent. Here you go.");
             println("You lost " + COST + " gold");
-            model.getParty().addToGold(-COST);
+            model.getParty().spendGold(COST);
             println("You got a fishing pole.");
             model.getParty().getInventory().add(new GoodFishingPole());
             leaderSay("We'll be going now.");

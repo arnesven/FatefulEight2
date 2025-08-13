@@ -117,7 +117,7 @@ public class TransferResourceAction extends HeadquartersAction {
 
         @Override
         protected void addToParty(Party party, int amount) {
-            party.addToGold(amount);
+            party.goldTransaction(amount);
         }
 
         @Override

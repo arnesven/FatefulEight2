@@ -68,8 +68,8 @@ public class MusicalPerformanceInnWork extends InnWorkAction {
         } else { // isSuccessful
             state.bartenderSay(model, "That a " + adjective + " performance. Here's your pay.");
             state.println("You receive 6 gold from the bartender.");
-            model.getParty().addToGold(6);
-            model.getParty().addToGold(tipsGold);
+            model.getParty().earnGold(6);
+            model.getParty().earnGold(tipsGold);
             model.getParty().addToObols(tipsObols);
             if (tipsGold > 0 && tipsObols > 0) {
                 state.println("You collected " + tipsGold + " gold and " + tipsObols + " obols in tips!");

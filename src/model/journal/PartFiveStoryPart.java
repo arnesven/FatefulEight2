@@ -202,7 +202,7 @@ public class PartFiveStoryPart extends StoryPart {
                     model.getParty().getInventory().getMaterials(),
                     model.getParty().getInventory().getIngredients(),
                     model.getParty().getInventory().getLockpicks());
-            model.getParty().addToGold(-model.getParty().getGold());
+            model.getParty().loseGold(model.getParty().getGold());
             model.getParty().addToObols(-model.getParty().getObols());
             model.getParty().getInventory().addToMaterials(-model.getParty().getInventory().getMaterials());
             model.getParty().getInventory().addToIngredients(-model.getParty().getInventory().getIngredients());

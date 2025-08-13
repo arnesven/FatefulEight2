@@ -15,7 +15,7 @@ public class SharpenKnivesInnWork extends InnWorkAction {
         if (success) {
             state.bartenderSay(model, "Excellent. You've saved me a trip to a town to have this done." +
                     " Here's your pay.");
-            model.getParty().addToGold(8);
+            model.getParty().earnGold(8);
             state.println("You got 8 gold.");
         } else {
             state.bartenderSay(model, "... These knives are blunter than a sledgehammer. " +

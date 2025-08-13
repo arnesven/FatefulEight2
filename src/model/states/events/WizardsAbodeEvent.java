@@ -57,7 +57,7 @@ public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
         if (result) {
             admitted = true;
             println("The wizard admits the party into his home and hands over the trinket (the party receives 10 gold).");
-            model.getParty().addToGold(10);
+            model.getParty().earnGold(10);
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.WIZ);
             println("After a scrumptious supper, the wizard offers to teach you about his trade, ");
             change.areYouInterested(model);

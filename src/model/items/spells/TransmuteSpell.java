@@ -133,7 +133,7 @@ public class TransmuteSpell extends ImmediateSpell {
         } else if (resource.equalsIgnoreCase("materials")) {
             party.getInventory().addToMaterials(amount);
         } else if (resource.equalsIgnoreCase("gold")) {
-            party.addToGold(amount);
+            party.goldTransaction(amount);
         } else {
             throw new IllegalStateException("Unrecognized resource type '" + resource + "'.");
         }
@@ -224,7 +224,7 @@ public class TransmuteSpell extends ImmediateSpell {
 
             @Override
             public void decrease(Party party, int resourceSpent) {
-                party.addToGold(-resourceSpent);
+                party.goldTransaction(-resourceSpent);
             }
         });
         return list;

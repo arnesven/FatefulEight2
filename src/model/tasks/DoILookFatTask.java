@@ -44,7 +44,7 @@ public class DoILookFatTask extends SummonTask {
                 model.getParty().randomPartyMemberSay(model, List.of("Of course."));
                 portraitSay("Well thanks again. Please allow me to compensate you for your trouble.");
                 println("The party receives 25 gold.");
-                model.getParty().addToGold(25);
+                model.getParty().earnGold(25);
             } else {
                 portraitSay("This is exhausting... I'm never going to be able to do this. I give up.");
                 model.getParty().randomPartyMemberSay(model, List.of("Come on people " + heOrShe(location.getLordGender()) + "'s hopeless..."));

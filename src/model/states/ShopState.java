@@ -229,7 +229,7 @@ public class ShopState extends GameState {
                 model.getParty().getInventory().addItem(it);
             }
 
-            model.getParty().addToGold(-1 * cost);
+            model.getParty().spendGold(cost);
             if (cost > 0) {
                 println("You bought " + it.getName() + " for " + cost + " gold.");
                 GameStatistics.incrementItemsBought(1);
@@ -342,7 +342,7 @@ public class ShopState extends GameState {
         } else {
             money = getSellValue(model, it);
         }
-        model.getParty().addToGold(money);
+        model.getParty().earnGold(money);
         println("You sold " + it.getName() + " for " + money + " gold.");
         GameStatistics.incrementItemsSold(1);
         SoundEffects.sellItem();

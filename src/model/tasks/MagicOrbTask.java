@@ -41,7 +41,7 @@ public class MagicOrbTask extends SummonTask {
                 model.getParty().partyMemberSay(model, pair.second, "This is a " + MyRandom.sample(ORB_TYPES));
                 portraitSay("That's good to know, thank you. Here, let me pay you for your trouble.");
                 println("The party receives 25 gold.");
-                model.getParty().addToGold(25);
+                model.getParty().earnGold(25);
             }
         } else {
             portraitSay("Uh, okay. But come back if you change your mind! " +

@@ -79,7 +79,7 @@ public class TradeWithBartenderState extends ShopState {
         print("Do you accept? (Y/N) ");
         if (yesNoInput()) {
             model.getParty().addToObols(-take*10);
-            model.getParty().addToGold(take);
+            model.getParty().goldTransaction(take);
             println("You now have " + model.getParty().getObols() + " obols.");
         }
     }
@@ -112,7 +112,7 @@ public class TradeWithBartenderState extends ShopState {
             println("You cannot afford to buy " + amount*10 + " obols.");
             return;
         }
-        model.getParty().addToGold(-amount);
+        model.getParty().goldTransaction(-amount);
         model.getParty().addToObols(amount * 10);
         print("You bought " + amount*10 + " obols.");
         println(" You now have " + model.getParty().getObols() + " obols.");

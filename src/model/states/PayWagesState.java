@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -51,7 +52,9 @@ public class PayWagesState extends GameState{
             } else {
                 println(leader.getName() + " paid " + wages +
                         " gold to each other party member.");
-                model.getParty().addToGold(-1 * wages * (model.getParty().size()-1));
+                int totalWages = wages * (model.getParty().size()-1);
+                model.getParty().loseGold(totalWages);
+                GameStatistics.incrementWagesPaid(totalWages);
                 adjustAttitudes(model, wages/2);
                 if (rando.hasPersonality(PersonalityTrait.greedy)) {
                     partyMemberSay(rando, "I expected more.");
@@ -109,7 +112,9 @@ public class PayWagesState extends GameState{
             super.showPartyAttitudesSubView(model);
             GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             partyMemberSay(gc, MyRandom.sample(List.of("Just having a brew...", "I'm loving it.3",
-                    "Ready for action!", "Whenever you're ready boss.", "Ready to roll.")));
+                    "Ready for action!", "Whenever you're ready boss.", "Ready to roll.",
+                    "Are we heading out soon?", "Nice place this. Are we staying the night?", "Where is that waiter?",
+                    "I think some people were playing cards...")));
 
         } else if (options.get(chosen).equals("Everybody")) {
             if (model.getParty().getGold() < others.size()) {
@@ -152,7 +157,8 @@ public class PayWagesState extends GameState{
                     "How kind!", "I deserved this.", "My fair share, I'm sure.",
                     "My wage? Okay.")));
         }
-        getModel().getParty().addToGold(-bribe);
+        getModel().getParty().loseGold(bribe);
+        GameStatistics.incrementWagesPaid(bribe);
     }
 
     private static int goldToAttitudeBonus(int bribe) {

@@ -1,5 +1,6 @@
 package model.headquarters;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
@@ -100,6 +101,7 @@ public class SubPartyAssignees extends ArrayList<GameCharacter> {
                 logEntry.append(".\n");
             }
             hq.addToGold(gold);
+            GameStatistics.incrementGoldEarned(gold);
         }
 
         List<GameCharacter> killed = new ArrayList<>();

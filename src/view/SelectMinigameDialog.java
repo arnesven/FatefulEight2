@@ -33,7 +33,7 @@ public class SelectMinigameDialog extends SelectableListMenu {
     public void transitionedFrom(Model model) {
         model.startGameWithState(selectedEvent);
         model.getParty().add(MyRandom.sample(model.getAllCharacters()));
-        model.getParty().addToGold(100);
+        model.getParty().goldTransaction(100);
         model.getParty().addToObols(100);
         model.getSettings().toggleMovementSpeed();
         model.getSettings().toggleLogSpeed();

@@ -85,7 +85,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
     private void enterTournament(Model model) {
         if (!sponsored) {
             println("The party pays " + ENTRY_FEE + " gold to the official.");
-            model.getParty().addToGold(-ENTRY_FEE);
+            model.getParty().spendGold(ENTRY_FEE);
         }
         print("Which party member do you wish to enter into the contest?");
         GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));

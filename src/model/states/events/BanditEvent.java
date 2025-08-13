@@ -49,7 +49,7 @@ public class BanditEvent extends DailyEventState {
         print("It's obviously a shakedown, do you wish to pay the gold (Y/N)? ");
         if (yesNoInput()) {
             int amount = Math.min(20, model.getParty().getGold());
-            model.getParty().addToGold(-amount);
+            model.getParty().loseGold(amount);
             println("You pay off the bandits and continue on your journey.");
         } else {
             portraitSay("You refuse? Hey, lads, we need to teach this lot some manners!");

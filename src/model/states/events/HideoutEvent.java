@@ -62,7 +62,7 @@ public class HideoutEvent extends DailyEventState {
                 print("Buy the loot for " + cost + " gold? (Y/N) ");
                 if (yesNoInput()) {
                     List<Item> items = generateLoot(model, cost);
-                    model.getParty().addToGold(-cost);
+                    model.getParty().spendGold(cost);
                     println("The party pays " + cost + " gold.");
                     for (Item it : items) {
                         println("The party receives " + it.getName() + ".");

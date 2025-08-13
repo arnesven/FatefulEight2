@@ -34,7 +34,7 @@ public abstract class SummonTask extends DailyEventState {
             leaderSay("Alright, let's do it.");
             portraitSay("Good. I'll make all the arrangements. Consider your former residence sold.");
             println(location.getLordName() + " hands you " + sellPrice + " gold.");
-            model.getParty().addToGold(sellPrice);
+            model.getParty().earnGold(sellPrice);
             current.transferTo(hq);
             return true;
         }

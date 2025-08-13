@@ -70,7 +70,7 @@ public class PriestEvent extends GeneralInteractionEvent {
                 if (!gc.hasCondition(VampirismCondition.class)) {
                     gc.addToSP(1000);
                 }
-                model.getParty().addToGold(-BLESS_COST);
+                model.getParty().spendGold(BLESS_COST);
                 model.getParty().partyMemberSay(model, gc, List.of("I feel refreshed!",
                         "I feel like a new person!", "What a cleansing feeling!",
                         "I feel reborn!", "Ahhh, that did wonders for me!"));

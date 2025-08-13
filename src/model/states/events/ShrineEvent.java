@@ -54,7 +54,7 @@ public class ShrineEvent extends DailyEventState {
                 gc = stillHavent.get(0);
             }
             stillHavent.remove(gc);
-            model.getParty().addToGold(-1);
+            model.getParty().loseGold(1);
             println(gc.getFirstName() + " places a coin in a bowl on the altar in the shrine.");
             if (gc.hasPersonality(PersonalityTrait.critical) || gc.hasPersonality(PersonalityTrait.rude)) {
                 println("Then " + heOrShe(gc.getGender()) + " " +

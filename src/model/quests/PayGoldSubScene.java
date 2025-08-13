@@ -38,7 +38,7 @@ public class PayGoldSubScene extends QuestSubScene {
         int amount = Math.min(model.getParty().getGold(), model.getParty().size() * gold);
         state.print("Paying " + amount + " gold. Press enter to continue.");
         state.waitForReturn();
-        model.getParty().addToGold(-amount);
+        model.getParty().spendGold(amount);
         return getSuccessEdge();
     }
 

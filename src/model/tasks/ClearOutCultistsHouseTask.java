@@ -116,7 +116,7 @@ public class ClearOutCultistsHouseTask extends SummonTask {
         leaderSay("Yes, of course.");
         portraitSay("Good. Here you go. Well then our business have thus concluded.");
         println("You got 50 gold from the " + location.getLordTitle() + ".");
-        model.getParty().addToGold(50);
+        model.getParty().earnGold(50);
     }
 
     @Override
@@ -209,7 +209,7 @@ public class ClearOutCultistsHouseTask extends SummonTask {
             portraitSay("Hmm... alright, we'll take the money and leave. You have our word");
             leaderSay("Good.");
             println("You handed " + bribe + " gold over to the cultist.");
-            model.getParty().addToGold(-bribe);
+            model.getParty().spendGold(bribe);
             return true;
         }
 

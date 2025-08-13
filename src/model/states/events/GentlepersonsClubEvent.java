@@ -162,7 +162,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
         } else {
             print("Do you spend " + MEMBERSHIP_FEE + " to become a member of the Gentleperson's Club? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-MEMBERSHIP_FEE);
+                model.getParty().spendGold(MEMBERSHIP_FEE);
                 leaderSay("Here's the " + MEMBERSHIP_FEE + " gold. Do we get a membership card or something?");
                 portraitSay("No need. We'll make sure all of our locations know your name and appearance, you're one of us now.");
                 leaderSay("That's nice of you.");
@@ -263,7 +263,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
                     leaderSay("The terms are acceptable to me. Do you have the money here?");
                     portraitSay("Yes, of course. Here it is.");
                     println("The collector hands you " + offer + " gold.");
-                    model.getParty().addToGold(offer);
+                    model.getParty().earnGold(offer);
                     leaderSay("Then the bird is yours.");
                     portraitSay("Ah... a real find! Great doing business with you.");
                     leaderSay("My pleasure");

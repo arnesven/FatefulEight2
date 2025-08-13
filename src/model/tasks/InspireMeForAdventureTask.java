@@ -52,7 +52,7 @@ public class InspireMeForAdventureTask extends SummonTask {
                 model.getParty().randomPartyMemberSay(model, List.of("And to appreciate those around you."));
                 portraitSay("Yes of course! Here, please let me give you something for your time.");
                 println("The party receives 15 gold.");
-                model.getParty().addToGold(15);
+                model.getParty().earnGold(15);
             }
         } else {
             leaderSay("I'm sorry you feel that way. But we just can't take you on. You understand.");

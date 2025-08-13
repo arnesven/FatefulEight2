@@ -127,7 +127,7 @@ public class WarehouseEvent extends DailyEventState {
         leaderSay("Piece of cake!");
         portraitSay("Here's your reward. I'm sorry I don't have more to give you.");
         println("You get 15 gold.");
-        model.getParty().addToGold(15);
+        model.getParty().earnGold(15);
         leaderSay("Thanks. Try keeping the warehouse tidy from now on.");
         portraitSay("I'll try. Goodbye.");
         leaderSay("Bye for now.");

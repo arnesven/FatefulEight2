@@ -144,7 +144,7 @@ public class RescueMissionStoryPart extends StoryPart {
                         " gold, as payment for the resolving the frogmen problem.");
                 portraitSay("Hmm, that seems plausible. Let me just get my purse.");
                 println("The party receives " + InitialStoryPart.REWARD_GOLD + " gold!");
-                model.getParty().addToGold(InitialStoryPart.REWARD_GOLD);
+                model.getParty().earnGold(InitialStoryPart.REWARD_GOLD);
 
                 if (witchPartCompleted()) {
                     leaderSay("There's an important issue which " + iOrWe() + " must urgently discuss with you.");

@@ -27,7 +27,7 @@ public class FencingTask extends SummonTask {
                 summon.increaseStep();
                 portraitSay("Wow! I feel much more confident now. Please let me compensate you.");
                 println("The party receives 25 gold.");
-                model.getParty().addToGold(25);
+                model.getParty().earnGold(25);
             }
         } else {
             portraitSay("Uh, okay. But come back if you change your mind!");

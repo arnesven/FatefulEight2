@@ -40,7 +40,7 @@ public class CharterBoatAtDocks extends GoTheDocksNode {
             if (yesNoInput()) {
                 println("You pay the captain " + CHARTER_COST + " gold to charter the boat.");
                 printQuote("Captain", "My ship is yours to command. Where do you want to go?");
-                model.getParty().addToGold(-CHARTER_COST);
+                model.getParty().spendGold(CHARTER_COST);
                 travelled = true;
                 return new TravelByCharteredBoat(model).run(model);
             }

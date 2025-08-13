@@ -108,7 +108,7 @@ public class TradeHorsesState extends GameState {
                             "Now you are the owner of this fine " + horse.getName() + ".")));
             availableHorses.remove(horse);
             subView.removeHoses(horse);
-            model.getParty().addToGold(-horse.getCost());
+            model.getParty().spendGold(horse.getCost());
             model.getParty().getHorseHandler().addHorse(horse);
         } else {
             printQuote(STABLE_MASTER_NAME,

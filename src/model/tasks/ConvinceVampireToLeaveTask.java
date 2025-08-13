@@ -98,12 +98,12 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
                         heOrSheCap(vampire.getGender()) + " won't be troubling this town anymore.");
                 portraitSay("Oh, I can't tell you how relieved I am. Let me fetch your reward.");
                 println("The " + location.getLordTitle() + " brings out a purse and hands you 40 gold.");
-                model.getParty().addToGold(40);
+                model.getParty().earnGold(40);
                 if (model.getParty().getLeader().hasPersonality(PersonalityTrait.greedy)) {
                     leaderSay("What? Not more for handling that dangerous monster for you?");
                     portraitSay("Hmm... I suppose the reward is a little too small. Here.");
                     println("The " + location.getLordTitle() + " hands you an additional 15 gold.");
-                    model.getParty().addToGold(15);
+                    model.getParty().earnGold(15);
                     portraitSay("I really can't give you more. My budget is quite tight.");
                     leaderSay("It will have to suffice I guess.");
                 } else {

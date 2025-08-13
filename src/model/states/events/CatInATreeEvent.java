@@ -176,7 +176,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
         portraitSay("Oh thank you so much for getting my beloved Quincy for me! Here, " +
                 "please take this, It's all I have on me.");
         int gold = 10;
-        model.getParty().addToGold(gold);
+        model.getParty().earnGold(gold);
         println("The party gains " + 10 + " gold.");
     }
 

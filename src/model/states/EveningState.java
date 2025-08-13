@@ -320,10 +320,10 @@ public class EveningState extends GameState {
                 @Override
                 protected void enterPressed(Model model, int cursorPos) {
                     if (cursorPos == 0) {
-                        model.getParty().addToGold(-1);
+                        model.getParty().spendGold(1);
                         model.getParty().addToFood(5);
                     } else if (cursorPos == 1) {
-                        model.getParty().addToGold(-finalCost);
+                        model.getParty().spendGold(finalCost);
                         model.getParty().addToFood(finalCost * 5);
                     } else {
                         done[0] = true;

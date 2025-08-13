@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.classes.Classes;
 import model.enemies.Enemy;
@@ -29,13 +30,15 @@ public class GoldenIdolsEvent extends DailyEventState {
             leaderSay("Better not do anything stupid.");
         } else if (res == 1) {
             println("The party gains 35 gold.");
-            model.getParty().addToGold(35);
+            model.getParty().earnGold(35);
+            GameStatistics.incrementGoldStolen(35);
         } else {
             println("You return at midnight and the party completely empties the room with the golden idols.");
             model.getParty().randomPartyMemberSay(model, List.of("What a treasure hoard!"));
             showRandomPortrait(model, Classes.TEMPLE_GUARD, "Temple Guards");
             println("The party gains 135 gold!");
-            model.getParty().addToGold(135);
+            model.getParty().earnGold(135);
+            GameStatistics.incrementGoldStolen(135);
             portraitSay("Hey you. What do you think your doing?");
             model.getParty().randomPartyMemberSay(model, List.of("Uh-oh. Busted..."));
             List<Enemy> guards = new ArrayList<>();

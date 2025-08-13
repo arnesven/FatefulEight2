@@ -41,7 +41,7 @@ public class ExpandHeadquartersAction extends HeadquartersAction {
 
         int hqGoldLoss = Math.min(EXPAND_COST_GOLD, model.getParty().getHeadquarters().getGold());
         model.getParty().getHeadquarters().addToGold(-hqGoldLoss);
-        model.getParty().addToGold(hqGoldLoss - EXPAND_COST_GOLD);
+        model.getParty().spendGold(EXPAND_COST_GOLD - hqGoldLoss);
 
         model.getParty().getHeadquarters().incrementSize();
         println("You have expanded your headquarters! " + model.getParty().getHeadquarters().presentYourself());

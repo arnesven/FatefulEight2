@@ -14,7 +14,7 @@ public class CleanStablesInnWork extends InnWorkAction {
         boolean success = model.getParty().doCollaborativeSkillCheck(model, state, Skill.Labor, 5);
         if (success) {
             state.bartenderSay(model, "Wow! I'm sure the ponies will be pleased. Good work. Here's your pay.");
-            model.getParty().addToGold(5);
+            model.getParty().earnGold(5);
             state.println("You got 5 gold.");
         } else {
             state.bartenderSay(model, "What's this? This place is even messier " +

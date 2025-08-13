@@ -115,7 +115,7 @@ public class BrrbitsReward extends Quest {
                 state.println("You gain 20 rations.");
                 model.getParty().addToFood(20);
                 state.println("You gain 20 gold.");
-                model.getParty().addToGold(20);
+                model.getParty().earnGold(20);
                 state.println("You gain 60 obols.");
                 model.getParty().addToObols(60);
                 model.getLog().waitForAnimationToFinish();
@@ -222,7 +222,7 @@ public class BrrbitsReward extends Quest {
                     SkillCheckResult result = gc.testSkill(model, Skill.Labor);
                     int silverAmount = multiplier * result.getModifiedRoll();
                     state.println(gc.getName() + " mines silver worth " + silverAmount + " gold.");
-                    model.getParty().addToGold(silverAmount);
+                    model.getParty().earnGold(silverAmount);
                 }
                 model.getLog().waitForAnimationToFinish();
 

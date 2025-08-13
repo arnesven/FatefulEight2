@@ -65,7 +65,7 @@ public class NoblemanEvent extends GeneralInteractionEvent {
         if (success) {
             state.println("After telling the great story of the party's exploits, the noble gladly gives you a small stipend.");
             int amount = Math.min(10 * model.getParty().size(), 50);
-            model.getParty().addToGold(amount);
+            model.getParty().earnGold(amount);
             state.println("The party receives " + amount + " gold from the noble.");
             boolean didSay = state.randomSayIfPersonality(PersonalityTrait.snobby, new ArrayList<>(), "We'll take it.");
             if (!didSay) {

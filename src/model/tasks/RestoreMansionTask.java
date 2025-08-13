@@ -64,7 +64,7 @@ public class RestoreMansionTask extends SummonTask {
                         "When the job is done there is only an empty lot remaining.");
                 portraitSay("Remarkable, it's gone. Well, here. For a job well done!");
                 println("The party received 20 gold.");
-                model.getParty().addToGold(20);
+                model.getParty().earnGold(20);
             } else {
                 println("Despite your best efforts you have not been able to completely clear " +
                         "the building away. The " + location.getLordTitle() + " is not particularly impressed.");
@@ -87,7 +87,7 @@ public class RestoreMansionTask extends SummonTask {
                         if (yesNoInput()) {
                             leaderSay("That seems fair.");
                             println("You hand over 75 materials and receive 200 gold.");
-                            model.getParty().addToGold(200);
+                            model.getParty().earnGold(200);
                             model.getParty().getInventory().addToMaterials(-MATERIALS_AND_GOLD_COST);
                             summon.increaseStep();
                         } else {
@@ -112,7 +112,7 @@ public class RestoreMansionTask extends SummonTask {
         leaderSay("Here are the materials and gold you asked for.");
         println("You hand over " + MATERIALS_AND_GOLD_COST + " materials and " + MATERIALS_AND_GOLD_COST + " gold");
         model.getParty().getInventory().addToMaterials(-MATERIALS_AND_GOLD_COST);
-        model.getParty().addToGold(-MATERIALS_AND_GOLD_COST);
+        model.getParty().spendGold(MATERIALS_AND_GOLD_COST);
         portraitSay("Wonderful! I'll make all the arrangements then. Here are the keys to your new property!");
         model.getParty().setHeadquarters(model, mansion);
         summon.increaseStep();

@@ -154,7 +154,7 @@ public class SingerAssassinationEndingEvent extends AssassinationEndingEvent {
         if (choice > 100 || MyRandom.flipCoin()) {
             println("The bodyguard accepts the money.");
             portraitSay("Fair enough. I never really liked this buffoon anyway.");
-            model.getParty().addToGold(-golds.get(choice));
+            model.getParty().spendGold(golds.get(choice));
             return true;
         }
         portraitSay("Take your dirty money away from me. Now leave!");
@@ -200,7 +200,7 @@ public class SingerAssassinationEndingEvent extends AssassinationEndingEvent {
         println("You quickly loot the " + bodyguardRaceString + ", then hurry away from the crime scene.");
         int gold = MyRandom.rollD10();
         println("You find " + gold + " gold.");
-        model.getParty().addToGold(gold);
+        model.getParty().earnGold(gold);
         GeneralInteractionEvent.addMurdersToNotoriety(model, this, 1);
         return Ending.failure;
     }

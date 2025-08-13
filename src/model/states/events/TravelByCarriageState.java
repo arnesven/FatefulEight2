@@ -44,7 +44,7 @@ public class TravelByCarriageState extends GameState {
                         " The driver will take your party for " + cost + " gold. The trip takes 3 days.");
                 print("Do you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
                 if (yesNoInput()) {
-                    model.getParty().addToGold(-cost);
+                    model.getParty().spendGold(cost);
                     travelTo(model, carriage);
                 } else {
                     println("Ok. But come back soon if you change your mind. The carriage will not wait for you.");

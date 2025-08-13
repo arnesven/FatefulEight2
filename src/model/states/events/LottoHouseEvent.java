@@ -95,11 +95,11 @@ public class LottoHouseEvent extends DailyEventState {
         if (selected == 0 || model.getParty().getGold() < 30) {
             picks = 1;
             println("You paid 10 gold to the lotto man.");
-            model.getParty().addToGold(-10);
+            model.getParty().spendGold(10);
         } else {
             picks = 5;
             println("You paid 30 gold to the lotto man.");
-            model.getParty().addToGold(-30);
+            model.getParty().spendGold(30);
         }
         lottoManSay("Thanks. Now just pick a chest!");
 

@@ -54,7 +54,7 @@ public class FamousPainterEvent extends PersonalityTraitEvent {
             model.getParty().unbenchAll();
             return;
         }
-        model.getParty().addToGold(-cost);
+        model.getParty().spendGold(cost);
         println("The boutique is not large but it still holds about a dozen canvases. There are a few other patrons " +
                 "quietly inspecting the pieces of art. You take your time to look at them yourself.");
         leaderSay("Is this the price down here?");
@@ -97,7 +97,7 @@ public class FamousPainterEvent extends PersonalityTraitEvent {
                 "We humbly accept this gift!");
         partyMemberSay(main, "Yes thank you...");
         println("The party receives 100 gold!");
-        model.getParty().addToGold(100);
+        model.getParty().earnGold(100);
         portraitSay("Now please, enjoy the exhibition, I won't bother you any more.");
         model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);

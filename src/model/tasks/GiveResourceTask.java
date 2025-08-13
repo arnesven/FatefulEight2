@@ -38,7 +38,7 @@ public abstract class GiveResourceTask extends SummonTask {
                 reduceResource(model, amount);
                 portraitSay("Thank you so much. Please allow me to compensate you.");
                 println("The party gains 50 gold.");
-                model.getParty().addToGold(50);
+                model.getParty().earnGold(50);
             } else {
                 decline(model);
             }

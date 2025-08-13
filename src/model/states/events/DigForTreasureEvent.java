@@ -50,7 +50,7 @@ public class DigForTreasureEvent extends DailyEventState {
                 }
                 int gold = MyRandom.randInt(100, 300);
                 println("The party finds " + gold + " gold.");
-                model.getParty().addToGold(gold);
+                model.getParty().earnGold(gold);
                 task.complete(model);
             } else {
                 println("You can confidently say that if there were any treasure here, you would have found it.");

@@ -31,7 +31,7 @@ public class HelpMeWithPuzzleTask extends SummonTask {
                 portraitSay("Ahh perfect, it's all done! Please let me " +
                         "give you something for spending your time here.");
                 println("The party receives 15 gold.");
-                model.getParty().addToGold(15);
+                model.getParty().earnGold(15);
             }
         } else {
             portraitSay("Uh, okay. But come back if you change your mind! " +

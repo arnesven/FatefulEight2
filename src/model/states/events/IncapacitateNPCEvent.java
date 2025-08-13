@@ -230,7 +230,7 @@ public class IncapacitateNPCEvent extends DailyEventState {
 
         portraitSay("Okay, it's a deal. Hand it over and you won't see me again.");
         println("You hand over " + bribe + " gold to " + npc.getName() + ".");
-        model.getParty().addToGold(-bribe);
+        model.getParty().loseGold(bribe);
         success = true;
         return true;
     }

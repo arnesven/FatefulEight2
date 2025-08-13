@@ -215,7 +215,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             private void buyHome(Model model, UrbanLocation location, Headquarters hq) {
                 portraitSay("Splendid. I can hand you the keys right now.");
                 println("You paid " + hq.getCost() + " gold to the " + location.getLordTitle() + ".");
-                model.getParty().addToGold(-hq.getCost());
+                model.getParty().spendGold(hq.getCost());
                 model.getParty().setHeadquarters(model, hq);
             }
         }

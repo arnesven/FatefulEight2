@@ -38,7 +38,7 @@ public class FerryEvent extends RiverEvent {
             print(" Do you accept (Y/N)? ");
             if (yesNoInput()) {
                 paid = true;
-                model.getParty().addToGold(-10);
+                model.getParty().spendGold(10);
                 model.getParty().randomPartyMemberSay(model, List.of(
                         "A nice little boat ride.",
                         "Take us across ferryman.",

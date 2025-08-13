@@ -46,7 +46,7 @@ public class GuideEvent extends DailyEventState {
             return;
         }
 
-        model.getParty().addToGold(-cost);
+        model.getParty().spendGold(cost);
         portraitSay("Thank you! Now where would you like to go?");
         leaderSay("You tell me. What are the sights?");
         chooseFromGuidableEvents(model, this::portraitSay);

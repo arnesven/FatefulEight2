@@ -128,7 +128,7 @@ public class BountyDestinationTask extends DestinationTask {
             JournalEntry.printJournalUpdateMessage(model);
             state.println("You visit the constabulary and turn in the bounty for " + getBountyName() + "!");
             state.println("The party gains " + bounty.getReward() + " gold.");
-            model.getParty().addToGold(bounty.getReward());
+            model.getParty().earnGold(bounty.getReward());
             state.leaderSay(MyRandom.sample(List.of("One bad guy less in the world.", "Ka-ching!",
                     "It's nice working with the law.", "Bounty collected. Now, what's next?")));
         }

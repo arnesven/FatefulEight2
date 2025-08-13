@@ -59,7 +59,7 @@ class MakeDealForPuzzleTubeDailyAction extends GameState {
                 print("Pay " + agreedPrice + " for the Puzzle Tube? (Y/N) ");
                 if (yesNoInput()) {
                     leaderSay("Okay, here's your money.");
-                    model.getParty().addToGold(agreedPrice);
+                    model.getParty().spendGold(agreedPrice);
                     lordSay("And here is your puzzle tube.");
                     new FindPuzzleTubeEvent(model).doTheEvent(model);
                     DestinationTask task = MyLists.find(model.getParty().getDestinationTasks(),

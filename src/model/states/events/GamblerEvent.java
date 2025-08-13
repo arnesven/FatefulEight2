@@ -125,7 +125,7 @@ public class GamblerEvent extends DailyEventState {
     private void payGambler(Model model) {
         if (model.getParty().getObols() < COST_TO_PLAY) {
             println("You hand the gambler 1 gold and the gambler hands you " + (10 - COST_TO_PLAY) + " obols back.");
-            model.getParty().addToGold(-1);
+            model.getParty().goldTransaction(-1);
             model.getParty().addToObols(10 - COST_TO_PLAY);
         } else {
             println("You hand the gambler " + COST_TO_PLAY + " obols.");

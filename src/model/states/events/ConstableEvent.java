@@ -124,7 +124,7 @@ public class ConstableEvent extends DailyEventState {
         if (amount == 1) {
             coinString = "this coin";
         }
-        model.getParty().addToGold(-amount);
+        model.getParty().spendGold(amount);
         leaderSay(MyStrings.capitalize(lawMan) + "... I think you dropped " + coinString + " on the ground...");
         int x = model.getParty().getNotoriety() - amount;
         if (MyRandom.rollD10() < x) {
@@ -206,7 +206,7 @@ public class ConstableEvent extends DailyEventState {
 
     private void payFine(Model model) {
         println("The party lost " + getFine() + " gold.");
-        model.getParty().addToGold(-getFine());
+        model.getParty().loseGold(getFine());
     }
 
     private int getJailTime() {

@@ -244,7 +244,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
                 return false;
             }
             artisanEvent.println("You hand over " + cost + " gold and the " + getName() + " starts working at once.");
-            model.getParty().addToGold(-cost);
+            model.getParty().spendGold(cost);
             artisanEvent.println("A while later the " + getName() + " returns to you hand hands you your item.");
             artisanEvent.portraitSay("Here you go. I'm quite pleased with the result myself.");
 

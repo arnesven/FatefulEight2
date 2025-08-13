@@ -108,7 +108,7 @@ public class BathHouseEvent extends DailyEventState {
     private void enterBathHouse(Model model, List<GameCharacter> bathers) {
         showRandomPortrait(model, Classes.OFFICIAL, "Bath Staff");
         portraitSay("Welcome guests, that will be " + bathers.size() + " gold please.");
-        model.getParty().addToGold(-bathers.size());
+        model.getParty().spendGold(bathers.size());
         leaderSay("There you go. Uhm... where are the pools?");
         portraitSay("Just down that hall, but...");
         leaderSay("What is it?");

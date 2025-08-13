@@ -207,7 +207,7 @@ public class OtherPartyEvent extends DailyEventState {
                 attitudeChange = -5;
             } else {
                 otherLeaderSay("I welcome this fine gift.");
-                model.getParty().addToGold(-amount);
+                model.getParty().spendGold(amount);
                 attitudeChange = Math.min(20, amount / 2);
             }
         } else {
@@ -391,7 +391,7 @@ public class OtherPartyEvent extends DailyEventState {
                     }
                     int gold = MyRandom.randInt(20, 50);
                     println(leader.getName() + " brought " + gold + " to the party.");
-                    model.getParty().addToGold(gold);
+                    model.getParty().goldTransaction(gold);
                     int food = MyRandom.randInt(10, 40);
                     println(leader.getName() + " brought " + food + " to the party.");
                     model.getParty().addToFood(food);

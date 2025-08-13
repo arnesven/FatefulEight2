@@ -521,7 +521,7 @@ public class FullPartySelectView extends SelectableListMenu {
     }
 
     public void miscSetup(Model model) {
-        model.getParty().addToGold(startingGold - model.getParty().getGold());
+        model.getParty().goldTransaction(startingGold - model.getParty().getGold());
         model.getParty().addToObols(startingObols - model.getParty().getObols());
         model.getParty().addToFood(startingFood - model.getParty().getFood());
         model.getParty().getInventory().addToIngredients(startingIngredients - model.getParty().getInventory().getIngredients());

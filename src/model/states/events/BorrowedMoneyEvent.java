@@ -43,7 +43,7 @@ public class BorrowedMoneyEvent extends DailyEventState {
             if (result.isSuccessful()) {
                 portraitSay("Okay okay, here, take it. I was only gonna spend it on dice anyway.");
                 println("The party receives 15 gold!");
-                model.getParty().addToGold(15);
+                model.getParty().earnGold(15);
                 partyMemberSay(main, "Thank you.");
                 randomSayIfPersonality(PersonalityTrait.greedy, List.of(main),
                         "That's it? What about the interest?");

@@ -108,7 +108,7 @@ public class MarketEvent extends DailyEventState {
         }
         print("Do you want to play? (Y/N) ");
         if (yesNoInput()) {
-            model.getParty().addToGold(-2);
+            model.getParty().spendGold(2);
             print("Who will play the ball shooting game?");
             GameCharacter shooter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
             ShootBallsState ballsState = new ShootBallsState(model, shooter, ShootBallsState.getCharactersBowOrDefault(shooter),
@@ -125,19 +125,19 @@ public class MarketEvent extends DailyEventState {
                 case 1:
                     portraitSay("Wow! Good shot " + mrOsMiss + "! Here's your prize!");
                     println("The party gains 10 gold.");
-                    model.getParty().addToGold(10);
+                    model.getParty().earnGold(10);
                     break;
                 case 2:
                     println("The young man looks a bit surprised.");
                     portraitSay("Oh... eh, good job " + mrOsMiss + ". Here's your prize...");
                     println("The party gains 15 gold.");
-                    model.getParty().addToGold(15);
+                    model.getParty().earnGold(15);
                     break;
                 default:
                     println("The young man is obviously annoyed by " + shooter.getFirstName() + "'s skill with the bow.");
                     portraitSay("... seriously? I mean, here you go " + mrOsMiss + ". Now maybe let somebody else have a go?");
                     println("The party gains 30 gold.");
-                    model.getParty().addToGold(30);
+                    model.getParty().earnGold(30);
             }
         } else {
             leaderSay("This distraction isn't worth our time.");

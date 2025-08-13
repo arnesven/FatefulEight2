@@ -54,7 +54,7 @@ public class MagicianEvent extends MagicExpertGeneralInteractionEvent {
         } else {
             print("Do you wish to pay " + cost + " gold to see show? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-cost);
+                model.getParty().spendGold(cost);
                 print("The show is truly very good and you stay a while after it has concluded to complement " +
                         "the magician. He thanks you and offers to give you some pointers in the field of " +
                         "magical showmanship, ");

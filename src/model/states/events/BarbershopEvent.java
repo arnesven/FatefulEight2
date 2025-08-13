@@ -62,7 +62,7 @@ public class BarbershopEvent extends DailyEventState {
             return;
         }
         leaderSay("Here's the money.");
-        model.getParty().addToGold(-COST);
+        model.getParty().spendGold(COST);
         print("Which party member do you want to give a hair cut?");
         GameCharacter gc = null;
         do {
@@ -74,7 +74,7 @@ public class BarbershopEvent extends DailyEventState {
                     leaderSay("I've changed my mind.");
                     portraitSay("Alright. Here's your money back. " +
                             "Please come back if you change your mind.");
-                    model.getParty().addToGold(COST);
+                    model.getParty().earnGold(COST);
                     return;
                 }
             } else {

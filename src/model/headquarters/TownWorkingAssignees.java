@@ -1,5 +1,6 @@
 package model.headquarters;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import util.MyLists;
@@ -24,6 +25,7 @@ public class TownWorkingAssignees extends ArrayList<GameCharacter> {
                 int goldGenerated = MyRandom.randInt(0, size() * MAX_GOLD_FROM_WORK);
                 logEntry.append("earned ").append(goldGenerated).append(" gold.\n");
                 headquarters.addToGold(goldGenerated);
+                GameStatistics.incrementGoldEarned(goldGenerated);
             }
         }
     }

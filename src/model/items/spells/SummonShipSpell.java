@@ -104,7 +104,7 @@ public class SummonShipSpell extends ImmediateSpell {
         } else if (chosenOption.contains("Charter")) {
             state.println("You pay the captain " + CHARTER_COST + " gold to charter the boat.");
             state.printQuote("Captain", "My ship is yours to command. Where do you want to go?");
-            model.getParty().addToGold(-CHARTER_COST);
+            model.getParty().spendGold(CHARTER_COST);
             new TravelByCharteredBoat(model).run(model);
         } else {
             state.println("Annoyed, the captain sails off with the ship.");

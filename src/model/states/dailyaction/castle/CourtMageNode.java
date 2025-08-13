@@ -79,7 +79,7 @@ public class CourtMageNode extends DailyActionNode {
             if (yesNoInput()) {
                 leaderSay("Yes please. That would be very convenient.");
                 if (!LeagueOfMagesEvent.isMember(model)) {
-                    model.getParty().addToGold(-TELEPORT_COST);
+                    model.getParty().spendGold(TELEPORT_COST);
                 }
                 printQuote("Court Mage", "Fine. Which castle do you want me to teleport you to?");
                 List<String> options = new ArrayList<>(List.of("Arkvale Castle", "Sunblaze Castle", "Castle Ardh",
@@ -94,7 +94,7 @@ public class CourtMageNode extends DailyActionNode {
                             "Getting cold feet?", "That's okay. It's all the same to me.")));
                     if (!LeagueOfMagesEvent.isMember(model)) {
                         printQuote("Court Mage", "Here's your money back then.");
-                        model.getParty().addToGold(TELEPORT_COST);
+                        model.getParty().earnGold(TELEPORT_COST);
                     }
                     return null;
                 }

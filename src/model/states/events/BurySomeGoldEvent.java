@@ -62,7 +62,7 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
             List<String> options = MyLists.transform(amounts, integer -> integer.toString() + " Gold");
             int choice = multipleOptionArrowMenu(model, 24, 24, options);
             buriedAmount = amounts.get(choice);
-            model.getParty().addToGold(-buriedAmount);
+            model.getParty().goldTransaction(-buriedAmount);
             println("The party digs a fairly deep hole at the roots of a nearby tree. " +
                     buriedAmount + " gold is placed in a bag. The hole is then filled up.");
             leaderSay("There. A long term deposit! Feel better " + main.getFirstName() + "?");
@@ -126,7 +126,7 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
                         leaderSay("Fine, take it.");
                         int amountLost = (model.getParty().getGold() / 20) * 20;
                         println("The party hands over " + amountLost + " gold to the robbers.");
-                        model.getParty().addToGold(-amountLost);
+                        model.getParty().loseGold(amountLost);
                         portraitSay("We'll be on our way now. Thanks for everything chappies.");
                         model.getLog().waitForAnimationToFinish();
                         removePortraitSubView(model);
@@ -166,7 +166,7 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
             if (model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 8)) {
                 partyMemberSay(main, "It's right here. It must be.");
                 println("You dig a hole and find the gold exactly where you left it.");
-                model.getParty().addToGold(buriedAmount);
+                model.getParty().goldTransaction(buriedAmount);
                 println("The party gains " + buriedAmount + " gold.");
             } else {
                 partyMemberSay(main, "Uhm... this one. I think... Or was it this one?");

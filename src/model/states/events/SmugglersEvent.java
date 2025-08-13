@@ -123,7 +123,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
         } else if (options.get(choice).contains("Pay 100")) {
             leaderSay("Here's the gold.");
             println("You hand over 100 gold.");
-            model.getParty().addToGold(-100);
+            model.getParty().loseGold(100);
             portraitSay("Shipment's all yours. Until next time then.");
             getShipment(model);
             if (withConstable) {

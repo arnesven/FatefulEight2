@@ -46,7 +46,7 @@ public class CharlatanEvent extends DailyEventState {
         } else {
             print("Buy the doctor's elixir? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-20);
+                model.getParty().spendGold(20);
                 MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.MagicGreen, 10);
                 if (passiveResult.first.isSuccessful()) {
                     charlatanFoundOut(model, passiveResult.second, passiveResult.first);
@@ -86,7 +86,7 @@ public class CharlatanEvent extends DailyEventState {
             println("The little chest contains a large number of coins, gems and jewels.");
             model.getParty().randomPartyMemberSay(model, List.of("Looks like business has been good for the Doctor."));
             println("The party gains 100 gold!");
-            model.getParty().addToGold(100);
+            model.getParty().earnGold(100);
         } else {
             println("You cannot manage to get the lock open.");
             model.getParty().randomPartyMemberSay(model, List.of("Let's leave it. It's just dead weight."));

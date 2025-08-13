@@ -34,7 +34,7 @@ public class ArcheryRangeEvent extends DailyEventState {
         while (model.getParty().getGold() >= COST_TO_PLAY) {
             print("Do you pay " + COST_TO_PLAY + " gold to play? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-COST_TO_PLAY);
+                model.getParty().spendGold(COST_TO_PLAY);
                 print("Which party member do you want to use? ");
                 GameCharacter shooter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
                 BowWeapon bowToUse = ArcheryState.getCharactersBowOrDefault(shooter);
@@ -49,7 +49,7 @@ public class ArcheryRangeEvent extends DailyEventState {
                     println("The marksman looks rather surprised.");
                     printQuote("Marksman", "Nice shot indeed. Here's your gold.");
                     println("The party receives " + WIN_SUM + " gold.");
-                    model.getParty().addToGold(WIN_SUM);
+                    model.getParty().earnGold(WIN_SUM);
                     printQuote("Marksman", "If you'll excuse me, I have to go now. Please come and" +
                             " see me again some time.");
                     break;
@@ -57,7 +57,7 @@ public class ArcheryRangeEvent extends DailyEventState {
                     partyMemberSay(shooter, "Aww, so close!");
                     printQuote("Marksman", "Still pretty impressive though. I'll give you your money back.");
                     println("You got " + COST_TO_PLAY + " gold back from the marksman.");
-                    model.getParty().addToGold(COST_TO_PLAY);
+                    model.getParty().earnGold(COST_TO_PLAY);
                 } else {
                     partyMemberSay(shooter, MyRandom.sample(List.of("Hmm. Not my best performance.",
                             "That's a miss.", "Aaw, I thought I'd do better.")));

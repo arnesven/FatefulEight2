@@ -111,7 +111,7 @@ public class StoneCircleEvent extends DailyEventState {
             int amount = Math.min(model.getParty().getGold(), 10);
             print("Pay " + amount + " gold? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToGold(-amount);
+                model.getParty().spendGold(amount);
                 change.doEvent(model);
             }
             println("You part ways with the druid.");

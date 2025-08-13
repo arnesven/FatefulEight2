@@ -149,7 +149,7 @@ public class GardenMazeEvent extends DailyEventState {
             portraitSay("I commend your sense of direction! I must keep working and make " +
                     "my maze even more difficult to solve. Here's your money.");
             println("You got " + betSize + " gold from the gardener.");
-            model.getParty().addToGold(betSize);
+            model.getParty().earnGold(betSize);
             leaderSay("Thank you. See you around gardener.");
             portraitSay("Bye for now.");
             incrementWins(model);
@@ -158,7 +158,7 @@ public class GardenMazeEvent extends DailyEventState {
             printQuote("Gardener", "See. Not so easy after all, was it?");
             leaderSay("I guess not. Here's your money.");
             println("You hand over " + betSize + " gold to the gardener.");
-            model.getParty().addToGold(-betSize);
+            model.getParty().spendGold(betSize);
             printQuote("Gardener", "Much obliged.");
             leaderSay("See you around gardener.");
             printQuote("Gardener", "Bye for now.");

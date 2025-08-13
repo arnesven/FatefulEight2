@@ -67,12 +67,20 @@ public class GameStatistics {
         increment("goldLost", cost);
     }
 
+    public static void incrementGoldSpent(int cost) {
+        increment("goldSpent", cost);
+    }
+
     public static int getGoldEarned() {
         return get("goldEarned");
     }
 
     public static int getGoldLost() {
         return get("goldLost");
+    }
+
+    public static int getGoldSpent() {
+        return get("goldSpent");
     }
 
     public static void incrementRationsConsumed(int i) {
@@ -267,12 +275,12 @@ public class GameStatistics {
         return get("itemsStolen");
     }
 
-    public static void incrementGoldPickpocketed(int stealMoney) {
-        increment("pickpocketGold", stealMoney);
+    public static void incrementGoldStolen(int stealMoney) {
+        increment("stolenGold", stealMoney);
     }
 
-    public static int getPickpocketGold() {
-        return get("pickpocketGold");
+    public static int getGoldStolen() {
+        return get("stolenGold");
     }
 
     public static void incrementItemsCrafted(int i) {
@@ -372,4 +380,12 @@ public class GameStatistics {
     public static int getPotionsDistilled() { return get("potionsdistilled"); }
 
     public static void incrementPotionsDistilled() { increment("potionsdistilled", 1);}
+
+    public static void incrementWagesPaid(int totalWages) {
+        increment("wagesPaid", totalWages);
+    }
+
+    public static int getWagesPaid() {
+        return get("wagesPaid");
+    }
 }

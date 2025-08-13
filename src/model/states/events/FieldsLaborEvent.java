@@ -78,7 +78,7 @@ public abstract class FieldsLaborEvent extends FarmerEvent {
         if (!didSay) {
             randomSayIfPersonality(PersonalityTrait.greedy, new ArrayList<>(), "A measly few coins for all that work?");
         }
-        model.getParty().addToGold(20);
+        model.getParty().earnGold(20);
         new GuestEvent(model, getPortrait()).doEvent(model);
         freeRations = true;
         didSay = randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(),

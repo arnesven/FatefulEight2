@@ -1,5 +1,6 @@
 package model.headquarters;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import util.MyLists;
@@ -24,6 +25,7 @@ public class ShoppingAssignees extends ArrayList<GameCharacter> {
                     int goldToSpend = Math.min(hq.getGold(), (int) Math.ceil(hq.getFoodLimit() / 5.0));
                     hq.addToGold(-goldToSpend);
                     hq.addToFood(goldToSpend * 5);
+                    GameStatistics.incrementGoldSpent(goldToSpend);
                     logEntry.append(MyLists.commaAndJoin(this, GameCharacter::getName));
                     logEntry.append(" went shopping, bought ").append(goldToSpend * 5);
                     logEntry.append(" rations for ").append(goldToSpend).append(" gold.\n");

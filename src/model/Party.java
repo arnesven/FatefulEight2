@@ -297,13 +297,42 @@ public class Party implements Serializable {
         return partyMembers.size() == inventory.getTentSize();
     }
 
-    public void addToGold(int cost) {
-        inventory.setGold(inventory.getGold() + cost);
-        if (cost > 0) {
-            GameStatistics.incrementGoldEarned(cost);
-        } else {
-            GameStatistics.incrementGoldLost(-cost);
-        }
+    /**
+     * Function for when the party earns or is gifted gold.
+     * @param amount, the amount to add to the party's gold.
+     */
+    public void earnGold(int amount) {
+        assert amount >= 0;
+        inventory.setGold(inventory.getGold() + amount);
+        GameStatistics.incrementGoldEarned(amount);
+    }
+
+    /**
+     * Function for when the party spends gold.
+     * @param amount, the amount to subtract from the party's gold.
+     */
+    public void spendGold(int amount) {
+        assert amount >= 0;
+        inventory.setGold(inventory.getGold() - amount);
+        GameStatistics.incrementGoldSpent(amount);
+    }
+
+    /**
+     * Function for when the party loses gold, or gives it away and gets nothing in return.
+     * @param amount, the amount to subtract from the party's gold.
+     */
+    public void loseGold(int amount) {
+        assert amount >= 0;
+        inventory.setGold(inventory.getGold() - amount);
+        GameStatistics.incrementGoldLost(amount);
+    }
+
+    /**
+     * Function for changing the party's gold amount without it being earned, spent or lost.
+     * @param amountToAdd, the amount to add or subtract (if negative) to party's gold.
+     */
+    public void goldTransaction(int amountToAdd) {
+        inventory.setGold(inventory.getGold() + amountToAdd);
     }
 
     public int partyStrength() {
@@ -338,7 +367,7 @@ public class Party implements Serializable {
                 gc.addToSP(1);
             }
         }
-        addToGold(-1 * cost);
+        spendGold(cost);
     }
 
     public List<GameCharacter> getMembersEligibleFor(CharacterClass charClass) {
@@ -683,7 +712,7 @@ public class Party implements Serializable {
         int amount = 0;
         if (payGold) {
             amount = Math.min(getGold(), gold);
-            addToGold(-amount);
+            spendGold(amount);
         }
         partyMembers.remove(gc);
         if (gc == leader) {
