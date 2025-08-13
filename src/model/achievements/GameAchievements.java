@@ -1,6 +1,5 @@
 package model.achievements;
 
-import model.GameData;
 import model.Model;
 import model.QuestDeck;
 import model.mainstory.MainStory;
@@ -8,7 +7,6 @@ import model.map.*;
 import model.quests.Quest;
 import model.states.events.*;
 import util.MyLists;
-import view.sprites.Sprite;
 
 import java.io.Serializable;
 import java.util.*;
@@ -25,9 +23,7 @@ public class GameAchievements implements Serializable {
     }
 
     private void addMiscAchievements() {
-        partyAchievements.put("TEST", new AlwaysDoneAchievement()); // TODO: Fix
-        // TODO: Fatue
-        // TODO: Spells collecting
+        partyAchievements.put(LittleSpenderAchievement.class.getCanonicalName(), new LittleSpenderAchievement());
     }
 
     private void addDungeonAchievements() {
