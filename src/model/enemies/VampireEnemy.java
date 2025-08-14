@@ -49,7 +49,7 @@ public class VampireEnemy extends UndeadEnemy {
         super.doUponDeath(model, combatEvent, killer);
         GameStatistics.incrementVampiresKilled();
         if (killer.hasCondition(VampirismCondition.class)) {
-            model.getAchievements().setCompleted(AlucardAchievement.KEY);
+            combatEvent.completeAchievement(AlucardAchievement.KEY);
         }
     }
 

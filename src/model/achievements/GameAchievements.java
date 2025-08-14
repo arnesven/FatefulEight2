@@ -39,7 +39,7 @@ public class GameAchievements implements Serializable {
         new BigEarnerAchievement().registerYourself(partyAchievements);
         new FishermanAchievement().registerYourself(partyAchievements);
         new OrcSlayerAchievement().registerYourself(partyAchievements);
-        partyAchievements.put(VampireEnemy.ALUCARD_ACHIEVEMENT_KEY, new AlucardAchievement());
+        partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
     }
 
     private void addDungeonAchievements() {

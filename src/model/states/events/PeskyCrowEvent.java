@@ -26,7 +26,7 @@ public class PeskyCrowEvent extends DailyEventState {
                 List.of("Shoo shoo!", "Scram bird!", "Just go away.",
                 "I'm not feeding you.", "What do you want?"));
         println("Suddenly it attacks you!");
-        runCombat(List.of(new CrowEnemy('A')));
+        runCombat(List.of(new VampireEnemy('A'))); //new CrowEnemy('A')));
     }
 
 }
