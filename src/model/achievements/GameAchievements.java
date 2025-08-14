@@ -20,10 +20,22 @@ public class GameAchievements implements Serializable {
         addQuestAchievements();
         addDungeonAchievements();
         addMiscAchievements();
+
+        printAchievements();
+    }
+
+    private void printAchievements() {
+        for (Achievement a : partyAchievements.values()) {
+            System.out.println(a.getKey() + ":" + a.getName());
+        }
+
     }
 
     private void addMiscAchievements() {
-        partyAchievements.put(LittleSpenderAchievement.class.getCanonicalName(), new LittleSpenderAchievement());
+        new LittleSpenderAchievement().registerYourself(partyAchievements);
+        new BigSpenderAchievement().registerYourself(partyAchievements);
+        new LittleEarnerAchievement().registerYourself(partyAchievements);
+        new BigEarnerAchievement().registerYourself(partyAchievements);
     }
 
     private void addDungeonAchievements() {
