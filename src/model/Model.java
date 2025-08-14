@@ -41,7 +41,6 @@ import java.io.*;
 import java.util.List;
 
 public class Model {
-    public static final int REP_TO_WIN = 10;
     private static final String HALL_OF_FAME_PATH = "hall_of_fame.ff8";
     private FatefulEight frame;
     private GameData gameData;
