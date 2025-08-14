@@ -21,15 +21,6 @@ public class GameAchievements implements Serializable {
         addQuestAchievements();
         addDungeonAchievements();
         addMiscAchievements();
-
-        printAchievements();
-    }
-
-    private void printAchievements() {
-        for (Achievement a : partyAchievements.values()) {
-            System.out.println(a.getKey() + ":" + a.getName());
-        }
-
     }
 
     private void addMiscAchievements() {
