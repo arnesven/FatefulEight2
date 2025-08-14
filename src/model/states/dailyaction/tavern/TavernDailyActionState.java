@@ -34,7 +34,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         }
         if (inTown) {
             Point doorPos = getDoorPosition();
-            addNode(doorPos.x, doorPos.y, new ExitTavernNode());
+            addNode(doorPos.x, doorPos.y+1, new ExitTavernNode());
             if (model.getDay() % 3 == 0 && model.getDay() < 100 - Loan.REPAY_WITHIN_DAYS * 2) {
                 addNode(4, 2, new TakeLoanNode());
             } else {

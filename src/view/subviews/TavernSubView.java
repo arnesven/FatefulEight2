@@ -91,9 +91,9 @@ public class TavernSubView extends DailyActionSubView {
                 }
             }
         }
-        if (!inTown) {
+        //if (!inTown) {
             drawDoorWithAnimation(model);
-        }
+        //}
 
         drawDecorations(model);
         drawPartyArea(model, List.of(new Point(6, 6), new Point(6, 5),
@@ -171,8 +171,8 @@ public class TavernSubView extends DailyActionSubView {
     }
 
     private boolean insideToOutside(Point from, Point to) {
-        return to.y != AdvancedDailyActionState.TOWN_MATRIX_ROWS-1 &&
-                from.y == AdvancedDailyActionState.TOWN_MATRIX_ROWS-1;
+        return to.y >= AdvancedDailyActionState.TOWN_MATRIX_ROWS-2 &&
+                from.y < AdvancedDailyActionState.TOWN_MATRIX_ROWS-2;
     }
 
     private void addCallout(int length, Point p) {
