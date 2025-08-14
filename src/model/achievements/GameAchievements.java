@@ -2,6 +2,7 @@ package model.achievements;
 
 import model.Model;
 import model.QuestDeck;
+import model.enemies.VampireEnemy;
 import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
@@ -37,6 +38,8 @@ public class GameAchievements implements Serializable {
         new LittleEarnerAchievement().registerYourself(partyAchievements);
         new BigEarnerAchievement().registerYourself(partyAchievements);
         new FishermanAchievement().registerYourself(partyAchievements);
+        new OrcSlayerAchievement().registerYourself(partyAchievements);
+        partyAchievements.put(VampireEnemy.ALUCARD_ACHIEVEMENT_KEY, new AlucardAchievement());
     }
 
     private void addDungeonAchievements() {

@@ -2,7 +2,9 @@ package model.enemies;
 
 import model.GameStatistics;
 import model.Model;
+import model.achievements.AlucardAchievement;
 import model.characters.GameCharacter;
+import model.combat.conditions.VampirismCondition;
 import model.combat.loot.BossCombatLoot;
 import model.combat.loot.CombatLoot;
 import model.states.CombatEvent;
@@ -46,6 +48,9 @@ public class VampireEnemy extends UndeadEnemy {
     public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
         super.doUponDeath(model, combatEvent, killer);
         GameStatistics.incrementVampiresKilled();
+        if (killer.hasCondition(VampirismCondition.class)) {
+            model.getAchievements().setCompleted(AlucardAchievement.KEY);
+        }
     }
 
     private static class VampireEnemySprite extends LoopingSprite {
