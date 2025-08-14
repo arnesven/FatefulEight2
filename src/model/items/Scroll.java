@@ -24,6 +24,11 @@ public class Scroll extends UsableItem {
     }
 
     @Override
+    public boolean isStackable() {
+        return true;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return sprite;
     }

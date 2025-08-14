@@ -5,13 +5,13 @@ import view.ScreenHandler;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class SellPotionDummyItem extends InventoryDummyItem {
+public class StackableDummyItem extends InventoryDummyItem {
     private final Item inner;
     private int count;
     private Sprite sprite;
     private Sprite overSprite;
 
-    public SellPotionDummyItem(Item item, int count) {
+    public StackableDummyItem(Item item, int count) {
         super(item.getName(), item.getCost());
         this.inner = item;
         this.count = count;
@@ -21,8 +21,8 @@ public class SellPotionDummyItem extends InventoryDummyItem {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof SellPotionDummyItem) {
-            SellPotionDummyItem other = (SellPotionDummyItem) obj;
+        if (obj instanceof StackableDummyItem) {
+            StackableDummyItem other = (StackableDummyItem) obj;
             return inner.getName().equals(other.getName()) && count == other.count;
         }
         return super.equals(obj);
@@ -69,10 +69,5 @@ public class SellPotionDummyItem extends InventoryDummyItem {
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
         super.drawYourself(screenHandler, col, row);
         screenHandler.put(col + 3, row + 3, overSprite);
-    }
-
-    public void decrement() {
-        count--;
-        makeSprite();
     }
 }

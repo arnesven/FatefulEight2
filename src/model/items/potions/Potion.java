@@ -1,7 +1,6 @@
 package model.items.potions;
 
 import model.items.Inventory;
-import model.items.Item;
 import model.items.UsableItem;
 
 public abstract class Potion extends UsableItem {

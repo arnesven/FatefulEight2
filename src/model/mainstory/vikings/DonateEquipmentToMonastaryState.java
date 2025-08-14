@@ -2,13 +2,7 @@ package model.mainstory.vikings;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.items.ArmorItem;
 import model.items.Item;
-import model.items.SellPotionDummyItem;
-import model.items.accessories.ShieldItem;
-import model.items.clothing.Clothing;
-import model.items.clothing.HeavyArmorClothing;
-import model.items.weapons.Weapon;
 import model.mainstory.GainSupportOfVikingsTask;
 import model.states.TransferItemState;
 

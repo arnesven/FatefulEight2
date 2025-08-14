@@ -11,13 +11,11 @@ import model.classes.SkillChecks;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
-import model.items.potions.Potion;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
-import view.MyColors;
 import view.SimpleMessageView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
@@ -25,7 +23,6 @@ import view.subviews.ShopSubView;
 import view.subviews.SubView;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class ShopState extends GameState {
 
@@ -84,14 +81,14 @@ public class ShopState extends GameState {
         List<Item> itemsToSell = new ArrayList<>();
         itemsToSell.addAll(model.getParty().getInventory().getAllItems());
         itemsToSell.removeIf((Item it) -> !it.isSellable());
-        groupPotions(itemsToSell);
+        groupStackables(itemsToSell);
         return itemsToSell;
     }
 
-    private void groupPotions(List<Item> itemsToSell) {
+    private void groupStackables(List<Item> itemsToSell) {
         Map<String, Integer> counts = new HashMap<>();
         for (Item it : itemsToSell) {
-            if (it instanceof Potion) {
+            if (it.isStackable()) {
                 if (counts.containsKey(it.getName())) {
                     counts.put(it.getName(), counts.get(it.getName()) + 1);
                 } else {
@@ -102,9 +99,10 @@ public class ShopState extends GameState {
 
         for (Map.Entry<String, Integer> entry : counts.entrySet()) {
             if (entry.getValue() > 1) {
-                Potion inner = (Potion)MyLists.find(itemsToSell, it -> it.getName().equals(entry.getKey()));
+                Item inner = MyLists.find(itemsToSell, it -> it.getName().equals(entry.getKey()));
+                assert inner != null;
                 itemsToSell.removeIf(it -> it.getName().equals(entry.getKey()));
-                itemsToSell.add(new SellPotionDummyItem(inner, entry.getValue()));
+                itemsToSell.add(new StackableDummyItem(inner, entry.getValue()));
             }
         }
 
@@ -316,19 +314,18 @@ public class ShopState extends GameState {
             sellItems.remove(it);
             itemJustSold(model, it, buyItems, prices);
             model.getParty().getInventory().remove(it);
-            if (getSellableItems(model).size() == 0) {
+            if (getSellableItems(model).isEmpty()) {
                 if (buyItems.getElementList().isEmpty()) {
                     return true;
                 } else {
                     toggleBuySell(model);
                 }
             }
-        } else if (it instanceof SellPotionDummyItem) {
-            SellPotionDummyItem dummy = ((SellPotionDummyItem)it);
+        } else if (it instanceof StackableDummyItem) {
+            StackableDummyItem dummy = ((StackableDummyItem)it);
             Item inner = dummy.getInnerItem();
             itemJustSold(model, inner, buyItems, prices);
             model.getParty().getInventory().remove(inner);
-            dummy.decrement();
         } else {
             println("You cannot sell an item that is currently equipped.");
         }

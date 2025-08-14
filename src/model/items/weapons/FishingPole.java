@@ -48,4 +48,9 @@ public class FishingPole extends PolearmWeapon {
             gameCharacter.unequipWeapon();
         }
     }
+
+    @Override
+    public boolean isStackable() {
+        return true;
+    }
 }
