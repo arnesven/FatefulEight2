@@ -36,6 +36,7 @@ public class GameAchievements implements Serializable {
         new BigSpenderAchievement().registerYourself(partyAchievements);
         new LittleEarnerAchievement().registerYourself(partyAchievements);
         new BigEarnerAchievement().registerYourself(partyAchievements);
+        new FishermanAchievement().registerYourself(partyAchievements);
     }
 
     private void addDungeonAchievements() {

@@ -86,6 +86,7 @@ public class FishingState extends GameState {
         Fish fish = generateFish();
         SkillCheckResult checkResult = model.getParty().doSkillCheckWithReRoll(model, this, fisher, Skill.Survival, fish.getDifficulty(), 10, 0);
         if (checkResult.isSuccessful()) {
+            GameStatistics.incrementFishCaught();
             GameStatistics.recordMaximumFish(fish.getWeight());
             partyMemberSay(fisher, "Oh, it's a " + fish.getName().toLowerCase() + ".");
             if (model.getParty().size() > 1 && fish.getWeight() > 1500) {

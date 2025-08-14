@@ -388,4 +388,12 @@ public class GameStatistics {
     public static int getWagesPaid() {
         return get("wagesPaid");
     }
+
+    public static void incrementFishCaught() {
+        increment("fishCaught", 1);
+    }
+
+    public static int getFishCaught() {
+        return get("fishCaught");
+    }
 }
