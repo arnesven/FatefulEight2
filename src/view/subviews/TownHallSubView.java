@@ -18,6 +18,8 @@ public class TownHallSubView extends DailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.LIGHT_GRAY;
     public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
+    public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
+            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
     private static final Sprite WALL = new Sprite32x32("tavernfarwall", "world_foreground.png", 0x44,
             MyColors.DARK_GRAY, MyColors.BROWN, MyColors.TAN);
     public static final Sprite FLOOR = new Sprite32x32("townhallfloor", "world_foreground.png", 0x56,

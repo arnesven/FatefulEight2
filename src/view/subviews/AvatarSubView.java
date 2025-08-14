@@ -50,7 +50,11 @@ public abstract class AvatarSubView extends SubView {
         }
     }
 
-    private static class MovementAnimation implements Animation {
+    protected MovementAnimation getMovementAnimation() {
+        return movementAnimation;
+    }
+
+    protected static class MovementAnimation implements Animation {
         private double lastDistance;
         private double steps;
         private final Point from;
@@ -117,6 +121,12 @@ public abstract class AvatarSubView extends SubView {
 
         public void drawYourself(Model model) {
             model.getScreenHandler().register("movefrom", from, sprite, 2, (int)shift.x, (int)shift.y);
+        }
+
+        public Point getCurrentPosition() {
+            double x = Math.round(from.x + shift.x / 8.0);
+            double y = Math.round(from.y + shift.y / 8.0);
+            return new Point((int)x, (int)y);
         }
     }
 }

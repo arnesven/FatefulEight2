@@ -7,6 +7,8 @@ import model.races.Race;
 import model.states.dailyaction.*;
 import model.states.dailyaction.tavern.RecruitNode;
 import model.states.dailyaction.tavern.TavernDailyActionState;
+import sound.ClientSound;
+import sound.SoundEffects;
 import sprites.CombatSpeechBubble;
 import util.MyPair;
 import view.MyColors;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Random;
 
 import static view.subviews.TownHallSubView.DOOR;
+import static view.subviews.TownHallSubView.OPEN_DOOR;
 
 public class TavernSubView extends DailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.DARK_BROWN;
@@ -49,6 +52,9 @@ public class TavernSubView extends DailyActionSubView {
 
     private final boolean inTown;
     private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
+    private boolean openDoorAnimation = false;
+    private boolean playedOpenDoorSound = false;
+    private boolean playCloseDoorSound = false;
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
@@ -86,8 +92,7 @@ public class TavernSubView extends DailyActionSubView {
             }
         }
         if (!inTown) {
-            Point p = convertToScreen(TavernDailyActionState.getDoorPosition());
-            model.getScreenHandler().put(p.x, p.y, DOOR);
+            drawDoorWithAnimation(model);
         }
 
         drawDecorations(model);
@@ -96,6 +101,24 @@ public class TavernSubView extends DailyActionSubView {
                 new Point(5, 4), new Point(4, 5)));
     }
 
+    private void drawDoorWithAnimation(Model model) {
+        Point p = convertToScreen(TavernDailyActionState.getDoorPosition());
+        if (openDoorAnimation &&
+                getMovementAnimation().getCurrentPosition().distance(p) < 3.0) {
+            if (!playedOpenDoorSound) {
+                SoundEffects.playHitWood();
+                playedOpenDoorSound = true;
+                playCloseDoorSound = true;
+            }
+            model.getScreenHandler().put(p.x, p.y, OPEN_DOOR);
+        } else {
+            if (playCloseDoorSound) {
+                SoundEffects.playHitWood();
+                playCloseDoorSound = false;
+            }
+            model.getScreenHandler().put(p.x, p.y, DOOR);
+        }
+    }
 
 
     private void drawDecorations(Model model) {
@@ -134,10 +157,13 @@ public class TavernSubView extends DailyActionSubView {
     public void animateMovement(Model model, Point from, Point to) {
         if (insideToOutside(from, to) || insideToOutside(to, from)) {
             Point doorPos = TavernDailyActionState.getDoorPosition();
+            openDoorAnimation = true;
+            playedOpenDoorSound = false;
             super.animateMovement(model, from, doorPos);
             Point below = new Point(doorPos);
             below.y++;
             super.animateMovement(model, doorPos, below);
+            openDoorAnimation = false;
             super.animateMovement(model, below, to);
         } else {
             super.animateMovement(model, from, to);
