@@ -6,12 +6,12 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class ExitLocaleNode extends DailyActionNode {
-    private final Sprite bgSprite;
+import java.awt.*;
 
-    public ExitLocaleNode(String label, Sprite bgSprite) {
+public class ExitLocaleNode extends DailyActionNode {
+
+    public ExitLocaleNode(String label) {
         super(label);
-        this.bgSprite = bgSprite;
     }
 
     @Override
@@ -22,8 +22,11 @@ public class ExitLocaleNode extends DailyActionNode {
 
     @Override
     public Sprite getBackgroundSprite() {
-        return bgSprite;
+        return null;
     }
+
+    @Override
+    public void drawYourself(Model model, Point p) { }
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {

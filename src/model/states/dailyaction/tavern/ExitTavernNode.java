@@ -9,11 +9,6 @@ import java.awt.*;
 public class ExitTavernNode extends ExitLocaleNode {
 
     public ExitTavernNode() {
-        super("Leave Tavern", TownHallSubView.DOOR);
-    }
-
-    @Override
-    public void drawYourself(Model model, Point p) {
-
+        super("Leave Tavern");
     }
 }

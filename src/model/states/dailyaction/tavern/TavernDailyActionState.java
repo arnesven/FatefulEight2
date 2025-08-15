@@ -16,6 +16,7 @@ import view.subviews.TownSubView;
 import java.awt.*;
 
 public class TavernDailyActionState extends AdvancedDailyActionState {
+    private static final Point DOOR_POSITION = new Point(3, 7);
     private final boolean inTown;
 
     public TavernDailyActionState(Model model, boolean freeLodging, boolean inTown) {
@@ -60,7 +61,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
     }
 
     public static Point getDoorPosition() {
-        return new Point(3, 7);
+        return DOOR_POSITION;
     }
 
     @Override

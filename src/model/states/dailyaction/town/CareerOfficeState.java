@@ -12,15 +12,18 @@ import view.subviews.DailyActionSubView;
 import java.awt.*;
 
 public class CareerOfficeState extends AdvancedDailyActionState {
-    private static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
-            MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
+    private static final Point DOOR_POS = new Point(3, 6);
 
     public CareerOfficeState(Model model) {
         super(model);
         addNode(3, 3, new CareerCoachNode());
         addNode(1, 3, new ClassesExpert());
         addNode(5, 3, new CourseCoordinator());
-        addNode(3, 6, new ExitLocaleNode("Leave career office", DOOR));
+        addNode(DOOR_POS.x, DOOR_POS.y + 1, new ExitLocaleNode("Leave career office"));
+    }
+    
+    public static Point getDoorPosition() {
+        return DOOR_POS;
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.Random;
 import static view.subviews.TownHallSubView.DOOR;
 import static view.subviews.TownHallSubView.OPEN_DOOR;
 
-public class TavernSubView extends DailyActionSubView {
+public class TavernSubView extends RoomDailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.DARK_BROWN;
 
     public static final Sprite WALL = new Sprite32x32("tavernfarwall", "world_foreground.png", 0x44,
@@ -52,9 +52,6 @@ public class TavernSubView extends DailyActionSubView {
 
     private final boolean inTown;
     private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
-    private boolean openDoorAnimation = false;
-    private boolean playedOpenDoorSound = false;
-    private boolean playCloseDoorSound = false;
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
@@ -63,8 +60,29 @@ public class TavernSubView extends DailyActionSubView {
     }
 
     @Override
-    protected void drawBackground(Model model) {
-        Random random = new Random(9847);
+    protected void drawParty(Model model) {
+        drawPartyArea(model, List.of(new Point(6, 6), new Point(6, 5),
+                new Point(5, 6), new Point(6, 4), new Point(4, 6),
+                new Point(5, 4), new Point(4, 5)));
+    }
+
+    @Override
+    protected Point getDoorPosition() {
+        return TavernDailyActionState.getDoorPosition();
+    }
+
+    @Override
+    protected Sprite getOpenDoorSprite() {
+        return OPEN_DOOR;
+    }
+
+    @Override
+    protected Sprite getClosedDoorSprite() {
+        return DOOR;
+    }
+
+    @Override
+    protected void drawBackgroundRoom(Model model, Random random) {
         for (int row = 0; row < 9; ++row) {
             for (int col = 0; col < 8; ++col) {
                 Point p = convertToScreen(new Point(col, row));
@@ -91,37 +109,10 @@ public class TavernSubView extends DailyActionSubView {
                 }
             }
         }
-        //if (!inTown) {
-            drawDoorWithAnimation(model);
-        //}
-
-        drawDecorations(model);
-        drawPartyArea(model, List.of(new Point(6, 6), new Point(6, 5),
-                new Point(5, 6), new Point(6, 4), new Point(4, 6),
-                new Point(5, 4), new Point(4, 5)));
     }
 
-    private void drawDoorWithAnimation(Model model) {
-        Point p = convertToScreen(TavernDailyActionState.getDoorPosition());
-        if (openDoorAnimation &&
-                getMovementAnimation().getCurrentPosition().distance(p) < 3.0) {
-            if (!playedOpenDoorSound) {
-                SoundEffects.playHitWood();
-                playedOpenDoorSound = true;
-                playCloseDoorSound = true;
-            }
-            model.getScreenHandler().put(p.x, p.y, OPEN_DOOR);
-        } else {
-            if (playCloseDoorSound) {
-                SoundEffects.playHitWood();
-                playCloseDoorSound = false;
-            }
-            model.getScreenHandler().put(p.x, p.y, DOOR);
-        }
-    }
-
-
-    private void drawDecorations(Model model) {
+    @Override
+    protected void drawDecorations(Model model) {
         drawForeground(model, 3, 0, CHIMNEY);
         drawForeground(model, 3, 1, FIREPLACE);
         drawForeground(model, 1, 1, PLANT);
@@ -152,27 +143,6 @@ public class TavernSubView extends DailyActionSubView {
             return "TAVERN";
         }
         return "INN";
-    }
-
-    public void animateMovement(Model model, Point from, Point to) {
-        if (insideToOutside(from, to) || insideToOutside(to, from)) {
-            Point doorPos = TavernDailyActionState.getDoorPosition();
-            openDoorAnimation = true;
-            playedOpenDoorSound = false;
-            super.animateMovement(model, from, doorPos);
-            Point below = new Point(doorPos);
-            below.y++;
-            super.animateMovement(model, doorPos, below);
-            openDoorAnimation = false;
-            super.animateMovement(model, below, to);
-        } else {
-            super.animateMovement(model, from, to);
-        }
-    }
-
-    private boolean insideToOutside(Point from, Point to) {
-        return to.y >= AdvancedDailyActionState.TOWN_MATRIX_ROWS-2 &&
-                from.y < AdvancedDailyActionState.TOWN_MATRIX_ROWS-2;
     }
 
     private void addCallout(int length, Point p) {

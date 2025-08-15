@@ -34,7 +34,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
         if (!breakIn) {
             addNode(4, 3, new TalkToLordNode());
         }
-        addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling(), location.getExitSprite()));
+        addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling()));
         addNode(1, 1, new LordTreasuryNode(model, location, breakIn));
     }
 
