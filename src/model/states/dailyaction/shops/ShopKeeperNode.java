@@ -7,6 +7,7 @@ import model.states.ShopState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.ShopInteriorState;
+import util.MyRandom;
 import view.sprites.Sprite;
 import view.subviews.ShopInteriorSubView;
 
@@ -29,13 +30,18 @@ public class ShopKeeperNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        state.leaderSay("Got anything good?");
-        String line = "Lot's of good stuff. Have a look.";
+        state.leaderSay(MyRandom.sample(List.of("Got anything good?", "Can I see your wares?",
+                "How is business?", "I want to do some shopping")));
+        String line = MyRandom.sample(List.of("Lot's of good stuff. Have a look.",
+                "I have some new stuff, and all the usual things as well.",
+                "You've come to the right place.", "Please, browse freely.",
+                "Business is always good, when you have loyal customers.",
+                "The finest merchandise!"));
         if (model.getSubView() instanceof ShopInteriorSubView) {
             model.getLog().waitForAnimationToFinish();
             ((ShopInteriorSubView)model.getSubView()).addCalloutAtMerchant(line.length());
         }
-        state.printQuote("Shopkeeper", line);
+        state.printQuote(shopName, line);
         model.getLog().waitForReturn();
         return new ShopState(model, shopName, inventory, prices, haggle);
     }
