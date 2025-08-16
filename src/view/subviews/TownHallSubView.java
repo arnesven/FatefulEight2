@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.races.Race;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.VisitLordDailyActionState;
 import view.MyColors;
 import view.combat.GrassCombatTheme;
 import view.sprites.Sprite;
@@ -14,7 +15,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
-public class TownHallSubView extends DailyActionSubView {
+public class TownHallSubView extends RoomDailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.LIGHT_GRAY;
     public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
@@ -46,8 +47,7 @@ public class TownHallSubView extends DailyActionSubView {
     }
 
     @Override
-    protected void drawBackground(Model model) {
-        Random random = new Random(9847);
+    protected void drawBackgroundRoom(Model model, Random random) {
         for (int row = 0; row < 9; ++row) {
             for (int col = 0; col < 8; ++col) {
                 Point p = convertToScreen(new Point(col, row));
@@ -70,13 +70,17 @@ public class TownHallSubView extends DailyActionSubView {
                 }
             }
         }
-        drawDecorations(model);
-        drawPartyArea(model, List.of(new Point(2, 5), new Point(4, 5),
+    }
+
+    @Override
+    protected void drawParty(Model model) {
+        super.drawPartyArea(model, List.of(new Point(2, 5), new Point(4, 5),
                 new Point(2, 6), new Point(4, 6), new Point(5, 5),
                 new Point(5, 6), new Point(2, 4)));
     }
 
-    private void drawDecorations(Model model) {
+    @Override
+    protected void drawDecorations(Model model) {
         Sprite window = WINDOW;
         if (!drawLord) {
             window = EVENING_WINDOW;
@@ -93,6 +97,21 @@ public class TownHallSubView extends DailyActionSubView {
         if (drawLord) {
             drawForeground(model, 4, 2, LORD);
         }
+    }
+
+    @Override
+    protected Point getDoorPosition() {
+        return VisitLordDailyActionState.getDoorPosition();
+    }
+
+    @Override
+    protected Sprite getOpenDoorSprite() {
+        return OPEN_DOOR;
+    }
+
+    @Override
+    protected Sprite getClosedDoorSprite() {
+        return DOOR;
     }
 
     @Override

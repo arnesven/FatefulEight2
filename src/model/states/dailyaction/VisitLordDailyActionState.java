@@ -22,6 +22,7 @@ import java.util.List;
 import java.awt.*;
 
 public abstract class VisitLordDailyActionState extends AdvancedDailyActionState {
+    private static final Point DOOR_POS = new Point(3, 7);
     private final Summon summon;
     private final UrbanLocation location;
     private boolean spentNight;
@@ -34,8 +35,12 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
         if (!breakIn) {
             addNode(4, 3, new TalkToLordNode());
         }
-        addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling()));
+        addNode(DOOR_POS.x, DOOR_POS.y + 1, new ExitLocaleNode("Leave " + location.getLordDwelling()));
         addNode(1, 1, new LordTreasuryNode(model, location, breakIn));
+    }
+
+    public static Point getDoorPosition() {
+        return DOOR_POS;
     }
 
     @Override
