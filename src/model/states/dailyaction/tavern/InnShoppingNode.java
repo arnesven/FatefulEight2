@@ -1,8 +1,12 @@
 package model.states.dailyaction.tavern;
 
 import model.Model;
+import model.TimeOfDay;
 import model.items.Item;
+import model.states.GameState;
 import model.states.ShopState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.shops.ShoppingNode;
 import util.MyRandom;
 import view.sprites.Sprite;
@@ -11,14 +15,13 @@ import view.subviews.TavernSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InnShoppingNode extends ShoppingNode {
-    public InnShoppingNode(Model model) {
-        super(model, "Merchant");
-    }
+public class InnShoppingNode extends DailyActionNode {
+    private final List<Item> inventory;
+    private boolean[] haggleFlag = new boolean[]{true};
 
-    @Override
-    protected boolean supportsBreakIn() {
-        return false;
+    public InnShoppingNode(Model model) {
+        super("Merchant");
+        this.inventory = makeInventory(model);
     }
 
     protected List<Item> makeInventory(Model model) {
@@ -27,18 +30,17 @@ public class InnShoppingNode extends ShoppingNode {
         return inventory;
     }
 
-    @Override
-    protected int getShopSecurity() {
-        return 7;
-    }
-
-    @Override
     protected int[] getSpecialPrices(List<Item> inventory) {
         int[] prices = new int[inventory.size()];
         for (int i = 0; i < inventory.size(); ++i) {
             prices[i] = inventory.get(i).getCost();
         }
         return prices;
+    }
+
+    @Override
+    public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        return new ShopState(model, getName(), inventory, getSpecialPrices(inventory), haggleFlag);
     }
 
     @Override
@@ -49,5 +51,17 @@ public class InnShoppingNode extends ShoppingNode {
     @Override
     public Sprite getForegroundSprite() {
         return null;
+    }
+
+    @Override
+    public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+        return true;
+    }
+
+    @Override
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (state.isMorning()) {
+            model.setTimeOfDay(TimeOfDay.MIDDAY);
+        }
     }
 }

@@ -7,8 +7,10 @@ import model.items.Prevalence;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +20,13 @@ public class WeaponShopNode extends GeneralShopNode {
 
     private static final Sprite WEAPON_SIGN = new SignSprite("weaponsign", 0x16,
             MyColors.PURPLE, MyColors.WHITE);
+
+    private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
+            new Sprite32x32("shopsign", "world_foreground.png", 0x7E,
+                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
+            new MiniItemSprite(0, MyColors.LIGHT_GRAY, MyColors.BROWN),
+            new MiniItemSprite(0, MyColors.GOLD, MyColors.BLUE),
+    };
 
     public WeaponShopNode(Model model, int column, int row) {
         super(model, column, row, "Weapon Shop");
@@ -31,6 +40,11 @@ public class WeaponShopNode extends GeneralShopNode {
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(1,5), Prevalence.rare, 0.0));
         Collections.sort(inventory);
         return inventory;
+    }
+
+    @Override
+    protected Sprite[] getShopDecorations() {
+        return SHOP_DECORATIONS;
     }
 
     @Override

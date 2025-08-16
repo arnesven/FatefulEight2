@@ -19,6 +19,7 @@ import util.MyLists;
 import util.MyRandom;
 import util.MyUnaryIntFunction;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -34,6 +35,7 @@ public abstract class ShoppingNode extends DailyActionNode {
     private static final Sprite SIGN = new SignSprite("generalsign", 0x06, MyColors.BLUE, MyColors.WHITE);
     private static final Sprite OUT_OF_BUSINESS_SIGN = new SignSprite("outofbusinesssign", 0x36, MyColors.RED, MyColors.WHITE);
     private static final String OUT_OF_BUSINESS_FLAG_SUFFIX = "out-of-business";
+
     private List<Item> shopInventory;
     private boolean triedBreakIn = false;
     private boolean[] haggleFlag = new boolean[]{true};
@@ -45,6 +47,8 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     protected abstract List<Item> makeInventory(Model model);
 
+    protected abstract Sprite[] getShopDecorations();
+
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         if (state.isEvening() && supportsBreakIn()) {
@@ -55,7 +59,8 @@ public abstract class ShoppingNode extends DailyActionNode {
             triedBreakIn = true;
             return state;
         }
-        return new ShopInteriorState(model, getName(), shopInventory, getSpecialPrices(shopInventory), haggleFlag);
+        return new ShopInteriorState(model, getName(), shopInventory,
+                getSpecialPrices(shopInventory), haggleFlag, getShopDecorations());
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {

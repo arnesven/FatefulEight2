@@ -12,6 +12,7 @@ import model.items.weapons.*;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -26,6 +27,13 @@ public class PirateShop extends GeneralShopNode {
             MyColors.PEACH, TownSubView.PATH_COLOR, MyColors.DARK_RED, MyColors.PEACH);
     private static final Sprite SIGN = new SignSprite("yeaoldesign", 0x1B0,
             MyColors.BLACK, MyColors.GOLD);
+    private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
+            new Sprite32x32("sign", "world_foreground.png", 0x8D,
+                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
+            new MiniItemSprite(0, MyColors.LIGHT_GRAY, MyColors.BROWN),
+            new MiniItemSprite(8, MyColors.DARK_BROWN, MyColors.BEIGE),
+    };
+
 
     private static final List<Item> ITEMS = List.of(
             new Scimitar(), new Rapier(), new Cutlass(), new Cutlass(),
@@ -60,6 +68,11 @@ public class PirateShop extends GeneralShopNode {
         list.addAll(model.getItemDeck().draw(MyRandom.randInt(3, 6), Prevalence.common));
         Collections.sort(list);
         return list;
+    }
+
+    @Override
+    protected Sprite[] getShopDecorations() {
+        return SHOP_DECORATIONS;
     }
 
     public static List<Item> getPirateItems() {

@@ -159,9 +159,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
         return new TownDailyActionState(model, isCoastal, this, freeLodge, freeRations);
     }
 
-    public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new GeneralShopNode(model, 6, 1));
-    }
+    public abstract List<GeneralShopNode> getShops(Model model);
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {

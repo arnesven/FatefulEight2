@@ -10,6 +10,7 @@ import model.states.dailyaction.LodgingNode;
 import model.states.dailyaction.ShopInteriorState;
 import model.states.dailyaction.tavern.TavernDailyActionState;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
@@ -20,22 +21,23 @@ public class ShopInteriorSubView extends RoomDailyActionSubView {
     private static final Sprite MERCHANT = new Sprite32x32("merchant", "world_foreground.png", 0x65,
             MyColors.BLACK, MyColors.GOLD, Race.NORTHERN_HUMAN.getColor(), MyColors.RED);
 
-    private static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
-            MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
-    public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
-            MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
-
     public static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN);
+    private final Sprite[] shoppingDecorations;
+    private final String name;
 
     public ShopInteriorSubView(AdvancedDailyActionState state,
-                               SteppingMatrix<DailyActionNode> matrix) {
+                               SteppingMatrix<DailyActionNode> matrix,
+                               String name,
+                               Sprite[] shoppingDecorations) {
         super(state, matrix);
+        this.shoppingDecorations = shoppingDecorations;
+        this.name = name.toUpperCase();
     }
 
     @Override
     protected String getPlaceType() {
-        return "SHOP INTERIOR";
+        return name;
     }
 
     @Override
@@ -53,6 +55,10 @@ public class ShopInteriorSubView extends RoomDailyActionSubView {
     @Override
     protected void specificDrawDecorations(Model model) {
         drawBar(model);
+        drawForeground(model, 4, 6, shoppingDecorations[0]);
+        drawForeground(model, 5, 3, shoppingDecorations[1], 1);
+        drawForeground(model, 2, 3, shoppingDecorations[2], 1);
+
         Point p = ShopInteriorState.getShopKeeperPosition();
         drawForeground(model, p.x, p.y, MERCHANT);
         drawForeground(model, 1, 2, DungeonChest.BIG_CHEST_CLOSED);

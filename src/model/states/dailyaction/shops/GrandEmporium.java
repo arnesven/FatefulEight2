@@ -6,8 +6,10 @@ import model.items.Lockpick;
 import model.items.Prevalence;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +19,12 @@ public class GrandEmporium extends GeneralShopNode {
 
     private static final Sprite SIGN = new SignSprite("emporiumsign", 0x26,
             MyColors.BLACK, MyColors.GOLD);
+    private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
+            new Sprite32x32("sign", "world_foreground.png", 0x8E,
+                    MyColors.BLACK, MyColors.GOLD, MyColors.BLACK),
+            new MiniItemSprite(2, MyColors.YELLOW, MyColors.DARK_GRAY),
+            new MiniItemSprite(6, MyColors.DARK_BROWN, MyColors.BEIGE),
+    };
 
     public GrandEmporium(Model model, int x, int y) {
         super(model, x, y, "Grand Emporium");
@@ -33,6 +41,11 @@ public class GrandEmporium extends GeneralShopNode {
         }
         Collections.sort(result);
         return result;
+    }
+
+    @Override
+    protected Sprite[] getShopDecorations() {
+        return SHOP_DECORATIONS;
     }
 
     @Override

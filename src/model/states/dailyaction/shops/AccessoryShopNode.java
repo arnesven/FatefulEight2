@@ -7,8 +7,10 @@ import model.items.Prevalence;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +20,12 @@ public class AccessoryShopNode extends GeneralShopNode {
 
     private static final Sprite SIGN = new SignSprite("accessorysign", 0x26,
             MyColors.GOLD, MyColors.WHITE);
+    private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
+            new Sprite32x32("sign", "world_foreground.png", 0x8E,
+                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
+            new MiniItemSprite(2, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY),
+            new MiniItemSprite(8, MyColors.BROWN, MyColors.BEIGE),
+    };
 
     public AccessoryShopNode(Model model, int column, int row) {
         super(model, column, row, "Accessory Shop");
@@ -36,6 +44,11 @@ public class AccessoryShopNode extends GeneralShopNode {
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allGloves(), MyRandom.randInt(1,7), Prevalence.unspecified, 0.0));
         Collections.sort(inventory);
         return inventory;
+    }
+
+    @Override
+    protected Sprite[] getShopDecorations() {
+        return SHOP_DECORATIONS;
     }
 
     @Override

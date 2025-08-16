@@ -17,10 +17,7 @@ import model.races.Race;
 import model.ruins.objects.DungeonChest;
 import model.states.events.LottoHouseChest;
 import view.MyColors;
-import view.sprites.CombatCursorSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite16x16;
-import view.sprites.Sprite32x32;
+import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -156,10 +153,10 @@ public class LottoHouseSubView extends AvatarSubView {
             return new MiniItemSprite(0, MyColors.LIGHT_GRAY, MyColors.BROWN);
         }
         if (selectedItem instanceof Clothing) {
-            return new MiniItemSprite(1, MyColors.PINK, MyColors.BEIGE);
+            return new MiniItemSprite(1, MyColors.PINK, MyColors.PINK);
         }
         if (selectedItem instanceof ShieldItem) {
-            return new MiniItemSprite(3, MyColors.RED, MyColors.BEIGE);
+            return new MiniItemSprite(3, MyColors.RED, MyColors.LIGHT_GRAY);
         }
         if (selectedItem instanceof Accessory) {
             return new MiniItemSprite(2, MyColors.GOLD, MyColors.BEIGE);
@@ -202,11 +199,4 @@ public class LottoHouseSubView extends AvatarSubView {
         avatarInitialPos = new Point(4, 5);
     }
 
-    private static class MiniItemSprite extends Sprite16x16 {
-        public MiniItemSprite(int num, MyColors color2, MyColors color3) {
-            super("miniitem"+num, "lotto.png", num);
-            setColor2(color2);
-            setColor3(color3);
-        }
-    }
 }

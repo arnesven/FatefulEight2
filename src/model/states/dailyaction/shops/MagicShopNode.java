@@ -11,8 +11,10 @@ import model.items.weapons.Weapon;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.MiniItemSprite;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +24,12 @@ public class MagicShopNode extends GeneralShopNode {
 
     private static final Sprite MAGIC_SIGN = new SignSprite("magicsign", 0x27,
             MyColors.RED, MyColors.WHITE);
+    private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
+            new Sprite32x32("sign", "world_foreground.png", 0x8F,
+                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
+            new MiniItemSprite(4, MyColors.PURPLE, MyColors.DARK_GRAY),
+            new MiniItemSprite(6, MyColors.BROWN, MyColors.WHITE),
+    };
 
     public MagicShopNode(Model model, int col, int row) {
         super(model, col, row, "Magic Shop");
@@ -63,6 +71,11 @@ public class MagicShopNode extends GeneralShopNode {
         }
         Collections.sort(inventory);
         return inventory;
+    }
+
+    @Override
+    protected Sprite[] getShopDecorations() {
+        return SHOP_DECORATIONS;
     }
 
     @Override

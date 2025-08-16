@@ -110,9 +110,13 @@ public abstract class DailyActionSubView extends AvatarSubView {
         cursorEnabled = b;
     }
 
-    protected void drawForeground(Model model, int x, int y, Sprite sprite) {
+    protected void drawForeground(Model model, int x, int y, Sprite sprite, int prio) {
         Point p = convertToScreen(new Point(x, y));
-        model.getScreenHandler().register(sprite.getName(), p, sprite);
+        model.getScreenHandler().register(sprite.getName(), p, sprite, prio);
+    }
+
+    protected void drawForeground(Model model, int x, int y, Sprite sprite) {
+        drawForeground(model, x, y, sprite, 0);
     }
 
     protected void drawPartyArea(Model model, List<Point> points) {
