@@ -19,9 +19,9 @@ public class GrandEmporium extends GeneralShopNode {
 
     private static final Sprite SIGN = new SignSprite("emporiumsign", 0x26,
             MyColors.BLACK, MyColors.GOLD);
+    private static final Sprite BIG_SIGN = new Sprite32x32("sign", "world_foreground.png", 0x8E,
+            MyColors.BLACK, MyColors.GOLD, MyColors.BLACK);
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("sign", "world_foreground.png", 0x8E,
-                    MyColors.BLACK, MyColors.GOLD, MyColors.BLACK),
             new MiniItemSprite(2, MyColors.YELLOW, MyColors.DARK_GRAY),
             new MiniItemSprite(6, MyColors.DARK_BROWN, MyColors.BEIGE),
     };
@@ -44,7 +44,12 @@ public class GrandEmporium extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
+    }
+
+    @Override
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
     }
 

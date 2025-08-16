@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.items.Item;
 import model.states.GameState;
 import model.states.dailyaction.shops.ShopKeeperNode;
+import model.states.dailyaction.shops.ShoppingNode;
 import model.states.dailyaction.town.CourseCoordinator;
 import view.sprites.Sprite;
 import view.subviews.CareerOfficeSubView;
@@ -17,17 +18,14 @@ import java.util.List;
 public class ShopInteriorState extends AdvancedDailyActionState {
     private static final Point DOOR_POS = new Point(3, 6);
     private static final Point SHOP_KEEPER_POS = new Point(3, 2);
-    private final Sprite[] shoppingDecorations;
-    private final String name;
+    private final ShoppingNode node;
 
-    public ShopInteriorState(Model model, String name, List<Item> shopInventory,
-                             int[] specialPrices, boolean[] haggleFlag, Sprite[] shoppingDecorations) {
+    public ShopInteriorState(Model model, ShoppingNode shoppingNode) {
         super(model);
-        this.name = name;
+        this.node = shoppingNode;
         addNode(getShopKeeperPosition().x, getShopKeeperPosition().y+1,
-                new ShopKeeperNode(name, shopInventory, specialPrices, haggleFlag));
+                new ShopKeeperNode(node.getName(), node.getInventory(), null, node.getHaggleFlag()));
         addNode(DOOR_POS.x, DOOR_POS.y + 1, new ExitLocaleNode("Leave shop"));
-        this.shoppingDecorations = shoppingDecorations;
     }
 
     public static Point getShopKeeperPosition() {
@@ -45,6 +43,6 @@ public class ShopInteriorState extends AdvancedDailyActionState {
 
     @Override
     protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new ShopInteriorSubView(advancedDailyActionState, matrix, name, shoppingDecorations);
+        return new ShopInteriorSubView(advancedDailyActionState, matrix, node);
     }
 }

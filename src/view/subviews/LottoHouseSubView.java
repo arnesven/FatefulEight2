@@ -56,7 +56,7 @@ public class LottoHouseSubView extends AvatarSubView {
     }
 
     protected void specificDrawArea(Model model) {
-        DailyActionSubView.drawRoom(model, 0, 8, 0, 6, TavernSubView.LOWER_WALL);
+        DailyActionSubView.drawRoom(model, 0, 8, 0, 6, TavernSubView.LOWER_WALL, DOOR, 3);
         Point p = convertToScreen(new Point(4, 6));
         model.getScreenHandler().put(p.x, p.y, DOOR);
         model.getScreenHandler().register("coach3", convertToScreen(new Point(6, 4)),

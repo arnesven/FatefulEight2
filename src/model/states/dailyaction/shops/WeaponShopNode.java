@@ -20,10 +20,10 @@ public class WeaponShopNode extends GeneralShopNode {
 
     private static final Sprite WEAPON_SIGN = new SignSprite("weaponsign", 0x16,
             MyColors.PURPLE, MyColors.WHITE);
+    private static final Sprite BIG_SIGN = new Sprite32x32("shopsign", "world_foreground.png", 0x7E,
+            MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
 
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("shopsign", "world_foreground.png", 0x7E,
-                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
             new MiniItemSprite(0, MyColors.LIGHT_GRAY, MyColors.BROWN),
             new MiniItemSprite(0, MyColors.GOLD, MyColors.BLUE),
     };
@@ -43,7 +43,12 @@ public class WeaponShopNode extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
+    }
+
+    @Override
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
     }
 

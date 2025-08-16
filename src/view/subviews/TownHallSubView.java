@@ -19,8 +19,10 @@ public class TownHallSubView extends RoomDailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.LIGHT_GRAY;
     public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
+    public static final Sprite OVER_DOOR = new Sprite32x32("overdoor", "world_foreground.png", 0x06,
+            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.BLACK);
     public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
-            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
+            MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
     private static final Sprite WALL = new Sprite32x32("tavernfarwall", "world_foreground.png", 0x44,
             MyColors.DARK_GRAY, MyColors.BROWN, MyColors.TAN);
     public static final Sprite FLOOR = new Sprite32x32("townhallfloor", "world_foreground.png", 0x56,
@@ -80,6 +82,11 @@ public class TownHallSubView extends RoomDailyActionSubView {
     }
 
     @Override
+    protected Sprite getOverDoorSprite() {
+        return TownHallSubView.OVER_DOOR;
+    }
+
+    @Override
     protected void specificDrawDecorations(Model model) {
         Sprite window = WINDOW;
         if (!drawLord) {
@@ -102,16 +109,6 @@ public class TownHallSubView extends RoomDailyActionSubView {
     @Override
     protected Point getDoorPosition() {
         return VisitLordDailyActionState.getDoorPosition();
-    }
-
-    @Override
-    protected Sprite getOpenDoorSprite() {
-        return OPEN_DOOR;
-    }
-
-    @Override
-    protected Sprite getClosedDoorSprite() {
-        return DOOR;
     }
 
     @Override

@@ -23,6 +23,8 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
 
     public static final Sprite BAR = new Sprite32x32("bar", "world_foreground.png", 0x5A,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
+    public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
+            MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
 
     private boolean openDoorAnimation = false;
     private boolean playedOpenDoorSound = false;
@@ -57,15 +59,19 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
                 AnimationManager.unregister(effect.first);
             }
         }
+        Sprite overDoor = getOverDoorSprite();
+        int doorY = getDoorPosition().y;
+        for (int x = 2; x < 5; ++x) {
+            Point p = convertToScreen(new Point(x, doorY));
+            model.getScreenHandler().register(overDoor.getName(), p, overDoor, 4);
+        }
     }
+
+    protected abstract Sprite getOverDoorSprite();
 
     protected abstract void specificDrawDecorations(Model model);
 
     protected abstract Point getDoorPosition();
-
-    protected abstract Sprite getOpenDoorSprite();
-
-    protected abstract Sprite getClosedDoorSprite();
 
     private void drawDoorWithAnimation(Model model) {
         Point p = convertToScreen(getDoorPosition());
@@ -76,13 +82,12 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
                 playedOpenDoorSound = true;
                 playCloseDoorSound = true;
             }
-            model.getScreenHandler().put(p.x, p.y, getOpenDoorSprite());
+            model.getScreenHandler().register(OPEN_DOOR.getName(), p, OPEN_DOOR);
         } else {
             if (playCloseDoorSound) {
                 SoundEffects.playHitWood();
                 playCloseDoorSound = false;
             }
-            model.getScreenHandler().put(p.x, p.y, getClosedDoorSprite());
         }
     }
 

@@ -31,8 +31,9 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
 
     private static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
             MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
-    public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
-            MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
+    public static final Sprite OVER_DOOR = new Sprite32x32("overdoor", "world_foreground.png", 0x06,
+            MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.BLACK);
+
     private static final Point COACH_POSITION = new Point(3, 2);
     private static final Point CLASS_EXPERT_POSITION = new Point(1, 2);
     private static final Point COURSE_COORDINATOR_POSITION = new Point(5, 2);
@@ -43,7 +44,7 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
 
     @Override
     protected void drawBackgroundRoom(Model model, Random random) {
-        super.drawSmallRoom(model, LOWER_WALL);
+        super.drawSmallRoom(model, LOWER_WALL, DOOR, 3);
     }
 
     @Override
@@ -51,6 +52,11 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
         super.drawPartyArea(model, List.of(new Point(4, 4), new Point(2, 4),
                 new Point(2, 5), new Point(4, 5), new Point(5, 4),
                 new Point(5, 5), new Point(1, 5)));
+    }
+
+    @Override
+    protected Sprite getOverDoorSprite() {
+        return OVER_DOOR;
     }
 
     @Override
@@ -68,16 +74,6 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
     @Override
     protected Point getDoorPosition() {
         return CareerOfficeState.getDoorPosition();
-    }
-
-    @Override
-    protected Sprite getOpenDoorSprite() {
-        return OPEN_DOOR;
-    }
-
-    @Override
-    protected Sprite getClosedDoorSprite() {
-        return DOOR;
     }
 
     @Override

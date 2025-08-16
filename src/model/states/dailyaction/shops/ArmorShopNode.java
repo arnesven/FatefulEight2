@@ -18,9 +18,9 @@ import java.util.List;
 public class ArmorShopNode extends GeneralShopNode {
     private static final Sprite ARMOR_SIGN = new SignSprite("armorsign", 0x17,
             MyColors.DARK_GREEN, MyColors.WHITE);
+    private static final Sprite BIG_SIGN = new Sprite32x32("shopsign", "world_foreground.png", 0x7F,
+            MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("shopsign", "world_foreground.png", 0x7F,
-                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
             new MiniItemSprite(1, MyColors.LIGHT_GRAY, MyColors.BROWN),
             new MiniItemSprite(1, MyColors.BLUE, MyColors.LIGHT_GRAY),
     };
@@ -42,7 +42,12 @@ public class ArmorShopNode extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
+    }
+
+    @Override
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
     }
 

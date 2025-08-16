@@ -20,9 +20,9 @@ public class AccessoryShopNode extends GeneralShopNode {
 
     private static final Sprite SIGN = new SignSprite("accessorysign", 0x26,
             MyColors.GOLD, MyColors.WHITE);
+    private static final Sprite BIG_SIGN = new Sprite32x32("sign", "world_foreground.png", 0x8E,
+            MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("sign", "world_foreground.png", 0x8E,
-                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
             new MiniItemSprite(2, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY),
             new MiniItemSprite(8, MyColors.BROWN, MyColors.BEIGE),
     };
@@ -47,8 +47,13 @@ public class AccessoryShopNode extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
+    }
+
+    @Override
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
     }
 
     @Override

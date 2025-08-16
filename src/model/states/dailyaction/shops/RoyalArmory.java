@@ -14,9 +14,9 @@ import java.util.List;
 
 public class RoyalArmory extends GeneralShopNode {
 
+    private static final Sprite BIG_SIGN = new Sprite32x32("sign", "world_foreground.png", 0x7F,
+            MyColors.BLACK, MyColors.GOLD, MyColors.BLACK);
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("sign", "world_foreground.png", 0x7F,
-                    MyColors.BLACK, MyColors.GOLD, MyColors.BLACK),
             new MiniItemSprite(1, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY),
             new MiniItemSprite(3, MyColors.LIGHT_GRAY, MyColors.RED),
     };
@@ -40,7 +40,12 @@ public class RoyalArmory extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
+    }
+
+    @Override
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
     }
 

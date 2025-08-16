@@ -47,7 +47,15 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     protected abstract List<Item> makeInventory(Model model);
 
-    protected abstract Sprite[] getShopDecorations();
+    public abstract Sprite getLowerWallSprite();
+
+    public abstract Sprite getDoorSprite();
+
+    public abstract Sprite getOverDoorSprite();
+
+    public abstract Sprite getBigSignSprite();
+
+    public abstract Sprite[] getCounterItemSprites();
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
@@ -59,8 +67,7 @@ public abstract class ShoppingNode extends DailyActionNode {
             triedBreakIn = true;
             return state;
         }
-        return new ShopInteriorState(model, getName(), shopInventory,
-                getSpecialPrices(shopInventory), haggleFlag, getShopDecorations());
+        return new ShopInteriorState(model, this);
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {
@@ -148,10 +155,6 @@ public abstract class ShoppingNode extends DailyActionNode {
         return triedBreakIn;
     }
 
-    protected int[] getSpecialPrices(List<Item> inventory) {
-        return null;
-    }
-
     @Override
     public Sprite getBackgroundSprite() {
         return SPRITE;
@@ -210,4 +213,13 @@ public abstract class ShoppingNode extends DailyActionNode {
             model.setTimeOfDay(TimeOfDay.MIDDAY);
         }
     }
+
+    public List<Item> getInventory() {
+        return shopInventory;
+    }
+
+    public boolean[] getHaggleFlag() {
+        return haggleFlag;
+    }
+
 }

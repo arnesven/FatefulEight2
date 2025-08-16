@@ -131,12 +131,13 @@ public abstract class DailyActionSubView extends AvatarSubView {
         }
     }
 
-    protected void drawSmallRoom(Model model, Sprite lowerWallSprite) {
-        drawRoom(model, 0, 7, 1, 6, lowerWallSprite);
+    protected void drawSmallRoom(Model model, Sprite lowerWallSprite, Sprite doorSpriteToUse, int doorX) {
+        drawRoom(model, 0, 7, 1, 6, lowerWallSprite, doorSpriteToUse, doorX);
     }
 
 
-    public static void drawRoom(Model model, int colStart, int colEnd, int rowStart, int rowEnd, Sprite lowerWallSprite) {
+    public static void drawRoom(Model model, int colStart, int colEnd, int rowStart, int rowEnd,
+                                Sprite lowerWallSprite, Sprite doorSpriteToUse, int doorX) {
         Random random = new Random(4312);
         for (int row = rowStart; row < rowEnd+2; ++row) {
             for (int col = colStart; col < colEnd; ++col) {
@@ -148,7 +149,11 @@ public abstract class DailyActionSubView extends AvatarSubView {
                 } else if (row == rowStart) {
                     model.getScreenHandler().put(p.x, p.y, TavernSubView.WALL);
                 } else if (row == rowEnd) {
-                    model.getScreenHandler().put(p.x, p.y, lowerWallSprite);
+                    if (col == doorX) {
+                        model.getScreenHandler().put(p.x, p.y, doorSpriteToUse);
+                    } else {
+                        model.getScreenHandler().put(p.x, p.y, lowerWallSprite);
+                    }
                 } else {
                     model.getScreenHandler().put(p.x, p.y,
                             GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);

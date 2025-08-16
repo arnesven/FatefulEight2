@@ -24,9 +24,9 @@ public class MagicShopNode extends GeneralShopNode {
 
     private static final Sprite MAGIC_SIGN = new SignSprite("magicsign", 0x27,
             MyColors.RED, MyColors.WHITE);
+    private static final Sprite BIG_SIGN = new Sprite32x32("sign", "world_foreground.png", 0x8F,
+            MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("sign", "world_foreground.png", 0x8F,
-                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
             new MiniItemSprite(4, MyColors.PURPLE, MyColors.DARK_GRAY),
             new MiniItemSprite(6, MyColors.BROWN, MyColors.WHITE),
     };
@@ -74,7 +74,12 @@ public class MagicShopNode extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
+    }
+
+    @Override
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
     }
 

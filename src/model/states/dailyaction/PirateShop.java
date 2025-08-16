@@ -27,9 +27,16 @@ public class PirateShop extends GeneralShopNode {
             MyColors.PEACH, TownSubView.PATH_COLOR, MyColors.DARK_RED, MyColors.PEACH);
     private static final Sprite SIGN = new SignSprite("yeaoldesign", 0x1B0,
             MyColors.BLACK, MyColors.GOLD);
+    private static final Sprite BIG_SIGN = new Sprite32x32("sign", "world_foreground.png", 0x8D,
+            MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
+    protected static final Sprite WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
+            MyColors.DARK_GRAY, MyColors.PEACH, MyColors.TAN);
+    public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
+            MyColors.DARK_GRAY, MyColors.PEACH, MyColors.TAN, MyColors.DARK_RED);
+    public static final Sprite OVER_DOOR = new Sprite32x32("overdoor", "world_foreground.png", 0x06,
+            MyColors.DARK_GRAY, MyColors.PEACH, MyColors.TAN, MyColors.BLACK);
+
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{
-            new Sprite32x32("sign", "world_foreground.png", 0x8D,
-                    MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE),
             new MiniItemSprite(0, MyColors.LIGHT_GRAY, MyColors.BROWN),
             new MiniItemSprite(8, MyColors.DARK_BROWN, MyColors.BEIGE),
     };
@@ -71,8 +78,28 @@ public class PirateShop extends GeneralShopNode {
     }
 
     @Override
-    protected Sprite[] getShopDecorations() {
+    public Sprite[] getCounterItemSprites() {
         return SHOP_DECORATIONS;
+    }
+
+    @Override
+    public Sprite getBigSignSprite() {
+        return BIG_SIGN;
+    }
+
+    @Override
+    public Sprite getLowerWallSprite() {
+        return WALL;
+    }
+
+    @Override
+    public Sprite getDoorSprite() {
+        return DOOR;
+    }
+
+    @Override
+    public Sprite getOverDoorSprite() {
+        return OVER_DOOR;
     }
 
     public static List<Item> getPirateItems() {

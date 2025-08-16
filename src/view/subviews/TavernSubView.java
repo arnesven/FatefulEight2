@@ -47,8 +47,6 @@ public class TavernSubView extends RoomDailyActionSubView {
             MyColors.BLACK, MyColors.GOLD, Race.NORTHERN_HUMAN.getColor(), MyColors.RED);
     private static final Sprite SIGN = new Sprite32x32("innsign", "world_foreground.png", 0x64,
             MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
-    private static final Sprite OVER_DOOR = new Sprite32x32("overdoor", "world_foreground.png", 0x06,
-            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.BLACK);
 
     private final boolean inTown;
 
@@ -66,18 +64,13 @@ public class TavernSubView extends RoomDailyActionSubView {
     }
 
     @Override
+    protected Sprite getOverDoorSprite() {
+        return TownHallSubView.OVER_DOOR;
+    }
+
+    @Override
     protected Point getDoorPosition() {
         return TavernDailyActionState.getDoorPosition();
-    }
-
-    @Override
-    protected Sprite getOpenDoorSprite() {
-        return OPEN_DOOR;
-    }
-
-    @Override
-    protected Sprite getClosedDoorSprite() {
-        return DOOR;
     }
 
     @Override
@@ -96,7 +89,11 @@ public class TavernSubView extends RoomDailyActionSubView {
                         model.getScreenHandler().put(p.x, p.y, WALL);
                     }
                 } else if (row == 7) {
-                    model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
+                    if (col == 3) {
+                        model.getScreenHandler().put(p.x, p.y, DOOR);
+                    } else {
+                        model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
+                    }
                 } else {
                     Sprite spr;
                     if (model.getTimeOfDay() == TimeOfDay.EVENING) {
@@ -122,10 +119,6 @@ public class TavernSubView extends RoomDailyActionSubView {
         drawForeground(model, 4, 7, SIGN);
         if (!inTown) {
             drawForeground(model, 4, 1, MERCHANT);
-        }
-        for (int x = 2; x < 5; ++x) {
-            Point p = convertToScreen(new Point(x, 7));
-            model.getScreenHandler().register(OVER_DOOR.getName(), p, OVER_DOOR, 4);
         }
     }
 
