@@ -5,21 +5,30 @@ import model.Model;
 import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.tavern.TavernDailyActionState;
 import sound.SoundEffects;
+import sprites.CombatSpeechBubble;
+import util.MyPair;
+import view.MyColors;
+import view.sprites.AnimationManager;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-import static view.subviews.TownHallSubView.DOOR;
-import static view.subviews.TownHallSubView.OPEN_DOOR;
-
 public abstract class RoomDailyActionSubView extends DailyActionSubView {
+
+    public static final Sprite BAR = new Sprite32x32("bar", "world_foreground.png", 0x5A,
+            MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
 
     private boolean openDoorAnimation = false;
     private boolean playedOpenDoorSound = false;
     private boolean playCloseDoorSound = false;
+
+    private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
 
     public RoomDailyActionSubView(AdvancedDailyActionState state,
                                   SteppingMatrix<DailyActionNode> matrix) {
@@ -39,7 +48,18 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
 
     protected abstract void drawParty(Model model);
 
-    protected abstract void drawDecorations(Model model);
+    protected final void drawDecorations(Model model) {
+        specificDrawDecorations(model);
+        for (MyPair<RunOnceAnimationSprite, Point> effect : new ArrayList<>(otherEffects)) {
+            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first, 3);
+            if (effect.first.isDone()) {
+                otherEffects.remove(effect);
+                AnimationManager.unregister(effect.first);
+            }
+        }
+    }
+
+    protected abstract void specificDrawDecorations(Model model);
 
     protected abstract Point getDoorPosition();
 
@@ -88,4 +108,20 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
                 from.y < AdvancedDailyActionState.TOWN_MATRIX_ROWS-2;
     }
 
+    protected void drawBar(Model model) {
+        for (int x = 1; x < 6; ++x) {
+            Point drawPos = convertToScreen(new Point(x, 3));
+            model.getScreenHandler().register("bar", drawPos, BAR);
+        }
+    }
+
+    protected void addCallout(int length, Point p) {
+        otherEffects.add(new MyPair<>(new TavernSpeechBubble(length), convertToScreen(p)));
+    }
+
+    private static class TavernSpeechBubble extends CombatSpeechBubble {
+        public TavernSpeechBubble(int lengthOfLine) {
+            setAnimationDelay(lengthOfLine / 4);
+        }
+    }
 }

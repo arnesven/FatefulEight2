@@ -14,7 +14,7 @@ import view.subviews.SubView;
 import view.subviews.TavernSubView;
 
 public class LodgingNode extends DailyActionNode {
-    private static final Sprite SPRITE = new Sprite32x32("table", "world_foreground.png", 0x54,
+    public static final Sprite SPRITE = new Sprite32x32("table", "world_foreground.png", 0x54,
             MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
     private final boolean freeLodging;
     private boolean giveAssassinationEndingEvent = false;

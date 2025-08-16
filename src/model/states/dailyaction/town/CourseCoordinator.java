@@ -9,6 +9,7 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.town.CareerOfficePersonNode;
 import model.states.events.ChangeClassEvent;
 import util.MyRandom;
+import view.subviews.CareerOfficeSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.SubView;
 
@@ -77,6 +78,9 @@ public class CourseCoordinator extends CareerOfficePersonNode {
 
         private void coordinatorSay(String s) {
             printQuote("Course Coordinator", s);
+            if (getModel().getSubView() instanceof CareerOfficeSubView) {
+                ((CareerOfficeSubView)getModel().getSubView()).addCourseCoordinatorCallout(s.length());
+            }
         }
     }
 }

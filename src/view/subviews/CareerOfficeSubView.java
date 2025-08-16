@@ -28,13 +28,14 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
 
     private static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
             MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN);
-    public static final Sprite BAR = new Sprite32x32("bar", "world_foreground.png", 0x5A,
-            MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
 
     private static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
             MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
     public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
             MyColors.DARK_GRAY, MyColors.PINK, MyColors.TAN, MyColors.DARK_RED);
+    private static final Point COACH_POSITION = new Point(3, 2);
+    private static final Point CLASS_EXPERT_POSITION = new Point(1, 2);
+    private static final Point COURSE_COORDINATOR_POSITION = new Point(5, 2);
 
     public CareerOfficeSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
         super(state, matrix);
@@ -53,17 +54,14 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
     }
 
     @Override
-    protected void drawDecorations(Model model) {
-        for (int x = 1; x < 6; ++x) {
-            Point drawPos = convertToScreen(new Point(x, 3));
-            model.getScreenHandler().register("bar", drawPos, BAR);
-        }
+    protected void specificDrawDecorations(Model model) {
+        super.drawBar(model);
 
-        model.getScreenHandler().register("coach1", convertToScreen(new Point(1, 2)),
+        model.getScreenHandler().register("coach1", convertToScreen(CLASS_EXPERT_POSITION),
                 COACH1_SPRITE);
-        model.getScreenHandler().register("coach2", convertToScreen(new Point(3, 2)),
+        model.getScreenHandler().register("coach2", convertToScreen(COACH_POSITION),
                 COACH2_SPRITE);
-        model.getScreenHandler().register("coach3", convertToScreen(new Point(5, 2)),
+        model.getScreenHandler().register("coach3", convertToScreen(COURSE_COORDINATOR_POSITION),
                 COACH3_SPRITE);
     }
 
@@ -85,5 +83,17 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
     @Override
     protected String getPlaceType() {
         return "CAREER OFFICE";
+    }
+
+    public void addCoachCallout(int length) {
+        addCallout(length, COACH_POSITION);
+    }
+    
+    public void addClassExpertCallout(int length) {
+        addCallout(length, CLASS_EXPERT_POSITION);
+    }
+
+    public void addCourseCoordinatorCallout(int length) {
+        addCallout(length, COURSE_COORDINATOR_POSITION);
     }
 }

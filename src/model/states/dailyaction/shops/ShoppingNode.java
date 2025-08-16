@@ -13,6 +13,7 @@ import model.states.GameState;
 import model.states.ShopState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.ShopInteriorState;
 import model.states.events.GeneralInteractionEvent;
 import util.MyLists;
 import util.MyRandom;
@@ -54,7 +55,7 @@ public abstract class ShoppingNode extends DailyActionNode {
             triedBreakIn = true;
             return state;
         }
-        return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory), haggleFlag);
+        return new ShopInteriorState(model, getName(), shopInventory, getSpecialPrices(shopInventory), haggleFlag);
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {

@@ -35,7 +35,7 @@ public class TownHallSubView extends RoomDailyActionSubView {
             MyColors.BLACK, MyColors.DARK_BLUE, Race.NORTHERN_HUMAN.getColor(), MyColors.PURPLE);
     private static final Sprite THRONE = new Sprite32x32("throne", "world_foreground.png", 0x66,
             MyColors.DARK_BROWN, MyColors.GOLD, MyColors.RED, MyColors.CYAN);
-    private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
+    public static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
             MyColors.GRAY, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
     private static final Sprite EVENING_WINDOW = new Sprite32x32("eveningwindow", "world_foreground.png", 0x35,
             MyColors.GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.DARK_BLUE);
@@ -80,7 +80,7 @@ public class TownHallSubView extends RoomDailyActionSubView {
     }
 
     @Override
-    protected void drawDecorations(Model model) {
+    protected void specificDrawDecorations(Model model) {
         Sprite window = WINDOW;
         if (!drawLord) {
             window = EVENING_WINDOW;

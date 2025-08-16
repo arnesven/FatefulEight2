@@ -21,6 +21,11 @@ public class ExitLocaleNode extends DailyActionNode {
     }
 
     @Override
+    public Point getCursorShift() {
+        return new Point(0, -4);
+    }
+
+    @Override
     public Sprite getBackgroundSprite() {
         return null;
     }

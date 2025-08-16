@@ -6,6 +6,7 @@ import model.classes.Classes;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.town.CareerOfficePersonNode;
+import view.subviews.CareerOfficeSubView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +56,9 @@ public class ClassesExpert extends CareerOfficePersonNode {
 
         private void expertSay(String s) {
             printQuote("Expert", s);
+            if (getModel().getSubView() instanceof CareerOfficeSubView) {
+                ((CareerOfficeSubView)getModel().getSubView()).addClassExpertCallout(s.length());
+            }
         }
     }
 }

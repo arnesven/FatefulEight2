@@ -51,7 +51,6 @@ public class TavernSubView extends RoomDailyActionSubView {
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.BLACK);
 
     private final boolean inTown;
-    private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
@@ -112,7 +111,7 @@ public class TavernSubView extends RoomDailyActionSubView {
     }
 
     @Override
-    protected void drawDecorations(Model model) {
+    protected void specificDrawDecorations(Model model) {
         drawForeground(model, 3, 0, CHIMNEY);
         drawForeground(model, 3, 1, FIREPLACE);
         drawForeground(model, 1, 1, PLANT);
@@ -128,13 +127,6 @@ public class TavernSubView extends RoomDailyActionSubView {
             Point p = convertToScreen(new Point(x, 7));
             model.getScreenHandler().register(OVER_DOOR.getName(), p, OVER_DOOR, 4);
         }
-        for (MyPair<RunOnceAnimationSprite, Point> effect : new ArrayList<>(otherEffects)) {
-            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first, 3);
-            if (effect.first.isDone()) {
-                otherEffects.remove(effect);
-                AnimationManager.unregister(effect.first);
-            }
-        }
     }
 
     @Override
@@ -143,10 +135,6 @@ public class TavernSubView extends RoomDailyActionSubView {
             return "TAVERN";
         }
         return "INN";
-    }
-
-    private void addCallout(int length, Point p) {
-        otherEffects.add(new MyPair<>(new TavernSpeechBubble(length), convertToScreen(p)));
     }
 
     public void addCalloutAtBartender(int lengthOfLine) {
@@ -159,11 +147,5 @@ public class TavernSubView extends RoomDailyActionSubView {
 
     public void addCalloutAtAgentOrGuide(int length) {
         addCallout(length, new Point(4, 1));
-    }
-
-    private static class TavernSpeechBubble extends CombatSpeechBubble {
-        public TavernSpeechBubble(int lengthOfLine) {
-            setAnimationDelay(lengthOfLine / 4);
-        }
     }
 }

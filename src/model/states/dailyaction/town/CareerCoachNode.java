@@ -7,6 +7,7 @@ import model.classes.CharacterClass;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import util.MyPair;
+import view.subviews.CareerOfficeSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.SubView;
 
@@ -137,6 +138,9 @@ public class CareerCoachNode extends CareerOfficePersonNode {
 
         private void coachSay(String s) {
             printQuote("Career Coach", s);
+            if (getModel().getSubView() instanceof CareerOfficeSubView) {
+                ((CareerOfficeSubView)getModel().getSubView()).addCoachCallout(s.length());
+            }
         }
     }
 }
