@@ -38,6 +38,7 @@ import view.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 public class Model {
@@ -370,6 +371,8 @@ public class Model {
     public void saveToFile(String filename) {
         try {
             gameData.logContent = log.getContents();
+            gameData.milliSecondsPlayed += (new Date()).getTime() - gameData.lastSave.getTime();
+            gameData.lastSave = new Date();
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename + "_save.ff8"));
             oos.writeObject(gameData);
             oos.close();

@@ -17,6 +17,7 @@ import java.awt.*;
 
 public class GuideNode extends DailyActionNode {
 
+    private static final Point CURSOR_SHIFT = new Point(0, -8);
     private final Sprite32x32 sprite;
 
     public GuideNode() {
@@ -40,6 +41,12 @@ public class GuideNode extends DailyActionNode {
         p.y -= 4;
         model.getScreenHandler().register(getForegroundSprite().getName(), new Point(p), getForegroundSprite(), 2);
     }
+
+    @Override
+    public Point getCursorShift() {
+        return CURSOR_SHIFT;
+    }
+
     @Override
     public Sprite getBackgroundSprite() {
         return TavernSubView.FLOOR;

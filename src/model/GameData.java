@@ -14,10 +14,7 @@ import model.tutorial.TutorialHandler;
 import util.MyRandom;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameData implements Serializable {
     public Party party = new Party();
@@ -41,6 +38,8 @@ public class GameData implements Serializable {
     public List<MapObject> mapObjects = new ArrayList<>();
     public WarHandler warHandler = new WarHandler();
     public List<GameCharacter> lingeringRecruitables = new ArrayList<>();
+    public Date lastSave = new Date();
+    public long milliSecondsPlayed = 0;
 
     // this should always be the last member of Game Data,
     // since it is dependent on other thing in game data!

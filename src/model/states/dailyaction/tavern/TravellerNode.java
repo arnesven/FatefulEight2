@@ -23,7 +23,7 @@ import java.util.List;
 import java.awt.*;
 
 public class TravellerNode extends DailyActionNode {
-    private static final Point CURSOR_SHIFT = new Point(0, -4);
+    private static final Point CURSOR_SHIFT = new Point(0, -8);
     private final Sprite32x32 sprite;
     private final Traveller traveller;
 

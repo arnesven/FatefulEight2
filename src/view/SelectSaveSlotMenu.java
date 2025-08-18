@@ -10,6 +10,7 @@ import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +105,13 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                 @Override
                 public void drawDecorations(Model model, int x, int y) {
                     if (data != null) {
-                        String title = data.party.getLeader().getName() + "'s Company, DAY " + data.day;
+                        int seconds = (int) (data.milliSecondsPlayed / 1000);
+                        int hours = seconds / 60 / 60;
+                        seconds -= hours * 60 * 60;
+                        int minutes = seconds / 60;
+                        seconds -= minutes * 60;
+                        String title = data.party.getLeader().getName() + "'s Company, DAY " + data.day + ". Time " +
+                                String.format("%d:%02d:%2d", hours, minutes, seconds);
                         BorderFrame.drawString(model.getScreenHandler(), title, x + 7, y, MyColors.WHITE, MyColors.BLUE);
                         int xShift = 7;
                         for (GameCharacter gc : data.party.getPartyMembers()) {
