@@ -96,7 +96,10 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
             Point doorPos = getDoorPosition();
             openDoorAnimation = true;
             playedOpenDoorSound = false;
-            super.animateMovement(model, from, doorPos);
+            Point above = new Point(doorPos);
+            above.y--;
+            super.animateMovement(model, from, above);
+            super.animateMovement(model, above, doorPos);
             Point below = new Point(doorPos);
             below.y++;
             super.animateMovement(model, doorPos, below);

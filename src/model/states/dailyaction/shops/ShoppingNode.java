@@ -39,10 +39,30 @@ public abstract class ShoppingNode extends DailyActionNode {
     private List<Item> shopInventory;
     private boolean triedBreakIn = false;
     private boolean[] haggleFlag = new boolean[]{true};
+    private final ShopCustomer customer;
 
     public ShoppingNode(Model model, String name) {
         super(name);
         shopInventory = makeInventory(model);
+        Item customerItem = makeCustomerItem(model);
+        if (customerItem != null) {
+            this.customer = new ShopCustomer(customerItem);
+        } else {
+            this.customer = null;
+        }
+    }
+
+    private Item makeCustomerItem(Model model) {
+        for (int tries = 0 ; tries < 3; ++tries) {
+            List<Item> candidates = makeInventory(model);
+            candidates.removeIf(it -> MyLists.any(shopInventory,
+                    it2 -> it2.getName().equals(it.getName())));
+            if (!candidates.isEmpty()) {
+                return MyRandom.sample(candidates);
+            }
+        }
+        System.err.println("Could generate item for customer after 3 tries.");
+        return null;
     }
 
     protected abstract List<Item> makeInventory(Model model);
@@ -222,4 +242,7 @@ public abstract class ShoppingNode extends DailyActionNode {
         return haggleFlag;
     }
 
+    public ShopCustomer getCustomer() {
+        return customer;
+    }
 }

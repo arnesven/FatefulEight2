@@ -84,4 +84,22 @@ public class MyStrings {
         }
         return bldr.toString();
     }
+
+    public static String aOrAn(String itemName) {
+        String vowels = "auieo";
+        String lowerCase = itemName.toLowerCase();
+        for (int i = 0; i < vowels.length(); ++i) {
+            if (lowerCase.startsWith(vowels.charAt(i) + "")) {
+                return "an";
+            }
+        }
+        return "a";
+    }
+
+    public static String itOrThem(String itemName) {
+        if (itemName.endsWith("s")) {
+            return "them";
+        }
+        return "it";
+    }
 }
