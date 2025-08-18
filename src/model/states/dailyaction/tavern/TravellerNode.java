@@ -23,6 +23,7 @@ import java.util.List;
 import java.awt.*;
 
 public class TravellerNode extends DailyActionNode {
+    private static final Point CURSOR_SHIFT = new Point(0, -4);
     private final Sprite32x32 sprite;
     private final Traveller traveller;
 
@@ -37,6 +38,11 @@ public class TravellerNode extends DailyActionNode {
                 MyColors.BLACK, MyColors.DARK_RED, traveller.getRace().getColor(), MyColors.BROWN);
 
 
+    }
+
+    @Override
+    public Point getCursorShift() {
+        return CURSOR_SHIFT;
     }
 
     @Override

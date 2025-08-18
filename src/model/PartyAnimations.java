@@ -64,7 +64,7 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    public void drawSpeakAnimations(ScreenHandler screenHandler) {
+    public synchronized void drawSpeakAnimations(ScreenHandler screenHandler) {
         for (CharacterAppearance app : new ArrayList<>(speakingAnimations.keySet())) {
             SpeakingAnimation speakAni = speakingAnimations.get(app);
             if (speakAni == null) {
@@ -78,7 +78,7 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    public void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance,
+    public synchronized void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance,
                                   boolean vampireTeeth) {
         lookers.remove(appearance);
         Point p = new Point(pOrig.x, pOrig.y);
@@ -114,14 +114,14 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    public void clearAnimations() {
+    public synchronized void clearAnimations() {
         dieRollAnimations.clear();
         speakingAnimations.clear();
         blinking.clear();
         lookers.clear();
     }
 
-    public void clearAnimationsFor(GameCharacter gc) {
+    public synchronized void clearAnimationsFor(GameCharacter gc) {
         speakingAnimations.remove(gc.getAppearance());
         blinking.remove(gc.getAppearance());
         lookers.remove(gc.getAppearance());
