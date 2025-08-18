@@ -92,6 +92,7 @@ public class CustomerNode extends DailyActionNode {
                         model.getParty().earnGold(customer.getGoldOffer());
                         model.getParty().getInventory().remove(foundInParty);
                         customer.setDealMade(true);
+                        this.completeAchievement(ShopCustomer.ACHIEVEMENT_KEY);
                         customerSay("Thanks a bunch!");
                         leaderSay("Use " + MyStrings.itOrThem(itemName) + " well.");
                         return null;

@@ -1,6 +1,7 @@
 package model.states.dailyaction.shops;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -12,6 +13,7 @@ import view.subviews.PortraitSubView;
 import java.awt.*;
 
 public class ShopSupplier {
+    public static final String ACHIEVEMENT_KEY = "ShopSupplierAchievement";
     private static final String DEAL_ON_DAY_KEY = "SUPPLIER_DEAL_ON_DAY";
     private final GameCharacter avatar;
     private final Item item;
@@ -40,6 +42,12 @@ public class ShopSupplier {
 
     public static void setDealOnDay(Model model) {
         model.getSettings().getMiscCounters().put(DEAL_ON_DAY_KEY, model.getDay());
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(ACHIEVEMENT_KEY, "Shop Supplier",
+                "You helped a flustered shop supplier by buying the shipment, " +
+                        "albeit angering some shopkeepers in the process.");
     }
 
     public void drawYourself(Model model, Point p) {

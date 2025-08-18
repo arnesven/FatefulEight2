@@ -90,6 +90,7 @@ public class SupplierNode extends DailyActionNode {
                 if (yesNoInput()) {
                     supplier.setDealMade(true);
                     ShopSupplier.setDealOnDay(model);
+                    completeAchievement(ShopSupplier.ACHIEVEMENT_KEY);
                     leaderSay("I'll buy those " + itemName + " from you.");
                     supplierSay("You will? That's fantastic! You're really helping me out of a tight " +
                             "spot here. Here you go.");

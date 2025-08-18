@@ -1,6 +1,7 @@
 package model.states.dailyaction.shops;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class ShopCustomer {
+    public static final String ACHIEVEMENT_KEY = "ShopCustomerAchievement";
     private final Item item;
     private final GameCharacter avatar;
     private final int goldOffer;
@@ -29,6 +31,11 @@ public class ShopCustomer {
         CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(randClass);
         avatar = new GameCharacter("", "", randApp.getRace(),
                 randClass, randApp, Classes.NO_OTHER_CLASSES);
+    }
+
+    public static Achievement.Data getAchievemetnData() {
+        return new Achievement.Data(ACHIEVEMENT_KEY, "Shop Customer",
+                "A customer in a shop requested an out-of-stock item. You sold it to the customer.");
     }
 
     public Item getItem() {

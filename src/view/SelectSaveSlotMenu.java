@@ -111,7 +111,7 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                         int minutes = seconds / 60;
                         seconds -= minutes * 60;
                         String title = data.party.getLeader().getName() + "'s Company, DAY " + data.day + ". Time " +
-                                String.format("%d:%02d:%2d", hours, minutes, seconds);
+                                String.format("%d:%02d:%02d", hours, minutes, seconds);
                         BorderFrame.drawString(model.getScreenHandler(), title, x + 7, y, MyColors.WHITE, MyColors.BLUE);
                         int xShift = 7;
                         for (GameCharacter gc : data.party.getPartyMembers()) {

@@ -6,6 +6,9 @@ import model.enemies.VampireEnemy;
 import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
+import model.states.dailyaction.CustomerNode;
+import model.states.dailyaction.shops.ShopCustomer;
+import model.states.dailyaction.shops.ShopSupplier;
 import model.states.events.*;
 import util.MyLists;
 
@@ -31,6 +34,8 @@ public class GameAchievements implements Serializable {
         new FishermanAchievement().registerYourself(partyAchievements);
         new OrcSlayerAchievement().registerYourself(partyAchievements);
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
+        registerAchievement(ShopCustomer.getAchievemetnData());
+        registerAchievement(ShopSupplier.getAchievementData());
     }
 
     private void addDungeonAchievements() {
