@@ -69,6 +69,9 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
                 COACH2_SPRITE);
         model.getScreenHandler().register("coach3", convertToScreen(COURSE_COORDINATOR_POSITION),
                 COACH3_SPRITE);
+
+
+        drawForeground(model, 3, 1, TownHallSubView.WINDOW);
     }
 
     @Override
