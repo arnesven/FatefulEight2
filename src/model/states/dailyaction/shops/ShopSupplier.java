@@ -35,7 +35,7 @@ public class ShopSupplier {
         if (model.getSettings().getMiscCounters().containsKey(DEAL_ON_DAY_KEY)) {
             return model.getSettings().getMiscCounters().get(DEAL_ON_DAY_KEY);
         }
-        return Integer.MIN_VALUE;
+        return -100;
     }
 
     public static void setDealOnDay(Model model) {
