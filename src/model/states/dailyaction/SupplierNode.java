@@ -89,6 +89,7 @@ public class SupplierNode extends DailyActionNode {
                 print("Do you want to buy the supplier's shipment? (Y/N) ");
                 if (yesNoInput()) {
                     supplier.setDealMade(true);
+                    ShopSupplier.setDealOnDay(model);
                     leaderSay("I'll buy those " + itemName + " from you.");
                     supplierSay("You will? That's fantastic! You're really helping me out of a tight " +
                             "spot here. Here you go.");

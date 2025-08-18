@@ -35,7 +35,10 @@ public class ShopKeeperNode extends DailyActionNode {
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         if (supplier != null && supplier.isDealMade()) {
-            return new ShopKeeperRefusesToTradeState(model);
+            return new ShopKeeperRefusesToTradeState(model, false);
+        }
+        if (model.getDay() - ShopSupplier.getDealDay(model) < 2) {
+            return new ShopKeeperRefusesToTradeState(model, true);
         }
         state.leaderSay(MyRandom.sample(List.of("Got anything good?", "Can I see your wares?",
                 "How is business?", "I want to do some shopping")));
@@ -78,19 +81,29 @@ public class ShopKeeperNode extends DailyActionNode {
     }
 
     private class ShopKeeperRefusesToTradeState extends GameState {
-        public ShopKeeperRefusesToTradeState(Model model) {
+        private final boolean fromColleague;
+
+        public ShopKeeperRefusesToTradeState(Model model, boolean fromColleague) {
             super(model);
+            this.fromColleague = fromColleague;
         }
 
         @Override
         public GameState run(Model model) {
+            if (fromColleague) {
+                shopKeeperSay(model, this, "I colleague of mine told me not to deal with you.");
+                leaderSay("Come on...");
+                shopKeeperSay(model, this, "Please leave now.");
+                return null;
+            }
+
             if (MyRandom.flipCoin()) {
                 String itemName = supplier.getItem().getName();
                 if (!itemName.endsWith("s")) {
                     itemName += "s";
                 }
                 leaderSay("Hey, wanna buy some " + itemName+ "?");
-                shopKeeperSay(model, this, "Get out.");
+                shopKeeperSay(model, this, "Think you're being funny? Get out!");
             } else {
                 shopKeeperSay(model, this, "Hey! I saw you doing business with my supplier. " +
                         "I'm not doing any business with you.");

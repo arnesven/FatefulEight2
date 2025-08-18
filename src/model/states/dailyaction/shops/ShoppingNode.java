@@ -51,7 +51,12 @@ public abstract class ShoppingNode extends DailyActionNode {
         } else {
             this.customer = null;
         }
-        this.supplier = new ShopSupplier(MyRandom.rollD10() >= 9, MyRandom.sample(makeInventory(model)));
+        if (MyRandom.rollD6() > 4) {
+            this.supplier = new ShopSupplier(MyRandom.rollD10() >= 7,
+                    MyRandom.sample(makeInventory(model)));
+        } else {
+            this.supplier = null;
+        }
     }
 
     private Item makeCustomerItem(Model model) {

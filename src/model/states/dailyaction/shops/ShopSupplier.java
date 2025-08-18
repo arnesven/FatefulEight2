@@ -12,6 +12,7 @@ import view.subviews.PortraitSubView;
 import java.awt.*;
 
 public class ShopSupplier {
+    private static final String DEAL_ON_DAY_KEY = "SUPPLIER_DEAL_ON_DAY";
     private final GameCharacter avatar;
     private final Item item;
     private final int number;
@@ -28,6 +29,17 @@ public class ShopSupplier {
         CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(Classes.ART);
         this.avatar = new GameCharacter("", "", randApp.getRace(),
                 Classes.ART, randApp, Classes.NO_OTHER_CLASSES);
+    }
+
+    public static int getDealDay(Model model) {
+        if (model.getSettings().getMiscCounters().containsKey(DEAL_ON_DAY_KEY)) {
+            return model.getSettings().getMiscCounters().get(DEAL_ON_DAY_KEY);
+        }
+        return Integer.MIN_VALUE;
+    }
+
+    public static void setDealOnDay(Model model) {
+        model.getSettings().getMiscCounters().put(DEAL_ON_DAY_KEY, model.getDay());
     }
 
     public void drawYourself(Model model, Point p) {
