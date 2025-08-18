@@ -35,7 +35,6 @@ public class CustomerNode extends DailyActionNode {
     @Override
     public void drawYourself(Model model, Point p) {
         customer.drawYourself(model, p);
-
     }
 
     @Override

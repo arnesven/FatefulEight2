@@ -40,16 +40,18 @@ public abstract class ShoppingNode extends DailyActionNode {
     private boolean triedBreakIn = false;
     private boolean[] haggleFlag = new boolean[]{true};
     private final ShopCustomer customer;
+    private final ShopSupplier supplier;
 
     public ShoppingNode(Model model, String name) {
         super(name);
         shopInventory = makeInventory(model);
         Item customerItem = makeCustomerItem(model);
-        if (customerItem != null) {
+        if (customerItem != null && MyRandom.rollD6() > 4) {
             this.customer = new ShopCustomer(customerItem);
         } else {
             this.customer = null;
         }
+        this.supplier = new ShopSupplier(MyRandom.rollD10() >= 9, MyRandom.sample(makeInventory(model)));
     }
 
     private Item makeCustomerItem(Model model) {
@@ -244,5 +246,9 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     public ShopCustomer getCustomer() {
         return customer;
+    }
+
+    public ShopSupplier getSupplier() {
+        return supplier;
     }
 }

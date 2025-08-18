@@ -19,17 +19,22 @@ public class ShopInteriorState extends AdvancedDailyActionState {
     private static final Point DOOR_POS = new Point(3, 6);
     private static final Point SHOP_KEEPER_POS = new Point(3, 2);
     private static final Point CUSTOMER_POS = new Point(1, 5);
+    private static final Point SUPPLIER_POS = new Point(5, 5);
     private final ShoppingNode node;
 
     public ShopInteriorState(Model model, ShoppingNode shoppingNode) {
         super(model);
         this.node = shoppingNode;
-        addNode(getShopKeeperPosition().x, getShopKeeperPosition().y+1,
-                new ShopKeeperNode(node.getName(), node.getInventory(), null, node.getHaggleFlag()));
-        addNode(DOOR_POS.x, DOOR_POS.y + 1, new ExitLocaleNode("Leave shop"));
         if (node.getCustomer() != null) {
             addNode(CUSTOMER_POS.x + 1, CUSTOMER_POS.y, new CustomerNode(node.getCustomer()));
         }
+        if (node.getSupplier() != null) {
+            addNode(SUPPLIER_POS.x - 1, SUPPLIER_POS.y, new SupplierNode(node.getSupplier()));
+        }
+        addNode(getShopKeeperPosition().x, getShopKeeperPosition().y+1,
+                new ShopKeeperNode(node.getName(), node.getInventory(), null, node.getHaggleFlag(),
+                        node.getSupplier()));
+        addNode(DOOR_POS.x, DOOR_POS.y + 1, new ExitLocaleNode("Leave shop"));
     }
 
     public static Point getShopKeeperPosition() {
@@ -42,6 +47,10 @@ public class ShopInteriorState extends AdvancedDailyActionState {
 
     public static Point getCustomerPosition() {
         return CUSTOMER_POS;
+    }
+
+    public static Point getSupplierPosition() {
+        return SUPPLIER_POS;
     }
 
     @Override

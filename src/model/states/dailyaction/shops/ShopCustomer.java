@@ -12,7 +12,6 @@ import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.util.Arrays;
-import java.util.List;
 
 public class ShopCustomer {
     private final Item item;

@@ -77,4 +77,8 @@ public class ShopInteriorSubView extends RoomDailyActionSubView {
     public void addCalloutAtCustomer(int length) {
         addCallout(length, ShopInteriorState.getCustomerPosition());
     }
+
+    public void addCalloutAtSupplier(int length) {
+        addCallout(length, ShopInteriorState.getSupplierPosition());
+    }
 }
