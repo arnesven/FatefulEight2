@@ -47,8 +47,11 @@ public class GameCharacter extends Combatant {
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
     private static final int MAX_ATTITUDE = 40;
     private static final int MIN_ATTITUDE = -40;
-    private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1100, 1600,
-                                                    2200, 3000, 4000, 5000, 6000, 7000, 8000};
+    private static final int[] XP_LEVELS = new int[]{
+            // 0   1    2    3    4     5     6
+               0, 100, 250, 450, 700, 1100, 1600,
+            // 7      8     9    10    11    12    13
+              2200, 3000, 4000, 5000, 6000, 7000, 8000};
 
     private final String firstName;
     private final String lastName;

@@ -12,16 +12,23 @@ import util.MyRandom;
 import view.sprites.Sprite;
 import view.subviews.TavernSubView;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InnShoppingNode extends DailyActionNode {
+    private static final Point CURSOR_SHIFT = new Point(0, -8);
     private final List<Item> inventory;
     private boolean[] haggleFlag = new boolean[]{true};
 
     public InnShoppingNode(Model model) {
         super("Merchant");
         this.inventory = makeInventory(model);
+    }
+
+    @Override
+    public Point getCursorShift() {
+        return CURSOR_SHIFT;
     }
 
     protected List<Item> makeInventory(Model model) {

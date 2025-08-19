@@ -19,11 +19,18 @@ import java.util.List;
 
 public class ItemDeck extends ArrayList<Item> {
 
-    private static final int LEVELS_PER_TIER = 5;
-    private static final double HIGHER_TIER_CHANCE_FACTOR = 1.0 / (4.0*LEVELS_PER_TIER);
+    private static final int[] standardTiersPerLevel =
+            //        0  1  2  3  4  5  6  7  8  9  10  11  12  13  14  15
+            new int[]{0, 0, 0, 0, 0, 1, 1, 1, 1, 2,  2,  2,  3,  3,  3,  3};
+    private static final double[] higherTierChancePerLevel =
+            //             0     1     2     3     4     5     6     7
+            new double[]{0.10, 0.15, 0.25, 0.35, 0.45, 0.05, 0.15, 0.25,
+            //             8     9    10    11    12    13    14     15
+                         0.35, 0.05, 0.15, 0.25, 0.05, 0.15, 0.25, 0.35};
+
     private static final int MAX_HIGHER_ITEM_TIERS = 4;
-    private int standardTier = 0;
-    private double higherTierChance = HIGHER_TIER_CHANCE_FACTOR;
+    private int standardTier = standardTiersPerLevel[1];
+    private double higherTierChance = higherTierChancePerLevel[1];
 
     public ItemDeck() {
         this.addAll(allItems());
@@ -379,15 +386,20 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public void setStandardItemTier(int averageLevel) {
-        int newStandard = averageLevel / LEVELS_PER_TIER;
-        double newChance = ((averageLevel % LEVELS_PER_TIER)*2 + 1) * HIGHER_TIER_CHANCE_FACTOR;
-        if (newStandard != standardTier) {
-            System.out.println("New standard item tier! Tier " + newStandard);
-            standardTier = newStandard;
+        if (averageLevel < standardTiersPerLevel.length) {
+            int newStandard = standardTiersPerLevel[averageLevel];
+            if (standardTier != newStandard) {
+                System.out.println("New standard item tier! Tier " + newStandard);
+                standardTier = newStandard;
+            }
         }
-        if (newChance != higherTierChance) {
-            System.out.println("New higher item tier chance! Chance " + newChance);
-            higherTierChance = newChance;
+
+        if (averageLevel < higherTierChancePerLevel.length) {
+            double newChance = higherTierChancePerLevel[averageLevel];
+            if (higherTierChance != higherTierChancePerLevel[averageLevel]) {
+                System.out.println("New higher item tier chance! Chance " + newChance);
+                higherTierChance = newChance;
+            }
         }
     }
 }
