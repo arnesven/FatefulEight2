@@ -30,6 +30,7 @@ public class EveningState extends GameState {
 
     public static SubView subViewTent = new ImageSubView("thetent", "EVENING", "You make camp.");
     private static SubView subViewTevern = new ImageSubView("theinn", "EVENING", "You spend the night at the tavern.");
+    private static SubView subViewCreatureComforts = new ImageSubView("comfort", "EVENING", "You spend the night in the magic tent!");
 
     private final boolean freeRations;
     private boolean freeLodging;
@@ -148,7 +149,9 @@ public class EveningState extends GameState {
     }
 
     public void setSubView(Model model) {
-        if (showTentSubView()) {
+        if (model.getSpellHandler().creatureComfortsCastToday(model)) {
+            CollapsingTransition.transition(model, subViewCreatureComforts);
+        } else if (showTentSubView()) {
             CollapsingTransition.transition(model, subViewTent);
         } else {
             CollapsingTransition.transition(model, subViewTevern);
