@@ -3,10 +3,11 @@ package view;
 import model.Model;
 import model.map.WorldBuilder;
 import util.Arithmetics;
-import util.MyRandom;
 import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
+import view.subviews.NoAvatarMapSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,24 +16,33 @@ import java.util.List;
 
 public class SelectInitialSettingsView extends SelectableListMenu {
     private static final int WIDTH = 31;
-    private static final int HEIGHT = 26;
+    private static final int HEIGHT = 23;
     private static final String DIFFICULTY_INTRO_TEXT = "Game Difficulty\n(can be changed at any time in the settings menu)";
     private static final String LOCATION_INTRO_TEXT = "Starting Location";
     private static final String[] DIFFICULTIES = new String[]{"EASY", "NORMAL", "HARD", "IMPOSSIBLE"};
     private static final String[] LOCATIONS = new String[]{"Crossroads Inn", "Waterfront Inn", "Hunter's Inn"};
-    private static final int DIFFICULTY_START_Y = 4;
-    private static final int LOCATION_START_Y = 15;
+    private static final int DIFFICULTY_START_Y = 2;
+    private static final int LOCATION_START_Y = 13;
+    private final SubView[] subViews;
     private int selectedDifficulty = 1;
     private int selectedLocation = 0;
 
     public SelectInitialSettingsView(Model model) {
         super(model.getView(), WIDTH, HEIGHT);
+        this.subViews = new SubView[]{new NoAvatarMapSubView(getPositionForSelected(0), 10),
+                                      new NoAvatarMapSubView(getPositionForSelected(1), 10),
+                                      new NoAvatarMapSubView(getPositionForSelected(2), 5)};
     }
 
     @Override
     public void transitionedFrom(Model model) {
         model.getSettings().setGameDifficulty(selectedDifficulty);
         model.setStartingPosition(getPositionForSelected(selectedLocation));
+    }
+
+    @Override
+    protected int getYStart() {
+        return super.getYStart() + 6;
     }
 
     private Point getPositionForSelected(int selectedLocation) {
@@ -49,12 +59,12 @@ public class SelectInitialSettingsView extends SelectableListMenu {
     public void transitionedTo(Model model) {
         super.transitionedTo(model);
         setSelectedRow(0);
+        model.setSubView(subViews[selectedLocation]);
     }
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> decorations = new ArrayList<>();
-        decorations.add(new TextDecoration("INITIAL SETTINGS", xStart, yStart + 1, MyColors.WHITE, MyColors.BLUE, true));
         addCenteredText(decorations, DIFFICULTY_INTRO_TEXT, yStart+DIFFICULTY_START_Y);
         addCenteredText(decorations, getDifficultyDescription(selectedDifficulty), yStart+DIFFICULTY_START_Y + 6);
         addCenteredText(decorations, LOCATION_INTRO_TEXT, yStart + LOCATION_START_Y);
@@ -118,11 +128,13 @@ public class SelectInitialSettingsView extends SelectableListMenu {
                 @Override
                 public void turnLeft(Model model) {
                     selectedLocation = Arithmetics.decrementWithWrap(selectedLocation, LOCATIONS.length);
+                    model.setSubView(subViews[selectedLocation]);
                 }
 
                 @Override
                 public void turnRight(Model model) {
                     selectedLocation = Arithmetics.incrementWithWrap(selectedLocation, LOCATIONS.length);
+                    model.setSubView(subViews[selectedLocation]);
                 }
             });
         }
