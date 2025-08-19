@@ -131,50 +131,12 @@ public class World implements Serializable {
                 model.getMainStory().drawMapObjects(model, x, y, screenX, screenY);
                 drawDestinationTasks(model, x, y, screenX, screenY);
                 drawFilterObjects(model, filterObjects, x, y, screenX, screenY);
-                if (filter instanceof WaterPathDistancesFilter) {
-                    drawWaterPaths(screenHandler, x, y, screenX, screenY);
+                if (filter != null) {
+                    filter.drawSpecial(model, hexes, x, y, screenX, screenY);
                 }
                 col++;
             }
             row++;
-        }
-    }
-
-    private void drawWaterPaths(ScreenHandler screenHandler, int x, int y, int screenX, int screenY) {
-        for (WaterPath p : hexes[x][y].getWaterPaths()) {
-            if (p.getHex() == hexes[x][y]) {
-                String str = String.format("%X", p.getDistance());
-                char dist = p.isDistanceUnset() ? 'X' : (str).charAt(0);
-                if (p.getDistance() > 15) {
-                    dist = '*';
-                }
-                int finalX = screenX;
-                int finalY = screenY;
-
-                switch (p.getDirection()) {
-                    case Direction.NORTH:
-                        finalX += 1;
-                        break;
-                    case Direction.NORTH_EAST:
-                        finalX += 3;
-                        finalY += 1;
-                        break;
-                    case Direction.SOUTH_EAST:
-                        finalX += 3;
-                        finalY += 3;
-                        break;
-                    case Direction.SOUTH:
-                        finalX += 1;
-                        finalY += 3;
-                        break;
-                    case Direction.SOUTH_WEST:
-                        finalY += 3;
-                    default:
-                }
-
-                screenHandler.register("sdas", new Point(finalX, finalY),
-                        CharSprite.make(dist, MyColors.LIGHT_RED));
-            }
         }
     }
 

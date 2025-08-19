@@ -120,17 +120,20 @@ public class FullMapView extends GameView {
 
     private void cycleView(Model model) {
         viewType = Arithmetics.incrementWithWrap(viewType, maxViews);
-        if (viewType == 4) {
-            currentFilter = new WaterPathDistancesFilter();
+        if (viewType == 1) {
+            //currentFilter = new WaterPathDistancesFilter();
+            currentFilter = new ShowLocationNamesFilter();
             worldToDraw = model.getWorld();
-        } else if (viewType == 3) {
+        } else if (viewType == 2) {
             currentFilter = new UnderworldLegendFilter();
             worldToDraw = model.getCaveSystem();
-        } else if (viewType == 2) {
+        } else if (viewType == 3) {
             currentFilter = new KingdomFilter();
-        } else if (viewType == 1) {
+            worldToDraw = model.getWorld();
+        } else if (viewType == 4) {
             currentFilter = new DiscoveredTravelRoutesFilter();
-        } else {
+            worldToDraw = model.getWorld();
+        } else { // 0
             currentFilter = null;
             worldToDraw = model.getWorld();
         }

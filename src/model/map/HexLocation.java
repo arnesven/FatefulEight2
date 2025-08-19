@@ -118,4 +118,8 @@ public abstract class HexLocation implements Serializable {
         }
         return null;
     }
+
+    public boolean showNameOnMap() {
+        return true;
+    }
 }

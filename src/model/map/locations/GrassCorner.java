@@ -42,4 +42,9 @@ public class GrassCorner extends HexLocation {
     public SubView getImageSubView() {
         return subView;
     }
+
+    @Override
+    public boolean showNameOnMap() {
+        return false;
+    }
 }

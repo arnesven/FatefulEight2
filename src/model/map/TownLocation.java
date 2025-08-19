@@ -213,7 +213,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public HelpDialog getHelpDialog(GameView view) {
-        return null;
+        return new TownHelpDialog(view);
     }
 
     @Override
