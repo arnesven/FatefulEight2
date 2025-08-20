@@ -127,6 +127,18 @@ public class ZeppelinStoryPart extends StoryPart {
         return step == BOUGHT;
     }
 
+    public Point getZeppelinPosition() {
+        return zeppelinPos;
+    }
+
+    public void setZeppelinPosition(Point position) {
+        zeppelinPos = new Point(position);
+    }
+
+    public boolean isZeppelinBought() {
+        return step >= BOUGHT;
+    }
+
     private class ZeppelinJournalEntry extends MainStoryTask {
         public ZeppelinJournalEntry() {
             super("Xelbi's Project");
