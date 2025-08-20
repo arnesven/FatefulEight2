@@ -19,6 +19,11 @@ public class CollectAllSpellsOfColorAchievement extends PassiveAchievement {
         this.color = color;
     }
 
+    @Override
+    public String getType() {
+        return "Spell";
+    }
+
     private static List<Spell> allSpellsOfColor(MyColors color) {
         return MyLists.filter(ItemDeck.allSpells(), sp -> sp.getColor() == color);
     }

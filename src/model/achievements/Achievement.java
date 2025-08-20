@@ -24,9 +24,11 @@ public class Achievement implements Serializable {
 
     private final Data data;
     private boolean completed;
+    private final String type;
 
     public Achievement(Achievement.Data data) {
         this.data = data;
+        this.type = "General";
         completed = false;
     }
 
@@ -40,6 +42,10 @@ public class Achievement implements Serializable {
 
     public String getKey() {
         return data.key;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public boolean isCompleted(Model model) {

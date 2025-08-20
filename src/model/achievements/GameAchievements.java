@@ -8,7 +8,6 @@ import model.items.spells.SummonShipSpell;
 import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
-import model.states.dailyaction.CustomerNode;
 import model.states.dailyaction.shops.ShopCustomer;
 import model.states.dailyaction.shops.ShopSupplier;
 import model.states.events.*;
@@ -34,6 +33,7 @@ public class GameAchievements implements Serializable {
         for (MyColors color : Spell.spellColors) {
             new CollectAllSpellsOfColorAchievement(color).registerYourself(partyAchievements);
         }
+        registerAchievement(SummonShipSpell.getAchievementData());
     }
 
     private void addMiscAchievements() {
@@ -46,7 +46,6 @@ public class GameAchievements implements Serializable {
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
         registerAchievement(ShopCustomer.getAchievemetnData());
         registerAchievement(ShopSupplier.getAchievementData());
-        registerAchievement(SummonShipSpell.getAchievementData());
     }
 
     private void addDungeonAchievements() {
@@ -55,16 +54,16 @@ public class GameAchievements implements Serializable {
 
         for (UrbanLocation urb : w.getLordLocations()) {
             if (urb instanceof CastleLocation) {
-                registerAchievement(((CastleLocation) urb).getDungeonAchievement());
+                registerDungeonAchievement(((CastleLocation) urb).getDungeonAchievement());
             }
         }
 
         for (RuinsLocation loc : w.getRuinsLocations()) {
-            registerAchievement(loc.getAchievementData());
+            registerDungeonAchievement(loc.getAchievementData());
         }
 
         for (TombLocation loc : w.getTombLocations()) {
-            registerAchievement(loc.getAchievementData());
+            registerDungeonAchievement(loc.getAchievementData());
         }
     }
 
@@ -73,7 +72,7 @@ public class GameAchievements implements Serializable {
         allQuests.addAll(MainStory.getQuests());
         for (Quest q : allQuests) {
             if (q.givesAchievement()) {
-                registerAchievement(q.getAchievementData());
+                registerQuestAchievement(q.getAchievementData());
             }
         }
     }
@@ -96,6 +95,14 @@ public class GameAchievements implements Serializable {
         partyAchievements.put(achievementData.getKey(), new Achievement(achievementData));
     }
 
+    private void registerQuestAchievement(Achievement.Data achievementData) {
+        partyAchievements.put(achievementData.getKey(), new QuestAchievement(achievementData));
+    }
+
+    private void registerDungeonAchievement(Achievement.Data achievementData) {
+        partyAchievements.put(achievementData.getKey(), new DungeonAchievement(achievementData));
+    }
+
     public int numberOfCompleted(Model model) {
         return MyLists.intAccumulate(getAsList(), a -> a.isCompleted(model) ? 1 : 0);
     }
@@ -106,7 +113,6 @@ public class GameAchievements implements Serializable {
 
     public List<Achievement> getAsList() {
         List<Achievement> result = new ArrayList<>(partyAchievements.values());
-        result.sort(Comparator.comparing(Achievement::getName));
         return result;
     }
 
