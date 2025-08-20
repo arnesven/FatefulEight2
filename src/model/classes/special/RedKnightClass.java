@@ -51,14 +51,6 @@ public class RedKnightClass extends SpecialCharacterClass {
         return new Equipment(new BastardSword(), new RedKnightsArmor(), new RedKnightsHelm());
     }
 
-
-    @Override
-    public void finalizeLook(CharacterAppearance appearance) {
-        // remove ears
-        appearance.setSprite(1, 3, new FilledBlockSprite(MyColors.BLACK));
-        appearance.setSprite(5, 3, new FilledBlockSprite(MyColors.BLACK));
-    }
-
     @Override
     public boolean isBackRowCombatant() {
         return false;

@@ -57,26 +57,15 @@ public class BlackKnightClass extends CharacterClass {
 
     public static void putOnKnightsHelm(CharacterAppearance characterAppearance, MyColors areaColor, MyColors lineColor) {
         characterAppearance.removeOuterHair();
-        for (int y = 1; y <= 4; ++y) {
-            characterAppearance.setSprite(1, y, new FilledBlockSprite(MyColors.BLACK));
-            characterAppearance.setSprite(5, y, new FilledBlockSprite(MyColors.BLACK));
+        for (int y = 2; y <= 4; ++y) {
+            characterAppearance.setSprite(1, y, new ClothesSpriteWithBack(0x1A6 + (y-2)*0x10, areaColor, lineColor));
+            characterAppearance.setSprite(5, y, new ClothesSpriteWithBack(0x1A7 + (y-2)*0x10, areaColor, lineColor));
         }
         for (int y = 0; y <= 5; ++y) {
             for (int x = 2; x <= 4; ++x) {
-                if (y == 4) {
-                    characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x20 + x + 2, areaColor, lineColor));
-                } else {
-                    characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x10 * y + x + 2, areaColor, lineColor));
-                }
+                characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x10 * y + x + 2, areaColor, lineColor));
             }
         }
-    }
-
-    @Override
-    public void finalizeLook(CharacterAppearance appearance) {
-        // remove ears
-        appearance.setSprite(1, 3, new FilledBlockSprite(MyColors.BLACK));
-        appearance.setSprite(5, 3, new FilledBlockSprite(MyColors.BLACK));
     }
 
     @Override
