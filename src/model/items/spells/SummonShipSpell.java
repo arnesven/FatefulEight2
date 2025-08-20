@@ -1,6 +1,7 @@
 package model.items.spells;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.journal.StoryPart;
@@ -28,6 +29,11 @@ public class SummonShipSpell extends ImmediateSpell {
 
     public SummonShipSpell() {
         super("Summon Ship", 26, COLORLESS, 8, 4);
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(SummonShipSpell.class.getCanonicalName(), "Summon Zeppelin",
+                "You used the Summon Ship Spell to summon the Zeppelin");
     }
 
     @Override
@@ -137,6 +143,7 @@ public class SummonShipSpell extends ImmediateSpell {
         ZeppelinStoryPart part = (ZeppelinStoryPart)MyLists.find(model.getMainStory().getStoryParts(),
                 p -> p instanceof ZeppelinStoryPart);
         part.setZeppelinPosition(model.getParty().getPosition());
+        state.completeAchievement(SummonShipSpell.class.getCanonicalName());
     }
 
     @Override

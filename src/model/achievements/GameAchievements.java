@@ -3,6 +3,7 @@ package model.achievements;
 import model.Model;
 import model.QuestDeck;
 import model.enemies.VampireEnemy;
+import model.items.spells.SummonShipSpell;
 import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
@@ -36,6 +37,7 @@ public class GameAchievements implements Serializable {
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
         registerAchievement(ShopCustomer.getAchievemetnData());
         registerAchievement(ShopSupplier.getAchievementData());
+        registerAchievement(SummonShipSpell.getAchievementData());
     }
 
     private void addDungeonAchievements() {
