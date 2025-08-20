@@ -167,7 +167,6 @@ public class ConstableEvent extends DailyEventState {
         } else {
             GeneralInteractionEvent.addToNotoriety(model, this, 30);
         }
-
     }
 
     public void goToJail(Model model) {

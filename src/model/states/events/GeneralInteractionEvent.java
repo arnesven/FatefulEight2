@@ -341,8 +341,12 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             if (worldHex.getLocation() != null &&
                     (worldHex.getLocation() instanceof TownLocation ||
                      worldHex.getLocation() instanceof CastleLocation)) {
-                if (MyRandom.rollD10() < Math.min(5, model.getParty().getNotoriety() / 10)) {
-                    return new ConstableEvent(model);
+                if (model.getParty().getNotoriety() <= 50) {
+                    if (MyRandom.rollD10() < model.getParty().getNotoriety() / 10) {
+                        return new ConstableEvent(model);
+                    }
+                } else {
+                    return new ConstableGroupEvent(model);
                 }
             }
         }
