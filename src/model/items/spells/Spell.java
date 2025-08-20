@@ -13,6 +13,7 @@ import model.states.GameState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
 import util.MyLists;
+import util.MyStrings;
 import view.*;
 import view.party.SelectableListMenu;
 import view.sprites.DamageValueEffect;
@@ -144,6 +145,13 @@ public abstract class Spell extends Item {
             default:
                 throw new IllegalStateException("Unrecognized magic skill " + skill.getName());
         }
+    }
+
+    public static String nameForColor(MyColors color) {
+        if (color == COLORLESS) {
+            return "Colorless";
+        }
+        return MyStrings.capitalize(color.name().toLowerCase());
     }
 
     public Skill getSkill() {

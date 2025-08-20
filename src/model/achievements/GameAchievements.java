@@ -3,6 +3,7 @@ package model.achievements;
 import model.Model;
 import model.QuestDeck;
 import model.enemies.VampireEnemy;
+import model.items.spells.Spell;
 import model.items.spells.SummonShipSpell;
 import model.mainstory.MainStory;
 import model.map.*;
@@ -12,6 +13,7 @@ import model.states.dailyaction.shops.ShopCustomer;
 import model.states.dailyaction.shops.ShopSupplier;
 import model.states.events.*;
 import util.MyLists;
+import view.MyColors;
 
 import java.io.Serializable;
 import java.util.*;
@@ -23,8 +25,15 @@ public class GameAchievements implements Serializable {
         partyAchievements = new HashMap<>();
         addEventAchievements();
         addQuestAchievements();
+        addSpellAchievements();
         addDungeonAchievements();
         addMiscAchievements();
+    }
+
+    private void addSpellAchievements() {
+        for (MyColors color : Spell.spellColors) {
+            new CollectAllSpellsOfColorAchievement(color).registerYourself(partyAchievements);
+        }
     }
 
     private void addMiscAchievements() {
