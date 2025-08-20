@@ -87,88 +87,9 @@ public abstract class ShoppingNode extends DailyActionNode {
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         if (state.isEvening() && supportsBreakIn()) {
-            state.print("The shop is closed. Do you want to try to break in? (Y/N) ");
-            if (state.yesNoInput()) {
-                breakIntoShop(model, state);
-            }
-            triedBreakIn = true;
-            return state;
+            return new BreakIntoShopState(model, this);
         }
         return new ShopInteriorState(model, this);
-    }
-
-    private void breakIntoShop(Model model, AdvancedDailyActionState state) {
-        List<GameCharacter> groupB = null;
-        if (model.getParty().size() > 1) {
-            state.print("Which party members should participate in the burglary (group B)? ");
-            List<GameCharacter> groupA = new ArrayList<>(model.getParty().getPartyMembers());
-            groupB = new ArrayList<>();
-            SplitPartySubView split = new SplitPartySubView(model.getSubView(), groupA, groupB);
-            model.setSubView(split);
-            model.getTutorial().burglary(model);
-            state.waitForReturnSilently();
-            if (groupB.isEmpty()) {
-                state.println("Burglary cancelled.");
-                return;
-            }
-            model.getParty().benchPartyMembers(groupA);
-        } else {
-            model.getTutorial().burglary(model);
-            groupB = new ArrayList<>(model.getParty().getPartyMembers());
-        }
-        boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
-        int weightLimit = MyLists.intAccumulate(groupB,
-                character -> character.getRace().getCarryingCapacity()*1000 - character.getEquipment().getTotalWeight());
-        int accumulatedWeight = 0;
-        if (result) {
-            state.leaderSay("Okay, we're inside. Now let's gather up the booty!");
-            if (shopInventory.isEmpty()) {
-                state.partyMemberSay(groupB.get(0), "What, there's nothing here? Aaw... what a waste of time. Let's get out of here.");
-                model.getParty().unbenchAll();
-                return;
-            }
-            SubView oldSubView = model.getSubView();
-            StealingSubView newSubView = new StealingSubView(shopInventory, weightLimit);
-            CollapsingTransition.transition(model, newSubView);
-            int bounty = 0;
-            while (true) {
-                state.waitForReturnSilently();
-                if (newSubView.getTopIndex() == 0 || shopInventory.isEmpty()) {
-                    break;
-                }
-                if (accumulatedWeight >= weightLimit) {
-                    state.println("You cannot carry any more loot!");
-                } else {
-                    Item it = newSubView.getSelectedItem();
-                    state.println("You stole " + it.getName() + ".");
-                    GameStatistics.incrementItemsStolen(1);
-                    shopInventory.remove(it);
-                    it.addYourself(model.getParty().getInventory());
-                    newSubView.removeItem(it);
-                    bounty++;
-                    accumulatedWeight += it.getWeight();
-                    newSubView.setBountyAndWeight(bounty, accumulatedWeight);
-                }
-            }
-            state.partyMemberSay(groupB.get(0), "Now let's try not to be spotted on our way out.");
-            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, Math.max(1, bounty/2));
-            if (!result) {
-                state.printAlert("Your crime has been witnessed.");
-                GeneralInteractionEvent.addToNotoriety(model, state, bounty * 10);
-            }
-            CollapsingTransition.transition(model, oldSubView);
-            if (MyRandom.rollD10() < bounty - 1) {
-                state.println("The " + getName() + " has gone out of business!");
-                setOutOfBusiness(model);
-            }
-        } else {
-            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 2);
-            if (!result) {
-                state.printAlert("Your crime has been witnessed.");
-                GeneralInteractionEvent.addToNotoriety(model, state, 10);
-            }
-        }
-        model.getParty().unbenchAll();
     }
 
     protected boolean supportsBreakIn() {
@@ -176,11 +97,6 @@ public abstract class ShoppingNode extends DailyActionNode {
     }
 
     protected abstract int getShopSecurity();
-
-    @Override
-    public boolean returnNextState() {
-        return triedBreakIn;
-    }
 
     @Override
     public Sprite getBackgroundSprite() {
@@ -224,7 +140,7 @@ public abstract class ShoppingNode extends DailyActionNode {
         return outOfBusiness != null && outOfBusiness;
     }
 
-    private void setOutOfBusiness(Model model) {
+    public void setOutOfBusiness(Model model) {
         HexLocation location = model.getCurrentHex().getLocation();
         if (!(location instanceof UrbanLocation)) {
             return;

@@ -28,10 +28,13 @@ public class StealingSubView extends TopMenuSubView {
 
     @Override
     protected String getUnderText(Model model) {
-        Item it = getSelectedItem();
-        return it.getName() + " " + it.getCost() + " gold, " +
-                it.getWeight() / 1000.0 + " kg" +
-                it.getShoppingDetails();
+        if (getSelectedItem() != null) {
+            Item it = getSelectedItem();
+            return it.getName() + " " + it.getCost() + " gold, " +
+                    it.getWeight() / 1000.0 + " kg" +
+                    it.getShoppingDetails();
+        }
+        return "";
     }
 
     public Item getSelectedItem() {
