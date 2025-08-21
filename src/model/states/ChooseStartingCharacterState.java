@@ -5,9 +5,15 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.*;
 import model.items.accessories.Accessory;
+import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
 import model.items.weapons.Weapon;
+import model.journal.MainStorySpawnEast;
+import model.journal.MainStorySpawnNorth;
+import model.journal.MainStorySpawnWest;
+import model.mainstory.MainStoryStep;
+import util.MyRandom;
 import view.*;
 import view.party.CharacterCreationView;
 
@@ -35,6 +41,7 @@ public class ChooseStartingCharacterState extends GameState {
                     "Create Custom"));
             if (FatefulEight.inDebugMode()) {
                 options.add("Full Party");
+                options.add("Random Full");
             }
             int choice = multipleOptionArrowMenu(model, 30, 16, options);
 
@@ -60,8 +67,13 @@ public class ChooseStartingCharacterState extends GameState {
                 if (gc != null) {
                     break;
                 }
-            } else {
+            } else if (choice == 3){
                 gc = fullPartySelect(model);
+                if (gc != null) {
+                    break;
+                }
+            } else {
+                gc = randomFullSelect(model);
                 if (gc != null) {
                     break;
                 }
@@ -95,6 +107,45 @@ public class ChooseStartingCharacterState extends GameState {
         model.getAllCharacters().remove(gcs.get(gcs.size()-1));
         view.miscSetup(model);
         return gcs.get(gcs.size()-1);
+    }
+
+    private GameCharacter randomFullSelect(Model model) {
+        List<GameCharacter> chars = new ArrayList<>();
+        for (int i = 0; i < 8; ++i) {
+            chars.add(MyRandom.sample(model.getAllCharacters()));
+        }
+
+        List<Weapon> weapons = ItemDeck.allWeapons();
+        List<Clothing> allApparel = ItemDeck.allApparel();
+        List<Accessory> allAccessories = new ArrayList<>();
+        allAccessories.addAll(ItemDeck.allJewelry());
+        allAccessories.addAll(ItemDeck.allGloves());
+        allAccessories.addAll(ItemDeck.allShields());
+        allAccessories.addAll(ItemDeck.allHeadGear());
+        allAccessories.addAll(ItemDeck.allShoes());
+        for (GameCharacter gc : chars) {
+            gc.setLevel(8);
+            Weapon w = (Weapon) MyRandom.sample(weapons).makeHigherTierCopy(1);
+            Clothing c;
+            do {
+                c = (Clothing) MyRandom.sample(allApparel).makeHigherTierCopy(1);
+            } while (c.isHeavy() != gc.getCharClass().canUseHeavyArmor());
+            Accessory a;
+            do {
+                a = (Accessory) MyRandom.sample(allAccessories).makeHigherTierCopy(1);
+            } while (a.isOffHandItem() == w.isTwoHanded());
+            gc.setEquipment(new Equipment(w, c, a));
+            if (model.getParty().size() < 7) {
+                model.getParty().add(gc);
+            }
+        }
+
+        model.getParty().goldTransaction(1000);
+        model.getParty().getInventory().addToLockpicks(3);
+
+        model.progressMainStoryForTesting(MainStoryStep.STARTED,
+                MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(), new MainStorySpawnWest())));
+        return chars.getLast();
     }
 
     private GameCharacter generateCharacter(Model model) {
