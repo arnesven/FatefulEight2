@@ -31,7 +31,16 @@ public class CaveSpelunkerEvent extends DailyEventState {
         this.townOrCity = townOrCityClosestToFatue;
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
     public static DailyEventState generateEvent(Model model) {
+        if (!model.isInOriginalWorld()) {
+            return new CaveSpelunkerEvent(model, null);
+        }
+
         if (alreadyDone(model) || calculateAverageLevel(model) < 2.5 ||
                 model.getCurrentHex().getLocation() instanceof UrbanLocation) {
             return null;

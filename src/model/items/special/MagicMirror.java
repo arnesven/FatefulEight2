@@ -71,7 +71,8 @@ public class MagicMirror extends StoryItem {
 
         @Override
         protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
-            MindMachineQuest.teleportToOtherWorld(model, state, model.getMainStory().getPastEntryPosition());
+            Point destination =  model.getMainStory().getPastEntryPosition();
+            MindMachineQuest.teleportToOtherWorld(model, state, destination);
         }
 
         @Override

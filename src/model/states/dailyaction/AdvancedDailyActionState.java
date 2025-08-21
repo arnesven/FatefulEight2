@@ -77,9 +77,9 @@ public abstract class AdvancedDailyActionState extends GameState {
             model.getTutorial().theInn(model);
             waitForReturnSilently();
             daily = matrix.getSelectedElement();
-            Point currentPosition = new Point(model.getParty().getPosition());
+            Point oldPartyPos = new Point(model.getParty().getPosition());
             model.handleCastSpells();
-            if (!model.partyIsInOverworldPosition(currentPosition)) { // Spell has moved party
+            if (!model.partyIsInOverworldPosition(oldPartyPos)) { // Spell has moved party
                 return model.getCurrentHex().getDailyActionState(model);
             }
             if (model.getSubView() != subView) {

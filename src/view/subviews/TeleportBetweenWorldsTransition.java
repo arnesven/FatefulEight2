@@ -12,6 +12,7 @@ public class TeleportBetweenWorldsTransition extends TeleportingTransition {
 
     @Override
     protected void moveParty(Model model, Point position, boolean inCaves) {
+        System.out.println("Moving party to " + position.x + "," + position.y);
         model.goBetweenWorlds(WorldType.thePast, position);
     }
 

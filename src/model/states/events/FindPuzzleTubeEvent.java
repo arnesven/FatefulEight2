@@ -14,6 +14,11 @@ public class FindPuzzleTubeEvent extends DailyEventState {
         super(model);
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
     public static boolean alreadyFoundInLocation(Model model, Point position) {
         return model.getSettings().getMiscFlags().containsKey(makeKeyFromPosition(position));
     }

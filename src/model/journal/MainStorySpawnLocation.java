@@ -21,7 +21,7 @@ public abstract class MainStorySpawnLocation implements Serializable {
     private final String libraryTown;
     private MyColors[] code;
     private final Point xelbiPosition;
-    private Point pastEntryPoint;
+    private final Point pastEntryPoint;
 
     public MainStorySpawnLocation(String town, String castle, Point witchLocation, String libraryTown, int expandedMapState, Point camp,
                                   Point xelbiPosition, String remotePeopleName, Point remotePeoplePosition, Point pastEntryPoint) {

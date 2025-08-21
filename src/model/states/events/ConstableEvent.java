@@ -44,6 +44,11 @@ public class ConstableEvent extends DailyEventState {
     }
 
     @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showExplicitPortrait(model, app, "Constable");
         boolean gender = app.getGender();

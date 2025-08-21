@@ -18,6 +18,11 @@ public class LetterFromMotherEvent extends DailyEventState {
         super(model);
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
     public static DailyEventState generateEvent(Model model) {
         if (!model.getSettings().getMiscFlags().containsKey(GOT_THIS_EVENT) &&
                 model.getDay() > 14 && GameStatistics.getGoldEarned() < 150) {

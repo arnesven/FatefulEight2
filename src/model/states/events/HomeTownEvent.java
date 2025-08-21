@@ -18,6 +18,11 @@ public class HomeTownEvent extends DailyEventState {
         this.homeGuy = homeGuy;
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
     private static boolean isInHomeTown(Model model, GameCharacter gc) {
         return gc.hasHomeTown() && gc.getHomeTown(model) == model.getCurrentHex().getLocation();
     }

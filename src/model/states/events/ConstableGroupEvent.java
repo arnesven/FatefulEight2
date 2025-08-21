@@ -15,10 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConstableGroupEvent extends DailyEventState {
-    private boolean ranAway;
 
     public ConstableGroupEvent(Model model) {
         super(model);
+    }
+
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
     }
 
     @Override

@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
+import model.states.events.NoEventState;
 import view.MyColors;
 import view.sprites.PastLandHexSprite;
 import view.sprites.Sprite;
@@ -40,6 +41,24 @@ public abstract class PastLandHex extends WorldHex {
             return "pastterrain";
         }
         return template.getTerrainName();
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        DailyEventState event;
+        for (int i = 0; i < 10; ++i) {
+            event = template.generateEvent(model);
+            if (!event.exclusiveToOriginalWorld()) {
+                return event;
+            }
+        }
+        for (int i = 0; i < 10; ++i) {
+            event = generateTerrainSpecificEvent(model);
+            if (!event.exclusiveToOriginalWorld()) {
+                return event;
+            }
+        }
+        return new NoEventState(model);
     }
 
     @Override

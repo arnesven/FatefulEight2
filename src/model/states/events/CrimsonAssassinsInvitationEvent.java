@@ -24,6 +24,11 @@ public class CrimsonAssassinsInvitationEvent extends DailyEventState {
         super(model);
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
     public static DailyEventState eventDependentOnMurders(Model model) {
         boolean condition =
                 GameStatistics.getMurders() > 0 &&

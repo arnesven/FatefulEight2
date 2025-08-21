@@ -376,4 +376,8 @@ public abstract class DailyEventState extends GameState {
     public String getDistantDescription() {
         return null;
     }
+
+    public boolean exclusiveToOriginalWorld() {
+        return false;
+    }
 }

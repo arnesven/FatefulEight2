@@ -17,6 +17,11 @@ public class BrotherhoodCroniesEvent extends DailyEventState {
     }
 
     @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("A group of hooded figures step out in front of the party and stop you.");
         int days = model.getDay() - model.getParty().getLoan().getDay();
