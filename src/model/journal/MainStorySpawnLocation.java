@@ -21,9 +21,10 @@ public abstract class MainStorySpawnLocation implements Serializable {
     private final String libraryTown;
     private MyColors[] code;
     private final Point xelbiPosition;
+    private Point pastEntryPoint;
 
     public MainStorySpawnLocation(String town, String castle, Point witchLocation, String libraryTown, int expandedMapState, Point camp,
-                                  Point xelbiPosition, String remotePeopleName, Point remotePeoplePosition) {
+                                  Point xelbiPosition, String remotePeopleName, Point remotePeoplePosition, Point pastEntryPoint) {
         this.town = town;
         this.castle = castle;
         this.witch = witchLocation;
@@ -33,6 +34,7 @@ public abstract class MainStorySpawnLocation implements Serializable {
         this.xelbiPosition = xelbiPosition;
         this.remotePeopleName = remotePeopleName;
         this.remotePeoplePosition = remotePeoplePosition;
+        this.pastEntryPoint = pastEntryPoint;
     }
 
     public abstract GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model);
@@ -82,4 +84,8 @@ public abstract class MainStorySpawnLocation implements Serializable {
     }
 
     public abstract World buildPastWorld();
+
+    public Point getPastEntryPoint() {
+        return pastEntryPoint;
+    }
 }

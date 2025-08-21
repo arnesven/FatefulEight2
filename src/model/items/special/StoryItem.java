@@ -1,6 +1,7 @@
 package model.items.special;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.items.Inventory;
 import model.items.Item;
 import model.journal.JournalEntry;
@@ -27,6 +28,10 @@ public abstract class StoryItem extends Item {
 
     @Override
     public String getSound() {
+        return null;
+    }
+
+    public String useFromMenu(Model model, GameCharacter gc) {
         return null;
     }
 }

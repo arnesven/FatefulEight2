@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.horses.HorseItemAdapter;
 import model.items.*;
 import model.items.designs.CraftingDesign;
+import model.items.special.StoryItem;
 import model.items.spells.DragonTamingSpell;
 import model.items.spells.Spell;
 import sound.SoundEffects;
@@ -321,13 +322,16 @@ public class InventoryView extends SelectableListMenu {
 
         public String getName() {
             if (itemToEquip instanceof Spell || itemToEquip instanceof Scroll) {
-                return  "Cast";
+                return "Cast";
             }
             if (itemToEquip instanceof UsableItem) {
                 return ((UsableItem)itemToEquip).getUsageVerb();
             }
             if (itemToEquip instanceof CraftingDesign || itemToEquip instanceof PotionRecipe) {
                 return "Learn";
+            }
+            if (itemToEquip instanceof StoryItem) {
+                return "Use";
             }
             return "Equip";
         }
@@ -376,6 +380,9 @@ public class InventoryView extends SelectableListMenu {
                         } else if (itemToEquip.opensViewFromInventoryMenu()) {
                             setTimeToTransition(true);
                             model.transitionToDialog(itemToEquip.getViewFromInventoryMenu(model, InventoryView.this, gc));
+                        } else if (itemToEquip instanceof StoryItem) {
+                            setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
+                                    ((StoryItem) itemToEquip).useFromMenu(model, gc)), model);
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);

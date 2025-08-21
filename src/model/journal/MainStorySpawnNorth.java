@@ -19,7 +19,8 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
               new Point(17, 10),
               new Point(18, 14),
                 "Vikings",
-                WorldBuilder.VIKING_VILLAGE_LOCATION);
+                WorldBuilder.VIKING_VILLAGE_LOCATION,
+                new Point(1, 9));
     }
 
     @Override

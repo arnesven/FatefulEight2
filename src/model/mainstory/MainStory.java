@@ -310,4 +310,8 @@ public class MainStory implements Serializable {
     public World buildPastWorld() {
         return spawnData.buildPastWorld();
     }
+
+    public Point getPastEntryPosition() {
+        return spawnData.getPastEntryPoint();
+    }
 }

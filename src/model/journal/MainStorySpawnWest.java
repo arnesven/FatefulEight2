@@ -52,7 +52,8 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
               new Point(11, 25),
               new Point(19, 27),
               "Pirates",
-               WorldBuilder.PIRATE_HAVEN_LOCATION);
+               WorldBuilder.PIRATE_HAVEN_LOCATION,
+               new Point(15, 12));
         this.potentialMutineers = makePotentialMutineers();
         this.realMutineer = MyRandom.sample(potentialMutineers);
     }

@@ -72,7 +72,7 @@ public class MindMachineQuest extends MainQuest {
         return toIgnore; // TODO Fix
     }
 
-    private void teleportToOtherWorld(Model model, QuestState state, Point destinationPosition) {
+    public static void teleportToOtherWorld(Model model, GameState state, Point destinationPosition) {
         MapSubView mapSubView = new MapSubView(model);
         CollapsingTransition.transition(model, mapSubView);
         state.println("Preparing to teleport, press enter to continue.");

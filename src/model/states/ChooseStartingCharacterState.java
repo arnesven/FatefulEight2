@@ -8,9 +8,11 @@ import model.items.accessories.Accessory;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
+import model.items.special.MagicMirror;
 import model.items.weapons.Weapon;
 import model.journal.MainStorySpawnEast;
 import model.journal.MainStorySpawnNorth;
+import model.journal.MainStorySpawnSouth;
 import model.journal.MainStorySpawnWest;
 import model.mainstory.MainStoryStep;
 import util.MyRandom;
@@ -112,7 +114,9 @@ public class ChooseStartingCharacterState extends GameState {
     private GameCharacter randomFullSelect(Model model) {
         List<GameCharacter> chars = new ArrayList<>();
         for (int i = 0; i < 8; ++i) {
-            chars.add(MyRandom.sample(model.getAllCharacters()));
+            GameCharacter gc = MyRandom.sample(model.getAllCharacters());
+            chars.add(gc);
+            model.getAllCharacters().remove(gc);
         }
 
         List<Weapon> weapons = ItemDeck.allWeapons();
@@ -142,9 +146,11 @@ public class ChooseStartingCharacterState extends GameState {
 
         model.getParty().goldTransaction(1000);
         model.getParty().getInventory().addToLockpicks(3);
+        new MagicMirror().addYourself(model.getParty().getInventory());
 
         model.progressMainStoryForTesting(MainStoryStep.STARTED,
-                MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(), new MainStorySpawnWest())));
+                new MainStorySpawnSouth());
+                //MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(), new MainStorySpawnWest())));
         return chars.getLast();
     }
 

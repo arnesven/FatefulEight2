@@ -19,7 +19,8 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new Point(40, 10),
               new Point(33, 11),
                 "Honorable Warriors",
-                WorldBuilder.EASTERN_PALACE_LOCATION);
+                WorldBuilder.EASTERN_PALACE_LOCATION,
+              new Point(7, 8));
     }
 
     @Override
