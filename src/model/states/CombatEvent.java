@@ -127,6 +127,7 @@ public class CombatEvent extends DailyEventState {
         model.setGameOver(model.getParty().isWipedOut());
         ClientSoundManager.playBackgroundMusic(previousSong);
         model.setInCombat(false);
+        subView.unregisterOngoing();
     }
 
     public static void startMusic() {

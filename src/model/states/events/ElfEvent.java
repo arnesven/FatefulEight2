@@ -125,7 +125,7 @@ public class ElfEvent extends DailyEventState {
                 protected String getVictimSelfTalk() {
                     return "I'm a paladin, a knight of a sacred order.";
                 }
-            };
+            }.doEvent(model);
         } else {
             adventurerWhoMayJoin(model, Race.HIGH_ELF);
         }

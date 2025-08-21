@@ -109,4 +109,11 @@ public abstract class SubView {
             e.printStackTrace();
         }
     }
+
+
+    public void unregisterOngoing() {
+        for (MyPair<Point, RunOnceAnimationSprite> pair : ongoingEffects) {
+            AnimationManager.unregister(pair.second);
+        }
+    }
 }

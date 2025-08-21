@@ -30,6 +30,11 @@ public class MineEvent extends DailyEventState {
     }
 
     @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
+    @Override
     public String getDistantDescription() {
         return "a mine";
     }

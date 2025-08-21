@@ -40,6 +40,11 @@ public class OrcsBattleEvent extends DailyEventState {
         this.victorious = false;
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
     public OrcsBattleEvent(Model model) {
         this(model, false);
     }

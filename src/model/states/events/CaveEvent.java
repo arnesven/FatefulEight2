@@ -16,6 +16,11 @@ public class CaveEvent extends DailyEventState {
     }
 
     @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Hey, there's a cave here!",
                 "Looks like a system of caves.", "A cave. Should we explore it?"));
