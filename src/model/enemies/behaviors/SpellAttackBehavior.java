@@ -6,6 +6,7 @@ import model.combat.conditions.EnemyCastingSpellCondition;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import sound.SoundEffects;
+import sprites.CombatSpeechBubble;
 import util.MyRandom;
 
 import java.util.List;
@@ -28,7 +29,8 @@ public abstract class SpellAttackBehavior extends EnemyAttackBehavior {
         model.getTutorial().enemyAttacks2(model);
         if (isCasting) {
             enemy.removeCondition(EnemyCastingSpellCondition.class);
-            combat.println(enemy.getName() + " casts " + spellName + "!");
+            combat.addSpecialEffect(enemy, new CombatSpeechBubble());
+            combat.printQuote(enemy.getName(), spellName + "!");
             resolveSpell(model, enemy, target, combat);
             isCasting = false;
         } else {
