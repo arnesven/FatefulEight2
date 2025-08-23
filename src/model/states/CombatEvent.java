@@ -264,7 +264,9 @@ public class CombatEvent extends DailyEventState {
                     handleCharacterTurn(model, turnTaker, false);
                 }
             }
-            checkForAutoCombatStop(model);
+            if (autoCombat) {
+                checkForAutoCombatStop(model);
+            }
         }
         if (!combatDone(model)) {
             handleSneakAttacks(model);
