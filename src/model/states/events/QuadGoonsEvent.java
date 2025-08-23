@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.enemies.Enemy;
 import model.enemies.QuadGoonImolator;
+import model.enemies.QuadGoonMedic;
 import model.states.DailyEventState;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class QuadGoonsEvent extends DailyEventState {
     protected void doEvent(Model model) {
         List<Enemy> enemies = new ArrayList<>();
         enemies.add(new QuadGoonImolator('A'));
+        enemies.add(new QuadGoonMedic('B'));
         runCombat(enemies);
     }
 }

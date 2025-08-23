@@ -7,11 +7,11 @@ import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 public class QuadGoonImolator extends QuadGoonEnemy {
-    private final ImoatorSprite sprite;
+    private final ImolatorSprite sprite;
 
     public QuadGoonImolator(char a) {
         super(a, "Imolator", new DestructionSpellAttackBehavior());
-        this.sprite = new ImoatorSprite(Race.randomRace());
+        this.sprite = new ImolatorSprite(Race.randomRace());
     }
 
     @Override
@@ -30,17 +30,12 @@ public class QuadGoonImolator extends QuadGoonEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
-        return 1;
-    }
-
-    @Override
     public int getSpeed() {
-        return 9;
+        return 6;
     }
 
-    private static class ImoatorSprite extends LoopingSprite {
-        public ImoatorSprite(Race r) {
+    private static class ImolatorSprite extends LoopingSprite {
+        public ImolatorSprite(Race r) {
             super("imolator", "enemies.png", 0x8C, 32);
             setFrames(4);
             setColor1(MyColors.BLACK);

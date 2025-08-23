@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.enemies.Enemy;
+import model.enemies.behaviors.SpellAttackBehavior;
 import model.items.spells.FullRoundSpell;
 import model.states.CombatEvent;
 import model.states.GameState;
@@ -11,8 +12,11 @@ import sound.SoundEffects;
 import util.MyRandom;
 
 public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
-    public EnemyCastingSpellCondition(Combatant combatant, int castRound) {
+    private final SpellAttackBehavior behavior;
+
+    public EnemyCastingSpellCondition(Combatant combatant, SpellAttackBehavior behavior, int castRound) {
         super(new DummySpell(), combatant, null, castRound);
+        this.behavior = behavior;
     }
 
     @Override
@@ -27,11 +31,13 @@ public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
                 enemy.removeCondition(EnemyCastingSpellCondition.class);
                 combat.println(enemy.getName() + "'s concentration was broken and " +
                         "is no longer casting the spell.");
-                combat.println(enemy.getName() + " takes 1 damage from spell feedback!");
-                SoundEffects.playSpellFail();
-                enemy.addCondition(new ErodeCondition());
-                combat.doDamageToEnemy(enemy, 1, subject);
-                enemy.removeCondition(ErodeCondition.class);
+                if (behavior.getFeedbackDamage() > 0) {
+                    combat.println(enemy.getName() + " takes " + behavior.getFeedbackDamage() + " damage from spell feedback!");
+                    SoundEffects.playSpellFail();
+                    enemy.addCondition(new ErodeCondition());
+                    combat.doDamageToEnemy(enemy, behavior.getFeedbackDamage(), subject);
+                    enemy.removeCondition(ErodeCondition.class);
+                }
             }
         }
     }

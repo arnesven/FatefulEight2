@@ -8,11 +8,16 @@ import model.enemies.behaviors.EnemyAttackBehavior;
 public abstract class QuadGoonEnemy extends HumanoidEnemy {
 
     public QuadGoonEnemy(char group, String name, EnemyAttackBehavior attackBehavior) {
-        super(group, name, attackBehavior);
+        super(group, "Quad Goon " + name, attackBehavior);
     }
 
     @Override
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model); // TODO QuadGoonLoot
+    }
+
+    @Override
+    public int getDamageReduction() {
+        return 1;
     }
 }

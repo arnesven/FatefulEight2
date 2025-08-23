@@ -8,7 +8,10 @@ public class TutorialEnemyAttacks2 extends SubChapterHelpDialog {
             "Knock Back attacks can move the target from the front row to the back row.\n\n" +
             "Pull Forward attacks can move the target from the back row to the front row.\n\n" +
             "Knock Down attacks can paralyze the target for one turn.\n\n" +
-            "Ferocious attacks are simply attacks of high damage - watch out!";
+            "Ferocious attacks are simply attacks of high damage - watch out!\n\n" +
+            "Spell attacks are usually very powerful but take a whole round to resolve. " +
+            "An enemy casting a spell can be interrupted by attacking that " +
+            "enemy.";
 
     public TutorialEnemyAttacks2(GameView view) {
         super(view, "Enemy Attacks II", TEXT);
