@@ -9,7 +9,7 @@ import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.BlueSpellSprite;
-import view.sprites.RunOnceAnimationSprite;
+import view.sprites.PhantasmEffect;
 import view.sprites.Sprite;
 
 import java.util.List;
@@ -65,22 +65,4 @@ public class ConjurePhantasmSpell extends CombatSpell {
         }
     }
 
-    private static class PhantasmEffect extends RunOnceAnimationSprite {
-        private int shift = 0;
-
-        public PhantasmEffect() {
-            super("phantasmeffect", "combat.png", 2, 8, 32, 32, 6, MyColors.WHITE);
-        }
-
-        @Override
-        public void stepAnimation(long elapsedTimeMs, Model model) {
-            super.stepAnimation(elapsedTimeMs, model);
-            shift += 1;
-        }
-
-        @Override
-        public int getYShift() {
-            return shift;
-        }
-    }
 }

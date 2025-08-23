@@ -3,6 +3,7 @@ package model.items.potions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.conditions.ParalysisCondition;
+import model.combat.conditions.TimedParalysisCondition;
 import model.items.Item;
 import model.items.Prevalence;
 import view.MyColors;
@@ -35,6 +36,7 @@ public class AntiParalysisPotion extends Potion {
     @Override
     public String useYourself(Model model, GameCharacter gc) {
         gc.removeCondition(ParalysisCondition.class);
+        gc.removeCondition(TimedParalysisCondition.class);
         return gc.getName() + "'s paralysis was cured!";
     }
 
