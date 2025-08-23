@@ -716,7 +716,7 @@ public class CombatEvent extends DailyEventState {
         }
     }
 
-    public void addEnemy(GelatinousBlobEnemy splitGuy) {
+    public void addEnemy(Enemy splitGuy) {
         if (enemies.size() < 24) {
             MyLists.forEach(enemies, combatMatrix::remove);
             enemies.add(splitGuy);

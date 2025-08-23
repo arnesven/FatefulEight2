@@ -19,7 +19,9 @@ public class QuadGoonsEvent extends DailyEventState {
         enemies.add(new QuadGoonMedic('B'));
         enemies.add(new QuadGoonMesmer('C'));
         enemies.add(new QuadGoonJuggernaught('D'));
-        enemies.add(new QuadGoonHunter('E'));
+        //enemies.add(new QuadGoonHunter('E'));
+        //enemies.add(new QuadGoonFencer('E'));
+        enemies.add(new QuadGoonNecromancer('E'));
         runCombat(enemies);
     }
 }
