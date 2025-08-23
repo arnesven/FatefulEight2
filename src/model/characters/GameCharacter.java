@@ -680,6 +680,7 @@ public class GameCharacter extends Combatant {
     }
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
+        boolean isPhysicalAttack = enemy.getAttackBehavior().isPhysicalAttack();
         combatEvent.blockSneakAttackFor(this);
         combatEvent.addSpecialEffect(this, enemy.getStrikeEffect());
         MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
@@ -694,8 +695,8 @@ public class GameCharacter extends Combatant {
             return;
         }
         SoundEffects.playSound(enemy.getAttackBehavior().getSound());
-        if ((checkForBlock(enemy) && enemy.getAttackBehavior().isPhysicalAttack()) ||
-                (!enemy.getAttackBehavior().isPhysicalAttack() && hasCondition(WardCondition.class))) {
+        if ((checkForBlock(enemy) && isPhysicalAttack) ||
+                (!isPhysicalAttack && hasCondition(WardCondition.class))) {
             combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
@@ -706,7 +707,7 @@ public class GameCharacter extends Combatant {
             combatEvent.addFloatyText(this, CombatSubView.PARRY_TEXT);
         } else {
             String reductionString = "";
-            if (enemy.getAttackBehavior().isPhysicalAttack() || equipment.applyArmorToMagicAttacks()) {
+            if (isPhysicalAttack || equipment.applyArmorToMagicAttacks()) {
                 int reduction = Math.min(damage, calculateDamageReduction());
                 if (getAP() > 0) {
                     reductionString = " (reduced by " + reduction + ")";
@@ -719,7 +720,10 @@ public class GameCharacter extends Combatant {
                 reductionString = ", " + LogView.YELLOW_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
             }
             combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
-            combatEvent.addFloatyDamage(this, damage, critical ? DamageValueEffect.CRITICAL_DAMAGE : DamageValueEffect.STANDARD_DAMAGE);
+            combatEvent.addFloatyDamage(this, damage,
+                    critical ? DamageValueEffect.CRITICAL_DAMAGE
+                            : (isPhysicalAttack ? DamageValueEffect.STANDARD_DAMAGE
+                                                : DamageValueEffect.MAGICAL_DAMAGE));
             if (party != null) {
                 combatEvent.tookDamageTalk(this, damage);
             }
@@ -728,7 +732,7 @@ public class GameCharacter extends Combatant {
         equipment.wielderWasAttackedBy(enemy, combatEvent);
         int finalDamage = damage;
         for (Condition cond : new ArrayList<>(getConditions())) {
-            cond.wasAttackedBy(this, enemy, finalDamage);
+            cond.wasAttackedBy(this, combatEvent, enemy, finalDamage);
         }
     }
 

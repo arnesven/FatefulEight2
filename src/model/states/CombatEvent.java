@@ -10,6 +10,7 @@ import model.combat.abilities.CombatAction;
 import model.combat.CombatAdvantage;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClinchedCondition;
+import model.combat.conditions.Condition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -462,6 +463,9 @@ public class CombatEvent extends DailyEventState {
         GameStatistics.incrementTotalDamage(damage);
         GameStatistics.recordMaximumDamage(damage);
         combatStats.damageDealt(damage, damager);
+        for (Condition cond : new ArrayList<>(target.getConditions())) {
+            cond.wasAttackedBy(damager, this, (Enemy)target, damage);
+        }
         if (target.getHP() <= 0) {
             RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();
             if (killAnimation != null) {

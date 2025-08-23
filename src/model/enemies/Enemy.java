@@ -102,7 +102,7 @@ public abstract class Enemy extends Combatant {
         decreaseTimedConditions(model, combatEvent);
     }
 
-    private List<GameCharacter> getCandidateTargets(Model model, CombatEvent combatEvent) {
+    public List<GameCharacter> getCandidateTargets(Model model, CombatEvent combatEvent) {
         List<GameCharacter> candidates = new ArrayList<>();
         if (canTargetBackRow()) {
             candidates.addAll(model.getParty().getBackRow());
@@ -130,10 +130,7 @@ public abstract class Enemy extends Combatant {
     }
 
     public final void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
-        boolean isRangedAttack = model.getParty().getBackRow().contains(target);
-        if (isRangedAttack) {
-            combatEvent.print(getName() + " performs a ranged attack! ");
-        }
+        combatBehavior.announceRangedAttack(model, combatEvent, this, target);
         combatBehavior.performAttack(model, this, target, combatEvent);
         model.getTutorial().combatDamage(model);
         combatEvent.checkForDead(model, target);

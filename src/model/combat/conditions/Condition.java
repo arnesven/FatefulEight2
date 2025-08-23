@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.enemies.Enemy;
+import model.states.CombatEvent;
 import model.states.GameState;
 import view.GameView;
 import view.ScreenHandler;
@@ -105,5 +106,5 @@ public abstract class Condition implements Serializable {
 
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) { }
 
-    public void wasAttackedBy(GameCharacter subject, Enemy enemy, int damage) { }
+    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, int damage) { }
 }

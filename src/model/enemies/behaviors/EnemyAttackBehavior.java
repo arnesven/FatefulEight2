@@ -42,4 +42,11 @@ public abstract class EnemyAttackBehavior implements Serializable {
     public String getSound() {
         return "default_attack";
     }
+
+    public void announceRangedAttack(Model model, CombatEvent combatEvent, Enemy enemy, GameCharacter target) {
+        boolean isRangedAttack = model.getParty().getBackRow().contains(target);
+        if (isRangedAttack) {
+            combatEvent.print(enemy.getName() + " performs a ranged attack! ");
+        }
+    }
 }

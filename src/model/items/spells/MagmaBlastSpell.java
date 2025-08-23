@@ -62,22 +62,4 @@ public class MagmaBlastSpell extends CombatSpell {
         return "Hurls a fiery ball against your enemies which explodes upon contact.";
     }
 
-    private static class MagmaBlastEffectSprite extends RunOnceAnimationSprite {
-        private int shift = 48;
-        public MagmaBlastEffectSprite() {
-            super("magmablasteffect", "combat.png", 0, 11, 32, 32, 8, MyColors.RED);
-            setColor2(MyColors.ORANGE);
-        }
-
-        @Override
-        public int getYShift() {
-            return shift;
-        }
-
-        @Override
-        public void stepAnimation(long elapsedTimeMs, Model model) {
-            super.stepAnimation(elapsedTimeMs, model);
-            shift -= 2;
-        }
-    }
 }

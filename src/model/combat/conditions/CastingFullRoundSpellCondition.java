@@ -22,10 +22,10 @@ public class CastingFullRoundSpellCondition extends Condition {
     private final Combatant target;
     private static final Sprite SPRITE = CharSprite.make((char)(0xC0), MyColors.LIGHT_GREEN, MyColors.BLACK, MyColors.CYAN);
     private final int castRound;
-    private final GameCharacter caster;
+    private final Combatant caster;
     private LoopingSprite spinRing = new SpinRingAnimation();
 
-    public CastingFullRoundSpellCondition(FullRoundSpell fullRoundSpell, GameCharacter caster, Combatant target, int castRound) {
+    public CastingFullRoundSpellCondition(FullRoundSpell fullRoundSpell, Combatant caster, Combatant target, int castRound) {
         super("Casting Spell", "CAS");
         this.spell = fullRoundSpell;
         this.target = target;
@@ -46,8 +46,10 @@ public class CastingFullRoundSpellCondition extends Condition {
     }
 
     @Override
-    public void wasAttackedBy(GameCharacter subject, Enemy enemy, int damage) {
+    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, int damage) {
         subject.removeCondition(CastingFullRoundSpellCondition.class);
+        combat.println(subject.getName() + "'s concentration was broken, " +
+                GameState.heOrShe(subject.getGender()) + " is no longer casting the spell.");
     }
 
     @Override
@@ -67,7 +69,12 @@ public class CastingFullRoundSpellCondition extends Condition {
 
     @Override
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) {
-        caster.drawAvatar(screenHandler, xpos, ypos);
+        if (caster instanceof GameCharacter) {
+            ((GameCharacter)caster).drawAvatar(screenHandler, xpos, ypos);
+        } else {
+            Sprite spr = ((Enemy)caster).getAvatar();
+            screenHandler.register(spr.getName(), new Point(xpos, ypos), spr);
+        }
         screenHandler.register(spinRing.getName(), new Point(xpos, ypos), spinRing);
     }
 
@@ -83,9 +90,9 @@ public class CastingFullRoundSpellCondition extends Condition {
             super("castingring", "combat.png", 0x90, 32, 32);
             setFrames(8);
             setColor1(MyColors.WHITE);
-            setColor2(MyColors.LIGHT_YELLOW);
-            setColor3(MyColors.LIGHT_PINK);
-            setColor4(MyColors.CYAN);
+            setColor2(MyColors.YELLOW);
+            setColor3(MyColors.PINK);
+            setColor4(MyColors.LIGHT_BLUE);
             setDelay(4);
         }
     }
