@@ -17,7 +17,7 @@ public class QuadGoonsEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("Another group of Quad Goons have caught up to you. They attack!");
-        List<Character> groups = new ArrayList<>(List.of('A', 'B', 'C', 'D', 'E'));
+        List<Character> groups = new ArrayList<>(List.of('A', 'B', 'C', 'D', 'E', 'F'));
         List<Enemy> enemies = new ArrayList<>();
 
         for (int numberOfEnemies = MyRandom.randInt(8, 12); enemies.size() < numberOfEnemies ; ) {
