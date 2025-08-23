@@ -10,6 +10,7 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import sound.SoundEffects;
 import util.MyRandom;
+import view.sprites.DamageValueEffect;
 
 public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
     private final SpellAttackBehavior behavior;
@@ -36,6 +37,7 @@ public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
                     SoundEffects.playSpellFail();
                     enemy.addCondition(new ErodeCondition());
                     combat.doDamageToEnemy(enemy, behavior.getFeedbackDamage(), subject);
+                    combat.addFloatyDamage(enemy, behavior.getFeedbackDamage(), DamageValueEffect.MAGICAL_DAMAGE);
                     enemy.removeCondition(ErodeCondition.class);
                 }
             }

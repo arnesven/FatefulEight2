@@ -27,7 +27,7 @@ public abstract class SpellAttackBehavior extends EnemyAttackBehavior {
     @Override
     public void performAttack(Model model, Enemy enemy, GameCharacter target, CombatEvent combat) {
         model.getTutorial().enemyAttacks2(model);
-        if (isCasting) {
+        if (isCasting && enemy.hasCondition(EnemyCastingSpellCondition.class)) {
             enemy.removeCondition(EnemyCastingSpellCondition.class);
             combat.addSpecialEffect(enemy, new CombatSpeechBubble());
             combat.printQuote(enemy.getName(), spellName + "!");

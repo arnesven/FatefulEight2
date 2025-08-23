@@ -41,6 +41,7 @@ public class QuadGoonsEvent extends DailyEventState {
             case 4:
                 return new QuadGoonJuggernaught(findGroup(QuadGoonJuggernaught.class, enemies, groups));
             case 5:
+                return new QuadGoonBrawler(findGroup(QuadGoonBrawler.class, enemies, groups));
             case 6:
                 return new QuadGoonHunter(findGroup(QuadGoonHunter.class, enemies, groups));
             case 7:
