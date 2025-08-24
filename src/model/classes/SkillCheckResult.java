@@ -44,7 +44,7 @@ public class SkillCheckResult {
     }
 
     public boolean isCritical(int critLevel) {
-        return roll >= 10;
+        return roll >= critLevel;
     }
 
     public int getUnmodifiedRoll() {

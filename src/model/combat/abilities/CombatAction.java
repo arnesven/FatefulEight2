@@ -128,8 +128,8 @@ public abstract class CombatAction {
             result.add(new DelayCombatAction());
         }
 
-        result.add(new PassCombatAction());
         result.add(new AutomaticCombatAction());
+        result.add(new PassCombatAction());
         for (Condition cond : character.getConditions()) {
             cond.manipulateCombatActions(result);
         }
