@@ -31,8 +31,8 @@ public class SpelunkersNotesBook extends BookItem {
             "no ordinary keyhole. All of us are completely stumped as how to get it open." +
             "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
             "28th of Frostburn\n" +
-            "We started exploring the mines today, but we quickly gave back. After catching our breath back at our " +
-            "camp in the main hall we explored the outer garden thinking it would be more tranquil. How wrong we were." +
+            "We started exploring the mines today, but we quickly gave up. After catching our breath back at our " +
+            "camp in the main hall we explored the outer garden thinking it would be more tranquil. How wrong we were. " +
             "We were at once assailed by bats, rats, spiders and snakes!\n\n" +
             "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
             "29th of Frostburn\n" +

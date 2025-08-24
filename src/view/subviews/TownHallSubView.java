@@ -60,7 +60,11 @@ public class TownHallSubView extends RoomDailyActionSubView {
                 } else if (row == 0) {
                     model.getScreenHandler().put(p.x, p.y, WALL);
                 } else if (row == 7) {
-                    model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
+                    if (col == getDoorPosition().x) {
+                        model.getScreenHandler().put(p.x, p.y, DOOR);
+                    } else {
+                        model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
+                    }
                 } else {
                     if (!drawLord) {
                         model.getScreenHandler().put(p.x, p.y,

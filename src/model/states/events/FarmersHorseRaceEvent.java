@@ -92,7 +92,7 @@ public class FarmersHorseRaceEvent extends DailyEventState {
                         leaderSay("On second thought... you probably need to stay with your pops for another year or two.");
                     }
                 } else {
-                    leaderSay("Sorry kid. You're still to young.");
+                    leaderSay("Sorry kid. You're still too young.");
                     portraitSay("Bah... I knew you were nothing but talk. Smell you later.");
                     leaderSay("Bye...");
                 }
