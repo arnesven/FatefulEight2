@@ -89,6 +89,9 @@ public class GameAchievements implements Serializable {
         for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
             registerAchievement(data);
         }
+        for (Achievement.Data data : BrigandInBurgundyEvent.getAchievementDatas()) {
+            registerAchievement(data);
+        }
     }
 
     private void registerAchievement(Achievement.Data achievementData) {

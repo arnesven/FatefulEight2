@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.Party;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
@@ -36,7 +38,9 @@ public class BrigandInBurgundyEvent extends DailyEventState {
     private static final String DEAD_KEY = "BRIGAND_DEAD";
     private static final String MET_KEY = "MET_BRIGAND";
     private static final String PORTRAIT_KEY = "BrigandInBurgundy";
+    private static final String ACHIEVEMENT_1_KEY = MET_KEY + "_MANSION";
     private final GameCharacter brigand;
+    private boolean breakInSuccess = false;
 
     public BrigandInBurgundyEvent(Model model) {
         super(model);
@@ -64,15 +68,24 @@ public class BrigandInBurgundyEvent extends DailyEventState {
         if (model.getSettings().getMiscFlags().containsKey(DEAD_KEY)) {
             return null;
         }
+        if (GameState.calculateAverageLevel(model) < 1.8) {
+            return null;
+        }
         if (!model.getParty().isOnRoad()) {
             return null;
         }
         int roll = MyRandom.rollD6() + MyRandom.rollD6();
         int target = hasMetBrigandBefore(model) ? 12 : 11;
-        if (roll >= target) {
-            return new BrigandInBurgundyEvent(model);
+        if (roll >= target) { // TODO: Add other events with the Brigand In Burgundy.
+            return new BrigandInBurgundyEvent(model); // Horse race with Brigand In Burgundy, Fencing with Brigand In Burgundys nemesis: the Black Viper.
         }
         return null;
+    }
+
+    public static List<Achievement.Data> getAchievementDatas() {
+        return List.of(new Achievement.Data(ACHIEVEMENT_1_KEY, "Brigand in Burgundy I",
+                "You helped the Brigand in Burgundy break into a " +
+                        "Brotherhood Boss's mansion and steal a valuable piece of art."));
     }
 
     @Override
@@ -111,11 +124,11 @@ public class BrigandInBurgundyEvent extends DailyEventState {
                 other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             }
             partyMemberSay(other, "The Brigand of what now?");
-            println("The brigand seems slightly annoyed.");
+            println("The Brigand seems slightly annoyed.");
             portraitSay("The Brigand in Burgundy! You haven't heard of me?");
             partyMemberSay(other, "No. Should " + iOrWe() + "?");
             portraitSay("Perhaps you know me by one of my aliases. For I am the...");
-            println("Once again, the brigand sings out the 'the', as if somebody else is announcing " +
+            println("Once again, the Brigand sings out the 'the', as if somebody else is announcing " +
                     himOrHer(brigand.getGender())+ " dramatically.");
             portraitSay("Crimson Lord of Crime!");
             partyMemberSay(other, "Sorry, haven't heard of " + himOrHer(brigand.getGender()) + " either.");
@@ -135,7 +148,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
             leaderSay("So you fight for the little guy. Good for you. Why are you breaking into this mansion?");
             portraitSay("This is the residence of a high-ranking individual in the Brotherhood. You know about the brotherhood?");
             partyMemberSay(other, "Yeah, we know about them. Are you robbing his house?");
-            println("The brigand looks with suspicion on the party.");
+            println("The Brigand looks with suspicion on the party.");
             portraitSay("Hey! I'm no common cat burglar. I... I'm not sure I can trust you actually.");
             boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 7);
             if (success) {
@@ -145,6 +158,17 @@ public class BrigandInBurgundyEvent extends DailyEventState {
                 portraitSay("Actually. I was just trying to reach an apple in that tree. I think I'll be on my way now.");
                 leaderSay("See you around Brigand.");
             }
+        }
+
+        if (breakInSuccess) {
+            showExplicitPortrait(model, brigand.getAppearance(), brigand.getName());
+            portraitSay("Haha! What chumps! They never knew what hit them.");
+            leaderSay("You don't seem to worried about how the Brotherhood will react.");
+            portraitSay("Those scoundrels! They'll never catch me, I'm the...");
+            leaderSay("Brigand in Burgundy, yes " + iOrWe() + " know.");
+            portraitSay("Uh, yes.");
+            leaderSay("Well, good luck in your travels Brigand. " + iOrWeCap() + "'ll be on " + myOrOur() + " way now.");
+            portraitSay("Farewell noble adventurer! Until we meet again.");
         }
     }
 
@@ -247,6 +271,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
         @Override
         public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
             exploreRuinsState.println("You found the rare piece of art!");
+            exploreRuinsState.completeAchievement(ACHIEVEMENT_1_KEY);
             if (brigand.isDead()) {
                 exploreRuinsState.leaderSay("Unfortunately. We'll probably never be able to fence this. So there's no point in stealing now.");
                 exploreRuinsState.println("You leave the rare piece of art where it is.");
@@ -255,6 +280,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
                         "Here's your share.");
                 exploreRuinsState.println("You got 150 gold!");
                 model.getParty().earnGold(150);
+                breakInSuccess = true;
             }
         }
     }
