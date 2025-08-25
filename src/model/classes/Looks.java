@@ -154,7 +154,8 @@ public abstract class Looks {
         appearance.removeOuterHair();
         for (int y = 0; y < 3; ++y) {
             for (int x = 1; x < 6; ++x) {
-                PortraitSprite spr =  new FaceAndClothesSprite(0x1E4 + 0x10 * y + x, appearance.getHairColor(), fillColor);
+                MyColors color2 = y == 2 ? appearance.getHairColor() : fillColor;
+                PortraitSprite spr =  new FaceAndClothesSprite(0x1E4 + 0x10 * y + x, color2, fillColor);
                 appearance.setSprite(x, y, spr);
             }
         }

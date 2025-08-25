@@ -42,7 +42,8 @@ public class DungeonMonster extends CenterDungeonObject {
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
         boolean surprise = false;
         if (isSleeping) {
-            exploreRuinsState.print("The " + enemies.get(0).getName() + " hasn't notice you. Do you want to attempt to sneak past it? (Y/N) ");
+            exploreRuinsState.print("The " + enemies.get(0).getName() + " hasn't notice you. " +
+                    "Do you want to attempt to sneak past it (Y) or do you want to attack it (N)? ");
             if (exploreRuinsState.yesNoInput()) {
                 int difficulty= 4;
                 if (RareBirdEvent.checkForSquawk(model, exploreRuinsState)) {
@@ -79,8 +80,10 @@ public class DungeonMonster extends CenterDungeonObject {
         if (getTimeLimit() != -1) {
             combat.setTimeLimit(getTimeLimit());
         }
+        exploreRuinsState.modifyCombatWithMonsters(model, combat, surprise);
         combat.run(model);
         StripedTransition.transition(model, exploreRuinsState.getSubView());
+        exploreRuinsState.combatPostHook(model, combat);
         if (combat.fled()) {
             exploreRuinsState.println("The monsters chase you out of the dungeon!");
             exploreRuinsState.setDungeonExited(true);

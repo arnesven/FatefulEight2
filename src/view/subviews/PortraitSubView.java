@@ -125,9 +125,21 @@ public class PortraitSubView extends SubView {
             silhouetteAppearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         }
         if (portraitName.length() > 14 && portraitName.contains(" ")) {
-               String[] splits = portraitName.split(" ");
-            BorderFrame.drawCentered(model.getScreenHandler(), splits[0], Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
-            BorderFrame.drawCentered(model.getScreenHandler(), splits[1], Y_OFFSET + 18, MyColors.LIGHT_GRAY, MyColors.BLACK);
+            String[] splits = portraitName.split(" ");
+            String first = splits[0];
+            String last = splits[1];
+
+            if (splits.length > 2) {
+                last = splits[2];
+                if (first.length() <= last.length()) {
+                    first += " " + splits[1];
+                } else {
+                    last += " " + splits[1];
+                }
+            }
+            BorderFrame.drawCentered(model.getScreenHandler(), first, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
+            BorderFrame.drawCentered(model.getScreenHandler(), last, Y_OFFSET + 18, MyColors.LIGHT_GRAY, MyColors.BLACK);
+
         } else {
             BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         }

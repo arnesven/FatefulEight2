@@ -1,9 +1,11 @@
 package model.ruins;
 
 import model.Model;
+import model.enemies.MansionGuardEnemy;
 import model.items.Prevalence;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.GardenDungeonLevelConfig;
+import model.ruins.configs.MansionDungeonConfig;
 import model.ruins.configs.TallSpireDungeonConfig;
 import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.HiddenChestObject;
@@ -90,6 +92,17 @@ public class DungeonMaker {
             levels.add(new DungeonLevel(model, random, false, 3, config));
         }
         levels.add(new FinalDungeonLevel(model, random, config.getTheme()));
+        return levels;
+    }
+
+    public static List<DungeonLevel> makeMansionDungeon(Model model, int size) {
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        DungeonLevelConfig config = new MansionDungeonConfig();
+        for (int i = 0; i < 3; ++i) {
+            levels.add(new DungeonLevel(model, random, true, size, config));
+        }
+        levels.add(new FinalDungeonLevel(model, random, new GrayBrickTheme()));
         return levels;
     }
 }

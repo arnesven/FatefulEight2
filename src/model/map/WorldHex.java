@@ -121,6 +121,7 @@ public abstract class WorldHex {
         MyLists.nonNullAdd(conditionalEvents, DwarvenPuzzleTube.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, CrimsonAssassinsInvitationEvent.eventDependentOnMurders(model));
         MyLists.nonNullAdd(conditionalEvents, HomeTownEvent.eventDependentOnHomeTown(model));
+        MyLists.nonNullAdd(conditionalEvents, BrigandInBurgundyEvent.generateEvent(model));
         if (model.getTutorial().isTutorialEnabled()) {
             MyLists.nonNullAdd(conditionalEvents, WorkbenchTask.makeFirstTimeAtCraftingBenchEvent(model));
             MyLists.nonNullAdd(conditionalEvents, AlchemyTask.makeAlchemySpellGottenEvent(model));
@@ -297,7 +298,6 @@ public abstract class WorldHex {
             events.add(new DogEvent(model));
             events.add(new CampSiteEvent(model));
             events.add(new CampSiteEvent(model));
-            // FEATURE: BrigandInBurgundyEvent
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);

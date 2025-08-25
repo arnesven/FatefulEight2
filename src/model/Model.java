@@ -522,11 +522,19 @@ public class Model {
     }
 
     public CharacterAppearance getLordPortrait(UrbanLocation location) {
-        if (!gameData.lordPortraits.containsKey(location.getLordName())) {
+        if (!gameData.savedPortraits.containsKey(location.getLordName())) {
             CharacterAppearance lordAppearance = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL, location.getLordGender());
-            gameData.lordPortraits.put(location.getLordName(), lordAppearance);
+            gameData.savedPortraits.put(location.getLordName(), lordAppearance);
         }
-        return gameData.lordPortraits.get(location.getLordName());
+        return gameData.savedPortraits.get(location.getLordName());
+    }
+
+    public CharacterAppearance getSavedPortrait(String key) {
+        return gameData.savedPortraits.get(key);
+    }
+
+    public void savePortrait(String key, CharacterAppearance app) {
+        gameData.savedPortraits.put(key, app);
     }
 
     public void cycleWorldState() {

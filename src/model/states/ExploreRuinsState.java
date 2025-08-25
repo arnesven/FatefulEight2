@@ -323,4 +323,8 @@ public class ExploreRuinsState extends GameState {
     public void completeAchievement() {
         super.completeAchievement(dungeonName);
     }
+
+    public void modifyCombatWithMonsters(Model model, CombatEvent combat, boolean surprise) {}
+
+    public void combatPostHook(Model model, CombatEvent combat) { }
 }

@@ -33,7 +33,7 @@ public class GameData implements Serializable {
     public Map<String, RuinsDungeon> dungeons = new HashMap<>();
     public SettingsManager settings = new SettingsManager();
     public MainStory mainStory = new MainStory();
-    public Map<String, CharacterAppearance> lordPortraits = new HashMap<>();
+    public Map<String, CharacterAppearance> savedPortraits = new HashMap<>();
     public int worldState = WorldBuilder.ORIGINAL;
     public List<MapObject> mapObjects = new ArrayList<>();
     public WarHandler warHandler = new WarHandler();
