@@ -211,7 +211,7 @@ public class CombatEvent extends DailyEventState {
             StripedTransition.transition(model, new CombatSummarySubView(combatStats, combatLoot));
         }
         if (askAboutTranscript) {
-            println("Do you want to add the automatic combat transcript to the log? (Y/N) ");
+            print("Do you want to add the automatic combat transcript to the log? (Y/N) ");
             if (yesNoInput()) {
                 autoTranscript.add(transcriptTemporary);
                 for (String s : autoTranscript) {
