@@ -38,7 +38,7 @@ public class GameData implements Serializable {
     public List<MapObject> mapObjects = new ArrayList<>();
     public WarHandler warHandler = new WarHandler();
     public List<GameCharacter> lingeringRecruitables = new ArrayList<>();
-    public Date lastSave = new Date();
+    public Date loadTime = new Date();
     public long milliSecondsPlayed = 0;
 
     // this should always be the last member of Game Data,

@@ -97,6 +97,7 @@ public class Model {
             initialize();
             subView = new EmptySubView();
             gameData = readGameData(filename);
+            gameData.loadTime = new Date();
             caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
             setWorldState(gameData.worldState);
             if (gameData.currentWorld != WorldType.original) {
@@ -371,8 +372,7 @@ public class Model {
     public void saveToFile(String filename) {
         try {
             gameData.logContent = log.getContents();
-            gameData.milliSecondsPlayed += (new Date()).getTime() - gameData.lastSave.getTime();
-            gameData.lastSave = new Date();
+            gameData.milliSecondsPlayed += (new Date()).getTime() - gameData.loadTime.getTime();
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename + "_save.ff8"));
             oos.writeObject(gameData);
             oos.close();
