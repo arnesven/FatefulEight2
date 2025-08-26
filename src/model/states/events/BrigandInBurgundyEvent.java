@@ -77,7 +77,11 @@ public class BrigandInBurgundyEvent extends DailyEventState {
         int roll = MyRandom.rollD6() + MyRandom.rollD6();
         int target = hasMetBrigandBefore(model) ? 12 : 11;
         if (roll >= target) { // TODO: Add other events with the Brigand In Burgundy.
-            return new BrigandInBurgundyEvent(model); // Horse race with Brigand In Burgundy, Fencing with Brigand In Burgundys nemesis: the Black Viper.
+            return new BrigandInBurgundyEvent(model);
+            // Horse race with Brigand In Burgundy,
+            // Fencing with Brigand In Burgundys nemesis: the Black Viper.
+            // The brigand has a forbidden romantic encounter with the Daughter of a notorious crime lord.
+            // Finally: the brigand of burgundy retires and passes on his mask to a party member (prestige class?).
         }
         return null;
     }
