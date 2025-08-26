@@ -25,15 +25,15 @@ public class ShopInteriorState extends AdvancedDailyActionState {
     public ShopInteriorState(Model model, ShoppingNode shoppingNode) {
         super(model);
         this.node = shoppingNode;
+        addNode(getShopKeeperPosition().x, getShopKeeperPosition().y+1,
+                new ShopKeeperNode(node.getName(), node.getInventory(), null, node.getHaggleFlag(),
+                        node.getSupplier()));
         if (node.getCustomer() != null) {
             addNode(CUSTOMER_POS.x + 1, CUSTOMER_POS.y, new CustomerNode(node.getCustomer()));
         }
         if (node.getSupplier() != null) {
             addNode(SUPPLIER_POS.x - 1, SUPPLIER_POS.y, new SupplierNode(node.getSupplier()));
         }
-        addNode(getShopKeeperPosition().x, getShopKeeperPosition().y+1,
-                new ShopKeeperNode(node.getName(), node.getInventory(), null, node.getHaggleFlag(),
-                        node.getSupplier()));
         addNode(DOOR_POS.x, DOOR_POS.y + 1, new ExitLocaleNode("Leave shop"));
     }
 

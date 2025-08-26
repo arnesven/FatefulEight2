@@ -117,7 +117,7 @@ public class ShopState extends GameState {
         prices = new HashMap<>();
         int i = 0;
         for (Item it : itemsForSale) {
-            if (specialPrices != null) {
+            if (specialPrices != null && i < specialPrices.length) {
                 prices.put(it, specialPrices[i]);
                 i++;
             } else {

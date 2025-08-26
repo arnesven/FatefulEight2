@@ -7,6 +7,7 @@ import view.GameView;
 import view.ScreenHandler;
 import view.help.HelpDialog;
 import view.help.PowerGaugeHelpSection;
+import view.sprites.AnimationManager;
 import view.widget.PowerGaugeWidget;
 
 public abstract class PowerGauge {
@@ -26,6 +27,11 @@ public abstract class PowerGauge {
         } else {
             this.widget = null;
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        AnimationManager.unregister(widget);
     }
 
     public HelpDialog makeHelpSection(GameView view) {
