@@ -243,4 +243,12 @@ public class HorseRacer {
             strafeShift += 2;
         }
     }
+
+    public void setPosition(int i, int y) {
+        this.position = new Point(i, y);
+    }
+
+    public void setLap(int i) {
+        this.lap = i;
+    }
 }

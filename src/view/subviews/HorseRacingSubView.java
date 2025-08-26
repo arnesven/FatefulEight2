@@ -208,7 +208,15 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     public void addNPC(GameCharacter chara, Horse horse) {
         int[] positionsForNpcSize = new int[]{2, 4, 1, 5, 0, 6};
-        NPCHorseRacer npc = new NPCHorseRacer(positionsForNpcSize[npcs.size()], chara, horse, this);
+        NPCHorseRacer npc;
+        if (npcs.size() >= positionsForNpcSize.length) {
+            int x = npcs.size() % positionsForNpcSize.length;
+            npc = new NPCHorseRacer(positionsForNpcSize[x], chara, horse, this);
+            npc.setPosition(positionsForNpcSize[x], 99);
+            npc.setLap(0);
+        } else {
+            npc = new NPCHorseRacer(positionsForNpcSize[npcs.size()], chara, horse, this);
+        }
         this.npcs.add(npc);
         allRacers.add(0, npc);
     }

@@ -15,12 +15,15 @@ public class HorseRaceTrack {
     public static final int TRACK_WIDTH = 7;
     public static final int TRACK_LENGTH = 100;
     private static final int SLICES_TO_DRAW = 9;
-    public static int TIME_TRACK = 1;
-    public static int RANDOM_TRACK = 0;
+    public static final int RANDOM_TRACK = 0;
+    public static final int TIME_TRACK = 1;
+    public static final int BRIDGE_TRACK = 2;
     private static SideSprite SIDE_TREE = new SideSprite(2, 3);
     private static SideSprite SIDE_POLE = new SideSprite(4, 5);
     private static SideSprite SIDE_POLE_UL = new SideSprite(5, 5);
     private static SideSprite SIDE_POLE_UR = new SideSprite(6, 5);
+    private static SideSprite WATER_LEFT = new SideSprite(true);
+    private static SideSprite WATER_RIGHT = new SideSprite(false);
     private static final MyColors BANNER_COLOR = MyColors.PINK;
     private static Sprite32x32 BANNER_LEFT = new Sprite32x32("bannerleft", "riding.png", 0x60,
             MyColors.BLACK, BANNER_COLOR, MyColors.PINK, MyColors.BEIGE);
@@ -52,7 +55,7 @@ public class HorseRaceTrack {
                 track.add(slice);
             }
             track.add(fullPathSlice());
-        } else {
+        } else { // TIME TRACK
             for (int row = 0; row < timeTrackTemplate[0].length(); ++row) {
                 List<TrackTerrain> slice = new ArrayList<>();
                 for (String s : timeTrackTemplate) {
@@ -60,6 +63,45 @@ public class HorseRaceTrack {
                 }
                 track.add(slice);
             }
+        }
+
+        if (trackType == BRIDGE_TRACK) {
+
+            int firstBridgeStartSlice = 16;
+            int firstBridgeLength = 5;
+            int secondBridgeLength = 7;
+            int secondBridgeSliceOffset = 50;
+
+            for (int i = firstBridgeStartSlice; i < firstBridgeStartSlice + secondBridgeLength; ++i) {
+                if (i < firstBridgeStartSlice + firstBridgeLength) {
+                    track.set(i, new ArrayList<>(List.of(new DeepWaterObstacle(), new DeepWaterObstacle(),
+                            new BridgeTrackTerrain(), new BridgeTrackTerrain(), new BridgeTrackTerrain(),
+                            new DeepWaterObstacle(), new DeepWaterObstacle())));
+                }
+                track.set(secondBridgeSliceOffset + i, new ArrayList<>(List.of(new DeepWaterObstacle(), new DeepWaterObstacle(),
+                        new BridgeTrackTerrain(), new BridgeTrackTerrain(), new BridgeTrackTerrain(),
+                        new DeepWaterObstacle(), new DeepWaterObstacle())));
+            }
+
+            int secondBridgeStartSlice = firstBridgeStartSlice + secondBridgeSliceOffset;
+
+            for (int j = 1; j < 6; ++j) { // In front and after bridge
+                track.get(firstBridgeStartSlice-1).set(j, new PathTrackTerrain());
+                track.get(firstBridgeStartSlice + firstBridgeLength).set(j, new PathTrackTerrain());
+                track.get(secondBridgeStartSlice - 1).set(j, new PathTrackTerrain());
+                track.get(secondBridgeStartSlice + secondBridgeLength).set(j, new PathTrackTerrain());
+            }
+
+            track.get(firstBridgeStartSlice - 1).set(0, new ObstacleTrackTerrain());
+            track.get(firstBridgeStartSlice - 1).set(6, new ObstacleTrackTerrain());
+
+            track.get(secondBridgeStartSlice - 1).set(0, new ObstacleTrackTerrain());
+            track.get(secondBridgeStartSlice - 1).set(6, new ObstacleTrackTerrain());
+
+            track.get(firstBridgeStartSlice + 3).set(3, new BridgeHoleObstacleTerrain());
+
+            track.get(secondBridgeStartSlice + 3).set(4, new BridgeHoleObstacleTerrain());
+            track.get(secondBridgeStartSlice + 5).set(2, new BridgeHoleObstacleTerrain());
         }
     }
 
@@ -104,6 +146,9 @@ public class HorseRaceTrack {
                 } else if (slice == TRACK_LENGTH-2) {
                     left = SIDE_POLE_UL;
                     right = SIDE_POLE_UR;
+                } else if (track.get(slice).getFirst() instanceof DeepWaterObstacle) {
+                    left = WATER_LEFT;
+                    right = WATER_RIGHT;
                 }
                 drawAt(model.getScreenHandler(), horseRacingSubView, left, -1, y+1, 0, 16, -yShift);
                 drawAt(model.getScreenHandler(), horseRacingSubView, right, 7, y+1, 0, 0, -yShift);
@@ -144,6 +189,12 @@ public class HorseRaceTrack {
             setColor2(MyColors.BLACK);
             setColor3(MyColors.BROWN);
             setColor4(MyColors.DARK_GREEN);
+        }
+
+        public SideSprite(boolean left) {
+            super("sidewater", "world.png", left ? 1 : 0, 2, 16, 32);
+            setColor1(MyColors.LIGHT_BLUE);
+            setColor2(MyColors.BLUE);
         }
     }
 }

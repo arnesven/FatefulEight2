@@ -185,7 +185,7 @@ public abstract class Race implements Serializable {
             appearance.addFaceDetail(new EyePatchDetail());
             appearance.setDetailColor(MyColors.BLACK);
         } else {
-            if (MyRandom.rollD10() == 10) {
+            if (MyRandom.rollD6() + MyRandom.rollD6() >= 11) {
                 MyColors detailColor = CharacterCreationView.detailColorSet[MyRandom.randInt(CharacterCreationView.detailColorSet.length)];
                 if (detailColor != appearance.getRace().getColor()) {
                     appearance.addFaceDetail(new GlassesDetail());
