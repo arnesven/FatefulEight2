@@ -44,6 +44,7 @@ public class HorseRaceOverBridgeEvent extends RiverEvent {
             portraitSay("Farewell then.");
         }
         portraitSay("There's another bridge further down the road, take it to get back to this side. We'll do two laps!");
+        println("Who should participate in the horse race?");
         GameCharacter gc = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         HorseRacingEvent horseRace = new HorseRacingEvent(model, gc, new Sphinx());
         horseRace.setTrack(HorseRaceTrack.BRIDGE_TRACK);
