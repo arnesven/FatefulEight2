@@ -116,6 +116,13 @@ public class EveningState extends GameState {
         GameCharacter proposedLeader = candidates.get(0);
         if (proposedLeader == mainDissident) {
             partyMemberSay(mainDissident, "I think I would be a better leader.");
+            GameCharacter reacter = MyLists.find(model.getParty().getPartyMembers(),
+                    gc -> gc != mainDissident && gc.getAttitude(mainDissident) < 0);
+            if (reacter != null) {
+                partyMemberSay(reacter, MyRandom.sample(List.of("You? Leader?", "You can't be serious.",
+                        "You are hardly leader material " + reacter.getFirstName() + ".",
+                        "You must be joking!")));
+            }
         } else {
             partyMemberSay(mainDissident, "I think " + proposedLeader.getFirstName() + " would be a great leader.");
         }
