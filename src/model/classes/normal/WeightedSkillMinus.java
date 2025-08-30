@@ -10,7 +10,7 @@ public class WeightedSkillMinus extends WeightedSkill {
 
     @Override
     public int getRank(int level) {
-        if (level == 1) {
+        if (level <= 1) {
             return super.getRank(level);
         }
         return super.getRank(level - 1);

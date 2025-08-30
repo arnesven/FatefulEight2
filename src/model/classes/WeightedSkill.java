@@ -29,7 +29,7 @@ public class WeightedSkill implements Serializable {
     }
 
     public int getRank(int level) {
-        if (weight == 0 || level == 0) {
+        if (weight <= 0 || level == 0) {
             return 0;
         }
         if (level > RANK_MATRIX[0].length) {
