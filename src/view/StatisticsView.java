@@ -3,10 +3,12 @@ package view;
 import model.GameStatistics;
 import model.Model;
 import model.Summon;
+import model.characters.GameCharacter;
 import model.headquarters.Headquarters;
 import model.items.Item;
 import model.map.TempleLocation;
 import model.map.UrbanLocation;
+import model.races.AllRaces;
 import model.states.GameState;
 import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
@@ -143,6 +145,15 @@ public class StatisticsView extends SelectableListMenu {
         } else {
             result.add(makeIntLine(leftColumn, row++, "Crafting designs learned", 0));
         }
+        String horseString = String.format("%2d/%1d",  model.getParty().getHorseHandler().getFullBloods(),
+                model.getParty().getHorseHandler().getPonies());
+        result.add(new PermanentlyEnabledListContent(leftColumn, row++,
+                format(46, 10, "Horses currently owned", horseString)) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                setInnerMenu(new SimpleMessageView(model.getView(), getHorsesNeededText(model)), model);
+            }
+        });
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "COMBAT"));
@@ -234,6 +245,16 @@ public class StatisticsView extends SelectableListMenu {
 
         return result;
     }
+
+    private String getHorsesNeededText(Model model) {
+        if (model.getParty().getHorseHandler().canRide(model.getParty().getPartyMembers())) {
+            return "You currently have enough horses to ride.";
+        }
+        return model.getParty().getHorseHandler().getSuggestedHorses(model) +
+                " for your entire party to be able to ride.";
+    }
+
+
 
     private ListContent makeTitleLine(int leftColumn, int row, String text) {
         return new ListContent(leftColumn, row, text) {

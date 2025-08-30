@@ -3,6 +3,7 @@ package model.horses;
 import model.Model;
 import model.characters.GameCharacter;
 import model.races.AllRaces;
+import util.MyLists;
 import util.MyRandom;
 import view.LogView;
 
@@ -138,5 +139,42 @@ public class HorseHandler extends ArrayList<Horse> {
 
     public void setTimedRaceRecord(int time) {
         timedRaceRecord = time;
+    }
+
+    public String getSuggestedHorses(Model model) {
+        List<GameCharacter> partyMembers = model.getParty().getPartyMembers();
+        int shortsLeft = MyLists.intAccumulate(partyMembers,
+                gc ->
+                        gc.getRace().id() == AllRaces.HALFLING.id() ||
+                                gc.getRace().id() == AllRaces.DWARF.id() ? 1 : 0);
+        int tallsLeft = partyMembers.size() - shortsLeft;
+        return getSuggestionString(tallsLeft, shortsLeft);
+    }
+
+    private String getSuggestionString(int tallsLeft, int shortsLeft) {
+        int missingFullBloods = tallsLeft - getFullBloods();
+        int missingPonies = Math.max(0, shortsLeft - tallsLeft - getPonies());
+
+        StringBuilder bldr = new StringBuilder("You need at least ");
+        if (missingFullBloods > 0) { // Enough steeds for tall guys?
+            bldr.append(missingFullBloods);
+            bldr.append(" more steed");
+            if (missingFullBloods > 1) {
+                bldr.append("s");
+            }
+            if (missingPonies > 0) {
+                bldr.append(" and ");
+            }
+        }
+
+        if (missingPonies > 0) {
+            bldr.append(missingPonies);
+            if (missingPonies > 1) {
+                bldr.append("ponies");
+            } else {
+                bldr.append("pony");
+            }
+        }
+        return bldr.toString();
     }
 }
