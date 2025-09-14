@@ -71,7 +71,9 @@ public class VampireFeedingHouse {
         int sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
         int lockDifficulty = MyRandom.randInt(6, 8);
         if (sleeping < dwellers) { // Some awake
-            if (MyRandom.rollD10() >= 9) {
+            int roll = MyRandom.rollD10();
+            System.out.println("Lock roll is " + roll + ".");
+            if (roll >= 9) {
                 lockDifficulty = 0;
             }
         } else { // All sleeping
