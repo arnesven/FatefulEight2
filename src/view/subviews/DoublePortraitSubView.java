@@ -48,7 +48,7 @@ public class DoublePortraitSubView extends SubView {
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(name, pair.second);
         partyAnimations.addSpeakAnimation(pair.first, app == leftApp ? CHAR_LOCATION_LEFT : CHAR_LOCATION_RIGHT,
-                line.length(), app, false);
+                line, app, false);
     }
 
     @Override

@@ -397,7 +397,7 @@ public class Party implements Serializable {
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
         if (!gc.isDead() && !bench.contains(gc)) {
-            partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance(),
+            partyAnimations.addSpeakAnimation(pair.first, p, text, gc.getAppearance(),
                     gc.hasCondition(VampirismCondition.class));
         }
     }

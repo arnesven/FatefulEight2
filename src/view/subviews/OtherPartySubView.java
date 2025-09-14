@@ -149,7 +149,7 @@ public class OtherPartySubView extends TopMenuSubView {
         Point p = matrix.getPositionFor(gc);
         int xPos = X_OFFSET + p.x * 8 + 7;
         int yPos = Y_OFFSET + p.y * 8 + 3;
-        partyAnis.addSpeakAnimation(pair.first, new Point(xPos-3, yPos-2), s.length(), gc.getAppearance(),
+        partyAnis.addSpeakAnimation(pair.first, new Point(xPos-3, yPos-2), s, gc.getAppearance(),
                 gc.hasCondition(VampirismCondition.class));
         return pair.second;
     }

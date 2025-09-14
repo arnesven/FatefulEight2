@@ -102,4 +102,13 @@ public class MyStrings {
         }
         return "it";
     }
+
+    public static String padRight(String s, char c, int desiredLength) {
+        if (s.length() >= desiredLength) {
+            return s;
+        }
+        StringBuilder bldr = new StringBuilder(s);
+        bldr.append(String.valueOf(c).repeat(desiredLength - s.length()));
+        return bldr.toString();
+    }
 }

@@ -78,7 +78,8 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    public synchronized void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance,
+    public synchronized void addSpeakAnimation(int calloutNum, Point pOrig, String text,
+                                               CharacterAppearance appearance,
                                   boolean vampireTeeth) {
         lookers.remove(appearance);
         Point p = new Point(pOrig.x, pOrig.y);
@@ -88,7 +89,7 @@ public class PartyAnimations implements Serializable {
             speakingAnimations.get(appearance).unregister();
             speakingAnimations.remove(appearance);
         }
-        speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance, vampireTeeth));
+        speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, text, appearance, vampireTeeth));
     }
 
     public DieRollAnimation addDieRollAnimation(Point location, int unmodifiedRoll) {

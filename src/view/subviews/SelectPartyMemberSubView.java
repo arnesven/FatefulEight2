@@ -48,7 +48,7 @@ public class SelectPartyMemberSubView extends SubView {
     private void drawCursor(Model model) {
         Point p = new Point(matrix.getSelectedPoint());
         Sprite sp = CharacterSelectCursor.LEFT_ARROW;
-        model.getScreenHandler().register("memberSelectCursor", p, sp, 2);
+        model.getScreenHandler().register("memberSelectCursor", p, sp, 4);
     }
 
     @Override
