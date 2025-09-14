@@ -30,9 +30,11 @@ import java.util.List;
 public class ConvinceVampireToLeaveTask extends SummonTask {
     private final UrbanLocation location;
     private static GameCharacter vampire = null;
+    private final Summon summon;
 
     public ConvinceVampireToLeaveTask(Summon summon, Model model, UrbanLocation location) {
         super(model);
+        this.summon = summon;
         this.location = location;
         if (vampire == null) {
             vampire = VampireProwlNightEvent.generateVampireCharacter();
@@ -93,6 +95,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
             showExplicitPortrait(model, model.getLordPortrait(location), location.getLordName());
             portraitSay("Were you able to find out anything about the peculiar noble?");
             if (success) {
+                summon.increaseStep();
                 leaderSay("Yes. " + heOrSheCap(vampire.getGender()) + " was a vampire, but " +
                         iOrWe() + "'ve dealt with " + himOrHer(vampire.getGender()) + ". " +
                         heOrSheCap(vampire.getGender()) + " won't be troubling this town anymore.");
