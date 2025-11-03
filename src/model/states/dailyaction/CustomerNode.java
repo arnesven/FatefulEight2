@@ -84,7 +84,7 @@ public class CustomerNode extends DailyActionNode {
                     leaderSay("Actually. " + iOrWeCap() + " happen to have one here...");
                     customerSay("Really? How lucky! Would you accept " + customer.getGoldOffer() +
                             " gold for " + MyStrings.itOrThem(itemName) + "?");
-                    print("Sell the " + itemName + " to the customer for " + customer.getGoldOffer() + " gold? (Y/N)");
+                    print("Sell the " + itemName + " to the customer for " + customer.getGoldOffer() + " gold? (Y/N) ");
                     if (yesNoInput()) {
                         leaderSay("That's a fair offer. Show me the gold.");
                         println("The customer hands you " + customer.getGoldOffer() + " gold, and you give " +
