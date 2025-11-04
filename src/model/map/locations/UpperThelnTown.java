@@ -44,6 +44,13 @@ public class UpperThelnTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("Lower Theln.........Often",
+                       "Cape Paxton........Rarely",
+                       "Chartered Boats.....Never");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's on the river Thelnius, surrounded by vast farmlands.";
     }

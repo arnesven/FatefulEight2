@@ -15,6 +15,7 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
+import model.items.books.SeaTravelBook;
 import model.items.designs.CraftingDesign;
 import model.items.potions.*;
 import model.items.spells.*;
@@ -83,6 +84,7 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
+        inventory.add(new SeaTravelBook());
     }
 
     public void setStartingPosition(Point position) {

@@ -39,6 +39,15 @@ public class EastDurhamTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("Cape Paxton.....Sometimes",
+                       "Roukon..........Sometimes",
+                       "Ebonshire...........Often",
+                       "Lower Theln........Rarely",
+                       "Chartered Boats.....Often"); // Often = 2-3)
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's on the western shore of the Icy Bay.";
     }

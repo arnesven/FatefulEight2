@@ -37,6 +37,17 @@ public class LowerThelnTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("East Durham........Rarely",
+                       "Cape Paxton........Rarely",
+                       "Roukon.............Rarely",
+                       "Ebonshire.......Sometimes",
+                       "Upper Theln.........Often",
+                       "Little Erinde......Rarely",
+                       "Chartered Boats....Rarely"); // Rarely = 6+)
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It is located right where the river Thelnius meets the sea.";
     }

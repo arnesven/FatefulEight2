@@ -28,6 +28,13 @@ public class AckervilleTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("Little Erinde...Sometimes",
+                       "Ebonshire.......Sometimes",
+                       "Chartered Boats.....Never");
+    }
+
+    @Override
     public boolean getLordGender() {
         return true;
     }

@@ -41,6 +41,15 @@ public class RoukonTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("Ebonshire.......Sometimes",
+                       "Lower Theln.....Sometimes",
+                       "East Durham........Rarely",
+                       "Cape Paxton........Rarely",
+                       "Chartered Boats.....Often"); // Often = 2-3)
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It lies on the southern shores of the Great Strait.";
     }

@@ -37,6 +37,17 @@ public class EbonshireTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("Ackerville.........Rarely",
+                       "Little Erinde......Rarely",
+                       "Roukon..........Sometimes",
+                       "Lower Theln.....Sometimes",
+                       "Cape Paxton.....Sometimes",
+                       "East Durham.....Sometimes",
+                       "Chartered Boats.Sometimes"); // Sometimes = 4-5)
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's right where the Ojai river meets the Sea.";
     }

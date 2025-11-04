@@ -27,6 +27,14 @@ public class LittleErindeTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("Ebonshire.......Sometimes",
+                       "Ackerville......Sometimes",
+                       "Lower Theln........Rarely",
+                       "Chartered Boats.....Never");
+    }
+
+    @Override
     public boolean getLordGender() {
         return true;
     }

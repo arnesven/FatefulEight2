@@ -234,4 +234,8 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     public HexLocation makePastSelf() {
         return null;
     }
+
+    public List<String> getSeaTravelRoutes() {
+        return List.of();
+    }
 }

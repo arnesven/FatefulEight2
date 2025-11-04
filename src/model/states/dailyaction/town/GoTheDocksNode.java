@@ -6,6 +6,7 @@ import model.states.GameState;
 import model.states.TravelBySeaState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.ShowShipRoutesState;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -23,6 +24,9 @@ public class GoTheDocksNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        if (state.isEvening()) {
+            return new ShowShipRoutesState(model);
+        }
         return travelState;
     }
 
@@ -38,10 +42,6 @@ public class GoTheDocksNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (state.isEvening()) {
-            state.println("All ships have already left for today. Try again tomorrow.");
-            return false;
-        }
         return true;
     }
 

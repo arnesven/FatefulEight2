@@ -42,6 +42,15 @@ public class CapePaxtonTown extends TownLocation {
     }
 
     @Override
+    public List<String> getSeaTravelRoutes() {
+        return List.of("East Durham.........Often",
+                       "Lower Theln.....Sometimes",
+                       "Ebonshire.......Sometimes",
+                       "Roukon.............Rarely",
+                       "Chartered Boats.Sometimes"); // Sometimes = 4-5)
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's on the eastern side of the Icy Bay.";
     }
