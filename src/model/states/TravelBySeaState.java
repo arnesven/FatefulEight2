@@ -2,8 +2,6 @@ package model.states;
 
 import model.Model;
 import model.map.*;
-import util.Arithmetics;
-import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -54,6 +52,10 @@ public class TravelBySeaState extends GameState {
     }
 
     private void travelTo(Model model, TownLocation first) {
+        if (model.getCurrentHex().getLocation() != null) {
+            DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(),
+                    model.getCurrentHex().getLocation(), first.getHex().getLocation(), DiscoveredRoute.SHIP);
+        }
         didTravel = true;
         travelBySea(model, first.getHex(), this, SHIP_AVATAR, first.getTownName(), true, true);
     }
@@ -183,7 +185,7 @@ public class TravelBySeaState extends GameState {
         TownLocation noShip = null;
 
         // OBS: If you update these tables, don't forget to update the corresponding BookItem.
-        TravelTable table = null;
+        TravelTable table;
         if (currentLocation == durham) {
             table = new TravelTable(
                     noShip,    0, noShip,    0,
