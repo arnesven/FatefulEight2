@@ -116,6 +116,9 @@ public class GameLog {
             if (animationBuffer.get(i) == ' ') {
                 return false;
             }
+            if (animationBuffer.get(i) == '\n') {
+                return false;
+            }
             if (currentLine.length() + i >= LOG_WIDTH_COLUMNS) {
                 return true;
             }
