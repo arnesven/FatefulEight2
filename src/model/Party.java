@@ -84,7 +84,6 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
-        inventory.add(new SeaTravelBook());
     }
 
     public void setStartingPosition(Point position) {
