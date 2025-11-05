@@ -56,7 +56,7 @@ public class Scroll extends UsableItem {
     public String castFromMenu(Model model, GameCharacter gc) {
         String toReturn = spell.castFromMenu(model, gc);
         if (toReturn.contains("is casting")) {
-            model.getParty().getInventory().remove(this);
+            model.getParty().removeFromInventory(this);
         }
         return toReturn;
     }

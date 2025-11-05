@@ -57,7 +57,7 @@ public class TreasureHuntTask extends DestinationTask {
 
     public void complete(Model model) {
         completed = true;
-        model.getParty().getInventory().remove(map);
+        model.getParty().removeFromInventory(map);
         model.getLog().addAnimated("You discarded the treasure map.\n");
         JournalEntry.printJournalUpdateMessage(model);
     }

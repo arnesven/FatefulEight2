@@ -18,6 +18,6 @@ public class ScrollCombatAction extends SpellFinalCombatAction {
     @Override
     public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         super.doAction(model, combat, performer, target);
-        model.getParty().getInventory().remove(scroll);
+        model.getParty().removeFromInventory(scroll);
     }
 }

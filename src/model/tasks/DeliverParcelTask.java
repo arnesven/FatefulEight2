@@ -162,7 +162,7 @@ public class DeliverParcelTask extends DestinationTask {
     }
 
     public void receivePayment(Model model) {
-        model.getParty().getInventory().remove(parcel);
+        model.getParty().removeFromInventory(parcel);
         model.getParty().earnGold(promisedGold);
         model.getLog().addAnimated("The party received " + promisedGold + " gold.\n");
         completed = true;

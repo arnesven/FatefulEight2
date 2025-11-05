@@ -312,7 +312,7 @@ public abstract class AssassinationEndingEvent extends DailyEventState {
         println("You hide yourself in the bushes near the " + task.getWrit().getDestinationShortDescription() + ".");
         Item poison = MyLists.find(model.getParty().getInventory().getAllItems(),
                 it -> it instanceof CommonPoison);
-        model.getParty().getInventory().remove(poison);
+        model.getParty().removeFromInventory(poison);
         return usePoisonPartTwo(model, task, objectAtDoor);
     }
 

@@ -225,7 +225,7 @@ public class WerewolfQuest extends Quest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             state.println("You use a sleep potion on the werewolf.");
-            model.getParty().getInventory().remove(MyLists.find(model.getParty().getInventory().getAllItems(),
+            model.getParty().removeFromInventory(MyLists.find(model.getParty().getInventory().getAllItems(),
                     (Item it) -> it instanceof SleepingPotion));
             return getSuccessEdge();
         }

@@ -105,7 +105,7 @@ public class DollyEvent extends DailyEventState {
                 heOrShe(childGender) + " can never keep track of things, I might as well give it to you as thanks.");
         Item heirloom = model.getItemDeck().getRandomJewelry();
         println("You received " + heirloom.getName() + "!");
-        model.getParty().getInventory().addItem(heirloom);
+        model.getParty().addToInventory(heirloom);
     }
 
     private static class DummyDollyItem extends InventoryDummyItem {

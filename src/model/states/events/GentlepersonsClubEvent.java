@@ -267,7 +267,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
                     leaderSay("Then the bird is yours.");
                     portraitSay("Ah... a real find! Great doing business with you.");
                     leaderSay("My pleasure");
-                    model.getParty().getInventory().remove(it);
+                    model.getParty().removeFromInventory(it);
                 } else {
                     leaderSay("... Actually, I'm going to keep the bird for now. It's too precious to me.");
                     portraitSay("I understand. I too would be hesitant to relinquishing something so wonderful.");

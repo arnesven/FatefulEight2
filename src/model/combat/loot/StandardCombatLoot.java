@@ -72,7 +72,7 @@ public class StandardCombatLoot extends CombatLoot {
     @Override
     protected void specificGiveYourself(Party party) {
         for (Item it : items) {
-            party.getInventory().addItem(it);
+            party.addToInventory(it);
         }
     }
 

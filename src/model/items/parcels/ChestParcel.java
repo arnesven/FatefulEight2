@@ -67,7 +67,7 @@ public class ChestParcel extends Parcel {
         if (gc.getRankForSkill(Skill.Security) < level) {
             return "Security Skill too Low!";
         }
-        model.getParty().getInventory().remove(this);
+        model.getParty().removeFromInventory(this);
         return gc.getFirstName() + " unlocked the chest. " + super.useYourself(model, gc);
     }
 

@@ -37,7 +37,7 @@ public class GiveStaffTask extends SummonTask {
                     ", are you willing to give it to the " + location.getLordTitle() + "? (Y/N) ");
             if (yesNoInput()) {
                 println("You hand over the " + staff.getName() + " to " + location.getLordName() + ".");
-                model.getParty().getInventory().remove(staff);
+                model.getParty().removeFromInventory(staff);
                 summon.increaseStep();
                 portraitSay("Heavens bless you! Now I can finally move around again. " +
                         "Why don't we take that tour of the castle now? There is so much to see and tell!");

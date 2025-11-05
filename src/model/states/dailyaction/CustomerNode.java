@@ -90,7 +90,7 @@ public class CustomerNode extends DailyActionNode {
                         println("The customer hands you " + customer.getGoldOffer() + " gold, and you give " +
                                 himOrHer(customer.getGender()) + " the " + itemName + ".");
                         model.getParty().earnGold(customer.getGoldOffer());
-                        model.getParty().getInventory().remove(foundInParty);
+                        model.getParty().removeFromInventory(foundInParty);
                         customer.setDealMade(true);
                         this.completeAchievement(ShopCustomer.ACHIEVEMENT_KEY);
                         customerSay("Thanks a bunch!");

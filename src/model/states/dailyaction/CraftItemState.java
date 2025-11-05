@@ -88,7 +88,7 @@ public class CraftItemState extends GameState {
                 " materials to attempt to craft " + triplet.first.getName() + "? (Y/N) ");
         if (yesNoInput() && makeItemFromMaterials(model, this, triplet.first, triplet.second, "craft", triplet.third)) {
             GameStatistics.incrementItemsCrafted(1);
-            model.getParty().getInventory().addItem(triplet.first.copy());
+            model.getParty().addToInventory(triplet.first.copy());
         }
         model.setSubView(previous);
     }
@@ -234,7 +234,7 @@ public class CraftItemState extends GameState {
                         "That's too bad.", "What a waste...", "I'm sorry. This is ruined now.",
                         "Hmm. I really thought I could do it.", "Trash...", "What, it broke?"));
             }
-            model.getParty().getInventory().remove(itemToSalvage);
+            model.getParty().removeFromInventory(itemToSalvage);
         }
         model.setSubView(previous);
     }
@@ -313,7 +313,7 @@ public class CraftItemState extends GameState {
         if (yesNoInput()) {
             if (makeItemFromMaterials(model, this, selectedItem, selectedItem.getCost(), "upgrade", false)) {
                 GameStatistics.incrementItemsUpgraded(1);
-                model.getParty().getInventory().remove(selectedItem);
+                model.getParty().removeFromInventory(selectedItem);
                 potentialItem.addYourself(model.getParty().getInventory());
             }
         }

@@ -39,7 +39,7 @@ public class ImprovisedWand extends OldWand {
                 } else {
                     gameCharacter.unequipWeapon();
                 }
-                model.getParty().getInventory().remove(this);
+                model.getParty().removeFromInventory(this);
             }
         }
     }

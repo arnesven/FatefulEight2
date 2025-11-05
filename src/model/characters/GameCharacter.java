@@ -544,7 +544,7 @@ public class GameCharacter extends Combatant {
 
     public void equipWeaponFromInventory(Weapon weapon) {
         unequipWeapon();
-        party.getInventory().remove(weapon);
+        party.removeFromInventory(weapon);
         equipment.setWeapon(weapon);
     }
 
@@ -559,7 +559,7 @@ public class GameCharacter extends Combatant {
 
     public void equipClothingFromInventory(Clothing clothing) {
         unequipArmor();
-        party.getInventory().remove(clothing);
+        party.removeFromInventory(clothing);
         equipment.setClothing(clothing);
     }
 
@@ -572,7 +572,7 @@ public class GameCharacter extends Combatant {
 
     public void equipAccessoryFromInventory(Accessory item) {
         unequipAccessory();
-        party.getInventory().remove(item);
+        party.removeFromInventory(item);
         equipment.setAccessory(item);
     }
 

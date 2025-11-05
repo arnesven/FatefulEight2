@@ -207,7 +207,7 @@ public class AlchemySpell extends ImmediateSpell {
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
         if (distill) {
             state.println(caster.getName() + " distilled " + selectedPotion.getName() + " and recovered " + distillAmount(selectedPotion) + " ingredients.");
-            model.getParty().getInventory().remove(selectedPotion);
+            model.getParty().removeFromInventory(selectedPotion);
             model.getParty().getInventory().addToIngredients(distillAmount(selectedPotion));
             if (MyRandom.rollD6() == 6 &&
                     !MyLists.any(model.getParty().getPotionRecipes(),
@@ -223,7 +223,7 @@ public class AlchemySpell extends ImmediateSpell {
             for (int i = 0; i < brewCount; i++) {
                 state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
                 model.getParty().getInventory().addToIngredients(-cost);
-                model.getParty().getInventory().addItem(selectedPotion.copy());
+                model.getParty().addToInventory(selectedPotion.copy());
                 GameStatistics.incrementPotionsBrewed();
             }
         }
@@ -238,7 +238,7 @@ public class AlchemySpell extends ImmediateSpell {
         if (distill) {
             state.println(caster.getName() + " was unable to recover any ingredients from the "
                     + selectedPotion.getName() + ".");
-            model.getParty().getInventory().remove(selectedPotion);
+            model.getParty().removeFromInventory(selectedPotion);
         } else {
             model.getParty().getInventory().addToIngredients(-ingredientCost);
             if (ingredientCost > 4 && MyRandom.rollD6() == 1) {

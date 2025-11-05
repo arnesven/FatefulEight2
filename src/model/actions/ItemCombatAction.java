@@ -56,7 +56,7 @@ public class ItemCombatAction extends BasicCombatAction {
                         GameCharacter character = (GameCharacter)target;
                         String message = item.useYourself(model, character);
                         combat.println(message);
-                        model.getParty().getInventory().remove(item);
+                        model.getParty().removeFromInventory(item);
                         character.addToAttitude(performer, 2);
                     }
                 };
@@ -66,7 +66,7 @@ public class ItemCombatAction extends BasicCombatAction {
                     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         ThrowablePotion tp = (ThrowablePotion)item;
                         tp.throwYourself(model, combat, performer, target);
-                        model.getParty().getInventory().remove(item);
+                        model.getParty().removeFromInventory(item);
                     }
                 };
             }

@@ -54,7 +54,7 @@ public class RevivingElixir extends Potion {
         if (!event.yesNoInput()) {
             return false;
         }
-        model.getParty().getInventory().remove(revive);
+        model.getParty().removeFromInventory(revive);
         String result = revive.useYourself(model, gc);
         event.println(result);
         return true;

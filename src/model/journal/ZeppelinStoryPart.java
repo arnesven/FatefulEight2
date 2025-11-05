@@ -424,7 +424,7 @@ public class ZeppelinStoryPart extends StoryPart {
             } else {
                 print("Do you want to refuel the zeppelin with fuel? (Y/N) ");
                 if (yesNoInput()) {
-                    model.getParty().getInventory().remove(p);
+                    model.getParty().removeFromInventory(p);
                     zeppelinFueled = true;
                     println("You fill the tank up with fuel.");
                 } else {

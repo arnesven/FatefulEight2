@@ -148,7 +148,7 @@ public class DungeonMonster extends CenterDungeonObject {
         if (pot != null) {
             state.print("Do you want to throw your sleeping potion to distract the " + enemies.get(0).getName() + "? (Y/N) ");
             if (state.yesNoInput()) {
-                model.getParty().getInventory().remove(pot);
+                model.getParty().removeFromInventory(pot);
                 state.println("The " + enemies.get(0).getName() + " has fallen asleep!");
                 isSleeping = true;
                 this.smoke = new SmokeBallAnimation();

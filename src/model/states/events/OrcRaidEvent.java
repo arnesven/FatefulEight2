@@ -85,7 +85,7 @@ public class OrcRaidEvent extends DailyEventState {
                     it = model.getItemDeck().getRandomItem();
                 } while (it instanceof Spell || it instanceof WandWeapon || it instanceof Potion);
                 println("The party receives " + it.getName() + ".");
-                model.getParty().getInventory().addItem(it);
+                model.getParty().addToInventory(it);
             }
             if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
                 UrbanLocation loc = (UrbanLocation) model.getCurrentHex().getLocation();

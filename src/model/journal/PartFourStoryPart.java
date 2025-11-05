@@ -235,7 +235,7 @@ public class PartFourStoryPart extends StoryPart {
                 for (int i = 0; i < 4; ++i) {
                     Item it = model.getItemDeck().getRandomItem(0.99);
                     println("The party receives " + it.getName() + ".");
-                    model.getParty().getInventory().addItem(it);
+                    model.getParty().addToInventory(it);
                 }
                 showLord(model);
                 portraitSay("And finally, I will mark another location on your map. There you will find a secret workshop " +

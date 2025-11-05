@@ -532,7 +532,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                         "the magic brews. The villagers recover quickly and pretty soon the hospital is empty.");
                 int potionsLost = Math.min(3, potions.size());
                 for (int i = potionsLost; i > 0; --i) {
-                    model.getParty().getInventory().remove(potions.get(0));
+                    model.getParty().removeFromInventory(potions.get(0));
                     potions.remove(0);
                 }
                 event.println("You have lost " + MyStrings.numberWord(potionsLost) + " health potions.");

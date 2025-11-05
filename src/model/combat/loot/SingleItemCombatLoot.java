@@ -17,6 +17,6 @@ public class SingleItemCombatLoot extends CombatLoot {
 
     @Override
     protected void specificGiveYourself(Party party) {
-        party.getInventory().addItem(item);
+        party.addToInventory(item);
     }
 }

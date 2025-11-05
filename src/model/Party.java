@@ -15,11 +15,8 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
-import model.items.books.SeaTravelBook;
 import model.items.designs.CraftingDesign;
-import model.items.potions.*;
 import model.items.spells.*;
-import model.items.weapons.FishingPole;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.quests.HeldQuestData;
@@ -1096,5 +1093,13 @@ public class Party implements Serializable {
         return MyLists.transform(MyLists.filter(permanentlyLearnedItems,
                 it -> it instanceof CraftingDesign),
                 it -> (CraftingDesign)it);
+    }
+
+    public void addToInventory(Item it) {
+        inventory.addItem(it);
+    }
+
+    public void removeFromInventory(Item it) {
+        inventory.remove(it);
     }
 }

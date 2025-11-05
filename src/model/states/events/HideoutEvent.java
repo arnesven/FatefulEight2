@@ -66,7 +66,7 @@ public class HideoutEvent extends DailyEventState {
                     println("The party pays " + cost + " gold.");
                     for (Item it : items) {
                         println("The party receives " + it.getName() + ".");
-                        model.getParty().getInventory().addItem(it);
+                        model.getParty().addToInventory(it);
                     }
                     printQuote("Bandit Leader", "Oh, and if you want, you can use our secret passage to get to the nearest town.");
                     secretPassage(model);

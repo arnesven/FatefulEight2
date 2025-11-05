@@ -140,7 +140,7 @@ public class TravelState extends GameState {
                 if (itemToThrowAway == null) {
                     throw new IllegalStateException("Could not find item to throw away.");
                 } else {
-                    model.getParty().getInventory().remove(itemToThrowAway);
+                    model.getParty().removeFromInventory(itemToThrowAway);
                     println("You threw away " + itemToThrowAway.getName() + ".");
                 }
             }

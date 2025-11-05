@@ -257,7 +257,7 @@ public class WeaponPair extends Weapon {
     }
 
     public void splitToInventory(Model model) {
-        model.getParty().getInventory().remove(this);
+        model.getParty().removeFromInventory(this);
         mainHand.addYourself(model.getParty().getInventory());
         offHand.addYourself(model.getParty().getInventory());
     }

@@ -82,7 +82,7 @@ public class Lute extends Weapon {
             combatEvent.println("The lute is broken!");
             combatEvent.partyMemberSay(gameCharacter, MyRandom.sample(List.of("Darn it!", "That's unfortunate.", "No! My lute!")));
             gameCharacter.unequipWeapon();
-            model.getParty().getInventory().remove(this);
+            model.getParty().removeFromInventory(this);
         }
     }
 }

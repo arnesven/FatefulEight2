@@ -156,7 +156,7 @@ public class BoozersEvent extends DailyEventState {
         leaderSay("Relax... we mean no harm. Why don't you have this.");
         String drinkName = drink.getName().toLowerCase();
         println("You offer the " + drinkName + " to the boozer.");
-        model.getParty().getInventory().remove(drink);
+        model.getParty().removeFromInventory(drink);
         boozer1Say("Uh... hic... a drink? Gimme!");
         if (drink.doesReject(model, boozer1.getRace())) {
             println("The boozer is about to have a sip of the " + drinkName + ", but then recoils with a jerk.");

@@ -220,11 +220,11 @@ public class ShopState extends GameState {
             println("You cannot afford that.");
         } else {
             if (it instanceof InventoryDummyItem && ((InventoryDummyItem) it).keepInStock()) {
-                model.getParty().getInventory().addItem(it.copy());
+                model.getParty().addToInventory(it.copy());
             } else {
                 buyItems.remove(it);
                 itemsForSale.remove(it);
-                model.getParty().getInventory().addItem(it);
+                model.getParty().addToInventory(it);
             }
 
             model.getParty().spendGold(cost);
@@ -313,7 +313,7 @@ public class ShopState extends GameState {
         if (!isCurrentlyEquipped(model, it)) {
             sellItems.remove(it);
             itemJustSold(model, it, buyItems, prices);
-            model.getParty().getInventory().remove(it);
+            model.getParty().removeFromInventory(it);
             if (getSellableItems(model).isEmpty()) {
                 if (buyItems.getElementList().isEmpty()) {
                     return true;
@@ -325,7 +325,7 @@ public class ShopState extends GameState {
             StackableDummyItem dummy = ((StackableDummyItem)it);
             Item inner = dummy.getInnerItem();
             itemJustSold(model, inner, buyItems, prices);
-            model.getParty().getInventory().remove(inner);
+            model.getParty().removeFromInventory(inner);
         } else {
             println("You cannot sell an item that is currently equipped.");
         }

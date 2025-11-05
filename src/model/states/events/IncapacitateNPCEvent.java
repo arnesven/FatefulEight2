@@ -136,7 +136,7 @@ public class IncapacitateNPCEvent extends DailyEventState {
         portraitSay("Uhm, sure. Why not?");
         String drinkName = drink.getName().toLowerCase();
         println("You offer the " + drinkName + " to " + npc.getName() + ".");
-        model.getParty().getInventory().remove(drink);
+        model.getParty().removeFromInventory(drink);
         if (drink.doesReject(model, npc.getRace())) {
             portraitSay(drink.getName() + "? I detest " + drinkName + "!");
             println(npc.getName() + " is annoyed and walks off.");

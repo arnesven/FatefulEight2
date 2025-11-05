@@ -56,7 +56,7 @@ public class DrunkenPirateEvent extends DailyEventState {
             change.areYouInterested(model);
         } else if (options.get(choice).contains("booze")) {
             println("You bring out some " + booze.getName() + ", and give it to the pirate.");
-            model.getParty().getInventory().remove(booze);
+            model.getParty().removeFromInventory(booze);
             if (booze instanceof RumPotion) {
                 portraitSay("Shhheeyyaaah... Thaasht the stufff.");
                 println("The pirate passes out, with a wide smile on " + hisOrHer(app.getGender()) + " face.");

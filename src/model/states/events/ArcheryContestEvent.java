@@ -369,13 +369,13 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     private void remove(Model model, BowWeapon bow) {
         if (model.getParty().getInventory().getAllItems().contains(bow)) {
-            model.getParty().getInventory().remove(bow);
+            model.getParty().removeFromInventory(bow);
             return;
         }
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getEquipment().getWeapon() == bow) {
                 gc.unequipWeapon();
-                model.getParty().getInventory().remove(bow);
+                model.getParty().removeFromInventory(bow);
                 return;
             }
         }

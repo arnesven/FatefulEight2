@@ -106,7 +106,7 @@ public class WeaponPairingDialog extends ConfigureSocketedItemMenu {
     public void transitionedTo(Model model) {
         model.getTutorial().weaponPairing(model);
         System.out.println("Removed main handed weapon from inventory");
-        model.getParty().getInventory().remove(mainWeapon);
+        model.getParty().removeFromInventory(mainWeapon);
     }
 
     private static class IntermediateWeaponPair implements SocketedItem {

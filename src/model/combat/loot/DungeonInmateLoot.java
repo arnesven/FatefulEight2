@@ -48,7 +48,7 @@ public class DungeonInmateLoot extends CombatLoot {
     @Override
     protected void specificGiveYourself(Party party) {
         for (Item it : items) {
-            party.getInventory().addItem(it);
+            party.addToInventory(it);
         }
     }
 

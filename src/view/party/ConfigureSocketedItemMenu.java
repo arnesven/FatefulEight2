@@ -165,7 +165,7 @@ public class ConfigureSocketedItemMenu extends SelectableListMenu {
             if (sash.getInnerItem(index) != null) {
                 unset(model);
             }
-            model.getParty().getInventory().remove(item);
+            model.getParty().removeFromInventory(item);
             sash.setInnerItem(index, item);
         }
 

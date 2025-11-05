@@ -272,7 +272,7 @@ public class PresentSwordToShingenEvent extends DailyEventState {
                     portraitSay(like);
                 }
                 portraitSay("I daresay, this blade is perfect! The ultimate symbol of our coming alliance!");
-                model.getParty().getInventory().remove(blade);
+                model.getParty().removeFromInventory(blade);
                 return true;
             }
             if (likes.isEmpty()) {

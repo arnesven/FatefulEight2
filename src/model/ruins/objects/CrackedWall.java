@@ -103,7 +103,7 @@ public class CrackedWall extends DungeonDoor {
         });
         state.waitForReturnSilently();
         if (selected[0].contains("Throw")) {
-            model.getParty().getInventory().remove(pot);
+            model.getParty().removeFromInventory(pot);
             explodeAndSound(state);
             state.println("The " + pot.getName() + " explodes on contact with the wall. " +
                     "The wall crumbles and opens a passage into the next room.");

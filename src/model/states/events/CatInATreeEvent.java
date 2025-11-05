@@ -119,7 +119,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
 
     private void offerFish(Model model) {
         Fish f = (Fish)MyLists.find(model.getParty().getInventory().getAllItems(), it -> it instanceof Fish);
-        model.getParty().getInventory().remove(f);
+        model.getParty().removeFromInventory(f);
         println("You pull out a " + f.getName() + " from your inventory and lay it on the ground.");
         printQuote("Cat", "Meooow!");
         println("The cat quickly leaps down from the tree and starts to eat the " + f.getName());
