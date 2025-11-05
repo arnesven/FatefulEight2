@@ -112,7 +112,7 @@ public class CampSiteEvent extends DailyEventState {
                 boolean large = MyRandom.flipCoin();
                 println("There's an abandoned tent here. It is showing some wear and tear, but it is still usable.");
                 TentUpgradeItem item = large ? new LargeTentUpgradeItem() : new TentUpgradeItem();
-                item.addYourself(model.getParty().getInventory());
+                model.getParty().addToInventory(item);
             }
         }
         List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Search, 7);

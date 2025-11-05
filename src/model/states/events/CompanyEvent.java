@@ -93,7 +93,7 @@ public class CompanyEvent extends DailyEventState {
         if (model.getParty().getInventory().getTentSize() < Party.MAXIMUM_PARTY_SIZE) {
             if (MyRandom.flipCoin()) {
                 println("The sloppy soldiers leave some gear behind. The party finds a tent!");
-                new TentUpgradeItem().addYourself(model.getParty().getInventory());
+                model.getParty().addToInventory(new TentUpgradeItem());
             }
         }
     }
