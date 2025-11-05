@@ -69,7 +69,7 @@ public class ChooseStartingCharacterState extends GameState {
                 if (gc != null) {
                     break;
                 }
-            } else if (choice == 3){
+            } else if (choice == 4){
                 gc = fullPartySelect(model);
                 if (gc != null) {
                     break;

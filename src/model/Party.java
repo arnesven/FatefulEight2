@@ -16,6 +16,7 @@ import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
+import model.items.special.TentUpgradeItem;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
@@ -145,11 +146,7 @@ public class Party implements Serializable {
                 }
             } else {
                 Point wordLocation = new Point(p.x + (drawPartyVertically && count >= 4 ? 3 : 8), p.y + 2);
-                if (count < inventory.getTentSize()) {
-                    BorderFrame.drawString(screenHandler, "*VACANT*", wordLocation.x, wordLocation.y, MyColors.GRAY, MyColors.BLACK);
-                } else {
-                    BorderFrame.drawString(screenHandler, "*LOCKED*", wordLocation.x, wordLocation.y, MyColors.DARK_RED, MyColors.BLACK);
-                }
+                partyAnimations.drawSlot(screenHandler, count, wordLocation, count < inventory.getTentSize());
             }
         }
         partyAnimations.drawSpeakAnimations(screenHandler);
@@ -1096,7 +1093,11 @@ public class Party implements Serializable {
     }
 
     public void addToInventory(Item it) {
+        int tentSizeBefore = inventory.getTentSize();
         inventory.addItem(it);
+        for (int i = tentSizeBefore; i < inventory.getTentSize(); i++) {
+            partyAnimations.addSlotAnimation(i);
+        }
     }
 
     public void removeFromInventory(Item it) {

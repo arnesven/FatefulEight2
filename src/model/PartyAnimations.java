@@ -3,8 +3,8 @@ package model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import util.MyRandom;
-import view.sprites.Animation;
-import view.sprites.AnimationManager;
+import view.BorderFrame;
+import view.MyColors;
 import view.sprites.DieRollAnimation;
 import view.ScreenHandler;
 
@@ -16,11 +16,13 @@ public class PartyAnimations implements Serializable {
     private static final int BLINK_RATE = 350;
     private static final int CHANGE_LOOK_LONG_DIRECTION = 800;
     private static final int CHANGE_LOOK_SHORT_DURATION = 400;
+    private static final int SLOT_ANIMATION_DELAY = 4;
     private final Map<CharacterAppearance, SpeakingAnimation> speakingAnimations = new HashMap<>();
     private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
     private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
     private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
     private final Map<CharacterAppearance, VampireFeedingLook> feedingLooks = new HashMap<>();
+    private Map<Integer, Integer> slotAnimations = new HashMap<>();
 
     public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
         if (!app.showFacialHair()) {
@@ -160,6 +162,33 @@ public class PartyAnimations implements Serializable {
     public void unregisterAll() {
         for (SpeakingAnimation a : speakingAnimations.values()) {
             a.unregister();
+        }
+    }
+
+    public void addSlotAnimation(int i) {
+        this.slotAnimations.put(i, SLOT_ANIMATION_DELAY * 8);
+    }
+
+    public void drawSlot(ScreenHandler screenHandler, int count, Point wordLocation, boolean isVacant) {
+        String vacantString = "*VACANT*";
+        String lockedString = "*LOCKED*";
+        BorderFrame.drawString(screenHandler, lockedString, wordLocation.x, wordLocation.y, MyColors.DARK_RED, MyColors.BLACK);
+
+        if (slotAnimations.containsKey(count)) {
+            int index = vacantString.length() - (slotAnimations.get(count)-1) / SLOT_ANIMATION_DELAY - 1;
+
+            BorderFrame.drawString(screenHandler, vacantString.substring(0, index), wordLocation.x, wordLocation.y, MyColors.GRAY, MyColors.BLACK);
+            BorderFrame.drawString(screenHandler, (char)0xFF + "",
+                    wordLocation.x + index, wordLocation.y, MyColors.WHITE, MyColors.BLACK);
+
+            int newStep = slotAnimations.get(count) - 1;
+            if (newStep <= 0) {
+                slotAnimations.remove(count);
+            } else {
+                slotAnimations.put(count, newStep);
+            }
+        } else if (isVacant) {
+            BorderFrame.drawString(screenHandler, vacantString, wordLocation.x, wordLocation.y, MyColors.GRAY, MyColors.BLACK);
         }
     }
 }
