@@ -402,4 +402,10 @@ public class ItemDeck extends ArrayList<Item> {
             }
         }
     }
+
+
+    public static List<? extends Weapon> allUniqueWeapons() {
+        return List.of(new CalixaberSword(), new SwordOfVigor(), new StaffOfDeimosItem(),
+                new LightningJavelins(), new AxeOfDismemberment());
+    }
 }

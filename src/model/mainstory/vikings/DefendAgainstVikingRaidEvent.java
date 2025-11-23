@@ -16,6 +16,7 @@ import model.items.clothing.LeatherTunic;
 import model.items.clothing.StuddedJerkin;
 import model.items.weapons.HuntersBow;
 import model.items.weapons.Mace;
+import model.items.weapons.Scepter;
 import model.items.weapons.ShortBow;
 import model.mainstory.GainSupportOfVikingsTask;
 import model.map.CastleLocation;
@@ -161,7 +162,7 @@ public class DefendAgainstVikingRaidEvent extends DailyEventState {
             if (i >= amount / 2) {
                 rando.setEquipment(new Equipment(new HuntersBow(), new StuddedJerkin(), null));
             } else {
-                rando.setEquipment(new Equipment(new Mace(), new LeatherArmor(), new LargeShield()));
+                rando.setEquipment(new Equipment(new Scepter(), new LeatherArmor(), new LargeShield()));
             }
             result.add(rando);
         }

@@ -278,7 +278,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         public GangsterLoot(Model model) {
             super(model, 0);
             List<Item> its = getItems();
-            its.add(MyRandom.sample(List.of(new Mace(), new Kukri(), new OrcishKnife(), new Wakizashi(),
+            its.add(MyRandom.sample(List.of(new Scepter(), new Kukri(), new OrcishKnife(), new Wakizashi(),
                     new Club(), new Hatchet(), new LeatherCap(), new StuddedJerkin(), new FancyJerkin())));
         }
     }

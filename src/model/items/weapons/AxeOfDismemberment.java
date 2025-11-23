@@ -22,7 +22,7 @@ public class AxeOfDismemberment extends AxeWeapon {
 
     @Override
     public String getExtraText() {
-        return ", .";
+        return ", Chance of chopping of limbs from humanoid targets";
     }
 
     @Override

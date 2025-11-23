@@ -100,6 +100,11 @@ public class StaffOfDeimosItem extends StaffWeapon implements SocketedItem {
     }
 
     @Override
+    public String getExtraText() {
+        return ", Configurable with spell, which can then be automatically cast";
+    }
+
+    @Override
     public String getDualUseLabel() {
         return "Configure";
     }

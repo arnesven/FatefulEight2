@@ -7,6 +7,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
 import model.items.Item;
+import model.items.StartingItem;
 import model.items.imbuements.WeaponImbuement;
 import model.states.CombatEvent;
 import util.MyStrings;
@@ -117,6 +118,9 @@ public abstract class Weapon extends EquipableItem {
     }
 
     public String getExtraText() {
+        if (this instanceof StartingItem) {
+            return "Starting item";
+        }
         if (getCriticalTarget() != 10) {
             int chance = (11 - getCriticalTarget()) * 10;
             return chance + "% Critical Hit Chance";

@@ -22,8 +22,4 @@ public class Flail extends BluntWeapon {
         return new Flail();
     }
 
-    @Override
-    public Prevalence getPrevalence() {
-        return Prevalence.rare;
-    }
 }

@@ -11,6 +11,7 @@ import model.items.clothing.RustyChestPlate;
 import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.Mace;
+import model.items.weapons.Scepter;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
@@ -113,6 +114,6 @@ public class BlackKnightClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new Mace(), new RustyChestPlate(), new HeraldicShield());
+        return List.of(new Scepter(), new RustyChestPlate(), new HeraldicShield());
     }
 }

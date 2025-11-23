@@ -27,4 +27,9 @@ public class Dirk extends SmallBladedWeapon implements StartingItem, PairableWea
     public Sprite makePairSprite() {
         return new ItemSprite(3, 14);
     }
+
+    @Override
+    public String getExtraText() {
+        return super.getExtraText();
+    }
 }

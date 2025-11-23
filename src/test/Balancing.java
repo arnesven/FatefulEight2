@@ -98,6 +98,10 @@ public class Balancing {
         return sum;
     }
 
+    public static double getAverageDamage(Weapon weapon) {
+        return calcTotalDamage(weapon) / MAX_RANKS;
+    }
+
     public static void runClothingAnalysis(Model model) {
         LeatherArmor leatherArmor = new LeatherArmor();
 
