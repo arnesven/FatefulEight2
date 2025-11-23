@@ -75,18 +75,19 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
 
     private void drawDoorWithAnimation(Model model) {
         Point p = convertToScreen(getDoorPosition());
-        if (openDoorAnimation &&
-                getMovementAnimation().getCurrentPosition().distance(p) < 3.0) {
-            if (!playedOpenDoorSound) {
-                SoundEffects.playHitWood();
-                playedOpenDoorSound = true;
-                playCloseDoorSound = true;
-            }
-            model.getScreenHandler().register(OPEN_DOOR.getName(), p, OPEN_DOOR);
-        } else {
-            if (playCloseDoorSound) {
-                SoundEffects.playHitWood();
-                playCloseDoorSound = false;
+        if (openDoorAnimation && getMovementAnimation() != null) {
+            if (getMovementAnimation().getCurrentPosition().distance(p) < 3.0) {
+                if (!playedOpenDoorSound) {
+                    SoundEffects.playHitWood();
+                    playedOpenDoorSound = true;
+                    playCloseDoorSound = true;
+                }
+                model.getScreenHandler().register(OPEN_DOOR.getName(), p, OPEN_DOOR);
+            } else {
+                if (playCloseDoorSound) {
+                    SoundEffects.playHitWood();
+                    playCloseDoorSound = false;
+                }
             }
         }
     }
