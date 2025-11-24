@@ -14,9 +14,13 @@ public abstract class AnalyzeDialog extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 25;
     private final String analysisType;
 
-    public AnalyzeDialog(Model model, int baseHeight, String analysisType) {
-        super(model.getView(), DIALOG_WIDTH, baseHeight + model.getParty().size());
+    public AnalyzeDialog(Model model, int width, int baseHeight, String analysisType) {
+        super(model.getView(), width, baseHeight + model.getParty().size());
         this.analysisType = analysisType;
+    }
+
+    public AnalyzeDialog(Model model, int baseHeight, String analysisType) {
+        this(model, DIALOG_WIDTH, baseHeight, analysisType);
     }
 
     public abstract List<DrawableObject> getAnalysisDrawableObjects(Model model, Item it, int xStart, int yStart);

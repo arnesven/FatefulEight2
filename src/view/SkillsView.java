@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkillsView extends SelectableListMenu {
-    private static final int ROW_OFFSET = 14;
+    public static final int ROW_OFFSET = 14;
 
     public SkillsView(GameView previous) {
         super(previous, 45, 39);
@@ -28,17 +28,8 @@ public class SkillsView extends SelectableListMenu {
         return List.of(new DrawableObject(xStart + 1, yStart + 1) {
                    @Override
                    public void drawYourself(Model model, int x, int y) {
-                       int charNum = 0;
-                       for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                           for (int i = gc.getFirstName().length() - 1; i >= 0; --i) {
-                               BorderFrame.drawString(model.getScreenHandler(), "" + gc.getFirstName().charAt(i),
-                                       x + 3 * charNum + 15, y + i - gc.getFirstName().length() + 12,
-                                       model.getParty().getColorForPartyMember(gc), MyColors.BLUE);
-                           }
-                           int row = 13;
-                           print(model.getScreenHandler(), x, y + row - 1, "____________________________________________");
-                           charNum++;
-                       }
+                       int charNum = drawCharacterNames(model, x, y);
+                       print(model.getScreenHandler(), x + 14 + 3*charNum, y + ROW_OFFSET - 2, "______");
                        String best = "BEST";
                        for (int i = best.length() - 1; i >= 0; --i) {
                            print(model.getScreenHandler(), x + 3 * charNum + 17, y + i - best.length() + 12,
@@ -53,6 +44,25 @@ public class SkillsView extends SelectableListMenu {
                         BorderFrame.drawString(model.getScreenHandler(), "Overview", x+1, y+1, MyColors.WHITE, MyColors.BLUE);
                     }
                 });
+    }
+
+    public static int drawCharacterNames(Model model, int x, int y) {
+        StringBuilder builder = new StringBuilder();
+        builder.repeat("_", 3);
+        String littleLine = builder.toString();
+        int charNum = 0;
+        int row = ROW_OFFSET-1;
+        print(model.getScreenHandler(), x, y + row - 1, "______________");
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            for (int i = gc.getFirstName().length() - 1; i >= 0; --i) {
+                BorderFrame.drawString(model.getScreenHandler(), "" + gc.getFirstName().charAt(i),
+                        x + 3 * charNum + 15, y + i - gc.getFirstName().length() + 12,
+                        model.getParty().getColorForPartyMember(gc), MyColors.BLUE);
+            }
+            print(model.getScreenHandler(), x + 14 + 3*charNum, y + row - 1, littleLine);
+            charNum++;
+        }
+        return charNum;
     }
 
     @Override

@@ -7,11 +7,11 @@ import model.items.accessories.Accessory;
 
 public class AnalyzeSkillFromAccessoryDialog extends AnalyzeSkillDialog {
     public AnalyzeSkillFromAccessoryDialog(Model model, Accessory accessory) {
-        super(model, accessory);
-    }
-
-    @Override
-    protected Item getClothingOrAccessory(GameCharacter gc) {
-        return gc.getEquipment().getAccessory(); // Can return null
+        super(model, accessory, new ItemGetter() {
+            @Override
+            public Item get(GameCharacter gc) {
+                return gc.getEquipment().getAccessory();
+            }
+        });
     }
 }

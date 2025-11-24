@@ -7,11 +7,11 @@ import model.items.clothing.Clothing;
 
 public class AnalyzeSkillFromClothingDialog extends AnalyzeSkillDialog {
     public AnalyzeSkillFromClothingDialog(Model model, Clothing clothing) {
-        super(model, clothing);
-    }
-
-    @Override
-    protected Item getClothingOrAccessory(GameCharacter gc) {
-        return gc.getEquipment().getClothing();
+        super(model, clothing, new ItemGetter() {
+            @Override
+            public Item get(GameCharacter gc) {
+                return gc.getEquipment().getClothing();
+            }
+        });
     }
 }

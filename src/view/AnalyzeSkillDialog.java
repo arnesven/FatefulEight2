@@ -8,47 +8,56 @@ import model.items.Item;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import util.BeforeAndAfterLine;
+import util.MyLists;
 import util.MyPair;
 import view.party.DrawableObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public abstract class AnalyzeSkillDialog extends AnalyzeDialog {
-
-    private final List<List<BeforeAndAfterLine<Integer>>> content;
+    private static final String NA_STRING = (char)0x80 + "" + (char)0x81;
+    private final List<MyPair<Skill, List<Integer>>> content;
     private final Item item;
 
-    public AnalyzeSkillDialog(Model model, Item item) {
-        super(model, 12 + (model.getParty().size()-1) * item.getSkillBonuses().size(), "Skill Analysis for");
+    public AnalyzeSkillDialog(Model model, Item item, ItemGetter getter) {
+        super(model, 15 + 3 * model.getParty().size(),
+                18 - model.getParty().size() + analyzeSkill(model, item, getter).size(), "Skill Analysis for");
         this.item = item;
-        content = analyzeSkill(model, item.getSkillBonuses());
+        content = analyzeSkill(model, item, getter);
     }
 
-    protected abstract Item getClothingOrAccessory(GameCharacter gc);
+    private static List<MyPair<Skill, List<Integer>>> analyzeSkill(Model model, Item item, ItemGetter getter) {
+        List<MyPair<Skill, List<Integer>>> outerResult = new ArrayList<>();
 
-
-    private List<List<BeforeAndAfterLine<Integer>>> analyzeSkill(Model model, List<MyPair<Skill, Integer>> bonuses) {
-        List<List<BeforeAndAfterLine<Integer>>> outerResult = new ArrayList<>();
-        for (MyPair<Skill, Integer> bonus : bonuses) {
-            List<BeforeAndAfterLine<Integer>> result = new ArrayList<>();
-            Skill skill = bonus.first;
+        for (Skill skill : Skill.values()) {
+            if (skill.areEqual(Skill.MagicAny)) {
+                continue;
+            }
+            List<Integer> resultForSkill = new ArrayList<>();
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
+
+                MyPair<Skill, Integer> bonus = MyLists.find(item.getSkillBonuses(), pair -> pair.first == skill);
+                int diff = 0;
+                if (bonus != null) {
+                    diff += bonus.second;
+                }
+                diff -= getBonusFor(getter.get(gc), skill);
+
                 if (item instanceof ArmorItem && cantEquip(gc, (ArmorItem) item)) {
-                    result.add(new BeforeAndAfterLine<>(gc.getFirstName(), -1, -1));
+                    resultForSkill.add(null);
                 } else {
-                    int diff = bonus.second - getBonusFor(getClothingOrAccessory(gc), skill);
-                    result.add(new BeforeAndAfterLine<>(gc.getFirstName(), gc.getRankForSkill(skill),
-                            gc.getRankForSkill(skill) + diff));
+                    resultForSkill.add(diff);
                 }
             }
-            outerResult.add(result);
+            if (MyLists.any(resultForSkill, val -> !(val == null || val == 0))) {
+                outerResult.add(new MyPair<>(skill, resultForSkill));
+            }
         }
         return outerResult;
     }
 
-    private int getBonusFor(Item item, Skill skill) {
+    private static int getBonusFor(Item item, Skill skill) {
         if (item == null) {
             return 0;
         }
@@ -60,7 +69,7 @@ public abstract class AnalyzeSkillDialog extends AnalyzeDialog {
         return 0;
     }
 
-    private boolean cantEquip(GameCharacter gc, ArmorItem item) {
+    private static boolean cantEquip(GameCharacter gc, ArmorItem item) {
         return (!gc.getCharClass().canUseHeavyArmor() && item.isHeavy()) ||
                 (!gc.canChangeClothing() && item instanceof Clothing) ||
                 (!gc.canChangeAccessory() && item instanceof Accessory);
@@ -68,47 +77,68 @@ public abstract class AnalyzeSkillDialog extends AnalyzeDialog {
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-        List<DrawableObject> objs = new ArrayList<>(makeHeader(item, xStart, yStart));
-        yStart += 9;
-        objs.addAll(makeDrawableObjects(content, xStart, yStart));
-        return objs;
-    }
-
-    private List<DrawableObject> makeDrawableObjects(List<List<BeforeAndAfterLine<Integer>>> content, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
-        for (int i = 0; i < content.size(); ++i) {
-            List<BeforeAndAfterLine<Integer>> contentList = content.get(i);
-            Skill skill = item.getSkillBonuses().get(i).first;
-            objs.add(new TextDecoration(skill.getName() + ":", xStart + 2, yStart, MyColors.WHITE, MyColors.BLUE, false));
-            yStart++;
-            for (BeforeAndAfterLine<Integer> line : contentList) {
-                if (line.getBefore() == -1) {
-                    objs.add(new TextDecoration(line.getLabel(), xStart + 2, yStart,
-                            MyColors.WHITE, MyColors.BLUE, false));
-                    objs.add(new TextDecoration("can't equip!", xStart + 12, yStart,
-                            MyColors.RED, MyColors.BLUE, false));
-                } else {
-                    String text = String.format("%-11s %2d  " + ((char) 0xB0), line.getLabel(), line.getBefore());
-                    objs.add(new TextDecoration(text, xStart + 2, yStart,
-                            MyColors.WHITE, MyColors.BLUE, false));
-                    MyColors afterColor = MyColors.WHITE;
-                    if (line.getAfter() > line.getBefore()) {
-                        afterColor = MyColors.LIGHT_GREEN;
-                    } else if (line.getAfter() < line.getBefore()) {
-                        afterColor = MyColors.LIGHT_RED;
-                    }
-                    objs.add(new TextDecoration(String.format("%2d", line.getAfter()), xStart + 21, yStart,
-                            afterColor, MyColors.BLUE, false));
-                }
-                yStart++;
+        objs.add(new DrawableObject(xStart+1, yStart+1) {
+            @Override
+            public void drawYourself(Model model, int x, int y) {
+                BorderFrame.drawString(model.getScreenHandler(), "Skill Bonus", x+1, y, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Analysis for", x+1, y+1, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), item.getName(), x+1, y+2, MyColors.WHITE, MyColors.BLUE);
+                item.drawYourself(model.getScreenHandler(), x + 3, y+3);
+                BorderFrame.drawString(model.getScreenHandler(), "Increase", x+1, y+8, MyColors.LIGHT_GREEN, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Decrease", x+1, y+9, MyColors.LIGHT_RED, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Can't Equip", x+1, y+10, MyColors.RED, MyColors.BLUE);
             }
-            yStart++;
-        }
+        });
+        objs.add(new DrawableObject(xStart + 1, yStart + 1) {
+            @Override
+            public void drawYourself(Model model, int x, int y) {
+                SkillsView.drawCharacterNames(model, x, y);
+            }
+        });
+        objs.add(new DrawableObject(xStart+1, yStart+1) {
+            @Override
+            public void drawYourself(Model model, int x, int y) {
+                int row = SkillsView.ROW_OFFSET - 1;
+                for (MyPair<Skill, List<Integer>> pair : content) {
+                    int finalY = y + row;
+                    BorderFrame.drawString(model.getScreenHandler(), String.format("%-13s", pair.first.getName()),
+                            x, finalY, MyColors.WHITE, MyColors.BLUE);
+
+                    int charNum = 0;
+                    for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                        int finalX = 14 + x + 3 * charNum;
+                        if (pair.second.get(charNum) == null) {
+                            BorderFrame.drawString(model.getScreenHandler(), NA_STRING, finalX, finalY, MyColors.RED, MyColors.BLUE);
+                        } else {
+                            MyColors fgColor = MyColors.WHITE;
+                            int diff = pair.second.get(charNum);
+                            int finalRank = gc.getRankForSkill(pair.first) + diff;
+                            if (diff < 0) {
+                                fgColor = MyColors.LIGHT_RED;
+                            } else if (diff > 0) {
+                                fgColor = MyColors.LIGHT_GREEN;
+                            }
+                            if (diff != 0) {
+                                BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", finalRank), finalX, finalY, fgColor, MyColors.BLUE);
+                            }
+                        }
+
+                        charNum++;
+                    }
+                    row++;
+                }
+            }
+        });
         return objs;
     }
 
     @Override
     public List<DrawableObject> getAnalysisDrawableObjects(Model model, Item it, int xStart, int yStart) {
-        return makeDrawableObjects(analyzeSkill(model, it.getSkillBonuses()), xStart, yStart);
+        return List.of(); // Not used for this type of analysis
+    }
+
+    protected static abstract class ItemGetter {
+        public abstract Item get(GameCharacter gc);
     }
 }
