@@ -5,11 +5,10 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.Condition;
 import model.enemies.Enemy;
-import model.items.spells.Spell;
+import model.items.analysis.ItemAnalysis;
 import model.states.CombatEvent;
 import model.states.ShopState;
 import util.MyPair;
-import view.AnalyzeDialog;
 import view.GameView;
 import view.InventoryView;
 import view.ScreenHandler;
@@ -104,12 +103,8 @@ public abstract class Item implements Serializable, Comparable<Item> {
         return false;
     }
 
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        return null;
-    }
-
-    public String getAnalysisType() {
-        return "";
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        return new ArrayList<>();
     }
 
     public boolean supportsHigherTier() {

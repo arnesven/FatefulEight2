@@ -17,7 +17,7 @@ public class AnalyzeArmorDialog extends AnalyzeDialog {
     private final ArmorItem armorItem;
 
     public AnalyzeArmorDialog(Model model, ArmorItem item) {
-        super(model, 12);
+        super(model, 12, "Armor Analysis");
         this.armorItem = item;
         this.content = analyzeArmor(model, item);
     }

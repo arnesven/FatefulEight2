@@ -6,11 +6,17 @@ import model.characters.GameCharacter;
 import model.items.ArmorItem;
 import model.items.EquipableItem;
 import model.items.Item;
+import model.items.analysis.ArmorAnalysis;
+import model.items.analysis.ItemAnalysis;
+import model.items.analysis.SkillBonusAnalysis;
 import model.items.spells.Spell;
 import util.MyStrings;
 import view.AnalyzeArmorDialog;
 import view.AnalyzeDialog;
 import view.AnalyzeSkillDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Accessory extends EquipableItem implements ArmorItem {
     public Accessory(String name, int cost) {
@@ -79,18 +85,19 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
 
     @Override
     public boolean isAnalyzable() {
-        return true;
+        return canAnalyzeArmor() || canAnalyzeSkills();
     }
 
     @Override
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        if (canAnalyzeSkills()) {
-            return new AnalyzeSkillDialog(model, this);
-        }
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        List<ItemAnalysis> result = new ArrayList<>();
         if (canAnalyzeArmor()) {
-            return new AnalyzeArmorDialog(model, this);
+            result.add(new ArmorAnalysis(this));
         }
-        return null;
+        if (canAnalyzeSkills()) {
+            result.add(new SkillBonusAnalysis(this));
+        }
+        return result;
     }
 
     private boolean canAnalyzeArmor() {
@@ -98,15 +105,7 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     }
 
     private boolean canAnalyzeSkills() {
-        return !getSkillBonuses().isEmpty() && getAP() == 0;
-    }
-
-    @Override
-    public String getAnalysisType() {
-        if (canAnalyzeSkills()) {
-            return "Skill Bonus Analysis";
-        }
-        return "Armor Analysis";
+        return !getSkillBonuses().isEmpty();
     }
 
     @Override

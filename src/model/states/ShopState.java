@@ -10,6 +10,7 @@ import model.classes.SkillCheckResult;
 import model.classes.SkillChecks;
 import model.items.*;
 import model.items.accessories.Accessory;
+import model.items.analysis.ItemAnalysis;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
@@ -195,7 +196,27 @@ public class ShopState extends GameState {
                     break;
                 }
             } else if (selectedAction[0] == 'A') {
-                model.transitionToDialog(matrixToUse.getSelectedElement().getAnalysisDialog(model));
+                List<ItemAnalysis> analyses = matrixToUse.getSelectedElement().getAnalyses(model);
+                if (analyses.size() == 1) {
+                    model.transitionToDialog(analyses.getFirst().getDialog(model));
+                } else {
+                    final ItemAnalysis[] didAction = new ItemAnalysis[]{null};
+                    List<String> options = MyLists.transform(analyses, ItemAnalysis::getAnalysisType);
+                    options.add("Cancel");
+                    model.setSubView(new ArrowMenuSubView(model.getSubView(), options, xPos, yPos, ArrowMenuSubView.NORTH_WEST) {
+                        @Override
+                        protected void enterPressed(Model model, int cursorPos) {
+                            if (cursorPos < analyses.size()) {
+                                didAction[0] = analyses.get(cursorPos);
+                            }
+                            model.setSubView(getPrevious());
+                        }
+                    });
+                    waitForReturnSilently();
+                    if (didAction[0] != null) {
+                        model.transitionToDialog(didAction[0].getDialog(model));
+                    }
+                }
             }
         }
         return new EveningState(model);

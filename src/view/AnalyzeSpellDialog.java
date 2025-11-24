@@ -19,7 +19,7 @@ public class AnalyzeSpellDialog extends AnalyzeDialog {
     private final List<BeforeAndAfterLine<Double>> content;
 
     public AnalyzeSpellDialog(Model model, Spell spell) {
-        super(model, DIALOG_HEIGHT_BASE);
+        super(model, DIALOG_HEIGHT_BASE, "Cast Chance for");
         this.spell = spell;
         this.content = analyzeCastChance(model, spell);
     }

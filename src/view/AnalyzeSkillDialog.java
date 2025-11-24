@@ -15,16 +15,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class AnalyzeSkillDialog extends AnalyzeDialog {
+public abstract class AnalyzeSkillDialog extends AnalyzeDialog {
 
     private final List<List<BeforeAndAfterLine<Integer>>> content;
-    private final Accessory accessory;
+    private final Item item;
 
-    public AnalyzeSkillDialog(Model model, Accessory accessory) {
-        super(model, 12 + (model.getParty().size()-1) * accessory.getSkillBonuses().size());
-        this.accessory = accessory;
-        content = analyzeSkill(model, accessory.getSkillBonuses());
+    public AnalyzeSkillDialog(Model model, Item item) {
+        super(model, 12 + (model.getParty().size()-1) * item.getSkillBonuses().size(), "Skill Analysis for");
+        this.item = item;
+        content = analyzeSkill(model, item.getSkillBonuses());
     }
+
+    protected abstract Item getClothingOrAccessory(GameCharacter gc);
+
 
     private List<List<BeforeAndAfterLine<Integer>>> analyzeSkill(Model model, List<MyPair<Skill, Integer>> bonuses) {
         List<List<BeforeAndAfterLine<Integer>>> outerResult = new ArrayList<>();
@@ -32,13 +35,10 @@ public class AnalyzeSkillDialog extends AnalyzeDialog {
             List<BeforeAndAfterLine<Integer>> result = new ArrayList<>();
             Skill skill = bonus.first;
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                if (cantEquip(gc, accessory)) {
+                if (item instanceof ArmorItem && cantEquip(gc, (ArmorItem) item)) {
                     result.add(new BeforeAndAfterLine<>(gc.getFirstName(), -1, -1));
                 } else {
-                    int diff = bonus.second;
-                    if (gc.getEquipment().getAccessory() != null) {
-                        diff -= getBonusFor(gc.getEquipment().getAccessory(), skill);
-                    }
+                    int diff = bonus.second - getBonusFor(getClothingOrAccessory(gc), skill);
                     result.add(new BeforeAndAfterLine<>(gc.getFirstName(), gc.getRankForSkill(skill),
                             gc.getRankForSkill(skill) + diff));
                 }
@@ -48,8 +48,11 @@ public class AnalyzeSkillDialog extends AnalyzeDialog {
         return outerResult;
     }
 
-    private int getBonusFor(Accessory accessory, Skill skill) {
-        for (MyPair<Skill, Integer> bonuses : accessory.getSkillBonuses()) {
+    private int getBonusFor(Item item, Skill skill) {
+        if (item == null) {
+            return 0;
+        }
+        for (MyPair<Skill, Integer> bonuses : item.getSkillBonuses()) {
             if (bonuses.first == skill) {
                 return bonuses.second;
             }
@@ -65,7 +68,7 @@ public class AnalyzeSkillDialog extends AnalyzeDialog {
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-        List<DrawableObject> objs = new ArrayList<>(makeHeader(accessory, xStart, yStart));
+        List<DrawableObject> objs = new ArrayList<>(makeHeader(item, xStart, yStart));
         yStart += 9;
         objs.addAll(makeDrawableObjects(content, xStart, yStart));
         return objs;
@@ -75,7 +78,7 @@ public class AnalyzeSkillDialog extends AnalyzeDialog {
         List<DrawableObject> objs = new ArrayList<>();
         for (int i = 0; i < content.size(); ++i) {
             List<BeforeAndAfterLine<Integer>> contentList = content.get(i);
-            Skill skill = accessory.getSkillBonuses().get(i).first;
+            Skill skill = item.getSkillBonuses().get(i).first;
             objs.add(new TextDecoration(skill.getName() + ":", xStart + 2, yStart, MyColors.WHITE, MyColors.BLUE, false));
             yStart++;
             for (BeforeAndAfterLine<Integer> line : contentList) {

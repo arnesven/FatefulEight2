@@ -18,7 +18,7 @@ public class AnalyzeWeaponDialog extends AnalyzeDialog {
     private final Weapon weapon;
 
     public AnalyzeWeaponDialog(Model model, Weapon weapon) {
-        super(model, DIALOG_HEIGHT_BASE);
+        super(model, DIALOG_HEIGHT_BASE, "Damage Analysis");
         this.weapon = weapon;
         this.content = analyzeWeapon(model, weapon);
     }

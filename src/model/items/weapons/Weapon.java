@@ -1,19 +1,20 @@
 package model.items.weapons;
 
 import model.combat.Combatant;
-import model.items.Inventory;
+import model.items.*;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.items.EquipableItem;
-import model.items.Item;
-import model.items.StartingItem;
+import model.items.analysis.DamageAnalysis;
+import model.items.analysis.ItemAnalysis;
 import model.items.imbuements.WeaponImbuement;
 import model.states.CombatEvent;
 import util.MyStrings;
 import view.*;
 import view.party.SelectableListMenu;
 import view.sprites.*;
+
+import java.util.List;
 
 public abstract class Weapon extends EquipableItem {
 
@@ -162,13 +163,8 @@ public abstract class Weapon extends EquipableItem {
     }
 
     @Override
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        return new AnalyzeWeaponDialog(model, this);
-    }
-
-    @Override
-    public String getAnalysisType() {
-        return "Damage Analysis";
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        return List.of(new DamageAnalysis(this));
     }
 
     @Override

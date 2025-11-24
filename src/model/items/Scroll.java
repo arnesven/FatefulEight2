@@ -2,12 +2,15 @@ package model.items;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.items.analysis.ItemAnalysis;
+import model.items.analysis.ScrollAnalysis;
 import model.items.spells.Spell;
 import view.*;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Scroll extends UsableItem {
@@ -92,13 +95,8 @@ public class Scroll extends UsableItem {
     }
 
     @Override
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        return new AnalyzeScrollDialog(model, this);
-    }
-
-    @Override
-    public String getAnalysisType() {
-        return "Cast Chance for";
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        return List.of(new ScrollAnalysis(this));
     }
 
     @Override

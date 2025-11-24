@@ -18,7 +18,7 @@ public class CraftingDesignAnalysisDialog extends AnalyzeDialog {
     private final CraftingDesign design;
 
     public CraftingDesignAnalysisDialog(Model model, CraftingDesign design) {
-        super(model, 12);
+        super(model, 12, "Crafting Chance for");
         this.design = design;
         this.content = analyzeCraftingSuccess(model, design.getCraftable());
     }

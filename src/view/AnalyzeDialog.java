@@ -12,9 +12,11 @@ import java.util.List;
 
 public abstract class AnalyzeDialog extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 25;
+    private final String analysisType;
 
-    public AnalyzeDialog(Model model, int baseHeight) {
+    public AnalyzeDialog(Model model, int baseHeight, String analysisType) {
         super(model.getView(), DIALOG_WIDTH, baseHeight + model.getParty().size());
+        this.analysisType = analysisType;
     }
 
     public abstract List<DrawableObject> getAnalysisDrawableObjects(Model model, Item it, int xStart, int yStart);
@@ -39,9 +41,9 @@ public abstract class AnalyzeDialog extends SelectableListMenu {
 
     }
 
-    protected static List<DrawableObject> makeHeader(Item item, int xStart, int yStart) {
+    protected List<DrawableObject> makeHeader(Item item, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
-        objs.add(new TextDecoration(item.getAnalysisType() + ":", xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
+        objs.add(new TextDecoration(analysisType + ":", xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
         yStart+=2;
         objs.add(new DrawableObject(xStart, yStart++) {
             @Override

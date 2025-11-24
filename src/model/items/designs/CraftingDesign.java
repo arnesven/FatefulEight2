@@ -1,18 +1,17 @@
 package model.items.designs;
 
 import model.Model;
-import model.items.Inventory;
-import model.items.Item;
-import model.items.Prevalence;
-import model.items.WeightlessItem;
+import model.items.*;
+import model.items.analysis.CraftingDesignAnalysis;
+import model.items.analysis.ItemAnalysis;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
 import model.states.dailyaction.CraftItemState;
-import view.AnalyzeDialog;
-import view.CraftingDesignAnalysisDialog;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+
+import java.util.List;
 
 public class CraftingDesign extends WeightlessItem {
     private static final Sprite ARMOR_SPRITE = new ItemSprite(6, 5, MyColors.WHITE, MyColors.BEIGE);
@@ -91,12 +90,7 @@ public class CraftingDesign extends WeightlessItem {
     }
 
     @Override
-    public String getAnalysisType() {
-        return "Crafting Chance for";
-    }
-
-    @Override
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        return new CraftingDesignAnalysisDialog(model, this);
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        return List.of(new CraftingDesignAnalysis(this));
     }
 }

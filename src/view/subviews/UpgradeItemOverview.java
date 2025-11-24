@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.items.Item;
+import model.items.analysis.ItemAnalysis;
 import util.MyStrings;
 import view.AnalyzeDialog;
 import view.BorderFrame;
@@ -17,15 +18,20 @@ public class UpgradeItemOverview extends SubView {
     private final Item fromItem;
     private final Item toItem;
     private final SubView previous;
+    private final String analysisType;
     private List<DrawableObject> analysisDrawableObjects = new ArrayList<>();
 
     public UpgradeItemOverview(Model model, Item fromItem, Item toItem) {
         this.previous = model.getSubView();
         this.fromItem = fromItem;
         this.toItem = toItem;
-        if (toItem.isAnalyzable()) {
-            AnalyzeDialog dialog = toItem.getAnalysisDialog(model);
+        if (toItem.isAnalyzable() && toItem.getAnalyses(model).getFirst().showInUpgradeView()) {
+            ItemAnalysis analysis = toItem.getAnalyses(model).getFirst();
+            this.analysisType = analysis.getAnalysisType();
+            AnalyzeDialog dialog = analysis.getDialog(model);
             analysisDrawableObjects.addAll(dialog.getAnalysisDrawableObjects(model, toItem, 27, 26));
+        } else {
+            this.analysisType = "";
         }
     }
 
@@ -61,7 +67,7 @@ public class UpgradeItemOverview extends SubView {
         }
 
         if (!analysisDrawableObjects.isEmpty()) {
-            BorderFrame.drawCentered(model.getScreenHandler(), toItem.getAnalysisType() + ":", y+8 + parts.length,
+            BorderFrame.drawCentered(model.getScreenHandler(), analysisType + ":", y+8 + parts.length,
                     MyColors.WHITE, MyColors.BLUE);
             for (DrawableObject drobj : analysisDrawableObjects) {
                 drobj.drawYourself(model, drobj.position.x, drobj.position.y + parts.length);

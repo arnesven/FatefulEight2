@@ -7,6 +7,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
+import model.items.analysis.ItemAnalysis;
+import model.items.analysis.SpellAnalysis;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -203,13 +205,8 @@ public abstract class Spell extends Item {
     }
 
     @Override
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        return new AnalyzeSpellDialog(model, this);
-    }
-
-    @Override
-    public String getAnalysisType() {
-        return "Cast Chance for";
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        return List.of(new SpellAnalysis(this));
     }
 
     @Override

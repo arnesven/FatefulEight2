@@ -1,14 +1,14 @@
 package model.items.clothing;
 
-import model.items.Inventory;
+import model.items.*;
 import model.Model;
 import model.characters.GameCharacter;
-import model.items.ArmorItem;
-import model.items.EquipableItem;
-import model.items.Item;
-import model.items.HigherTierClothing;
-import view.AnalyzeArmorDialog;
-import view.AnalyzeDialog;
+import model.items.analysis.ArmorAnalysis;
+import model.items.analysis.ItemAnalysis;
+import model.items.analysis.SkillBonusAnalysis;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Clothing extends EquipableItem implements ArmorItem {
 
@@ -63,18 +63,21 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
 
     @Override
     public boolean isAnalyzable() {
-        return true;
+        return getAP() > 0 || !getSkillBonuses().isEmpty();
     }
 
     @Override
-    public AnalyzeDialog getAnalysisDialog(Model model) {
-        return new AnalyzeArmorDialog(model, this);
+    public List<ItemAnalysis> getAnalyses(Model model) {
+        List<ItemAnalysis> result = new ArrayList<>();
+        if (getAP() > 0) {
+            result.add(new ArmorAnalysis(this));
+        }
+        if (!getSkillBonuses().isEmpty()) {
+            result.add(new SkillBonusAnalysis(this));
+        }
+        return result;
     }
 
-    @Override
-    public String getAnalysisType() {
-        return "Armor Analysis";
-    }
 
     @Override
     public boolean supportsHigherTier() {

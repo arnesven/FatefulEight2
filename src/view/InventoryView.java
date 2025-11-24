@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.horses.HorseItemAdapter;
 import model.items.*;
+import model.items.analysis.ItemAnalysis;
 import model.items.designs.CraftingDesign;
 import model.items.special.StoryItem;
 import model.items.spells.DragonTamingSpell;
@@ -101,9 +102,10 @@ public class InventoryView extends SelectableListMenu {
             int row = innerPrintItemText(model, it.getName() + getExtraForStacking(it),
                     it, rightTabX + 1, y + it.getSpriteSize() + 3);
             row++;
-            if (it.isAnalyzable()) {
-                print(model.getScreenHandler(), rightTabX+1, row++, it.getAnalysisType() + ":");
-                List<DrawableObject> objs = (it.getAnalysisDialog(model)).getAnalysisDrawableObjects(model, it, rightTabX, row);
+            if (it.isAnalyzable() && it.getAnalyses(model).getFirst().showInInventory()) {
+                ItemAnalysis analysis = it.getAnalyses(model).getFirst();
+                print(model.getScreenHandler(), rightTabX+1, row++, analysis.getAnalysisType() + ":");
+                List<DrawableObject> objs = (analysis.getDialog(model)).getAnalysisDrawableObjects(model, it, rightTabX, row);
                 for (DrawableObject obj : objs) {
                     if (obj.position.y >= y + getHeight()) {
                         break;
