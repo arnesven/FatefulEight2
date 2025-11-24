@@ -10,6 +10,7 @@ import model.items.spells.Spell;
 import util.MyStrings;
 import view.AnalyzeArmorDialog;
 import view.AnalyzeDialog;
+import view.AnalyzeSkillDialog;
 
 public abstract class Accessory extends EquipableItem implements ArmorItem {
     public Accessory(String name, int cost) {
@@ -83,11 +84,28 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
 
     @Override
     public AnalyzeDialog getAnalysisDialog(Model model) {
-        return new AnalyzeArmorDialog(model, this);
+        if (canAnalyzeSkills()) {
+            return new AnalyzeSkillDialog(model, this);
+        }
+        if (canAnalyzeArmor()) {
+            return new AnalyzeArmorDialog(model, this);
+        }
+        return null;
+    }
+
+    private boolean canAnalyzeArmor() {
+        return getAP() > 0;
+    }
+
+    private boolean canAnalyzeSkills() {
+        return !getSkillBonuses().isEmpty() && getAP() == 0;
     }
 
     @Override
     public String getAnalysisType() {
+        if (canAnalyzeSkills()) {
+            return "Skill Bonus Analysis";
+        }
         return "Armor Analysis";
     }
 

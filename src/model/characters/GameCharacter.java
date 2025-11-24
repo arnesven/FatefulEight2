@@ -313,8 +313,9 @@ public class GameCharacter extends Combatant {
         if (skill.areEqual(Skill.MagicAny)) {
             int best = 0;
             for (Skill s : Skill.values()) {
-                if (s.isMagic() && internalGetRankForSkill(s) > best) {
-                    best = internalGetRankForSkill(s);
+                int internalRank = internalGetRankForSkill(s);
+                if (s.isMagic() && internalRank > best) {
+                    best = internalRank;
                     skill = s;
                 }
             }

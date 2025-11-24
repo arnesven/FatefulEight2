@@ -105,6 +105,9 @@ public class InventoryView extends SelectableListMenu {
                 print(model.getScreenHandler(), rightTabX+1, row++, it.getAnalysisType() + ":");
                 List<DrawableObject> objs = (it.getAnalysisDialog(model)).getAnalysisDrawableObjects(model, it, rightTabX, row);
                 for (DrawableObject obj : objs) {
+                    if (obj.position.y >= y + getHeight()) {
+                        break;
+                    }
                     obj.drawYourself(model, obj.position.x, obj.position.y);
                 }
             }
