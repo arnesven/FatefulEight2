@@ -5,7 +5,7 @@ Barbarian Prince and various JRPGs.
 
 Features:
 - Manage a party of up to 8 party members.
-- Over 40 preset characters. 20+ Classes, 7 Races.
+- Over 40 preset characters. 20+ Classes, 9 Races.
 - 25+ Skills for your characters to master.
 - Lots of items to equip your characters with.
 - 20+ Quests, 100+ Random Events
@@ -18,5 +18,5 @@ Features:
 - Original soundtrack.
   
 
-Just download the latest release (FatefulEight2.jar) and run it. At least Java 11 is required.
+Just download the latest release (FatefulEight2.jar) and run it. At least Java  is required.
 Enjoy!
