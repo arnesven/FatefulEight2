@@ -69,9 +69,9 @@ public class MerchantEvent extends GeneralInteractionEvent {
                 "need of something. Won't you please have a look?");
         ShopState.pressToEnterShop(this);
         ShopState merchantShop = new ShopState(model, "merchant", items,
-                new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
+                new int[]{items.get(0).getCost()+10, items.get(1).getCost()+10,
                         items.get(2).getCost()-2, items.get(3).getCost()-2,
-                        items.get(4).getCost()+10, items.get(5).getCost()+10}, new boolean[]{true});
+                        items.get(4).getCost()/2, items.get(5).getCost()/2}, new boolean[]{true});
         merchantShop.run(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, apperance, "Merchant");

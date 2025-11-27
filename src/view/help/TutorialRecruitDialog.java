@@ -13,7 +13,7 @@ public class TutorialRecruitDialog extends HelpDialog {
             "and most adventurers don't want to join a too small (or too big) party. " +
             "Furthermore, most are more willing to join if your party is more " +
             "experienced.\n\n" +
-            "New characters never bring more than a basic weapon with them but they sometimes " +
+            "New characters will bring a starting item, a spell or a horse to the party and will sometimes " +
             "contribute a little bit of gold to the party's communal purse.\n\n" +
             "Your party can have at most eight party members, but initially your party can only consist of " +
             "up to four party members. The remaining four slots will be locked until " +

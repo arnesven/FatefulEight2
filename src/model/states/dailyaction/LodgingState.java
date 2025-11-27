@@ -31,7 +31,9 @@ public class LodgingState extends EveningState {
             model.getParty().lodging(EveningState.lodgingCost(model));
             model.getParty().randomPartyMemberSay(model, List.of("I feel rather refreshed.", "I slept well!3",
                     "Nothing is like a good night's sleep.", "That was a delicious dinner.",
-                    "Ahhh, I feel like a person again.", "Can I have a hot bath too?"));
+                    "Ahhh, I feel like a person again.", "I got to sleep in a real bed for once.",
+                    "Can I have a hot bath too?", "It cost a little, but it was worth it.",
+                    "Good food, decent rooms.", "This was a pleasant place. Let's stay here again some time."));
         }
         removePoison(model.getParty());
     }

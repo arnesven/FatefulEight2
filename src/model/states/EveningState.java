@@ -387,6 +387,11 @@ public class EveningState extends GameState {
                 model.getParty().randomPartyMemberSay(model, List.of(
                         "I think I'm lying on a root.#",
                         "This tent is nice, but a bit small.",
+                        "It's peaceful around here.",
+                        "It's so quite. Almost eerily so.",
+                        "I wonder what tomorrow will bring.",
+                        "A good night's sleep will do me well",
+                        "Time for some rest.",
                         "Can somebody feed that fire, it's dying.",
                         "Anybody know a camp story?",
                         "I need some rest.",
