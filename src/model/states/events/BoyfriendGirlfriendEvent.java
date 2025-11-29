@@ -8,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.map.HexLocation;
+import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.tasks.BoyfriendGirlfriendDestinationTask;
 import util.MyRandom;
@@ -86,10 +87,14 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
 
         GameCharacter friendCharacter = new GameCharacter(friendName, randomLastName(), main.getRace(), Classes.None,
                 friend, new CharacterClass[]{Classes.CAP, Classes.ART, Classes.FOR, Classes.MAG});
+        UrbanLocation mainHomeTown = main.getHomeTown(model);
+        if (mainHomeTown instanceof TownLocation) {
+            friendCharacter.setHomeTown(((TownLocation) mainHomeTown).getTownName());
+        }
         int topic = topicChoice(model, main, friendCharacter);
         println("The two keep talking but evening is soon approaching.");
         portraitSay("I'm afraid I need to run along now. It's a been a pleasure seeing you again " + main.getFirstName() +
-                ", won't you please visit me the next time your in town?");
+                ". Won't you please visit me the next time your in town?");
         partyMemberSay(main, "Of course " + friendName + ". I'll make sure to visit you soon again.");
         println(main.getFirstName() + " and " + friendName + " part ways. Each looking back several times, " +
                 "but missing each others' glances.");

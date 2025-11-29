@@ -245,6 +245,8 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
             partyMemberSay(main, "Sure. We can get our own tent.");
             partyMemberSay(friend, "Hehe...");
             findTask(model).setCompleted(true);
+            friend.addToAttitude(main, 10);
+            main.addToAttitude(friend, 10);
         } else {
             leaderSay("Sorry " + friend.getFirstName() + " we can't take you on at the moment.");
             println(friend.getFirstName() + " leaves, visibly annoyed.");

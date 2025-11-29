@@ -64,7 +64,8 @@ public class SupplierNode extends DailyActionNode {
             }
             if (!supplier.isActivated()) {
                 supplierSay("I'm a supplier for this shop. Just dropped off a shipment of " + itemName + ".");
-                leaderSay(MyRandom.sample(List.of("How nice for you.", "Good for you.", "Okay.", "...")));
+                leaderSay(MyRandom.sample(List.of("How nice for you.", "Good for you.", "Okay.", "...",
+                        "Uh-huh?")));
                 return null;
             }
 

@@ -32,7 +32,7 @@ public class FrogmenScoutsEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         println("Suddenly, several frogmen burst out of the bushes around you. Armed with blowpipes, their eyes seemed " +
-                "crazed and their leader barks some commands. Without any attempt att negotiation, the simply attack you!");
+                "crazed and their leader barks some commands. Without any attempt at negotiation, the simply attack you!");
         randomSayIfPersonality(PersonalityTrait.aggressive, new ArrayList<>(), "Let's rip them to pieces!");
         randomSayIfPersonality(PersonalityTrait.anxious, new ArrayList<>(), "Everybody! Be careful!");
         runCombat(List.of(new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'),

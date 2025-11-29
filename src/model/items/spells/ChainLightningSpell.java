@@ -93,9 +93,11 @@ public class ChainLightningSpell extends CombatSpell {
             combat.println("The lightning chained " + split + " times, dealing " + damage + " damage to each target.");
         }
         model.getLog().waitForAnimationToFinish();
-        for (Combatant c : victims){
-            combat.addFloatyDamage(c, damage, DamageValueEffect.MAGICAL_DAMAGE);
-            combat.doDamageToEnemy(c, damage, performer);
+        for (Combatant c : victims) {
+            if (!c.isDead()) {
+                combat.addFloatyDamage(c, damage, DamageValueEffect.MAGICAL_DAMAGE);
+                combat.doDamageToEnemy(c, damage, performer);
+            }
         }
     }
 

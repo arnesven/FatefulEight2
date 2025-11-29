@@ -33,7 +33,7 @@ public class FrogmenProblemQuest extends MainQuest {
     private static final String TEXT = "You've been contracted by a town to take care of a rampart population of " +
             "frogmen. The frogmen have their settlement nearby. You could just wipe them all out, but is there " +
             "something more to this job than meets the eye?";
-    private static final String END_TEXT = "You return to town to report your success. You are rewarded for your service.";
+    private static final String END_TEXT = "You should return to town to report your success, so you can be rewarded for your service.";
     private static final Sprite SWAMP = new Sprite32x32("frogmenswamp", "quest.png", 0x0F,
             MyColors.DARK_BROWN, MyColors.DARK_GREEN, MyColors.TAN, MyColors.GREEN);
     private static final Sprite HUTS = new Sprite32x32("frogmenhuts", "quest.png", 0x1F,

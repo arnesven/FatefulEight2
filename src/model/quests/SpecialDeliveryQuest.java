@@ -90,6 +90,7 @@ public class SpecialDeliveryQuest extends MainQuest {
         StoryJunction story = new StoryJunction(7, 8, new QuestEdge(getSuccessEndingNode())) {
             @Override
             protected void doAction(Model model, QuestState state) {
+                // TODO: Actual potraits
                 state.println("A noble and a constable approaches you.");
                 state.printQuote("Noble", "So he's dead then?");
                 state.printQuote("Constable", "Looks so. We'll clean this mess up.");

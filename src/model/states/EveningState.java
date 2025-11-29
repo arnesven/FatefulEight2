@@ -383,6 +383,7 @@ public class EveningState extends GameState {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
+            // TODO: If party has dog, let it say goodnight!
             if (model.getParty().size() > 1) {
                 model.getParty().randomPartyMemberSay(model, List.of(
                         "I think I'm lying on a root.#",

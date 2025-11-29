@@ -79,7 +79,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
                 heOrShe(vampire.getGender()) + " is up to. If it's just common larceny, we can press charges. " +
                 "If we're dealing with a vampire, please get rid of it!");
         leaderSay("I understand. We'll see what we can do. Where does this noble live?");
-        print("The " + location.getLordTitle() + " gives you direction to the residence of the noble. Do you want to go there now? (Y/N) ");
+        print("The " + location.getLordTitle() + " gives you directions to the residence of the noble. Do you want to go there now? (Y/N) ");
         if (yesNoInput()) {
             leaderSay("We'll head over there right now.");
             portraitSay("Good luck.");
@@ -193,7 +193,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
                 heOrSheCap(location.getLordGender()) + " has contracted us to investigate your recent strange behavior.");
         portraitSay("Ahh... yes, young " + location.getLordName() +
                 "... I remember when " + heOrShe(location.getLordGender()) + " was just a little...");
-        leaderSay("Let's nog get sidetracked here you old " + (vampire.getGender() ? "crone" : "codger") + "!");
+        leaderSay("Let's not get sidetracked here you old " + (vampire.getGender() ? "crone" : "codger") + "!");
         portraitSay("Alright. Yes... I've heard the rumours. " + heOrSheCap(location.getLordGender()) +
                 " thinks I'm a vampire.");
         println("The old noble seems amused.");

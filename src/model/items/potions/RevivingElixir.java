@@ -34,6 +34,7 @@ public class RevivingElixir extends Potion {
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {
+        // TODO: Add animation (reverse of change class)
         gc.addToHP(2);
         return gc.getName() + " has come back to life!";
     }

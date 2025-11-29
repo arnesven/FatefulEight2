@@ -103,7 +103,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
             showExplicitPortrait(model, brigand.getAppearance(), brigand.getName());
             leaderSay("Oh, it's you!");
             leaderSay("What are you up to now?");
-            portraitSay("This is the residence of a high-ranking individual in the Brotherhood. You know about the brotherhood?");
+            portraitSay("This is the residence of a high-ranking individual in the Brotherhood. You know about the Brotherhood?");
             leaderSay("Yeah, we know about them. Are you robbing his house?");
             tellThePlan(model);
         } else {
@@ -150,7 +150,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
                     "For all those unable, I settle the score.");
             partyMemberSay(other, "Nice, it rhymes.");
             leaderSay("So you fight for the little guy. Good for you. Why are you breaking into this mansion?");
-            portraitSay("This is the residence of a high-ranking individual in the Brotherhood. You know about the brotherhood?");
+            portraitSay("This is the residence of a high-ranking individual in the Brotherhood. You know about the Brotherhood?");
             partyMemberSay(other, "Yeah, we know about them. Are you robbing his house?");
             println("The Brigand looks with suspicion on the party.");
             portraitSay("Hey! I'm no common cat burglar. I... I'm not sure I can trust you actually.");
@@ -185,7 +185,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
     }
 
     private void tellThePlan(Model model) {
-        portraitSay(" This individual has a particularly rare and expensive piece of art " +
+        portraitSay("This individual has a particularly rare and expensive piece of art " +
                 "stored away in the basement. I'm going to steal it. You look like the capable sort. Do you want to help me do it?");
         print("Do you want to accompany the Brigand into the mansion (Y/N) ");
         if (yesNoInput()) {

@@ -646,7 +646,7 @@ public class Party implements Serializable {
         }
         model.getSpellHandler().unacceptSkillBoostingSpells(skill);
         List<GameCharacter> failers = new ArrayList<>();
-        for (GameCharacter gc : partyMembers) {
+        for (GameCharacter gc : partyMembers) { // TODO: Random order and abandon when on first fail
             if (!bench.contains(gc)) {
                 SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
                 if (!individualResult.isSuccessful()) {

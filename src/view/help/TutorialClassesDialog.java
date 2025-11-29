@@ -9,9 +9,9 @@ import java.util.List;
 
 public class TutorialClassesDialog extends ExpandableHelpDialog {
     private static final String text =
-            "A character's class defines that characters baseline of Health Points and Speed, " +
+            "A character's class defines that character's baseline of Health Points and Speed, " +
             "their skills and whether or not that character can wear heavy armor. A character's " +
-            "class also affects how much gold they contribute to the party when joining and " +
+            "class also affects starting items and how much gold they contribute to the party when joining and " +
             "how much gold they would claim if being dismissed.\n\n" +
             "The Skill Weights (denoted W1, W2 etc.) indicate how a character's ranks in a skill will increase each " +
             "level. See the Skills Chapter for details.\n\n" +

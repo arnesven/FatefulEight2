@@ -146,6 +146,8 @@ public abstract class RitualEvent extends DailyEventState {
             beams.clear();
             println("The ritual has failed");
         } else if (ritualSucceeded()) {
+            // TODO: Show callout from one of the mages
+            // Let bystanders comment. Also in fail above.
             subView.setRitualSuccess(true);
             println("The ritual has succeeded!");
         }

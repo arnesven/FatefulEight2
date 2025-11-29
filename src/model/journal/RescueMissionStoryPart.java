@@ -139,7 +139,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 portraitSay("Very unfortunate, but I'm afraid we can't...");
                 leaderSay("Sorry to interrupt you, but you owe the " + town.getLordTitle() + " of " + town.getTownName() +
                         " some money. Am I right?");
-                leaderSay("That's correct.");
+                portraitSay("That's correct.");
                 leaderSay("I've been authorized to collect a debt of " + InitialStoryPart.REWARD_GOLD +
                         " gold, as payment for the resolving the frogmen problem.");
                 portraitSay("Hmm, that seems plausible. Let me just get my purse.");

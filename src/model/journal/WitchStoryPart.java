@@ -153,7 +153,7 @@ public class WitchStoryPart extends StoryPart {
                 leaderSay("Excuse " + meOrUs() + "...");
                 portraitSay("My hat is old, my teeth are gold... I have a bird I like to hold.");
                 leaderSay("EXCUSE " + meOrUs().toUpperCase() + "!");
-                portraitSay("Yes, my goodness. Some people are just noisy arent they!");
+                portraitSay("Yes, my goodness. Some people are just noisy aren't they!");
                 notLeaderSay("Is she talking to us?");
                 leaderSay("We've been told we could find a wise person here.");
                 portraitSay("Who told you that?");

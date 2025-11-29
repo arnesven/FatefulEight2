@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class AdvancedCalloutSprite extends CalloutSprite {
     private static final int MAX_CALLOUT_WIDTH = 20;
-    private static final int MAX_ROWS = 4;
+    private static final int MAX_ROWS = 4; // TODO: Perhaps increase this to 5?
     private String[] textRows;
 
     private static final Sprite[][] calloutBorders = makeBorderSprites();
@@ -19,7 +19,7 @@ public class AdvancedCalloutSprite extends CalloutSprite {
 
     public AdvancedCalloutSprite(String text) {
         super(0, text.length()*4);
-        if (text.endsWith("#") ||text.endsWith("3")) {
+        if (text.endsWith("#") || text.endsWith("3")) {
             text = text.substring(0, text.length()-1);
         } else if (text.endsWith("^")) {
             text = "Level Up!";
