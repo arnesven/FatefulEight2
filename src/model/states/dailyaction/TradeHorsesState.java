@@ -91,7 +91,7 @@ public class TradeHorsesState extends GameState {
         }
 
         Horse horse = subView.getSelectedHorse();
-
+        // TODO: Add haggling
         String rest = " You can have " + himOrHer(horse.getGender()) + " for " + horse.getCost() + " gold.";
         printQuote(STABLE_MASTER_NAME, MyRandom.sample(List.of("Oh the " + horse.getName() + ". A fine creature.",
                 "Interested in the " + horse.getName() + "?", "Yes, the " + horse.getName() + "...",

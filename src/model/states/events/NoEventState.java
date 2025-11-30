@@ -10,6 +10,6 @@ public class NoEventState extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("No event today.");
+        println("No event today."); // TODO: Should probably remove this and always use "silent"
     }
 }

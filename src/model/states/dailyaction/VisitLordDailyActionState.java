@@ -196,7 +196,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                     leaderSay("I'm afraid it's a little over our budget.");
                     portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
                 } else {
-                    print("Buy the house? (Y/N) ");
+                    print("Buy the house? (Y/N) "); // TODO: Add haggling
                     if (yesNoInput()) {
                         if (model.getParty().getHeadquarters() == null) {
                             leaderSay("Okay. We'll take it.");

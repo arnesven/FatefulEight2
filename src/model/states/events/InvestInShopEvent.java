@@ -19,6 +19,8 @@ public class InvestInShopEvent extends DailyEventState {
     private static final String INVEST_GOLD_PREFIX = "INVESTED_IN_SHOP_GOLD";
     private static final double EXPONENT = 1.25;
 
+    // TODO: Fix bug that when you collect on your investment the "day" resets.
+
     public InvestInShopEvent(Model model) {
         super(model);
     }

@@ -10,7 +10,7 @@ import model.states.RecruitState;
 import java.util.List;
 
 public class WillisEndingEvent extends DailyEventState {
-    private static final String RECRUIT_FLAG = "WILLIS_RECRUITABLE";
+    private static final String RECRUIT_FLAG = "WILLIS_RECRUITABLE"; // TODO: change to "WILLIS_RECRUITED"
     private final CharacterAppearance portrait;
 
     public WillisEndingEvent(Model model, CharacterAppearance willisPortrait) {
@@ -19,13 +19,11 @@ public class WillisEndingEvent extends DailyEventState {
     }
 
     public static boolean canWillisBeRecruited(Model model) {
-        return !model.getParty().getPartyMembers().contains(model.getMainStory().getWillisCharacter()) &&
-                model.getSettings().getMiscFlags().containsKey(RECRUIT_FLAG);
+        return !model.getSettings().getMiscFlags().containsKey(RECRUIT_FLAG);
     }
 
     @Override
     protected void doEvent(Model model) {
-        model.getSettings().getMiscFlags().put(RECRUIT_FLAG, true);
         println("You return to the library. Willis is ecstatic.");
         showExplicitPortrait(model, portrait, "Willis");
         portraitSay("I've never had this much help. Just think what this place will become now, " +
@@ -50,6 +48,7 @@ public class WillisEndingEvent extends DailyEventState {
         removePortraitSubView(model);
         setCurrentTerrainSubview(model);
         if (model.getParty().getPartyMembers().contains(willis)) {
+            model.getSettings().getMiscFlags().put(RECRUIT_FLAG, true);
             leaderSay("Good to have you with us Willis.");
             partyMemberSay(willis, "Hope I can be of help.");
         } else {
