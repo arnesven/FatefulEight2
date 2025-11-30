@@ -62,7 +62,8 @@ public class PartyCookingEvent extends DailyEventState {
                     } else {
                         model.getParty().partyMemberSay(model, gc,
                                 List.of("Yummy!", "Can I have some more?", "Ah, what lovely seasoning!<3",
-                                        "Perfection!<3", "So creamy!", "This is my favorite food."));
+                                        "Perfection!<3", "So creamy!", "This is my favorite food.",
+                                        "A secret recipe?", "Lovely."));
                     }
                     gc.addToAttitude(cooker, diff);
                     cooker.addToAttitude(gc, diff/2);

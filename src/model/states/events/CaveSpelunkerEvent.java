@@ -75,7 +75,7 @@ public class CaveSpelunkerEvent extends DailyEventState {
         println("You're taking a short break at the side of the path when a " +
                 "sudden rustling of bushes startles you. Suddenly a " + who + " crawls out of the underbrush.");
         leaderSay("Who... don't sneak up on us like that!");
-        println(heOrSheCap(gender) + " looks completely emaciated. When " + heOrShe(gender) + " tries to stand and is struggling to stand up.");
+        println(heOrSheCap(gender) + " looks completely emaciated. " + heOrSheCap(gender) + " tries to stand but is struggling to even get up.");
         CharacterAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER, race, gender);
         showExplicitPortrait(model, appearance, "Spelunker");
         portraitSay("Water... food... please help me...");

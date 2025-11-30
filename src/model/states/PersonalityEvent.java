@@ -60,7 +60,9 @@ public class PersonalityEvent extends DailyEventState {
             return;
         }
         innerEvent.doTheEvent(model);
+        System.out.println("Saving to miscFlags: " + KEY_PREFIX + innerEvent.getMainCharacter().getName());
         model.getSettings().getMiscFlags().put(KEY_PREFIX + innerEvent.getMainCharacter().getName(), true);
+        System.out.println("Saving to miscFlags: " + KEY_PREFIX + innerEvent.getTrait().toString());
         model.getSettings().getMiscFlags().put(KEY_PREFIX + innerEvent.getTrait().toString(), true);
     }
 
