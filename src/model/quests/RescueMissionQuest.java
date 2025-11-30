@@ -394,7 +394,7 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("Nothing! I'm just a peasant.");
             leaderSay("Yeah right. You're dressed as a bandit and you were keeping a lookout. Tell us the " +
                     "truth, you are a bandit belonging to 'the Vermin' gang, right?");
-            portraitSay("Me, a vermin? Hah! We wiped those losers out weeks ago.");
+            portraitSay("Me, a Vermin? Hah! We wiped those losers out weeks ago.");
             leaderSay("So you are a bandit?");
             println("The bandit girl seems embarrassed.");
             portraitSay("Uhm yes...");
