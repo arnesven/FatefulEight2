@@ -46,10 +46,12 @@ public class SouthernCrossSpell extends ImmediateSpell {
                 int hpBefore = gc.getHP();
                 gc.addToHP(8 + getMasteryLevel(caster) * 2);
                 int totalRecovered = gc.getHP() - hpBefore;
-                state.println(gc.getName() + " recovers " + totalRecovered + " HP!");
-                model.getParty().partyMemberSay(model, gc,
-                        List.of("Thank you so much!3", "Much obliged!3",
-                                "I really needed that!3", "Aah, I feel great!3"));
+                if (totalRecovered > 0) {
+                    state.println(gc.getName() + " recovers " + totalRecovered + " HP!");
+                    model.getParty().partyMemberSay(model, gc,
+                            List.of("Thank you so much!3", "Much obliged!3",
+                                    "I really needed that!3", "Aah, I feel great!3"));
+                }
                 gc.removeCondition(PoisonCondition.class);
                 gc.removeCondition(BleedingCondition.class);
                 gc.removeCondition(BurningCondition.class);

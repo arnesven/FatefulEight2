@@ -14,7 +14,7 @@ import view.sprites.Sprite;
 
 public class TransfigurationSpell extends CombatSpell {
     private static final Sprite SPRITE = new GreenSpellSprite(0, true);
-
+    // TODO: Tougher enemies should be able to resist.
     public TransfigurationSpell() {
         super("Transfiguration", 28, MyColors.GREEN, 10, 3);
     }

@@ -18,6 +18,7 @@ import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FishingState extends GameState {
@@ -90,7 +91,8 @@ public class FishingState extends GameState {
             GameStatistics.recordMaximumFish(fish.getWeight());
             partyMemberSay(fisher, "Oh, it's a " + fish.getName().toLowerCase() + ".");
             if (model.getParty().size() > 1 && fish.getWeight() > 1500) {
-                partyMemberSay(model.getParty().getRandomPartyMember(fisher), "Nice catch!");
+                partyMemberSay(model.getParty().getRandomPartyMember(fisher),
+                        MyRandom.sample(List.of("Nice catch!", "That's a big one.", "Wow! Big!")));
             }
             print("Do you want to convert the " + fish.getName().toLowerCase() + " into " +
                     fish.getRations() + " rations? (Y/N) ");

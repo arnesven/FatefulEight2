@@ -22,7 +22,7 @@ public abstract class StaminaCombatAbility extends SpecialAbilityCombatAction {
 
     @Override
     public final void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (target instanceof GameCharacter) {
+        if (target instanceof GameCharacter) { // TODO: But riposte you do on yourself...
             combat.println("You can't do a " + getName() + " on a friendly character!");
             takeAnotherAction = true;
         } else if (performer.getSP() > 0) {

@@ -18,7 +18,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 35;
     private static final int DIALOG_HEIGHT = 41;
     private String title = "";
-    private String text = "";
+    private String text = ""; // TODO: This dialog appears "scrolled down" so that the first part can't be seen, why?
     private static final String ENDING_TEXT =
             "You have achieved marvelous things. You have explored the world. " +
             "You have defeated mighty foes. You have done many good deeds " +

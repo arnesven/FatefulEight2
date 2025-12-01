@@ -105,6 +105,7 @@ public class Model {
             }
             state = getCurrentHex().getDailyActionState(this);
             System.out.println("Loading from file, setting state to " + state);
+            System.out.println("Load time is: " + gameData.loadTime.toString());
             log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
         } catch (FileNotFoundException | CorruptSaveFileException ex) {
@@ -372,7 +373,11 @@ public class Model {
     public void saveToFile(String filename) {
         try {
             gameData.logContent = log.getContents();
-            gameData.milliSecondsPlayed += (new Date()).getTime() - gameData.loadTime.getTime();
+            Date now = new Date();
+            long millisPlayedThisTime = now.getTime() - gameData.loadTime.getTime();
+            System.out.println("Saving... seconds played: " + (millisPlayedThisTime / 1000));
+            gameData.milliSecondsPlayed += millisPlayedThisTime;
+            gameData.loadTime = now;
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename + "_save.ff8"));
             oos.writeObject(gameData);
             oos.close();

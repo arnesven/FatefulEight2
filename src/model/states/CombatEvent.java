@@ -87,6 +87,11 @@ public class CombatEvent extends DailyEventState {
         this.advantage = advantage;
         this.sneakAttackers = new ArrayList<>();
         combatStats = new CombatStatistics();
+        if (advantage == CombatAdvantage.Party) {
+            GameStatistics.incrementSurpriseCombats();
+        } else if (advantage == CombatAdvantage.Enemies) {
+            GameStatistics.incrementAmbushCombats();
+        }
     }
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {

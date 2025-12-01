@@ -66,7 +66,7 @@ public class CorpseObject extends CenterDungeonObject {
                     type = "this " + type;
                 }
                 state.println("You found a map of " + type + "!");
-                state.mapsFound(state.getCurrentLevel());
+                state.mapsFound(state.getCurrentLevel()); // TODO: small chance of revealing a level below.
                 for (int i = 0; i <= state.getCurrentLevel(); ++i) {
                     for (DungeonRoom room : state.getDungeon().getLevel(i).getRoomList()) {
                         room.setRevealedOnMap(true);

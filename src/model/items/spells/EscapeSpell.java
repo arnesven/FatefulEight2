@@ -15,7 +15,7 @@ public class EscapeSpell extends CombatSpell {
     public EscapeSpell() {
         super("Escape", 24, MyColors.BLUE, 7, 2, true);
     }
-
+    // TODO: This spell caused stack overflow when cast in quest.
     @Override
     protected Sprite getSprite() {
         return SPRITE;

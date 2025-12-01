@@ -106,8 +106,8 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                 public void drawDecorations(Model model, int x, int y) {
                     if (data != null) {
                         int seconds = (int) (data.milliSecondsPlayed / 1000);
-                        int hours = seconds / 60 / 60;
-                        seconds -= hours * 60 * 60;
+                        int hours = seconds / (60 * 60);
+                        seconds -= hours * (60 * 60);
                         int minutes = seconds / 60;
                         seconds -= minutes * 60;
                         String title = data.party.getLeader().getName() + "'s Company, DAY " + data.day + ". Time " +
