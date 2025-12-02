@@ -35,7 +35,7 @@ public abstract class RiverEvent extends DailyEventState {
         if (levitate && levitateSpell != null) {
             print("Would you like to attempt to levitate the party across the river? (Y/N) ");
             if (yesNoInput()) {
-                levitateAcross(model, levitateSpell);
+                levitateAcross(model, levitateSpell); // TODO: eventPreventsCrossing may still return false though...
                 return;
             }
         }
@@ -49,7 +49,7 @@ public abstract class RiverEvent extends DailyEventState {
         GameCharacter caster = model.getParty().getPartyMember(0);
         while (!charsToLevitate.isEmpty()) {
             println("There are still " + charsToLevitate.size() + " party member(s) to levitate across the river.");
-            print("Who do you want to levitate across the river? ");
+            print("Who do you want to levitate across the river? "); // TODO: Make it more clear who is on which side of the river
             GameCharacter target = model.getParty().partyMemberInput(model, this, charsToLevitate.get(0));
             print("Who do you want to cast the levitate spell? ");
             caster = model.getParty().partyMemberInput(model, this, caster);

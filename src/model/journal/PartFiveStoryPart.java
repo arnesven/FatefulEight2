@@ -23,6 +23,7 @@ import model.states.GameState;
 import model.states.QuestState;
 import model.states.dailyaction.TownDailyActionState;
 import util.MyLists;
+import util.MyStrings;
 import view.JournalView;
 import view.LogView;
 import view.subviews.CollapsingTransition;
@@ -138,7 +139,7 @@ public class PartFiveStoryPart extends StoryPart {
             model.getLog().waitForAnimationToFinish();
             showLord(model);
             portraitSay("My friends, welcome back.");
-            leaderSay(castle.getLordTitle() + ", we've vanquished the spirit of the Quad!");
+            leaderSay(MyStrings.capitalize(castle.getLordTitle()) + ", we've vanquished the spirit of the Quad!");
             portraitSay("Indeed? Then why have our borders been overrun with orcish hordes?");
             leaderSay("That... that can't be. I assure you, the enemy has been beaten.");
             portraitSay("Hmmm...");

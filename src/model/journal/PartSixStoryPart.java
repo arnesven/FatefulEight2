@@ -277,11 +277,11 @@ public class PartSixStoryPart extends StoryPart {
                     "What's all this about really?");
             String direction = model.getMainStory().getExpandDirectionName().toLowerCase();
             println("You spend some time filling Everix in on what you've found out about " +
-                    "the crimson pearl and the quad. You tell about your adventures at the Ancient Stronghold," +
+                    "the crimson pearl and the Quad. You tell about your adventures at the Ancient Stronghold," +
                     " and the latest events at " + castle.getName() + ", including your encounter with Damal the advisor " +
                     "and Damal's story about the mysterious envoy from the " + direction + ".");
             portraitSay("That's quite the tale. And now you can add 'escaped from prison' to the end of it. " +
-                    castle.getLordName() + "'s men will be looking high and lo for you now. Your probably the most wanted " +
+                    castle.getLordName() + "'s men will be looking high and low for you now. Your probably the most wanted " +
                     "individuals in the kingdom.");
             leaderSay("Somehow we have to set this right. Any advice on where to go from here?");
             portraitSay("Let's stay clear of urban areas, unless you want to go back to jail. " +

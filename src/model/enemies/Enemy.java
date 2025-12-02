@@ -251,7 +251,9 @@ public abstract class Enemy extends Combatant {
         if (damage > 0 && getDamageReduction() > 0 && !hasCondition(ErodeCondition.class)) {
             int hpBefore = getHP();
             super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()), damager);
-            combatEvent.printAlert("Damage was reduced by " + (damage - (hpBefore - getHP())) + "!");
+
+            int damageReduction = Math.max(getDamageReduction(), (damage - (hpBefore - getHP())));
+            combatEvent.printAlert("Damage was reduced by " + damageReduction + "!");
         } else {
             super.takeCombatDamage(combatEvent, damage, damager);
         }

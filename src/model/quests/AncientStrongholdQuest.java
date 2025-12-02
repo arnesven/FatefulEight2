@@ -529,6 +529,7 @@ public class AncientStrongholdQuest extends MainQuest {
             if (state.yesNoInput()) {
                 state.println("You slowly step into the chamber. There are lots of people here but also ghostly specters. " +
                         "Some of them notice you and start whispering to one another.");
+                // TODO: Add cool portrait
                 state.printQuote("Spirit of the Quad",
                         "Ah, finally, I was wondering if you would come for a visit.");
             } else {

@@ -69,7 +69,7 @@ public class SitInDungeonState extends GameState {
             partyMemberSay(other, "What in the world just happened? Has " + castle.getLordName() + " lost " +
                     hisOrHer(castle.getLordGender()) + " mind?");
             leaderSay("Maybe. " + heOrShe(castle.getLordGender()) + " seemed completely different...");
-            partyMemberSay(other, "In chance we can get out of here?");
+            partyMemberSay(other, "Any chance we can get out of here?");
             leaderSay("I saw a lot of other prisoners in the cells on our way in here.");
             partyMemberSay(other, "What do you mean by that?");
             leaderSay("I mean, either the " + castle.getLordTitle() + " has been very busy imprisoning people, " +

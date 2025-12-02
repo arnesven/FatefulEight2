@@ -9,7 +9,8 @@ public class CombatProwessAbilityHelpChapter extends SubChapterHelpDialog {
             "directed toward other targets if the character possesses the Combat Prowess ability. " +
             "A character must have reached level " + CombatProwessAbility.REQUIRED_LEVEL +
             " and needs at least " +
-            CombatProwessAbility.REQUIRED_ACROBATICS_RANKS + " to use Combat Prowess.\n\n" +
+            CombatProwessAbility.REQUIRED_ACROBATICS_RANKS + " ranks of Acrobatics Skill " +
+            "to use Combat Prowess.\n\n" +
             "Other targets are randomly selected from enemies still remaining in the combat.";
 
     public CombatProwessAbilityHelpChapter(GameView view) {
