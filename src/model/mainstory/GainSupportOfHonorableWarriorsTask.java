@@ -239,7 +239,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             portraitSay("You don't belong here outsider. What's your business?");
             leaderSay("We've come to conduct diplomatic negotiations with your people. Who among you do you call leader?");
             portraitSay("Our Lord Shingen rules this land. But he will surely not see a lowly outsider as yourself.");
-            leaderSay("Why not? " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."));
+            leaderSay("Why not, " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."));
             portraitSay("Nevertheless, I'm sure our lord will not meet with you. " +
                     "You had better go see old Miko, he is wise and knows most about western affairs among us. He will advise you.");
             print("Do you follow the villager to Miko's home? (Y/N) ");
@@ -282,7 +282,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                     portraitSay("Greetings travellers, what is your business in our peaceful town?");
                     leaderSay("We've come to conduct diplomatic negotiations with your people. Who among you do you call leader?");
                     portraitSay("Our Lord Shingen rules this land. But he will surely not see a lowly outsider as yourself.");
-                    leaderSay("Why not? " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."));
+                    leaderSay("Why not, " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."));
                     portraitSay("Nevertheless, I'm sure our lord will not meet with you.");
                 } else {
                     leaderSay("Yes, urgent indeed.");
@@ -295,7 +295,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 leaderSay("Yes. Arkvale is in a state of turmoil at the moment. And the people there are suffring. " +
                         "That's actually the reason we've travelled to this land.");
                 portraitSay("Oh? Go on.");
-                leaderSay(iOrWeCap() + " believe an evil force has corrupted the regent in Arkvale. " + imOrWere() + " rallying the " +
+                leaderSay(iOrWeCap() + " believe an evil force has corrupted the regent in Arkvale. " + imOrWereCap() + " rallying the " +
                         "neighboring kingdoms to depose them. But we also need the support of your people.");
                 portraitSay("I understand, it's a noble cause, and Shingen does not have a heart of stone. But it will " +
                         "require some kind of act to prove that your intentions are honorable.");
@@ -353,7 +353,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                         "very fine weapons. One of those should be suitable for lord Shingen.");
                 leaderSay("Sounds ideal. Is it far?");
                 portraitSay("The trip takes a day or two.");
-                leaderSay(imOrWere() + " off then.");
+                leaderSay(imOrWereCap() + " off then.");
                 if (doesShingenLikeInscriptions()) {
                     portraitSay("Make sure you get a weapon with an inscription, that will please Lord Shingen.");
                 } else {

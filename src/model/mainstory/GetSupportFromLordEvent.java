@@ -79,7 +79,7 @@ public abstract class GetSupportFromLordEvent extends VisitLordEvent {
                 "that upcoming battle, or I fear my whole kingdom will be overrun. If you could travel to the front line and " +
                 "ensure the positive outcome of the battle, then I'll be happy to back you in your quest to bring down " + kingdom.getLordName() + ".");
         leaderSay("I understand.");
-        portraitSay("Once the threat of the " + getShortThreatDescription(kingdom) +
+        portraitSay("Once the threat of " + getShortThreatDescription(kingdom) +
                 " has been dealt with, I'll send my elite troops to rendezvous with you near " + kingdom.getPlaceName() + ".");
         leaderSay("Thank you, you won't regret this.");
         portraitSay("Good bye, and good luck!");

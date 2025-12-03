@@ -136,7 +136,7 @@ public class SingerAssassinationEndingEvent extends AssassinationEndingEvent {
             portraitSay("Message received, loud and clear. I'm outta here.");
             return true;
         }
-        partyMemberSay(gc, imOrWere() + " like the strongest, toughest ever. Fight " + meOrUs() + ", and you'll be sorry!");
+        partyMemberSay(gc, imOrWereCap() + " like the strongest, toughest ever. Fight " + meOrUs() + ", and you'll be sorry!");
         portraitSay("Yeah, yeah. Super scary. Not.");
         return false;
     }

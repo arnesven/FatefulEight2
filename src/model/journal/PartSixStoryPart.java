@@ -358,7 +358,7 @@ public class PartSixStoryPart extends StoryPart {
             portraitSay("Not necessarily. Right now " + CastleLocation.placeNameShort(castle.getPlaceName()) + "'s neighboring kingdoms " +
                     "are being subjected to " + castle.getLordName() + "'s spies and agents, as well as scores of fugitives. " +
                     "And I hear the orcish raids have spread to other kingdoms while mysteriously stopped in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ". " +
-                    "I don't think those rulers are so happy with " + castle.getLordTitle() + " " + castle.getLordName() + " right now.");
+                    "I don't think those rulers are so happy with " + castle.getLordName() + " right now.");
             said = randomSayIfPersonality(PersonalityTrait.intellectual, List.of(), "We could seize the opportunity and win them to our cause.");
             if (!said) {
                 leaderSay("How does that help us?");
@@ -366,7 +366,7 @@ public class PartSixStoryPart extends StoryPart {
             }
             portraitSay("Have them lend us some support, maybe even some armed forces. With them on our side we should be " +
                     "able to stage a big enough diversion that a small assault on " + castle.getPlaceName() + " could be successful. Then you could finally confront " +
-                    castle.getLordTitle() + " " + castle.getLordName() + " and track down our mystery woman.");
+                    castle.getLordName() + " and track down our mystery woman.");
             leaderSay("Perhaps... It seems risky.");
             showEverix(model);
             portraitSay("You could even the odds a bit. You could try to gain the support of the " + model.getMainStory().getRemotePeopleName() + ".");

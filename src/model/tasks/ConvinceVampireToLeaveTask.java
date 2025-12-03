@@ -182,9 +182,9 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
             SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, model.getParty().getLeader(),
                     Skill.Persuade, 8, 10, 0);
             if (result.isSuccessful()) {
-                leaderSay(imOrWere() + " from a society of historians. We want to document the heraldry of this town.");
+                leaderSay(imOrWereCap() + " from a society of historians. We want to document the heraldry of this town.");
             } else {
-                leaderSay(imOrWere() + " from the fire brigade, here to check the fire safety of your house.");
+                leaderSay(imOrWereCap() + " from the fire brigade, here to check the fire safety of your house.");
             }
             portraitSay("That's ridiculous. You just look like a bunch of brigands.");
             leaderSay("Fine...");

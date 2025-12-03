@@ -107,7 +107,7 @@ public class ElvenHighCouncilQuest extends Quest {
                 new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(0).get(1), QuestEdge.VERTICAL)),
                 "What if we get the elves a bribe... uh... I mean a gift. " +
-                "To break the ice, who doesn't like presents?");
+                "To break the ice. Who doesn't like presents?");
         QuestDecisionPoint qdp = new QuestDecisionPoint(3, 2,
                 List.of(new QuestEdge(scenes.get(1).get(0), QuestEdge.VERTICAL),
                         new QuestEdge(scenes.get(1).get(1)),
@@ -207,7 +207,7 @@ public class ElvenHighCouncilQuest extends Quest {
                 state.println("The elven nobles seem to relax a little as " + talker.getFirstName() + ", an elf, steps forward to speak.");
                 bonus = 2;
             } else {
-                state.println("The elven nobles seem tense and suspicious " + talker.getFirstName() + ", a non-elf, steps forward to speak.");
+                state.println("The elven nobles seem tense and suspicious as " + talker.getFirstName() + ", a non-elf, steps forward to speak.");
             }
             SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, talker, Skill.Persuade, diff, 20, bonus);
             model.getSpellHandler().unacceptSkillBoostingSpells(Skill.Persuade);
