@@ -252,6 +252,7 @@ public class CommandOutpostDailyEventState extends DailyEventState {
             }
             GameCharacter gc = model.getParty().getPartyMember(gci);
             SkillCheckResult result = gc.testSkill(model, Skill.Search);
+            Item equipment = null;
             if (result.getModifiedRoll() < 5) {
                 state.println(gc.getName() + " finds nothing.");
             } else if (result.getModifiedRoll() < 7) {
@@ -259,15 +260,19 @@ public class CommandOutpostDailyEventState extends DailyEventState {
                 model.getParty().getInventory().addToMaterials(materials);
                 state.println(gc.getName() + " finds " + materials + " materials.");
             } else if (result.getModifiedRoll() < 10) {
-                Item equipment = generateCombatEquipment();
+                equipment = generateCombatEquipment();
                 state.println(gc.getName() + " finds a " + equipment.getName() + ".");
             } else {
-                Item equipment = generateNiceCombatEquipment();
+                equipment = generateNiceCombatEquipment();
                 state.println(gc.getName() + " finds " + equipment.getName() + "!");
                 state.partyMemberSay(gc, MyRandom.sample(List.of("Lucky!", "Wow. Nice!", "A good find.",
                         "Better not let this go to waste.", "This belongs to me now.",
                         "Rather good quality item this.", "Jackpot!")));
 
+            }
+            if (equipment != null) {
+                // TODO: Make higher tier if it should be.
+                equipment.addYourself(model.getParty().getInventory());
             }
         }
     }

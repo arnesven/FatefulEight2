@@ -31,7 +31,7 @@ public class EnemyPoisonCondition extends Condition {
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         state.println(comb.getName() + " takes suffers 1 damage from the effects of the poison.");
-        if (state instanceof CombatEvent) {
+        if (state instanceof CombatEvent) { // TODO: This damage should not be reduced by enemy DR.
             ((CombatEvent) state).doDamageToEnemy(comb, 1, caster);
             ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.MAGICAL_DAMAGE);
         } else {
