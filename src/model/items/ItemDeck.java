@@ -323,6 +323,7 @@ public class ItemDeck extends ArrayList<Item> {
         // FEATURE: Horse Racing 101
         // FEATURE: Runny Card Game for Dummies
         // FEATURE: Battle Tactics Basics
+        // FEATURE: Magical Dueling Dos and Don'ts
     }
 
     public static List<Weapon> allWeapons() {
