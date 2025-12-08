@@ -627,43 +627,11 @@ public class Party implements Serializable {
     }
 
     public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {
-        GameStatistics.incrementCollectiveSkillChecks(1);
-        difficulty = SkillChecks.adjustDifficulty(model, difficulty);
-        event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
-        model.getTutorial().skillChecks(model);
-        while (true) {
-            model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
-            try {
-                event.waitForReturn(true);
-                break;
-            } catch (SpellCastException spe) {
-                if (spe.getSpell() instanceof SkillBoostingSpell) {
-                    spe.getSpell().castYourself(model, event, spe.getCaster());
-                } else {
-                    throw spe;
-                }
-            }
-        }
-        model.getSpellHandler().unacceptSkillBoostingSpells(skill);
-        List<GameCharacter> failers = new ArrayList<>();
-        for (GameCharacter gc : partyMembers) { // TODO: Random order and abandon when on first fail
-            if (!bench.contains(gc)) {
-                SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
-                if (!individualResult.isSuccessful()) {
-                    failers.add(gc);
-                }
-            }
-        }
-        if (failers.isEmpty()) {
-            event.println("Each party member successfully completed the skill check!");
-        } else {
-            event.println("The collective skill check has failed.");
-        }
-        return failers;
+        return SkillChecks.doGeneralCollectiveSkillCheck(model, event, skill, difficulty, false);
     }
 
     public boolean doCollectiveSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
-        return doCollectiveSkillCheckWithFailers(model, event, skill, difficulty).isEmpty();
+        return SkillChecks.doGeneralCollectiveSkillCheck(model, event, skill, difficulty, true).isEmpty();
     }
 
     public SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {

@@ -5,13 +5,19 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.StaminaRecoveryItem;
+import model.items.spells.SkillBoostingSpell;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
+import model.states.SpellCastException;
 import model.states.events.CheckForVampireEvent;
 import util.MyLists;
 import util.MyRandom;
 import view.InventoryView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SkillChecks {
     public static SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event,
@@ -88,5 +94,47 @@ public class SkillChecks {
             performer.getEquipment().setWeapon(new UnarmedCombatWeapon());
         }
         return damage;
+    }
+
+    public static List<GameCharacter> doGeneralCollectiveSkillCheck(Model model, GameState event, Skill skill, int difficulty,
+                                                             boolean stopOnFail) {
+        GameStatistics.incrementCollectiveSkillChecks(1);
+        difficulty = SkillChecks.adjustDifficulty(model, difficulty);
+        event.print("Preparing to perform a" + (stopOnFail ? "" : "n Exhaustive") +
+                " Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
+        model.getTutorial().skillChecks(model);
+        while (true) {
+            model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
+            try {
+                event.waitForReturn(true);
+                break;
+            } catch (SpellCastException spe) {
+                if (spe.getSpell() instanceof SkillBoostingSpell) {
+                    spe.getSpell().castYourself(model, event, spe.getCaster());
+                } else {
+                    throw spe;
+                }
+            }
+        }
+        model.getSpellHandler().unacceptSkillBoostingSpells(skill);
+        List<GameCharacter> failers = new ArrayList<>();
+        List<GameCharacter> performers = new ArrayList<>(model.getParty().getPartyMembers());
+        performers.removeAll(model.getParty().getBench());
+        Collections.shuffle(performers);
+        for (GameCharacter gc : performers) {
+            SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
+            if (!individualResult.isSuccessful()) {
+                failers.add(gc);
+                if (stopOnFail) {
+                    break;
+                }
+            }
+        }
+        if (failers.isEmpty()) {
+            event.println("Each party member successfully completed the skill check!");
+        } else {
+            event.println("The collective skill check has failed.");
+        }
+        return failers;
     }
 }

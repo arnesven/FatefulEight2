@@ -20,7 +20,10 @@ public class TutorialSkillChecksDialog extends ExpandableHelpDialog {
 
     private static final String COLLECTIVE_TEXT =
             "In a Collective Skill Check each party members must pass the skill check for it to be successful.\n\n" +
-            "Collective Skill checks thus become more difficult the larger party you have.";
+            "Collective Skill checks thus become more difficult the larger party you have.\n\n" +
+            "Normally a Collective Skill Check fails as soon as one party member fails, " +
+            "but sometimes Collective Skill Checks will go on until all party members have rolled, such skill checks are called " +
+            "Exhaustive Collective Skill Checks.";
 
     private static final String COLLABORATIVE_TEXT =
             "In a Collaborative Skill Check, one party member is designated as the main performer of the skill check. " +
