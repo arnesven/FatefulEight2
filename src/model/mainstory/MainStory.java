@@ -124,6 +124,9 @@ public class MainStory implements Serializable {
         }
         for (Quest q : quests) {
             q.setRemoteLocation(model);
+            if (q instanceof MainQuest) {
+                ((MainQuest)q).setSpawnData(spawnData);
+            }
         }
     }
 

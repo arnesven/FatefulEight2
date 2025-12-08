@@ -7,13 +7,14 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.*;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.enemies.CrowEnemy;
 import model.enemies.Enemy;
 import model.enemies.MonkeyEnemy;
 import model.items.Item;
 import model.items.weapons.Cutlass;
 import model.items.weapons.Pistol;
+import model.journal.MainStorySpawnLocation;
 import model.journal.MainStorySpawnWest;
+import model.journal.StoryPart;
 import model.mainstory.pirates.PotentialMutineer;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
@@ -54,8 +55,8 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
 
     private static final int COLLABORATIVE_CHECK_DIFFICULTY = 14;
     private static final int COLLECTIVE_CHECK_DIFFICULTY = 5;
-    private final List<PotentialMutineer> potentialMutineers;
-    private final PotentialMutineer realMutineer;
+    private List<PotentialMutineer> potentialMutineers;
+    private PotentialMutineer realMutineer;
     private final AdvancedAppearance firstMatePortrait;
     private CharacterAppearance blackbonePortrait;
     private Sprite blackboneAvatar;
@@ -66,22 +67,27 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
     public AvertTheMutinyQuest() {
         super(QUEST_NAME, "Captain Blackbone", QuestDifficulty.VERY_HARD,
                 new Reward(200, 0), 0, INTRO_TEXT, END_TEXT);
-        MainStorySpawnWest storySpawn = new MainStorySpawnWest(); // Get this from the main story
-        this.potentialMutineers = storySpawn.getPotentialMutineers();
-        this.realMutineer = storySpawn.getRealMutineer();
         firstMatePortrait = PortraitSubView.makeRandomPortrait(Classes.PIRATE);
         firstMatePortrait.addFaceDetail(new EyePatchDetail());
         firstMatePortrait.setDetailColor(MyColors.BLACK);
         firstMatePortrait.setClass(Classes.PIRATE);
-        System.out.println("Real mutineer is " + realMutineer.getName() + " the " +
-                (realMutineer.getGender() ? "female":"male") + " " + realMutineer.getRace().getName() +
-                ". IsTrans=" + realMutineer.isTrans() + ", likesRum=" + realMutineer.likesRum() +
-                ",usesPistol=" + realMutineer.usesPistol() + ", weaponFlippsed=" + realMutineer.isFlippedWeapon() + ".");
     }
 
     @Override
     public Achievement.Data getAchievementData() {
         return makeAchievement(this, "You helped Captain Blackbone uncover who was the mutineer on the ship.");
+    }
+
+    @Override
+    public void setSpawnData(MainStorySpawnLocation spawnData) {
+        assert spawnData instanceof MainStorySpawnWest;
+        MainStorySpawnWest storySpawn = (MainStorySpawnWest) spawnData;
+        this.potentialMutineers = storySpawn.getPotentialMutineers();
+        this.realMutineer = storySpawn.getRealMutineer();
+        System.out.println("Real mutineer is " + realMutineer.getName() + " the " +
+                (realMutineer.getGender() ? "female":"male") + " " + realMutineer.getRace().getName() +
+                ". IsTrans=" + realMutineer.isTrans() + ", likesRum=" + realMutineer.likesRum() +
+                ",usesPistol=" + realMutineer.usesPistol() + ", weaponFlippsed=" + realMutineer.isFlippedWeapon() + ".");
     }
 
     @Override
@@ -288,6 +294,10 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
             PotentialMutineer accused = potentialMutineers.get(selectedAction[0]);
             if (accused == realMutineer) {
                 state.println("You present the evidence you've collected and Blackbone agrees with your conclusion.");
+                state.println("The mutineer is indeed " + realMutineer.getName() + " the " +
+                        (realMutineer.isTrans()?"transgender":(realMutineer.getGender() ? "female" : "male")) + " " + realMutineer.getRace().getName() + " who likes to drink " +
+                        (realMutineer.likesRum()?"rum":"wine") + " and fights with a " + (realMutineer.usesPistol()?"pistol":"cutlass") +
+                        (realMutineer.isFlippedWeapon()?" (but prefers " + (realMutineer.usesPistol() ? "blades)":"pistols)") : "") + ".");
                 return getSuccessEdge();
             }
             state.println("You present your findings to Blackbone, but as you describe it, you realize yourself " +
@@ -311,7 +321,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
                     println("You approach the first mate of captain Blackbone's ship.");
                     portraitSay("What do you want?");
                     leaderSay("Captain Blackbone mentioned you overheard a conversation at the Sunken Worlds about a " +
-                            "mutineer on " + hisOrHer(blackbonePortrait.getGender()) + ". Can you give us the details?");
+                            "mutineer on " + hisOrHer(blackbonePortrait.getGender()) + " ship. Can you give us the details?");
                     portraitSay("Well, it was late one night, and aye, I was at the Sunken Worlds enjoying me brew. " +
                             "I was just about to leave, when I heard a few people talking about Captain Blackbone. " +
                             "One of them, I heard, was set on staging a mutiny.");
@@ -327,7 +337,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
                     portraitSay("Naw... too dim.");
                     leaderSay("What about their voices. Did the mutineer sound like a man, or a woman?");
                     portraitSay("It's hard to say... they were whispering, and I had had one or two pints of ale.");
-                    leaderSay("Come on " + (firstMatePortrait.getGender() ? "man" : "woman") + " there must be some information you can give me.");
+                    leaderSay("Come on " + (firstMatePortrait.getGender() ? "woman" : "man") + ", there must be some information you can give me.");
                     portraitSay("Aye, now that I think about it. I did hear them talk about a secret cache. The mutineer has " +
                             "hid a weapon in a secret compartment somewhere on the ship.");
                     leaderSay("Interesting. Well, if you don't have any more information, I think we're done.");

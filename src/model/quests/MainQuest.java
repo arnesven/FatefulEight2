@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.appearance.CharacterAppearance;
 import model.items.special.CrimsonPearl;
+import model.journal.MainStorySpawnLocation;
 import model.journal.StoryPart;
 import model.states.GameState;
 import model.states.QuestState;
@@ -27,6 +28,10 @@ public abstract class MainQuest extends Quest {
 
     public void setStoryPart(StoryPart storyPart) {
         this.storyPart = storyPart;
+    }
+
+    public void setSpawnData(MainStorySpawnLocation spawnData) {
+
     }
 
     @Override

@@ -31,7 +31,7 @@ public class CraftItemState extends GameState {
         WorkbenchSubView subView = new WorkbenchSubView();
         CollapsingTransition.transition(model, subView);
         println("What would you like to do at the workbench?");
-        do {
+        do { // FEATURE: Add improves: write name of item, make something randomly!
             int selected = multipleOptionArrowMenu(model, 24, 26,
                     List.of("Craft Item", "Upgrade Item", "Salvage Item", "Cancel"));
             if (selected == 1) {
