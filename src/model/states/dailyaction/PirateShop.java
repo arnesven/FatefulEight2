@@ -48,6 +48,8 @@ public class PirateShop extends GeneralShopNode {
             new Spyglass(), new PirateVest(), new PirateCaptainsHat()
     );
 
+    private static final List<Item> MUSKET_LIST = List.of(new Musket());
+
     public PirateShop(Model model, int col, int row) {
         super(model, col, row, "Ye Old Shoppe");
     }
@@ -67,7 +69,8 @@ public class PirateShop extends GeneralShopNode {
         List<Item> list = model.getItemDeck().draw(ITEMS, MyRandom.randInt(10, 20),
                 Prevalence.unspecified, 0.05);
         if (MyRandom.randInt(3) == 0) {
-            list.add(new Musket());
+            list.addAll(model.getItemDeck().draw(MUSKET_LIST, 1, MUSKET_LIST.getFirst().getPrevalence(),
+                    0.05));
         }
         for (int i = 0; i < MyRandom.randInt(5); ++i) {
             list.add(new RumPotion());
