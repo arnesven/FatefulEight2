@@ -31,6 +31,7 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
 
     @Override
     protected void doEvent(Model model) {
+        // TODO: mini image subview, otherwise this event activates on top of town subview.
         println("You're strolling down the street, when suddenly you hear loud shouts.");
         printQuote("Man", "Fire! Fire!");
         println("A house stands ablaze on the corner of the street. People are gathering around. " +

@@ -1,16 +1,20 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
+import util.MyLists;
 import util.MyRandom;
+import util.MyStrings;
 import view.subviews.PortraitSubView;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class BouncedAtSunkenWorldsEvent extends DailyEventState {
     public BouncedAtSunkenWorldsEvent(Model model) {
@@ -26,9 +30,17 @@ public class BouncedAtSunkenWorldsEvent extends DailyEventState {
         } else {
             leaderSay("How do you know we aren't pirates?");
         }
-        portraitSay("I can tell just from looking at you! Now get lost landlubbers.");
+        portraitSay("I can tell just from looking at you!");
+        List<GameCharacter> nonPirateChars = MyLists.filter(model.getParty().getPartyMembers(), gameCharacter -> !PirateBarNode.hasPirateClothing(gameCharacter));
+        if (nonPirateChars.size() < model.getParty().size()) {
+            println("The bouncer points at " + MyLists.commaAndJoin(nonPirateChars, GameCharacter::getFirstName) + ".");
+        } else {
+            println("The bouncer points at all of you.");
+        }
+        portraitSay("Now get lost landlubbers.");
         leaderSay("Rude.");
         model.getLog().waitForAnimationToFinish();
+        removePortraitSubView(model);
         println("You're start walking away when you hear a weak voice.");
         CharacterAppearance app = PortraitSubView.makeOldPortrait(Classes.HERMIT, Race.randomRace(), MyRandom.flipCoin());
         showExplicitPortrait(model, app, "Beggar");

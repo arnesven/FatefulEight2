@@ -58,7 +58,7 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
             randomCaptain = GainSupportOfPiratesTask.CAPTAIN_NAME;
         }
 
-        portraitSay("Your in luck newcomer. Tonight drinks are on the generous, " +
+        portraitSay("You're in luck newcomer. Tonight drinks are on the generous, " +
                 "notorious and glorious, Captain " + randomCaptain + "!");
         leaderSay("Seriously? It's an open bar?");
         portraitSay("Yes. The captain has had a very good haul and is celebrating with anyone who call themselves pirates.");
@@ -110,6 +110,7 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                     println(pair.second.getFirstName() + " sings terribly and is booed and shushed.");
                 }
             } else if (choice == 3) {
+                // TODO: If blackbone already met.
                 if (isMainStoryTriggered(model)) {
                     CharacterAppearance app = getGainSupportTask(model).getCaptainAppearance();
                     println("You look around for Captain " + randomCaptain + ". Finally you get an opportunity to sit down with " + himOrHer(app.getGender()) + ".");
@@ -130,10 +131,10 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                     portraitSay("Blasted greenskins. It's not good for business you know. I was lucky I got a good haul this time. " +
                             "But what have got the orcs so riled up?");
                     leaderSay("Actually, " + iOrWe() + " have been investigating the matter. Or " + iWasOrWeWere() + ", until " +
-                            sunblaze.getLordTitle() + " " + sunblaze.getLordName() + " turned on us. " + iOrWeCap() + " think there is " +
-                            " a connection between " + hisOrHer(sunblaze.getLordGender()) + " sudden despotic behavior and the orcish uprising.");
+                            sunblaze.getLordName() + " turned on us. " + iOrWeCap() + " think there is " +
+                            "a connection between " + hisOrHer(sunblaze.getLordGender()) + " sudden despotic behavior and the orcish uprising.");
                     portraitSay("How intriguing!");
-                    leaderSay("Yes. The theory is that " + sunblaze.getLordTitle() + " " + sunblaze.getLordName() + " has been put under some kind " +
+                    leaderSay("Yes. The theory is that " + sunblaze.getLordName() + " has been put under some kind " +
                             "of spell by a cabal of ancient evil sorcerers, called the Quad.");
                     portraitSay("The Quad? I think I've heard of that. Thought it just an old wives tale. So... what do you intend to do?");
                     leaderSay(iOrWeCap() + " have to get back to " + sunblaze.getPlaceName() + ". It's our only lead. And in any case, we can't allow " +

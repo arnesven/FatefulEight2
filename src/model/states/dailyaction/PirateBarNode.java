@@ -29,7 +29,7 @@ public class PirateBarNode extends DailyActionNode {
         this.admitted = false;
     }
 
-    private static boolean hasPirateClothing(GameCharacter chara) {
+    public static boolean hasPirateClothing(GameCharacter chara) {
         return chara.getEquipment().getWeapon().isOfType(PirateItem.class) ||
                 chara.getEquipment().getClothing() instanceof PirateItem ||
                 chara.getEquipment().getAccessory() instanceof PirateItem;

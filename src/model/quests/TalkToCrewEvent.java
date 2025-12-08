@@ -105,7 +105,7 @@ class TalkToCrewEvent extends DailyEventState {
         }
         if (MyRandom.randInt(3) < target) {
             portraitSay(MyRandom.sample(List.of("Why are you asking me all these questions?", "Enough talk!",
-                    "Bla bla bla! I have better things to do than standing her talking to you.")));
+                    "Bla bla bla! I have better things to do than to stand and talk to you!")));
             println(person.getName() + " walks of in annoyance.");
             return true;
         }

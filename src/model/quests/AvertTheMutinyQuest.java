@@ -53,7 +53,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
             "Captain Blackbone rewards the party and promises to be a friend and ally for the future.";
 
     private static final int COLLABORATIVE_CHECK_DIFFICULTY = 14;
-    private static final int COLLECTIVE_CHECK_DIFFICULTY = 7;
+    private static final int COLLECTIVE_CHECK_DIFFICULTY = 5;
     private final List<PotentialMutineer> potentialMutineers;
     private final PotentialMutineer realMutineer;
     private final AdvancedAppearance firstMatePortrait;
@@ -360,7 +360,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
                             "That way we may get a meeting with the mutineer.");
                         println("Who will pose as a fellow mutineer?");
                         chosen = model.getParty().partyMemberInput(model, this, model.getParty().getLeader());
-                        println("You carefully let know that " + chosen.getFirstName() + " is interested in the concept of mutiny, " +
+                        println("You carefully spread the rumor among the crew, that " + chosen.getFirstName() + " is interested in the concept of mutiny, " +
                                 "and that " + heOrShe(chosen.getGender()) + " are willing to meet, at midnight, in the aft cargo hold.");
                         GameCharacter sayer;
 
