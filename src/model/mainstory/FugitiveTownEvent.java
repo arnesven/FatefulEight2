@@ -14,7 +14,7 @@ public class FugitiveTownEvent extends DailyEventState {
     protected void doEvent(Model model) {
         CastleLocation castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
         println("As you approach the outskirts of town you can clearly see " +
-                castle.getLordTitle() + " " + castle.getLordName() + "'s forces moving about.");
+                castle.getLordName() + "'s forces moving about.");
         leaderSay("It's no good, " + castle.getLordName() + " has got " + hisOrHer(castle.getLordGender()) +
                 " people all over the place here. We'll be caught in no time.");
         if (model.getParty().size() > 1) {

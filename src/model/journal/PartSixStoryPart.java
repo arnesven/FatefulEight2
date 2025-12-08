@@ -452,12 +452,12 @@ public class PartSixStoryPart extends StoryPart {
         @Override
         protected void doEvent(Model model) {
             println("At the rendezvous point, many tents and pavilions have been erected. There are soldiers everywhere and you " +
-                    "can spot banners from both " + CastleLocation.placeNameToKingdom(kingdom1.getPlaceName()) +
-                    " and " + CastleLocation.placeNameToKingdom(kingdom2.getPlaceName()) + ".");
-            leaderSay("The armies of " + CastleLocation.placeNameToKingdom(castle) +
+                    "can spot banners from both the " + CastleLocation.placeNameToKingdom(kingdom1.getPlaceName()) +
+                    " and the " + CastleLocation.placeNameToKingdom(kingdom2.getPlaceName()) + ".");
+            leaderSay("The armies of the " + CastleLocation.placeNameToKingdom(castle) +
                     " must really be in disarray if all of these soldiers where able " +
                     "to set up camp right on " + enemyKingdom.getLordName() + "'s doorstep.");
-            println("A larger more grand tent is located atop a small hill. There are guards posted outside, you figure " +
+            println("A larger, more grand tent is located atop a small hill. There are guards posted outside, you figure " +
                     "whoever is commanding these soldiers are in there. You step into the tent and are surprised " +
                     "to see some familiar faces.");
             model.getLog().waitForAnimationToFinish();
@@ -466,7 +466,7 @@ public class PartSixStoryPart extends StoryPart {
             showLord2(model);
             portraitSay("I'm glad you made it. We were beginning to think you wouldn't come.");
             println(kingdom1.getLordName() + " and " + kingdom2.getLordName() + " are standing by a war table surrounded " +
-                    "by there highest ranking officials.");
+                    "by their highest ranking officials.");
             leaderSay("My lords. What are you doing here?");
             showLord1(model);
             portraitSay("We wanted to see this through for ourselves. And honestly, when our scouts reported very little " +
@@ -536,6 +536,11 @@ public class PartSixStoryPart extends StoryPart {
         private void showLord2(Model model) {
             removePortraitSubView(model);
             showExplicitPortrait(model, model.getLordPortrait(kingdom2), kingdom2.getLordName());
+        }
+
+        @Override
+        protected boolean allowPartyEvent() {
+            return false;
         }
 
         @Override

@@ -4,6 +4,7 @@ import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
+import model.mainstory.FugitiveTownEvent;
 import model.states.dailyaction.WildernessDailyAction;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
@@ -62,6 +63,10 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
+        if (isPersonaNonGrata(model)) {
+            return new FugitiveTownEvent(model);
+        }
+
         DailyEventState tutorialEvent = model.getTutorial().getTutorialEvent(model);
         if (tutorialEvent != null) {
             return tutorialEvent;
@@ -87,6 +92,10 @@ public abstract class WorldHex {
             eventToReturn = generatePartyEvent(model);
         }
         return eventToReturn;
+    }
+
+    private boolean isPersonaNonGrata(Model model) {
+        return hexLocation instanceof UrbanLocation && model.getMainStory().isPersonaNonGrata(model);
     }
 
     public DailyEventState generateEventFromDistance(Model model) {

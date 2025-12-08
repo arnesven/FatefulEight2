@@ -143,7 +143,7 @@ public class CombatEvent extends DailyEventState {
 
     private void runQuickCastTurns(Model model) {
         displaySplash("QUICK CAST");
-        MyLists.forEach(
+        MyLists.forEach( // TODO: Break early if combat over
                 MyLists.filter(
                         MyLists.transform(
                                 MyLists.filter(initiativeOrder, (Combatant c) -> c instanceof GameCharacter &&

@@ -108,9 +108,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        if (model.getMainStory().isPersonaNonGrata(model)) {
-            return new FugitiveTownEvent(model);
-        }
         int dieRoll = MyRandom.rollD10();
         if (dieRoll >= 3) {
             List<DailyEventState> dailyEvents = new ArrayList<>(List.of(
@@ -141,6 +138,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new ArtisanEvent(model),
                     new MagicDuelContestEvent(model, this)
                     // new SewersEvent
+                    // new BeautySalonEvent
             ));
             if (!LeagueOfMagesEvent.isMember(model)) {
                 dailyEvents.add(new LeagueOfMagesEvent(model));

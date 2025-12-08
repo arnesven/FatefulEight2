@@ -34,7 +34,7 @@ public class StormAtSeaEvent extends DailyEventState {
             if (MyRandom.rollD6() < gc.getLevel()) {
                 partyMemberSay(gc, "We've got to drop canvas, and bring her around to take those waves head on!");
                 leaderSay("Let's get to it!");
-                print("The party manages to steer the ship through the storm. In the end, you are all completely " +
+                println("The party manages to steer the ship through the storm. In the end, you are all completely " +
                         "exhausted, but at least you survived.");
                 println("Each party member loses all SP but gains 30 experience!");
                 MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc2) ->
