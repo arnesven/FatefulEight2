@@ -18,7 +18,6 @@ public class PotentialMutineer implements Serializable {
     private PersonalityTrait personality;
     private boolean isTrans;
     private boolean likesRum;
-    private boolean flippedWeapon; // TODO: remove
 
     public PotentialMutineer(GameCharacter chara, PersonalityTrait personality, boolean trans, boolean likesRum, boolean flippedWeapon) {
         this.character = chara;

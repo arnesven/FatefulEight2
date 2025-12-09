@@ -1,10 +1,11 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.PirateItem;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class Musket extends SlugThrower { // TODO: Implements PirateItem
+public class Musket extends SlugThrower implements PirateItem {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(14, 16);
 
