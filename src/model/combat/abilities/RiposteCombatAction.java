@@ -27,6 +27,11 @@ public class RiposteCombatAction extends StaminaCombatAbility implements SkillAb
         super("Riposte", false);
     }
 
+    @Override
+    protected boolean cantTargetPartyMember() {
+        return false;
+    }
+
     public static void doRiposte(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Enemy enemy) {
         if (gameCharacter.hasCondition(RiposteStanceCondition.class)) {
             combatEvent.println(gameCharacter.getFirstName() + " counter-attacks!");

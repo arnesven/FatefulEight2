@@ -115,7 +115,7 @@ public class CombatEvent extends DailyEventState {
             model.getTutorial().ambushes(model);
         }
         setInitiativeOrder();
-        AnimationManager.synchAnimations();
+        AnimationManager.synchAnimations(); // TODO: Move to start of event.
         model.setInCombat(true);
         if (advantage != CombatAdvantage.Enemies) {
             setFormation(model);

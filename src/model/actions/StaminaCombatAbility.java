@@ -22,7 +22,7 @@ public abstract class StaminaCombatAbility extends SpecialAbilityCombatAction {
 
     @Override
     public final void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (target instanceof GameCharacter) { // TODO: But riposte you do on yourself...
+        if (target instanceof GameCharacter && cantTargetPartyMember()) {
             combat.println("You can't do a " + getName() + " on a friendly character!");
             takeAnotherAction = true;
         } else if (performer.getSP() > 0) {
@@ -33,6 +33,10 @@ public abstract class StaminaCombatAbility extends SpecialAbilityCombatAction {
             combat.println(performer.getFirstName() + " is too exhausted to do that.");
             takeAnotherAction = true;
         }
+    }
+
+    protected boolean cantTargetPartyMember() {
+        return true;
     }
 
     protected abstract void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target);
