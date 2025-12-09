@@ -10,7 +10,7 @@ import model.states.RecruitState;
 import java.util.List;
 
 public class WillisEndingEvent extends DailyEventState {
-    private static final String RECRUIT_FLAG = "WILLIS_RECRUITABLE"; // TODO: change to "WILLIS_RECRUITED"
+    private static final String RECRUIT_FLAG = "WILLIS_RECRUITED";
     private final CharacterAppearance portrait;
 
     public WillisEndingEvent(Model model, CharacterAppearance willisPortrait) {

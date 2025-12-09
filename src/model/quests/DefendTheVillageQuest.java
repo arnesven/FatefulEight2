@@ -163,8 +163,8 @@ public class DefendTheVillageQuest extends Quest {
             }
             super.setEnemies(enemies);
             QuestEdge toReturn = super.run(model, state);
-            getJunctions().remove(getJunctions().size()-1); // TODO: This has no effect (still visibile in quest view)
-            getJunctions().remove(getJunctions().size()-1); // fix...
+            getJunctions().remove(getJunctions().size()-1);
+            getJunctions().remove(getJunctions().size()-1);
             getJunctions().remove(getJunctions().size()-1);
             return toReturn;
         }
