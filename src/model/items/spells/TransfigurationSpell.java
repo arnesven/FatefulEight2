@@ -7,6 +7,7 @@ import model.combat.conditions.TransfiguredCondition;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.GreenSpellSprite;
 import view.sprites.SmokeBallAnimation;
@@ -14,7 +15,7 @@ import view.sprites.Sprite;
 
 public class TransfigurationSpell extends CombatSpell {
     private static final Sprite SPRITE = new GreenSpellSprite(0, true);
-    // TODO: Tougher enemies should be able to resist.
+    
     public TransfigurationSpell() {
         super("Transfiguration", 28, MyColors.GREEN, 10, 3);
     }
@@ -36,14 +37,18 @@ public class TransfigurationSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        int newMax = Math.max(1, target.getMaxHP() - 3);
-        int diff = 0;
-        if (target.getHP() > newMax) {
-            diff = target.getHP() - newMax;
-            target.addToHP(-diff);
+        if (2 * performer.getLevel() + MyRandom.rollD10() > target.getMaxHP()) {
+            int newMax = Math.max(1, target.getMaxHP() - 3);
+            int diff = 0;
+            if (target.getHP() > newMax) {
+                diff = target.getHP() - newMax;
+                target.addToHP(-diff);
+            }
+            combat.addSpecialEffect(target, new SmokeBallAnimation());
+            target.addCondition(new TransfiguredCondition(diff));
+        } else {
+            combat.println(target.getName() + " resisted the spell!");
         }
-        combat.addSpecialEffect(target, new SmokeBallAnimation());
-        target.addCondition(new TransfiguredCondition(diff));
     }
 
     @Override
