@@ -15,7 +15,7 @@ public class SettingsManager implements Serializable {
     }
 
     private boolean autosave = true;
-    private LogSpeed logSpeed = LogSpeed.SLOW; // TODO: Default: Log slowest, combat slow, movement slow
+    private LogSpeed logSpeed = LogSpeed.SLOWER;
     private LogSpeed combatLogSpeed = LogSpeed.SLOW;
     private LogSpeed movementSpeed = LogSpeed.SLOW;
     private boolean levelUpSummary = true;
