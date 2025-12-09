@@ -44,9 +44,11 @@ public class MultiShotCombatAction extends StaminaCombatAbility implements Skill
         enemies.remove(target);
         Collections.shuffle(enemies);
         for (int i = 0; i < 4 && !enemies.isEmpty(); ++i) {
-            target = enemies.remove(0); // TODO: Perform one attack per attack of the weapon?
-            performer.applyAttack(model, combat, target, false, 0,
-                    weapon.getCriticalTarget(), weapon.getEffectSprite(), result);
+            target = enemies.removeFirst();
+            for (int j = 0; j < weapon.getNumberOfAttacks() && !target.isDead(); ++j) {
+                performer.applyAttack(model, combat, target, false, 0,
+                        weapon.getCriticalTarget(), weapon.getEffectSprite(), result);
+            }
         }
     }
 
