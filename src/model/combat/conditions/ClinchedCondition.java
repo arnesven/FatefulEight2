@@ -43,7 +43,10 @@ public class ClinchedCondition extends Condition {
         }
     }
 
-    // TODO: Override remove at end of combat => true
+    @Override
+    public boolean removeAtEndOfCombat() {
+        return true;
+    }
 
     @Override
     public void manipulateCombatActions(List<CombatAction> result) {
