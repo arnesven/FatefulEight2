@@ -104,6 +104,7 @@ public class CombatEvent extends DailyEventState {
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         startMusic();
         StripedTransition.transition(model, subView);
+        AnimationManager.synchAnimations();
         partyMemberComment(model);
         addAllies(new ArrayList<>(model.getParty().getTamedDragons().values()));
         if (allies.size() > 0) {
@@ -115,7 +116,6 @@ public class CombatEvent extends DailyEventState {
             model.getTutorial().ambushes(model);
         }
         setInitiativeOrder();
-        AnimationManager.synchAnimations(); // TODO: Move to start of event.
         model.setInCombat(true);
         if (advantage != CombatAdvantage.Enemies) {
             setFormation(model);
