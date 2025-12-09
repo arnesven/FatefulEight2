@@ -4,6 +4,7 @@ import model.GameScore;
 import model.Model;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyPair;
 import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -18,12 +19,13 @@ public class EndOfGameDialog extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 35;
     private static final int DIALOG_HEIGHT = 41;
     private String title = "";
-    private String text = ""; // TODO: This dialog appears "scrolled down" so that the first part can't be seen, why?
+    private String text = "";
     private static final String ENDING_TEXT =
-            "You have achieved marvelous things. You have explored the world. " +
-            "You have defeated mighty foes. You have done many good deeds " +
-            "(and perhaps some bad ones too). You are now one of the most " +
-            "famous adventurers in all the land.";
+            "Congratulations on completing 100 days as an adventurer!\n\n" +
+            "You have achieved marvelous things. You have explored the world, " +
+            "defeated mighty foes, done many good deeds " +
+            "(and perhaps some bad ones too) and you are now one of the most " +
+            "famous adventurers in all the land!";
     private static final String CHOICE_TEXT =
             "You must now make a decision. Either you stop here, lay down your load, " +
             "and retire from adventuring. Choosing this will record your score into " +
@@ -57,9 +59,9 @@ public class EndOfGameDialog extends SelectableListMenu {
         numRows += 2;
         textContent.add(new TextDecoration("- score - ", xStart+2, yStart+numRows+2, MyColors.WHITE, MyColors.BLUE, true));
         GameScore score = GameScore.calculate(model);
-        for (Map.Entry<String, Integer> entry : score.entrySet()) {
+        for (MyPair<String, Integer> entry : score) {
             numRows++;
-            textContent.add(new TextDecoration(String.format("%-26s%5d", entry.getKey(), entry.getValue()),
+            textContent.add(new TextDecoration(String.format("%-26s%5d", entry.first, entry.second),
                     xStart+2, yStart+numRows+2, MyColors.WHITE, MyColors.BLUE, false));
         }
         numRows++;
@@ -83,7 +85,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(
-                new SelectableListContent(40 - 3, yStart + getHeight() - 3, "RETIRE") {
+                new SelectableListContent(DIALOG_HEIGHT - 5, yStart + getHeight() - 3, "RETIRE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setTimeToTransition(true);
@@ -95,7 +97,7 @@ public class EndOfGameDialog extends SelectableListMenu {
                         return true;
                     }
                 },
-                new SelectableListContent(40 - 4, yStart + getHeight() - 2, "CONTINUE") {
+                new SelectableListContent(DIALOG_HEIGHT - 6, yStart + getHeight() - 2, "CONTINUE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         model.setFreePlay(true);
