@@ -384,7 +384,7 @@ public class EveningState extends GameState {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
             if (model.getParty().size() > 1) {
-                if (MyRandom.flipCoin()) {
+                if (MyRandom.rollD6() < 6) {
                     randomComment(model);
                 } else {
                     personalityComment(model);
