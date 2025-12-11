@@ -2,6 +2,7 @@ package model.horses;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.map.CaveHex;
 import model.races.AllRaces;
 import util.MyLists;
 import util.MyRandom;
@@ -21,6 +22,7 @@ public class HorseHandler extends ArrayList<Horse> {
     private int lastBoughtHorseOnDay = -1;
     private Horse nextAvailableHorse = generateHorse();
     private int timedRaceRecord = 60;
+    private List<Horse> lostHorses = new ArrayList<>();
 
     public void addHorse(Horse horse) {
         this.add(horse);
@@ -105,11 +107,13 @@ public class HorseHandler extends ArrayList<Horse> {
     }
 
     public void someHorsesRunAway(Model model) {
-        if (size() > 0) { // FEATURE: horses can find their way back to HQ?
+        if (size() > 0) {
             int times = size();
             for (int i = 0; i < times; ++i) {
                 if (MyRandom.flipCoin()) {
-                    removeHorse(get(MyRandom.randInt(size())));
+                    Horse horse = get(MyRandom.randInt(size()));
+                    lostHorses.add(horse);
+                    removeHorse(horse);
                 }
             }
             if (isEmpty()) {
@@ -129,8 +133,22 @@ public class HorseHandler extends ArrayList<Horse> {
         }
     }
 
-    public void newAvailableHorse() {
+    public void generateNextAvailableHorse() {
         nextAvailableHorse = generateHorse();
+    }
+
+    public void startOfDayUpdate(Model model) {
+        generateNextAvailableHorse();
+        if (!lostHorses.isEmpty() && !(model.getCurrentHex() instanceof CaveHex)) {
+            Horse horse = lostHorses.getFirst();
+            int dieRoll = MyRandom.rollD6();
+            if (dieRoll == 6) {
+                model.getLog().addAnimated("A horse has found its way back to you.\n");
+                addHorse(horse);
+            } else if (dieRoll == 1) {
+                lostHorses.remove(horse); // Horse permanently lost.
+            }
+        }
     }
 
     public int getTimedRaceRecord() {

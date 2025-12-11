@@ -358,10 +358,10 @@ public class Model {
         gameData.warHandler.updateWars(this);
         if (!gameData.lingeringRecruitables.isEmpty()) {
             if (gameData.lingeringRecruitables.size() > 5) {
-                gameData.lingeringRecruitables.remove(0);
+                gameData.lingeringRecruitables.removeFirst();
             }
             if (gameData.lingeringRecruitables.size() > 1 || MyRandom.flipCoin()) {
-                gameData.lingeringRecruitables.remove(0);
+                gameData.lingeringRecruitables.removeFirst();
             }
         }
     }

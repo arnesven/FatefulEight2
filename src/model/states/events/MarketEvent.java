@@ -73,7 +73,7 @@ public class MarketEvent extends DailyEventState {
                 MyRandom.randInt(-15, 5));
         buyHorse.run(model);
         if (model.getParty().getHorseHandler().getAvailableHorse(model) == null) {
-            model.getParty().getHorseHandler().newAvailableHorse();
+            model.getParty().getHorseHandler().generateNextAvailableHorse();
         }
     }
 

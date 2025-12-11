@@ -16,7 +16,6 @@ import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
-import model.items.special.TentUpgradeItem;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
@@ -995,7 +994,7 @@ public class Party implements Serializable {
 
     public void startOfDayUpdate(Model model) {
         setRecruitmentPersistence(null);
-        getHorseHandler().newAvailableHorse();
+        getHorseHandler().startOfDayUpdate(model);
         addToNotoriety(-(MyRandom.rollD6()+1)/2);
         if (getDog() != null && MyRandom.rollD6() == 1 && MyRandom.rollD6() == 1) {
             model.getLog().addAnimated("Your dog appears to have left you.\n");
