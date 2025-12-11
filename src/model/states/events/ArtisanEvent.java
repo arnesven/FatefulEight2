@@ -323,7 +323,9 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof JewelryItem) { // TODO: Check for higher-tier accessory that is a jewelry.
+            if (equipment.getAccessory() instanceof JewelryItem ||
+                    (equipment.getAccessory() instanceof HigherTierAccessory &&
+                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof JewelryItem)) {
                 return equipment.getAccessory();
             }
             return null;
@@ -342,7 +344,9 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof ShoesItem) { // TODO: Check for higher tier accessory that is shoes
+            if (equipment.getAccessory() instanceof ShoesItem ||
+                    (equipment.getAccessory() instanceof HigherTierAccessory &&
+                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof ShoesItem)) {
                 return equipment.getAccessory();
             }
             return null;
@@ -361,7 +365,8 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getWeapon() instanceof WandWeapon || equipment.getWeapon() instanceof StaffWeapon) { // TODO: Check for higher tier weapon that is wand or staff
+            if (equipment.getWeapon().isOfType(WandWeapon.class) ||
+                    equipment.getWeapon().isOfType(StaffWeapon.class)) {
                 return equipment.getWeapon();
             }
             return null;
@@ -409,7 +414,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getWeapon() instanceof BowWeapon) { // TODO: Check for higher tier weapon that is a bow
+            if (equipment.getWeapon().isOfType(BowWeapon.class)) {
                 return equipment.getWeapon();
             }
             return null;
@@ -428,7 +433,9 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof HeadGearItem) { // TODO: Check for higher tier accessory that is headgeare
+            if (equipment.getAccessory() instanceof HeadGearItem ||
+                    (equipment.getAccessory() instanceof HigherTierAccessory &&
+                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof HeadGearItem)) {
                 return equipment.getAccessory();
             }
             return equipment.getAccessory();
@@ -447,7 +454,9 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof ShieldItem) { // TODO: Check for higher tier accessory that is shield
+            if (equipment.getAccessory() instanceof ShieldItem ||
+                    (equipment.getAccessory() instanceof HigherTierAccessory &&
+                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof ShieldItem)) {
                 return equipment.getAccessory();
             }
             return null;

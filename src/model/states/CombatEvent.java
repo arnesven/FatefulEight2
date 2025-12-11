@@ -143,14 +143,19 @@ public class CombatEvent extends DailyEventState {
 
     private void runQuickCastTurns(Model model) {
         displaySplash("QUICK CAST");
-        MyLists.forEach( // TODO: Break early if combat over
+        List<GameCharacter> quickCasters =
                 MyLists.filter(
                         MyLists.transform(
                                 MyLists.filter(initiativeOrder, (Combatant c) -> c instanceof GameCharacter &&
                                                                 model.getParty().getPartyMembers().contains(c)),
                                 (Combatant c) -> (GameCharacter)c),
-                        (GameCharacter gc) -> AbilityCombatAction.getPassiveCombatActions(gc).contains(QuickCastPassiveCombatAction.getInstance())),
-                (GameCharacter gc) -> handleCharacterTurn(model, gc, true));
+                        (GameCharacter gc) -> AbilityCombatAction.getPassiveCombatActions(gc).contains(QuickCastPassiveCombatAction.getInstance()));
+        for (GameCharacter gc : quickCasters) {
+            handleCharacterTurn(model, gc, true);
+            if (combatDone(model)) {
+                break;
+            }
+        }
     }
 
     private void setInitiativeOrder() {
