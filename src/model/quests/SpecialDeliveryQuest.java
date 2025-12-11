@@ -1,7 +1,10 @@
 package model.quests;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
+import model.states.DailyEventState;
 import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.*;
@@ -13,6 +16,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
 import view.combat.GrassCombatTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -90,30 +94,7 @@ public class SpecialDeliveryQuest extends MainQuest {
         StoryJunction story = new StoryJunction(7, 8, new QuestEdge(getSuccessEndingNode())) {
             @Override
             protected void doAction(Model model, QuestState state) {
-                // TODO: Actual potraits
-                state.println("A noble and a constable approaches you.");
-                state.printQuote("Noble", "So he's dead then?");
-                state.printQuote("Constable", "Looks so. We'll clean this mess up.");
-                state.println("The noble turns to you.");
-                state.printQuote("Noble", "Thank you. You played your part brilliantly?");
-                state.leaderSay("Part? What part? Please explain yourself.");
-                state.printQuote("Noble", "Aha, that sly witch. She didn't fill you in on the details. Well perhaps it was for the best.");
-                state.leaderSay("So you're the client.");
-                state.printQuote("Noble", "Indeed I am. Let me explain. For a long time, this crime lord here, or should I say, former crime lord, has been " +
-                        "making trouble for our town and particularly for my business. It's turned into something of a vendetta I'm afraid. His organization " +
-                        "is very well connected and backed by many powerful individuals. I shan't name any names, though. But still, I had to get rid of " +
-                        "this particular individual, so, with a little help from our witch friend, we came up with a plan, a trap.");
-                state.leaderSay("And we were the bait!");
-                state.printQuote("Noble", "Yes, sorry. But the opportunity was too good not to seize. My agents reported that the crime lord was obsessed with the " +
-                        "idea of a luck potion that would make him immensely rich. So I started planting rumors that I was trying to obtain one myself. I knew " +
-                        "he would not be able to resist swiping it from me.");
-                state.leaderSay("So that wasn't a luck potion he just drank?");
-                state.printQuote("Noble", "Obviously not.");
-                state.leaderSay("I don't really know how I feel about this. What if I would have downed the potion instead of him?");
-                state.printQuote("Noble", "Well, I had to take that risk. And after all, everything turned out all right in the end.");
-                state.leaderSay("Hmph. Well I guess I was lucky.");
-                state.printQuote("Noble", "There you go. Now if you'll excuse us, me and the constable are going to see about cleaning up the rest " +
-                        "of the thugs in this town. Good bye!");
+                new ConstableAndNobleEvent(model).doEvent(model);
             }
         };
         return List.of(new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(0).get(0)),
@@ -278,5 +259,48 @@ public class SpecialDeliveryQuest extends MainQuest {
         }
 
         return backgrounds;
+    }
+
+    private class ConstableAndNobleEvent extends DailyEventState {
+        public ConstableAndNobleEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            AdvancedAppearance nobleApp = PortraitSubView.makeRandomPortrait(Classes.NOB);
+            AdvancedAppearance contableApp = PortraitSubView.makeRandomPortrait(Classes.CONSTABLE);
+            println("A noble and a constable approaches you.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, nobleApp, "Noble");
+            portraitSay("So he's dead then?");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, contableApp, "Constable");
+            portraitSay("Looks so. We'll clean this mess up.");
+            println("The noble turns to you.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, nobleApp, "Noble");
+            portraitSay("Thank you. You played your part brilliantly?");
+            leaderSay("Part? What part? Please explain yourself.");
+            portraitSay("Aha, that sly witch. She didn't fill you in on the details. Well perhaps it was for the best.");
+            leaderSay("So you're the client.");
+            portraitSay("Indeed I am. Let me explain. For a long time, this crime lord here, or should I say, former crime lord, has been " +
+                    "making trouble for our town and particularly for my business. It's turned into something of a vendetta I'm afraid. His organization " +
+                    "is very well connected and backed by many powerful individuals. I shan't name any names, though. But still, I had to get rid of " +
+                    "this particular individual, so, with a little help from our witch friend, we came up with a plan, a trap.");
+            leaderSay("And we were the bait!");
+            portraitSay("Yes, sorry. But the opportunity was too good not to seize. My agents reported that the crime lord was obsessed with the " +
+                    "idea of a luck potion that would make him immensely rich. So I started planting rumors that I was trying to obtain one myself. I knew " +
+                    "he would not be able to resist swiping it from me.");
+            leaderSay("So that wasn't a luck potion he just drank?");
+            portraitSay("Obviously not.");
+            leaderSay("I don't really know how I feel about this. What if I would have downed the potion instead of him?");
+            portraitSay("Well, I had to take that risk. And after all, everything turned out all right in the end.");
+            leaderSay("Hmph. Well I guess I was lucky.");
+            portraitSay("There you go. Now if you'll excuse us, me and the constable are going to see about cleaning up the rest " +
+                    "of the thugs in this town. Good bye!");
+            showExplicitPortrait(model, contableApp, "Constable");
+            portraitSay("Stay safe and out of trouble citizen.");
+        }
     }
 }
