@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.items.Inventory;
 import model.map.*;
@@ -15,15 +16,14 @@ import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import util.MyLists;
+import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
 import view.LogView;
 import view.subviews.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
 
 public class EveningState extends GameState {
@@ -383,29 +383,15 @@ public class EveningState extends GameState {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
-            DogEvent.dogInTheEvening(model);
             if (model.getParty().size() > 1) {
-                // TODO: Let party members chat depending on personality traits.
-                model.getParty().randomPartyMemberSay(model, List.of(
-                        "I think I'm lying on a root.#",
-                        "This tent is nice, but a bit small.",
-                        "It's peaceful around here.",
-                        "It's so quite. Almost eerily so.",
-                        "I wonder what tomorrow will bring.",
-                        "A good night's sleep will do me well",
-                        "Time for some rest.",
-                        "Can somebody feed that fire, it's dying.",
-                        "Anybody know a camp story?",
-                        "I need some rest.",
-                        "Let's hit the sack people.",
-                        "Who's been using my sleeping bag?",
-                        "Tomorrow's another day.",
-                        "I'm about to fall asleep.",
-                        "Bedtime. At least for me.",
-                        "These rations are a bit stale.",
-                        "It's been an alright day I suppose.",
-                        "I wish we would stay at a tavern.",
-                        "Yaaawn!", "Good night everybody."));
+                if (MyRandom.flipCoin()) {
+                    randomComment(model);
+                } else {
+                    personalityComment(model);
+                }
+            }
+            if (model.getParty().hasDog()) {
+                DogEvent.dogInTheEvening(model);
             }
         } else {
             print("There are not enough rations for everybody. ");
@@ -424,6 +410,56 @@ public class EveningState extends GameState {
                 }
             }
             starveAndKill(model, remaining);
+        }
+    }
+
+    private void randomComment(Model model) {
+        model.getParty().randomPartyMemberSay(model, List.of(
+                "I think I'm lying on a root.#",
+                "This tent is nice, but a bit small.",
+                "It's peaceful around here.",
+                "It's so quite. Almost eerily so.",
+                "I wonder what tomorrow will bring.",
+                "A good night's sleep will do me well",
+                "Time for some rest.",
+                "Can somebody feed that fire, it's dying.",
+                "Anybody know a camp story?",
+                "I need some rest.",
+                "Let's hit the sack people.",
+                "Who's been using my sleeping bag?",
+                "Tomorrow's another day.",
+                "I'm about to fall asleep.",
+                "Bedtime. At least for me.",
+                "These rations are a bit stale.",
+                "It's been an alright day I suppose.",
+                "I wish we would stay at a tavern.",
+                "Yaaawn!", "Good night everybody."));
+    }
+
+    private void personalityComment(Model model) {
+        if (model.getParty().size() < 2) {
+            return; // Sanity check
+        }
+        GameCharacter mainPerson = MyRandom.sample(model.getParty().getPartyMembers());
+        GameCharacter other = mainPerson;
+        while (mainPerson == other) {
+            other = MyRandom.sample(model.getParty().getPartyMembers());
+        }
+
+        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> allConvos = PersonalityTrait.makeEveningConversation(model, mainPerson, other);
+        List<PersonalityTrait> traits = MyLists.filter(new ArrayList<>(allConvos.keySet()), mainPerson::hasPersonality);
+        if (traits.isEmpty()) {
+            randomComment(model);
+        } else {
+            Collections.shuffle(traits);
+            List<MyPair<GameCharacter, String>> convo = allConvos.get(traits.getFirst());
+            for (MyPair<GameCharacter, String> p : convo) {
+                if (p.first == null) {
+                    println(p.second);
+                } else {
+                    partyMemberSay(p.first, p.second);
+                }
+            }
         }
     }
 

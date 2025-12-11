@@ -1,12 +1,14 @@
 package model.characters;
 
 import model.Model;
+import model.items.weapons.NaturalWeapon;
+import model.states.GameState;
 import model.states.events.*;
+import util.MyLists;
+import util.MyPair;
 import util.MyRandom;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public enum PersonalityTrait {
                  // Chars    Usages
@@ -40,7 +42,61 @@ public enum PersonalityTrait {
     stingy,      // 4        6
     unkind;      // 4        8
 
-    public static Map<PersonalityTrait, List<String>> makeConversations(GameCharacter gc) {
+    public PersonalityTraitEvent makeEvent(Model model, GameCharacter mainCharacter) {
+        switch (this) {
+            case aggressive:
+                return new TavernBrawlEvent(model, this, mainCharacter);
+            case brave:
+                return new BurningBuildingEvent(model, this, mainCharacter);
+            case prudish:
+                return new HotSpringEvent(model, this, mainCharacter);
+            case lawful:
+                // return new MarshallEvent(model, this, mainCharacter); // which thief stole the thing?
+            case stingy:
+                // return new CantAffordThatThingEvent(model, this, mainCharacter);
+            case romantic:
+                return new BoyfriendGirlfriendEvent(model, mainCharacter);
+            case naive:
+                return new DeadlyLoverEvent(model, this, mainCharacter);
+            case diplomatic:
+                // return new FeudingFamiliesEvent(model, this, mainCharacter);
+            case cold:
+                // return new GraveyardEvent(model, this, mainCharacter); // Robbing the dead...
+            case calm:
+                // return new TidalWaterEvent(model, this, mainCharacter); // Water rising in a cave, keep calm?
+            case benevolent:
+                return new SwordInTheStoneEvent(model, this, mainCharacter);
+            case playful:
+                // return new BallGameEvent(model, this, mainCharacter);
+            case gluttonous:
+                // return new OuthouseEvent(model, this, mainCharacter);
+            case jovial:
+                // return new OffendedWomanEvent(model, this, mainCharacter);
+            case anxious:
+                return new BurySomeGoldEvent(model, this, mainCharacter);
+            case irritable:
+                return new AuctionEvent(model, this, mainCharacter);
+            case snobby:
+                // return new DontWantToGetDirtyEvent(model, this, mainCharacter);
+            case rude:
+                // return new SlapInTheFaceEvent(model, this, mainCharacter);
+            case greedy:
+                // return new TreasureTroveEvent(model, this, mainCharacter); // push-your-luck infiltration style
+            case encouraging:
+                return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
+            case intellectual:
+                // return new BookWithMissingPagesEvent(model, this, mainCharacter);
+            case cowardly:
+                // return new NightmareEvent(model, this, mainCharacter);
+            case narcissistic:
+                return new DoppelgangerEvent(model, mainCharacter);
+            default:
+
+        }
+        return null;
+    }
+
+    public static Map<PersonalityTrait, List<String>> tavernConversation(GameCharacter gc) {
         Map<PersonalityTrait, List<String>> answers = new HashMap<>(Map.of(
                 PersonalityTrait.anxious,
                 List.of("Feeling a bit nervous about what's ahead of us.",
@@ -70,7 +126,7 @@ public enum PersonalityTrait {
                         "Did you stand up to him?",
                         "Not really. I just sort of ran away."),
                 PersonalityTrait.critical,
-                List.of("I'm not sure we're spending out gold responsibly.",
+                List.of("I'm not sure we're spending our gold responsibly.",
                         "Do you want to be the leader of this party?",
                         "No no... It was just a casual remark."),
                 PersonalityTrait.diplomatic,
@@ -154,7 +210,7 @@ public enum PersonalityTrait {
                         "I think it's pretty standard pricing actually.",
                         "I say, when I was a kid, it was six obols for food and three for a room.",
                         "That was a long time ago. Prices have gone up. You can scarcely get " +
-                                "a egg for three obols these days.",
+                                "an egg for three obols these days.",
                         "Half an egg used to be equivalent to an obol, every kid knew that.",
                         "Those were the days."),
                 PersonalityTrait.unkind,
@@ -164,57 +220,258 @@ public enum PersonalityTrait {
         return answers;
     }
 
-    public PersonalityTraitEvent makeEvent(Model model, GameCharacter mainCharacter) {
-        switch (this) {
-            case aggressive:
-                return new TavernBrawlEvent(model, this, mainCharacter);
-            case brave:
-                return new BurningBuildingEvent(model, this, mainCharacter);
-            case prudish:
-                return new HotSpringEvent(model, this, mainCharacter);
-            case lawful:
-                // return new MarshallEvent(model, this, mainCharacter); // which thief stole the thing?
-            case stingy:
-                // return new CantAffordThatThingEvent(model, this, mainCharacter);
-            case romantic:
-                return new BoyfriendGirlfriendEvent(model, mainCharacter);
-            case naive:
-                return new DeadlyLoverEvent(model, this, mainCharacter);
-            case diplomatic:
-                // return new FeudingFamiliesEvent(model, this, mainCharacter);
-            case cold:
-                // return new GraveyardEvent(model, this, mainCharacter); // Robbing the dead...
-            case calm:
-                // return new TidalWaterEvent(model, this, mainCharacter); // Water rising in a cave, keep calm?
-            case benevolent:
-                return new SwordInTheStoneEvent(model, this, mainCharacter);
-            case playful:
-                // return new BallGameEvent(model, this, mainCharacter);
-            case gluttonous:
-                // return new OuthouseEvent(model, this, mainCharacter);
-            case jovial:
-                // return new OffendedWomanEvent(model, this, mainCharacter);
-            case anxious:
-                return new BurySomeGoldEvent(model, this, mainCharacter);
-            case irritable:
-                return new AuctionEvent(model, this, mainCharacter);
-            case snobby:
-                // return new DontWantToGetDirtyEvent(model, this, mainCharacter);
-            case rude:
-                // return new SlapInTheFaceEvent(model, this, mainCharacter);
-            case greedy:
-                // return new TreasureTroveEvent(model, this, mainCharacter); // push-your-luck infiltration style
-            case encouraging:
-                return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
-            case intellectual:
-                // return new BookWithMissingPagesEvent(model, this, mainCharacter);
-            case cowardly:
-                // return new NightmareEvent(model, this, mainCharacter);
-            case narcissistic:
-                return new DoppelgangerEvent(model, mainCharacter);
-            default:
+    public static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeEveningConversation(Model model, GameCharacter main, GameCharacter other) {
+        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> convos = new HashMap<>();
 
+        if (MyRandom.flipCoin() &&
+                !main.getEquipment().getWeapon().isRangedAttack() &&
+                !main.getEquipment().getWeapon().isOfType(NaturalWeapon.class)) {
+            return makeCleanWeaponConvos(main, other);
         }
-        return null;
+
+        return makeRationsConvos(model, main, other);
+    }
+
+    private static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeRationsConvos(Model model, GameCharacter main, GameCharacter other) {
+        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> convos = new HashMap<>();
+        List<MyPair<GameCharacter, String>> primer = new ArrayList<>(List.of(
+                new MyPair<>(null, main.getFirstName() + " is counting the rations.")));
+
+        if (model.getParty().getFood() < model.getParty().size() * 3) { // low rations
+            convos.put(PersonalityTrait.stingy,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "We're running low. Perhaps we should go down to half rations."),
+                            new MyPair<>(other, "What? You can't be serious?"),
+                            new MyPair<>(main, "Well... Nobody eats more than their share!"),
+                            new MyPair<>(other, "Relax! Jeez..."))));
+
+            convos.put(PersonalityTrait.aggressive,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "I think somebody's been having late night snacks..."),
+                            new MyPair<>(other, "You think somebody is stealing food?"),
+                            new MyPair<>(main, "Arrrg... when I get my hands on them!"),
+                            new MyPair<>(other, "You probably just counted wrong."),
+                            new MyPair<>(null, main.getFirstName() + " spends the rest of the evening interrogating the other party members about the alleged theft."),
+                            new MyPair<>(main, "I'm so pissed off!"))));
+
+            convos.put(PersonalityTrait.diplomatic,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "We're low. If things get bad, we need to figure out who gets to eat."),
+                            new MyPair<>(other, "Uh-huh, and I suppose you are a priority?"),
+                            new MyPair<>(main, "Actually yes. If I'm fed I can more easily secure food for the rest of the party."),
+                            new MyPair<>(other, "Let's make sure it doesn't come to that."))));
+
+            convos.put(PersonalityTrait.cold,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "We're low. Perhaps we will starve soon."),
+                            new MyPair<>(other, "You really think so?"),
+                            new MyPair<>(main, "Of course. Plenty of people starve every day. It's bound to happen to us sooner or later."),
+                            new MyPair<>(other,"I'm trying not to think about it."))));
+
+            convos.put(PersonalityTrait.calm,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "We're low."),
+                            new MyPair<>(other, "Are we going to run out?"),
+                            new MyPair<>(main, "We'll be fine."))));
+
+            convos.put(PersonalityTrait.benevolent,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "We're low. But I don't have to eat so much. Somebody else probably needs it more."),
+                            new MyPair<>(other, "That's generous of you. But we all need to keep up our strength."))));
+
+            convos.put(PersonalityTrait.anxious,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new MyPair<>(main, "We're low. What if we run out?"),
+                            new MyPair<>(other, "I'm sure we'll be able to get some more soon."),
+                            new MyPair<>(main, "I hope so. I don't want to starve."))));
+        }
+
+        if (model.getParty().getFood() > model.getParty().size() * 7) { // high rations
+            convos.put(PersonalityTrait.naive,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "Checking on the rations?"),
+                            new MyPair<>(main, "Yeah, I was thinking, since we have so much. Maybe we should eat more."),
+                            new MyPair<>(other, "We'll just get sick if we eat too much."),
+                            new MyPair<>(main, "Maybe."))));
+
+            convos.put(PersonalityTrait.gluttonous,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "Checking on the rations?"),
+                            new MyPair<>(main, "Yes... we have a lot. And I'm hungry..."),
+                            new MyPair<>(other, "Hey! Didn't we just eat?"),
+                            new MyPair<>(main, "Yummy yummy...."),
+                            new MyPair<>(other, "I'm keeping my eye on you!"))));
+
+            convos.put(PersonalityTrait.encouraging,
+                    MyLists.merge(primer, List.of(
+                            new MyPair<>(other, "Checking on the rations?"),
+                            new MyPair<>(main, "Yes... we have plenty. Enough for everybody"),
+                            new MyPair<>(other, "That's good to hear."))));
+        }
+
+        convos.put(PersonalityTrait.prudish,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Checking on the rations?"),
+                        new MyPair<>(main, "I'm sick of this stuff. I want a real meal."),
+                        new MyPair<>(other, "We'll hit a tavern sooner or later."),
+                        new MyPair<>(null, main.getFirstName() + " picks up some dry bread."),
+                        new MyPair<>(main, "Yuck..."))));
+
+        convos.put(PersonalityTrait.romantic,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "It would be better with some real food, yeah?"),
+                        new MyPair<>(main, "I don't mind actually. I imagine it's the most scrumptious entry at the finest diner, and it tastes a lot better."),
+                        new MyPair<>(other, "I wish I had your imagination."))));
+
+        convos.put(PersonalityTrait.snobby,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "It would be better with some real food, yeah?"),
+                        new MyPair<>(main, "Indeed. This stuff is basically swill."),
+                        new MyPair<>(other, "I wouldn't go that far."))));
+
+        convos.put(PersonalityTrait.rude,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Checking on the rations?"),
+                        new MyPair<>(main, "Yeah. Have you been stealing?."),
+                        new MyPair<>(other, "What!? Of course not."),
+                        new MyPair<>(main, "Just don't get any ideas."),
+                        new MyPair<>(other, "I don't like your tone " + main.getFirstName() + "."),
+                        new MyPair<>(main, "That sounds like a you-problem."),
+                        new MyPair<>(null, other.getFirstName() + " is offended and walks off."))));
+
+        convos.put(PersonalityTrait.greedy,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Checking on the rations?"),
+                        new MyPair<>(main, "Yeah. I think I deserve double rations."),
+                        new MyPair<>(other, "Really? Why."),
+                        new MyPair<>(main, "I just do."))));
+        return convos;
+    }
+
+    private static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeCleanWeaponConvos(GameCharacter main, GameCharacter other) {
+        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> convos = new HashMap<>();
+
+        List<MyPair<GameCharacter, String>> primer = new ArrayList<>(List.of(
+                new MyPair<>(null, main.getFirstName() + " is cleaning " + GameState.hisOrHer(main.getGender()) + " " + main.getEquipment().getWeapon().getName().toLowerCase() + ".")));
+
+        convos.put(PersonalityTrait.aggressive,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Yes. I can't wait to get back into the fight!"))));
+
+        convos.put(PersonalityTrait.brave,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "I have to. It won't do for it to be rusty when we need to defend ourselves."))));
+
+        convos.put(PersonalityTrait.lawful,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Are you expecting to use that soon?"),
+                        new MyPair<>(main, "I've heard there are bandits around here. We should bring them to justice."))));
+
+        convos.put(PersonalityTrait.stingy,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "This equipment is expensive, we should take good care of it."))));
+
+        convos.put(PersonalityTrait.romantic,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "What's the point of cleaning that, " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "I have to. What if I meet a cute " + GameState.boyOrGirl(MyRandom.flipCoin()) + "? " +
+                                "They'll run the other way if my gear looks shabby."),
+                        new MyPair<>(other, "That's your reason for doing that? Incredible."))));
+
+        convos.put(PersonalityTrait.cold,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Are those blood stains?"),
+                        new MyPair<>(main, "They are. Been doing a lot of killing."),
+                        new MyPair<>(other, "..."))));
+
+        convos.put(PersonalityTrait.calm,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Yes. This is almost like meditation for me."))));
+
+        convos.put(PersonalityTrait.benevolent,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Are you expecting to use that soon?"),
+                        new MyPair<>(main, "I hope not. I actually abhor violence."))));
+
+        convos.put(PersonalityTrait.jovial,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Are those blood stains?"),
+                        new MyPair<>(main, "No no, this is jam. I was preparing a very large sandwich earlier."),
+                        new MyPair<>(other, "Uhm... I don't think I"),
+                        new MyPair<>(main, "I'm just yanking your chain mate."),
+                        new MyPair<>(other, "Oh. Ha-ha."))));
+
+        convos.put(PersonalityTrait.irritable,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Mind your own business " + other.getName() + "."),
+                        new MyPair<>(other, "Hmph!"))));
+
+        convos.put(PersonalityTrait.prudish,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Yes... but can you do this for me?"),
+                        new MyPair<>(other, "What? Why should I?"),
+                        new MyPair<>(main, "Well... I don't want to get dirty."),
+                        new MyPair<>(null, other.getFirstName() + " turns away in disgust."))));
+
+        convos.put(PersonalityTrait.snobby,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Yes... but can you do this for me?"),
+                        new MyPair<>(other, "What? Why should I?"),
+                        new MyPair<>(main, "This type of chore is beneath me. It's servant stuff."),
+                        new MyPair<>(other, "Are you saying I'm your servant?"),
+                        new MyPair<>(main, "No but..."),
+                        new MyPair<>(null, other.getFirstName() + " turns away in disgust."))));
+
+        convos.put(PersonalityTrait.rude,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Not all of us want to have dirty gear " + other.getName() + "."),
+                        new MyPair<>(other, "Hey!"))));
+
+        convos.put(PersonalityTrait.encouraging,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Yes. The way I see it, why not look good while we're fighting?"),
+                        new MyPair<>(other, "Can't argue with that."))));
+
+        convos.put(PersonalityTrait.intellectual,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "Dirt can actually degrade your weapon faster than using it in battle."),
+                        new MyPair<>(other, "I don't know if I believe that."),
+                        new MyPair<>(main, "Well, it's true. I once attended a lecture about it..."),
+                        new MyPair<>(null, main.getName() + " starts reminiscing about " + GameState.hisOrHer(main.getGender()) + " time at college."),
+                        new MyPair<>(other, "Fine, I believe you. Just stop talking please..."))));
+
+        convos.put(PersonalityTrait.cowardly,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "Are you expecting to use that soon?"),
+                        new MyPair<>(main, "Actually, I don't know why I lug this thing around. " +
+                                "Am I expected to use it in combat?"),
+                        new MyPair<>(other, "Uhm, yeah."),
+                        new MyPair<>(main, "Sounds risky."),
+                        new MyPair<>(other, "Adventuring is risky business " + main.getFirstName() +
+                                ". You'd better get used to it, or find another occupation."),
+                        new MyPair<>(main, "I'll be fine. Let's just keep the fighting to a minimum."))));
+
+        convos.put(PersonalityTrait.narcissistic,
+                MyLists.merge(primer, List.of(
+                        new MyPair<>(other, "What's the point of cleaning that, " + main.getFirstName() + "?"),
+                        new MyPair<>(main, "I want it to look extra shiny. This weapon is part of my image."))));
+        return convos;
     }
 }

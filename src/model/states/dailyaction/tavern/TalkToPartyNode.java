@@ -116,7 +116,7 @@ public class TalkToPartyNode extends DailyActionNode {
                     }
                 } else {
                     leaderSay("What's on your mind " + gc.getFirstName() + "?");
-                    Map<PersonalityTrait, List<String>> answers = PersonalityTrait.makeConversations(gc);
+                    Map<PersonalityTrait, List<String>> answers = PersonalityTrait.tavernConversation(gc);
 
                     List<PersonalityTrait> traits = MyLists.filter(new ArrayList<>(answers.keySet()), gc::hasPersonality);
                     if (traits.isEmpty()) {

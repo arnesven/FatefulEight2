@@ -1,5 +1,6 @@
 package util;
 
+import model.characters.GameCharacter;
 import model.journal.StoryPart;
 import model.states.DailyEventState;
 
@@ -169,5 +170,11 @@ public class MyLists {
 
     public static <E> E last(List<E> list) {
         return list.get(list.size()-1);
+    }
+
+    public static <E> List<E> merge(List<E> left, List<E> right) {
+        List<E> result = new ArrayList<>(left);
+        result.addAll(right);
+        return result;
     }
 }
