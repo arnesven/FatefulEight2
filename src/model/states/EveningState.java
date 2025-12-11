@@ -383,7 +383,7 @@ public class EveningState extends GameState {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
-            // TODO: If party has dog, let it say goodnight!
+            DogEvent.dogInTheEvening(model);
             if (model.getParty().size() > 1) {
                 // TODO: Let party members chat depending on personality traits.
                 model.getParty().randomPartyMemberSay(model, List.of(

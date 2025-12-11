@@ -5,6 +5,7 @@ import model.characters.appearance.DogAppearance;
 import model.combat.conditions.BleedingCondition;
 import model.horses.DogHorse;
 import model.states.DailyEventState;
+import model.states.GameState;
 import util.MyRandom;
 
 public class DogEvent extends DailyEventState {
@@ -26,7 +27,7 @@ public class DogEvent extends DailyEventState {
         if (model.getParty().hasDog()) {
             showExplicitPortrait(model, dogPortrait, "Dog");
             portraitSay("Ruff ruff!");
-            leaderSay("What is it " + boyOrGirl(dogPortrait.getGender()) + ", smell something?");
+            leaderSay("What is it " + boyOrGirl(model.getParty().getDog().getGender()) + ", smell something?");
             portraitSay("Ruff ruff!");
             leaderSay("You want " + meOrUs() + " to come with you?");
             portraitSay("Ruff ruff ruff!");
@@ -79,9 +80,10 @@ public class DogEvent extends DailyEventState {
                     portraitSay("Ruff ruff!");
                     leaderSay("You wanna come with?");
                     portraitSay("Ruff ruff ruff!");
-                    leaderSay("Alright " + boyOrGirl(dogPortrait.getGender()) + ", you can come along.");
+                    DogHorse dog = new DogHorse();
+                    leaderSay("Alright " + boyOrGirl(dog.getGender()) + ", you can come along.");
                     println("The dog jumps and scampers about playfully. It seems happy to have found new master.");
-                    model.getParty().setDog(new DogHorse());
+                    model.getParty().setDog(dog);
                     model.getTutorial().dog(model);
                 } else {
                     println("The dog quickly snatches the bag and runs off! You have lost 5 rations.");
@@ -92,6 +94,29 @@ public class DogEvent extends DailyEventState {
             }
         } else {
             leaderSay("Just another stray. Let's keep moving.");
+        }
+    }
+
+    public static void dogInTheEvening(Model model) {
+        new DogEvent(model).doEvening(model);
+    }
+
+    private void doEvening(Model model) {
+        if (MyRandom.flipCoin()) {
+            showExplicitPortrait(model, dogPortrait, "Dog");
+            println("Your dog comes to your side and whimpers a little.");
+            leaderSay("Hello there " + boyOrGirl(model.getParty().getDog().getGender()) + ".");
+            int dieRoll = MyRandom.rollD6();
+            if (dieRoll < 3) {
+                println("You pet the dog.");
+            } else if (dieRoll < 5) {
+                println("You ruffle the dog's fur.");
+                leaderSay("You're a good dog.");
+            } else {
+                println("You bring out some food for the dog.");
+                leaderSay("There you go.");
+            }
+            portraitSay("Ruff ruff!");
         }
     }
 }
