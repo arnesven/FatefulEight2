@@ -89,7 +89,7 @@ public class BreakIntoShopState extends GameState {
                 }
             }
             partyMemberSay(groupB.get(0), "Now let's try not to be spotted on our way out.");
-            result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, Math.max(1, bounty/2));
+            result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 1 + bounty/2);
             if (!result) {
                 printAlert("Your crime has been witnessed.");
                 GeneralInteractionEvent.addToNotoriety(model, this, bounty * 10);
