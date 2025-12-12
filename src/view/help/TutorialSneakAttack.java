@@ -7,7 +7,7 @@ public class TutorialSneakAttack extends SubChapterHelpDialog {
             "A character with at least 1 rank of sneaking can perform a sneak " +
             "attack once per combat. Unless that character has already attacked, " +
             "or been attacked the character can initiate the sneak attack as a " +
-            "combat action.\n\n" +
+            "combat action (or if the character is invisible).\n\n" +
             "The character rolls a D10 and adds his sneaking modifier " +
             "to get a Stealth rating. The rest of the sneak attack will be resolved at " +
             "the end of the combat round. Should the character be targeted by an " +

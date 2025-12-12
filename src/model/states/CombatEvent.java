@@ -11,6 +11,7 @@ import model.combat.CombatAdvantage;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClinchedCondition;
 import model.combat.conditions.Condition;
+import model.combat.conditions.InvisibilityCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -617,7 +618,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     public boolean isEligibleForSneakAttack(GameCharacter performer) {
-        return !blockSneakAttack.contains(performer);
+        return !blockSneakAttack.contains(performer) || performer.hasCondition(InvisibilityCondition.class);
     }
 
     public void blockSneakAttackFor(GameCharacter character) {
