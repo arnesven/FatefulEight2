@@ -25,6 +25,7 @@ import model.states.dailyaction.CraftItemState;
 import sound.BackgroundMusic;
 import util.MyMatrices;
 import util.MyPair;
+import util.MyRandom;
 import util.MyStrings;
 import view.LogView;
 import view.MyColors;
@@ -419,7 +420,9 @@ public class EscapeTheDungeonQuest extends MainQuest {
                         tryToBackOut(model);
                     }
                 } else if (choice == 1) {
-                    leaderSay("Yes... thanks for making them for us! Let's get them!");
+                    leaderSay(MyRandom.sample(List.of("Yes... thanks for making them for us! Let's get them!",
+                            "I'm sorry, but you've got no chance. But we do after we take your weapons!",
+                            "You scum aren't going nowhere. Now hand over those weapons.")));
                     portraitSay("You want a piece of us? Fine, we'll smack you down!");
                     didAttack = true;
                 } else {
