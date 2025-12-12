@@ -121,6 +121,8 @@ public abstract class SelectableListMenu extends GameView {
         for (DrawableObject decor : decorations) {
             if (isInScrollFrame(decor.position.y)) {
                 decor.drawYourself(model, decor.position.x, decor.position.y+scrollShift);
+            } else {
+                System.out.println("Decor skipped: " + decor.position + ", and shift is " + scrollShift);
             }
         }
 

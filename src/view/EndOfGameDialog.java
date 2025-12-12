@@ -18,9 +18,8 @@ public class EndOfGameDialog extends SelectableListMenu {
 
     private static final int DIALOG_WIDTH = 35;
     private static final int DIALOG_HEIGHT = 41;
-    private String title = "";
-    private String text = "";
-    private static final String ENDING_TEXT =
+    private static final String title = "the end of your adventures";
+    private static final  String text =
             "Congratulations on completing 100 days as an adventurer!\n\n" +
             "You have achieved marvelous things. You have explored the world, " +
             "defeated mighty foes, done many good deeds " +
@@ -41,8 +40,6 @@ public class EndOfGameDialog extends SelectableListMenu {
         super.transitionedTo(model);
         ClientSoundManager.stopPlayingBackgroundSound();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.endingSong);
-        title = "the end of your adventures";
-        text = ENDING_TEXT;
     }
 
     @Override
@@ -85,7 +82,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(
-                new SelectableListContent(DIALOG_HEIGHT - 5, yStart + getHeight() - 3, "RETIRE") {
+                new SelectableListContent(xStart + getWidth()/2 - 2, yStart + getHeight() - 3, "RETIRE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setTimeToTransition(true);
@@ -97,7 +94,7 @@ public class EndOfGameDialog extends SelectableListMenu {
                         return true;
                     }
                 },
-                new SelectableListContent(DIALOG_HEIGHT - 6, yStart + getHeight() - 2, "CONTINUE") {
+                new SelectableListContent(xStart + getWidth()/2 - 3, yStart + getHeight() - 2, "CONTINUE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         model.setFreePlay(true);

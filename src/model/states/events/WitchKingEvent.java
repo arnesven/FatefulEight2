@@ -73,7 +73,7 @@ public class WitchKingEvent extends DailyEventState {
             portraitSay("My dear chap, all this. All you see around you, is the Witch Realm.");
             leaderSay("...");
             portraitSay("Or at least, it was. I gather a few things may change while one is imprisoned for a few thousand years.");
-            leaderSay("I'm afraid you'll find that nobody around here has every heard about the Witch Realm.");
+            leaderSay("I'm afraid you'll find that nobody around here has ever heard about the Witch Realm.");
             portraitSay("It didn't even make it into the history books?");
             GameCharacter gc = model.getParty().getRandomPartyMember();
             model.getParty().partyMemberSay(model, gc, "Who has time for books?");
@@ -142,7 +142,10 @@ public class WitchKingEvent extends DailyEventState {
                 GameCharacter gc2 = model.getParty().getRandomPartyMember();
                 model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
                 exploreRuinsState.printQuote("Witch King", "Please.... Help.... Me....");
-                tryBreakSpell(model, exploreRuinsState);
+                if (tryBreakSpell(model, exploreRuinsState)) {
+                    exploreRuinsState.setDungeonExited(true);
+                    return;
+                }
                 model.getParty().partyMemberSay(model, gc, "He appears to be waking up.");
             }
             exploreRuinsState.println("The Witch King suddenly opens his eyes. In a wild fury he lunges at you!");
@@ -164,7 +167,7 @@ public class WitchKingEvent extends DailyEventState {
                     try {
                         boolean result = tryBreakSpell(model, exploreRuinsState);
                         if (result) {
-                            return;
+                            break;
                         }
                     } catch (SpellCastException sce) {
                         if (sce.getSpell().getName().equals(new DispelSpell().getName())) {
