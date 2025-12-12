@@ -10,12 +10,12 @@ import view.sprites.BlueSpellSprite;
 import view.sprites.Sprite;
 
 public class EscapeSpell extends CombatSpell {
-    private static final Sprite SPRITE = new BlueSpellSprite(4, true);
+    private static final Sprite SPRITE = new BlueSpellSprite(4, false);
 
     public EscapeSpell() {
         super("Escape", 24, MyColors.BLUE, 7, 2, true);
     }
-    // TODO: This spell caused stack overflow when cast in quest.
+
     @Override
     protected Sprite getSprite() {
         return SPRITE;
@@ -45,6 +45,6 @@ public class EscapeSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "Teleports the party out of combat and other tricky situations.";
+        return "Teleports the party out of combat.";
     }
 }

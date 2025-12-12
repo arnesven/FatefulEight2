@@ -46,7 +46,7 @@ public abstract class CombatSpell extends MasterySpell {
     @Override
     public String tryCastSpell(Model model, GameCharacter gc) {
         if (quest) {
-            return super.castFromMenu(model, gc);
+            return super.tryCastSpell(model, gc);
         }
         return getName() + " can only be cast in combat.";
     }
