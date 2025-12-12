@@ -226,10 +226,11 @@ public enum PersonalityTrait {
         if (MyRandom.flipCoin() &&
                 !main.getEquipment().getWeapon().isRangedAttack() &&
                 !main.getEquipment().getWeapon().isOfType(NaturalWeapon.class)) {
-            return makeCleanWeaponConvos(main, other);
+            convos.putAll(makeCleanWeaponConvos(main, other));
         }
 
-        return makeRationsConvos(model, main, other);
+        convos.putAll(makeRationsConvos(model, main, other));
+        return convos;
     }
 
     private static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeRationsConvos(Model model, GameCharacter main, GameCharacter other) {

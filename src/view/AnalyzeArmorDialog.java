@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.items.ArmorItem;
 import model.items.Item;
 import model.items.accessories.Accessory;
+import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import util.BeforeAndAfterLine;
 import view.party.DrawableObject;
@@ -43,6 +44,9 @@ public class AnalyzeArmorDialog extends AnalyzeDialog {
     }
 
     private boolean cantEquip(GameCharacter gc, ArmorItem item) {
+        if (gc.getEquipment().getWeapon().isTwoHanded() && item instanceof Accessory && ((Accessory) item).isOffHandItem()) {
+            return false;
+        }
         return (!gc.getCharClass().canUseHeavyArmor() && item.isHeavy()) ||
                 (!gc.canChangeClothing() && item instanceof Clothing) ||
                 (!gc.canChangeAccessory() && item instanceof Accessory);
