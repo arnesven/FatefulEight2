@@ -25,6 +25,9 @@ public class AdvancedCalloutSprite extends CalloutSprite {
             text = "Level Up!";
         }
         this.textRows = MyStrings.partition(text, MAX_CALLOUT_WIDTH);
+        for (int i = 0; i < textRows.length; ++i) {
+            textRows[i] = textRows[i].trim();
+        }
         fixTextRows(textRows);
 
         // Abbreviate if too long.
