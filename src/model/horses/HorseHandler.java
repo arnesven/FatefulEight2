@@ -127,9 +127,11 @@ public class HorseHandler extends ArrayList<Horse> {
     public void abandonHorses(Model model) {
         if (size() > 0) {
             model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n" + LogView.DEFAULT_COLOR);
-            clear();
-            ponies = 0;
-            horsesFullBlood = 0;
+            while (!isEmpty()) {
+                Horse horse = getFirst();
+                lostHorses.add(horse);
+                removeHorse(horse);
+            }
         }
     }
 
