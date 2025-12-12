@@ -19,6 +19,7 @@ import view.subviews.CollapsingTransition;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TravelState extends GameState {
@@ -91,24 +92,25 @@ public class TravelState extends GameState {
         int chosen;
         do {
             options.clear();
-            int food = model.getParty().getInventory().getFood();
-            if (food > 0) {
-                options.add("Food (" + (Inventory.WEIGHT_OF_FOOD * food) / 1000.0 + ")");
+            for (Item it : model.getParty().getInventory().getAllItems()) {
+                options.add(it.getName() + " (" + (it.getWeight() / 1000.0) + ")");
             }
-            int ingredients = model.getParty().getInventory().getIngredients();
-            if (ingredients > 0) {
-                options.add("Ingredients (" + (Inventory.WEIGHT_OF_INGREDIENTS * ingredients) / 1000.0 + ")");
+            options.sort(Comparator.naturalOrder());
+            int lockpicks = model.getParty().getInventory().getLockpicks();
+            if (lockpicks > 0) {
+                options.addFirst("Lockpicks (" + (Inventory.WEIGHT_OF_LOCKPICKS*lockpicks) / 1000.0 + ")");
             }
             int materials = model.getParty().getInventory().getMaterials();
             if (materials > 0) {
-                options.add("Materials (" + (Inventory.WEIGHT_OF_MATERIALS * materials) / 1000.0 + ")");
+                options.addFirst("Materials (" + (Inventory.WEIGHT_OF_MATERIALS * materials) / 1000.0 + ")");
             }
-            int lockpicks = model.getParty().getInventory().getLockpicks();
-            if (lockpicks > 0) {
-                options.add("Lockpicks (" + (Inventory.WEIGHT_OF_LOCKPICKS*lockpicks) / 1000.0 + ")");
+            int ingredients = model.getParty().getInventory().getIngredients();
+            if (ingredients > 0) {
+                options.addFirst("Ingredients (" + (Inventory.WEIGHT_OF_INGREDIENTS * ingredients) / 1000.0 + ")");
             }
-            for (Item it : model.getParty().getInventory().getAllItems()) {
-                options.add(it.getName() + " (" + (it.getWeight() / 1000.0) + ")");
+            int food = model.getParty().getInventory().getFood();
+            if (food > 0) {
+                options.addFirst("Food (" + (Inventory.WEIGHT_OF_FOOD * food) / 1000.0 + ")");
             }
             options.add("Cancel");
             chosen = multipleOptionArrowMenu(model, 24, 4, options);

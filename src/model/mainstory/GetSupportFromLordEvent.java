@@ -44,7 +44,7 @@ public abstract class GetSupportFromLordEvent extends VisitLordEvent {
             leaderSay("Yes, that's me.");
             agent = "agents";
         }
-        portraitSay("I'm " + castle.getLordTitle() + " " + castle.getLordName() + ".");
+        portraitSay("I'm " + castle.getLordName() + ".");
         portraitSay("It's well known you are " + agent + " of the now infamous " +
                         kingdom.getLordName() + " of " + CastleLocation.placeNameToKingdom(kingdom.getPlaceName()) +
                 ". State your business quickly before you are thrown out!");
