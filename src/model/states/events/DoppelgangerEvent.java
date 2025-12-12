@@ -69,7 +69,7 @@ public class DoppelgangerEvent extends PersonalityTraitEvent {
         removePortraitSubView(model);
         leaderSay("That was strange.");
         partyMemberSay(other, "Very. Was " + heOrShe(doppelGanger.getGender()) +
-                " just playing a prank on us. Or maybe, could it be... It wasn't " + main.getFirstName() + " at all?");
+                " just playing a prank on us? Or maybe, could it be... It wasn't " + main.getFirstName() + " at all?");
         leaderSay("It, can't have been. Even though " + heOrShe(doppelGanger.getGender()) +
                 " looked exactly like " + main.getFirstName() + ", I think it was a different person, a doppelganger.");
         partyMemberSay(other, "Uncanny... let's head back to the market and tell the rest of the party.");

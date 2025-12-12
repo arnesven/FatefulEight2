@@ -23,6 +23,8 @@ public abstract class SkillBoostingPotion extends Potion {
         this.description = bldr.substring(0, bldr.length());
     }
 
+    // FEATURE: If in combat, turn invisible.
+
     @Override
     public String getShoppingDetails() {
         return description;
