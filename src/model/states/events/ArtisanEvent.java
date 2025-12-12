@@ -33,6 +33,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
     private ArrayList<Item> itemList;
     private AdvancedAppearance portrait;
     private ArtisanType subType;
+    private int improvedTimes = 0;
 
     public ArtisanEvent(Model model, boolean withIntro, ArtisanType subType, Race race) {
         super(model, "Trade with", MyRandom.randInt(10, 40));
@@ -123,8 +124,14 @@ public class ArtisanEvent extends GeneralInteractionEvent {
             GameCharacter gc = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
             if (subType.didImprove(model, this, gc)) {
                 partyMemberSay(gc, MyRandom.sample(List.of("Thank you!", "Much obliged.", "It looks great!", "Beautiful!")));
+                improvedTimes++;
             }
-            print("Do you want to upgrade " + subType.getItemType() + " for another party members? (Y/N) ");
+            if (improvedTimes < 3) {
+                print("Do you want to upgrade " + subType.getItemType() + " for another party members? (Y/N) ");
+            } else {
+                portraitSay("Unfortunately I don't have enough materials to upgrade anything more.");
+                break;
+            }
         }
     }
 
