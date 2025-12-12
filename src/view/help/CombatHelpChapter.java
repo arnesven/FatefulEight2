@@ -53,6 +53,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
         protected List<HelpDialog> makeSubSections(GameView view) {
             return List.of(
                     new CleaveHelpDialog(null),
+                    new CombatProwessAbilityHelpChapter(null),
                     new TutorialCurseAbility(null),
                     new TutorialDefending(null),
                     new TutorialInspire(null),

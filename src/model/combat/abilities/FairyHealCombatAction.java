@@ -36,7 +36,7 @@ public class FairyHealCombatAction extends SpecialAbilityCombatAction implements
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
         if (result.getModifiedRoll() < DIFFICULTY) {
             combat.println("But it failed.");
-        } else {
+        } else { // FEATURE: Add "fairy" animation
             int health = (result.getModifiedRoll() - DIFFICULTY + 2) / 2;
             int hpBefore = target.getHP();
             target.addToHP(health);

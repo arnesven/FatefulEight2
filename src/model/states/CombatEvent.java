@@ -751,18 +751,20 @@ public class CombatEvent extends DailyEventState {
             return;
         }
         List<MyPair<PersonalityTrait, String>> comments = new ArrayList<>();
-        comments.add(new MyPair<>(PersonalityTrait.critical, "Everybody mind your tactics!"));
-        comments.add(new MyPair<>(PersonalityTrait.cold, "If we die, we die."));
+        comments.add(new MyPair<>(PersonalityTrait.aggressive, "Let's get em!"));
         comments.add(new MyPair<>(PersonalityTrait.anxious, "Let's just get this over with."));
+        comments.add(new MyPair<>(PersonalityTrait.benevolent, "Don't worry. I'll protect you."));
+        comments.add(new MyPair<>(PersonalityTrait.cold, "If we die, we die."));
+        comments.add(new MyPair<>(PersonalityTrait.critical, "Everybody mind your tactics!"));
         comments.add(new MyPair<>(PersonalityTrait.irritable, "What, another fight?"));
-        comments.add(new MyPair<>(PersonalityTrait.unkind, "Don't anybody get in my way."));
-        comments.add(new MyPair<>(PersonalityTrait.snobby, "Fighting is such a chore."));
         comments.add(new MyPair<>(PersonalityTrait.jovial, "These guys seem friendly. Hey! Why don't we be pals?"));
+        comments.add(new MyPair<>(PersonalityTrait.lawful, "This is self defense."));
         comments.add(new MyPair<>(PersonalityTrait.naive, "This will be easy. Right?"));
         comments.add(new MyPair<>(PersonalityTrait.narcissistic, "Just leave it to me."));
-        comments.add(new MyPair<>(PersonalityTrait.aggressive, "Let's get em!"));
+        comments.add(new MyPair<>(PersonalityTrait.prudish, "Ugh, they look gross."));
         comments.add(new MyPair<>(PersonalityTrait.romantic, "A battle, how exciting!"));
-        comments.add(new MyPair<>(PersonalityTrait.lawful, "This is self defense."));
+        comments.add(new MyPair<>(PersonalityTrait.snobby, "Fighting is such a chore."));
+        comments.add(new MyPair<>(PersonalityTrait.unkind, "Don't anybody get in my way."));
         Collections.shuffle(comments);
         for (MyPair<PersonalityTrait, String> pair : comments) {
             if (randomSayIfPersonality(pair.first, List.of(), pair.second)) {
@@ -772,6 +774,11 @@ public class CombatEvent extends DailyEventState {
                 break;
             }
         }
+        leaderSay(MyRandom.sample(List.of("Everybody get ready!", "Just, hold the line.",
+                "We've got this.", "This will go quick, as long as everybody does their job.",
+                "Okay, you know the deal. Fight!", "This is what I pay you for.",
+                "They don't have a chance.", "Form up, we've got enemies incoming.",
+                "Draw your weapons, this might get messy.")));
     }
 
     public void setAutoCombatEnabled(boolean enabled) {
