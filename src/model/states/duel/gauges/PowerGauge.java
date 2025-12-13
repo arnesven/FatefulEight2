@@ -12,7 +12,7 @@ import view.widget.PowerGaugeWidget;
 
 public abstract class PowerGauge {
 
-    private final PowerGaugeWidget widget;
+    private PowerGaugeWidget widget;
     private final boolean withGraphics;
     private final int[] levelIndices;
     private final String name;
@@ -22,11 +22,6 @@ public abstract class PowerGauge {
         this.name = name;
         this.levelIndices = levelIndices;
         this.withGraphics = withGraphics;
-        if (withGraphics) {
-            this.widget = makeWidget();
-        } else {
-            this.widget = null;
-        }
     }
 
     @Override
@@ -62,12 +57,18 @@ public abstract class PowerGauge {
 
     public void drawYourself(ScreenHandler screenHandler, int xOffset, int yOffset) {
         if (withGraphics) {
+            if (widget == null) {
+                widget = makeWidget();
+            }
             widget.drawYourself(screenHandler, xOffset, yOffset);
         }
     }
 
     public void drawGaugeLogo(ScreenHandler screenHandler, int xOffset, int yOffset) {
         if (withGraphics) {
+            if (widget == null) {
+                widget = makeWidget();
+            }
             widget.drawGaugeLogo(screenHandler, xOffset, yOffset);
         }
     }
@@ -132,6 +133,9 @@ public abstract class PowerGauge {
     public abstract String getHelpText();
 
     public void drawSegments(ScreenHandler screenHandler, int x, int y) {
+        if (widget == null) {
+            widget = makeWidget();
+        }
         widget.drawSegmentsOnly(screenHandler, x, y);
     }
 

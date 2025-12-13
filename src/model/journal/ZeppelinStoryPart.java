@@ -338,6 +338,7 @@ public class ZeppelinStoryPart extends StoryPart {
     private class FlyWithZeppelinEvent extends AlternativeTravelEvent {
         public FlyWithZeppelinEvent(Model model) {
             super(model, false);
+            setWideMap(true);
         }
 
         @Override

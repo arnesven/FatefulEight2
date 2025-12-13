@@ -5,6 +5,8 @@ import model.map.SeaHex;
 import model.map.World;
 import model.states.DailyEventState;
 import model.states.TravelBySeaState;
+import view.GameView;
+import view.WideSubviewView;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.EmptySubView;
@@ -17,10 +19,16 @@ import java.util.List;
 public abstract class AlternativeTravelEvent extends DailyEventState {
 
     private final boolean isWaterTravel;
+    private boolean wideMap = false;
+    private GameView oldView = null;
 
     public AlternativeTravelEvent(Model model, boolean isWaterTravel) {
         super(model);
         this.isWaterTravel = isWaterTravel;
+    }
+
+    protected void setWideMap(boolean b) {
+        wideMap = b;
     }
 
     protected abstract Sprite getSprite();
@@ -38,8 +46,16 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
         }
         Sprite sprite = getSprite();
         model.getWorld().setAlternativeAvatar(sprite);
-        ExplicitTravelSubView mapSubView = new ExplicitTravelSubView(model);
-        CollapsingTransition.transition(model, mapSubView);
+        ExplicitTravelSubView mapSubView;
+        if (wideMap) {
+            this.oldView = model.getView();
+            model.transitionToDialog(new WideSubviewView());
+            mapSubView = new ExplicitTravelSubView(model, 12);
+            CollapsingTransition.wideTransition(model, mapSubView);
+        } else {
+            mapSubView = new ExplicitTravelSubView(model);
+            CollapsingTransition.transition(model, mapSubView);
+        }
         Point selectedPos;
         if (isWaterTravel) {
             model.getWorld().setAlternativeAvatar(null);
@@ -57,7 +73,12 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
                     model.getWorld().translateToScreen(selectedPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
             mapSubView.waitForAnimation();
         }
-        CollapsingTransition.transition(model, new EmptySubView());
+        if (wideMap) {
+            CollapsingTransition.wideTransition(model, new EmptySubView());
+            model.transitionToDialog(oldView);
+        } else {
+            CollapsingTransition.transition(model, new EmptySubView());
+        }
         model.getCurrentHex().travelFrom(model);
         model.getParty().setPosition(selectedPos);
         model.getParty().setOnRoad(false);
@@ -94,18 +115,24 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
     }
 
     private class ExplicitTravelSubView extends MapSubView {
+        private final int mapWidthHexes;
         private final Point cursorPos;
         private final Point startPoint;
         private final String titleText;
         private final String underText;
         private boolean enabled = true;
 
-        public ExplicitTravelSubView(Model model) {
+        public ExplicitTravelSubView(Model model, int mapWidth) {
             super(model);
+            this.mapWidthHexes = mapWidth;
             cursorPos = new Point(model.getParty().getPosition());
             startPoint = new Point(model.getParty().getPosition());
             this.titleText = AlternativeTravelEvent.this.getTitleText();
             this.underText = AlternativeTravelEvent.this.getUnderText();
+        }
+
+        public ExplicitTravelSubView(Model model) {
+            this(model, MAP_WIDTH_HEXES);
         }
 
         @Override
@@ -121,7 +148,7 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
         @Override
         public void specificDrawArea(Model model) {
             model.getWorld().drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
-                    MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, enabled);
+                    mapWidthHexes, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, enabled);
         }
 
         @Override

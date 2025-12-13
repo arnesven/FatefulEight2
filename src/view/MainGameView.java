@@ -15,9 +15,14 @@ public class MainGameView extends GameView {
     private TopText topText = new TopText();
     private MiniLog miniLog = new MiniLog();
     private GameView nextView;
+    private boolean allowLogChange = true;
 
     public MainGameView() {
         super(false);
+    }
+
+    protected void setAllowLogChange(boolean b) {
+        allowLogChange = b;
     }
 
     @Override
@@ -37,14 +42,26 @@ public class MainGameView extends GameView {
             setTimeToTransition(true);
             nextView = new GameOverView();
         } else {
-            BorderFrame.drawFrame(model.getScreenHandler(), model.getSubView().getCenterTextHeight());
+            drawFrame(model);
             ScreenHandler screenHandler = model.getScreenHandler();
             screenHandler.clearForeground();
-            model.getParty().drawYourself(screenHandler);
+            drawParty(model);
             topText.drawYourself(model);
-            model.getSubView().drawYourself(model);
+            drawSubView(model);
             miniLog.drawYourself(model);
         }
+    }
+
+    protected void drawFrame(Model model) {
+        BorderFrame.drawFrame(model.getScreenHandler(), model.getSubView().getCenterTextHeight());
+    }
+
+    protected void drawParty(Model model) {
+        model.getParty().drawYourself(model.getScreenHandler());
+    }
+
+    private void drawSubView(Model model) {
+        model.getSubView().drawYourself(model);
     }
 
     @Override
@@ -54,7 +71,7 @@ public class MainGameView extends GameView {
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F2 && allowLogChange) {
             if (miniLog.isFinalStage()) {
                 setTimeToTransition(true);
                 nextView = new LogView(this);

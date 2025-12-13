@@ -80,7 +80,7 @@ public class FullMapView extends GameView {
         ensureCursorPosSet(model);
         ScreenHandler screenHandler = model.getScreenHandler();
         BorderFrame.drawFrameTop(screenHandler);
-        BorderFrame.drawFrameHorizontalLine(screenHandler, 48);
+        BorderFrame.drawFrameHorizontalLine(screenHandler, 0, DrawingArea.WINDOW_COLUMNS, 48);
         topText.drawYourself(model);
         screenHandler.clearForeground();
         worldToDraw.drawYourself(model, cursorPos, model.getParty().getPosition(),
