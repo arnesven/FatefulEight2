@@ -4,16 +4,22 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.ChildAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.map.UrbanLocation;
+import model.races.Race;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BurningBuildingEvent extends PersonalityTraitEvent {
+    private AdvancedAppearance motherApp;
+
     public BurningBuildingEvent(Model model, PersonalityTrait personalityTrait, GameCharacter mainCharacter) {
         super(model, personalityTrait, mainCharacter);
     }
@@ -39,13 +45,16 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
         leaderSay("It's useless. All we can do is try to contain it.");
         printQuote("Man", "Get more water! Do we know if anybody is still in there?");
         println("An paralyzing scream pierces your ears.");
-        printQuote("Woman", "My daughter! She is still in the house! Oh no, my poor baby!");
+        this.motherApp = PortraitSubView.makeRandomPortrait(Classes.ART, Race.randomRace(), true);
+        showExplicitPortrait(model, motherApp, "Woman");
+        portraitSay("My child! My child is still in the house! Oh no, my poor baby!");
         GameCharacter main = getMainCharacter();
         println("Before anybody else has time to react " + main.getName() + " sprints into the burning building!");
         leaderSay(main.getFirstName() + "! Come back... it's to late!");
         leaderSay("My god...");
         println(main.getName() + " has separated from the party. Press enter to continue.");
         waitForReturn();
+        removePortraitSubView(model);
         List<GameCharacter> toBench = new ArrayList<>(model.getParty().getPartyMembers());
         toBench.remove(main);
         model.getParty().benchPartyMembers(toBench);
@@ -89,14 +98,18 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
     }
 
     private void successful(Model model, GameCharacter main) {
+        ChildAppearance childApp = PortraitSubView.makeChildAppearance(motherApp.getRace(), MyRandom.flipCoin());
+        childApp.setEyebrowsUp();
+        childApp.setBigMouth();
         println("Suddenly " + main.getFirstName() + " hears the sound of a crying child." +
-                " Upstairs, in a bedroom, a small girl is " +
+                " Upstairs, in a bedroom, a small " + boyOrGirl(childApp.getGender()) + " is " +
                 "hiding under a table, panicky and crying.");
+        showExplicitPortrait(model, childApp, "Kid");
         partyMemberSay(main, "Come on kid. Let's get out of here!");
-        println(main.getFirstName() + " grabs the girl, but at that moment the ceiling above the doorway collapses. " +
+        println(main.getFirstName() + " grabs the " + boyOrGirl(childApp.getGender()) + ", but at that moment the ceiling above the doorway collapses. " +
                 "The only other way out of the room is the window facing the street.");
         partyMemberSay(main, "Get on my back kid, we're going to have to jump.");
-        printQuote("Kid", "Jump? Out of the window? Are you nuts?");
+        portraitSay("Jump? Out of the window? Are you nuts?");
         partyMemberSay(main, "It's okay. We'll be alright. Here we go!");
         println(main.getFirstName() + " steps up on the window sill, then leaps into the air!");
 
@@ -115,14 +128,20 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
             println(main.getFirstName() + " lands gracefully in front of the crowd of townspeople.");
         }
         model.getParty().unbenchAll();
-        println("The little girl returns to her mother. " + main.getFirstName() + " is black from soot, sweat " +
+        println("The little " + boyOrGirl(childApp.getGender()) + " returns to her mother. " + main.getFirstName() + " is black from soot, sweat " +
                 "pouring from " + hisOrHer(main.getGender()) + " brow.");
+        model.getLog().waitForAnimationToFinish();
+        removePortraitSubView(model);
         leaderSay(main.getFirstName() + "... You're a hero!");
-        printQuote("Man", "A hero!");
-        printQuote("Woman", "How can we ever repay you!");
+        printQuote("Man", "A hero! " + heOrSheCap(main.getGender()) + " saved the child!");
+        model.getLog().waitForAnimationToFinish();
+        showExplicitPortrait(model, motherApp, "Mother");
+        portraitSay("My " + (childApp.getGender() ? "daughter":"son") + "... How can we ever repay you?");
         println("The crowd erupts in cheer. People are in such good spirits, all wanting to shake " + main.getFirstName() +
                 "'s hand, that they almost seem to have forgotten about the burning building.");
-        printQuote("Man", "Okay people, we still have work to do. We can't let this fire spread to the other houses.");
+        model.getLog().waitForAnimationToFinish();
+        showRandomPortrait(model, Classes.CONSTABLE, "Constable");
+        portraitSay("Okay people, we still have work to do. We can't let this fire spread to the other houses.");
         println("The party spends the rest of the evening trying to help the townspeople contain the fire.");
         partyMemberSay(main, "The building is completely destroyed.");
         leaderSay("Yes, but nobody got hurt. That's what counts. Good job " + main.getFirstName() + ".");

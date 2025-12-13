@@ -105,7 +105,7 @@ public class PortraitSubView extends SubView {
         return mouthIndex == 4 || mouthIndex == 5 || mouthIndex >= 12;
     }
 
-    public static CharacterAppearance makeChildAppearance(Race race, boolean gender) {
+    public static ChildAppearance makeChildAppearance(Race race, boolean gender) {
         ChildAppearance app = new ChildAppearance(race, gender, HairStyle.randomHairColor());
         app.setClass(Classes.None);
         return app;

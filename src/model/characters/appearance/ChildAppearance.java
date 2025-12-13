@@ -6,17 +6,22 @@ import util.MyRandom;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite;
+import view.sprites.Sprite8x8;
 
 import java.awt.*;
 import java.util.List;
 
 public class ChildAppearance extends CharacterAppearance {
     private final Sprite headSprite;
+    private Sprite eyeBrows;
     private final boolean realGender;
+    private final MyColors hairColor;
+    private Sprite8x8 specialMouth = null;
 
     public ChildAppearance(Race race, boolean gender, MyColors hairColor) {
         super(race, false, hairColor);
         this.realGender = gender;
+        this.hairColor = hairColor;
         setShoulders(ShouldersFactory.makeShoulders("Narrow", false));
         setNeck(new SlenderNeck());
 
@@ -36,7 +41,8 @@ public class ChildAppearance extends CharacterAppearance {
         headSprite.setColor3(race.getMouthDefaultColor());
         headSprite.setColor4(MyColors.BLACK);
 
-
+        setEyebrowsNormal();
+        setNormalMouth();
     }
 
     @Override
@@ -49,6 +55,8 @@ public class ChildAppearance extends CharacterAppearance {
         super.drawYourself(screenHandler, col, row);
         screenHandler.clearSpace(col+1, col+6, row+1, row+5);
         screenHandler.register(headSprite.getName(), new Point(col+2, row+1), headSprite);
+        screenHandler.register(eyeBrows.getName(), new Point(col+2, row+3), eyeBrows, 1);
+        screenHandler.register(specialMouth.getName(), new Point(col+3, row+4), specialMouth, 1);
     }
 
 
@@ -57,7 +65,7 @@ public class ChildAppearance extends CharacterAppearance {
 
     @Override
     public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
-    
+
     @Override
     public boolean supportsSpeakingAnimation() {
         return false;
@@ -91,5 +99,35 @@ public class ChildAppearance extends CharacterAppearance {
     @Override
     public CharacterAppearance copy() {
         return new ChildAppearance(getRace(), getGender(), getHairColor());
+    }
+
+    public void setEyebrowsNormal() {
+        eyeBrows = new Sprite("childeyebrows", "child.png", 0, 5, 24, 8);
+        eyeBrows.setColor2(hairColor);
+    }
+
+    public void setEyebrowsUp() {
+        eyeBrows = new Sprite("childeyebrowsupset", "child.png", 1, 5, 24, 8);
+        eyeBrows.setColor2(hairColor);
+    }
+
+    public void setEyebrowsDown() {
+        eyeBrows = new Sprite("childeyebrowsupset", "child.png", 2, 5, 24, 8);
+        eyeBrows.setColor2(hairColor);
+    }
+
+    public void setNormalMouth() {
+        specialMouth = new Sprite8x8("frownmouth", "child.png", 0x59,
+                getRace().getColor(), MyColors.WHITE, getRace().getMouthDefaultColor(), MyColors.BEIGE);
+    }
+
+    public void setMouthFrown() {
+        specialMouth = new Sprite8x8("frownmouth", "child.png", 0x5A,
+                getRace().getColor(), MyColors.WHITE, getRace().getMouthDefaultColor(), MyColors.BEIGE);
+    }
+
+    public void setBigMouth() {
+        specialMouth = new Sprite8x8("frownmouth", "child.png", 0x5B,
+                getRace().getColor(), MyColors.WHITE, getRace().getMouthDefaultColor(), MyColors.BEIGE);
     }
 }
