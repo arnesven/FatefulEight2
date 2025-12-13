@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.appearance.ChildAppearance;
 import model.combat.abilities.InvisibilityCombatAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
@@ -34,22 +35,25 @@ public class KidsWantFireworksEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("As you walk down the road a group of little kids suddenly ambush you.");
-        CharacterAppearance kid1 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        ChildAppearance kid1 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        kid1.setBigMouth();
         showExplicitPortrait(model, kid1, "Kid 1");
         portraitSay("Hey... you know magic right? Do some magic!");
         leaderSay("Eh, what?");
         CharacterAppearance kid2 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
         showExplicitPortrait(model, kid2, "Kid 2");
         portraitSay("Yeah, show us some magic tricks! Pull a rabbit out of your hat!");
-        CharacterAppearance kid3 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        ChildAppearance kid3 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
         showExplicitPortrait(model, kid3, "Kid 3");
         portraitSay("Turn this stick into a flower!");
-        CharacterAppearance kid4 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        ChildAppearance kid4 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        kid4.setEyebrowsDown();
         showExplicitPortrait(model, kid4,"Kid 4");
         portraitSay("Make my mommy disappear!");
         showExplicitPortrait(model, kid1, "Kid 1");
         portraitSay("Do some fireworks!");
         showExplicitPortrait(model, kid3, "Kid 3");
+        kid3.setBigMouth();
         portraitSay("Yeah fireworks!");
         println("All of the kids are now chanting for fireworks.");
         leaderSay("Oh come on kids...");

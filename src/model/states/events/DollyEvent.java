@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.ChildAppearance;
 import model.classes.Skill;
 import model.items.Inventory;
 import model.items.InventoryDummyItem;
@@ -27,7 +28,9 @@ public class DollyEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         boolean childGender = MyRandom.randInt(2) == 0;
-        CharacterAppearance kid = PortraitSubView.makeChildAppearance(Race.randomRace(), childGender);
+        ChildAppearance kid = PortraitSubView.makeChildAppearance(Race.randomRace(), childGender);
+        kid.setMouthFrown();
+        kid.setEyebrowsUp();
         showExplicitPortrait(model, kid, "Crying Child");
         println("You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
                 "The child seems to be in some kind of distress. Apparently " + heOrShe(childGender) +

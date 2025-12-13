@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.ChildAppearance;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
@@ -88,7 +89,9 @@ public class InformationBrokerAssassinationEndingEvent extends AssassinationEndi
                 " was watching you intently.");
         leaderSay("Hey! You there!");
         println("You take a few quick steps and grab the kid before " + heOrShe(kidGender) + " can get away.");
-        CharacterAppearance app = PortraitSubView.makeChildAppearance(Race.ALL, kidGender);
+        ChildAppearance app = PortraitSubView.makeChildAppearance(Race.ALL, kidGender);
+        app.setEyebrowsDown();
+        app.setBigMouth();
         showExplicitPortrait(model, app, "Kid");
         portraitSay("Hey, lemme go! Whadda ya want?");
         leaderSay("Why were you spying on " + meOrUs() + " kid?");
@@ -96,6 +99,9 @@ public class InformationBrokerAssassinationEndingEvent extends AssassinationEndi
         randomSayIfPersonality(PersonalityTrait.jovial, List.of(model.getParty().getLeader()), "Hehehe. This kid's got humor.");
         leaderSay("Just tell " + meOrUs() + " what you were doing, and " + iOrWe() + "'ll let you go.");
         String mister = task.getWrit().getGender() ? "Mizz " : "Mister ";
+        model.getLog().waitForAnimationToFinish();
+        app.setEyebrowsNormal();
+        app.setNormalMouth();
         portraitSay(mister + task.getWrit().getLastName() + " said he was going away on a trip. " +
                 "Gave me some money to keep a look out for any weirdos snooping around " +
                 hisOrHer(task.getWrit().getGender()) + " house.");
