@@ -2,6 +2,7 @@ package model.mainstory;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.*;
@@ -17,6 +18,7 @@ import model.items.spells.Spell;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.mainstory.honorable.*;
+import model.map.HillsHex;
 import model.map.WorldBuilder;
 import model.map.locations.EasternPalaceLocation;
 import model.quests.NightAtTheTheaterQuest;
@@ -29,6 +31,7 @@ import util.*;
 import view.MyColors;
 import view.combat.MountainCombatTheme;
 import view.subviews.ArrowMenuSubView;
+import view.subviews.CollapsingTransition;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -292,7 +295,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 leaderSay("What has given him that impression?");
                 portraitSay("We've had some bad experiences with envoys from the kingdoms of Arkvale and Ardh. " +
                         "And more recently, there's been troop movement near Arkvale.");
-                leaderSay("Yes. Arkvale is in a state of turmoil at the moment. And the people there are suffring. " +
+                leaderSay("Yes. Arkvale is in a state of turmoil at the moment. And the people there are suffering. " +
                         "That's actually the reason we've travelled to this land.");
                 portraitSay("Oh? Go on.");
                 leaderSay(iOrWeCap() + " believe an evil force has corrupted the regent in Arkvale. " + imOrWereCap() + " rallying the " +
@@ -381,10 +384,12 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
             boolean success = selected.performTask(model, this);
-            if (step == NO_SUBTASK_PERFORMED && success) {
+            if (success) {
                 portraitSay("Your help to our village will surely have been noticed by Shingen.");
                 subTasks.remove(selected);
-                step = MIKOS_TASK_DONE;
+                if (step == NO_SUBTASK_PERFORMED) {
+                    step = MIKOS_TASK_DONE;
+                }
             }
         }
 
@@ -416,16 +421,36 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             }
 
             showMiko(model);
-            print("A fierce skirmish huh? This reminds me when Shingen was a young lad. He would go into battle, armed with ");
+            portraitSay("You're back.");
+            leaderSay("We are. It was quite the fierce skirmish.");
+            StringBuilder bldr = new StringBuilder("That reminds me of when Shingen was a young lad. He would go into battle, armed with ");
             switch (shingenWeapon) {
                 case Wakisashis:
-                    print("two wakizashis");
+                    bldr.append("two wakizashis");
+                    break;
                 case Katana:
-                    print("a simple katana");
+                    bldr.append("a simple katana");
+                    break;
                 case DaiKatana:
-                    print("a large dai-katana");
+                    bldr.append("a large dai-katana");
+                    break;
             }
-            println(" fearless as a tiger.");
+            bldr.append(" fearless as a tiger.");
+            portraitSay(bldr.toString());
+            GameCharacter leader = model.getParty().getLeader();
+            if (leader.hasPersonality(PersonalityTrait.critical)) {
+                leaderSay("I don't know if I believe that.");
+                portraitSay("It's the truth.");
+            } else if (leader.hasPersonality(PersonalityTrait.aggressive) ||
+                    leader.hasPersonality(PersonalityTrait.brave)) {
+                leaderSay("How glorious!");
+            } else if (leader.hasPersonality(PersonalityTrait.cowardly)) {
+                leaderSay("Did he have a death wish?");
+                portraitSay("Hehehe. No.");
+            } else {
+                leaderSay("I bet that was quite the sight.");
+                portraitSay("It truly was.");
+            }
             return true;
         }
 
@@ -493,6 +518,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         public boolean performTask(Model model, VisitMikosHomeEvent event) {
             event.println("You head out of town and up into the hills. After a little while you " +
                     "spot the bandit camp Miko was talking about.");
+            CollapsingTransition.transition(model, new HillsHex(0, 0, 0).getImageSubView());
             return event.runBanditCombat(model);
         }
     }
@@ -582,7 +608,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
 
         @Override
         public boolean performTask(Model model, VisitMikosHomeEvent event) {
-            event.println("You head over to the local school. With a little help from the teachers are soon able to set up " +
+            event.println("You head over to the local school. With a little help from the teachers you are soon able to set up " +
                     "a lecture about the fundamentals of magic. Many villagers are in attendance.");
             event.print("Which of the party members should be the speaker during the lecture?");
             GameCharacter lecturer = model.getParty().partyMemberInput(model, event, model.getParty().getPartyMember(0));
@@ -591,12 +617,17 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 event.println("At the end of the lecture you feel the need to demonstrate a couple of spells. " +
                         "After all, one cannot be a magic user by only dealing with theory!");
                 List<Spell> spells = new ArrayList<>(model.getParty().getSpells());
+                while (spells.size() > 6) {
+                    Collections.shuffle(spells);
+                    Spell sp = spells.getFirst();
+                    spells.removeIf(spell -> spell.getColor().equals(sp.getColor()) && sp != spell);
+                }
                 if (spells.isEmpty()) {
                     event.println("However, since you do not know a single spell, you attempt to perform a cheap trick instead. " +
                             "The villagers are not impressed, and some of them leave early.");
                     return false;
                 }
-                for (int i = 0; i < 2; ++i) {
+                for (int i = 0; i < 2 && !spells.isEmpty(); ++i) {
                     event.print("What spell would you like to cast?");
                     List<String> options = MyLists.transform(spells, Item::getName);
                     final Spell[] selected = {null};
@@ -612,7 +643,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                     if (lecturer.isDead() || !castSuccess) {
                         return false;
                     }
-                    event.print("The crowd is impressed by the display of magic!");
+                    event.println("The crowd is impressed by the display of magic!");
                     spells.remove(selected[0]);
                 }
             } else {

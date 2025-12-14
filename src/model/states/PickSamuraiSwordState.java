@@ -40,6 +40,12 @@ public class PickSamuraiSwordState extends DailyEventState {
                 if (doesPurchaseSword(model, sword)) {
                     subView.removeSelected();
                     subView.clearSelected();
+                    print("Do you want to buy more swords? (Y/N) ");
+                    if (!yesNoInput()) {
+                        break;
+                    } else {
+                        println("Use the arrow keys to select a sword. Use SPACE to go to the next room or quit.");
+                    }
                 }
                 subView.clearSelected();
             } else {

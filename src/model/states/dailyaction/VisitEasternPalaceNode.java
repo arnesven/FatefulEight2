@@ -89,7 +89,7 @@ public class VisitEasternPalaceNode extends DailyActionNode {
                 printQuote("Palace Majordomo", "Outsider... wait, I've heard of you, you're the one who's been " +
                         "helping around in town.");
                 leaderSay("Yes. We need to see Lord Shingen.");
-                printQuote("Palace Majordomo", "Hmm... there seems to be a narrow slot in Lord Shingens busy schedule. " +
+                printQuote("Palace Majordomo", "Hmm... there seems to be a narrow slot in Lord Shingen's busy schedule. " +
                         "Please follow me.");
                 task.makeLordShingenEvent(model).doTheEvent(model);
             } else {

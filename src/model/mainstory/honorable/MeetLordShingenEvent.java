@@ -32,16 +32,16 @@ public class MeetLordShingenEvent extends DailyEventState {
         portraitSay("Indeed. We have had a surge in orcish activity, and the forces of the " +
                 kingdom +
                 " have begin infringing on our territory in the west. Are you an envoy of " +
-                arkvale.getLordTitle() + " " + arkvale.getLordName() + "?");
+                arkvale.getLordName() + "?");
         leaderSay("No, or yes... It's complicated.");
         portraitSay("I don't understand. Are you or are you not?");
         leaderSay(iOrWeCap() + " were investigating a matter for the " + arkvale.getLordTitle() + ". The quest " +
                 "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
                 iOrWe() + " were wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped " + kingdom +
                 " alive. It seems the " + arkvale.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
-                "Because of this, the kingdom has been descended into disorder.");
+                "Because of this, the kingdom has descended into disorder.");
         portraitSay("I see. And now you seek refuge here?");
-        leaderSay("For a time perhaps. " + iOrWeCap() + " aim to rally the support of the kingdoms surrounding " +
+        leaderSay("For a time perhaps. " + iOrWeCap() + " aim to rally the support of the kingdoms surrounding the " +
                 kingdom + ". We intend to return to " + kingdom + " to overthrow " +
                 arkvale.getLordName() + " and root out the evil presence.");
         portraitSay("Ah, now I understand. You seek to form an alliance with me.");
@@ -57,7 +57,7 @@ public class MeetLordShingenEvent extends DailyEventState {
         portraitSay("My grandfather once formed such an alliance with one of the kingdoms of old. If I recall " +
                 "correctly, the Grand Duchess of Ardh brought my grandfather a magnificent sword. It was a masterfully " +
                 "crafted item. The gesture proved that the Duchess was serious about the alliance.");
-        leaderSay("You want a sword? What about all of the ones hanging on the wall?");
+        leaderSay("You want a sword? What about all of the ones hanging on the wall behind you?");
         portraitSay("Our customs may seem strange. But formality must be observed. Bring me a sword worthy of our " +
                 "commitment to each other, and I will give your proposal sincere consideration.");
         task.setShingenMet();

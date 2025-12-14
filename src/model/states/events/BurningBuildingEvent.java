@@ -9,6 +9,8 @@ import model.characters.appearance.ChildAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.map.CastleLocation;
+import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.races.Race;
 import util.MyRandom;
@@ -32,7 +34,8 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
 
     @Override
     public boolean isApplicable(Model model) {
-        return model.getCurrentHex().getLocation() instanceof UrbanLocation;
+        return model.getCurrentHex().getLocation() instanceof TownLocation ||
+                model.getCurrentHex().getLocation() instanceof CastleLocation;
     }
 
     @Override
