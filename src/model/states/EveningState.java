@@ -208,11 +208,13 @@ public class EveningState extends GameState {
             int mainQuests = quests.size();
             addHeldQuests(model, quests);
             addRandomQuests(model, quests, mainQuests);
-            if (quests.size() == 0) {
+            if (quests.isEmpty()) {
+                print("Checking for quests... ");
                 println("The party has not been offered any quests.");
             }
         }
-        if (quests.size() > 0) {
+        if (!quests.isEmpty()) {
+            print("Checking for quests... ");
             goOnQuest = offerQuests(model, this, quests);
         }
     }

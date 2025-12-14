@@ -171,7 +171,7 @@ public class BattleState extends GameState {
     }
 
     public boolean canMoveInDirection(BattleUnit performer, BattleDirection direction,
-                                      boolean allowMoveIntoEnemyUnit) {
+                                      boolean allowMoveIntoEnemyUnit, boolean allowMoveIntoFriendlyUnit) {
         Point pos = units.getPositionFor(performer);
         if (direction == BattleDirection.east && pos.x == BATTLE_GRID_WIDTH-1) {
             return false;
@@ -183,11 +183,15 @@ public class BattleState extends GameState {
             return false;
         }
         BattleUnit other = getOtherUnitInDirection(performer, direction);
+        // FEATURE: Merge friendly units of same type
         if (other == null) {
             return true;
         }
         if (!allowMoveIntoEnemyUnit) {
             return false;
+        }
+        if (allowMoveIntoFriendlyUnit) {
+            return true;
         }
         return !other.getOrigin().equals(performer.getOrigin());
     }
@@ -207,6 +211,16 @@ public class BattleState extends GameState {
             }
             performer.setMP(performer.getMP() - moveCost);
             moveUnitInDirection(performer, direction);
+        } else if (other.getQualifiedName().equals(performer.getQualifiedName())) {
+            if (!action.isNoPrompt()) {
+                print("Merge units? ");
+            }
+            if (action.isNoPrompt() || yesNoInput()) {
+                other.setCount(other.getCount() + performer.getCount());
+                println(performer.getQualifiedName() + " has merged with other unit of same type.");
+                performer.setCount(0);
+                removeUnit(performer);
+            }
         } else {
             if (!action.isNoPrompt()) {
                 print("Attack " + other.getQualifiedName() + " with " + performer.getName() + " (uses all remaining MP)? (Y/N) ");
@@ -245,7 +259,7 @@ public class BattleState extends GameState {
         candidates.add(attackDirection);
         BattleDirection retreatDirection = null;
         for (BattleDirection dir : candidates) {
-            if (canMoveInDirection(retreater, dir, false) &&
+            if (canMoveInDirection(retreater, dir, false, false) &&
                     movePointCostForDestination(retreater, dir) < BattleTerrain.IMPASSIBLE_TERRAIN_MOVE_COST) {
                 retreatDirection = dir;
                 break;

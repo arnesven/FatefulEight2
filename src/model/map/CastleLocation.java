@@ -33,7 +33,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     private final Sprite questSprite;
     private final Race lordRace;
     private final Headquarters headquarters;
-
+    // FEATURE: Unique decorations for towns:  Sparse trees for Ardh, dunes for Sunblaze, thick trees for Bogdown, Snow covered trees for arkvale
     public CastleLocation(String castleName, MyColors castleColor, String lordName, Race lordRace) {
         super(castleName);
         this.castleColor = castleColor;

@@ -48,6 +48,18 @@ public class KingdomWar implements Serializable {
         units.add(new KnightsUnit(MyRandom.randInt(4, 7), name, color));
         units.add(new PikemenUnit(MyRandom.randInt(10, 16), name, color));
         units.add(new MilitiaUnit(MyRandom.randInt(14, 20), name, color));
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll < 3) {
+            units.add(new MilitiaUnit(MyRandom.randInt(14, 20), name, color));
+        } else if (dieRoll < 5) {
+            units.add(new SwordsmanUnit(MyRandom.randInt(8, 12), name, color));
+        } else if (dieRoll < 7) {
+            units.add(new ArchersUnit(MyRandom.randInt(10, 16), name, color));
+        } else if (dieRoll < 9) {
+            units.add(new PikemenUnit(MyRandom.randInt(10, 16), name, color));
+        } else {
+            units.add(new KnightsUnit(MyRandom.randInt(4, 7), name, color));
+        } // TODO: Add catapult/trebuche
         return units;
     }
 

@@ -285,6 +285,7 @@ public abstract class BattleUnit implements Serializable {
         }
         battleState.println("Ranged attack does " + hits + " hits.");
         target.takeCasualties(battleState, hits);
+        target.checkForRout(battleState);
     }
 
     protected static MyColors fixColor(MyColors color) {

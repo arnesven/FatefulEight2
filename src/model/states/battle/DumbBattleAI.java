@@ -28,7 +28,7 @@ public class DumbBattleAI extends BattleAI {
         }
         MoveOrAttackBattleAction moveOrAttack = null;
         for (BattleDirection dir : List.of(BattleDirection.south, BattleDirection.west, BattleDirection.east, BattleDirection.north)) {
-            if (battleState.canMoveInDirection(activeUnit, dir, true)) {
+            if (battleState.canMoveInDirection(activeUnit, dir, true, false)) {
                 moveOrAttack = new SilentMoveOrAttackBattleAction(activeUnit);
                 moveOrAttack.setParameters(model, battleState, dir);
                 if (moveOrAttack.isValid()) {

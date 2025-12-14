@@ -283,7 +283,14 @@ public class MainStory implements Serializable {
     }
 
     public boolean isPersonaNonGrata(Model model) {
-        return isFugitive() && model.getWorld().getKingdomForPosition(model.getParty().getPosition()).getName().equals(spawnData.getCastle());
+        if (!isFugitive()) {
+            return false;
+        }
+        CastleLocation kingdom = model.getWorld().getKingdomForPosition(model.getParty().getPosition());
+        if (kingdom == null) {
+            return false;
+        }
+        return kingdom.getName().equals(spawnData.getCastle());
     }
 
     public GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model) {

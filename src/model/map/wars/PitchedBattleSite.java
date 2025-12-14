@@ -29,10 +29,10 @@ public class PitchedBattleSite implements Serializable {
         Collections.shuffle(xs);
         Collections.shuffle(ys);
         List<MyPair<Point, BattleTerrain>> result = new ArrayList<>();
-        for (int i = MyRandom.randInt(2, 5); i > 0; --i) {
+        for (int i = MyRandom.randInt(3, 9); i > 0; --i) {
             result.add(new MyPair<>(new Point(xs.remove(0), ys.remove(0)), new WoodsBattleTerrain()));
         }
-        for (int i = MyRandom.randInt(1, 3); i > 0; --i) {
+        for (int i = MyRandom.randInt(2, 6); i > 0; --i) {
             result.add(new MyPair<>(new Point(xs.remove(0), ys.remove(0)), new HillsBattleTerrain(getGroundColor())));
         }
         return result;

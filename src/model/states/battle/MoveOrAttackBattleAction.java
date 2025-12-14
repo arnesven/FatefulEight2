@@ -77,10 +77,10 @@ public class MoveOrAttackBattleAction extends BattleAction {
     public void setParameters(Model model, BattleState state, BattleDirection newDirection) {
         if (getPerformer().getDirection() == newDirection) { // Move forward
             int mpCost = state.movePointCostForDestination(getPerformer(), newDirection);
-            if (state.canMoveInDirection(getPerformer(), newDirection, true) &&
+            if (state.canMoveInDirection(getPerformer(), newDirection, true, true) &&
                     getPerformer().getMP() >= mpCost) {
                 this.direction = newDirection;
-                if (state.getOtherUnitInDirection(getPerformer(), direction) != null) { // is attack
+                if (state.getOtherUnitInDirection(getPerformer(), direction) != null) { // is attack or merge
                     this.mpCost = getPerformer().getMP();
                 } else {
                     this.mpCost = mpCost;
