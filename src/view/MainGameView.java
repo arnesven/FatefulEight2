@@ -84,6 +84,9 @@ public class MainGameView extends GameView {
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             setTimeToTransition(true);
             nextView = new HelpView(this);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_INSERT) {
+            setTimeToTransition(true);
+            nextView = new PauseMenu(this);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_F7 && FatefulEight.inDebugMode()) {
             for (GameCharacter target : model.getParty().getPartyMembers()) {
                 VampirismCondition vampCond = (VampirismCondition) target.getCondition(VampirismCondition.class);

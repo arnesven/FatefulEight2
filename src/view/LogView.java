@@ -154,6 +154,9 @@ public class LogView extends GameView {
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             setTimeToTransition(true);
             nextView = new HelpView(this);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_INSERT) {
+            setTimeToTransition(true);
+            nextView = new PauseMenu(this);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
              this.scroll++;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {

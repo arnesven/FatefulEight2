@@ -10,7 +10,8 @@ public class TutorialBasicControls extends HelpDialog {
             "Pressing Alt and Enter will toggle full screen mode.\n\n" +
             "The Esc key opens the game menu, or exits the current menu. F1 opens the help section and F2 " +
             "changes the layout of the game log in a larger window.\n\nPlease adjust the log speed to a desirable rate " +
-            "in the settings menu.";
+            "in the settings menu.\n\n" +
+            "The game will pause while in the menu, but can also be explicitly if you hitting the Insert key.";
 
     public TutorialBasicControls(GameView view) {
         super(view, "Basic Controls", TEXT);
