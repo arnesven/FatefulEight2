@@ -140,9 +140,9 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 }
                 if (step == INITIAL_STEP) {
                     return "Gain the support of the Honorable Warriors in the Far Eastern town.";
-                } else if (step <= NO_SUBTASK_PERFORMED) {
+                } else if (step == NO_SUBTASK_PERFORMED) {
                     return "Complete one of Miko's tasks to gain enough trust to get an audience with Lord Shingen.";
-                } else if (step <= MIKOS_TASK_DONE) {
+                } else if (step == MIKOS_TASK_DONE) {
                     return "Request an audience with Lord Shingen.";
                 } else if (step == SWORD_GIVEN) {
                     return "Complete the quest '" + NightAtTheTheaterQuest.QUEST_NAME + "'.";
@@ -151,6 +151,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 if (step == SMITH_TIP_GOTTEN) {
                     extra = " Get a special weapon from the weapon smith who lives north east of the Eastern Palace.";
                 }
+                // step == SHINGEN_MET
                 return "Find a suitable sword to present to Lord Shingen as a symbol of your commitment to one another." +
                         extra;
             }
@@ -201,6 +202,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     public DailyEventState makeLordShingenEvent(Model model) {
+        System.out.println("Step is " + step);
         if (step >= SHINGEN_MET) {
             return new PresentSwordToShingenEvent(model, this, true);
         }
@@ -326,7 +328,9 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 if (success) {
                     portraitSay("Your help to our village will surely have been noticed by Shingen.");
                     subTasks.remove(selected);
-                    step = MIKOS_TASK_DONE;
+                    if (step < MIKOS_TASK_DONE) {
+                        step = MIKOS_TASK_DONE;
+                    }
                 }
             } else { // Step 1 => Not performed any subtask or SUBTASK PERFORMED
                 setCurrentTerrainSubview(model);
@@ -387,7 +391,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             if (success) {
                 portraitSay("Your help to our village will surely have been noticed by Shingen.");
                 subTasks.remove(selected);
-                if (step == NO_SUBTASK_PERFORMED) {
+                if (step < MIKOS_TASK_DONE) {
                     step = MIKOS_TASK_DONE;
                 }
             }
