@@ -147,6 +147,7 @@ public class AutomaticCombatAction extends BasicCombatAction {
         List<Combatant> partyMembers = new ArrayList<>(combat.getAllCombatants());
         partyMembers.removeAll(combat.getEnemies());
         partyMembers.removeAll(combat.getAllies());
+        partyMembers.remove(character);
         if (MyLists.all(partyMembers, pm -> pm.hasCondition(InspiredCondition.class))) {
             return null;
         }

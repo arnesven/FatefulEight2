@@ -10,16 +10,14 @@ import model.combat.conditions.Condition;
 import model.items.weapons.Lute;
 import model.states.CombatEvent;
 import util.MyRandom;
-import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialInspire;
-import view.sprites.CharSprite;
-import view.sprites.Sprite;
 
 import java.util.List;
 
 public class InspireCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final int LEADERSHIP_RANKS_REQUIREMENT = 4;
+    public static final int BASE_DIFFICULTY = 8;
 
     public InspireCombatAction() {
         super("Inspire", false, false);
@@ -33,7 +31,7 @@ public class InspireCombatAction extends SpecialAbilityCombatAction implements S
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().inspire(model);
-        SkillCheckResult result = doSkillCheck(model, combat, performer);
+        SkillCheckResult result = testSkill(model, combat, performer);
         if (result.isSuccessful()) {
             String word = "a";
             int bonus = 1;
@@ -62,11 +60,10 @@ public class InspireCombatAction extends SpecialAbilityCombatAction implements S
         }
     }
 
-    protected SkillCheckResult doSkillCheck(Model model, CombatEvent combat, GameCharacter performer) {
+    protected SkillCheckResult testSkill(Model model, CombatEvent combat, GameCharacter performer) {
         int isLeader = model.getParty().getLeader() == performer? 1 : 0;
         combat.println(performer.getFirstName() + " attempts to inspire the party.");
-        return model.getParty().doSkillCheckWithReRoll(model, combat, performer,
-                Skill.Leadership, 8, 0, isLeader);
+        return performer.testSkill(model, Skill.Leadership, BASE_DIFFICULTY, isLeader);
     }
 
     public Condition getCondition() {

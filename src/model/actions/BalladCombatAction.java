@@ -18,11 +18,10 @@ public class BalladCombatAction extends InspireCombatAction {
         return "Ballad";
     }
 
-    protected SkillCheckResult doSkillCheck(Model model, CombatEvent combat, GameCharacter performer) {
+    protected SkillCheckResult testSkill(Model model, CombatEvent combat, GameCharacter performer) {
         combat.println(performer.getFirstName() + " attempts to inspire the party with a powerful ballad.");
         SoundEffects.playSound("lute");
-        return model.getParty().doSkillCheckWithReRoll(model, combat, performer,
-                Skill.Entertain, 8, 0, 1);
+        return performer.testSkill(model, Skill.Entertain, BASE_DIFFICULTY, 1);
     }
 
 
