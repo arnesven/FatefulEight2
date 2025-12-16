@@ -1,8 +1,8 @@
 package view.subviews;
 
+import model.LargerCalloutPortraitAnimations;
 import model.Model;
-import model.PartyAnimations;
-import model.characters.GameCharacter;
+import model.PortraitAnimations;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -26,7 +26,7 @@ public class PortraitSubView extends SubView {
     private final SubView previous;
     private final CharacterAppearance appearance;
     private final String portraitName;
-    private final PartyAnimations partyAnimations = new PartyAnimations();
+    private final PortraitAnimations portraitAnimations = new LargerCalloutPortraitAnimations();
 
     public PortraitSubView(SubView subView, CharacterClass cls, Race race, String portraitName) {
         this.previous = subView;
@@ -120,7 +120,7 @@ public class PortraitSubView extends SubView {
                 PORTRAIT_FRAME_WIDTH, PORTRAIT_FRAME_HEIGHT, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
-            partyAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION);
+            portraitAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION);
         } else {
             silhouetteAppearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         }
@@ -143,7 +143,7 @@ public class PortraitSubView extends SubView {
         } else {
             BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         }
-        partyAnimations.drawSpeakAnimations(model.getScreenHandler());
+        portraitAnimations.drawSpeakAnimations(model.getScreenHandler());
     }
 
     @Override
@@ -165,7 +165,7 @@ public class PortraitSubView extends SubView {
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(portraitName, pair.second);
         if (appearance != null) {
-            partyAnimations.addSpeakAnimation(pair.first, CHAR_LOCATION, line, appearance, false);
+            portraitAnimations.addSpeakAnimation(CHAR_LOCATION, line, appearance, false);
         }
     }
 
@@ -201,18 +201,18 @@ public class PortraitSubView extends SubView {
     }
 
     public void forceVampireFeedingLook() {
-        partyAnimations.setVampireFeedingLookEnabledFor(appearance, CHAR_LOCATION);
+        portraitAnimations.setVampireFeedingLookEnabledFor(appearance, CHAR_LOCATION);
     }
 
     public void removeVampireFeedingLook() {
-        partyAnimations.removeVampireFeedingLookFor(appearance);
+        portraitAnimations.removeVampireFeedingLookFor(appearance);
     }
 
     public void forceEyesClosed(boolean closed) {
-        partyAnimations.forceEyesClosed(appearance, closed);
+        portraitAnimations.forceEyesClosed(appearance, closed);
     }
 
     public void dispose() {
-        partyAnimations.unregisterAll();
+        portraitAnimations.unregisterAll();
     }
 }

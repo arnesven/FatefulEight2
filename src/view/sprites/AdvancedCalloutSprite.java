@@ -9,31 +9,36 @@ import java.awt.*;
 
 
 public class AdvancedCalloutSprite extends CalloutSprite {
-    private static final int MAX_CALLOUT_WIDTH = 20;
+    private static final int MAX_CALLOUT_WIDTH = 22;
     private static final int MAX_ROWS = 5;
+    private final boolean shiftRight;
     private String[] textRows;
 
     private static final Sprite[][] calloutBorders = makeBorderSprites();
     private int maxWidth;
 
-
     public AdvancedCalloutSprite(String text) {
+        this(text, MAX_CALLOUT_WIDTH, MAX_ROWS, true);
+    }
+
+    public AdvancedCalloutSprite(String text, int maxWidth, int maxRows, boolean shiftRight) {
         super(0, text.length()*4);
+        this.shiftRight = shiftRight;
         if (text.endsWith("#") || text.endsWith("3")) {
             text = text.substring(0, text.length()-1);
         } else if (text.endsWith("^")) {
             text = "Level Up!";
         }
-        this.textRows = MyStrings.partition(text, MAX_CALLOUT_WIDTH);
+        this.textRows = MyStrings.partition(text, maxWidth);
         for (int i = 0; i < textRows.length; ++i) {
             textRows[i] = textRows[i].trim();
         }
         fixTextRows(textRows);
 
         // Abbreviate if too long.
-        if (textRows.length > MAX_ROWS) {
+        if (textRows.length > maxRows) {
             String[] oldTextRows = textRows;
-            textRows = new String[MAX_ROWS];
+            textRows = new String[maxRows];
             for (int i = 0; i < textRows.length; ++i) {
                 textRows[i] = oldTextRows[i];
             }
@@ -80,15 +85,18 @@ public class AdvancedCalloutSprite extends CalloutSprite {
     }
 
     public void drawYourself(ScreenHandler screenHandler, Point location) {
-        int startX = location.x;
+        int shift = shiftRight ? 1 : ((maxWidth - 1) / 2);
+        int startX = location.x - shift;
         int startY = location.y - textRows.length + 1;
 
+        // TOP ROW
         drawBorder(screenHandler, startX - 1, startY, 0, 0);
         for (int x = 0; x < maxWidth; ++x) {
             drawBorder(screenHandler,startX + x, startY, 1, 0);
         }
         drawBorder(screenHandler,startX + maxWidth, startY, 3, 0);
 
+        // MID ROWS
         for (int y = 0; y < textRows.length; ++y) {
             drawBorder(screenHandler,startX - 1, startY + y + 1, 0, 1);
             BorderFrame.drawStringInForeground(screenHandler, textRows[y], startX, startY + y + 1,
@@ -96,11 +104,12 @@ public class AdvancedCalloutSprite extends CalloutSprite {
             drawBorder(screenHandler,startX + textRows[y].length(), startY + y + 1, 3, 1);
         }
 
+        // DRAW BOTTOM ROW
         drawBorder(screenHandler,startX - 1, startY + textRows.length + 1, 0, 2);
         for (int x = 0; x < maxWidth; ++x) {
-            if (x == 2) {
+            if (startX + x == location.x + 2) {
                 drawBorder(screenHandler,startX + x, startY + textRows.length + 2, 1, 2);
-            } else if (x == 3) {
+            } else if (startX + x == location.x + 3) {
                 drawBorder(screenHandler,startX + x, startY + textRows.length + 2, 2, 2);
             }
             drawBorder(screenHandler,startX + x, startY + textRows.length + 1, 1, 1);

@@ -13,11 +13,10 @@ public class SpeakingAnimation implements Serializable {
     private final AdvancedCalloutSprite callout;
     private final MouthMovementSprite mouthAnimation;
 
-    public SpeakingAnimation(int calloutNum, Point location, String text,
+    public SpeakingAnimation(Point location, String text,
                              CharacterAppearance app, boolean vampireTeeth) {
         this.location = location;
-        //callout = new CalloutSprite(calloutNum, text.length());
-        callout = new AdvancedCalloutSprite(text);
+        callout = makeCalloutSprite(text);
         if (app.showFacialHair() && app.supportsSpeakingAnimation()) {
             MyColors skinColor = app.hasAlternateSkinColor() ? app.getAlternateSkinColor() : app.getRace().getColor();
             mouthAnimation = new MouthMovementSprite(text.length(), skinColor,
@@ -25,6 +24,10 @@ public class SpeakingAnimation implements Serializable {
         } else {
             mouthAnimation = null;
         }
+    }
+
+    protected AdvancedCalloutSprite makeCalloutSprite(String text) {
+        return new AdvancedCalloutSprite(text);
     }
 
     public void drawYourself(ScreenHandler screenHandler) {

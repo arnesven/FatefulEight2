@@ -109,7 +109,7 @@ public class RecruitState extends GameState {
             print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
                     " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
                     recruitableNames() + ".");
-            waitForReturn();
+            waitForReturn(); // FEATURE: Add some banter before recruiting
 
             int topCommand = subView.getTopIndex();
             if (topCommand == 2) { // Exit

@@ -52,7 +52,7 @@ public class Party implements Serializable {
     private final List<GameCharacter> frontRow = new ArrayList<>();
     private final List<GameCharacter> backRow = new ArrayList<>();
     private final List<GameCharacter> bench = new ArrayList<>();
-    private final PartyAnimations partyAnimations = new PartyAnimations();
+    private final PortraitAnimations portraitAnimations = new PortraitAnimations();
     private final Map<String, Summon> summons = new HashMap<>();
     private final Set<String> templeBannings = new HashSet<>();
     private final Map<String, HeldQuestData> heldQuests = new HashMap<>();
@@ -141,15 +141,15 @@ public class Party implements Serializable {
                     gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
                 }
                 if (!gc.isDead() && !bench.contains(gc)) {
-                    partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
+                    portraitAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
                 }
             } else {
                 Point wordLocation = new Point(p.x + (drawPartyVertically && count >= 4 ? 3 : 8), p.y + 2);
-                partyAnimations.drawSlot(screenHandler, count, wordLocation, count < inventory.getTentSize());
+                portraitAnimations.drawSlot(screenHandler, count, wordLocation, count < inventory.getTentSize());
             }
         }
-        partyAnimations.drawSpeakAnimations(screenHandler);
-        partyAnimations.drawDieRollAnimations(screenHandler);
+        portraitAnimations.drawSpeakAnimations(screenHandler);
+        portraitAnimations.drawDieRollAnimations(screenHandler);
     }
 
     public Point getLocationForPartyMember(int count) {
@@ -391,7 +391,7 @@ public class Party implements Serializable {
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
         if (!gc.isDead() && !bench.contains(gc)) {
-            partyAnimations.addSpeakAnimation(pair.first, p, text, gc.getAppearance(),
+            portraitAnimations.addSpeakAnimation(p, text, gc.getAppearance(),
                     gc.hasCondition(VampirismCondition.class));
         }
     }
@@ -665,7 +665,7 @@ public class Party implements Serializable {
     }
 
     public synchronized int remove(GameCharacter gc, boolean transferEquipment, boolean payGold, int gold) {
-        partyAnimations.clearAnimationsFor(gc);
+        portraitAnimations.clearAnimationsFor(gc);
         if (transferEquipment) {
             gc.transferEquipmentToParty(this);
         }
@@ -735,7 +735,7 @@ public class Party implements Serializable {
                 backRow.remove(gc);
                 frontRow.remove(gc);
                 bench.add(gc);
-                partyAnimations.clearAnimationsFor(gc);
+                portraitAnimations.clearAnimationsFor(gc);
             }
         }
     }
@@ -916,15 +916,15 @@ public class Party implements Serializable {
         } else {
             position.translate(1, 8);
         }
-        return partyAnimations.addDieRollAnimation(position, unmodifiedRoll);
+        return portraitAnimations.addDieRollAnimation(position, unmodifiedRoll);
     }
 
     public void clearAnimations() {
-        partyAnimations.clearAnimations();
+        portraitAnimations.clearAnimations();
     }
 
     public void forceEyesClosed(GameCharacter victim, boolean closed) {
-        partyAnimations.forceEyesClosed(victim, closed);
+        portraitAnimations.forceEyesClosed(victim, closed);
     }
 
     public void setGuide(int days) {
@@ -942,11 +942,11 @@ public class Party implements Serializable {
     public void enabledVampireLookFor(GameCharacter vampire) {
         int index = partyMembers.indexOf(vampire);
         Point p = getLocationForPartyMember(index);
-        partyAnimations.setVampireFeedingLookEnabledFor(vampire.getAppearance(), p);
+        portraitAnimations.setVampireFeedingLookEnabledFor(vampire.getAppearance(), p);
     }
 
     public void disableVampireLookFor(GameCharacter vampire) {
-        partyAnimations.removeVampireFeedingLookFor(vampire.getAppearance());
+        portraitAnimations.removeVampireFeedingLookFor(vampire.getAppearance());
     }
 
     public void setDog(DogHorse dogHorse) {
@@ -1063,7 +1063,7 @@ public class Party implements Serializable {
         int tentSizeBefore = inventory.getTentSize();
         inventory.addItem(it);
         for (int i = tentSizeBefore; i < inventory.getTentSize(); i++) {
-            partyAnimations.addSlotAnimation(i);
+            portraitAnimations.addSlotAnimation(i);
         }
     }
 

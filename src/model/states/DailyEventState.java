@@ -285,6 +285,9 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void showExplicitPortrait(Model model, CharacterAppearance appearance, String name) {
+        if (portraitSubView != null) {
+            removePortraitSubView(model);
+        }
         portraitSubView = new PortraitSubView(model.getSubView(), appearance, name);
         model.setSubView(portraitSubView);
     }

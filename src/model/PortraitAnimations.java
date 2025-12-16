@@ -12,7 +12,7 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class PartyAnimations implements Serializable {
+public class PortraitAnimations implements Serializable {
     private static final int BLINK_RATE = 350;
     private static final int CHANGE_LOOK_LONG_DIRECTION = 800;
     private static final int CHANGE_LOOK_SHORT_DURATION = 400;
@@ -80,9 +80,9 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    public synchronized void addSpeakAnimation(int calloutNum, Point pOrig, String text,
+    public synchronized void addSpeakAnimation(Point pOrig, String text,
                                                CharacterAppearance appearance,
-                                  boolean vampireTeeth) {
+                                               boolean vampireTeeth) {
         lookers.remove(appearance);
         Point p = new Point(pOrig.x, pOrig.y);
         p.x += 3;
@@ -91,7 +91,11 @@ public class PartyAnimations implements Serializable {
             speakingAnimations.get(appearance).unregister();
             speakingAnimations.remove(appearance);
         }
-        speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, text, appearance, vampireTeeth));
+        speakingAnimations.put(appearance, makeSpeakingAnimation(p, text, appearance, vampireTeeth));
+    }
+
+    protected SpeakingAnimation makeSpeakingAnimation(Point p, String text, CharacterAppearance appearance, boolean vampireTeeth) {
+        return new SpeakingAnimation(p, text, appearance, vampireTeeth);
     }
 
     public DieRollAnimation addDieRollAnimation(Point location, int unmodifiedRoll) {

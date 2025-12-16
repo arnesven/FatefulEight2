@@ -27,6 +27,7 @@ public class ArcheryRangeEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("There is an archery range on the outskirts of town. The marksman there approaches you.");
+        // TODO: Make real portrait
         printQuote("Marksman", "Hello there. Want to practice your marksmanship? For 5 gold I'll lend you " +
                 "a bow if you don't have one and some arrows.");
         model.getParty().randomPartyMemberSay(model, List.of("I don't know... Do we really have time for this?"));
