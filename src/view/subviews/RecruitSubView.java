@@ -1,8 +1,11 @@
 package view.subviews;
 
 import model.Model;
+import model.PortraitAnimations;
+import model.SmallCalloutPortraitAnimations;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import model.combat.conditions.VampirismCondition;
 import model.states.RecruitState;
 import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
@@ -11,6 +14,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.Map;
 
 public class RecruitSubView extends TopMenuSubView {
@@ -18,6 +22,8 @@ public class RecruitSubView extends TopMenuSubView {
     private final RecruitState state;
     private final Map<GameCharacter, Integer> startingGoldMap;
     private Point cursorPosition;
+    private PortraitAnimations portraitAnis = new SmallCalloutPortraitAnimations();
+    private Map<GameCharacter, Integer> knownInfo = new HashMap<>();
 
     public RecruitSubView(RecruitState state, SteppingMatrix<GameCharacter> recruitMatrix, Map<GameCharacter, Integer> startingGoldMap) {
         super(2, new int[]{X_OFFSET + 2, X_OFFSET+13, X_OFFSET+24});
@@ -80,28 +86,46 @@ public class RecruitSubView extends TopMenuSubView {
                 }
             }
         }
+        portraitAnis.drawSpeakAnimations(model.getScreenHandler());
     }
 
     private void drawCharacter(Model model, GameCharacter gc, int xPos, int yPos) {
         gc.drawAppearance(model.getScreenHandler(), xPos, yPos);
-        BorderFrame.drawString(model.getScreenHandler(), gc.getFirstName(), xPos, yPos+7, MyColors.WHITE, MyColors.BLUE);
+        int info = getKnownInfo(gc);
         BorderFrame.drawString(model.getScreenHandler(), gc.getRace().getName(), xPos, yPos+8, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), gc.getCharClass().getShortName() + " " + gc.getLevel(), xPos, yPos+9, MyColors.WHITE, MyColors.BLUE);
+        if (info >= 1) {
+            BorderFrame.drawString(model.getScreenHandler(), gc.getFirstName(), xPos, yPos + 7, MyColors.WHITE, MyColors.BLUE);
+        }
+        if (info >= 2) {
+            BorderFrame.drawString(model.getScreenHandler(), gc.getCharClass().getShortName() + " " + gc.getLevel(), xPos, yPos + 9, MyColors.WHITE, MyColors.BLUE);
+        }
+        portraitAnis.drawBlink(model.getScreenHandler(), gc.getAppearance(), new Point(xPos, yPos-3));
     }
 
     @Override
     protected String getUnderText(Model model) {
-        if (matrix.getSelectedElement() != null) {
+        if (matrix.getSelectedElement() != null && knownInfo.containsKey(matrix.getSelectedElement())) {
             GameCharacter gc = matrix.getSelectedElement();
             int startingGold = 0;
             if (startingGoldMap.containsKey(gc) && state.isStartingGoldEnabled()) {
                 startingGold = startingGoldMap.get(gc);
             }
-            String text = String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),
+            int knownInfo = getKnownInfo(matrix.getSelectedElement());
+            if (knownInfo == 1) {
+                return String.format("%s", gc.getFullName());
+            }
+            if (knownInfo == 2) {
+                return String.format("%s, %s %d", gc.getFullName(),
+                        gc.getCharClass().getShortName(), gc.getLevel());
+            }
+            if (knownInfo == 3) {
+                return String.format("%s, %s %d, %s", gc.getFullName(),
+                        gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses());
+            }
+            return String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),
                     gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGold);
-            return text;
         }
-        return "";
+        return "???";
     }
 
     @Override
@@ -126,5 +150,28 @@ public class RecruitSubView extends TopMenuSubView {
 
     public Point getCursorPosition() {
         return cursorPosition;
+    }
+
+    public void characterSay(GameCharacter gc, String text) {
+        Point p = matrix.getPositionFor(gc);
+        int xPos = X_OFFSET + p.x*14 + 5;
+        int yPos = Y_OFFSET + p.y*12;
+        portraitAnis.addSpeakAnimation(new Point(xPos, yPos), text,
+                gc.getAppearance(), gc.hasCondition(VampirismCondition.class));
+    }
+
+    public void improveKnownInfo(GameCharacter selected) {
+        if (!knownInfo.containsKey(selected)) {
+            knownInfo.put(selected, 1);
+        } else {
+            knownInfo.put(selected, knownInfo.get(selected) + 1);
+        }
+    }
+
+    public int getKnownInfo(GameCharacter selected) {
+        if (!knownInfo.containsKey(selected)) {
+            return 0;
+        }
+        return knownInfo.get(selected);
     }
 }

@@ -4,6 +4,7 @@ import model.Model;
 import model.Party;
 import model.SteppingMatrix;
 import model.characters.*;
+import model.classes.CharacterClass;
 import model.headquarters.TransferCharacterHeadquartersAction;
 import model.items.HorseStartingItem;
 import model.items.Item;
@@ -15,10 +16,12 @@ import model.races.HalfOrc;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
+import util.MyStrings;
 import view.subviews.RecruitSubView;
 
+import java.awt.*;
 import java.util.*;
-import java.util.function.Predicate;
+import java.util.List;
 
 public class RecruitState extends GameState {
 
@@ -26,7 +29,9 @@ public class RecruitState extends GameState {
     private List<GameCharacter> recruitables = new ArrayList<>();
     private MyPair<Integer, String> recruitResult;
     private Map<GameCharacter, Integer> startingGoldMap;
+    private Map<GameCharacter, Item> startingItemMap;
     private boolean startingGold = true;
+    private RecruitSubView subView;
 
     public RecruitState(Model model) {
         super(model);
@@ -43,7 +48,7 @@ public class RecruitState extends GameState {
         setRandomClasses(recruitables);
         setLevels(recruitables);
         recruitables.addAll(model.getLingeringRecruitables());
-        setGold(recruitables);
+        setGoldAndItems(recruitables);
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         model.getParty().setRecruitmentPersistence(recruitables);
@@ -56,15 +61,17 @@ public class RecruitState extends GameState {
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
-        setGold(preSelectedRecruitables);
+        setGoldAndItems(preSelectedRecruitables);
     }
 
-    private void setGold(List<GameCharacter> recruitables) {
+    private void setGoldAndItems(List<GameCharacter> recruitables) {
         startingGoldMap = new HashMap<>();
+        startingItemMap = new HashMap<>();
         for (GameCharacter gc : recruitables) {
             int amount = Math.max(0, MyRandom.randInt(gc.getCharClass().getStartingGold()-10,
                                                       gc.getCharClass().getStartingGold()));
             startingGoldMap.put(gc, amount);
+            startingItemMap.put(gc, MyRandom.sample(gc.getCharClass().getStartingItems()).copy());
         }
     }
 
@@ -103,14 +110,12 @@ public class RecruitState extends GameState {
     }
 
     private void recruitFromView(Model model) {
-        RecruitSubView subView = new RecruitSubView(this, recruitMatrix, startingGoldMap);
+        this.subView = new RecruitSubView(this, recruitMatrix, startingGoldMap);
         model.setSubView(subView);
+        print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
+                " adventurer" + (!recruitables.isEmpty() ? "s" : "") + " interested in joining your party.");
         do {
-            print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
-                    " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
-                    recruitableNames() + ".");
-            waitForReturn(); // FEATURE: Add some banter before recruiting
-
+            waitForReturnSilently();
             int topCommand = subView.getTopIndex();
             if (topCommand == 2) { // Exit
                 break;
@@ -121,10 +126,16 @@ public class RecruitState extends GameState {
                 } else {
                     println("You cannot dismiss your last party member.");
                 }
-            } else if (topCommand == -1){ // Selecting in matrix
-                recruitSelectedCharacter(model);
-                if (recruitables.size() == 0) {
-                    break;
+            } else if (topCommand == -1) { // Selecting in matrix
+                Point p = subView.getCursorPosition();
+                int choice = multipleOptionArrowMenu(model, p.x, p.y+5, List.of("Talk", "Recruit", "Cancel"));
+                if (choice == 0) {
+                    talkToCharacter(model);
+                } else if (choice == 1) {
+                    recruitSelectedCharacter(model);
+                    if (recruitables.size() == 0) {
+                        break;
+                    }
                 }
             }
         } while (true);
@@ -135,11 +146,69 @@ public class RecruitState extends GameState {
         }
     }
 
+    private void talkToCharacter(Model model) {
+        GameCharacter selected = recruitMatrix.getSelectedElement();
+        int knownInfo = subView.getKnownInfo(selected);
+        if (knownInfo == 0) {
+            leaderSay("Who are you?");
+            candidateSay(selected, "I'm " + selected.getName() + ".");
+            subView.improveKnownInfo(selected);
+        } else if (knownInfo == 1) {
+            leaderSay("What is your profession?");
+            candidateSay(selected, "I'm a level " + MyStrings.numberWord(selected.getLevel()) + " " +
+                    selected.getCharClass().getFullName() + ".");
+            subView.improveKnownInfo(selected);
+        } else if (knownInfo == 2) {
+            leaderSay("What are your qualifications?");
+            List<CharacterClass> classList = new ArrayList<>(Arrays.asList(selected.getClasses()));
+            classList.remove(selected.getCharClass());
+            candidateSay(selected, "I have previously worked as " + MyLists.commaAndJoin(classList,
+                    cls -> MyStrings.aOrAn(cls.getFullName()) + " " + cls.getFullName()) + ".");
+            subView.improveKnownInfo(selected);
+        } else if (knownInfo == 3) {
+            leaderSay("Would you contribute any gold or equipment to the party if you joined?");
+            String conjunc = "";
+            String firstPart = "";
+            if (startingGoldMap.containsKey(selected) && startingGoldMap.get(selected) > 0) {
+                conjunc = "And";
+                if (selected.hasPersonality(PersonalityTrait.generous)) {
+                    firstPart = "Of course, " + startingGoldMap.get(selected) + " gold. " +
+                            "That's all I have.";
+                } else {
+                    firstPart = "Yes, " + startingGoldMap.get(selected) + " gold.";
+                }
+            } else {
+                conjunc = "But";
+                if (selected.hasPersonality(PersonalityTrait.stingy)) {
+                    firstPart = "No way. You're not getting my money!";
+                } else {
+                    firstPart = "No. Sorry.";
+                }
+            }
+            String startItemString = makeStartingItemString(startingItemMap.get(selected));
+            candidateSay(selected, firstPart + " " + conjunc +
+                    " I have " + MyStrings.aOrAn(startItemString) + " " + startItemString + ".");
+            subView.improveKnownInfo(selected);
+        } else {
+            leaderSay(MyRandom.sample(List.of("Are you ready to be an adventurer?",
+                    "So you think you're up for this?", "Are you a dependable party member?",
+                    "Are you a team player?", "Do you get along well with others?",
+                    "Do you do well in stressful situations?", "Are you ambitious?",
+                    "Are you a good fighter?", "You think you can contribute to this party?",
+                    "Can you follow orders?")));
+            candidateSay(selected, MyRandom.sample(List.of("Definitely.", "I think so.",
+                    "Absolutely.", "Of course.", "That's me.", "Yes.", "No doubt about it.")));
+        }
+    }
+
     private void recruitSelectedCharacter(Model model) {
         if (model.getParty().isFull()) {
             println("Your party is currently full. You must dismiss party members to recruit new ones.");
         } else {
             GameCharacter gc = recruitMatrix.getSelectedElement();
+            leaderSay("Want to join the party " + gc.getName() + "?");
+            newPartyMemberComment(gc);
+            model.getLog().waitForAnimationToFinish();
             recruitMatrix.remove(gc);
             recruitables.remove(gc);
             println("You recruited " + gc.getFullName() + "!");
@@ -151,21 +220,55 @@ public class RecruitState extends GameState {
                 println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
             }
             if (!gc.getCharClass().getStartingItems().isEmpty()) {
-                Item it = MyRandom.sample(gc.getCharClass().getStartingItems()).copy();
+                Item it = startingItemMap.get(gc);
                 ChooseStartingCharacterState.addSelectedItem(model, gc, it);
                 if (!gc.getEquipment().contains(it)) {
-                    String extra = "";
-                    if (it instanceof Spell) {
-                        extra = "spell, ";
-                    }
-                    if (it instanceof HorseStartingItem) {
-                        extra = "horse, ";
-                    }
-                    println(gc.getName() + " contributed a " + extra + it.getName() + " to the party.");
+                    println(gc.getName() + " contributed a " + makeStartingItemString(it) + " to the party.");
                 }
             }
             model.getTutorial().leader(model);
         }
+    }
+
+    private String makeStartingItemString(Item it) {
+        String extra = "";
+        if (it instanceof Spell) {
+            extra = "spell, ";
+        }
+        if (it instanceof HorseStartingItem) {
+            extra = "horse, ";
+        }
+        return extra + it.getName();
+    }
+
+    private void newPartyMemberComment(GameCharacter gc) {
+        if (gc.hasPersonality(PersonalityTrait.narcissistic) || gc.hasPersonality(PersonalityTrait.snobby)) {
+            candidateSay(gc, "You should be honored to have me. Okay.");
+        } else if (gc.hasPersonality(PersonalityTrait.intellectual)) {
+            candidateSay(gc, "Of course. It will be a good learning experience for me.");
+        } else if (gc.hasPersonality(PersonalityTrait.critical)) {
+            candidateSay(gc, "Hmm... Yes, for now.");
+        } else if (gc.hasPersonality(PersonalityTrait.encouraging) || gc.hasPersonality(PersonalityTrait.brave)) {
+            candidateSay(gc, "Yes, this is so exciting!");
+        } else if (gc.hasPersonality(PersonalityTrait.diplomatic) || gc.hasPersonality(PersonalityTrait.calm)) {
+            candidateSay(gc, "Yes, it is a good deal for both of us.");
+        } else if (gc.hasPersonality(PersonalityTrait.friendly) || gc.hasPersonality(PersonalityTrait.benevolent)) {
+            candidateSay(gc, "Absolutely. It's good to meet you.");
+        } else if (gc.hasPersonality(PersonalityTrait.greedy) || gc.hasPersonality(PersonalityTrait.stingy)) {
+            candidateSay(gc, "Okay. When do I get my wages?");
+        } else if (gc.hasPersonality(PersonalityTrait.unkind) || gc.hasPersonality(PersonalityTrait.rude)) {
+            candidateSay(gc, "Reluctantly, yes.");
+        } else if (gc.hasPersonality(PersonalityTrait.playful) || gc.hasPersonality(PersonalityTrait.jovial)) {
+            candidateSay(gc, "Hooray, I finally get to go into the wilderness!");
+        } else {
+            candidateSay(gc, MyRandom.sample(List.of("Yes.", "I shall.", "I accept.")));
+        }
+    }
+
+    private void candidateSay(GameCharacter gc, String s) {
+        getModel().getLog().waitForAnimationToFinish();
+        subView.characterSay(gc, s);
+        printQuote(gc.getName(), s);
     }
 
     private void dismiss(Model model) {
@@ -297,16 +400,6 @@ public class RecruitState extends GameState {
             texts.add("");
         }
         return new MyPair<>(sum, MyRandom.sample(texts));
-    }
-
-    private String recruitableNames() {
-          StringBuilder bldr = new StringBuilder();
-          int i = 0;
-          for (GameCharacter gc : recruitables) {
-              bldr.append(gc.getFullName() + (i+2==recruitables.size()?" and ": ", "));
-              i++;
-          }
-          return bldr.substring(0, bldr.length()-2);
     }
 
     private String noOfRecruitables() {

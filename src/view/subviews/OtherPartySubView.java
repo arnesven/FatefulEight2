@@ -23,7 +23,7 @@ public class OtherPartySubView extends TopMenuSubView {
     private final GameCharacter leader;
     private final HashMap<GameCharacter, Integer> attitudes;
     private Set<GameCharacter> infoRevealed = new HashSet<>();
-    private final PortraitAnimations partyAnis = new PortraitAnimations();
+    private final PortraitAnimations partyAnis = new SmallCalloutPortraitAnimations();
 
     public OtherPartySubView(List<GameCharacter> characters,
                              GameCharacter leader,
