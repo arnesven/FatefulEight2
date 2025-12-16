@@ -158,8 +158,7 @@ public class PresentSwordToShingenEvent extends DailyEventState {
            leaderSay("I realize my mistake now. Please forgive me.");
            portraitSay("Hmph! Well, since you are new to our customs, I'll forgive you. But please find a more suitable " +
                    "blade as a token of our lasting alliance.");
-           leaderSay("I shall. Goodbye for now.");
-           portraitSay("Good bye.");
+           leaderSay("I shall.");
             return false;
         }
     }
@@ -197,7 +196,7 @@ public class PresentSwordToShingenEvent extends DailyEventState {
             leaderSay("So I'm going to have to find another sword? Are you sure this is necessary?");
             portraitSay("Customs must be obeyed. My ancestors would not look kindly if I scorned them.");
             leaderSay("Alright. I'll be back with a nice sword for you.");
-            portraitSay("Splendid. Until then.");
+            portraitSay("I'm looking forward to it.");
             return false;
         }
     }

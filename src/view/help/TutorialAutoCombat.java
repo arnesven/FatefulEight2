@@ -16,7 +16,7 @@ public class TutorialAutoCombat extends SubChapterHelpDialog {
                     "Formation is never changed during automatic combat, except when the party is Overrun.\n\n" +
                     "Automatic combat is disabled immediately" +
                     " if any character should die or fall below " + AutomaticCombatAction.STOP_IF_HP_FALLS_BELOW + " HP.",
-                    "Automatic combat should be used with caution! Enabled it only when you are sure your party will have no " +
+                    "Automatic combat should be used with caution! Enable it only when you are sure your party will have no " +
                     "trouble finishing off the enemies."};
 
     public TutorialAutoCombat(GameView view) {
