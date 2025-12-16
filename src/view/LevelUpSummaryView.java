@@ -25,7 +25,7 @@ public class LevelUpSummaryView extends SelectableListMenu {
     private final ArrayList<BeforeAndAfterLine<Integer>> content;
 
     public LevelUpSummaryView(Model model, GameCharacter gc) {
-        super(model.getView(), DIALOG_WIDTH, DIALOG_HEIGHT);
+        super(model.getView(), DIALOG_WIDTH, DIALOG_HEIGHT); // FEATURE: Show class icon.
         this.levler = gc;
         this.willBe = gc.copy();
         this.willBe.setLevel(levler.getLevel()+1);
