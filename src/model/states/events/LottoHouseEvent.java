@@ -44,7 +44,7 @@ public class LottoHouseEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You pass a little hut. In front, there's a sign saying 'Lotto House - Try your luck!'.");
+        showEventCard("Lotto House", "You pass a little hut. In front, there's a sign saying 'Lotto House - Try your luck!'.");
         print("Do you enter? (Y/N) ");
         if (!yesNoInput()) {
             return;

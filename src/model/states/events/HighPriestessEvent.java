@@ -23,7 +23,8 @@ public class HighPriestessEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.PRI, "High Priestess");
         GameCharacter gc = MyRandom.sample(model.getParty().getPartyMembers());
-        println("At first it just seemed like hospitality but now it's clear. " +
+        showEventCard("High Priestess",
+                "At first it just seemed like hospitality but now it's clear. " +
                 "The High Priestess clearly has the hots for " + gc.getName() + ". She has invited " +
                 himOrHer(gc.getGender()) + " to a special tea " +
                 "ceremony.");

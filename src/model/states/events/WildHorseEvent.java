@@ -18,7 +18,7 @@ public class WildHorseEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You spot a wild horse up ahead, peacefully grazing by the side of the path.");
+        showEventCard("Wild Horse", "You spot a wild horse up ahead, peacefully grazing by the side of the path.");
         leaderSay("Perhaps we can tame it?");
         boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Survival, 6);
         if (success) {

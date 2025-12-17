@@ -33,7 +33,7 @@ public class MarketEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.happyMandolin);
-        println("Today is market day. The party casually browses the stands and booths.");
+        showEventCard("Market", "Today is market day. The party casually browses the stands and booths.");
         randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(),
                 "I wonder if they sell any special kinds of food here?");
         randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(),

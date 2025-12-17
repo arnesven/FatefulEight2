@@ -22,7 +22,7 @@ public class SaberfishEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("The party wades out into the shallows, vicious fish start " +
+        showEventCard("Saberfish", "The party wades out into the shallows, vicious fish start " +
                 "nipping at their legs!");
         MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToHP(-1));
         removeKilledPartyMembers(model, false);

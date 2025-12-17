@@ -45,7 +45,7 @@ public class MinerEvent extends GeneralInteractionEvent {
         this.app = PortraitSubView.makeRandomPortrait(Classes.MIN, race);
         showExplicitPortrait(model, app, "Miner");
         if (withIntro) {
-            print("The party encounters a miner. ");
+            showEventCard("The party encounters a miner. ");
         }
         return true;
     }

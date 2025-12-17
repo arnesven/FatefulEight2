@@ -56,7 +56,7 @@ public class OrcsBattleEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) { // FEATURE: Sneak over to orcish side and direct the battle from their side.
-        println("The party comes upon an army camp.");
+        showEventCard("Orc Battle", "The party comes upon an army camp.");
         if (forceBattle || WorldBuilder.isInExtendedRegion(model.getParty().getPosition())) {
             println("The scene is pretty busy and nobody seems to take not of you entering the camp.");
             fightBattle(model);

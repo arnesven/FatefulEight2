@@ -35,7 +35,7 @@ public class CryptEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party encounters a crypt.");
+        showEventCard("Crypt", "The party encounters a crypt.");
         randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()), "Perhaps we should take a look inside?");
         randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()), "Looks kind of spooky.");
         print("Do you wish to enter it? (Y/N) ");

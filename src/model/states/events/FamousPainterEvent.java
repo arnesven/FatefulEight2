@@ -37,7 +37,7 @@ public class FamousPainterEvent extends PersonalityTraitEvent {
         CharacterAppearance artist = PortraitSubView.makeRandomPortrait(Classes.ARTIST);
         String title = artist.getGender() ? "Ms":"Mr";
         String name = GameState.randomFirstName(artist.getGender()) + " Bouvier";
-        println("As " + leader.getFirstName() + " and " + main.getFirstName() + " walk down the street, " +
+        showEventCard("As " + leader.getFirstName() + " and " + main.getFirstName() + " walk down the street, " +
                 "they pass by a boutique with large windows. In front of the boutique a sign has been placed, it reads: " +
                 "'Exclusive Art Exhibition - By " + title + " " + name +
                 " - only this week. - Entrance: " + ENTRANCE_FEE + " gold'");

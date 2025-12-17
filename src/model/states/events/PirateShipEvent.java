@@ -21,7 +21,7 @@ public class PirateShipEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         setCurrentTerrainSubview(model);
-        println("Suddenly the lookout calls out in alarm. He's spotted a pirate ship and it's gaining on you. Soon it's " +
+        showEventCard("Pirate Ship", "Suddenly the lookout calls out in alarm. He's spotted a pirate ship and it's gaining on you. Soon it's " +
                 "clear that you will be boarded.");
         leaderSay("Everybody grab your gear, we're about to face some pirate scum!");
         print("Press enter to continue.");

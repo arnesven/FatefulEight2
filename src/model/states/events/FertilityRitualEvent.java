@@ -37,7 +37,7 @@ public class FertilityRitualEvent extends RitualEvent {
         druid.setClass(Classes.DRU);
         druid.addToHP(999);
         ritualists.set(0, druid);
-        println("You come to a meadow where peasants have erected a maypole adorned with many beautiful flowers.");
+        showEventCard("Fertility Ritual", "You come to a meadow where peasants have erected a maypole adorned with many beautiful flowers.");
         println("There are " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a fertility ritual. " +
                 "They are looking for some extra mages to join them in performing it.");
         model.getLog().waitForAnimationToFinish();

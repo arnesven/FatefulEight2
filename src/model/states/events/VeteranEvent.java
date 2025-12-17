@@ -44,7 +44,7 @@ public class VeteranEvent extends CombatExpertGeneralInteractionEvent {
         this.app = PortraitSubView.makeOldPortrait(Classes.None, race, MyRandom.flipCoin());
         showExplicitPortrait(model, app, "Veteran");
         if (withIntro) {
-            println("The party passes an old tattered hut. Inside sits a venerable figure, " +
+            showEventCard("The party passes an old tattered hut. Inside sits a venerable figure, " +
                     "who claims to be a veteran of the wars of old. ");
         }
         return true;

@@ -21,7 +21,7 @@ public class OrchardEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.FARMER, "Farmer");
-        println("The party suddenly finds itself in a lovely orchard, " +
+        showEventCard("Orchard", "The party suddenly finds itself in a lovely orchard, " +
                 "with fruit hanging everywhere. As one member of your " +
                 "party reaches for a low hanging piece of fruit, a farmer " +
                 "suddenly pops up behind a bush. Embarrassed, you " +

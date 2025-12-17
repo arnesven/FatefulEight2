@@ -19,7 +19,7 @@ public class ThievesGuildEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party finds a seedy bar and wanders in to rest their legs a bit. " +
+        showEventCard("The party finds a seedy bar and wanders in to rest their legs a bit. " +
                 "It doesn't take a lot of eavesdropping to figure out that this is the hideout " +
                 "of a thieves guild. The members of the guild don't seem to troubled about " +
                 "being found out however and is boasting about an upcoming heist.");

@@ -24,7 +24,7 @@ public class PegasusEvent extends AlternativeTravelEvent {
 
     @Override
     protected boolean eventIntro(Model model) {
-        println("A winged horse lands in front of the party. It seems to be " +
+        showEventCard("Pegasus", "A winged horse lands in front of the party. It seems to be " +
                 "willing to give them a ride.");
         randomSayIfPersonality(PersonalityTrait.romantic, new ArrayList<>(), "This is like a dream. It's soooo beautiful!");
         if (model.getParty().size() > 3) {

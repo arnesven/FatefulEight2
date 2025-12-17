@@ -25,8 +25,8 @@ public class HideoutEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You start up a tunnel when suddenly you hear voices. You creep closer to try to overhear the conversation.");
-        println("From the way the inhabitants are talking it's clear that they are a bandit gang.");
+        showEventCard("Hideout", "You start up a tunnel when suddenly you hear voices. You creep closer to try to overhear the conversation. " +
+                "From the way the inhabitants are talking it's clear that they are a bandit gang.");
         model.getParty().randomPartyMemberSay(model, List.of("What do we do now?"));
         int result = multipleOptionArrowMenu(model, 26, 20,
                 List.of("Attack the bandits", "Approach the bandits", "Go back"));

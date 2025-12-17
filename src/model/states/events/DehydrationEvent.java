@@ -27,7 +27,7 @@ public class DehydrationEvent extends DailyEventState {
                         "Goodness, I'm sweating buckets here."));
         randomSayIfPersonality(PersonalityTrait.jovial, new ArrayList<>(),
                 "I would tell a joke, but my humor is to dry!");
-        println("The intense sun beats down mercilessly. The party " +
+       showEventCard("Dehydration", "The intense sun beats down mercilessly. The party " +
                 "members are severely perspiring and must constantly " +
                 "replenish their bodily fluids. Some party members consumes an extra ration.");
         model.getParty().addToFood(-gcs.size());

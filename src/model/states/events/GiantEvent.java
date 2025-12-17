@@ -18,7 +18,7 @@ public class GiantEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("What seemed to be a rocky outcropping was actually the " +
+        showEventCard("Giant", "What seemed to be a rocky outcropping was actually the " +
                 "closed fist of a stone giant. The humongous creature " +
                 "suddenly moves and the earth shakes. There is no " +
                 "fighting such a beast.");

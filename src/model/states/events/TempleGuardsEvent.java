@@ -19,7 +19,7 @@ public class TempleGuardsEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         if (withIntro) {
-            println("A few temple guards - armed monks approach you.");
+            showEventCard("A few temple guards - armed monks approach you.");
             showRandomPortrait(model, Classes.TEMPLE_GUARD, "Temple Guards");
             println("The guards appraise you.");
             int align = calculatePartyAlignment(model, this);

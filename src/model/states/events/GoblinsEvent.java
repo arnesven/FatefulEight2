@@ -22,7 +22,8 @@ public class GoblinsEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        print("A horde of goblins are coming straight for you! Do you turn and run? (Y/N) ");
+        showEventCard("Goblins", "A horde of goblins are coming straight for you!");
+        print("Do you turn and run? (Y/N) ");
         if (yesNoInput()) {
             this.fled = true;
         } else {

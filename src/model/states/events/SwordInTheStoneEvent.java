@@ -32,12 +32,13 @@ public class SwordInTheStoneEvent extends PersonalityTraitEvent {
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Sword in the Stone"));
 
+        String cardText = "";
         if (model.getCurrentHex() instanceof PlainsHex) {
-            print("In the middle of a vast plain");
+            cardText = "In the middle of a vast plain";
         } else {
-            print("In a peaceful clearing");
+            cardText = "In a peaceful clearing";
         }
-        println(", the party encounters a large stone slab. Its perfect geometric shape seem " +
+        showEventCard(cardText + ", the party encounters a large stone slab. Its perfect geometric shape seem " +
                 "to indicate that it has been carved, but who, or what, could have brought it here? " +
                 "Even more quixotically, a sword is sticking out of the top of the slab, as " +
                 "if some otherworldly force had driven it down into the rock.");

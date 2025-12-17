@@ -34,7 +34,7 @@ public class BlackKnightEvent extends RiverEvent {
     @Override
     protected void doRiverEvent(Model model) {
         showRandomPortrait(model, Classes.BKN, "Black Knight");
-        println("A narrow bridge spans the width of the river. Upon it, " +
+        showEventCard("Black Knight", "A narrow bridge spans the width of the river. Upon it, " +
                 "a knight in black armor stands guard.");
         leaderSay("Um, excuse us. Can we cross the bridge?");
         portraitSay("None shall pass.");

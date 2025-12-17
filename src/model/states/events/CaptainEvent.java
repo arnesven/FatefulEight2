@@ -32,7 +32,7 @@ public class CaptainEvent extends CombatExpertGeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        println("The party meets the master-at-arms of the castle.");
+        showEventCard("The party meets the master-at-arms of the castle.");
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.CAP);
         showExplicitPortrait(model, portrait, "Master-at-arms");
         return true;

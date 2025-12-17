@@ -48,7 +48,7 @@ public class OtherPartyEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You come upon a small campsite, this one seems to be in use by a group of people.");
+        showEventCard("Other Party", "You come upon a small campsite, this one seems to be in use by a group of people.");
         model.getParty().randomPartyMemberSay(model, List.of("Looks like a company of adventurers."));
         model.getParty().randomPartyMemberSay(model, List.of("The competition?"));
         leaderSay("Maybe. Or maybe not. Let's proceed with care.");

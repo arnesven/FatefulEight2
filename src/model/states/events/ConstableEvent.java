@@ -53,7 +53,7 @@ public class ConstableEvent extends DailyEventState {
         showExplicitPortrait(model, app, "Constable");
         boolean gender = app.getGender();
         if (withIntro) {
-            print("The party encounters a constable on the street. " +
+            showEventCard("The party encounters a constable on the street. " +
                     heOrSheCap(gender) + " approaches you, do you run away? (Y/N) ");
             if (yesNoInput()) {
                 runAway = true;

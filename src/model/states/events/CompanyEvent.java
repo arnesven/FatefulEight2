@@ -41,7 +41,7 @@ public class CompanyEvent extends DailyEventState {
             return;
         }
         showRandomPortrait(model, Classes.CAP, "Soldiers");
-        println("It is indeed a large company of soldiers. They " +
+        showEventCard("Company", "It is indeed a large company of soldiers. They " +
                 "seem friendly and so you decide to share your " +
                 "evening with them. The company has an abundance of " +
                 "beer, but lack food and hope that you can share some " +

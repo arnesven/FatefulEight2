@@ -13,7 +13,7 @@ public class ScorpionEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("A giant scorpion suddenly crawls out from under a large " +
+        showEventCard("Scorpions", "A giant scorpion suddenly crawls out from under a large " +
                 "rock.");
         leaderSay("Watch out, that tail has a poisoned stinger!");
         runCombat(List.of(new ScorpionEnemy('A')));

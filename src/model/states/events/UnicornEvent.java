@@ -26,7 +26,7 @@ public class UnicornEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Unicorn"));
-        println("A shimmering horse-like creature approaches the party. " +
+        showEventCard("Unicorn", "A shimmering horse-like creature approaches the party. " +
                 "A long spiraling horn protrudes from its forehead. It " +
                 "seems perfectly tame and gladly lets the party members " +
                 "stroke its mane.");

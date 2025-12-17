@@ -207,11 +207,11 @@ public class DiggingGameEvent extends DailyEventState {
     }
 
     private boolean doIntro(Model model) {
-        println("You pass by a pasture. Curiously a farmer is idly laying in the grass.");
+        showEventCard("Digging Game", "You pass by a pasture. Curiously a farmer is idly laying in the grass.");
         leaderSay("Taking a day off?");
         showRandomPortrait(model, Classes.FARMER, "Farmer");
         portraitSay("Why work? I've got a good thing going here.");
-        println("You look around, all you can see is the empty meadow.");
+        showEventCard("You look around, all you can see is the empty meadow.");
         leaderSay("What do you mean?");
         portraitSay("I have a whole new business idea. I was about to plow this field, but I realized it was full of boulders. " +
                 "So I thought, 'How can I get somebody else to dig'em up for me?' And that's when I got my stroke of genius. " +

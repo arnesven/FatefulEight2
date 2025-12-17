@@ -386,7 +386,14 @@ public abstract class DailyEventState extends GameState {
     public void showEventCard(String title, String cardText) {
         getModel().getLog().waitForAnimationToFinish();
         println(cardText);
-        getModel().setSubView(new EventCardSubView(getModel().getSubView(), title, cardText));
+        if (getModel().getSubView() instanceof EventCardSubView) {
+            ((EventCardSubView) getModel().getSubView()).setTitleAndContents(title, cardText);
+        } else if (getModel().getSubView() instanceof PortraitSubView &&
+                ((PortraitSubView)getModel().getSubView()).hasPreviousEventCard()) {
+            ((PortraitSubView)getModel().getSubView()).replaceEventCardContents(title, cardText);
+        } else {
+            getModel().setSubView(new EventCardSubView(getModel().getSubView(), title, cardText));
+        }
     }
 
     public void showEventCard(String cardText) {

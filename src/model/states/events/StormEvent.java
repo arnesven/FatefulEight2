@@ -26,7 +26,7 @@ public class StormEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Storm"));
-        println("Dark clouds are looming and drops start to fall on your " +
+        showEventCard("Storm", "Dark clouds are looming and drops start to fall on your " +
                 "heads.");
         model.getParty().randomPartyMemberSay(model, List.of("Looks like bad weather...", "Here it comes...",
                 "Get ready to get wet.", "Well it could be worse."));

@@ -39,7 +39,7 @@ public class OrcRaidEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("Suddenly you hear a bell clamoring. You hear shouting and people start " +
+        showEventCard("Orc Raid", "Suddenly you hear a bell clamoring. You hear shouting and people start " +
                 "running into their houses, shutting doors and windows.");
         showRandomPortrait(model, Classes.CONSTABLE, "Militia");
         portraitSay("Orc Raid! Everybody, take up arms to defend our town!");

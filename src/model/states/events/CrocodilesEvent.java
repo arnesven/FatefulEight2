@@ -24,7 +24,7 @@ public class CrocodilesEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("As the party tries to cross a wetland by stepping on " +
+        showEventCard("Crocodiles", "As the party tries to cross a wetland by stepping on " +
                 "floating logs they soon realize, they are not logs at all! " +
                 "The creatures come alive and snap at you with deadly jaws.");
         boolean spotted = false;

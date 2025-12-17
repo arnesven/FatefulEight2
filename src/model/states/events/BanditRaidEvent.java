@@ -20,7 +20,7 @@ public class BanditRaidEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.BANDIT, "Bandits");
-        println("This farmstead has been plagued by bandits for some time.");
+        showEventCard("Bandit Raid", "This farmstead has been plagued by bandits for some time.");
         model.getParty().randomPartyMemberSay(model, List.of("It's time to teach this rabble a lesson."));
         List<Enemy> enemies = BanditEvent.generateBanditEnemies(model);
         runCombat(enemies);

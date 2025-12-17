@@ -17,7 +17,7 @@ public class ColdEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The cold environment is affecting the party.");
+        showEventCard("Cold", "The cold environment is affecting the party.");
 
         List<GameCharacter> gcs =
                 model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Endurance, 8);

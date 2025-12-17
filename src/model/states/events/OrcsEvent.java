@@ -26,7 +26,7 @@ public class OrcsEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party encounters a group of orcs.");
+        showEventCard("Orcs", "The party encounters a group of orcs.");
         if (interactWithOrcs(model)) {
             println("The group of orcs let you continue on your journey.");
         } else {

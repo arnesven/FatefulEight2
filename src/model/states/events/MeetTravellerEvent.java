@@ -30,7 +30,7 @@ public abstract class MeetTravellerEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        println("You meet a " + traveller.getName().toLowerCase() + " on the road.");
+        showEventCard("Traveller", "You meet a " + traveller.getName().toLowerCase() + " on the road.");
         showExplicitPortrait(model, traveller.getAppearance(), traveller.getName());
         return true;
     }

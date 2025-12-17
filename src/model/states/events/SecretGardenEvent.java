@@ -62,7 +62,7 @@ public class SecretGardenEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party comes to a neat hedge.");
+        showEventCard("Secret Garden", "The party comes to a neat hedge.");
         leaderSay("Hey, these bushes look like they've been planted...");
         leaderSay("And here's a gate.");
         println("The trees in the garden have grown so densely that light has trouble getting through. " +

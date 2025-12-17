@@ -19,19 +19,19 @@ public class BearEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("A large bear grunts at the party. It seems hungry.");
+        showEventCard("Bear", "A large bear grunts at the party. It seems hungry.");
         print("Do you want to try and avoid fighting the bear? (Y/N) ");
         if (yesNoInput()) {
             leaderSay("Hey, what are you supposed to do? Climb a tree, or play dead?");
             boolean passed = model.getParty().doCollectiveSkillCheck(model, this, Skill.Survival, 4);
             if (passed) {
-                println("The bear seems dissuaded and goes away.");
+                showEventCard("The bear seems dissuaded and goes away.");
                 return;
             } else if (model.getParty().getFood() > 1) {
                 print("Do you want to try to distract the bear with some of your food (half of your rations)? (Y/N) ");
                 if (yesNoInput()) {
                     model.getParty().addToFood(-model.getParty().getFood()/2);
-                    println("The bear is distracted and the party can sneak away.");
+                    showEventCard("The bear is distracted and the party can sneak away.");
                     return;
                 }
             }

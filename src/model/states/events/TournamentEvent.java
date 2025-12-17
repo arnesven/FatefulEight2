@@ -60,7 +60,7 @@ public class TournamentEvent extends DailyEventState {
         if (!yesNoInput()) {
             return;
         }
-        println("Outside the castle walls many tents and pavilions have been erected. And there, " +
+        showEventCard("Tournament", "Outside the castle walls many tents and pavilions have been erected. And there, " +
                 "in the middle, is the fighting pit.");
         println("As you wander around you see knights, fair ladies, noblemen, merchants and commoners " +
                 "all bustling about and getting ready for the tournament. Some people are lining up at a little booth " +

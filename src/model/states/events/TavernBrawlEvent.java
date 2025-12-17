@@ -41,7 +41,7 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
         String innOrTavern = innOrTavern(model.getCurrentHex().getLocation());
         GameCharacter main = getMainCharacter();
         CollapsingTransition.transition(model, subView);
-        println("You are enjoying a brew at the " + innOrTavern + ", when suddenly...");
+        showEventCard("Tavern Brawl", "You are enjoying a brew at the " + innOrTavern + ", when suddenly...");
         partyMemberSay(main, "What did you call me!!??");
         showRandomPortrait(model, Classes.None, "Patron");
         portraitSay("A thug! You spilled beer on my boots! Rowdy thugs like you should be thrown out of this place!");

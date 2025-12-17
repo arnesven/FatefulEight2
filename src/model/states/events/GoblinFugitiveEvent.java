@@ -42,7 +42,9 @@ public class GoblinFugitiveEvent extends DailyEventState {
             new NoEventState(model).doEvent(model);
             return;
         }
-        print("You come around a bend in the road and suddenly you see half a dozen goblins rushing toward you. Do you turn and flee? (Y/N) ");
+        showEventCard("Goblin Fugetive",
+                "You come around a bend in the road and suddenly you see half a dozen goblins rushing toward you.");
+        print("Do you turn and flee? (Y/N) ");
         if (yesNoInput()) {
             didFlee = true;
             return;

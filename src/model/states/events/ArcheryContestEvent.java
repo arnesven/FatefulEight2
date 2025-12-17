@@ -42,9 +42,10 @@ public class ArcheryContestEvent extends TournamentEvent {
         if (!yesNoInput()) {
             return;
         }
-        println("Outside the castle walls many tents and pavilions have been erected. And there, " +
+        showEventCard("Archery Contest",
+                "Outside the castle walls many tents and pavilions have been erected. And there, " +
                 "on a long stretch of lawn, several archery targets have been placed.");
-        println("As you wander around you see marksmen, fair ladies, noblemen, merchants and commoners " +
+        showEventCard("As you wander around you see marksmen, fair ladies, noblemen, merchants and commoners " +
                 "all bustling about and getting ready for the contest. Some people are lining up at a little booth " +
                 "where a small gentleman in fancy clothing is accepting coins and writing things down in big ledgers.");
         model.getLog().waitForAnimationToFinish();
@@ -52,12 +53,14 @@ public class ArcheryContestEvent extends TournamentEvent {
         portraitSay("Yes, we're still accepting participants. Are you here to compete in the archery contest?");
         leaderSay("Perhaps. What are the parameters?");
         portraitSay("The entry fee is " + ENTRY_FEE + " gold. Twenty marksmen will enter the competition, which has three rounds. " +
-                "In the first round each contestant fires a single arrow at the target. Those who hit the target qualify. " +
-                "In the second round each contestant must shoot at balls which have been tossed into the air. The contestants who " +
-                "can hit the most balls tossed at the same time will qualify to the third round. In the third round, each contestant is " +
+                "In the first round each contestant fires a single arrow at the target. Those who hit the target qualify for the next round.");
+        portraitSay("In the second round each contestant must shoot at balls which have been tossed into the air. The contestants who " +
+                "can hit the most balls tossed at the same time will qualify to the third round.");
+        portraitSay("In the third round, each contestant is " +
                 "given three arrows and score points for how well they hit the target. The contestant who scores the most points in the final " +
-                "round wins a marvelous prize - the Golden Bow. Oh and you'll also receive the " + castle.getLordTitle() +
-                "'s blessing - which is probably equally valuable.");
+                "round wins a marvelous prize - the Golden Bow.");
+        portraitSay("Oh and you'll also receive the " + castle.getLordTitle() +
+                            "'s blessing - which is probably equally valuable.");
         showOfficial();
         portraitSay("But all of you can't enter the contest, in fact we only have room for one more. Are you still interested?");
         boolean sponsored = false;
@@ -188,6 +191,7 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     private Map<GameCharacter, Integer> playRoundOne(Model model, GameCharacter chosen,
                                                      BowWeapon bowToUse, List<GameCharacter> contestants) {
+        showOfficial();
         portraitSay("To my left is a board with the names of all the contestants. Please have a look at it now.");
         waitForReturnSilently();
         SubView prevSubView = model.getSubView();
@@ -200,6 +204,9 @@ public class ArcheryContestEvent extends TournamentEvent {
         portraitSay("Ladies and gentlemen! Please take your seats, for it is time to witness the first round of " +
                 "this archery competition. Each contestant will shoot a single arrow at the target. Only those who hit " +
                 "the target will qualify to the next round.");
+        portraitSay("Our Lord and protector " + castle.getLordName() + " will now inaugurate this contest!");
+        showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+        portraitSay("Thank you! The best of luck to all the contestants. May your arrows fly true! Let the contest begin!");
         ArcheryState state = new ArcheryState(model, chosen, bowToUse, ArcheryState.MEDIUM_DISTANCE);
         List<GameCharacter> others = new ArrayList<>(contestants);
         others.remove(chosen);

@@ -65,7 +65,7 @@ public class CommandOutpostDailyEventState extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         CharacterAppearance fieldGeneralAppearance = war.getGeneralAppearance();
-        println("You wander into the army camp.");
+        showEventCard("You wander into the army camp.");
         intro(this, fieldGeneralAppearance.getRace());
         showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
         if (war.isInitialBattle()) {

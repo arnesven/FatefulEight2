@@ -12,7 +12,7 @@ public class FarmerSellsHorseEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You meet a poor farmer who is selling a horse.");
+        showEventCard("You meet a poor farmer who is selling a horse.");
         BuyHorseState buyHorse = new BuyHorseState(model, "Farmer");
         buyHorse.setPrice(MyRandom.randInt(8, 20));
         buyHorse.run(model);

@@ -25,7 +25,7 @@ public class MayorEvent extends DailyEventState {
     protected void doEvent(Model model) {
         UrbanLocation town = (UrbanLocation) model.getCurrentHex().getLocation();
         if (!model.getParty().getSummons().containsKey(town.getPlaceName())) {
-            println("A group of nobles are engrossed in a conversation on a street corner " +
+            showEventCard("A group of nobles are engrossed in a conversation on a street corner " +
                     "when a wagon, fully loaded with huge wine barrels passes by. Suddenly a barrel " +
                     "tumbles off the wagon and rolls straight at one of the nobles.");
             leaderSay("Watch out!");

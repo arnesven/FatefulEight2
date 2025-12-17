@@ -41,7 +41,7 @@ public class GamblerEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You pass by an alley and see a small crowd gathered there. A few of " +
+        showEventCard("Gambler", "You pass by an alley and see a small crowd gathered there. A few of " +
                 "them are squatting, some of them shouting and laughing. You casually " +
                 "meander over and look what the commotion is about.");
         model.getParty().randomPartyMemberSay(model, List.of("Dice... I should've guessed"));

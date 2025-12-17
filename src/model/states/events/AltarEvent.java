@@ -32,7 +32,7 @@ public class AltarEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Altar"));
-        println("The party reaches the summit of the mountain. There is an altar here. " +
+        showEventCard("Altar", "The party reaches the summit of the mountain. There is an altar here. " +
                 "Someone has perform some sort of sacrificial ritual here. Not only is the " +
                 "victim dead but there are " +
                 "also some dead cultists scattered about the site.");

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ChoppingWoodEvent extends FieldsLaborEvent {
      public ChoppingWoodEvent(Model model) {
-        super(model, "The farmer needs help chopping wood. Any help is much appreciated.",
+        super(model, "Chopping Wood", "The farmer needs help chopping wood. Any help is much appreciated.",
                 "while chopping the wood");
     }
 

@@ -20,7 +20,7 @@ public class AssassinEvent extends DailyEventState {
             new NoEventState(model).run(model);
             return;
         }
-        println("You hear a rumor that someone has hired an assassin to liquidate one of the party members.");
+        showEventCard("Assassin", "You hear a rumor that someone has hired an assassin to liquidate one of the party members.");
         leaderSay("If we ask around a bit maybe we can intercept the assassin.");
         boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 7);
         if (result) {

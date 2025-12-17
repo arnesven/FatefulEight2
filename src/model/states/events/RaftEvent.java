@@ -26,7 +26,7 @@ class RaftEvent extends AlternativeTravelEvent {
 
     @Override
     protected boolean eventIntro(Model model) {
-        println("There are enough vines and logs here to make a good raft. " +
+        showEventCard("Raft", "There are enough vines and logs here to make a good raft. " +
                 "Not only could the party use it to " + description + ", but travel " +
                 "downstream as well.");
         if (model.getParty().hasHorses()) {

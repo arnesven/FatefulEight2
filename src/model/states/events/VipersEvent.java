@@ -18,7 +18,7 @@ public class VipersEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party stumbles into a nest of vipers.");
+        showEventCard("Vipers", "The party stumbles into a nest of vipers.");
         if (model.getParty().size() == 1) {
             boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Acrobatics, 6);
             if (result) {

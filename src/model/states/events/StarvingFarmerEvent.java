@@ -31,7 +31,7 @@ public class StarvingFarmerEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party comes to a farmstead. Working in a nearby field is a man and a woman, both look " +
+        showEventCard("The party comes to a farmstead. Working in a nearby field is a man and a woman, both look " +
                 "pale and thin.");
         showRandomPortrait(model, Classes.FARMER, "Farmer");
         portraitSay("Greetings traveller.");

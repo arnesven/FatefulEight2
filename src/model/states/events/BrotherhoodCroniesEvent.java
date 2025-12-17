@@ -23,7 +23,7 @@ public class BrotherhoodCroniesEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("A group of hooded figures step out in front of the party and stop you.");
+        showEventCard("A group of hooded figures step out in front of the party and stop you.");
         int days = model.getDay() - model.getParty().getLoan().getDay();
         showRandomPortrait(model, Classes.THF, "Brotherhood");
         portraitSay("Hey scumbag! The Brotherhood wants its money back. They sent us to remind you.");

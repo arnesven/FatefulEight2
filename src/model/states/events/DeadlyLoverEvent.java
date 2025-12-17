@@ -55,7 +55,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
 
         model.getParty().benchPartyMembers(MyLists.filter(model.getParty().getPartyMembers(),
                 character -> character != getMainCharacter()));
-        println("While the rest of the party members are busy with chores, " + main.getName() +
+        showEventCard("While the rest of the party members are busy with chores, " + main.getName() +
                 " decides to visit the tavern for a light meal.");
         println("The tavern is mostly empty, only one patron, sitting alone at the bar, his or her face concealed by a hood.");
         println(main.getFirstName() + " sits down at a table and is soon served by the barkeep.");

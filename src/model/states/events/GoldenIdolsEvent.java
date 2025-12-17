@@ -17,7 +17,8 @@ public class GoldenIdolsEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("One of the priests takes you on a tour of the temple. You " +
+        showEventCard("Golden Idols",
+                "One of the priests takes you on a tour of the temple. You " +
                 "pass by a room and glance inside. Something glimmering " +
                 "catches your eye. While the priest is busy telling the " +
                 "other party members about some ancient spirit, you sneak " +

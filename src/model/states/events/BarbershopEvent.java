@@ -35,7 +35,7 @@ public class BarbershopEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You enter a shop.");
+        showEventCard("Barber Shop", "You enter a shop...");
         leaderSay("Wait this isn't a shop...");
         CharacterAppearance barberAppearance = PortraitSubView.makeRandomPortrait(Classes.BARBER, barberRace);
         showExplicitPortrait(model, barberAppearance, "Barber");

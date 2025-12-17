@@ -41,7 +41,7 @@ public class HorseRaceCup extends TournamentEvent {
         if (!yesNoInput()) {
             return;
         }
-        println("Outside the castle walls many tents and pavilions have been erected. And around them all, " +
+        showEventCard("Horse Race Cup", "Outside the castle walls many tents and pavilions have been erected. And around them all, " +
                 "a track have been prepared for horses to race on.");
         println("As you wander around you see riders, fair ladies, noblemen, merchants and commoners " +
                 "all bustling about and getting ready for the cup. Some people are lining up at a little booth " +
@@ -130,7 +130,11 @@ public class HorseRaceCup extends TournamentEvent {
                             " " + horses.get(rider).getName() + ".");
                 }
             }
-            portraitSay("Well, the " + MyStrings.nthWord(round) + " race is about to start... Everybody hold on to your hats!");
+            portraitSay("Well, the " + MyStrings.nthWord(round) + " race is about to start. " +
+                    "I'll now present our Lord and protector " + castle.getLordName() + " who will " +
+                    "announce the start of the race.");
+            showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+            portraitSay("Ride like the wind racers. Everybody else, hold on to your hats!");
             HorseRacingEvent event = new HorseRacingEvent(model, chosenRider, horses.get(chosenRider));
             event.setLaps(3);
             for (GameCharacter gc : riders) {

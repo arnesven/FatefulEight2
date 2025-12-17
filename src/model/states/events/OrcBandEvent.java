@@ -25,7 +25,7 @@ public class OrcBandEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party is taking a little rest by the side of the road " +
+        showEventCard("Orc Band", "The party is taking a little rest by the side of the road " +
                 "when they hear footsteps approaching, many footsteps. " +
                 "It's a whole band of orcs! It may be possible for the party " +
                 "to hide behind some bushes and remain undetected.");

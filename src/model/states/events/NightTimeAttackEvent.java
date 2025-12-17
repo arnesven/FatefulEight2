@@ -30,7 +30,7 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
     @Override
     protected final void doEvent(Model model) {
         GameCharacter rando = model.getParty().getRandomPartyMember();
-        println("It is night and " + rando.getName() + " is keeping watch.");
+        showEventCard("It is night and " + rando.getName() + " is keeping watch.");
         boolean spotted = false;
         if (model.getParty().hasDog()) {
             DogAppearance app = new DogAppearance();
@@ -53,7 +53,7 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
             model.getLog().waitForAnimationToFinish();
             runCombat(enemies, combatTheme, true);
         } else {
-            println("Before " + rando.getFirstName() + " has a chance to react " + ambushIntro + "!");
+            showEventCard("Before " + rando.getFirstName() + " has a chance to react " + ambushIntro + "!");
             model.getLog().waitForAnimationToFinish();
             runAmbushCombat(enemies, combatTheme, true);
         }

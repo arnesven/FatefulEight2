@@ -32,7 +32,7 @@ public class DollyEvent extends DailyEventState {
         kid.setMouthFrown();
         kid.setEyebrowsUp();
         showExplicitPortrait(model, kid, "Crying Child");
-        println("You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
+        showEventCard("Dolly", "You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
                 "The child seems to be in some kind of distress. Apparently " + heOrShe(childGender) +
                 " has lost " + hisOrHer(childGender) + " dolly.");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(), "Aw, poor child. Can we help?");

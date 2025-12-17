@@ -33,7 +33,7 @@ public class ShrineEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Shrine"));
-        println("The party passes a small shrine to a local deity.");
+        showEventCard("Shrine", "The party passes a small shrine to a local deity.");
         leaderSay("Maybe we should pay our respects?");
         randomSayIfPersonality(PersonalityTrait.romantic, List.of(model.getParty().getLeader()),
                 "I'd like to. I like to think that someone is watching over me.");

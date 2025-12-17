@@ -32,10 +32,11 @@ public class FarmersChildEvent extends FarmerEvent {
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
-        print("The farmer begs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +
+        showEventCard("Farmer's Child", "The farmer begs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +
                 (gender?"daughter":"son") + " as an apprentice adventurer. The kid seems" +
                 " ready to take on the world, but an apprentice may turn out to be a" +
-                "liability. Are you interested? (Y/N) ");
+                "liability.");
+        print("Are you interested? (Y/N) ");
         if (yesNoInput()) {
             GameCharacter gc = MyRandom.sample(model.getAvailableCharactersByGender(gender));
             gc.setLevel(0);

@@ -52,7 +52,7 @@ public class CourierEvent extends DailyEventState {
 
         showRandomPortrait(model, Classes.None, this.race, "Courier");
         if (withIntro) {
-            println("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
+            showEventCard("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
                     " catches " + hisOrHer(getPortraitGender()) + " breath.");
         }
         portraitSay("'" + model.getParty().getLeader().getFullName() + "'s Company' - that's you right? I have a letter for you.");

@@ -42,7 +42,7 @@ public class PriestEvent extends GeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
-            println("The party meets a priest.");
+            showEventCard("The party meets a priest.");
         }
         showExplicitPortrait(model, portrait, "Priest");
         return true;

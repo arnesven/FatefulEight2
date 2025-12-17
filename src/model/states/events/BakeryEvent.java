@@ -24,7 +24,7 @@ public class BakeryEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party passes by a bakery.");
+        showEventCard("Bakery", "The party passes by a bakery. A wonderful aroma is coming from inside.");
         partyMemberSay(model.getParty().getRandomPartyMember(), "That smells lovely!");
         showRandomPortrait(model, Classes.BAKER, "Baker");
         portraitSay("Yes, fresh out of the oven. But alas, today two of my three apprentices are home with the flu. " +

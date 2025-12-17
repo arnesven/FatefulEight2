@@ -43,7 +43,7 @@ public class BarbarianEvent extends CombatExpertGeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.BBN, race);
-        println("Clad in bear fur, a few patches of leather armor and wielding an enormous axe, " +
+        showEventCard("Clad in bear fur, a few patches of leather armor and wielding an enormous axe, " +
                 "this barbarian seems to belong to a proud tribe. ");
         showExplicitPortrait(model, portrait, "Barbarian");
         randomSayIfPersonality(PersonalityTrait.snobby, List.of(model.getParty().getLeader()),

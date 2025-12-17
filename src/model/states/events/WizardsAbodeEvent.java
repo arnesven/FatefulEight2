@@ -40,7 +40,7 @@ public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.randomRace(), false);
         showExplicitPortrait(model, portrait, "Wizard");
-        println("A white stone structure pokes out from the surrounding " +
+        showEventCard("A white stone structure pokes out from the surrounding " +
                 "hills. A wizard lives here and gladly accepts some " +
                 "company.");
         return true;

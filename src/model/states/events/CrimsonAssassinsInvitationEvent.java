@@ -51,9 +51,9 @@ public class CrimsonAssassinsInvitationEvent extends DailyEventState {
         model.getSettings().getMiscFlags().put(ALREADY_DONE_KEY, true);
         CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.ASN);
         if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
-            println("A hooded " + manOrWoman(app.getGender()) + " approaches you on the street.");
+            showEventCard("A hooded " + manOrWoman(app.getGender()) + " approaches you on the street.");
         } else {
-            println("A hooded " + manOrWoman(app.getGender()) + " catches up to you on the road.");
+            showEventCard("A hooded " + manOrWoman(app.getGender()) + " catches up to you on the road.");
         }
         model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, app, "Stranger");

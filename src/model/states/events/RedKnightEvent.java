@@ -30,7 +30,7 @@ public class RedKnightEvent extends DailyEventState {
             return;
         }
         model.getParty().markSpecialCharacter(redKnightChar);
-        println("You spot two figures on the ground up ahead. One is lying face down, in a pool of dark liquid. The other " +
+        showEventCard("You spot two figures on the ground up ahead. One is lying face down, in a pool of dark liquid. The other " +
                 "is a knight, clad in full plate armor, his head obscured by a full helm.");
         leaderSay("Let's approach carefully here and find out what happened.");
         leaderSay("Hello there. Are you in need of aid?");

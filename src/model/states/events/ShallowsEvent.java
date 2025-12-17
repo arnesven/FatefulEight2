@@ -9,7 +9,7 @@ public class ShallowsEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("The river is shallow and there is no undertow. The party can wade across.");
+        showEventCard("Shallows", "The river is shallow and there is no undertow. The party can wade across.");
         print("Press enter to continue.");
         waitForReturn();
     }

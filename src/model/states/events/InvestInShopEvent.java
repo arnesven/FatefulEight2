@@ -131,7 +131,7 @@ public class InvestInShopEvent extends DailyEventState {
     }
 
     private void offerInvestment(Model model) {
-        println("As you step into a shop, you're immediately greeted by the shopkeeper.");
+        showEventCard("Empty Shop", "As you step into a shop, you're immediately greeted by the shopkeeper.");
         showRandomPortrait(model, Classes.MERCHANT, "Shopkeeper");
         portraitSay("Hello there. How can I help you?");
         leaderSay("Uhm, well, I would browse your wares but...");

@@ -38,8 +38,9 @@ public class HalflingVillage extends DailyEventState {
                 return;
             }
         }
-        print("The party stumbles upon a little miniature village. ");
-        println("The halflings quickly race for their dwellings and promptly shut their doors and windows.");
+        showEventCard("Halfling Village",
+                "The party stumbles upon a little miniature village. " +
+                "The halflings quickly race for their dwellings and promptly shut their doors and windows.");
         showRandomPortrait(model, Classes.None, Race.HALFLING, "Halfling Woman");
         portraitSay("Go away, we don't want any big-people trouble here!");
         model.getParty().randomPartyMemberSay(model, List.of("How rude."));

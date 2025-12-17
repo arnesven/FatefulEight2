@@ -32,7 +32,7 @@ public class PsychicRitual extends RitualEvent {
         magician.setClass(Classes.MAG);
         magician.addToHP(999);
         ritualists.set(0, magician);
-        println("You see several mages enter a house nearby. Your curiosity gets the better of you and you wander inside. " +
+        showEventCard("Psychic Ritual", "You see several mages enter a house nearby. Your curiosity gets the better of you and you wander inside. " +
                 "You come into a large room. In the middle stands a bed, a child sleeping soundly in it.");
         println("There are " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a psychic ritual. " +
                 "They are looking for some extra mages to join them in performing it.");

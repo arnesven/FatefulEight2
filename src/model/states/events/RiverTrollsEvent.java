@@ -36,7 +36,7 @@ public class RiverTrollsEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("As you come down to the river you spot three large river trolls in the water. " +
+        showEventCard("River Trolls", "As you come down to the river you spot three large river trolls in the water. " +
                 "They seem to be fishing and have not yet noticed you.");
         int selected = multipleOptionArrowMenu(model, 24, 24,
                 List.of("Sneak past them", "Approach them calmly", "Attack them"));

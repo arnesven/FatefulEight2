@@ -90,7 +90,7 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     private GameCharacter arriveAtVillage(Model model) {
-        println("The party arrives at a little hamlet hidden away from the main road. " +
+        showEventCard("Enchantress", "The party arrives at a little hamlet hidden away from the main road. " +
                 "The people here seem busy at work, but friendly. After some casual chitchat, " +
                 "the party realizes that something isn't quite right here.");
         leaderSay("What's the matter with people here? They seem distant and distracted.");

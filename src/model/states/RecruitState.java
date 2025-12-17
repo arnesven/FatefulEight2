@@ -4,6 +4,7 @@ import model.*;
 import model.characters.*;
 import model.headquarters.TransferCharacterHeadquartersAction;
 import model.items.HorseStartingItem;
+import model.items.InventoryDummyItem;
 import model.items.Item;
 import model.items.spells.Spell;
 import model.map.UrbanLocation;
@@ -161,7 +162,7 @@ public class RecruitState extends GameState {
         String extra = "";
         if (it instanceof Spell) {
             extra = "spell, ";
-        }
+        } // TODO: Fix "an Obols (150)"
         if (it instanceof HorseStartingItem) {
             extra = "horse, ";
         }

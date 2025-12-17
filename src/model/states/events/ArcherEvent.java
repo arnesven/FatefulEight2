@@ -38,7 +38,7 @@ public class ArcherEvent extends GeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
-            println("Out on the grounds, a skilled archer puts arrow after " +
+            showEventCard("Out on the grounds, a skilled archer puts arrow after " +
                     "arrow right in the bullseye.");
         }
         showExplicitPortrait(model, appearance, "Archer");

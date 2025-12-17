@@ -23,7 +23,7 @@ public class VulturesEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("Vultures have been circling over the party for some time now. Their shadows looming bigger and bigger.");
+        showEventCard("Vultures", "Vultures have been circling over the party for some time now. Their shadows looming bigger and bigger.");
         model.getParty().randomPartyMemberSay(model, List.of("Those big turkeys are really getting annoying!"));
         model.getParty().randomPartyMemberSay(model, List.of("They're probably hoping to have us for dinner."));
         int kills = 0;

@@ -24,7 +24,7 @@ public class OasisEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("Exhausted from the heat, the party reaches a lush oasis in the " +
+        showEventCard("Oasis", "Exhausted from the heat, the party reaches a lush oasis in the " +
                 "desert. There is a watering hole here and some much " +
                 "needed shade. The party gains 3 rations.");
         model.getParty().addToFood(3);

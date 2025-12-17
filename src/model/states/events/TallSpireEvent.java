@@ -52,7 +52,8 @@ public class TallSpireEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        print("You come upon a very high spire. Do you want to enter? (Y/N) ");
+        showEventCard("Tall Spire", "You come upon a very high spire.");
+        print("Do you want to enter? (Y/N) ");
         if (yesNoInput()) {
             RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeTallSpireDungeon(model));
             DungeonRoom entryRoom = new TallSpireEntryRoom();

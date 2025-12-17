@@ -19,7 +19,7 @@ public class SpidersEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("An unnerving chittering echoes around the party " +
+        showEventCard("An unnerving chittering echoes around the party " +
                 "members. Giant spiders are surrounding them. These " +
                 "devil-spawn have poisonous attacks that paralyze their " +
                 "victims.");

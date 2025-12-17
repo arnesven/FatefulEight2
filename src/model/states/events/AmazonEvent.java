@@ -30,8 +30,8 @@ public class AmazonEvent extends CombatExpertGeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.AMZ);
-        println("A large, handsome and scantily clad person stands " +
-                "before the party. From the way that they are talking you " +
+        showEventCard("A large, handsome and scantily clad person stands " +
+                "before the party. From the way they are talking you " +
                 "understand that this is a native warrior of great skill.");
         showExplicitPortrait(model, portrait, "Amazon");
         return true;

@@ -20,7 +20,8 @@ public class CharlatanEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("Next to a small covered wagon, standing on a wooden box, is a man in extravagant clothing. " +
+        showEventCard("Charlatan",
+                "Next to a small covered wagon, standing on a wooden box, is a man in extravagant clothing. " +
                 "He is shouting to a crowd while holding up a small bottle. " +
                 "Intrigued, you wander closer.");
         showRandomPortrait(model, Classes.CHARLATAN, "Doctor");

@@ -12,7 +12,7 @@ public abstract class LetterOnTheStreetEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You are pacing through town when suddenly something on the ground catches your eye. At first, " +
+        showEventCard("Letter", "You are pacing through town when suddenly something on the ground catches your eye. At first, " +
                 "you take it for just a piece of trash, but then you realize it's a letter. You pick it up.");
         innerDoEvent(model);
     }

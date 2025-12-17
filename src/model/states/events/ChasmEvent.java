@@ -26,7 +26,7 @@ public class ChasmEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Chasm"));
-        println("A deep chasm lies in front of the party. There is a very " +
+        showEventCard("Chasm", "A deep chasm lies in front of the party. There is a very " +
                 "narrow path and it will be difficult to traverse. Does the " +
                 "party dare?");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),

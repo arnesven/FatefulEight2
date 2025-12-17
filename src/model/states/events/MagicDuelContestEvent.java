@@ -49,7 +49,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
         if (!yesNoInput()) {
             return;
         }
-        println("Outside the castle walls many tents and pavilions have been erected. And there, " +
+        showEventCard("Magic Duel Contest", "Outside the castle walls many tents and pavilions have been erected. And there, " +
                 "on a stretch of lawn, an arena has been set up for the purpose of hosting magical duels.");
         println("As you wander around you see mages, fair ladies, noblemen, merchants and commoners " +
                 "all bustling about and getting ready for the contest. Some people are lining up at a little booth " +

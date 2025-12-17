@@ -24,7 +24,7 @@ public class WorkshopEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You enter what you think is a shop.");
+        showEventCard("Workshop", "You enter what you think is a shop.");
         leaderSay("Hey... this isn't a shop, it's a workshop! There are tools and materials everywhere.");
         if (MyRandom.rollD10() < 5) {
             print("The tinkerer doesn't seem to be here right now. Do you 'borrow' some of " +

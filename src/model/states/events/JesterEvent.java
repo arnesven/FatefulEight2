@@ -47,7 +47,7 @@ public class JesterEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        println("The party encounters a " + fullName.toLowerCase() + ".");
+        showEventCard("The party encounters a " + fullName.toLowerCase() + ".");
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.BRD, race);
         showExplicitPortrait(model, portrait, fullName);
         return true;

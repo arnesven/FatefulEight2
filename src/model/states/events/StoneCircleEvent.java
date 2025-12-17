@@ -23,7 +23,7 @@ public class StoneCircleEvent extends DailyEventState {
     protected void doEvent(Model model) {
         AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.DRU);
         showExplicitPortrait(model, app, "Druid");
-        println("In a wide field, the party encounters a ring of standing " +
+        showEventCard("In a wide field, the party encounters a ring of standing " +
                 "stones. In the middle lay one large slab which seems to be " +
                 "intended as an altar. A druid is there with a gathering of " +
                 "a few followers and is just about to perform a nature " +

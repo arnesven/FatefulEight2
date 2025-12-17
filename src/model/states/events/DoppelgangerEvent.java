@@ -47,7 +47,7 @@ public class DoppelgangerEvent extends PersonalityTraitEvent {
     }
 
     private void doEvent(Model model, GameCharacter main, GameCharacter leader, GameCharacter other) {
-        println("While going about your business today, the party members decide to split up to get their chores done more quickly.");
+        showEventCard("Doppelganger", "While going about your business today, the party members decide to split up to get their chores done more quickly.");
         List<GameCharacter> toBench = MyLists.filter(model.getParty().getPartyMembers(),
                 (GameCharacter gc) -> gc != other && gc != leader);
         model.getParty().benchPartyMembers(toBench);

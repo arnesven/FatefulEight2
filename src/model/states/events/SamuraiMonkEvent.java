@@ -23,7 +23,7 @@ public class SamuraiMonkEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("A large crowd of people have gathered down by a stream. They are watching " +
+        showEventCard("Samurai Monk", "A large crowd of people have gathered down by a stream. They are watching " +
                 "a monk shaving an old man's head.");
         leaderSay("What's going on here?");
         showRandomPortrait(model, Classes.None, AllRaces.EASTERN_HUMAN, "Commoner");

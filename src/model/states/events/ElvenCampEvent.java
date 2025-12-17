@@ -34,7 +34,7 @@ public class ElvenCampEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party stumbles upon a clearing where a roaring " +
+        showEventCard("Elven Camp", "The party stumbles upon a clearing where a roaring " +
                 "campfire is burning and delicious meat is roasting on " +
                 "a spit. Around the fire, elven faces are peering at the " +
                 "newcomers.");

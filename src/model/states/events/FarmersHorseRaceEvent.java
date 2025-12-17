@@ -31,7 +31,7 @@ public class FarmersHorseRaceEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party comes upon a little farm. You hear the familiar neighing of horses.");
+        showEventCard("The party comes upon a little farm. You hear the familiar neighing of horses.");
         boolean gender = MyRandom.flipCoin();
         String boyOrGirl = gender?"Girl":"Boy";
         println("As you a approach a young farmer " + boyOrGirl.toLowerCase() + " spots you.");

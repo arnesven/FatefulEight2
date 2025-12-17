@@ -18,7 +18,7 @@ public class WhiteKnightEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.PAL, "Paladin");
-        println("You meet a white knight, a paladin.");
+        showEventCard("You meet a white knight, a paladin.");
         portraitSay("We are the Paladins, the protectors of our sacred " +
                 "temple!");
         println("The paladin seems almost comically serious as he " +

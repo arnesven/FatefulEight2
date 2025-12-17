@@ -49,7 +49,7 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
-            println("The party encounters a mage who seems eager to discuss the more academic aspects of magic.");
+            showEventCard("The party encounters a mage who seems eager to discuss the more academic aspects of magic.");
             randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(), "Finally some intellectual interaction.");
             showExplicitPortrait(model, appearance, "Mage");
         }

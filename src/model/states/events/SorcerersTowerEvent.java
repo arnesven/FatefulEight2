@@ -41,7 +41,7 @@ public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.SOR);
         showExplicitPortrait(model, portrait, "Sorcerer");
-        println("A tall stone structure stands silently in front of the party. " +
+        showEventCard("A tall stone structure stands silently in front of the party. " +
                 "Within is a sorcerer who only accepts persons who are " +
                 "acquainted with magic.");
         randomSayIfPersonality(PersonalityTrait.diplomatic, new ArrayList<>(),

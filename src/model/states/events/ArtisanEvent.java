@@ -77,15 +77,18 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
+        String cardText = "";
         if (withIntro) {
-            print("The party encounters an artisan. ");
+            cardText = "The party encounters an artisan. ";
         }
-        print("This particular artisan is a");
+        cardText += "This particular artisan is a";
         this.itemList = new ArrayList<>();
 
 
-        println(" an " + subType.getName().toLowerCase() + " and offers to sell you " +
+        showEventCard(cardText + " an " + subType.getName().toLowerCase() + " and offers to sell you " +
                 subType.getItemType() + " at a discount.");
+
+
         itemList.add(subType.getItem(model));
         this.portrait = PortraitSubView.makeRandomPortrait(
                 subType.makeArtisanSubClass(), race);

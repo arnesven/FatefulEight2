@@ -24,7 +24,7 @@ public class PlayEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("There's apparently a play running in town. Everybody is talking about it. It is supposed to be pretty good.");
+        showEventCard("Play", "There's apparently a play running in town. Everybody is talking about it. It is supposed to be pretty good.");
         randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(),
                 "This sounds like a genuine waste of time.");
         randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(),

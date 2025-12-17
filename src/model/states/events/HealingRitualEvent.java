@@ -28,7 +28,8 @@ public class HealingRitualEvent extends RitualEvent {
         priest.setClass(Classes.PRI);
         priest.addToHP(999);
         ritualists.set(0, priest);
-        println("There is a small village here. As you stroll through by the huts you see a lot of sick and weak people. " +
+        showEventCard("Healing Ritual",
+                "There is a small village here. As you stroll through by the huts you see a lot of sick and weak people. " +
                 "You continue onward until you reach a little chapel at the end of the road.");
         print("Do you want to go to the chapel (Y) or continue on with your journey (N). ");
         if (!yesNoInput()) {

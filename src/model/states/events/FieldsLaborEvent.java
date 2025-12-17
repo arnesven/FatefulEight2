@@ -21,10 +21,12 @@ import java.util.List;
 public abstract class FieldsLaborEvent extends FarmerEvent {
     private final String introText;
     private final String failText;
+    private final String title;
     private boolean freeRations;
 
-    public FieldsLaborEvent(Model model, String introText, String failText) {
+    public FieldsLaborEvent(Model model, String title, String introText, String failText) {
         super(model);
+        this.title = title;
         freeRations = false;
         this.introText = introText;
         this.failText = failText;
@@ -56,7 +58,7 @@ public abstract class FieldsLaborEvent extends FarmerEvent {
 
 
     private void failure(Model model, String sitch) {
-        println("The party just made a mess of things " + sitch + ". The farmer is appalled by " +
+        showEventCard(title, "The party just made a mess of things " + sitch + ". The farmer is appalled by " +
                 "the party's inability to do even a simple job and angrily asks you to be " +
                 "on your way.");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.snobby, new ArrayList<>(), "I'm not one for manual labor anyway.");
@@ -72,7 +74,7 @@ public abstract class FieldsLaborEvent extends FarmerEvent {
     }
 
     private void success(Model model) {
-        println("The farmer thanks the party for the help and offers a small bag of coins (20 gold).");
+        showEventCard("The farmer thanks the party for the help and offers a small bag of coins (20 gold).");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.generous, new ArrayList<>(),
                 "The peasants have a hard life. We should hardly ask them to pay us.");
         if (!didSay) {

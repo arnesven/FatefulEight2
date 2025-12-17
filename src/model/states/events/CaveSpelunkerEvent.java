@@ -72,7 +72,7 @@ public class CaveSpelunkerEvent extends DailyEventState {
         if (race.id() == Race.NORTHERN_HUMAN.id() || race.id() == Race.SOUTHERN_HUMAN.id()) {
             who = manOrWoman(gender);
         }
-        println("You're taking a short break at the side of the path when a " +
+        showEventCard("You're taking a short break at the side of the path when a " +
                 "sudden rustling of bushes startles you. Suddenly a " + who + " crawls out of the underbrush.");
         leaderSay("Who... don't sneak up on us like that!");
         println(heOrSheCap(gender) + " looks completely emaciated. " + heOrSheCap(gender) + " tries to stand but is struggling to even get up.");

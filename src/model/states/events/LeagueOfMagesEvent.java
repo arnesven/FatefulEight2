@@ -48,7 +48,7 @@ public class LeagueOfMagesEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         CollapsingTransition.transition(model, GuildHallImageSubView.getInstance("League of Mages"));
-        println("You pass by a building with an ornate sign out front. " +
+        showEventCard("You pass by a building with an ornate sign out front. " +
                 "'League of Mages - Guild Hall' is written in gilded letters upon it. " +
                 "You step inside.");
         AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.MAGE);

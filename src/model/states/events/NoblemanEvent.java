@@ -42,7 +42,7 @@ public class NoblemanEvent extends GeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.NOB, race);
-        println("You meet with a nobleman and " + hisOrHer(portrait.getGender()) + " entourage.");
+        showEventCard("You meet with a nobleman and " + hisOrHer(portrait.getGender()) + " entourage.");
         showExplicitPortrait(model, portrait, "Noble");
         return true;
     }

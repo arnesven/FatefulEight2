@@ -31,7 +31,7 @@ public class WatchtowerEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Watchtower"));
-        println("Up on a hill, an ancient watchtower sits silently and " +
+        showEventCard("Watchtower", "Up on a hill, an ancient watchtower sits silently and " +
             "resolutely. The party climbs the stone steps to find it " +
             "completely abandoned. However, there are majestic " +
             "statues, murals with powerful imagery and the view is " +

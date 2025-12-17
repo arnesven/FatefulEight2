@@ -27,7 +27,7 @@ public class ConstableGroupEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You see a group of constables approaching you on the street.");
+        showEventCard("You see a group of constables approaching you on the street.");
         print("Do you run away? (Y/N) ");
         if (yesNoInput()) {
             setFledCombat(true);

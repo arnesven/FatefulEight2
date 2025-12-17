@@ -41,7 +41,7 @@ public class SmithEvent extends GeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(new ArtisanEvent.Smith().makeArtisanSubClass(), smithRace);
         showExplicitPortrait(model, portrait, "Smith");
-        println("The smith stands in the heat from the furnace. " + heOrSheCap(portrait.getGender()) + " is banging with a mallet on an " +
+        showEventCard("The smith stands in the heat from the furnace. " + heOrSheCap(portrait.getGender()) + " is banging with a mallet on an " +
                 "anvil.");
         return true;
     }

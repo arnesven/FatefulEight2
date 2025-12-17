@@ -33,7 +33,7 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         setCurrentTerrainSubview(model);
-        println("You take the staff and put it in the hole in front of the large stone door. It fits perfectly into the hole." +
+        showEventCard("You take the staff and put it in the hole in front of the large stone door. It fits perfectly into the hole." +
                 " The light which shines down from the cavern ceiling passes through the crystal in the top piece of the staff. " +
                 "The refracted light then passes through a tiny slot in the center of the door.");
         println("Suddenly the ground shakes and the large door starts to move to the side, revealing a dark chamber inside.");

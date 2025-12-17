@@ -24,7 +24,7 @@ public class FriendEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        print("One of the party members encounters an old friend. After speaking a bit, the friend ");
+        showEventCard("Friend", "One of the party members encounters an old friend. After speaking a bit, the friend ");
         List<GameCharacter> list = model.getAvailableCharactersOfRace(Race.ALL);
         if (model.getParty().size() == 8 || list.isEmpty()) {
             println(" sets own about its own affairs.");

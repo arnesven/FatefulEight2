@@ -34,7 +34,7 @@ public class BanditEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You encounter a few ruffians at the side of the road. They rudely block your path.");
+        showEventCard("You encounter a few ruffians at the side of the road. They rudely block your path.");
         showRandomPortrait(model, Classes.BANDIT, race,"Bandit");
         portraitSay("There's a toll here. 20 gold. It's uh... a traveller's fee. Bring out your purse now, be a good chap!");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.aggressive, new ArrayList<>(),

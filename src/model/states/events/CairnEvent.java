@@ -28,7 +28,7 @@ public class CairnEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Cairn"));
-        println("You pass a unusually large pillar of stacked stones. It's a cairn. " +
+        showEventCard("Cairns", "You pass a unusually large pillar of stacked stones. It's a cairn. " +
                 "You inspect it more closely and realize that there may be something hidden inside it.");
         boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Endurance, 7);
         if (success) {

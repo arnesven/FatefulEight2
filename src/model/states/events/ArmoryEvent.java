@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.items.Item;
 import model.states.DailyEventState;
 import model.states.ShopState;
@@ -21,8 +22,8 @@ public class ArmoryEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showSilhouettePortrait(model, "Servant");
-        println("One of the Lord's servants approaches you and leads you to the castle armory.");
+        showRandomPortrait(model, Classes.OFFICIAL, "Servant");
+        showEventCard("Armory", "One of the Lord's servants approaches you and leads you to the castle armory.");
         portraitSay("I have been instructed to offer you a gift. You may take one of these " +
                 "items that fits your fancy.");
 

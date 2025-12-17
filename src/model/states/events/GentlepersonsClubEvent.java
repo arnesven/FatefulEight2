@@ -48,7 +48,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
     protected void doEvent(Model model) {
         this.castleLocation = (UrbanLocation) model.getCurrentHex().getLocation();
         CollapsingTransition.transition(model, GuildHallImageSubView.getInstance("Gentleperson's Club"));
-        println("You happen to pass a building with a very elaborate sign out front. " +
+        showEventCard("You happen to pass a building with a very elaborate sign out front. " +
                 "'Gentleperson's Club' is written in fancy letters upon it. " +
                 "You step inside.");
         AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL);

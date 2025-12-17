@@ -10,7 +10,7 @@ import java.util.List;
 public class PlowingFieldsEvent extends FieldsLaborEvent {
 
     public PlowingFieldsEvent(Model model) {
-        super(model, "The farmer needs some help plowing his fields. Any help is much appreciated.",
+        super(model, "Plowing Fields", "The farmer needs some help plowing his fields. Any help is much appreciated.",
                 "in the field");
     }
 

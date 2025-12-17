@@ -43,15 +43,16 @@ public class CampSiteEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        print("Up in the distance, the party spots a camp site. ");
+        String cardText = "Up in the distance, the party spots a camp site. ";
 
         if (roll < NOBODY_THRESHOLD) {
-           println("It looks like there's nobody there.");
+           cardText += "It looks like there's nobody there.";
         } else if (roll < FEW_POEPLE_THRESHOLD) {
-            println("It looks like there's a few people at the camp site.");
+            cardText += "It looks like there's a few people at the camp site.";
         } else {
-            println("It looks like there's a whole crowd of people at the camp site.");
+            cardText += "It looks like there's a whole crowd of people at the camp site.";
         }
+        showEventCard("Camp Site", cardText);
 
         print("Do you want to go to the camp site (Y), or do you avoid it (N)? ");
         if (!yesNoInput()) {

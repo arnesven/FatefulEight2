@@ -52,7 +52,7 @@ public class BathHouseEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party passes a bath house. The entrance fee is 1 gold per person. " +
+        showEventCard("Bath House", "The party passes a bath house. The entrance fee is 1 gold per person. " +
                 "Do any party members want to take a bath (group B)?");
         SubView oldSub = model.getSubView();
         List<GameCharacter> groupB;

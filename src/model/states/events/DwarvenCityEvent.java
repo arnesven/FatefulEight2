@@ -53,7 +53,7 @@ public class DwarvenCityEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("At the end of a tunnel, two large stone doors block the way forward. As the party approaches them, " +
+        showEventCard("Dwarven City", "At the end of a tunnel, two large stone doors block the way forward. As the party approaches them, " +
                 "a little hatch in one of the doors open. You can see the bearded face of a dwarf peering out at you.");
         showRandomPortrait(model, Classes.CONSTABLE, Race.DWARF, "Dwarf");
         if (partyContainsElves(model)) {

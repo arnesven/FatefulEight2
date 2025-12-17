@@ -35,7 +35,7 @@ public class WantedPosterEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         SubView previous = model.getSubView();
-        println("You pass by a poster hanging on the wall of a building.");
+        showEventCard("You pass by a poster hanging on the wall of a building.");
         String townName = null;
         if (model.getCurrentHex().getLocation() instanceof TownLocation) {
             townName = ((TownLocation) model.getCurrentHex().getLocation()).getTownName();

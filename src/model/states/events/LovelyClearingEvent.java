@@ -17,7 +17,7 @@ public class LovelyClearingEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party comes to a lovely clearing in the woods. Many beautiful flowers grow here. " +
+        showEventCard("Clearing", "The party comes to a lovely clearing in the woods. Many beautiful flowers grow here. " +
                 "It's an excellent spot to collect some potion ingredients.");
         model.getParty().getInventory().addToIngredients(10);
         println("The party gains 10 ingredients.");

@@ -28,7 +28,7 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
     protected void doEvent(Model model) {
         GameCharacter main = getMainCharacter();
         benchAllButMain(model);
-        println(main.getName() + " is taking a little time for " + himOrHer(main.getGender()) + "self, and decides " +
+        showEventCard(main.getName() + " is taking a little time for " + himOrHer(main.getGender()) + "self, and decides " +
                 "to browse some market stands. At a fresh produce stand a farmer is selling strawberries.");
         partyMemberSay(main, "Good year for strawberries?");
         AdvancedAppearance farmerPortrait = PortraitSubView.makeRandomPortrait(Classes.FARMER);

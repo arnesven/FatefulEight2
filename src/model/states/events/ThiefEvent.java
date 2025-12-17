@@ -28,7 +28,7 @@ public class ThiefEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showSilhouettePortrait(model, "Stranger");
         if (withIntro) {
-            println("A stranger comes up to you and asks for directions.");
+            showEventCard("A stranger comes up to you and asks for directions.");
         }
         if (spotThief(model)) {
             model.getParty().randomPartyMemberSay(model, List.of("Did you think you could pull a fast one on us?"));

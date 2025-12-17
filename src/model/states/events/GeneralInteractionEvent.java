@@ -79,6 +79,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         if (!doIntroAndContinueWithEvent(model)) {
             return;
         }
+        model.getLog().waitForAnimationToFinish();
         if (darkDeedsMenu(getVictimCharacter(model),
                 companions, getProvokedStrategy(), true)) {
             return;
@@ -129,7 +130,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 options.add("Steal from " + victim);
             }
             options.add("Make Inquiry");
-            int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
+            int chosen = multipleOptionArrowMenu(getModel(), 24, 23, options);
             if (chosen == 0) {
                 return false;
             }

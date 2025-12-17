@@ -48,7 +48,7 @@ public class MerchantEvent extends GeneralInteractionEvent {
             items.add(map);
         }
         if (withIntro) {
-            println("The party encounters a large wagon with tons of wares stacked upon it. " +
+            showEventCard("The party encounters a large wagon with tons of wares stacked upon it. " +
                     "Beside it stands a plump character in fancy clothing.");
             showExplicitPortrait(model, apperance, "Merchant");
         }

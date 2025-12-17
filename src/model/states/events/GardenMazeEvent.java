@@ -53,7 +53,7 @@ public class GardenMazeEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         AdvancedAppearance gardener = PortraitSubView.makeRandomPortrait(Classes.GARDENER, gardernerRace);
-        println("You thought you were heading into town but it seems this road is taking you in the opposite direction. " +
+        showEventCard("Garden Maze", "You thought you were heading into town but it seems this road is taking you in the opposite direction. " +
                 "You come to a large mansion with a vast garden. The garden has neatly trimmed bushes, hedges and trees. " +
                 "A gardener is trimming the lawn near the house. " + heOrSheCap(gardener.getGender()) + " approaches you.");
         model.getLog().waitForAnimationToFinish();

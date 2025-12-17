@@ -27,7 +27,7 @@ public class FishermanEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("The party encounters a fisherman on the banks of the river.");
+        showEventCard("Fisherman", "The party encounters a fisherman on the banks of the river.");
         showRandomPortrait(model, Classes.FARMER, "Fisherman");
         leaderSay("Good day to you sir. Is the river safe to cross here?");
         portraitSay("Shhh! You'll scare the fish away.");

@@ -46,7 +46,7 @@ public class BoozersEvent extends DailyEventState {
         } else if (!boozer1.getGender() && !boozer2.getGender()) {
             pair = " of men";
         }
-        println("Intending to take a short cut, you cut through an alley. You encounter a pair" + pair + " who seem a bit odd. " +
+        showEventCard("Boozers", "Intending to take a short cut, you cut through an alley. You encounter a pair" + pair + " who seem a bit odd. " +
                 "They're a bit rowdy and it's clear they've been drinking. Rather than go back, you attempt to push " +
                 "past them in the narrow alley but end up accidentally bumping into one of them.");
         leaderSay("Excuse " + meOrUs() + ".");

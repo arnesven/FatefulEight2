@@ -16,7 +16,7 @@ public class TranceEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You join in during a chanting session with the monks. Apparently participants sometimes " +
+        showEventCard("Trance", "You join in during a chanting session with the monks. Apparently participants sometimes " +
                 "enter a trance and unlock hidden potential within themselves.");
         GameCharacter trancer = null;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {

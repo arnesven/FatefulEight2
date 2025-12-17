@@ -34,7 +34,7 @@ public class KidsWantFireworksEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("As you walk down the road a group of little kids suddenly ambush you.");
+        showEventCard("Fireworks", "As you walk down the road a group of little kids suddenly ambush you.");
         ChildAppearance kid1 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
         kid1.setBigMouth();
         showExplicitPortrait(model, kid1, "Kid 1");

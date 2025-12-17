@@ -40,7 +40,7 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIT);
         showExplicitPortrait(model, portrait, "Witch");
-        println("You find a small hut in a dank grove. Light emanates from " +
+        showEventCard("You find a small hut in a dank grove. Light emanates from " +
                 "the window. Inside a witch is stirring a cauldron and " +
                 "mumbling strange rhymes.");
         randomSayIfPersonality(PersonalityTrait.rude, new ArrayList<>(),

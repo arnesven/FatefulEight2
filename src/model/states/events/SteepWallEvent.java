@@ -21,7 +21,7 @@ public class SteepWallEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The pass the party thought they were approaching turns out to be a dead end.");
+        showEventCard("Steep Wall", "The pass the party thought they were approaching turns out to be a dead end.");
         GameCharacter other = null;
         if (model.getParty().size() > 1) {
             other = model.getParty().getRandomPartyMember(model.getParty().getLeader());

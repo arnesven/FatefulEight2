@@ -36,7 +36,7 @@ public class HermitEvent extends GeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), false);
         showExplicitPortrait(model, portrait, "Hermit");
-        println("The party encounters an old man. He has a long beard, and his clothes are nothing " +
+        showEventCard("Hermit", "The party encounters an old man. He has a long beard, and his clothes are nothing " +
                 "but shreds. He must have lived out here in the wilderness " +
                 "for a long, long time. He seems tight lipped about his life " +
                 "but you just know that he must have some good stories.");

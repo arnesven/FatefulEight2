@@ -51,7 +51,7 @@ public class NomadCampEvent extends DailyEventState {
     protected void doEvent(Model model) {
         CharacterClass cls = MyRandom.sample(List.of(Classes.AMZ, Classes.BBN));
         showRandomPortrait(model, cls, "Nomads");
-        println("The party comes to a little community of tents and wagons. " +
+        showEventCard("The party comes to a little community of tents and wagons. " +
                 "These nomads travel around the countryside, following game or herds.");
         randomSayIfPersonality(PersonalityTrait.friendly, new ArrayList<>(), "We should approach them peacefully. " +
                 "If we befriend them, we may all benefit.");

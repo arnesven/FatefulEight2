@@ -19,13 +19,19 @@ public class EventCardSubView extends SubView {
     private static final MyColors CARD_COLOR = MyColors.BEIGE;
     private static final int MAX_WIDTH = 26;
     private final SubView previous;
-    private final List<String> content;
+    private List<String> content = null;
     private final StringBuilder template;
     private static final Sprite[][] borderSprites = makeBorderSprites();
 
     public EventCardSubView(SubView previous, String title, String cardText) {
         super(previous.getCenterTextHeight());
         this.previous = previous;
+        setTitleAndContents(title, cardText);
+        this.template = new StringBuilder();
+        template.repeat(" ", MAX_WIDTH);
+    }
+
+    public void setTitleAndContents(String title, String cardText) {
         this.content = new ArrayList<>();
         if (title != null) {
             content.add(title);
@@ -34,10 +40,8 @@ public class EventCardSubView extends SubView {
             content.add(bldr.toString());
         }
         for (String part : MyStrings.partition(cardText, MAX_WIDTH+1)) {
-             content.add(part.trim());
+            content.add(part.trim());
         }
-        this.template = new StringBuilder();
-        template.repeat(" ", MAX_WIDTH);
     }
 
     @Override

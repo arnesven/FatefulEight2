@@ -18,7 +18,7 @@ public class SnowyBeastEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("This beast is covered in white fur. It has tusks, " +
+        showEventCard("Snowy Beast", "This beast is covered in white fur. It has tusks, " +
                 "horns and a terrible temper. It is coming straight for the " +
                 "party.");
         leaderSay("Everybody, get ready to fight!");

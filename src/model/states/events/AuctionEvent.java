@@ -50,7 +50,7 @@ public class AuctionEvent extends PersonalityTraitEvent {
     protected void doEvent(Model model) {
         GameCharacter main = getMainCharacter();
         model.getParty().benchPartyMembers(MyLists.filter(model.getParty().getPartyMembers(), gc -> gc != main));
-        println(main.getFirstName() + " falls behind the rest of the party but " + hisOrHer(main.getGender()) +
+        showEventCard(main.getFirstName() + " falls behind the rest of the party but " + hisOrHer(main.getGender()) +
                 " pack is so terribly uncomfortable that " + heOrShe(main.getGender()) +
                 " must repack it before walking any further.");
         partyMemberSay(main, "I guess I'll just have to catch up with them later. " +

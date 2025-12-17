@@ -30,7 +30,7 @@ public class AlchemistEvent extends DailyEventState {
     protected void doEvent(Model model) {
         AdvancedAppearance durok = PortraitSubView.makeRandomPortrait(Classes.ALCHEMIST, Race.HALF_ORC, false);
         showExplicitPortrait(model, durok, "Durok");
-        println("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
+        showEventCard("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
         leaderSay("Opening up a new shop?");
         portraitSay("Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.");

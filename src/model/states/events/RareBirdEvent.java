@@ -71,7 +71,7 @@ public class RareBirdEvent extends DailyEventState {
             new NoEventState(model).doEvent(model);
             return;
         }
-        println("As you push a branch out of your way something colorful flutters by.");
+        showEventCard("Rare Bird", "As you push a branch out of your way something colorful flutters by.");
         leaderSay("What was that?");
         model.getLog().waitForAnimationToFinish();
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Rare Bird"));

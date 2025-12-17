@@ -15,7 +15,7 @@ public class CleansingRitual extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The monks are chanting, there is an elaborate tea " +
+        showEventCard("Cleansing Ritual", "The monks are chanting, there is an elaborate tea " +
                 "drinking ceremony and there is incense everywhere. " +
                 "However, afterward the party members feel better than " +
                 "they have in a long time");

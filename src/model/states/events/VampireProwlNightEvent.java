@@ -43,7 +43,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
         model.getParty().benchPartyMembers(others);
         model.getParty().forceEyesClosed(victim, true);
         showSilhouettePortrait(model, "Something");
-        println("It is night and " + victim.getFirstName() + " is asleep. " +
+        showEventCard("It is night and " + victim.getFirstName() + " is asleep. " +
                 "Something approaches " + hisOrHer(victim.getGender()) + " bed...");
         print("Press enter to continue...");
         waitForReturn();

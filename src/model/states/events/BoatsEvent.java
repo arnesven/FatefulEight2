@@ -54,7 +54,7 @@ public class BoatsEvent extends RiverEvent {
             }
             return;
         }
-        println("There are boats here. They don't look sturdy enough to " +
+        showEventCard("There are boats here. They don't look sturdy enough to " +
                 "go for a longer ride in, but surely they will hold for just crossing the river.");
         model.getLog().waitForAnimationToFinish();
         println("The boats are rather small however and the party must split into smaller groups.");

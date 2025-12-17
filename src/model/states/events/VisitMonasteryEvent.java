@@ -65,7 +65,7 @@ public class VisitMonasteryEvent extends DailyEventState {
         }
 
         if (!hasVisited(model)) {
-            println("As you walk up a hill on this island you see a huge structure towering in front of you.");
+            showEventCard("As you walk up a hill on this island you see a huge structure towering in front of you.");
             leaderSay("A castle? No... wait, it looks like a monastery.");
             randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(),
                     "This must be the famous monastery on the isle of Faith! It is said it was once a fulcrum " +

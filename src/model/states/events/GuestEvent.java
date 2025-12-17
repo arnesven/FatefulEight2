@@ -35,7 +35,7 @@ public class GuestEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showExplicitPortrait(model, this.appearance, "Farmer");
-        println("The party is invited into the home of these farmers who " +
+        showEventCard("Guest", "The party is invited into the home of these farmers who " +
                 "gracefully offer a warm meal and the prospect of sleeping in " +
                 "the barn for the night.");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(), "What an honor.");

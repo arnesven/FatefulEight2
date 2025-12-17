@@ -24,7 +24,7 @@ public class BerriesEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Berries"));
-        println("The party encounters a large thicket, rich with bright red berries.");
+        showEventCard("Berries", "The party encounters a large thicket, rich with bright red berries.");
         model.getParty().randomPartyMemberSay(model, List.of("Those look yummy!"));
         randomSayIfPersonality(PersonalityTrait.naive, List.of(model.getParty().getLeader()),
                 "I'm sure their not poisonous. They have a beautiful color. " +
@@ -36,7 +36,7 @@ public class BerriesEvent extends DailyEventState {
 
         boolean poisonous = MyRandom.randInt(3) == 0;
         if (!poisonous) {
-            println("The party happily eats and picks as many berries as they can carry.");
+            showEventCard("The party happily eats and picks as many berries as they can carry.");
             model.getParty().addToFood(2*model.getParty().size());
         } else {
             GameCharacter survivalist = model.getParty().getPartyMember(0);
@@ -50,9 +50,9 @@ public class BerriesEvent extends DailyEventState {
             if (result.isSuccessful()) {
                 println(survivalist.getName() + "'s survival instinct kicks in. (Survival " + result.asString() + ")");
                 model.getParty().partyMemberSay(model, survivalist, List.of("Wait! Those are poisonous!"));
-                println("With great disappointment, the party turns away from the bushes and continues on their journey.");
+                showEventCard("With great disappointment, the party turns away from the bushes and continues on their journey.");
             } else {
-                println("The party happily eats the berries but quickly realizes their error.");
+                showEventCard("The party happily eats the berries but quickly realizes their error.");
                 model.getParty().randomPartyMemberSay(model, List.of("Uh... I don't feel so good."));
                 println("Each party takes damage from eating poisonous berries.");
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {

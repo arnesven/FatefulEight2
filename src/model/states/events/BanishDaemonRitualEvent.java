@@ -33,7 +33,7 @@ public class BanishDaemonRitualEvent extends RitualEvent {
         sorcerer.setClass(Classes.SOR);
         sorcerer.addToHP(999);
         ritualists.set(0, sorcerer);
-        println("The party encounters a large group of dwarves here, gathered around a large pit. " +
+        showEventCard("Banish Daemon", "The party encounters a large group of dwarves here, gathered around a large pit. " +
                 "In the pit stands an enormous daemon bound in chains. It seems somewhat subdued. The dwarves are shouting " +
                 "and arguing amongst themselves.");
         println("There are also " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a banishing ritual. " +

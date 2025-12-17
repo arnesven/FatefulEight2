@@ -26,7 +26,7 @@ public class DrunkenPirateEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You pass by an ally, and something stirs in the corner of your eye. " +
+        showEventCard("Drunken Pirate", "You pass by an ally, and something stirs in the corner of your eye. " +
                 "You flinch, thinking it may be a rat, but realize it's a person lying on the ground.");
         leaderSay("It's a pirate, stinking drunk!");
         model.getLog().waitForAnimationToFinish();

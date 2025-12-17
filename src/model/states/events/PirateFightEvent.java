@@ -21,7 +21,7 @@ public class PirateFightEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("While getting a few refreshments at the tavern, two burly men start arguing. Each of them " +
+        showEventCard("Pirate Brawl", "While getting a few refreshments at the tavern, two burly men start arguing. Each of them " +
                 "belongs to a crew of pirates, some of which are also in the tavern. You feel a fight may be coming.");
         int choice = multipleOptionArrowMenu(model, 24, 24,
                 List.of("Leave tavern", "Aide one group of pirates", "Fight them all"));

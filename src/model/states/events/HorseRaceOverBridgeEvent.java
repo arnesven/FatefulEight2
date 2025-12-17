@@ -26,7 +26,7 @@ public class HorseRaceOverBridgeEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("You come to a small wooden bridge. You're about to cross when the thundering of hooves stop you in your tracks. " +
+        showEventCard("Bridge Race", "You come to a small wooden bridge. You're about to cross when the thundering of hooves stop you in your tracks. " +
                 "You are almost run over by several riders.");
         leaderSay("You maniacs!");
         println("One of the riders turns around and rides back toward you.");

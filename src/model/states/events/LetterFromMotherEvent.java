@@ -35,7 +35,7 @@ public class LetterFromMotherEvent extends DailyEventState {
     protected void doEvent(Model model) {
         model.getSettings().getMiscFlags().put(GOT_THIS_EVENT, true);
         showRandomPortrait(model, Classes.None, "Courier");
-        println("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
+        showEventCard("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
                 " catches " + hisOrHer(getPortraitGender()) + " breath.");
         portraitSay("'" + model.getParty().getLeader().getFullName() + "' - that's you right? I have a package for you.");
         println(model.getParty().getLeader().getFirstName() + " opens the package, inside is a letter.");

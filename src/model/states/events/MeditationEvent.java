@@ -14,7 +14,7 @@ public class MeditationEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The priests here insist that everybody meditate at least an hour a day. " +
+        showEventCard("Meditation", "The priests here insist that everybody meditate at least an hour a day. " +
                 "Most of the party rejects this idea out of hand, except...");
         GameCharacter gc = MyRandom.sample(model.getParty().getPartyMembers());
         model.getParty().partyMemberSay(model, gc, List.of("Aw heck, I'll give it a try",

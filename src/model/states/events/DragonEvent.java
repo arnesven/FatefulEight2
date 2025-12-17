@@ -20,7 +20,7 @@ public class DragonEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("Suddenly a powerful gust of wind catches the party off " +
+        showEventCard("Suddenly a powerful gust of wind catches the party off " +
                 "guard. Then, the horror...");
         model.getParty().randomPartyMemberSay(model, List.of("DRAGON!!!"));
         randomSayIfPersonality(PersonalityTrait.brave, new ArrayList<>(), "To me everybody! " +

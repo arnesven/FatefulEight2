@@ -24,7 +24,8 @@ public class UndergroundLakeEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party discovers an underground lake.");
+        showEventCard("Underground lake", "The party discovers a large body of water. " +
+                "The water is completely still, and looks very cold.");
         leaderSay("This might be a good place to rest, and to fill up our water skins.");
         randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
                 "I don't know though... that lake gives me the creeps.");

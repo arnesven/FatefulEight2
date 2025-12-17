@@ -17,7 +17,7 @@ public class MuggingEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.BANDIT, "Muggers");
-        println("Some scruffy men approach the party as you cut through" +
+        showEventCard("Muggers", "Some scruffy men approach the party as you cut through" +
                 " an alley.");
         printQuote("Thug", "Okay kid, hand it over!");
         randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Forget about it, numb-skulls!");

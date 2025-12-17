@@ -94,7 +94,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("There's a stone wall on one side of the road. It looks like the road is passing by some property. " +
+        showEventCard("There's a stone wall on one side of the road. It looks like the road is passing by some property. " +
                 "Up on a hill, you can see a large mansion.");
         leaderSay("Wow... one must be rather wealthy to live here.");
         println("After walking a little further you spot a figure trying to climb over a wall. It looks rather suspicious.");

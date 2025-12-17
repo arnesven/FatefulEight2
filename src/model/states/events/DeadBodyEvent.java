@@ -25,7 +25,7 @@ public class DeadBodyEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("The party encounters a dead body. This person has" +
+        showEventCard("Dead Body", "The party encounters a dead body. This person has" +
                 " been dead for a while. There are remains " +
                 "of clothing and the stink of rotting flesh. In some places, " +
                 "bones are visible. The party ransacks the body and the " +

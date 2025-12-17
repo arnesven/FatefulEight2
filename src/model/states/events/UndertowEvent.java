@@ -21,7 +21,7 @@ public class UndertowEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("The party comes to a narrower part of the river and " +
+        showEventCard("Undertow", "The party comes to a narrower part of the river and " +
                 "decides on trying to swim. A few feet into the water a " +
                 "strong current starts tugging at the party members' legs. ");
         leaderSay("Do we turn back, or press on?");

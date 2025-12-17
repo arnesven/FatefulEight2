@@ -12,7 +12,7 @@ public class BrokenWagonEvent extends SalvageEvent {
     private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x03);
 
     public BrokenWagonEvent(Model model) {
-        super(model, " broken down wagon", 5);
+        super(model, "Broken Wagon", " broken down wagon", 5);
     }
 
     @Override
@@ -29,5 +29,11 @@ public class BrokenWagonEvent extends SalvageEvent {
     @Override
     protected String getMinipicSubviewText() {
         return "Broken Down Wagon";
+    }
+
+    @Override
+    protected List<String> getPartyMemberComments() {
+        return List.of("I wonder what happened here.", "What a mess.",
+                "Ambushed by raiders?", "Maybe this was a merchant caravan?");
     }
 }

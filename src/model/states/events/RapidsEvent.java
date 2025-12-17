@@ -24,7 +24,7 @@ public class RapidsEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
-        println("The party wades out into the shallows but are soon swept " +
+        showEventCard("Rapids", "The party wades out into the shallows but are soon swept " +
                 "away by an undertow. The river takes them to some " +
                 "rapids which bang them up nicely.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(),

@@ -215,4 +215,12 @@ public class PortraitSubView extends SubView {
     public void dispose() {
         portraitAnimations.unregisterAll();
     }
+
+    public boolean hasPreviousEventCard() {
+        return previous instanceof EventCardSubView;
+    }
+
+    public void replaceEventCardContents(String title, String cardText) {
+        ((EventCardSubView)previous).setTitleAndContents(title, cardText);
+    }
 }

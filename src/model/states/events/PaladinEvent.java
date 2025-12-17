@@ -37,7 +37,7 @@ public class PaladinEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("You suddenly hear distant screams. Faintly, you hear somebody calling for help.");
+        showEventCard("You suddenly hear distant screams. Faintly, you hear somebody calling for help.");
         model.getParty().randomPartyMemberSay(model, List.of("Sounds like somebody is in trouble."));
         randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
                 "We must act.");
