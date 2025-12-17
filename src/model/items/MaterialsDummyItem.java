@@ -39,4 +39,9 @@ public class MaterialsDummyItem extends InventoryDummyItem {
     public Item copy() {
         return new MaterialsDummyItem(amount);
     }
+
+    @Override
+    public String getDescription() {
+        return amount + " materials";
+    }
 }

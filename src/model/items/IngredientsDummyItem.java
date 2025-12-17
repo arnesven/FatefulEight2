@@ -41,4 +41,9 @@ public class IngredientsDummyItem extends InventoryDummyItem {
     public void addYourself(Inventory inventory) {
         inventory.addToIngredients(amount);
     }
+
+    @Override
+    public String getDescription() {
+        return amount + " ingredients";
+    }
 }

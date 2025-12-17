@@ -43,4 +43,9 @@ public class ObolsDummyItem extends InventoryDummyItem {
     public int getSellValue(int mercantileRank) {
         return getCost();
     }
+
+    @Override
+    public String getDescription() {
+        return amount + " obols";
+    }
 }

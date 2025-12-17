@@ -147,6 +147,11 @@ public class ThiefClass extends CharacterClass {
         }
 
         @Override
+        public String getDescription() {
+            return "Deft Gloves and 2 lockpicks.";
+        }
+
+        @Override
         public Item copy() {
             return new LarcenyKit();
         }

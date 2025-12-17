@@ -23,4 +23,8 @@ public abstract class InventoryDummyItem extends Item {
     public boolean keepInStock() {
         return true;
     }
+
+    public String getDescription() {
+        return getName();
+    }
 }

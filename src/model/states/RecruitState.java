@@ -166,6 +166,9 @@ public class RecruitState extends GameState {
         if (it instanceof HorseStartingItem) {
             extra = "horse, ";
         }
+        if (it instanceof InventoryDummyItem) {
+            return ((InventoryDummyItem)it).getDescription();
+        }
         return extra + it.getName();
     }
 

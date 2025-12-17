@@ -39,4 +39,9 @@ public class FoodDummyItem extends InventoryDummyItem {
     public void addYourself(Inventory inventory) {
         inventory.setFood(inventory.getFood() + amount);
     }
+
+    @Override
+    public String getDescription() {
+        return amount + " rations";
+    }
 }
