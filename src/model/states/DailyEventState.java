@@ -1,6 +1,5 @@
 package model.states;
 
-import model.GameStatistics;
 import model.Model;
 import model.RecruitableCharacter;
 import model.TimeOfDay;
@@ -382,5 +381,15 @@ public abstract class DailyEventState extends GameState {
 
     public boolean exclusiveToOriginalWorld() {
         return false;
+    }
+
+    public void showEventCard(String title, String cardText) {
+        getModel().getLog().waitForAnimationToFinish();
+        println(cardText);
+        getModel().setSubView(new EventCardSubView(getModel().getSubView(), title, cardText));
+    }
+
+    public void showEventCard(String cardText) {
+        showEventCard(null, cardText);
     }
 }

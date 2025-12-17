@@ -121,7 +121,7 @@ public class AdvancedCalloutSprite extends CalloutSprite {
         screenHandler.register("", new Point(x, y), calloutBorders[col][row], 3);
     }
 
-    private static Sprite[][] makeBorderSprites() {
+    public static Sprite[][] makeBorderSprites() {
         Sprite[][] result = new Sprite[4][3];
         for (int y = 0; y < 3; ++y) {
             result[0][y] = new Sprite8x8("calloutborder" + y, "callouts.png", 0x10 * y);
