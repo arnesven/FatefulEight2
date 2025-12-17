@@ -38,7 +38,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), true);
         showExplicitPortrait(model, portrait, "Old Woman");
-        println("As you cut through a small park you spot an old woman standing under a tree.");
+        showEventCard("Cat In A Tree", "As you cut through a small park you spot an old woman standing under a tree.");
         return true;
     }
 
