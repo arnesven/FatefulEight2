@@ -6,6 +6,7 @@ import model.headquarters.TransferCharacterHeadquartersAction;
 import model.items.HorseStartingItem;
 import model.items.InventoryDummyItem;
 import model.items.Item;
+import model.items.accessories.RedRing;
 import model.items.spells.Spell;
 import model.map.UrbanLocation;
 import model.races.Dwarf;
@@ -14,6 +15,7 @@ import model.races.HalfOrc;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
+import util.MyStrings;
 import view.subviews.RecruitSubView;
 
 import java.awt.*;
@@ -88,7 +90,7 @@ public class RecruitState extends GameState {
     }
 
     private void recruitFromView(Model model) {
-        this.subView = new RecruitSubView(this, recruitMatrix);
+        this.subView = new RecruitSubView(recruitMatrix);
         model.setSubView(subView);
         print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
                 " adventurer" + (!recruitables.isEmpty() ? "s" : "") + " interested in joining your party.");
@@ -125,7 +127,34 @@ public class RecruitState extends GameState {
     }
 
     private void talkToCharacter(Model model) {
-        recruitMatrix.getSelectedElement().talkTo(model, this);
+        RecruitableCharacter current = recruitMatrix.getSelectedElement();
+        current.talkTo(model, this);
+        for (RecruitableCharacter rgc : recruitables) {
+            if (rgc != current) {
+                rgc.increaseAnnoyance();
+            }
+        }
+        for (RecruitableCharacter rgc : recruitables) {
+            if (rgc != current && rgc.noLongerWantsToJoin()) {
+                candidateSay(rgc, MyRandom.sample(List.of("This is taking forever... I'm out of here.",
+                        "I've got better things to do. See ya.", "That's it. I'm out.",
+                        "You know what? I've changed my mind.", "Too much talk, not enough action.")));
+                model.getLog().waitForAnimationToFinish();
+                println(rgc.getCharacter().getName() + " no longer wants to join the party.");
+                subView.clearAnimationsFor(rgc.getCharacter());
+                recruitables.remove(rgc);
+                recruitMatrix.remove(rgc);
+                return;
+            }
+        }
+        for (RecruitableCharacter rgc : recruitables) {
+            if (rgc != current && rgc.isGettingImpatient()) {
+                candidateSay(rgc, MyRandom.sample(List.of("This is taking forever...",
+                        "Bla bla bla...", "Come on, just hire me already.",
+                        "Hey. What about me?.", "Too much talk, when can we go?.")));
+                return;
+            }
+        }
     }
 
     private void recruitSelectedCharacter(Model model) {
@@ -134,7 +163,10 @@ public class RecruitState extends GameState {
         } else {
             RecruitableCharacter rgc = recruitMatrix.getSelectedElement();
             GameCharacter gc = rgc.getCharacter();
-            leaderSay("Want to join the party " + gc.getName() + "?");
+            leaderSay(MyRandom.sample(List.of("Want to join the party " + gc.getName() + "?",
+                    "Welcome aboard " + gc.getName() + "! If you're still interested.",
+                    "Are you in, " + gc.getFirstName() + "?",
+                    "The jobs yours " + gc.getFirstName() + ". Do you want it?")));
             newPartyMemberComment(rgc);
             model.getLog().waitForAnimationToFinish();
             recruitMatrix.remove(rgc);
@@ -151,7 +183,7 @@ public class RecruitState extends GameState {
                 Item it = rgc.getStartingItem();
                 ChooseStartingCharacterState.addSelectedItem(model, gc, it);
                 if (!gc.getEquipment().contains(it)) {
-                    println(gc.getName() + " contributed a " + makeStartingItemString(it) + " to the party.");
+                    println(gc.getName() + " contributed " + makeStartingItemString(it) + " to the party.");
                 }
             }
             model.getTutorial().leader(model);
@@ -159,17 +191,16 @@ public class RecruitState extends GameState {
     }
 
     public static String makeStartingItemString(Item it) {
-        String extra = "";
-        if (it instanceof Spell) {
-            extra = "spell, ";
-        } // TODO: Fix "an Obols (150)"
-        if (it instanceof HorseStartingItem) {
-            extra = "horse, ";
-        }
         if (it instanceof InventoryDummyItem) {
             return ((InventoryDummyItem)it).getDescription();
         }
-        return extra + it.getName();
+        String extra = "";
+        if (it instanceof Spell) {
+            extra = "a spell, ";
+        } else {
+            extra = MyStrings.aOrAn(it.getName()) + " ";
+        }
+        return  extra + it.getName();
     }
 
     private void newPartyMemberComment(RecruitableCharacter rgc) {

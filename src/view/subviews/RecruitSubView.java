@@ -16,14 +16,11 @@ import java.util.Map;
 
 public class RecruitSubView extends TopMenuSubView {
     private final SteppingMatrix<RecruitableCharacter> matrix;
-    private final RecruitState state;
     private Point cursorPosition;
     private PortraitAnimations portraitAnis = new SmallCalloutPortraitAnimations();
-    private Map<GameCharacter, RecruitInfo> knownInfo = new HashMap<>();
 
-    public RecruitSubView(RecruitState state, SteppingMatrix<RecruitableCharacter> recruitMatrix) {
+    public RecruitSubView(SteppingMatrix<RecruitableCharacter> recruitMatrix) {
         super(2, new int[]{X_OFFSET + 2, X_OFFSET+13, X_OFFSET+24});
-        this.state = state;
         this.matrix = recruitMatrix;
     }
 
@@ -139,18 +136,7 @@ public class RecruitSubView extends TopMenuSubView {
                 gc.getCharacter().getAppearance(), gc.getCharacter().hasCondition(VampirismCondition.class));
     }
 
-    public void improveKnownInfo(GameCharacter selected) {
-        if (!knownInfo.containsKey(selected)) {
-            knownInfo.put(selected, RecruitInfo.name);
-        } else {
-            knownInfo.put(selected, RecruitInfo.values()[knownInfo.get(selected).ordinal() + 1]);
-        }
-    }
-
-    public RecruitInfo getKnownInfo(GameCharacter selected) {
-        if (!knownInfo.containsKey(selected)) {
-            return RecruitInfo.none;
-        }
-        return knownInfo.get(selected);
+    public void clearAnimationsFor(GameCharacter character) {
+        portraitAnis.clearAnimationsFor(character);
     }
 }

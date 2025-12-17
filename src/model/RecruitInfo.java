@@ -72,14 +72,14 @@ public enum RecruitInfo {
             if (rgc.getStartingItem() != null) {
                 String startItemString = RecruitState.makeStartingItemString(rgc.getStartingItem());
                 state.candidateSay(rgc, firstPart + " " + conjunc +
-                        " I have " + MyStrings.aOrAn(startItemString) + " " + startItemString + ".");
+                        " I have " + startItemString + ".");
             } else {
                 state.candidateSay(rgc, firstPart + ".");
             }
             return true;
         }
         state.leaderSay(MyRandom.sample(List.of("Are you ready to be an adventurer?",
-                "So you think you're up for this?", "Are you a dependable party member?",
+                "So you think you're up for this?", "Do you think you would be a dependable party member?",
                 "Are you a team player?", "Do you get along well with others?",
                 "Do you do well in stressful situations?", "Are you ambitious?",
                 "Are you a good fighter?", "You think you can contribute to this party?",

@@ -47,4 +47,9 @@ public class HorseStartingItem extends InventoryDummyItem{
     public Horse getHorse() {
         return horse;
     }
+
+    @Override
+    public String getDescription() {
+        return "a horse, " + getName();
+    }
 }

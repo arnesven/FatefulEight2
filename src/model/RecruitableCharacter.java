@@ -1,7 +1,6 @@
 package model;
 
 import model.characters.GameCharacter;
-import model.classes.CharacterClass;
 import model.items.Item;
 import model.states.RecruitState;
 import util.MyRandom;
@@ -14,6 +13,7 @@ public class RecruitableCharacter implements Serializable {
     private int startingGold;
     private Item startingItem;
     private RecruitInfo info;
+    private int annoyance = 0;
 
     public RecruitableCharacter(GameCharacter gc, boolean randomStartingClass) {
         this.character = gc;
@@ -79,5 +79,17 @@ public class RecruitableCharacter implements Serializable {
 
     public static List<RecruitableCharacter> makeOneNamedRecruitable(GameCharacter chara) {
         return makeOneRecruitable(chara, RecruitInfo.name);
+    }
+
+    public void increaseAnnoyance() {
+        annoyance += 1;
+    }
+
+    public boolean noLongerWantsToJoin() {
+        return MyRandom.rollD6() + MyRandom.rollD6() + MyRandom.rollD6() + 1 < annoyance;
+    }
+
+    public boolean isGettingImpatient() {
+        return MyRandom.rollD6() + MyRandom.rollD6() + 1 < annoyance;
     }
 }

@@ -94,11 +94,13 @@ public class KidsWantFireworksEvent extends DailyEventState {
             invisibilityAbility.castYourself(model,
                     new CombatEvent(model, List.of(new TrainingDummyEnemy('A'))), caster, caster);
             if (caster.hasCondition(InvisibilityCondition.class)) {
+                model.getParty().benchPartyMembers(List.of(caster));
                 println("The kids are visibly stunned by the disappearance of " + caster.getFirstName() + ".");
                 showExplicitPortrait(model, kid1, "Kid 1");
                 portraitSay("Whoa! Where did " + heOrShe(caster.getGender()) + " go?");
                 println("After a little while, " + caster.getFirstName() + " becomes visible again, right behind the kids.");
                 caster.removeCondition(InvisibilityCondition.class);
+                model.getParty().unbenchAll();
                 partyMemberSay(caster, "Booo!");
                 showExplicitPortrait(model, kid4, "Kid 4");
                 portraitSay("Eeeeh!");
