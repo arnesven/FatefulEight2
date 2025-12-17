@@ -1,6 +1,7 @@
 package model.states.dailyaction.tavern;
 
 import model.Model;
+import model.RecruitableCharacter;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
@@ -26,7 +27,7 @@ public class RecruitNode extends DailyActionNode {
     public static final Sprite TABLE = new Sprite32x32("table", "world_foreground.png", 0x04,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN, MyColors.WHITE);
     private final List<Point> offsets;
-    private final ArrayList<GameCharacter> defaultGuys;
+    private final ArrayList<RecruitableCharacter> defaultGuys;
     private RecruitState recruitState;
 
     public RecruitNode(Model model) {
@@ -43,7 +44,7 @@ public class RecruitNode extends DailyActionNode {
             CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(randClass);
             GameCharacter gc = new GameCharacter("", "", randApp.getRace(),
                     randClass, randApp, Classes.NO_OTHER_CLASSES);
-            defaultGuys.add(gc);
+            defaultGuys.add(new RecruitableCharacter(gc));
         }
     }
 
@@ -74,7 +75,7 @@ public class RecruitNode extends DailyActionNode {
         model.getScreenHandler().put(p.x, p.y, getBackgroundSprite());
         Sprite fg = getForegroundSprite();
         model.getScreenHandler().register("objectforeground", p, fg);
-        Set<GameCharacter> recruitables = new HashSet<>(model.getLingeringRecruitables());
+        Set<RecruitableCharacter> recruitables = new HashSet<>(model.getLingeringRecruitables());
         if (this.recruitState != null) {
              recruitables.addAll(recruitState.getRecruitables());
         }
@@ -82,7 +83,8 @@ public class RecruitNode extends DailyActionNode {
             recruitables.addAll(defaultGuys);
         }
         int i = 0;
-        for (GameCharacter gc : recruitables) {
+        for (RecruitableCharacter rgc : recruitables) {
+            GameCharacter gc = rgc.getCharacter();
             if (!model.getParty().getPartyMembers().contains(gc)) {
                 AvatarSprite avatarSprite = gc.getAvatarSprite();
                 avatarSprite.synch();

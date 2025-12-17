@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
@@ -205,7 +207,7 @@ public class HorseRaceCup extends TournamentEvent {
             leaderSay("Oh really?");
             portraitSay("Yes. I'm a good racer, but I've been longing to join up with a party and travel the world.");
             winner.setEquipment(new Equipment(new ShortSword(), new JustClothes(), new SuedeBoots()));
-            RecruitState recruit = new RecruitState(model, List.of(winner));
+            RecruitState recruit = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(winner, RecruitInfo.name));
             recruit.run(model);
             if (model.getParty().getPartyMembers().contains(winner)) {
                 removePortraitSubView(model);

@@ -1,12 +1,15 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.RecruitState;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FriendEvent extends DailyEventState {
@@ -27,11 +30,12 @@ public class FriendEvent extends DailyEventState {
             println(" sets own about its own affairs.");
         } else {
             println(" expresses a wish to join the party.");
-            list = List.of(MyRandom.sample(list));
-            RecruitState recruit = new RecruitState(model, list);
-            list.get(0).setLevel(2);
-            list.get(0).setRandomStartingClass();
-            recruit.setStartingGoldEnabled(false);
+            RecruitableCharacter candidate = new RecruitableCharacter(MyRandom.sample(list));
+            candidate.setStartingGold(0);
+            candidate.setInfo(RecruitInfo.name);
+            List<RecruitableCharacter> rcList = new ArrayList<>(List.of(candidate));
+            RecruitState.setRandomLevels(model, rcList);
+            RecruitState recruit = new RecruitState(model, rcList);
             recruit.run(model);
         }
     }

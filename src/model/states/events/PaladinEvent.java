@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
@@ -83,7 +85,7 @@ public class PaladinEvent extends DailyEventState {
                         GameCharacter paladin2 = new GameCharacter(randomFirstName(paladin.getGender()), randomLastName(),
                                 paladin.getRace(), Classes.PAL, portrait, makeRandomClassSet(Classes.PAL), paladin.getEquipment());
                         paladin2.setLevel((int)Math.ceil(calculateAverageLevel(model)));
-                        new RecruitState(model, List.of(paladin2));
+                        new RecruitState(model, RecruitableCharacter.makeOneRecruitable(paladin2, RecruitInfo.none));
                     } else {
                         changeClass(model);
                     }

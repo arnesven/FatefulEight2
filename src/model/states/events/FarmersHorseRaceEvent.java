@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
@@ -73,11 +74,9 @@ public class FarmersHorseRaceEvent extends DailyEventState {
                 portraitSay("Can I become an adventurer right now? Can I come with you?");
                 print("Let the kid join your party? (Y/N) ");
                 if (yesNoInput()) {
-                    List<GameCharacter> list = new ArrayList<>();
-                    list.add(farmerCharacter);
-                    list.get(0).setLevel(0);
-                    list.get(0).setClass(Classes.None);
-                    RecruitState recruitState = new RecruitState(model, list);
+                    farmerCharacter.setLevel(0);
+                    farmerCharacter.setClass(Classes.None);
+                    RecruitState recruitState = new RecruitState(model, RecruitableCharacter.makeOneNamedRecruitable(farmerCharacter));
                     recruitState.run(model);
                     if (model.getParty().getPartyMembers().contains(farmerCharacter)) {
                         leaderSay("Welcome to the party kid.");

@@ -1,6 +1,8 @@
 package model.quests;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -321,7 +323,7 @@ public class VampiresLairQuest extends MainQuest {
     private void possiblyRecruitCaid(Model model, QuestState state) {
         GameCharacter caid = model.getMainStory().getCaidCharacter();
         caid.setLevel((int) Math.ceil(GameState.calculateAverageLevel(model)));
-        RecruitState recruit = new RecruitState(model, List.of(caid));
+        RecruitState recruit = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(caid, RecruitInfo.all));
         recruit.run(model);
         if (model.getParty().getPartyMembers().contains(caid)) {
             state.leaderSay("Good to have you with us Caid.");

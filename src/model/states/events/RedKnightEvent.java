@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.special.RedKnightCharacter;
 import model.enemies.RedKnightEnemy;
@@ -126,7 +127,7 @@ public class RedKnightEvent extends DailyEventState {
         portraitSay("A swear a solemn vow never to leave your side! I shall be with you through wind and rain. " +
                 "Through mishaps and hardships. Only by the disgrace of combat shall I be banished from your service!");
         leaderSay("I can't believe this guy...");
-        new RecruitState(model, List.of(redKnightChar)).run(model);
+        new RecruitState(model, List.of(new RecruitableCharacter(redKnightChar))).run(model);
 
     }
 

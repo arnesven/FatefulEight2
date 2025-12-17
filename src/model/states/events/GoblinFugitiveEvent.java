@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.special.GoblinAppearance;
 import model.characters.special.GoblinCharacter;
@@ -96,7 +98,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
                 "In case my gang comes back. Do you mind if I team up with you?");
         waitForReturn();
         goblinChar.setLevel((int)Math.max(1, Math.floor(GameState.calculateAverageLevel(model))));
-        RecruitState recruitState = new RecruitState(model, List.of(goblinChar));
+        RecruitState recruitState = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(goblinChar, RecruitInfo.profession));
         recruitState.run(model);
         if (model.getParty().getPartyMembers().contains(goblinChar)) {
             portraitSay("Wheeee! I promise I can be useful!");

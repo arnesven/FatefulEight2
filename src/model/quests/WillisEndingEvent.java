@@ -1,6 +1,8 @@
 package model.quests;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.states.DailyEventState;
@@ -43,7 +45,7 @@ public class WillisEndingEvent extends DailyEventState {
         waitForReturn();
         GameCharacter willis = model.getMainStory().getWillisCharacter();
         willis.setLevel((int) Math.ceil(GameState.calculateAverageLevel(model)));
-        RecruitState recruit = new RecruitState(model, List.of(willis));
+        RecruitState recruit = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(willis, RecruitInfo.profession));
         recruit.run(model);
         removePortraitSubView(model);
         setCurrentTerrainSubview(model);

@@ -600,7 +600,7 @@ public class Model {
         gameData.party.setStartingPosition(position);
     }
 
-    public List<GameCharacter> getLingeringRecruitables() {
+    public List<RecruitableCharacter> getLingeringRecruitables() {
         return gameData.lingeringRecruitables;
     }
 

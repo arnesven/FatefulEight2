@@ -153,4 +153,8 @@ public class OtherPartySubView extends TopMenuSubView {
                 gc.hasCondition(VampirismCondition.class));
         return pair.second;
     }
+
+    public boolean isInfoRevealed(GameCharacter character) {
+        return infoRevealed.contains(character);
+    }
 }

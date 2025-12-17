@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -234,8 +236,9 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         model.getLog().waitForAnimationToFinish();
         friend.setClass(classes[choice]);
         friend.setLevel((int)Math.ceil(calculateAverageLevel(model)) + 1);
-        RecruitState recruit = new RecruitState(model, List.of(friend));
-        recruit.setStartingGold(friend, 50);
+        List<RecruitableCharacter> rcList = RecruitableCharacter.makeOneRecruitable(friend, RecruitInfo.name);
+        rcList.getFirst().setStartingGold(50);
+        RecruitState recruit = new RecruitState(model, rcList);
         recruit.run(model);
         setCurrentTerrainSubview(model);
         if (model.getParty().getPartyMembers().contains(friend)) {

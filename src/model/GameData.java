@@ -37,7 +37,7 @@ public class GameData implements Serializable {
     public int worldState = WorldBuilder.ORIGINAL;
     public List<MapObject> mapObjects = new ArrayList<>();
     public WarHandler warHandler = new WarHandler();
-    public List<GameCharacter> lingeringRecruitables = new ArrayList<>();
+    public List<RecruitableCharacter> lingeringRecruitables = new ArrayList<>();
     public Date loadTime = new Date();
     public long milliSecondsPlayed = 0;
 

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.items.Equipment;
@@ -36,12 +37,11 @@ public class FarmersChildEvent extends FarmerEvent {
                 " ready to take on the world, but an apprentice may turn out to be a" +
                 "liability. Are you interested? (Y/N) ");
         if (yesNoInput()) {
-            List<GameCharacter> list = new ArrayList<>();
-            list.add(MyRandom.sample(model.getAvailableCharactersByGender(gender)));
-            list.get(0).setLevel(0);
-            list.get(0).setClass(Classes.None);
-            list.get(0).setEquipment(new Equipment());
-            RecruitState recruitState = new RecruitState(model, list);
+            GameCharacter gc = MyRandom.sample(model.getAvailableCharactersByGender(gender));
+            gc.setLevel(0);
+            gc.setClass(Classes.None);
+            gc.setEquipment(new Equipment());
+            RecruitState recruitState = new RecruitState(model, RecruitableCharacter.makeOneNamedRecruitable(gc));
             recruitState.run(model);
             setCurrentTerrainSubview(model);
         }

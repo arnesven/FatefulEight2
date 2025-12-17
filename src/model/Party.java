@@ -66,7 +66,7 @@ public class Party implements Serializable {
     private Loan currentLoan = null;
     private final HorseHandler horseHandler = new HorseHandler();
     private DogHorse dog = null;
-    private List<GameCharacter> recruitmentPersistence = null;
+    private List<RecruitableCharacter> recruitmentPersistence = null;
     private boolean seminarHeld = false;
     private int notoriety = 0;
     private int carryingCapInKilos = 0;
@@ -794,11 +794,11 @@ public class Party implements Serializable {
         return horseHandler.size() < partyMembers.size() + 2;
     }
 
-    public List<GameCharacter> getRecruitmentPersistence() {
+    public List<RecruitableCharacter> getRecruitmentPersistence() {
         return recruitmentPersistence;
     }
 
-    public void setRecruitmentPersistence(List<GameCharacter> recruitables) {
+    public void setRecruitmentPersistence(List<RecruitableCharacter> recruitables) {
         this.recruitmentPersistence = recruitables;
     }
 

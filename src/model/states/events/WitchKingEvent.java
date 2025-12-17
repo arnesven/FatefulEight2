@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.special.WitchKingCharacter;
 import model.classes.Skill;
@@ -84,7 +86,7 @@ public class WitchKingEvent extends DailyEventState {
             portraitSay("Would it be to presumptuous of me to ask to join you in your travels?");
             waitForReturn();
             witchKingChar.setLevel((int)Math.max(1, Math.floor(GameState.calculateAverageLevel(model))));
-            RecruitState recruitState = new RecruitState(model, List.of(witchKingChar));
+            RecruitState recruitState = new RecruitState(model, RecruitableCharacter.makeOneNamedRecruitable(witchKingChar));
             recruitState.run(model);
             if (model.getParty().getPartyMembers().contains(witchKingChar)) {
                 portraitSay("Another adventure awaits...");

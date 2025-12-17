@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.states.DailyEventState;
@@ -33,7 +35,7 @@ public class WhiteKnightEvent extends DailyEventState {
         if (pala != null) {
             pala.setLevel(2);
             println("The paladin offers to join your party.");
-            RecruitState recruit = new RecruitState(model, List.of(pala));
+            RecruitState recruit = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(pala, RecruitInfo.none));
             recruit.run(model);
         }
         println("The paladin offers to instruct you in the way of his order, ");

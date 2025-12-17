@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
@@ -26,11 +28,9 @@ public class WoundedAdventurerEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
-        List<GameCharacter> list = new ArrayList<>();
-        list.add(MyRandom.sample(model.getAvailableCharactersByGender(gender)));
-        list.get(0).setLevel(3);
-        list.get(0).setRandomStartingClass();
-        list.get(0).setEquipment(new Equipment(model.getItemDeck().getRandomWeapon(), model.getItemDeck().getRandomApparel(), null));
+        GameCharacter guy = MyRandom.sample(model.getAvailableCharactersByGender(gender));
+        guy.setLevel(3);
+        guy.setEquipment(new Equipment(model.getItemDeck().getRandomWeapon(), model.getItemDeck().getRandomApparel(), null));
 
         showSilhouettePortrait(model, "Wounded Adventurer");
         println("The party finds an adventurer sitting on the ground. " +
@@ -75,7 +75,8 @@ public class WoundedAdventurerEvent extends DailyEventState {
                     println("The wounded adventurer recovered!");
                     printQuote("Wounded Adventurer", "Thank you for helping me. I'll gladly offer my services!");
                     model.getLog().waitForAnimationToFinish();
-                    RecruitState recruitState = new RecruitState(model, list);
+                    RecruitState recruitState = new RecruitState(model,
+                            RecruitableCharacter.makeOneRecruitable(guy, RecruitInfo.none));
                     recruitState.run(model);
                     break;
                 }

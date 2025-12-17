@@ -2,6 +2,7 @@ package model.states;
 
 import model.GameStatistics;
 import model.Model;
+import model.RecruitableCharacter;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
@@ -100,10 +101,11 @@ public abstract class DailyEventState extends GameState {
             println("n adventurer who offers to join your party.");
             Collections.shuffle(list);
             while (list.size() > 1) {
-                list.remove(0);
+                list.removeFirst();
             }
-            list.get(0).setRandomStartingClass();
-            RecruitState recruitState = new RecruitState(model, list);
+            List<RecruitableCharacter> recruitables = MyLists.transform(list, RecruitableCharacter::new);
+            RecruitState.setRandomLevels(model, recruitables);
+            RecruitState recruitState = new RecruitState(model, recruitables);
             recruitState.run(model);
         }
     }

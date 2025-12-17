@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.combat.conditions.BlessedCondition;
@@ -182,10 +184,10 @@ public class SecretGardenEvent extends DailyEventState {
             }
             GameCharacter chara = MyRandom.sample(list);
             chara.setLevel(4);
-            chara.setRandomStartingClass();
             SubView subView = model.getSubView();
-            RecruitState recruitState = new RecruitState(model, List.of(chara));
-            recruitState.setStartingGoldEnabled(true);
+            List<RecruitableCharacter> rcList = RecruitableCharacter.makeOneRecruitable(chara, RecruitInfo.none);
+            rcList.getFirst().setStartingGold(0);
+            RecruitState recruitState = new RecruitState(model, rcList);
             recruitState.run(model);
             model.setSubView(subView);
         }

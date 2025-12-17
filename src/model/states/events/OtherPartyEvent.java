@@ -2,6 +2,8 @@ package model.states.events;
 
 import model.Model;
 import model.Party;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.classes.*;
 import model.classes.normal.BardClass;
@@ -14,6 +16,7 @@ import model.items.Item;
 import model.states.DailyEventState;
 import model.states.RecruitState;
 import model.states.ShopState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.CollapsingTransition;
 import view.subviews.OtherPartySubView;
@@ -249,7 +252,7 @@ public class OtherPartyEvent extends DailyEventState {
             unwilling.removeIf((GameCharacter gc) -> attitudeMap.get(gc) < 0);
             if (unwilling.size() > 0) {
                 otherPartyMemberSay(unwilling.get(0), "Why not. You guys seem okay.");
-                RecruitState state = new RecruitState(model, unwilling);
+                RecruitState state = new RecruitState(model, makeRecruitableList(unwilling));
                 state.run(model);
             } else {
                 otherPartyMemberSay(otherPartyMembers.get(0), "No, I think I'll find my own way.");
@@ -276,7 +279,7 @@ public class OtherPartyEvent extends DailyEventState {
             if (unwilling.size() > 0) {
                 otherPartyMemberSay(unwilling.get(0), MyRandom.sample(List.of("Why not. You guys seem okay.",
                         "Sure, why not.", "I don't have anything better to do.")));
-                RecruitState state = new RecruitState(model, unwilling);
+                RecruitState state = new RecruitState(model, makeRecruitableList(unwilling));
                 state.run(model);
             } else {
                 otherPartyMemberSay(otherPartyMembers.get(0), "No, I think I'll find my own way.");
@@ -455,7 +458,7 @@ public class OtherPartyEvent extends DailyEventState {
                     "party (Persuade " + result.asString() + ").");
             if (result.isSuccessful()) {
                 attitudeMap.put(leader, attitudeMap.get(leader) - 20);
-                RecruitState state = new RecruitState(model, List.of(who));
+                RecruitState state = new RecruitState(model, makeRecruitableList(List.of(who)));
                 state.run(model);
                 model.setSubView(subView);
                 if (model.getParty().getPartyMembers().contains(who)) {
@@ -470,6 +473,16 @@ public class OtherPartyEvent extends DailyEventState {
                         "party members.");
             }
         }
+    }
+
+    private List<RecruitableCharacter> makeRecruitableList(List<GameCharacter> who) {
+        List<RecruitableCharacter> rcList = MyLists.transform(who, gc ->
+        {
+            RecruitableCharacter rgc = new RecruitableCharacter(gc, false);
+            rgc.setInfo(subView.isInfoRevealed(rgc.getCharacter()) ? RecruitInfo.profession : RecruitInfo.none);
+            return rgc;
+        });
+        return rcList;
     }
 
     private String getReply(int attitude) {

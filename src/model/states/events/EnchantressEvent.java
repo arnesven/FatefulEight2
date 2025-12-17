@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitInfo;
+import model.RecruitableCharacter;
 import model.achievements.Achievement;
 import model.achievements.GameAchievements;
 import model.characters.PersonalityTrait;
@@ -359,7 +361,7 @@ public class EnchantressEvent extends DailyEventState {
         leaderSay("Not particularly surprising.");
         portraitSay("Oh dear... this is what I was afraid of. I'm sorry but I'll have to use my spell again.");
         leaderSay("No, there's another solution.");
-        new RecruitState(model, List.of(enchantress)).run(model);
+        new RecruitState(model, RecruitableCharacter.makeOneRecruitable(enchantress, RecruitInfo.profession)).run(model);
         if (model.getParty().getPartyMembers().contains(enchantress)) {
             removePortraitSubView(model);
             leaderSay("Come with us. I don't think the villagers will want to tussle with us.");

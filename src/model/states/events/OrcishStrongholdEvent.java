@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
@@ -18,6 +19,7 @@ import model.races.OrcAppearance;
 import model.states.DailyEventState;
 import model.states.RecruitState;
 import model.states.ShopState;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
@@ -154,7 +156,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
                 println("You have rescued a prisoner!");
                 printQuote(list.get(0).getName(), "Thank you for rescuing me. I'll gladly offer my services!");
             }
-            RecruitState recruitState = new RecruitState(model, list);
+            RecruitState recruitState = new RecruitState(model, MyLists.transform(list, RecruitableCharacter::new));
             recruitState.run(model);
         }
         println("You leave the orcish stronghold.");

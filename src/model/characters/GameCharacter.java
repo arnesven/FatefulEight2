@@ -3,6 +3,7 @@ package model.characters;
 import control.GameExitedException;
 import model.characters.appearance.PortraitClothing;
 import model.characters.appearance.SkeletonAppearance;
+import model.classes.Classes;
 import model.combat.*;
 import model.Model;
 import model.Party;
@@ -663,9 +664,11 @@ public class GameCharacter extends Combatant {
     }
 
     public void setRandomStartingClass() {
-        setClass(MyRandom.sample(Arrays.asList(classes)));
-        this.equipment = charClass.getDefaultEquipment();
-        super.setCurrentHp(getMaxHP());
+        if (classes != Classes.NO_OTHER_CLASSES) {
+            setClass(MyRandom.sample(Arrays.asList(classes)));
+            this.equipment = charClass.getDefaultEquipment();
+            super.setCurrentHp(getMaxHP());
+        }
     }
 
     public void setEquipment(Equipment equipment) {
