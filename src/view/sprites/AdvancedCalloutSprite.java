@@ -79,6 +79,7 @@ public class AdvancedCalloutSprite extends CalloutSprite {
                 maxWidth = s.length();
             }
         }
+        maxWidth = Math.max(maxWidth, 8);
         for (int i = 0; i < this.textRows.length; ++i) {
             this.textRows[i] = MyStrings.padRight(this.textRows[i], ' ', maxWidth);
         }

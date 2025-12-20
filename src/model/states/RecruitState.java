@@ -3,10 +3,8 @@ package model.states;
 import model.*;
 import model.characters.*;
 import model.headquarters.TransferCharacterHeadquartersAction;
-import model.items.HorseStartingItem;
 import model.items.InventoryDummyItem;
 import model.items.Item;
-import model.items.accessories.RedRing;
 import model.items.spells.Spell;
 import model.map.UrbanLocation;
 import model.races.Dwarf;
@@ -48,6 +46,7 @@ public class RecruitState extends GameState {
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         model.getParty().setRecruitmentPersistence(recruitables);
+        assertNoDuplicates(model);
     }
 
     public RecruitState(Model model, List<RecruitableCharacter> preSelectedRecruitables) {
@@ -57,6 +56,25 @@ public class RecruitState extends GameState {
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
+        assertNoDuplicates(model);
+    }
+
+    private void assertNoDuplicates(Model model) {
+        if (MyLists.any(recruitables, rgc -> model.getParty().getPartyMembers().contains(rgc.getCharacter()))) {
+            System.err.println("Lingering recruitables:");
+            for (RecruitableCharacter rgc : model.getLingeringRecruitables()) {
+                System.err.println(rgc.getCharacter().getName());
+            }
+            System.err.println("Character Persistance:");
+            for (RecruitableCharacter rgc : model.getParty().getRecruitmentPersistence()) {
+                System.err.println(rgc.getCharacter().getName());
+            }
+            System.err.println("All Characters:");
+            for (GameCharacter gc : model.getAllCharacters()) {
+                System.err.println(gc.getName());
+            }
+            throw new IllegalStateException("Party member appeared as recruitable!");
+        }
     }
 
     public static void setRandomLevels(Model model, List<RecruitableCharacter> recruitables) {
@@ -119,6 +137,7 @@ public class RecruitState extends GameState {
                 }
             }
         } while (true);
+        model.getLingeringRecruitables().clear();
         for (RecruitableCharacter rgc : recruitMatrix.getElementList()) {
             if (!model.getLingeringRecruitables().contains(rgc)) {
                 model.getLingeringRecruitables().add(rgc);
@@ -194,13 +213,7 @@ public class RecruitState extends GameState {
         if (it instanceof InventoryDummyItem) {
             return ((InventoryDummyItem)it).getDescription();
         }
-        String extra = "";
-        if (it instanceof Spell) {
-            extra = "a spell, ";
-        } else {
-            extra = MyStrings.aOrAn(it.getName()) + " ";
-        }
-        return  extra + it.getName();
+        return GameState.getNameWithArticle(it);
     }
 
     private void newPartyMemberComment(RecruitableCharacter rgc) {

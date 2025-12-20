@@ -39,7 +39,7 @@ public class DollyEvent extends DailyEventState {
         didSay = didSay || randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(), MyRandom.sample(List.of("Typical kids...",
                 "This really isn't any of our business.")));
         didSay = didSay || randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(), "Hey kid, wanna see a magic trick?");
-
+        model.getLog().waitForAnimationToFinish();
         int choice = multipleOptionArrowMenu(model, 24, 24, List.of("Search for dolly", "Buy dolly", "Craft dolly", "Walk away"));
         if (choice == 0) {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 8);

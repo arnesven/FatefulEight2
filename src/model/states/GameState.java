@@ -8,11 +8,13 @@ import model.characters.appearance.AdvancedAppearance;
 import model.classes.*;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
+import model.items.Item;
 import model.items.spells.Spell;
 import model.races.Race;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
+import util.MyStrings;
 import view.LogView;
 import view.PartyAttitudesDialog;
 import view.subviews.*;
@@ -373,5 +375,16 @@ public abstract class GameState implements GameStateConstants {
             model.getLog().addAnimated(LogView.GOLD_COLOR + "You have unlocked an achievement '" +
                     name + "'!\n" + LogView.DEFAULT_COLOR);
         }
+    }
+
+    // TODO: Move to Item, (breaks save)
+    public static String getNameWithArticle(Item it) {
+        String extra = "";
+        if (it instanceof Spell) {
+            extra = "a spell, ";
+        } else {
+            extra = MyStrings.aOrAn(it.getName()) + " ";
+        }
+        return  extra + it.getName();
     }
 }

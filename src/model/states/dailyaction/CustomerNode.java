@@ -68,11 +68,7 @@ public class CustomerNode extends DailyActionNode {
                 return null;
             }
 
-            String thing = itemName;
-            if (!itemName.endsWith("s")) {
-                 thing = MyStrings.aOrAn(itemName) + " " + itemName;
-            }
-            String line = "I'm looking for " + thing +
+            String line = "I'm looking for " + GameState.getNameWithArticle(customer.getItem()) +
                     ", but this shop never gets it in stock.";
 
             customerSay(line);
