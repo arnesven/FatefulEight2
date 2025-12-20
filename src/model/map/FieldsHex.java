@@ -27,7 +27,7 @@ public class FieldsHex extends WorldHex {
     }
 
     @Override
-    protected SubView getSubView() {
+    protected SubView getSubView(Model model) {
         return subView;
     }
 

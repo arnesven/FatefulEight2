@@ -1,5 +1,6 @@
 package model.map.locations;
 
+import model.Model;
 import model.map.HexLocation;
 import view.GameView;
 import view.MyColors;
@@ -39,7 +40,7 @@ public class GrassCorner extends HexLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return subView;
     }
 

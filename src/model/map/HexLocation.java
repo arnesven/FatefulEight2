@@ -1,7 +1,6 @@
 package model.map;
 
 import model.Model;
-import model.Party;
 import model.actions.DailyAction;
 import model.states.DailyActionState;
 import model.states.DailyEventState;
@@ -14,7 +13,6 @@ import view.MyColors;
 import view.help.HelpDialog;
 import view.sprites.Sprite16x16;
 import view.subviews.SubView;
-import view.subviews.ImageSubView;
 import view.ScreenHandler;
 import view.sprites.Sprite;
 
@@ -62,7 +60,7 @@ public abstract class HexLocation implements Serializable {
 
     public boolean hasLodging() { return false; }
 
-    public SubView getImageSubView() { return null; }
+    public SubView getImageSubView(Model model) { return null; }
 
     public boolean hasDailyActions() {
         return false;

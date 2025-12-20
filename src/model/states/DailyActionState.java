@@ -29,7 +29,7 @@ public class DailyActionState extends GameState {
             menuPos = new Point(SubView.X_OFFSET, SubView.Y_OFFSET);
             menuAnchor = DailyActionMenu.NORTH_WEST;
         } else {
-            CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView());
+            CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView(model));
             MyPair<Point, Integer> pointAndAnchor = model.getCurrentHex().getDailyActionMenuPositionAndAnchor();
             menuPos = pointAndAnchor.first;
             menuAnchor = pointAndAnchor.second;

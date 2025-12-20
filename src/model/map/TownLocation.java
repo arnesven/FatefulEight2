@@ -2,9 +2,8 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.enemies.Enemy;
+import model.TimeOfDay;
 import model.headquarters.Headquarters;
-import model.mainstory.FugitiveTownEvent;
 import model.states.*;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
@@ -12,7 +11,6 @@ import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.events.*;
 import model.states.warehouse.WarehouseEvent;
 import util.MyRandom;
-import util.MyTriplet;
 import view.GameView;
 import view.MyColors;
 import view.help.HelpDialog;
@@ -23,7 +21,6 @@ import view.sprites.Sprite32x32;
 import view.subviews.*;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TownLocation extends HexLocation implements UrbanLocation {
@@ -33,6 +30,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     private final boolean isCoastal;
     private final Sprite QUEST_SPRITE = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+    private final ImageSubView subViewNight;
     private Headquarters headquarters;
 
     public TownLocation(String townName, String lordName, boolean isCoastal) {
@@ -40,6 +38,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
         this.townName = townName;
         this.lordName = lordName;
         subView = new ImageSubView("town", "TOWN", "Town of " + townName, true);
+        subViewNight = new ImageSubView("townatnight", "TOWN", "Town of " + townName, true);
         this.isCoastal = isCoastal;
         headquarters = Headquarters.makeRandomHeadquarters(this);
     }
@@ -65,9 +64,12 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
+        if (model.getTimeOfDay() == TimeOfDay.EVENING ||model.getTimeOfDay() == TimeOfDay.NIGHT) {
+            return subViewNight;
+        }
         return subView;
-                }
+    }
 
     @Override
     public void travelTo(Model model) { }

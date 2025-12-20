@@ -4,16 +4,13 @@ import model.Model;
 import model.SteppingMatrix;
 import model.journal.PartSixStoryPart;
 import model.journal.StoryPart;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.mainstory.GainSupportOfVikingsTask;
-import model.map.HexLocation;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.EasternPalaceDailyActionState;
 import model.states.dailyaction.VikingVillageDailyActionState;
 import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.events.*;
@@ -44,7 +41,7 @@ public class VikingVillageLocation extends TownishLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return subView;
     }
 

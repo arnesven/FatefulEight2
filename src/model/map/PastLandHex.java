@@ -2,7 +2,6 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
-import model.states.events.NoEventState;
 import model.states.events.QuadGoonsEvent;
 import view.MyColors;
 import view.sprites.PastLandHexSprite;
@@ -69,8 +68,8 @@ public abstract class PastLandHex extends WorldHex {
     }
 
     @Override
-    protected SubView getSubView() {
-        return template.getSubView();
+    protected SubView getSubView(Model model) {
+        return template.getSubView(model);
     }
 
     @Override

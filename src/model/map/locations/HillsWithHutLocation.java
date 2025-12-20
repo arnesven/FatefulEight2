@@ -44,8 +44,8 @@ public class HillsWithHutLocation extends HillsLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
-        return hillsHex.getImageSubView();
+    public SubView getImageSubView(Model model) {
+        return hillsHex.getImageSubView(model);
     }
 
     @Override

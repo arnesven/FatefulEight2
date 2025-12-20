@@ -74,7 +74,7 @@ public class TombLocation extends HexLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return subView;
     }
 

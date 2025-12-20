@@ -80,7 +80,7 @@ public class MindMachineQuest extends MainQuest {
         TeleportBetweenWorldsTransition.transition(model, mapSubView, destinationPosition);
         state.println("Press enter to continue.");
         state.waitForReturn();
-        CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView());
+        CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView(model));
     }
 
     @Override

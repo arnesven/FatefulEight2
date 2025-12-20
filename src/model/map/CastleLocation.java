@@ -4,7 +4,6 @@ import model.Model;
 import model.SteppingMatrix;
 import model.achievements.Achievement;
 import model.headquarters.Headquarters;
-import model.mainstory.FugitiveTownEvent;
 import model.races.Race;
 import model.states.AcceptDeliveryEvent;
 import model.states.DailyEventState;
@@ -55,7 +54,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
         return HexLocationSprite.make("castlelower", 0xD0, MyColors.BLACK, MyColors.LIGHT_GRAY, this.castleColor);
     }
 
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return subView;
     }
 

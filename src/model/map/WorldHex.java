@@ -267,18 +267,18 @@ public abstract class WorldHex {
         return false;
     }
 
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         if (hexLocation != null && !hexLocation.isDecoration()) {
-            return hexLocation.getImageSubView();
+            return hexLocation.getImageSubView(model);
         }
-        return getSubView();
+        return getSubView(model);
     }
 
     public boolean hasRoad() {
         return roads != 0;
     }
 
-    protected abstract SubView getSubView();
+    protected abstract SubView getSubView(Model model);
 
     private DailyEventState generateOnRoadEvent(Model model) {
         int dieRoll = MyRandom.rollD10();

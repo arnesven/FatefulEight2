@@ -19,7 +19,7 @@ public class CryptEvent extends DailyEventState {
 
     public CryptEvent(Model model) {
         super(model);
-        this.caveSubView = new CaveHex(0, 0).getImageSubView();
+        this.caveSubView = new CaveHex(0, 0).getImageSubView(model);
     }
 
     @Override

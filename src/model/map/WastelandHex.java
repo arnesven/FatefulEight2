@@ -71,7 +71,7 @@ public class WastelandHex extends WorldHex {
     }
 
     @Override
-    protected SubView getSubView() {
+    protected SubView getSubView(Model model) {
         return subView;
     }
 

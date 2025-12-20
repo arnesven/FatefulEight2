@@ -97,7 +97,7 @@ public class TeleportSpell extends ImmediateSpell {
         TeleportingTransition.transition(model, mapSubView, position, inCaves);
         state.println("Press enter to continue.");
         state.waitForReturn();
-        CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView());
+        CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView(model));
     }
 
     private void markLocation(Model model, GameState state, GameCharacter caster) {

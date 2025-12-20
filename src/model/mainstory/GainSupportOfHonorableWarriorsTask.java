@@ -522,7 +522,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         public boolean performTask(Model model, VisitMikosHomeEvent event) {
             event.println("You head out of town and up into the hills. After a little while you " +
                     "spot the bandit camp Miko was talking about.");
-            CollapsingTransition.transition(model, new HillsHex(0, 0, 0).getImageSubView());
+            CollapsingTransition.transition(model, new HillsHex(0, 0, 0).getImageSubView(model));
             return event.runBanditCombat(model);
         }
     }

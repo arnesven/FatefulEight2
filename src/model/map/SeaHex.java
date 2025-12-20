@@ -61,7 +61,7 @@ public class SeaHex extends WorldHex {
     }
 
     @Override
-    protected SubView getSubView() {
+    protected SubView getSubView(Model model) {
         return SUB_VIEW;
     }
 

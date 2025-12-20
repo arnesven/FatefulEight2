@@ -2,9 +2,6 @@ package model.map.locations;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.headquarters.Headquarters;
-import model.map.HexLocation;
-import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.beangame.BeanGameEvent;
@@ -38,7 +35,7 @@ public class PirateHavenLocation extends TownishLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return subView;
     }
 

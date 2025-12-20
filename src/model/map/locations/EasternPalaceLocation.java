@@ -55,7 +55,7 @@ public class EasternPalaceLocation extends TownishLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return subView;
     }
 

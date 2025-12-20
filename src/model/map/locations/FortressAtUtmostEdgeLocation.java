@@ -44,7 +44,7 @@ public class FortressAtUtmostEdgeLocation extends HexLocation {
     }
 
     @Override
-    public SubView getImageSubView() {
+    public SubView getImageSubView(Model model) {
         return IMAGE_SUB_VIEW;
     }
 
