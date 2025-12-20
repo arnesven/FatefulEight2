@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VampireProwlNightEvent extends NightTimeEvent {
+    private static final int NPC_VAMPIRE_POWER = 3;
     public static final int DETECT_VAMPIRE_PERCEPTION_DIFFICULTY = 6;
     private final boolean inTavern;
     private final GameCharacter vampireCharacter;
@@ -48,7 +49,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
         print("Press enter to continue...");
         waitForReturn();
         if (failsToDetectVampire(model, this, victim)) {
-            makeVampire(model, victim);
+            makeVampire(model, victim, NPC_VAMPIRE_POWER);
         } else {
             model.getParty().forceEyesClosed(victim, false);
             removePortraitSubView(model);
@@ -88,7 +89,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
                 }
                 println(victim.getFirstName() + " closes "+ hisOrHer(victim.getGender()) +
                         " eyes and awaits the vampire's embrace.");
-                makeVampire(model, victim);
+                makeVampire(model, victim, NPC_VAMPIRE_POWER);
             }
         }
         model.getLog().waitForAnimationToFinish();
@@ -104,11 +105,11 @@ public class VampireProwlNightEvent extends NightTimeEvent {
         return result.isFailure();
     }
 
-    protected void makeVampire(Model model, GameCharacter victim) {
-        makeCharacterIntoVampire(model, this, victim, true);
+    protected void makeVampire(Model model, GameCharacter victim, int vampirePower) {
+        makeCharacterIntoVampire(model, this, victim, vampirePower);
     }
 
-    public static void makeCharacterIntoVampire(Model model, GameState state, GameCharacter victim, boolean random) {
+    public static void makeCharacterIntoVampire(Model model, GameState state, GameCharacter victim, int vampirePower) {
         state.println("A sharp pain in the neck! Then, just as suddenly, it is gone and a strange, " +
                 "but pleasant sensation falls upon " + victim.getFirstName() + ". " + heOrSheCap(victim.getGender()) +
                 " falls into a deeper sleep and have odd dreams filled with violence, lust and the sense of immortality.");
@@ -118,7 +119,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
             victim.addToHP(-hpLoss);
             victim.addToSP(-victim.getSP());
         }
-        if (MyRandom.rollD10() < 7 || !random) {
+        if (MyRandom.rollD10() < 4 + vampirePower) {
             VampirismCondition.makeVampire(model, state, victim);
         } else {
             state.println("Apart from feeling incredibly weak, " + victim.getFirstName() +

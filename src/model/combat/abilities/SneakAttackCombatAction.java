@@ -20,7 +20,7 @@ public class SneakAttackCombatAction extends SpecialAbilityCombatAction implemen
     private int sneakValue;
     private GameCharacter performer;
     private boolean takeAnotherAction;
-
+    // FEATURE: Adv. Sneak Attack which can be activated from back row.
     public SneakAttackCombatAction() {
         super("Sneak Attack", true, false);
         takeAnotherAction = false;

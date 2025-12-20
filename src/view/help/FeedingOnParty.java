@@ -10,7 +10,8 @@ public class FeedingOnParty extends SubChapterHelpDialog {
             "in a sneak roll of 3 + number of party members. Then, the victim may still notice the vampire if it succeeds in a " +
             "Perception " + VampireProwlNightEvent.DETECT_VAMPIRE_PERCEPTION_DIFFICULTY + " Reactive Check.\n\n" +
             "If however, the victim does not detect the vampire, the vampire may feed on the victim, " +
-            "potentially infecting the victim with vampirism.\n\n" +
+            "potentially infecting the victim with vampirism. The higher the the stage of vampirism the higher the chance " +
+            "that the party member becomes infected with vampirism.\n\n" +
             "A vampire can not feed on other vampires.";
 
     public FeedingOnParty(GameView view) {

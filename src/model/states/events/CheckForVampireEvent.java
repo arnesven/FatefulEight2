@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckForVampireEvent extends DailyEventState {
-    private static final int PERSUADE_BASE_DIFFICULTY = 5;
+    private static final int PERSUADE_BASE_DIFFICULTY = 4;
     private static final int ATTITUDE_THRESHOLD = 5;
 
     public CheckForVampireEvent(Model model) {
@@ -41,7 +41,7 @@ public class CheckForVampireEvent extends DailyEventState {
         partyMemberSay(other, "Fair enough. Here it goes. Are you a vampire?");
         partyMemberSay(vampire, "A vampire? No, hehehe, goodness. Whatever gave you that idea?");
         VampirismCondition vampCond = (VampirismCondition) vampire.getCondition(VampirismCondition.class);
-        SkillCheckResult result = vampire.testSkill(model, Skill.Persuade, PERSUADE_BASE_DIFFICULTY + vampCond.getStage() * 3);
+        SkillCheckResult result = vampire.testSkill(model, Skill.Persuade, PERSUADE_BASE_DIFFICULTY + vampCond.getStage() * 2);
         println(vampire.getFirstName() + " performs a Persuade " + result.asString() + ".");
         if (result.isSuccessful()) {
             persuadeSuccess(model, vampire, other);

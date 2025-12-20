@@ -51,9 +51,10 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
 
         VampireProwlNightEvent vampireProwl = new VampireProwlNightEvent(model, true);
         println(vampire.getFirstName() + " leans over " + victim.getFirstName() + "...");
+        VampirismCondition vampCond = (VampirismCondition) vampire.getCondition(VampirismCondition.class);
         if (vampireProwl.failsToDetectVampire(model, this, victim)) {
             model.getParty().enabledVampireLookFor(vampire);
-            vampireProwl.makeVampire(model, victim);
+            vampireProwl.makeVampire(model, victim, vampCond.getStage());
             if (victim.getAppearance() instanceof AdvancedAppearance) {
                 VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
                         (AdvancedAppearance) victim.getAppearance());
@@ -68,8 +69,7 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
             model.getLog().waitForAnimationToFinish();
             model.getParty().forceEyesClosed(victim, false);
             CheckForVampireEvent vampireEvent = new CheckForVampireEvent(model);
-            if (!vampireEvent.askForMesmerize(model, vampire, victim,
-                    (VampirismCondition) vampire.getCondition(VampirismCondition.class))) {
+            if (!vampireEvent.askForMesmerize(model, vampire, victim, vampCond)) {
                 partyMemberSay(victim, "Help! A vampire!!! What, " + vampire.getFirstName() + ", you're a vampire?");
                 model.getLog().waitForAnimationToFinish();
                 if (model.getParty().size() > 2) {

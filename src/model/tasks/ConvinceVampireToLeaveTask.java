@@ -317,7 +317,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
                 ((PortraitSubView) model.getSubView()).forceVampireFeedingLook();
             }
             model.getParty().forceEyesClosed(model.getParty().getLeader(), true);
-            VampireProwlNightEvent.makeCharacterIntoVampire(model, this, model.getParty().getLeader(), false);
+            VampireProwlNightEvent.makeCharacterIntoVampire(model, this, model.getParty().getLeader(), 7);
             println("A short while later, " + model.getParty().getLeader().getFirstName() + " is roused by the pale noble.");
             model.getLog().waitForAnimationToFinish();
             model.getParty().forceEyesClosed(model.getParty().getLeader(), false);

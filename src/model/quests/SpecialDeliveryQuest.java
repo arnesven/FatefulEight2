@@ -280,7 +280,7 @@ public class SpecialDeliveryQuest extends MainQuest {
             println("The noble turns to you.");
             model.getLog().waitForAnimationToFinish();
             showExplicitPortrait(model, nobleApp, "Noble");
-            portraitSay("Thank you. You played your part brilliantly?");
+            portraitSay("Thank you. You played your part brilliantly.");
             leaderSay("Part? What part? Please explain yourself.");
             portraitSay("Aha, that sly witch. She didn't fill you in on the details. Well perhaps it was for the best.");
             leaderSay("So you're the client.");

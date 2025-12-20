@@ -340,7 +340,7 @@ public enum PersonalityTrait {
         convos.put(PersonalityTrait.rude,
                 MyLists.merge(primer, List.of(
                         new MyPair<>(other, "Checking on the rations?"),
-                        new MyPair<>(main, "Yeah. Have you been stealing?."),
+                        new MyPair<>(main, "Yeah. Have you been stealing?"),
                         new MyPair<>(other, "What!? Of course not."),
                         new MyPair<>(main, "Just don't get any ideas."),
                         new MyPair<>(other, "I don't like your tone " + main.getFirstName() + "."),
