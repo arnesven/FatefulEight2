@@ -188,6 +188,7 @@ public class RecruitState extends GameState {
                     "The jobs yours " + gc.getFirstName() + ". Do you want it?")));
             newPartyMemberComment(rgc);
             model.getLog().waitForAnimationToFinish();
+            subView.clearAnimationsFor(rgc.getCharacter());
             recruitMatrix.remove(rgc);
             recruitables.remove(rgc);
             println("You recruited " + gc.getFullName() + "!");

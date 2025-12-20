@@ -54,7 +54,9 @@ public class ConstableEvent extends DailyEventState {
         boolean gender = app.getGender();
         if (withIntro) {
             showEventCard("The party encounters a constable on the street. " +
-                    heOrSheCap(gender) + " approaches you, do you run away? (Y/N) ");
+                    heOrSheCap(gender) + " has a concerned look on "  + hisOrHer(gender) +
+                    " face and is approaching you.");
+            print("Do you turn and run away? (Y/N) ");
             if (yesNoInput()) {
                 runAway = true;
                 return;

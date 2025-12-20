@@ -47,7 +47,7 @@ public class RopeBridgeEvent extends RiverEvent {
         }
         randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
                 "I've got a bad feeling about this.");
-        print(" Do you try to cross? (Y/N) ");
+        print("Do you try to cross? (Y/N) ");
         if (yesNoInput()) {
             model.getParty().getHorseHandler().abandonHorses(model);
             List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Acrobatics, 4);
