@@ -4,7 +4,13 @@ import model.Model;
 import model.items.FoodDummyItem;
 import model.items.Item;
 import model.items.ObolsDummyItem;
+import model.items.PotionRecipe;
+import model.items.accessories.Accessory;
+import model.items.clothing.Clothing;
+import model.items.designs.CraftingDesign;
 import model.items.special.TentUpgradeItem;
+import model.items.spells.Spell;
+import model.items.weapons.Weapon;
 import view.subviews.ArrowMenuSubView;
 
 import java.util.List;
@@ -37,6 +43,12 @@ public class TradeWithBartenderState extends ShopState {
         if (model.getParty().getInventory().getObols() > 0 && sellableObols != null) {
             items.add(sellableObols);
         }
+        items.removeIf(it -> it instanceof Weapon ||
+                it instanceof Clothing ||
+                it instanceof Accessory ||
+                it instanceof CraftingDesign ||
+                it instanceof PotionRecipe ||
+                it instanceof Spell);
         return items;
     }
 

@@ -519,7 +519,7 @@ public class BrrbitsReward extends Quest {
             leaderSay("Seriously? The ore vein isn't the reward? What could possibly be better than this?");
             portraitSay(FrogmanRace.makeFrogmanMumboJumbo(5) + "!");
             leaderSay("This is unbelievable.");
-            println("You could stay here mine the silver ore vein, but " + FROGMAN_NAME +
+            println("You could stay here and mine the silver ore vein, but " + FROGMAN_NAME +
                     " will not wait for you and is anxiously wanting for you to come with him. " +
                     "Do you stay (quest will be failed). Or you can keep following " + FROGMAN_NAME + ".");
             model.getLog().waitForAnimationToFinish();

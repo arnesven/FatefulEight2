@@ -6,8 +6,12 @@ import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.Item;
+import model.items.Lockpick;
 import model.states.DailyEventState;
+import model.states.ShopState;
 import util.MyPair;
+import util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +45,10 @@ public class ThiefEvent extends DailyEventState {
                         "You're probably very hungry. Eat as much as you like.");
                 model.getParty().addToFood(-1);
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.THF);
-                print("The thief is surprised by your sudden generosity and gladly joins you for the evening. " +
-                        "The thief is willing to show you some tricks, ");
+                println("The thief is surprised by your sudden generosity and gladly joins you for the evening.");
+                println("The thief offers to sell you some lockpicks.");
+                new ShopState(model, "Thief", makeLockpicks(), new boolean[]{false});
+                print("The thief is also willing to show you some tricks, ");
                 change.areYouInterested(model);
             } else {
                 model.getParty().randomPartyMemberSay(model, List.of("Shove off you! Don't let us catch you near us again!"));
@@ -66,6 +72,14 @@ public class ThiefEvent extends DailyEventState {
             }
         }
 
+    }
+
+    private List<Item> makeLockpicks() {
+        ArrayList<Item> list = new ArrayList<>();
+        for (int i = MyRandom.rollD6(); i > 0; --i) {
+            list.add(new Lockpick());
+        }
+        return list;
     }
 
     private boolean spotThief(Model model) {
