@@ -5,6 +5,7 @@ import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.items.InventoryDummyItem;
 import model.items.Item;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
@@ -64,6 +65,7 @@ public abstract class ShoppingNode extends DailyActionNode {
             List<Item> candidates = makeInventory(model);
             candidates.removeIf(it -> MyLists.any(shopInventory,
                     it2 -> it2.getName().equals(it.getName())));
+            candidates.removeIf(it -> it instanceof InventoryDummyItem);
             if (!candidates.isEmpty()) {
                 return MyRandom.sample(candidates);
             }

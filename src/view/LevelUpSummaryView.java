@@ -8,6 +8,7 @@ import model.classes.Skill;
 import model.combat.abilities.SpecialAbilityCombatAction;
 import util.BeforeAndAfterLine;
 import util.MyLists;
+import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
@@ -78,7 +79,18 @@ public class LevelUpSummaryView extends SelectableListMenu {
         objs.add(new DrawableObject(xStart, yStart+2) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                levler.getAppearance().drawYourself(model.getScreenHandler(), 36, y);
+                int charIconX = 32;
+                int charIconY = y + 1;
+                model.getScreenHandler().clearSpace(charIconX, charIconX + 4, charIconY, charIconY + 4);
+                model.getScreenHandler().put(charIconX, charIconY, levler.getCharClass().getIconSprite());
+
+                String[] classNameParts = levler.getCharClass().getFullName().split(" ");
+                for (int row = 0; row < classNameParts.length; ++row) {
+                    int xOffset = classNameParts[row].length()/2 - 2;
+                    BorderFrame.drawString(model.getScreenHandler(), classNameParts[row], charIconX-xOffset, charIconY + 5 + row,
+                            MyColors.WHITE, MyColors.BLUE);
+                }
+                levler.getAppearance().drawYourself(model.getScreenHandler(), 40, y);
             }
         });
         yStart += 9;

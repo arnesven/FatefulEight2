@@ -45,7 +45,7 @@ public class WillisEndingEvent extends DailyEventState {
         waitForReturn();
         GameCharacter willis = model.getMainStory().getWillisCharacter();
         willis.setLevel((int) Math.ceil(GameState.calculateAverageLevel(model)));
-        RecruitState recruit = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(willis, RecruitInfo.profession));
+        RecruitState recruit = new RecruitState(model, RecruitableCharacter.makeOneRecruitable(willis, RecruitInfo.qualifications));
         recruit.run(model);
         removePortraitSubView(model);
         setCurrentTerrainSubview(model);

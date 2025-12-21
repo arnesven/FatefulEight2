@@ -72,7 +72,7 @@ public class GelatinousBlobTask extends DestinationTask {
         public String getText() {
             StringBuilder bldr = new StringBuilder("To verify the research notes on Gelatinous Blobs, you need to kill a number of them.\n\n");
             for (MyColors color : countMap.keySet()) {
-                bldr.append(String.format("%-15s%d/%d\n", MyStrings.capitalize(color.name().toLowerCase()) + "Blobs:", countMap.get(color), NUMBER_NEEDED_OF_EACH));
+                bldr.append(String.format("%-15s%d/%d\n", MyStrings.capitalize(color.name().toLowerCase()) + " Blobs:", countMap.get(color), NUMBER_NEEDED_OF_EACH));
             }
             return bldr.toString();
         }
