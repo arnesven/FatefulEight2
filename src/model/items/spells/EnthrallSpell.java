@@ -84,8 +84,8 @@ public class EnthrallSpell extends ImmediateSpell {
         return new EnthrallSpell();
     }
 
-//    @Override
-//    public Prevalence getPrevalence() { // TODO: bring this back (breaks save)
-//        return Prevalence.veryRare;
-//    }
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.veryRare;
+    }
 }
