@@ -4,10 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.conditions.ThrallCondition;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.enemies.VampireAttackBehavior;
+import model.items.spells.EnthrallSpell;
 import model.log.GameLog;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -29,11 +31,13 @@ public class CheckForVampireEvent extends DailyEventState {
     protected void doEvent(Model model) {
         List<GameCharacter> vampires = MyLists.filter(model.getParty().getPartyMembers(),
                 CheckForVampireEvent::isVampire);
-        if (vampires.isEmpty() || vampires.size() == model.getParty().size()) {
+        List<GameCharacter> nonVampireNorThralls = MyLists.filter(model.getParty().getPartyMembers(),
+                gc -> !CheckForVampireEvent.isVampire(gc) && !EnthrallSpell.isThrall(gc));
+        if (vampires.isEmpty() || nonVampireNorThralls.isEmpty()) {
             return;
         }
         GameCharacter vampire = vampires.get(0);
-        GameCharacter other = model.getParty().getRandomPartyMember(vampire);
+        GameCharacter other = MyRandom.sample(nonVampireNorThralls);
         partyMemberSay(other, "Hey " + vampire.getFirstName() + ", can I ask you something?");
         partyMemberSay(vampire, "Sure, what is it?");
         partyMemberSay(other, "Well... It's a little hard to ask...");
@@ -121,18 +125,40 @@ public class CheckForVampireEvent extends DailyEventState {
             partyMemberSay(other, "Don't even think about it. Be happy we don't end you right here " +
                     "and now. Now begone foul creature.");
             partyMemberSay(vampire, "I'm gone. But I shall not forget this.");
+            model.getLog().waitForAnimationToFinish();
             model.getParty().remove(vampire, false, false, 0);
             println(vampire.getFirstName() + " has left the party.");
+            for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
+                if (ThrallCondition.isThrallTo(gc, vampire)) {
+                    partyMemberSay(gc, "I'm going with " + vampire.getFirstName() + ".");
+                    model.getLog().waitForAnimationToFinish();
+                    model.getParty().remove(gc, false, false, 0);
+                }
+            }
         } else {
             partyMemberSay(other, "I'm sorry " + vampire.getFirstName() +
                     ". But It's our duty to hold you accountable for your crimes against the innocent.");
             partyMemberSay(vampire, "You can try.");
+            model.getLog().waitForAnimationToFinish();
             model.getParty().remove(vampire, false, false, 0);
             println(vampire.getFirstName() + " has left the party.");
             println("You attack " + vampire.getFirstName() + "!");
             Enemy enm = new FormerPartyMemberEnemy(vampire);
             enm.setAttackBehavior(new VampireAttackBehavior());
-            runCombat(List.of(enm));
+            List<Enemy> enemies = new ArrayList<>();
+            enemies.add(enm);
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (isVampire(gc) || EnthrallSpell.isThrall(gc)) {
+                    partyMemberSay(gc, "I'm going with " + vampire.getFirstName() + ".");
+                    enemies.add(new FormerPartyMemberEnemy(gc));
+                    if (isVampire(gc)) {
+                        enemies.getLast().setAttackBehavior(new VampireAttackBehavior());
+                    }
+                    model.getLog().waitForAnimationToFinish();
+                    model.getParty().remove(gc, false, false, 0);
+                }
+            }
+            runCombat(enemies);
         }
     }
 
@@ -144,7 +170,7 @@ public class CheckForVampireEvent extends DailyEventState {
                     imOrWere + " leaving, right now!#");
             partyMemberSay(vampire, "Fine. Who needs you?");
             for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
-                if (!isVampire(gc)) {
+                if (!isVampireFriendly(gc)) {
                     model.getParty().remove(gc, false, false, 0);
                     println(gc.getFirstName() + " left the party.");
                 } else if (gc != vampire) {
@@ -157,7 +183,7 @@ public class CheckForVampireEvent extends DailyEventState {
             partyMemberSay(vampire, "You can try.");
             List<Enemy> enemies = new ArrayList<>();
             for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
-                if (!isVampire(gc)) {
+                if (!isVampireFriendly(gc)) {
                     model.getParty().remove(gc, false, false, 0);
                     println(gc.getFirstName() + " left the party.");
                     enemies.add(new FormerPartyMemberEnemy(gc));
@@ -172,6 +198,10 @@ public class CheckForVampireEvent extends DailyEventState {
             }
         }
 
+    }
+
+    private boolean isVampireFriendly(GameCharacter gc) {
+        return isVampire(gc) || EnthrallSpell.isThrall(gc);
     }
 
     public static boolean isVampire(GameCharacter gc) {

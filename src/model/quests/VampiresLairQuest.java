@@ -9,14 +9,23 @@ import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.ThrallEnemy;
 import model.enemies.VampirePuppeteer;
+import model.items.spells.EnthrallSpell;
+import model.items.spells.Spell;
+import model.journal.MainStorySpawnLocation;
+import model.map.CastleLocation;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.QuestState;
 import model.states.RecruitState;
+import model.states.events.CheckForVampireEvent;
+import model.states.events.VampireProwlNightEvent;
 import sound.BackgroundMusic;
+import util.MyLists;
+import util.MyStrings;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -36,6 +45,7 @@ public class VampiresLairQuest extends MainQuest {
             "He asks you to accompany him inside to find the sister of his lord.";
     private static final String END_TEXT = "You've solved the mystery of the lord's missing sister. Caid compensates you.";
     private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
+    private String castleName;
 
 
     public VampiresLairQuest() {
@@ -51,6 +61,11 @@ public class VampiresLairQuest extends MainQuest {
     @Override
     public MainQuest copy() {
         return new VampiresLairQuest();
+    }
+
+    @Override
+    public void setSpawnData(MainStorySpawnLocation spawnData) {
+        this.castleName = spawnData.getCastle();
     }
 
     @Override
@@ -89,8 +104,9 @@ public class VampiresLairQuest extends MainQuest {
                 new QuestScene("Assassination", List.of(
                         new SoloSkillCheckSubScene(3, 6, Skill.Perception, 8, "Hmm... two of the vampires are talking. If we get a little closer we may overhear " +
                                 "the conversation and learn where the missing sister is being held."), // 8
-                        new SoloSkillCheckSubScene(1, 7, Skill.Sneak, 14, "Maybe we can just sneak up and take her out?"), // 12
-                        new SoloSkillCheckSubScene(2, 7, Skill.Bows, 12, "With one well placed arrow, she'll be one vanquished vampire.") // 12
+                        new SoloSkillCheckSubScene(0, 7, Skill.Sneak, 14, "Maybe we can just sneak up and take her out?"), // 12
+                        new SoloSkillCheckSubScene(1, 7, Skill.Bows, 12, "With one well placed arrow, she'll be one vanquished vampire."), // 12
+                        new PersuadeCaidAndOthersToLeaveSubScene(2, 7)
                 ))
                 );
     }
@@ -123,9 +139,10 @@ public class VampiresLairQuest extends MainQuest {
         };
         QuestStartPointWithoutDecision qsp = new QuestStartPointWithoutDecision(new QuestEdge(story), "");
         qsp.setRow(2);
-        QuestDecisionPoint qdp3 = new QuestDecisionPoint(2, 6, List.of(
+        QuestDecisionPoint qdp3 = new QuestDecisionPoint(1, 6, List.of(
                 new QuestEdge(scenes.get(3).get(1)),
-                new QuestEdge(scenes.get(3).get(2))),
+                new QuestEdge(scenes.get(3).get(2)),
+                new QuestEdge(scenes.get(3).get(3))),
                 "Did you hear that? The lord's sister IS a vampire? Let's just assassinate her!");
         StoryJunction vampAssassinated = new StoryJunction(6, 7, new QuestEdge(getSuccessEndingNode())) {
             @Override
@@ -159,11 +176,14 @@ public class VampiresLairQuest extends MainQuest {
         scenes.get(3).get(0).connectSuccess(junctions.get(7));
         scenes.get(3).get(0).connectFail(scenes.get(2).get(1));
 
-        scenes.get(3).get(1).connectFail(getFailEndingNode());
+        scenes.get(3).get(1).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
         scenes.get(3).get(1).connectSuccess(junctions.get(8));
 
         scenes.get(3).get(2).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
         scenes.get(3).get(2).connectSuccess(junctions.get(8));
+
+        scenes.get(3).get(3).connectFail(junctions.get(7), QuestEdge.VERTICAL);
+        scenes.get(3).get(3).connectSuccess(getSuccessEndingNode());
     }
 
     @Override
@@ -171,11 +191,13 @@ public class VampiresLairQuest extends MainQuest {
         return MyColors.BLACK;
     }
 
-    private static class VampirePuppeteerCombatSubScene extends CombatSubScene {
+    private class VampirePuppeteerCombatSubScene extends CombatSubScene {
+        private final int vampires;
         private GameCharacter caidCharacter;
 
         public VampirePuppeteerCombatSubScene(int col, int row, int thralls, int vampires) {
             super(col, row, makeEnemies(thralls, vampires), true);
+            this.vampires = vampires;
         }
 
         @Override
@@ -187,6 +209,27 @@ public class VampiresLairQuest extends MainQuest {
         public QuestEdge run(Model model, QuestState state) {
             this.caidCharacter = model.getMainStory().getCaidCharacter();
             caidCharacter.setLevel((int)Math.ceil(GameState.calculateAverageLevel(model)));
+            if (MyLists.all(MyLists.filter(model.getParty().getPartyMembers(),
+                    gc -> !model.getParty().getBench().contains(gc)),
+                    CheckForVampireEvent::isVampire)) {
+                if (vampires == 1) {
+                    state.printQuote("Caid", "Wow, that's a lot of thralls, but wait... They don't seem to " +
+                            "care that we're here. How odd. I guess we can just keep going then.");
+                    state.leaderSay("Yes, how odd...");
+                    return getSuccessEdge();
+                }
+                if (vampires == 2) {
+                    state.printQuote("Caid", "Amazing, it's like they don't even see us.");
+                    state.leaderSay("Let's keep going.");
+                    return getSuccessEdge();
+                }
+                state.printQuote("Caid", "I've never seen vampire thralls act this way. " +
+                        "I'm beginning to suspect there something very strange going on here.");
+                state.leaderSay("It's probably completely normal.");
+                state.printQuote("Caid", "If you say so.");
+                return new QuestEdge(getScenes().get(3).getFirst());
+            }
+
             state.printQuote("Caid", "Wow, that's a lot of thralls, and they're coming straight for us. " +
                     "I really don't want to hurt them but it seems like we won't even be able to take a swing at " +
                     "the vampire before we cut some of them down.");
@@ -379,5 +422,84 @@ public class VampiresLairQuest extends MainQuest {
         list.add(new QuestBackground(new Point(1, 7), AbandonedMineQuest.LL_CORNER, false));
         list.add(new QuestBackground(new Point(2, 7), AbandonedMineQuest.LR_CORNER, false));
         return list;
+    }
+
+    private class MeetWithVampireEvent extends DailyEventState {
+        public MeetWithVampireEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            CastleLocation castle = model.getWorld().getCastleByName(castleName);
+            Race race = castle.getLordRace();
+            printQuote("Caid", "What? I... alright. You go on. I'll wait outside.");
+            println("Caid leaves the crypt. You approach the vampire you believe to be the Lord's sister.");
+            model.getLog().waitForAnimationToFinish();
+            GameCharacter vamp = VampireProwlNightEvent.generateVampireCharacter(true, race);
+            showExplicitPortrait(model, vamp.getAppearance(), castle.getLordName() + "'s Sister");
+            portraitSay("Greetings fellow creature of the night. I'm surprised to see an unfamiliar vampire here.");
+            leaderSay("I assume you are " + castle.getLordName() + "'s sister.");
+            portraitSay("That's correct. How did you know?");
+            leaderSay("I came here with the " + castle.getLordTitle() + "'s agent, Caid. He's been tracking you.");
+            portraitSay("Caid Sanchez... as sharp as ever. As a young girl he was my fencing teacher. " +
+                    "I never thought he would one day hunt me down. But I do not see him. Where is he?");
+            leaderSay("I convinced him to leave. If you wish, I can just tell him I killed you.");
+            portraitSay("That would be most beneficial for me. What could I do to repay you?");
+            leaderSay("How did you get all these thralls?");
+            portraitSay("There's a spell. Here, take a copy.");
+            Spell sp = new EnthrallSpell();
+            sp.addYourself(model.getParty().getInventory());
+            println("You got " + sp.getName() + ".");
+            portraitSay("It can only be cast by vampires. It makes the target completely compliant, " +
+                    "and will let you feed on them over and over, without turning them into vampires.");
+            leaderSay("That sounds very handy.");
+            portraitSay("It is. With it, you're power will be immense. Best of luck to you.");
+            leaderSay("So long.");
+            model.getLog().waitForAnimationToFinish();
+            removePortraitSubView(model);
+        }
+    }
+
+    private class PersuadeCaidAndOthersToLeaveSubScene extends SoloSkillCheckSubScene {
+        private boolean alreadyTried;
+
+        public PersuadeCaidAndOthersToLeaveSubScene(int col, int row) {
+            super(col, row, Skill.Persuade, 7, "");
+            alreadyTried = false;
+        }
+
+        @Override
+        protected boolean isEligibleForSelection(Model model, QuestState state) {
+            return CheckForVampireEvent.isVampire(model.getParty().getLeader()) && !alreadyTried;
+        }
+
+        @Override
+        public String getDescription() {
+            return "Persuade Caid (and other) to leave. Only if leader is Vampire. " + (alreadyTried ? "(already tried)" : "");
+        }
+
+        @Override
+        protected void subSceneIntro(Model model, QuestState state) {
+            alreadyTried = true;
+            state.leaderSay("Okay, I think I can take her out. But I need everybody else to leave.");
+            state.printQuote("Caid", "Really? Why?");
+            state.leaderSay("I'd like to tell you, but I can't. You're just going to have trust me " +
+                    "when I say that you can't help me with this.");
+            state.printQuote("Caid", "Why are you being so mysterious?");
+            state.leaderSay("Again, I can't tell you. But I need you to leave.");
+        }
+
+        @Override
+        protected void subSceneOutro(Model model, QuestState state, boolean skillSuccess) {
+            if (skillSuccess) {
+                model.getParty().benchPartyMembers(MyLists.filter(model.getParty().getPartyMembers(), gc ->
+                        gc != model.getParty().getLeader()));
+                new MeetWithVampireEvent(model).doEvent(model);
+            } else {
+                state.printQuote("Caid", "No, I'm sorry. I just can't let this lead go. It's the only one I've got. " +
+                        "Let's just keep moving.");
+            }
+        }
     }
 }

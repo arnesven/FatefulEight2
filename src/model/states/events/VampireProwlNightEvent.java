@@ -119,7 +119,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
             victim.addToHP(-hpLoss);
             victim.addToSP(-victim.getSP());
         }
-        if (MyRandom.rollD10() < 4 + vampirePower) {
+        if (MyRandom.rollD10() < 5 + vampirePower) {
             VampirismCondition.makeVampire(model, state, victim);
         } else {
             state.println("Apart from feeling incredibly weak, " + victim.getFirstName() +
@@ -127,14 +127,23 @@ public class VampireProwlNightEvent extends NightTimeEvent {
         }
     }
 
-    public static GameCharacter generateVampireCharacter() {
-        Race race = MyRandom.sample(AllRaces.getAllRaces());
-        CharacterAppearance vampirePortrait = PortraitSubView.makeOldPortrait(Classes.VAMPIRE, race, MyRandom.flipCoin());
+    public static GameCharacter generateVampireCharacter(boolean gender, Race targetRace) {
+        Race race;
+        if (targetRace.id() == Race.ALL.id()) {
+            race = MyRandom.sample(AllRaces.getAllRaces());
+        } else {
+            race = targetRace;
+        }
+        CharacterAppearance vampirePortrait = PortraitSubView.makeOldPortrait(Classes.VAMPIRE, race, gender);
         GameCharacter gc = new GameCharacter("Vampire", "", race, Classes.VAMPIRE,
                 vampirePortrait, Classes.NO_OTHER_CLASSES, new Equipment());
         VampirismCondition cond = new VampirismCondition(5, 0);
         gc.addCondition(cond);
         cond.updateAppearance(gc);
         return gc;
+    }
+
+    public static GameCharacter generateVampireCharacter() {
+        return generateVampireCharacter(MyRandom.flipCoin(), Race.ALL);
     }
 }

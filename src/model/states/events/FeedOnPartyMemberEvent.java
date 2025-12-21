@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.conditions.ThrallCondition;
 import model.combat.conditions.VampirismCondition;
 import model.states.DailyEventState;
 import model.states.feeding.VampireFeedingHouse;
@@ -41,6 +42,17 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
         sleepers.remove(vampire);
         sleepers.remove(victim);
         model.getParty().benchPartyMembers(sleepers);
+        if (ThrallCondition.isThrallTo(victim, vampire)) {
+            partyMemberSay(vampire, "Come my thrall. I must feed.");
+            partyMemberSay(victim, "Yes master.");
+            println(victim.getFirstName() + " obediently exposes " + hisOrHer(victim.getGender()) +
+                    " neck, and " + vampire.getFirstName() + " leans in.");
+            biteThrall(model, vampire, victim);
+            model.getLog().waitForAnimationToFinish();
+            model.getParty().forceEyesClosed(victim, false);
+            model.getParty().unbenchAll();
+            return;
+        }
         MyLists.forEach(sleepers, ch -> model.getParty().forceEyesClosed(ch, false));
 
         println(vampire.getFirstName() + " waits until the rest of the party has gone to bed. " +
@@ -53,17 +65,7 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
         println(vampire.getFirstName() + " leans over " + victim.getFirstName() + "...");
         VampirismCondition vampCond = (VampirismCondition) vampire.getCondition(VampirismCondition.class);
         if (vampireProwl.failsToDetectVampire(model, this, victim)) {
-            model.getParty().enabledVampireLookFor(vampire);
-            vampireProwl.makeVampire(model, victim, vampCond.getStage());
-            if (victim.getAppearance() instanceof AdvancedAppearance) {
-                VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
-                        (AdvancedAppearance) victim.getAppearance());
-            } else {
-                VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
-                        (AdvancedAppearance) vampire.getAppearance());
-            }
-            model.getLog().waitForAnimationToFinish();
-            model.getParty().disableVampireLookFor(vampire);
+            biteVictim(model, vampire, victim, vampireProwl, vampCond);
         } else {
             println(victim.getFirstName() + " wakes up!");
             model.getLog().waitForAnimationToFinish();
@@ -77,11 +79,44 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
                     model.getParty().unbenchAll();
                 }
                 vampireEvent.dealWithVampire(model, vampire, victim);
+            } else { // Used mesmerize (but is it success or fail?)
+                if (model.getParty().getPartyMembers().contains(vampire) &&
+                        model.getParty().getPartyMembers().contains(victim)) {
+                    biteVictim(model, vampire, victim, vampireProwl, vampCond);
+                }
             }
         }
         model.getParty().unbenchAll();
         MyLists.forEach(model.getParty().getPartyMembers(),
                 ch -> model.getParty().forceEyesClosed(ch, false));
+    }
+
+    private void biteVictim(Model model, GameCharacter vampire, GameCharacter victim,
+                            VampireProwlNightEvent vampireProwl, VampirismCondition vampCond) {
+        model.getParty().enabledVampireLookFor(vampire);
+        vampireProwl.makeVampire(model, victim, vampCond.getStage());
+        if (victim.getAppearance() instanceof AdvancedAppearance) {
+            VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
+                    (AdvancedAppearance) victim.getAppearance());
+        } else {
+            VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
+                    (AdvancedAppearance) vampire.getAppearance());
+        }
+        model.getLog().waitForAnimationToFinish();
+        model.getParty().disableVampireLookFor(vampire);
+    }
+
+    private void biteThrall(Model model, GameCharacter vampire, GameCharacter victim) {
+        model.getParty().enabledVampireLookFor(vampire);
+        if (victim.getAppearance() instanceof AdvancedAppearance) {
+            VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
+                    (AdvancedAppearance) victim.getAppearance());
+        } else {
+            VampireFeedingHouse.applyRaceSpecificEffect(model, this, vampire,
+                    (AdvancedAppearance) vampire.getAppearance());
+        }
+        model.getLog().waitForAnimationToFinish();
+        model.getParty().disableVampireLookFor(vampire);
     }
 
     private boolean remainsUndetected(Model model, GameCharacter vampire, GameCharacter victim, List<GameCharacter> sleepers) {

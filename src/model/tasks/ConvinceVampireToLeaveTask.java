@@ -14,6 +14,8 @@ import model.enemies.VampireAttackBehavior;
 import model.items.Equipment;
 import model.items.accessories.*;
 import model.items.clothing.LeatherArmor;
+import model.items.spells.EnthrallSpell;
+import model.items.spells.Spell;
 import model.items.weapons.*;
 import model.map.UrbanLocation;
 import model.states.events.VampireProwlNightEvent;
@@ -225,7 +227,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
             // No vampires in party
             if (pair.first) {
                 portraitSay("Those are some fair points. Alright, why not. I'll pack my things and move on.");
-                vampireConvinced(model);
+                vampireConvinced(model, null);
                 return true;
             }
 
@@ -253,7 +255,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
         if (model.getParty().getLeader().hasCondition(VampirismCondition.class)) {
             println("The vampire looks intently at " + model.getParty().getLeader() + ".");
             portraitSay("Hmmm... okay, I'll pack my things");
-            vampireConvinced(model);
+            vampireConvinced(model, model.getParty().getLeader());
             return true;
         }
         GameCharacter gc = MyLists.find(model.getParty().getPartyMembers(), ch -> ch.hasCondition(VampirismCondition.class));
@@ -268,7 +270,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
             println(gc.getName() + " is now the party leader.");
             leaderSay("Okay vampire... Are you happy now?");
             portraitSay("Yes. I'm satisfied. I'll pack my things and leave.");
-            vampireConvinced(model);
+            vampireConvinced(model, gc);
             return true;
         }
         leaderSay("Nope. Only party members have a say in who's our leader.");
@@ -332,7 +334,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
                     "People are less careful and suspicious on the countryside.");
             leaderSay("I'll keep it in mind. Now, you'll keep your end of the bargain? You'll leave town?");
             portraitSay("Yes.");
-            vampireConvinced(model);
+            vampireConvinced(model, null);
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
             if (model.getParty().size() > 1) {
@@ -351,14 +353,23 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
         return false;
     }
 
-    private void vampireConvinced(Model model) {
+    private void vampireConvinced(Model model, GameCharacter partyVampire) {
         leaderSay("Really? You'll go?");
         portraitSay("Yes. You've convinced me. I was getting a little bit bored. Not so strange actually, " +
                 "I've lived here for a hundred and fifty years you know.");
         leaderSay("Wow, that's a long time. Okay, " + iOrWe() + " hold you to your word. If you don't go, " +
                 "we'll be back with those stakes.");
         portraitSay("You can trust me.");
+        if (partyVampire != null) {
+            portraitSay("In fact, I have a little parting gift to you. I'm sure you will find it interesting.");
+            println("The vampire hands " + partyVampire.getFirstName() + " a book.");
+            Spell sp = new EnthrallSpell();
+            println("You have received a spell, " + sp.getName());
+            sp.addYourself(model.getParty().getInventory());
+            partyMemberSay(partyVampire, "Uhm. Thanks. I'll have a look at it later.");
+        }
         leaderSay("Farewell then.");
+        portraitSay("Good bye.");
         println("You leave the house.");
     }
 

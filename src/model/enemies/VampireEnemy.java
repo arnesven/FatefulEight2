@@ -5,12 +5,21 @@ import model.Model;
 import model.achievements.AlucardAchievement;
 import model.characters.GameCharacter;
 import model.combat.conditions.VampirismCondition;
-import model.combat.loot.BossCombatLoot;
 import model.combat.loot.CombatLoot;
+import model.combat.loot.StandardCombatLoot;
+import model.items.Prevalence;
+import model.items.spells.DarkShroudSpell;
+import model.items.spells.DrainLifeSpell;
+import model.items.spells.EnthrallSpell;
+import model.items.spells.GazeOfDeathSpell;
+import model.items.weapons.*;
 import model.states.CombatEvent;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
+
+import java.util.List;
 
 public class VampireEnemy extends UndeadEnemy {
     private static final LoopingSprite SPRITE = new VampireEnemySprite();
@@ -41,7 +50,7 @@ public class VampireEnemy extends UndeadEnemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new BossCombatLoot(model);
+        return new VampireEnemyLoot(model);
     }
 
     @Override
@@ -64,4 +73,18 @@ public class VampireEnemy extends UndeadEnemy {
         }
     }
 
+    private static class VampireEnemyLoot extends StandardCombatLoot {
+        public VampireEnemyLoot(Model model) {
+            super(model);
+            setGold(MyRandom.rollD10() + getGold());
+            if (MyRandom.flipCoin()) {
+                getItems().add(MyRandom.sample(List.of(new DrainLifeSpell(), new GazeOfDeathSpell(), new DarkShroudSpell(), new EnthrallSpell())));
+            } else {
+                List<Weapon> blades = List.of(new RitualDagger(), new Claymore(), new Sai(), new Sicle(),
+                        new MorningStar(), new ShortSpear());
+                Weapon blade = (Weapon)model.getItemDeck().draw(blades, 1, Prevalence.unspecified, 0.95).getFirst();
+                getItems().add(blade);
+            }
+        }
+    }
 }

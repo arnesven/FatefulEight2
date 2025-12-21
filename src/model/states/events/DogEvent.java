@@ -37,11 +37,11 @@ public class DogEvent extends DailyEventState {
                 if (innerEvent != null) {
                     innerEvent.run(model);
                 } else {
-                    showEventCard("You follow the dog for a while but cannot find anything of importance.");
+                    println("You follow the dog for a while but cannot find anything of importance.");
                 }
             } else {
                 leaderSay("You silly doggy! Come on, it's this way!");
-                showEventCard("The dog whines but reluctantly follows you.");
+                println("The dog whines but reluctantly follows you.");
             }
         } else {
             findADog(model);
@@ -64,33 +64,33 @@ public class DogEvent extends DailyEventState {
         if (yesNoInput()) {
             int roll = MyRandom.rollD6();
             if (roll == 1) {
-                showEventCard("As you extend your hand to pet the dog, it bites your hand.");
+                println("As you extend your hand to pet the dog, it bites your hand.");
                 leaderSay("Ouch!");
                 portraitSay("Grrrr....");
-                showEventCard("The dog finally release your hand, and scampers away.");
+                println("The dog finally release your hand, and scampers away.");
                 println(model.getParty().getLeader().getName() + "'s hand is bleeding ");
                 model.getParty().getLeader().addCondition(new BleedingCondition());
                 leaderSay("Darn mutt!");
             } else if (model.getParty().getFood() > 4) {
-                showEventCard("You approach the dog carefully. You bring out some meat from one of your bags and offer it to the dog.");
+                println("You approach the dog carefully. You bring out some meat from one of your bags and offer it to the dog.");
                 if (MyRandom.rollD10() > 3) {
-                    showEventCard("The dog quickly gobbles up the meat. Then playfully licks your hand.");
+                    println("The dog quickly gobbles up the meat. Then playfully licks your hand.");
                     leaderSay("Hungry eh? Well I'm afraid that's all I can spare for now. We better get going.");
-                    showEventCard("You start to leave, but the dog will not leave your side.");
+                    println("You start to leave, but the dog will not leave your side.");
                     portraitSay("Ruff ruff!");
                     leaderSay("You wanna come with?");
                     portraitSay("Ruff ruff ruff!");
                     DogHorse dog = new DogHorse();
                     leaderSay("Alright " + boyOrGirl(dog.getGender()) + ", you can come along.");
-                    showEventCard("The dog jumps and scampers about playfully. It seems happy to have found new master.");
+                    println("The dog jumps and scampers about playfully. It seems happy to have found new master.");
                     model.getParty().setDog(dog);
                     model.getTutorial().dog(model);
                 } else {
-                    showEventCard("The dog quickly snatches the bag and runs off! You have lost 5 rations.");
+                    println("The dog quickly snatches the bag and runs off! You have lost 5 rations.");
                     model.getParty().addToFood(-5);
                 }
             } else {
-                showEventCard("The dog just runs off.");
+                println("The dog just runs off.");
             }
         } else {
             leaderSay("Just another stray. Let's keep moving.");
@@ -106,14 +106,19 @@ public class DogEvent extends DailyEventState {
             showExplicitPortrait(model, dogPortrait, "Dog");
             showEventCard("Your dog comes to your side and whimpers a little.");
             leaderSay("Hello there " + boyOrGirl(model.getParty().getDog().getGender()) + ".");
+            if (CheckForVampireEvent.isVampire(model.getParty().getLeader())) {
+                println("The dog snarls and backs away.");
+                leaderSay("...");
+                return;
+            }
             int dieRoll = MyRandom.rollD6();
             if (dieRoll < 3) {
-                showEventCard("You pet the dog.");
+                println("You pet the dog.");
             } else if (dieRoll < 5) {
-                showEventCard("You ruffle the dog's fur.");
+                println("You ruffle the dog's fur.");
                 leaderSay("You're a good dog.");
             } else {
-                showEventCard("You bring out some food for the dog.");
+                println("You bring out some food for the dog.");
                 leaderSay("There you go.");
             }
             portraitSay("Ruff ruff!");

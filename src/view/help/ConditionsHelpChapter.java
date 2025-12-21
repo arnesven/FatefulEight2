@@ -80,6 +80,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new StrengthPotion().getCondition(),
                 new SummonCondition(null),
                 new TamedCondition(),
+                new ThrallCondition(null),
                 new VampirismCondition(VampirismCondition.NO_STAGE, 0),
                 new WardCondition(),
                 new WeakenCondition(),
