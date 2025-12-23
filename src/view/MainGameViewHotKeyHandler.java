@@ -21,6 +21,8 @@ public class MainGameViewHotKeyHandler {
             return new JournalView(gameView);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_X) {
             return new ExitGameView(gameView);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_P) {
+            return new PotionsView(gameView);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_E) {
             return new InventoryView(gameView);
         }
@@ -33,6 +35,7 @@ public class MainGameViewHotKeyHandler {
                 "Ctrl-Z : Spells View\n" +
                 "Ctrl-W : Map View\n" +
                 "Ctrl-E : Inventory View\n" +
+                "Ctrl-P : Potions View\n" +
                 "Ctrl-Q : Journal View\n" +
                 "Ctrl-X : Quit Game\n";
     }

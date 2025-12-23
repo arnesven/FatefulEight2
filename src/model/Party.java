@@ -16,6 +16,7 @@ import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
+import model.items.potions.HealthPotion;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;

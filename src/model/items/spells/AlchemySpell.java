@@ -30,6 +30,8 @@ public class AlchemySpell extends ImmediateSpell {
     private int ingredientCost = 0;
     private boolean distill = false;
     private int brewCount = 1;
+    private Potion presetPotion = null;
+    private boolean presetDistill;
 
     public AlchemySpell() {
         super("Alchemy", 5, MyColors.GREEN, 6, 0);
@@ -73,6 +75,7 @@ public class AlchemySpell extends ImmediateSpell {
             Set<String> setOfPotions = findSetOfPotions(model);
             if (setOfPotions.isEmpty()) {
                 state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have enough ingredients.");
+                presetPotion = null;
                 model.setSubView(previousSubView);
                 return false;
             }
@@ -82,7 +85,7 @@ public class AlchemySpell extends ImmediateSpell {
                 model.setSubView(previousSubView);
                 return false;
             }
-            subView.setContents(selectedPotion, ingredientCost);
+            subView.setContents(selectedPotion, distill ? distillAmount(selectedPotion) : ingredientCost);
             if (distill) {
                 state.print("Are you sure you want to use up " + selectedPotion.getName() + " to recover " + distillAmount(selectedPotion) + " ingredients");
             } else {
@@ -121,18 +124,25 @@ public class AlchemySpell extends ImmediateSpell {
     }
 
     private void setSelectedPotionAndCost(Model model, GameState state, Set<String> setOfPotions) {
-        state.println("What potion would you like to attempt to " + (distill ? "distill" : "make") + " with Alchemy?");
-        List<String> options = new ArrayList<>(setOfPotions);
-        options.add("Cancel");
         final String[] selected = {null};
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 36 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
-            @Override
-            protected void enterPressed(Model model, int cursorPos) {
-                selected[0] = options.get(cursorPos);
-                model.setSubView(getPrevious());
-            }
-        });
-        state.waitForReturnSilently();
+        this.selectedPotion = null;
+        this.ingredientCost = 0;
+        if (presetPotion != null) {
+            selected[0] = presetPotion.getName();
+            presetPotion = null;
+        } else {
+            state.println("What potion would you like to attempt to " + (distill ? "distill" : "make") + " with Alchemy?");
+            List<String> options = new ArrayList<>(setOfPotions);
+            options.add("Cancel");
+            model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 36 - options.size() * 2, ArrowMenuSubView.NORTH_WEST) {
+                @Override
+                protected void enterPressed(Model model, int cursorPos) {
+                    selected[0] = options.get(cursorPos);
+                    model.setSubView(getPrevious());
+                }
+            });
+            state.waitForReturnSilently();
+        }
         for (Potion p : model.getParty().getInventory().getPotions()) {
             if (selected[0].contains(p.getName())) {
                 this.selectedPotion = p;
@@ -167,6 +177,11 @@ public class AlchemySpell extends ImmediateSpell {
     }
 
     private boolean selectBrewOrDistill(Model model, GameState state, AlchemySubView subView) {
+        if (presetPotion != null) {
+            distill = presetDistill;
+            subView.setDistill(presetDistill);
+            return true;
+        }
         final boolean[] cancelled = {false};
         model.setSubView(new ArrowMenuSubView(model.getSubView(), List.of("Brew", "Distill", "Cancel"),
                 24, 26, ArrowMenuSubView.NORTH_WEST) {
@@ -191,11 +206,11 @@ public class AlchemySpell extends ImmediateSpell {
         return p.getName() + " (" + standardCostForPotion(p) + ")";
     }
 
-    private int standardCostForPotion(Potion p) {
+    private static int standardCostForPotion(Potion p) {
         return Math.max(1, p.getCost() / 2);
     }
 
-    private int recipeCost(Potion p) {
+    private static int recipeCost(Potion p) {
         return Math.max(1, p.getCost() / 3);
     }
 
@@ -265,5 +280,18 @@ public class AlchemySpell extends ImmediateSpell {
     @Override
     public String getDescription() {
         return "Lets the caster concoct potions from gathered ingredients.";
+    }
+
+    public void setPresetPotion(Potion potion, boolean isDistill) {
+        this.presetPotion = potion;
+        this.presetDistill = isDistill;
+    }
+
+
+    public static int calcCost(Potion potion, boolean withRecipe) {
+        if (withRecipe) {
+            return recipeCost(potion);
+        }
+        return standardCostForPotion(potion);
     }
 }

@@ -120,7 +120,7 @@ public class InventoryView extends SelectableListMenu {
         return tabNames[selectedTab].getItems(model);
     }
 
-    private static int innerPrintItemText(Model model, String itemName, Item it, int col, int row) {
+    public static int innerPrintItemText(Model model, String itemName, Item it, int col, int row) {
         String text = itemName + ", " + it.getShoppingDetails() +
                 ", Value: " + it.getCost() +
                 ", Weight: " + (it.getWeight() / 1000.0) + " Kg";
