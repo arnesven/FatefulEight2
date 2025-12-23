@@ -694,7 +694,9 @@ public class GameCharacter extends Combatant {
             combatEvent.addFloatyText(this, CombatSubView.EVADE_TEXT);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
             model.getTutorial().evading(model);
-            RiposteCombatAction.doRiposte(model, combatEvent, this, enemy);
+            if (!enemy.getAttackBehavior().canAttackBackRow()) {
+                RiposteCombatAction.doRiposte(model, combatEvent, this, enemy);
+            }
             combatEvent.getStatistics().addToAvoidedDamage(damage);
             return;
         }

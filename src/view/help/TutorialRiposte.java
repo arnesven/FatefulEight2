@@ -11,7 +11,7 @@ public class TutorialRiposte extends SubChapterHelpDialog {
             "When selecting the Riposte ability the character exhausts 1 Stamina Point and enters a riposte " +
             "stance until their next combat turn. This stance grants the character an innate 20% evade chance " +
             "(which stacks with evade chance granted from a character's speed) and will trigger a counter-attack " +
-            "if an attack is successfully evaded. A maximum of one counter-attack can occur this way.";
+            "if a melee attack is successfully evaded. Each counter-attack performed has a 50% chance of breaking the stance.";
 
     public TutorialRiposte(GameView view) {
         super(view, "Riposte", TEXT);

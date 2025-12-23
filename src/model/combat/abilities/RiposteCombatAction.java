@@ -10,6 +10,7 @@ import model.enemies.Enemy;
 import model.items.weapons.BladedWeapon;
 import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
+import util.MyRandom;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -36,7 +37,9 @@ public class RiposteCombatAction extends StaminaCombatAbility implements SkillAb
         if (gameCharacter.hasCondition(RiposteStanceCondition.class)) {
             combatEvent.println(gameCharacter.getFirstName() + " counter-attacks!");
             gameCharacter.doOneAttack(model, combatEvent, enemy, false, 0, 10);
-            gameCharacter.removeCondition(RiposteStanceCondition.class);
+            if (MyRandom.flipCoin()) {
+                gameCharacter.removeCondition(RiposteStanceCondition.class);
+            }
         }
     }
 
