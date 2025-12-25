@@ -177,11 +177,21 @@ public class RecruitState extends GameState {
         } else {
             RecruitableCharacter rgc = recruitMatrix.getSelectedElement();
             GameCharacter gc = rgc.getCharacter();
+            String name = gc.getName();
+            String firstName = gc.getFirstName();
+            if (rgc.getInfo() == RecruitInfo.none) {
+                name = "... uhm, who ever you are";
+                firstName = MyRandom.sample(List.of("buddy", "friend", "stranger"));
+            }
             leaderSay(MyRandom.sample(List.of("Want to join the party " + gc.getName() + "?",
-                    "Welcome aboard " + gc.getName() + "! If you're still interested.",
-                    "Are you in, " + gc.getFirstName() + "?",
-                    "The jobs yours " + gc.getFirstName() + ". Do you want it?")));
-            newPartyMemberComment(rgc);
+                    "Welcome aboard " + name + "! If you're still interested.",
+                    "Are you in, " + firstName + "?",
+                    "The jobs yours " + firstName + ". Do you want it?")));
+            if (rgc.getInfo() == RecruitInfo.none) {
+                candidateSay(rgc, "My name is " + rgc.getCharacter().getName() + ".");
+            } else {
+                newPartyMemberComment(rgc);
+            }
             model.getLog().waitForAnimationToFinish();
             subView.clearAnimationsFor(rgc.getCharacter());
             recruitMatrix.remove(rgc);
@@ -209,7 +219,7 @@ public class RecruitState extends GameState {
         if (it instanceof InventoryDummyItem) {
             return ((InventoryDummyItem)it).getDescription();
         }
-        return GameState.getNameWithArticle(it);
+        return Item.getNameWithArticle(it);
     }
 
     private void newPartyMemberComment(RecruitableCharacter rgc) {

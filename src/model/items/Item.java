@@ -6,9 +6,11 @@ import model.classes.Skill;
 import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.analysis.ItemAnalysis;
+import model.items.spells.Spell;
 import model.states.CombatEvent;
 import model.states.ShopState;
 import util.MyPair;
+import util.MyStrings;
 import view.GameView;
 import view.InventoryView;
 import view.ScreenHandler;
@@ -161,5 +163,15 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public boolean grantsConditionImmunity(Condition cond) {
         return false;
+    }
+
+    public static String getNameWithArticle(Item it) {
+        String extra = "";
+        if (it instanceof Spell) {
+            extra = "a spell, ";
+        } else {
+            extra = MyStrings.aOrAn(it.getName()) + " ";
+        }
+        return  extra + it.getName();
     }
 }

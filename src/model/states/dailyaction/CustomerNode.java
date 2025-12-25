@@ -68,7 +68,7 @@ public class CustomerNode extends DailyActionNode {
                 return null;
             }
 
-            String line = "I'm looking for " + GameState.getNameWithArticle(customer.getItem()) +
+            String line = "I'm looking for " + Item.getNameWithArticle(customer.getItem()) +
                     ", but this shop never gets it in stock.";
 
             customerSay(line);

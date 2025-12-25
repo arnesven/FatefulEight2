@@ -376,15 +376,4 @@ public abstract class GameState implements GameStateConstants {
                     name + "'!\n" + LogView.DEFAULT_COLOR);
         }
     }
-
-    // TODO: Move to Item, (breaks save)
-    public static String getNameWithArticle(Item it) {
-        String extra = "";
-        if (it instanceof Spell) {
-            extra = "a spell, ";
-        } else {
-            extra = MyStrings.aOrAn(it.getName()) + " ";
-        }
-        return  extra + it.getName();
-    }
 }
