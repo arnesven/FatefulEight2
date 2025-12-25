@@ -3,10 +3,12 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.ItemDeck;
 import model.items.PotionRecipe;
 import model.items.potions.*;
 import model.items.spells.AlchemySpell;
 import model.items.spells.Spell;
+import util.Arithmetics;
 import util.MyLists;
 import util.MyPair;
 import view.party.DrawableObject;
@@ -23,37 +25,13 @@ public class PotionsView extends SelectableListMenu {
     private static final int COLUMN_WIDTH = 14;
     private static final int ROW_HEIGHT = 9;
 
-    private static final List<String> headers = List.of("Basic Drafts", "Condition Remedies", "Attribute Boosters", "Miscellaneous");
+    private List<String> headers;
+    private List<List<MyPair<Potion, Integer>>> allLists;
 
-    private List<MyPair<Potion, Integer>> basicPotions = List.of(
-            new MyPair<>(new HealthPotion(), 0),
-            new MyPair<>(new StaminaPotion(), 0),
-            new MyPair<>(new RejuvenationPotion(), 0));
-
-    private List<MyPair<Potion, Integer>> conditionRemedies = List.of(
-            new MyPair<>(new AntidotePotion(), 0),
-            new MyPair<>(new RevivingElixir(), 0),
-            new MyPair<>(new AntiParalysisPotion(), 0)
-    );
-
-    private List<MyPair<Potion, Integer>> attributePotions = List.of(
-            new MyPair<>(new StrengthPotion(), 0),
-            new MyPair<>(new DexterityPotion(), 0),
-            new MyPair<>(new CharismaPotion(), 0),
-            new MyPair<>(new WitsPotion(), 0));
-
-    private List<MyPair<Potion, Integer>> miscPotions = List.of(
-            new MyPair<>(new InvisibilityPotion(), 0),
-            new MyPair<>(new SleepingPotion(), 0),
-            new MyPair<>(new UnstablePotion(), 0),
-            new MyPair<>(new CommonPoison(), 0)
-    );
-
-    private List<List<MyPair<Potion, Integer>>> allLists =
-            List.of(basicPotions, conditionRemedies, attributePotions, miscPotions);
     private Set<String> recipes;
     private int otherPotionsCount;
     private Spell alchemy;
+    private int currentTier = 0;
 
     public PotionsView(GameView previous) {
         super(previous, VIEW_WIDTH, VIEW_HEIGHT);
@@ -64,12 +42,51 @@ public class PotionsView extends SelectableListMenu {
         super.transitionedTo(model);
         countPotions(model);
         findRecipes(model);
+
         Spell templateAlchemy = new AlchemySpell();
         alchemy = MyLists.find(model.getParty().getLearnedSpells(), sp -> sp.getName().equals(templateAlchemy.getName()));
         if (alchemy == null) {
             alchemy = MyLists.find(model.getParty().getSpells(), sp -> sp.getName().equals(templateAlchemy.getName()));
         }
         setSelectedRow(findFirstNonZeroRow());
+    }
+
+    private List<List<MyPair<Potion, Integer>>> makeAllLists(Model model) {
+        List<MyPair<Potion, Integer>> conditionRemedies = List.of(
+                new MyPair<>(new AntidotePotion(), 0),
+                new MyPair<>(new RevivingElixir(), 0),
+                new MyPair<>(new AntiParalysisPotion(), 0)
+        );
+
+        List<MyPair<Potion, Integer>> attributePotions = List.of(
+                new MyPair<>(new StrengthPotion(), 0),
+                new MyPair<>(new DexterityPotion(), 0),
+                new MyPair<>(new CharismaPotion(), 0),
+                new MyPair<>(new WitsPotion(), 0));
+
+        List<MyPair<Potion, Integer>> miscPotions = List.of(
+                new MyPair<>(new InvisibilityPotion(), 0),
+                new MyPair<>(new SleepingPotion(), 0),
+                new MyPair<>(new UnstablePotion(), 0),
+                new MyPair<>(new CommonPoison(), 0)
+        );
+
+        return List.of(makeBasicPotionsList(model), conditionRemedies, attributePotions, miscPotions);
+    }
+
+    private List<MyPair<Potion, Integer>> makeBasicPotionsList(Model model) {
+        Potion health = new HealthPotion();
+        Potion rejuv = new RejuvenationPotion();
+        if (currentTier > 0) {
+            health = (Potion)health.makeHigherTierCopy(currentTier);
+            rejuv = (Potion)rejuv.makeHigherTierCopy(currentTier);
+        }
+
+        List<MyPair<Potion, Integer>> basicPotions = List.of(
+                new MyPair<>(health, 0), // IF standard tier > 0, these should be higher tier.
+                new MyPair<>(new StaminaPotion(), 0),
+                new MyPair<>(rejuv, 0));
+        return basicPotions;
     }
 
     private int findFirstNonZeroRow() {
@@ -127,8 +144,8 @@ public class PotionsView extends SelectableListMenu {
                                 MyColors.WHITE, MyColors.BLUE, false));
                     }
                     String[] parts = pair.first.getName().split(" ");
-                    if (parts.length > 1) {
-                        decorations.add(new TextDecoration(parts[1], xStart + drawPos.x, yStart + drawPos.y + 7,
+                    for ( int i = 1; i < parts.length; ++i) {
+                        decorations.add(new TextDecoration(parts[i], xStart + drawPos.x, yStart + drawPos.y + 6 + i,
                                 MyColors.LIGHT_GRAY, MyColors.BLUE, false));
                     }
                 } else {
@@ -145,7 +162,7 @@ public class PotionsView extends SelectableListMenu {
             row++;
             col = 0;
         }
-        decorations.add(new TextDecoration("Other Potions: " + otherPotionsCount,
+        decorations.add(new TextDecoration("Other Potions: " + otherPotionsCount + ", (F3 = Change Tier)",
                 xStart + 1, yStart + VIEW_HEIGHT-1, MyColors.WHITE, MyColors.BLUE, false));
         return decorations;
     }
@@ -206,7 +223,9 @@ public class PotionsView extends SelectableListMenu {
 
     private void countPotions(Model model) {
         System.out.println("Counting potions");
-        clearCounts();
+        otherPotionsCount = 0;
+        allLists = makeAllLists(model);
+        headers = List.of("Basic Drafts, (tier " + currentTier + ")", "Condition Remedies", "Attribute Boosters", "Miscellaneous");
         Map<String, MyPair<Potion, Integer>> countMap = new HashMap<>();
 
         for (List<MyPair<Potion, Integer>> subList : allLists) {
@@ -225,18 +244,13 @@ public class PotionsView extends SelectableListMenu {
 
     }
 
-    private void clearCounts() {
-        otherPotionsCount = 0;
-        for (List<MyPair<Potion, Integer>> subList : allLists) {
-            for (MyPair<Potion, Integer> pair : subList) {
-                pair.second = 0;
-            }
-        }
-    }
-
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
+            currentTier = Arithmetics.incrementWithWrap(currentTier, Item.TIER_PREFIXES.length);
+            countPotions(model);
+            madeChanges();
+        }
     }
 
     @Override
