@@ -58,4 +58,21 @@ public class MyRandom {
     public static double nextDouble() {
         return random.nextDouble();
     }
+
+    public static int rollObD6(int number) {
+        if (number == 0) {
+            return 0;
+        }
+        int rerolls = 0;
+        int sum = 0;
+        for (int i = 0; i < number; ++i) {
+            int roll = rollD6();
+            if (roll == 6){
+                rerolls++;
+            } else {
+                sum += roll;
+            }
+        }
+        return sum + rollObD6(rerolls);
+    }
 }
