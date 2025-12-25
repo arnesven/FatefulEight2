@@ -72,21 +72,20 @@ public class PotionsView extends SelectableListMenu {
                 new MyPair<>(new CommonPoison(), 0)
         );
 
-        return List.of(makeBasicPotionsList(model), conditionRemedies, attributePotions, miscPotions);
+        return List.of(makeBasicPotionsList(), conditionRemedies, attributePotions, miscPotions);
     }
 
-    private List<MyPair<Potion, Integer>> makeBasicPotionsList(Model model) {
-        Potion health = new HealthPotion();
-        Potion rejuv = new RejuvenationPotion();
-        if (currentTier > 0) {
-            health = (Potion)health.makeHigherTierCopy(currentTier);
-            rejuv = (Potion)rejuv.makeHigherTierCopy(currentTier);
-        }
-
+    private List<MyPair<Potion, Integer>> makeBasicPotionsList() {
         List<MyPair<Potion, Integer>> basicPotions = List.of(
-                new MyPair<>(health, 0), // IF standard tier > 0, these should be higher tier.
+                new MyPair<>(new HealthPotion(), 0),
                 new MyPair<>(new StaminaPotion(), 0),
-                new MyPair<>(rejuv, 0));
+                new MyPair<>(new RejuvenationPotion(), 0));
+        if (currentTier > 0) {
+            basicPotions = List.of(
+                    new MyPair<>((Potion)new HealthPotion().makeHigherTierCopy(currentTier), 0), // IF standard tier > 0, these should be higher tier.
+                    new MyPair<>((Potion)new StaminaPotion().makeHigherTierCopy(currentTier), 0),
+                    new MyPair<>((Potion)new RejuvenationPotion().makeHigherTierCopy(currentTier), 0));
+        }
         return basicPotions;
     }
 
@@ -135,7 +134,7 @@ public class PotionsView extends SelectableListMenu {
                             xStart + drawPos.x + 5, yStart + drawPos.y + 2,
                             MyColors.WHITE, MyColors.BLUE, false));
                     if (hasAlchemy()) {
-                        decorations.add(new TextDecoration("Cost " + AlchemySpell.calcCost(pair.first, hasRecipe(pair.first)),
+                        decorations.add(new TextDecoration(AlchemySpell.calcCost(pair.first, hasRecipe(pair.first)) + " " + (char)0x12,
                                 xStart + drawPos.x + 5, yStart + drawPos.y + 3,
                                 MyColors.WHITE, MyColors.BLUE, false));
                     }

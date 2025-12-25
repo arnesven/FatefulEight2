@@ -19,10 +19,7 @@ import view.subviews.AlchemySubView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.SubView;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AlchemySpell extends ImmediateSpell {
     private static final Sprite SPRITE = new GreenSpellSprite(1, false);
@@ -143,14 +140,20 @@ public class AlchemySpell extends ImmediateSpell {
             });
             state.waitForReturnSilently();
         }
-        for (Potion p : model.getParty().getInventory().getPotions()) {
+        List<Potion> potionsSortedByLength = new ArrayList<>(model.getParty().getInventory().getPotions());
+        potionsSortedByLength.sort(Comparator.comparingInt(o -> o.getName().length()));
+        potionsSortedByLength = potionsSortedByLength.reversed();
+        for (Potion p : potionsSortedByLength) {
             if (selected[0].contains(p.getName())) {
                 this.selectedPotion = p;
                 this.ingredientCost = standardCostForPotion(p);
                 break;
             }
         }
-        for (PotionRecipe recipe : model.getParty().getPotionRecipes()) {
+        List<PotionRecipe> recipesSortedByLength = new ArrayList<>(model.getParty().getPotionRecipes());
+        recipesSortedByLength.sort(Comparator.comparingInt(r -> r.getName().length()));
+        recipesSortedByLength = recipesSortedByLength.reversed();
+        for (PotionRecipe recipe : recipesSortedByLength) {
             if (selected[0].contains(recipe.getBrewable().getName())) {
                 this.selectedPotion = recipe.getBrewable();
                 this.ingredientCost = recipeCost(recipe.getBrewable());

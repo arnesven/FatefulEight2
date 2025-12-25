@@ -72,7 +72,11 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     private void doCombatWithMonster(Model model, ExploreRuinsState exploreRuinsState, boolean surprise) {
-        exploreRuinsState.print(enemies.get(0).getName() + "s attack you! Press enter to continue.");
+        if (surprise) {
+            exploreRuinsState.print("You attack the " + enemies.get(0).getName() + "! Press enter to continue.");
+        } else {
+            exploreRuinsState.print(enemies.get(0).getName() + "s attack you! Press enter to continue.");
+        }
         exploreRuinsState.waitForReturn();
 
         CombatEvent combat = new CombatEvent(model, enemies, exploreRuinsState.getCombatTheme(),
