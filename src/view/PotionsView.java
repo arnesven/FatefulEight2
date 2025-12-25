@@ -31,7 +31,7 @@ public class PotionsView extends SelectableListMenu {
     private Set<String> recipes;
     private int otherPotionsCount;
     private Spell alchemy;
-    private int currentTier = 0;
+    private int currentTier;
 
     public PotionsView(GameView previous) {
         super(previous, VIEW_WIDTH, VIEW_HEIGHT);
@@ -40,6 +40,7 @@ public class PotionsView extends SelectableListMenu {
     @Override
     public void transitionedTo(Model model) {
         super.transitionedTo(model);
+        currentTier = model.getItemDeck().getStandardItemTier();
         countPotions(model);
         findRecipes(model);
 
@@ -225,7 +226,7 @@ public class PotionsView extends SelectableListMenu {
         System.out.println("Counting potions");
         otherPotionsCount = 0;
         allLists = makeAllLists(model);
-        headers = List.of("Basic Drafts, (tier " + currentTier + ")", "Condition Remedies", "Attribute Boosters", "Miscellaneous");
+        headers = List.of("Basic Drafts (Tier " + currentTier + ")", "Condition Remedies", "Attribute Boosters", "Miscellaneous");
         Map<String, MyPair<Potion, Integer>> countMap = new HashMap<>();
 
         for (List<MyPair<Potion, Integer>> subList : allLists) {
@@ -247,7 +248,7 @@ public class PotionsView extends SelectableListMenu {
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
-            currentTier = Arithmetics.incrementWithWrap(currentTier, Item.TIER_PREFIXES.length);
+            currentTier = Arithmetics.incrementWithWrap(currentTier, Item.TIER_PREFIXES.length + 1);
             countPotions(model);
             madeChanges();
         }

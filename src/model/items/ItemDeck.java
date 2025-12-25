@@ -410,4 +410,8 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(new CalixaberSword(), new SwordOfVigor(), new StaffOfDeimosItem(),
                 new LightningJavelins(), new AxeOfDismemberment());
     }
+
+    public int getStandardItemTier() {
+        return standardTier;
+    }
 }

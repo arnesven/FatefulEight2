@@ -9,12 +9,13 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class HealthPotion extends Potion {
-    private static final Sprite SPRITE = new ItemSprite(13, 7, MyColors.WHITE, MyColors.DARK_RED);
+    private static final MyColors POTION_COLOR = MyColors.DARK_RED;
+    private static final Sprite SPRITE = new ItemSprite(13, 7, MyColors.WHITE, POTION_COLOR);
     private static final Sprite[] higherTierSprites = new ItemSprite[]{
-            new ItemSprite(10, 6, MyColors.WHITE, MyColors.DARK_RED),
-            new ItemSprite(11, 6, MyColors.WHITE, MyColors.DARK_RED),
-            new ItemSprite(12, 6, MyColors.WHITE, MyColors.DARK_RED),
-            new ItemSprite(13, 6, MyColors.WHITE, MyColors.DARK_RED),
+            new ItemSprite(10, 6, MyColors.WHITE, POTION_COLOR),
+            new ItemSprite(11, 6, MyColors.WHITE, POTION_COLOR),
+            new ItemSprite(12, 6, MyColors.WHITE, POTION_COLOR),
+            new ItemSprite(13, 6, MyColors.WHITE, POTION_COLOR),
     };
     private final int tier;
 
