@@ -28,8 +28,8 @@ public class WizardClass extends CharacterClass {
                         new WeightedSkill(Skill.Logic, 5),
                         new WeightedSkill(Skill.MagicBlack, 2),
                         new WeightedSkill(Skill.MagicBlue, 4),
-                        new WeightedSkillMinus(Skill.MagicGreen, 4),
                         new WeightedSkill(Skill.MagicRed, 2),
+                        new WeightedSkillMinus(Skill.MagicWhite, 4),
                         new WeightedSkill(Skill.Mercantile, 2),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkillPlus(Skill.Search, 2),
@@ -83,7 +83,7 @@ public class WizardClass extends CharacterClass {
 
     @Override
     public String getDescription() {
-        return "Wizards are the masters of magic. Apart from white magic, wizards are vastly knowledgeable about " +
+        return "Wizards are the masters of magic. Apart from green magic, wizards are vastly knowledgeable about " +
                 "different types of magic. They are also highly intelligent, and are often academics or scholars. " +
                 "While not very apt as leaders, they have no difficulty handling social interactions.";
     }

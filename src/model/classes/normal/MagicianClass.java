@@ -27,7 +27,7 @@ public class MagicianClass extends CharacterClass {
                         new WeightedSkill(Skill.Entertain, 5),
                         new WeightedSkill(Skill.Logic, 4),
                         new WeightedSkill(Skill.MagicBlue, 4),
-                        new WeightedSkill(Skill.MagicWhite, 3),
+                        new WeightedSkill(Skill.MagicRed, 3),
                         new WeightedSkill(Skill.Mercantile, 3),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 4),
@@ -98,7 +98,7 @@ public class MagicianClass extends CharacterClass {
     @Override
     public String getDescription() {
         return "Magicians are individuals who mostly use magic as a form of entertainment. However, should " +
-                "the need arise, the can cast spells to protect themselves. They are often charismatic and do " +
+                "the need arise, they can cast spells to defend themselves. They are often charismatic and do " +
                 "well in social contexts. It is not unheard of that magician also take jobs of the less " +
                 "reputable variety.";
     }
