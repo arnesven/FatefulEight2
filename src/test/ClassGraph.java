@@ -4,6 +4,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import util.MyLists;
 import util.MyRandom;
+import util.MyStrings;
 
 import java.util.*;
 
@@ -27,101 +28,101 @@ public class ClassGraph extends ArrayList<CharacterClass> {
     */
 
 
-    private static final List<CharacterClass> BEST_SOLUTION_SO_FAR = List.of(
-            Classes.FOR, Classes.MIN, Classes.BBN, Classes.DRU, Classes.PRI,
-            Classes.NOB, Classes.BRD, Classes.THF, Classes.ASN, Classes.MAR,
-            Classes.CAP, Classes.PAL, Classes.BKN, Classes.SOR, Classes.WIZ,
-            Classes.ART, Classes.MAG, Classes.SPY, Classes.WIT, Classes.AMZ);
-
-    /*
-    Best so far:
-         MIN--------BBN-------- D
+        /*
+    New Best so far:
+         AMZ-------- F --------MIN
         /   \        |       /    \
-       /     PAL----BKN----SOR     \
+       /     MAR---- C ----PAL     \
       /     /                 \     \
-    F ---- C                  WIZ----PRI
+   WIT----ASN                 BKN----BBN
     |      |                   |      |
-   MAR----AMZ                 ART---- N
+   SPY---- T                  SOR---- D
       \     \                 /     /
-       \     WIT----SPY----MAG     /
+       \     BRD----MAG----WIZ     /
         \   /        |        \   /
-         ASN-------- T --------BRD
-    Total cost: 742
+         ART-------- N --------PRI
+Cost: 734
+Alternatively, (for the same cost) the lower left corner can be arranged like this:
+
+       \     ART----MAG----
+        \   /        |
+          N --------BRD--
 
     */
 
-    private static final List<CharacterClass> CONTENDER = List.of(
-            Classes.PRI, Classes.DRU, Classes.BBN, Classes.MIN, Classes.FOR,
-            Classes.AMZ, Classes.WIT, Classes.SPY, Classes.NOB, Classes.BRD,
-            Classes.WIZ, Classes.SOR, Classes.BKN, Classes.PAL, Classes.CAP,
-            Classes.MAR, Classes.ASN, Classes.THF, Classes.ART, Classes.MAG);
+    private static final List<CharacterClass> BEST_SOLUTION_SO_FAR = List.of(
+            Classes.WIT, Classes.AMZ, Classes.FOR, Classes.MIN, Classes.BBN,
+            Classes.DRU, Classes.PRI, Classes.NOB, Classes.ART, Classes.SPY,
+            Classes.ASN, Classes.MAR, Classes.CAP, Classes.PAL, Classes.BKN,
+            Classes.SOR, Classes.WIZ, Classes.MAG, Classes.BRD, Classes.THF);
 
     /*
-          D --------BBN--------MIN
+    Other variants:
+         WIZ--------SOR--------BKN
         /   \        |       /    \
-       /     SOR----BKN----PAL     \
+       /     PRI---- D ----BBN     \
       /     /                 \     \
-   PRI----WIZ                  C ---- F
+   MAG----BRD                 MIN----PAL
     |      |                   |      |
-   BRD----MAG                 MAR----AMZ
+   ART---- N                   F ---- C
       \     \                 /     /
-       \     ART---- T ----ASN     /
+       \      T ----ASN----MAR     /
         \   /        |        \   /
-          N --------SPY--------WIT
-    Cost: 743
+         SPY--------WIT--------AMZ
+Cost: 735
 
-          C --------AMZ--------ASN
+         MAR-------- C --------PAL
         /   \        |       /    \
-       /      F ----MAR----SPY     \
+       /     AMZ---- F ----MIN     \
       /     /                 \     \
-   PAL----MIN                 ART---- T
+   ASN----WIT                 BBN----BKN
     |      |                   |      |
-   BKN----BBN                  N ----BRD
+    T ----SPY                 SOR---- D
       \     \                 /     /
-       \      D ----WIT----PRI     /
+       \     ART----MAG----WIZ     /
         \   /        |        \   /
-         SOR--------WIZ--------MAG
-    Cost: 743
+          N --------BRD--------PRI
+Cost: 746
 
-         BBN-------- D --------WIT
+          T --------ASN--------WIT
         /   \        |       /    \
-       /     BKN----SOR----SPY     \
+       /     SPY----MAR----AMZ     \
       /     /                 \     \
-   MIN----PAL                 ART----WIZ
+   BRD----MAG                  D ----SOR
     |      |                   |      |
-    F ---- C                  MAG----PRI
+   PRI----WIZ                  C ----BKN
       \     \                 /     /
-       \     MAR---- T ----BRD     /
+       \     ART----MIN----PAL     /
         \   /        |        \   /
-         AMZ--------ASN-------- N
-    Cost: 753
+          N -------- F --------BBN
+Cost: 772
 
-         ASN--------AMZ-------- C
+         PAL-------- C --------AMZ
         /   \        |       /    \
-       /     SPY----MAR---- F      \
+       /     MIN---- F ----MAR     \
       /     /                 \     \
-    T ----BRD                 MIN----PAL
+   BKN----BBN                  T ----ASN
     |      |                   |      |
-    N ----PRI                 BBN----BKN
+   SOR---- D                  BRD----MAG
       \     \                 /     /
-       \     MAG----WIZ---- D      /
+       \     WIT----WIZ----PRI     /
         \   /        |        \   /
-         ART--------WIT--------SOR
-    Cost: 757
+         SPY--------ART-------- N
+Cost: 762
 
-         BKN--------PAL-------- C
+         SOR--------MAG--------BRD
         /   \        |       /    \
-       /      D ----BBN----MIN     \
+       /     WIZ----PRI---- N      \
       /     /                 \     \
-   SOR----WIT                  F ----MAR
+    D ----WIT                 SPY---- T
     |      |                   |      |
-   PRI----WIZ                 ASN----AMZ
+   MAR----AMZ                 ART----ASN
       \     \                 /     /
-       \     MAG----BRD---- T      /
+       \      F ----BBN----MIN     /
         \   /        |        \   /
-          N --------ART--------SPY
-    Cost: 761
-     */
+          C --------PAL--------BKN
+Cost: 785
+    */
 
     private final HashMap<CharacterClass, Integer> indices;
     private final ClassDiffCostTable costTable;
@@ -220,6 +221,14 @@ public class ClassGraph extends ArrayList<CharacterClass> {
         System.out.printf("               %2d         %2d\n", cost(8, 7), cost(7, 6));
     }
 
+
+    private void printAsList() {
+        System.out.println("private static final List<CharacterClass> list = List.of(");
+        System.out.print(MyStrings.makeString(this, cls ->
+                "Classes." + cls.getShortName() + ", "));
+        System.out.println(");");
+    }
+
     private int cost(int cl1, int cl2) {
         return costTable.get(get(cl1)).get(get(cl2));
     }
@@ -258,10 +267,11 @@ public class ClassGraph extends ArrayList<CharacterClass> {
         System.out.println("Total cost: " + total);
         classGraph.printNoCosts();
         System.out.println("Press return to start.");
-        new Scanner(System.in).nextLine();
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
 
         boolean betterFound = false;
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 2000000; i++) { // 1000000
             ClassGraph copy = classGraph.copy();
             int steps = MyRandom.randInt(3) + MyRandom.randInt(3) + 1;
             if (steps == 5) {
@@ -298,6 +308,80 @@ public class ClassGraph extends ArrayList<CharacterClass> {
             System.out.println("Cost: " + total);
         } else {
             System.out.println("No better solution found.");
+        }
+
+        do {
+            System.out.println("1 = Rotate Clockwise");
+            System.out.println("2 = Rotate Counter-Clockwise");
+            System.out.println("3 = Invert");
+            System.out.println("4 = Swap inner/outer");
+            System.out.println("9 = Quit");
+            int op = scanner.nextInt();
+            if (op == 9) {
+                break;
+            }
+            if (op == 1) {
+                classGraph.rotateClockwise();
+            }
+            if (op == 2) {
+                classGraph.rotateCounterClockwise();
+            }
+            if (op == 3) {
+                classGraph.invert();
+            }
+            if (op == 4) {
+                classGraph.swapInnerOuter();
+            }
+            classGraph.printNoCosts();
+
+        } while (true);
+        System.out.println("Cost: " + total);
+        classGraph.printAsList();
+    }
+
+    private void rotateClockwise() {
+        CharacterClass elem9 = get(9);
+        CharacterClass elem19 = get(19);
+
+        remove(elem9);
+        remove(elem19);
+
+        add(0, elem9);
+        add(10, elem19);
+    }
+
+    private void rotateCounterClockwise() {
+        CharacterClass elem0 = get(0);
+        CharacterClass elem10 = get(10);
+
+        remove(elem0);
+        remove(elem10);
+
+        add(9, elem0);
+        add(19, elem10);
+    }
+
+    private void invert() {
+        CharacterClass[] arr = this.toArray(CharacterClass[]::new);
+        clear();
+        for (int i = 4; i >= 0; --i) {
+            add(arr[i]);
+        }
+        for (int i = 9; i >= 5; --i) {
+            add(arr[i]);
+        }
+        for (int i = 14; i >= 10; --i) {
+            add(arr[i]);
+        }
+        for (int i = 19; i>= 15; --i) {
+            add(arr[i]);
+        }
+    }
+
+    private void swapInnerOuter() {
+        for (int i = 0; i < 10; ++i) {
+            CharacterClass first = removeFirst();
+            add(first);
         }
     }
 }
