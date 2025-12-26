@@ -73,6 +73,10 @@ public class ExploreRuinsState extends GameState {
         getCurrentRoom().entryTrigger(model, this);
         do {
             waitForReturnSilently();
+            model.handleCastSpells();
+            if (model.getSubView() != subView) {
+                model.setSubView(subView);
+            }
             DungeonObject selected = matrix.getSelectedElement();
             selected.doAction(model, this);
             populateMatrix();

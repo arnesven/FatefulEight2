@@ -26,7 +26,7 @@ public class CombineSpell extends AuxiliarySpell {
     private static final String COMBINE_COMBAT_SPELL_NAME = "COMBO";
     private static final Sprite SPRITE = new ColorlessSpellSprite(2, true);
     private List<Spell> combinedResult = null;
-
+    // TODO: Masteries for combine does not show up in Spell View (since this is not a Mastery Spell?)
     public CombineSpell() {
         super(SPELL_NAME, 68, COLORLESS, 5, 0);
     }
@@ -36,7 +36,7 @@ public class CombineSpell extends AuxiliarySpell {
     }
 
     public static String getMagicExpertTips() {
-        return "Combine is a very powerful spell. A master of combine can more than two spells.";
+        return "Combine is a very powerful spell. A master of combine can combine more than two spells.";
     }
 
     @Override

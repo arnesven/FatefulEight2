@@ -22,7 +22,7 @@ public class WerewolfFormCondition extends Condition {
     private static final Sprite SPRITE = CharSprite.make((char)(0xD7), MyColors.PURPLE, MyColors.BLACK, MyColors.CYAN);
     private final RegenerationCondition regenCondition;
     private AvatarSprite avatar;
-
+    // TODO: This condition does not increase damage of the character
     public WerewolfFormCondition(GameCharacter basedOn, int regen) {
         super("Werewolf Form", "WWF");
         setDuration(WerewolfFormSpell.TURNS);

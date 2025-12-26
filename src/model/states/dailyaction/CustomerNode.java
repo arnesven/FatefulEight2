@@ -1,13 +1,17 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.items.Item;
+import model.items.clothing.Clothing;
+import model.items.weapons.Weapon;
 import model.states.GameState;
 import model.states.dailyaction.shops.ShopCustomer;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.sprites.Sprite;
+import view.sprites.WeaponPairSprite;
 import view.subviews.ShopInteriorSubView;
 
 import java.awt.*;
@@ -90,7 +94,19 @@ public class CustomerNode extends DailyActionNode {
                         customer.setDealMade(true);
                         this.completeAchievement(ShopCustomer.ACHIEVEMENT_KEY);
                         customerSay("Thanks a bunch!");
-                        leaderSay("Use " + MyStrings.itOrThem(itemName) + " well.");
+                        if (!model.getParty().getLeader().hasPersonality(PersonalityTrait.rude) &&
+                            !model.getParty().getLeader().hasPersonality(PersonalityTrait.unkind)) {
+                            if (MyRandom.flipCoin()) {
+                                leaderSay("Use " + MyStrings.itOrThem(itemName) + " well.");
+                            } else if (foundInParty instanceof Weapon) {
+                                leaderSay("Be careful with " + MyStrings.itOrThem(itemName) +
+                                        ", " + MyStrings.itsOrTheyre(itemName) + " sharp.");
+                            } else if (foundInParty instanceof Clothing) {
+                                leaderSay("I hope it fits you.");
+                            } else {
+                                leaderSay("You're welcome.");
+                            }
+                        }
                         return null;
                     }
                 }

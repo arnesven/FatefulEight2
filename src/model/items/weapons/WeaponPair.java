@@ -13,10 +13,7 @@ import view.GameView;
 import view.MyColors;
 import view.YesNoMessageView;
 import view.party.SelectableListMenu;
-import view.sprites.AvatarItemSprite;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.Sprite;
-import view.sprites.WeaponPairSprite;
+import view.sprites.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +34,17 @@ public class WeaponPair extends Weapon {
                 weapon1.getSkill(), makeDamageTable(weapon1, weapon2));
         this.mainHand = weapon1;
         this.offHand = weapon2;
-        this.sprite = new WeaponPairSprite(getName(), (PairableWeapon) weapon1, (PairableWeapon) weapon2);
+        WeaponPairSprite baseSprite = new WeaponPairSprite(getName(), (PairableWeapon) weapon1, (PairableWeapon) weapon2);
+
+//        int tier1 = weapon1 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon1).getTier() : 0;
+//        int tier2 = weapon2 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon2).getTier() : 0;
+//        int thisTier = Math.max(tier1, tier2);
+//        if (thisTier > 0) { // TODO: Bring this back (breaks save)
+//            sprite = new HigherTierItemSprite(baseSprite, thisTier);
+//        } else {
+            sprite = baseSprite;
+//        }
+
     }
 
     private static int[] makeDamageTable(Weapon weapon1, Weapon weapon2) {

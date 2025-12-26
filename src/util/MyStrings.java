@@ -103,6 +103,13 @@ public class MyStrings {
         return "it";
     }
 
+    public static String itsOrTheyre(String itemName) {
+        if (itemName.endsWith("s")) {
+            return "they're";
+        }
+        return "it's";
+    }
+
     public static String padRight(String s, char c, int desiredLength) {
         if (s.length() >= desiredLength) {
             return s;

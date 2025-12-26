@@ -91,6 +91,7 @@ public class AlchemySpell extends ImmediateSpell {
                     state.print("You have enough ingredients to brew " + maxNumber + " " + selectedPotion.getName() + ", do you want to brew more than one? (Y/N) ");
                     if (state.yesNoInput()) {
                         brewMultiple(state, selectedPotion, maxNumber);
+                        // FEATURE: Show brew count in subview
                         return true;
                     }
                 }

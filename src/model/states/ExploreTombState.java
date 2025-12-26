@@ -10,6 +10,7 @@ public class ExploreTombState extends ExploreRuinsState {
     }
 
     private static RuinsDungeon savedOrNewDungeon(Model model, String name) {
+        // FEATURE: If you don't have it, add task for clearing the two tombs in the extended part of the map
         if (model.hasVisitedDungeon(name)) {
             return model.getDungeon(name, true);
         }
