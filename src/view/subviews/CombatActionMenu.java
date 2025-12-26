@@ -42,9 +42,11 @@ public class CombatActionMenu extends ArrowMenuSubView {
 
     @Override
     protected void enterPressed(Model model, int cursorPos) {
+        System.out.println("Enter pressed, cursorPos=" + cursorPos + ", action size=" + actions.size());
         if (cursorPos < actions.size()) {
             CombatAction selectedAction = actions.get(cursorPos);
             if (selectedAction.hasInnerMenu()) {
+                System.out.println("Setting inner action menu for " + selectedAction.getName());
                 List<CombatAction> innerActions = selectedAction.getInnerActions(model);
                 int newY = y+cursorPos*2;
                 if (inverter) {
@@ -53,6 +55,7 @@ public class CombatActionMenu extends ArrowMenuSubView {
                 model.setSubView(new CombatActionMenu(this, innerActions, toStringList(innerActions), x+2, newY,
                         anchor, combatEvent, target, combatSubView));
             } else {
+                System.out.println("Final action reached. Unblocking combat");
                 combatEvent.unblock(selectedAction, target);
                 model.setSubView(combatSubView);
             }
