@@ -18,6 +18,11 @@ public class WardCondition extends Condition {
         return false;
     }
 
+//    @Override // TODO: And should be removed after 2 turns.
+//    public boolean removeAtEndOfCombat() {
+//        return true;
+//    }
+
     @Override
     public Sprite getSymbol() {
         return CONDITION_SPRITE;

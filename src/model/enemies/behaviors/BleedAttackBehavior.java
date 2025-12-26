@@ -5,9 +5,12 @@ import model.characters.GameCharacter;
 import model.combat.conditions.BleedingCondition;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
+import sprites.CombatSpeechBubble;
 import util.MyRandom;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.SlashStrikeEffectSprite;
+
+import java.util.List;
 
 public class BleedAttackBehavior extends EnemyAttackBehavior {
     private final int chance;
@@ -30,6 +33,9 @@ public class BleedAttackBehavior extends EnemyAttackBehavior {
             if (target.hasCondition(BleedingCondition.class)) {
                 combatEvent.println(target.getName() + " is bleeding!");
                 model.getTutorial().enemyAttacks(model);
+                combatEvent.partyMemberSay(target, MyRandom.sample(List.of("I'm bleeding.",
+                        "That's a deep cut.", "Ouch - blood!", "A bleeding wound!")));
+                combatEvent.addSpecialEffect(target, new CombatSpeechBubble());
             } else {
                 combatEvent.println(target.getName() + " does not start bleeding from the attack.");
             }
