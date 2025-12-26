@@ -6,13 +6,9 @@ import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import sound.SoundEffects;
-import sprites.CombatSpeechBubble;
 import util.MyPair;
 import view.MyColors;
-import view.sprites.AnimationManager;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
+import view.sprites.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -125,12 +121,7 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
     }
 
     protected void addCallout(int length, Point p) {
-        otherEffects.add(new MyPair<>(new TavernSpeechBubble(length), convertToScreen(p)));
+        otherEffects.add(new MyPair<>(new NonCombatSpeechBubble(length), convertToScreen(p)));
     }
 
-    private static class TavernSpeechBubble extends CombatSpeechBubble {
-        public TavernSpeechBubble(int lengthOfLine) {
-            setAnimationDelay(lengthOfLine / 4);
-        }
-    }
 }

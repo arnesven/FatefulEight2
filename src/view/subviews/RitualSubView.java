@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.states.events.RitualEvent;
+import sprites.CombatSpeechBubble;
 import util.Arithmetics;
 import util.MyPair;
 import view.MyColors;
@@ -12,6 +13,7 @@ import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class RitualSubView extends SubView implements Animation {
     private double tempBeamProgress = 0.0;
     private boolean ritualSuccess = false;
     private boolean cursorEnabled;
+    private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
 
     public RitualSubView(CombatTheme theme, RitualEvent ritual, MyColors magicColor) {
         this.theme = theme;
@@ -63,6 +66,7 @@ public class RitualSubView extends SubView implements Animation {
         drawBeams(model);
         drawBystanders(model);
         drawInitiativeOrder(model);
+        drawOtherEffects(model);
         if (cursorEnabled) {
             drawCursor(model);
         }
@@ -108,8 +112,8 @@ public class RitualSubView extends SubView implements Animation {
 
     private ParticleSprite getSpriteForAngle(double angle) {
         double v = Math.PI / 2 - angle;
-        int row = (int)Math.floor((v / Math.PI) * (angledBeams.length + 1));
-        if (row == angledBeams.length + 1) {
+        int row = (int)Math.floor((v / Math.PI)  * (angledBeams.length + 1));
+        if (row >= angledBeams.length) {
             row = 0;
         }
         return angledBeams[row];
@@ -160,6 +164,16 @@ public class RitualSubView extends SubView implements Animation {
             model.getScreenHandler().put(xPosStart + col, Y_MAX - 1 ,
                     CombatSubView.getInitiativeSymbol(combatant, model));
             col += 2;
+        }
+    }
+
+    private void drawOtherEffects(Model model) {
+        for (MyPair<RunOnceAnimationSprite, Point> effect : new ArrayList<>(otherEffects)) {
+            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first, 3);
+            if (effect.first.isDone()) {
+                otherEffects.remove(effect);
+                AnimationManager.unregister(effect.first);
+            }
         }
     }
 
@@ -279,5 +293,9 @@ public class RitualSubView extends SubView implements Animation {
 
     public void setCursorEnabled(boolean b) {
         this.cursorEnabled = b;
+    }
+
+    public void addCallout(GameCharacter gc, int lineLength) {
+        addSpecialEffect(gc, new NonCombatSpeechBubble(lineLength));
     }
 }

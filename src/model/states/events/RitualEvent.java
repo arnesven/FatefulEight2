@@ -3,6 +3,7 @@ package model.states.events;
 import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -114,6 +115,9 @@ public abstract class RitualEvent extends DailyEventState {
             print(turnTaker.getName() + "'s turn. ");
             if (getNumberOfBeams(turnTaker) > 0) {
                 println(turnTaker.getFirstName() + " takes damage from maintaining the beam.");
+                participantSay(turnTaker, subView, MyRandom.sample(List.of(
+                        "This is tough!", "Ugh!", "Straining.", "I can't do this forever.",
+                        "Ouch!", "Gnnnn!")));
                 takeBeamDamage(turnTaker, subView);
                 model.getLog().waitForAnimationToFinish();
             }
@@ -124,6 +128,8 @@ public abstract class RitualEvent extends DailyEventState {
                 if (!model.getParty().getPartyMembers().contains(turnTaker)) {
                     if (MyRandom.rollD10() > COMMAND_NPC_CHANCE){
                         subView.setCursorEnabled(false);
+                        participantSay(turnTaker, subView,
+                                MyRandom.sample(List.of("My turn!", "I've got an idea!", "I know what to do!", "Just let me...")));
                         print(heOrSheCap(turnTaker.getGender()) + " acts of " + hisOrHer(turnTaker.getGender()) +
                                 " own volition! ");
                         model.getLog().waitForAnimationToFinish();
@@ -145,9 +151,11 @@ public abstract class RitualEvent extends DailyEventState {
         if (ritualFailed()) {
             beams.clear();
             println("The ritual has failed");
+            participantSay(MyRandom.sample(ritualists), subView, MyRandom.sample(List.of("Oh no...",
+                    "Darn it. We failed.", "We gave it our best, but...", "Impossible.")));
         } else if (ritualSucceeded()) {
-            // TODO: Show callout from one of the mages
-            // Let bystanders comment. Also in fail above.
+            participantSay(MyRandom.sample(ritualists), subView, MyRandom.sample(List.of("We did it!",
+                    "The ritual is complete!", "Fantastic!", "Wonderful, we managed it.", "Hooray!")));
             subView.setRitualSuccess(true);
             println("The ritual has succeeded!");
         }
@@ -159,6 +167,15 @@ public abstract class RitualEvent extends DailyEventState {
         CollapsingTransition.transition(model, prevSubView);
         ClientSoundManager.playBackgroundMusic(previous);
         runEventOutro(model, !ritualFailed(), ritualists.size() - 4);
+    }
+
+    private void participantSay(GameCharacter turnTaker, RitualSubView subView, String s) {
+        if (getModel().getParty().getPartyMembers().contains(turnTaker)) {
+            partyMemberSay(turnTaker, s);
+        } else {
+            printQuote(turnTaker.getName(), s);
+            subView.addCallout(turnTaker, s.length());
+        }
     }
 
     private void stepNextTurnTaker() {
@@ -211,7 +228,7 @@ public abstract class RitualEvent extends DailyEventState {
             if (selected == 0) {
                 done = tryToCastBeam(model, subView, subView.getSelected());
             } else if (selected == 1) {
-                done = swapWithNeighbor(model, p);
+                done = swapWithNeighbor(model, p, subView);
             } else if (selected == 2) {
                 dropOut(turnTaker, subView);
                 done = true;
@@ -241,6 +258,8 @@ public abstract class RitualEvent extends DailyEventState {
 
     private void dropOut(GameCharacter dropOut, RitualSubView subView) {
         println(dropOut.getName() + " drops out of the ritual.");
+        participantSay(dropOut, subView, MyRandom.sample(List.of("I... I can't hold it!", "Aaargh!",
+                "I'm out!", "I'm exhausted.", "I've got no energy left.")));
         if (dropOut == subView.getSelected()) {
             subView.resetSelected();
         }
@@ -297,7 +316,11 @@ public abstract class RitualEvent extends DailyEventState {
         }
 
         println(turnTaker.getName() + " attempts to cast a beam onto " + receiver.getName() + ".");
-
+        if (MyRandom.flipCoin()) {
+            participantSay(turnTaker, subView, MyRandom.sample(List.of(
+                    receiver.getFirstName() + "!", "Here it comes!", "Heads up " + receiver.getFirstName() + "!",
+                    "Here I go.", "Get ready!", "Casting!", "Are you ready " + receiver.getFirstName() + "?")));
+        }
         SkillCheckResult result;
         if (model.getParty().getPartyMembers().contains(turnTaker)) {
             result = model.getParty().doSkillCheckWithReRoll(model, this, turnTaker, primeMagicSkill,
@@ -353,10 +376,30 @@ public abstract class RitualEvent extends DailyEventState {
             addBeam(sender, receiver);
             println("A ritual beam was successfully established between " + sender.getFirstName() +
                     " and " + receiver.getFirstName() + ".");
+            if (MyRandom.flipCoin()) {
+                participantSay(receiver, subView, MyRandom.sample(List.of("Got it!", "Yes!", "It's holding - for now.",
+                        "I'm holding it!")));
+            }
+            if (sender.hasPersonality(PersonalityTrait.friendly) || sender.hasPersonality(PersonalityTrait.encouraging)) {
+                participantSay(sender, subView, MyRandom.sample(List.of("Nice catch " + receiver.getFirstName() + "!",
+                        "Good job " + receiver.getFirstName() + "!", "That's it!", "Nice one!", "Alright!")));
+            }
         } else {
             println(receiver.getName() + " couldn't hold the beam, and it dissipates.");
             subView.addSpecialEffect(receiver, new MiscastEffectSprite());
             SoundEffects.playSpellFail();
+            if (MyRandom.flipCoin()) {
+                participantSay(receiver, subView, MyRandom.sample(List.of("Darn.", "Shoot.", "Sorry!",
+                        "Awww! Almost had it.")));
+                if (sender.hasPersonality(PersonalityTrait.encouraging)) {
+                    participantSay(sender, subView, MyRandom.sample(List.of("That's okay. We can still make it.",
+                            "Don't worry " + receiver.getFirstName() + "!", "Don't sweat it. We'll have another shot at it.")));
+                }
+            }
+            if (sender.hasPersonality(PersonalityTrait.critical) || sender.hasPersonality(PersonalityTrait.unkind)) {
+                participantSay(sender, subView, MyRandom.sample(List.of("Come on " + receiver.getFirstName() + "!",
+                        "You've got to do better.", "Pitiful.", "Typical.", "Not good enough.")));
+            }
         }
     }
 
@@ -374,13 +417,15 @@ public abstract class RitualEvent extends DailyEventState {
         this.beams.add(new MyPair<>(sender, receiver));
     }
 
-    private boolean swapWithNeighbor(Model model, Point p) {
+    private boolean swapWithNeighbor(Model model, Point p, RitualSubView subView) {
         List<String> directionOptions = List.of("Clockwise", "Counter-Clockwise", "Back");
         int direction = multipleOptionArrowMenu(model, p.x+3, p.y+3,
                 directionOptions);
         if (direction == 2) {
             return false;
         }
+        participantSay(turnTaker, subView,
+                MyRandom.sample(List.of("We need to reposition.", "Swap places with me.", "If I stand here...")));
         swapWithNeighborInDirection(direction);
         return true;
     }

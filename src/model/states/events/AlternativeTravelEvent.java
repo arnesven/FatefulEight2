@@ -11,6 +11,7 @@ import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.EmptySubView;
 import view.subviews.MapSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -50,7 +51,7 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
         if (wideMap) {
             this.oldView = model.getView();
             model.transitionToDialog(new WideSubviewView());
-            mapSubView = new ExplicitTravelSubView(model, 12);
+            mapSubView = new ExplicitTravelSubView(model, WideSubviewView.SUBVIEW_WIDTH);
             CollapsingTransition.wideTransition(model, mapSubView);
         } else {
             mapSubView = new ExplicitTravelSubView(model);
@@ -67,10 +68,11 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
             selectedPos = selectDirection(model, mapSubView);
             model.getWorld().setAlternativeAvatar(null);
             mapSubView.setAvatarEnabled(false);
+            int mapWidth = wideMap ? WideSubviewView.SUBVIEW_WIDTH : MapSubView.MAP_WIDTH_HEXES;
             mapSubView.addMovementAnimation(
                     sprite,
-                    model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                    model.getWorld().translateToScreen(selectedPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                    model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), mapWidth, MapSubView.MAP_HEIGHT_HEXES),
+                    model.getWorld().translateToScreen(selectedPos, model.getParty().getPosition(), mapWidth, MapSubView.MAP_HEIGHT_HEXES));
             mapSubView.waitForAnimation();
         }
         if (wideMap) {

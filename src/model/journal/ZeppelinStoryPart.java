@@ -1,5 +1,6 @@
 package model.journal;
 
+import control.FatefulEight;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
@@ -18,6 +19,7 @@ import model.states.ShopState;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.events.AlternativeTravelEvent;
 import model.states.events.RitualEvent;
+import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -438,7 +440,10 @@ public class ZeppelinStoryPart extends StoryPart {
         private boolean checkForRitual(Model model) {
             GameCharacter willis = model.getMainStory().getWillisCharacter();
             boolean willisInParty = model.getParty().getPartyMembers().contains(willis);
-
+            if (FatefulEight.inDebugMode() && !willisInParty) {
+                willisInParty = MyLists.any(model.getParty().getPartyMembers(),
+                        gc -> gc.getName().equals("Willis Johanssen"));
+            }
             if (!willisInParty) {
                 return false;
             }

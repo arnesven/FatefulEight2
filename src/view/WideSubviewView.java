@@ -4,6 +4,8 @@ import model.Model;
 
 public class WideSubviewView extends MainGameView {
 
+    public static final int SUBVIEW_WIDTH = 12;
+
     public WideSubviewView() {
         setAllowLogChange(false);
     }
