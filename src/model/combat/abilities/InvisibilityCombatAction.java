@@ -36,14 +36,14 @@ public class InvisibilityCombatAction extends SpecialAbilityCombatAction impleme
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().invisibility(model);
-        SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE);
+        SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE, DIFFICULTY);
         String targetString = target.getName();
         if (performer == target) {
             targetString = GameState.himOrHer(performer.getGender()) + "self";
         }
         combat.println(performer.getFirstName() + " attempts Invisibility on " + targetString + ", " +
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
-        if (result.getModifiedRoll() < DIFFICULTY || target.hasCondition(InvisibilityCondition.class)) {
+        if (result.isFailure() || target.hasCondition(InvisibilityCondition.class)) {
             combat.println("But it failed.");
         } else {
             int turns = (result.getModifiedRoll() - DIFFICULTY + 3) / 3;
