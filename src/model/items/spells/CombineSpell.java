@@ -39,6 +39,12 @@ public class CombineSpell extends AuxiliarySpell {
         return "Combine is a very powerful spell. A master of combine can combine more than two spells.";
     }
 
+    //  TODO: Should not be able to make a scroll of combine? (breaks save)
+    // @Override
+    // public boolean canExistsAsScroll() {
+    //     return false;
+    // }
+
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;

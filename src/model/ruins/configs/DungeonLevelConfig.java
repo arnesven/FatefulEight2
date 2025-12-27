@@ -160,7 +160,7 @@ public class DungeonLevelConfig implements Serializable {
 
         if (roll < chests) {
             room.addObject(new DungeonChest(random));
-        } else if (roll < chests + levers) {
+        } else if (roll < chests + levers) { // FEATURE: Add workbench?
             LeverObject lever = new LeverObject(random);
             room.addObject(lever);
             dungeonLevel.getRoom(dungeonLevel.getDescentPoint()).connectLeverToDoor(lever);

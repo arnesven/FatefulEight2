@@ -397,7 +397,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
                 portraitSay("Hey you! You running around in here?");
                 leaderSay("Something like that. What are you lot up to?");
                 portraitSay("We're busting out of here soon.");
-                leaderSay("The guards look tough, you really thin you can take them down?");
+                leaderSay("The guards look tough, you really think you can take them down?");
                 portraitSay("Heh, yeah, but we've been keeping busy... look at these.");
                 println("The prisoners pull out a few makeshift weapons, put together from " +
                         "odd pieces of wood and metal fragments.");

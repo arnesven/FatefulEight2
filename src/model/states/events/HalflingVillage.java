@@ -37,7 +37,7 @@ public class HalflingVillage extends DailyEventState {
                 foundVillage(model, gc);
                 return;
             }
-        }
+        } // FEATURE: sells Halfling heavy armor, also in merchant event if merchant is halfling
         showEventCard("Halfling Village",
                 "The party stumbles upon a little miniature village. " +
                 "The halflings quickly race for their dwellings and promptly shut their doors and windows.");
