@@ -12,7 +12,7 @@ public class CharterBoatAtDocks extends GoTheDocksNode {
 
     public CharterBoatAtDocks(Model model) {
         super(model);
-    }
+    } // TODO: Can this action be taken in the evening?
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {

@@ -110,10 +110,8 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
             eq.setWeapon(MyRandom.sample(List.of(new Longsword(), new RaidersAxe(), new Broadsword(), new BattleAxe())));
             eq.setClothing(MyRandom.sample(List.of(new PlateMailArmor(), new ChainMail(), new Brigandine(), new LeatherArmor())));
             eq.setAccessory(MyRandom.sample(List.of(new Buckler(), new LargeShield(), new KiteShield(), new SpikedShield())));
-            GameCharacter viking = new GameCharacter("Viking", "", appearance.getRace(), Classes.PRI, appearance,
+            GameCharacter viking = new GameCharacter("Viking", "", appearance.getRace(), Classes.VIKING, appearance,
                     Classes.NO_OTHER_CLASSES, eq);
-            GameState.makeRandomCharacter(4, Race.NORTHERN_HUMAN);
-            viking.setClass(Classes.VIKING);
             viks.add(viking);
         }
         return viks;
