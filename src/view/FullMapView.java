@@ -26,8 +26,8 @@ public class FullMapView extends GameView {
     private final GameView previousView;
     private TopText topText = new FullMapTopText();
     private World worldToDraw;
-    private int viewType = 0;
-    private MapFilter currentFilter = null;
+    private int viewType = 1;
+    private MapFilter currentFilter = new ShowLocationNamesFilter();
     private int maxViews;
 
     public FullMapView(GameView previous, Point startCursorPos) {
