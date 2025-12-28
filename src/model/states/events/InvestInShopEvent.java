@@ -42,6 +42,7 @@ public class InvestInShopEvent extends DailyEventState {
         int days = model.getSettings().getMiscCounters().get(INVEST_DAY_PREFIX + hqLocation);
         int investment = model.getSettings().getMiscCounters().get(INVEST_GOLD_PREFIX + hqLocation);
         if ((model.getDay() + 1 - days) % 7 == 0) {
+            resetDayInvested(model);
             return calcProfit(model, days, investment);
         }
         return 0;
@@ -83,6 +84,7 @@ public class InvestInShopEvent extends DailyEventState {
             if (profit == 0) {
                 portraitSay("Yes, but there hasn't been enough time to turn a profit yet. Please return again later.");
             } else {
+                resetDayInvested(model);
                 if (profit < 10) {
                     portraitSay("Yes, somewhat. Here is your share.");
                 } else if (profit < 50) {
@@ -119,7 +121,14 @@ public class InvestInShopEvent extends DailyEventState {
     }
 
     private static int calcProfit(Model model, int days, int investment) {
-        return (int)Math.floor(Math.pow(model.getDay() - days, EXPONENT) * investment / 100.0);
+        int dayCount = model.getDay() - days;
+        if (dayCount < 3) {
+            return 0;
+        }
+        if (dayCount < 8) {
+            return (dayCount * investment) / 10;
+        }
+        return (int)Math.floor(dayCount / 7.0 * investment);
     }
 
     private static boolean hasInvestmentHere(Model model) {
@@ -188,6 +197,13 @@ public class InvestInShopEvent extends DailyEventState {
             UrbanLocation urb = (UrbanLocation) model.getCurrentHex().getLocation();
             model.getSettings().getMiscCounters().put(INVEST_DAY_PREFIX + urb.getPlaceName(), model.getDay());
             model.getSettings().getMiscCounters().put(INVEST_GOLD_PREFIX + urb.getPlaceName(), investment);
+        }
+    }
+
+    private static void resetDayInvested(Model model) {
+        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
+            UrbanLocation urb = (UrbanLocation) model.getCurrentHex().getLocation();
+            model.getSettings().getMiscCounters().put(INVEST_DAY_PREFIX + urb.getPlaceName(), model.getDay());
         }
     }
 

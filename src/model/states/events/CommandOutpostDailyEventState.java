@@ -271,7 +271,6 @@ public class CommandOutpostDailyEventState extends DailyEventState {
 
             }
             if (equipment != null) {
-                // TODO: Make higher tier if it should be.
                 equipment.addYourself(model.getParty().getInventory());
             }
         }
