@@ -167,28 +167,10 @@ public class LogView extends GameView {
              this.scroll += 20;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
              this.scroll = Math.max(this.scroll - 20, 0);
-        } else if (keyEvent.isControlDown() && keyEvent.getKeyCode() == KeyEvent.VK_P) {
-            printToFile(model);
         }
 
          if (model.getLog().isAcceptingInput()) {
             model.getLog().keyTyped(keyEvent, model);
-        }
-    }
-
-    private void printToFile(Model model) {
-        try {
-            Date date = new Date();
-            String fileName = "ff8_log_" + date.toString() + ".txt";
-            fileName = fileName.replace(' ', '_');
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-            for (String s : model.getLog().getContents()) {
-                writer.write(s);
-            }
-            writer.close();
-            model.transitionToDialog(new SimpleMessageView(model.getView(), "Log written to " + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

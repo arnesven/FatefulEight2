@@ -1,5 +1,8 @@
 package model.combat.conditions;
 
+import model.Model;
+import model.combat.Combatant;
+import model.states.GameState;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -8,9 +11,11 @@ import view.sprites.Sprite;
 
 public class WardCondition extends Condition {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD1), MyColors.WHITE, MyColors.PURPLE, MyColors.CYAN);
+    private int turnsLeft;
 
     public WardCondition() {
         super("Ward", "WRD");
+        this.turnsLeft = 2;
     }
 
     @Override
@@ -18,10 +23,18 @@ public class WardCondition extends Condition {
         return false;
     }
 
-//    @Override // TODO: And should be removed after 2 turns.
-//    public boolean removeAtEndOfCombat() {
-//        return true;
-//    }
+    @Override
+    public boolean removeAtEndOfCombat() {
+        return true;
+    }
+
+    @Override
+    public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
+        turnsLeft--;
+        if (turnsLeft == 0) {
+            comb.removeCondition(WardCondition.class);
+        }
+    }
 
     @Override
     public Sprite getSymbol() {

@@ -21,17 +21,24 @@ public class WerewolfFormCondition extends Condition {
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD7), MyColors.PURPLE, MyColors.BLACK, MyColors.CYAN);
     private final RegenerationCondition regenCondition;
+    private final int attackBonus;
     private AvatarSprite avatar;
     // TODO: This condition does not increase damage of the character
-    public WerewolfFormCondition(GameCharacter basedOn, int regen) {
+    public WerewolfFormCondition(GameCharacter basedOn, int magnitude) {
         super("Werewolf Form", "WWF");
         setDuration(WerewolfFormSpell.TURNS);
-        this.regenCondition = new RegenerationCondition(999, regen);
+        this.regenCondition = new RegenerationCondition(999, magnitude);
+        this.attackBonus = magnitude;
         if (basedOn != null) {
             this.avatar = new AvatarSprite(basedOn.getRace(), 0x2E0,
                     MyColors.DARK_GRAY, basedOn.getRace().getColor(), MyColors.LIGHT_GRAY,
                     CharacterAppearance.noHair(), CharacterAppearance.noHair());
         }
+    }
+
+    @Override
+    public int getAttackBonus() {
+        return attackBonus;
     }
 
     @Override
