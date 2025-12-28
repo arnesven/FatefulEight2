@@ -29,7 +29,7 @@ public class DungeonMaker {
                     new PurpleCaveTheme(), new RedCaveTheme(),
                     new BlueCaveTheme(), new GreenCaveTheme());
     private static final List<DungeonTheme> ALL_HOUSE_THEMES =
-            List.of(new HouseDungeonTheme()); // TODO: Use this somewhere.
+            List.of(new HouseDungeonTheme());
     private static final List<DungeonTheme> ALL_RUINS_THEMES =
             List.of(new BlueAndGrayRuinsTheme(),
             new GreenAndRedDungeonTheme(), new PurpleAndBlackTheme(),

@@ -12,10 +12,13 @@ public class CharterBoatAtDocks extends GoTheDocksNode {
 
     public CharterBoatAtDocks(Model model) {
         super(model);
-    } // TODO: Can this action be taken in the evening?
+    }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        if (state.isEvening()) {
+            return super.getDailyAction(model, state);
+        }
         return new CharterBoatState(model);
     }
 
