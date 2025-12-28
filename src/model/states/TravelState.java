@@ -230,7 +230,7 @@ public class TravelState extends GameState {
             GameState state = river.run(model);
             if (state instanceof GameOverState) {
                 return state;
-            } if (river.eventPreventsCrossing(model)) {
+            } if (river.isCrossingPrevented(model)) {
                 setCurrentTerrainSubview(model);
                 return state;
             }

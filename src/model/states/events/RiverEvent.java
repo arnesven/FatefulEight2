@@ -21,10 +21,18 @@ public abstract class RiverEvent extends DailyEventState {
 
     public static SubView subView = new ImageSubView("river", "RIVER", "You are attempting to cross the river.", true);
     private final boolean levitate;
+    private boolean levitatedAcross = false;
 
     public RiverEvent(Model model, boolean levitateAcross) {
         super(model);
         this.levitate = levitateAcross;
+    }
+
+    public final boolean isCrossingPrevented(Model model) {
+        if (levitatedAcross) {
+            return false;
+        }
+        return eventPreventsCrossing(model);
     }
 
     public abstract boolean eventPreventsCrossing(Model model);
@@ -35,7 +43,8 @@ public abstract class RiverEvent extends DailyEventState {
         if (levitate && levitateSpell != null) {
             print("Would you like to attempt to levitate the party across the river? (Y/N) ");
             if (yesNoInput()) {
-                levitateAcross(model, levitateSpell); // TODO: eventPreventsCrossing may still return false though...
+                levitatedAcross = true;
+                levitateAcross(model, levitateSpell);
                 return;
             }
         }
@@ -47,10 +56,18 @@ public abstract class RiverEvent extends DailyEventState {
         List<GameCharacter> charsToLevitate = new ArrayList<>(model.getParty().getPartyMembers());
 
         GameCharacter caster = model.getParty().getPartyMember(0);
-        while (!charsToLevitate.isEmpty()) {
+        while (!charsToLevitate.isEmpty()) { // FEATURE: Subview which shows which chars are on what side.
             println("There are still " + charsToLevitate.size() + " party member(s) to levitate across the river.");
-            print("Who do you want to levitate across the river? "); // TODO: Make it more clear who is on which side of the river
-            GameCharacter target = model.getParty().partyMemberInput(model, this, charsToLevitate.get(0));
+            GameCharacter target;
+            do {
+                print("Who do you want to levitate across the river? ");
+                target = model.getParty().partyMemberInput(model, this, charsToLevitate.get(0));
+                if (charsToLevitate.contains(target)) {
+                    break;
+                } else {
+                    println(target.getName() + " is already on the other side of the river.");
+                }
+            } while (true);
             print("Who do you want to cast the levitate spell? ");
             caster = model.getParty().partyMemberInput(model, this, caster);
             boolean success = levitateSpell.castYourself(model, this, caster);

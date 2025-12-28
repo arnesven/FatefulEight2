@@ -68,7 +68,7 @@ public class MerchantEvent extends GeneralInteractionEvent {
         portraitSay("Please, I have lots of merchandise and I just know you adventurer types are always in " +
                 "need of something. Won't you please have a look?");
         ShopState.pressToEnterShop(this);
-        // TODO: Make this more random. Like 5-10 items which randomly have prices either +10, -2 or /2
+        // FEATURE: Make this more random. Like 5-10 items which randomly have prices either +10, -2 or /2
         ShopState merchantShop = new ShopState(model, "merchant", items,
                 new int[]{items.get(0).getCost()+10, items.get(1).getCost()+10,
                         items.get(2).getCost()-2, items.get(3).getCost()-2,
