@@ -26,7 +26,7 @@ public class WeaponPair extends Weapon {
 
     private final Weapon mainHand;
     private final Weapon offHand;
-    private final WeaponPairSprite sprite;
+    private final Sprite sprite;
     private int attackCounter = 0;
 
     public WeaponPair(Weapon weapon1, Weapon weapon2) {
@@ -36,15 +36,14 @@ public class WeaponPair extends Weapon {
         this.offHand = weapon2;
         WeaponPairSprite baseSprite = new WeaponPairSprite(getName(), (PairableWeapon) weapon1, (PairableWeapon) weapon2);
 
-//        int tier1 = weapon1 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon1).getTier() : 0;
-//        int tier2 = weapon2 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon2).getTier() : 0;
-//        int thisTier = Math.max(tier1, tier2);
-//        if (thisTier > 0) { // TODO: Bring this back (breaks save)
-//            sprite = new HigherTierItemSprite(baseSprite, thisTier);
-//        } else {
+        int tier1 = weapon1 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon1).getTier() : 0;
+        int tier2 = weapon2 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon2).getTier() : 0;
+        int thisTier = Math.max(tier1, tier2);
+        if (thisTier > 0) {
+            sprite = new HigherTierItemSprite(baseSprite, thisTier);
+        } else {
             sprite = baseSprite;
-//        }
-
+        }
     }
 
     private static int[] makeDamageTable(Weapon weapon1, Weapon weapon2) {

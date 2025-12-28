@@ -26,8 +26,6 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
         this.tier = tier;
     }
 
-    // TODO: Make not craftable (breaks save)
-
     private static int[] makeDamageTable(int[] damageTable, int tier) {
         List<Integer> list = new ArrayList<>();
         for (int i : damageTable) {
@@ -185,6 +183,6 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
 
     @Override
     public boolean isCraftable() {
-        return inner.isCraftable();
+        return false;
     }
 }
