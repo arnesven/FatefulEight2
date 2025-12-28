@@ -83,7 +83,7 @@ public class DollyEvent extends DailyEventState {
             } else {
                 int materialCost = Math.min(3, model.getParty().getInventory().getMaterials());
                 Item dummy = new DummyDollyItem();
-                result = CraftItemState.makeItemFromMaterials(model, this, dummy, materialCost, "craft", false);
+                result = CraftItemState.makeItemFromMaterials(model, this, dummy, materialCost, "craft", false, 1);
             }
             print("You present the crafted dolly to the child. ");
             if (result) {

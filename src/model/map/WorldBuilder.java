@@ -68,7 +68,7 @@ public class WorldBuilder {
             "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtsstopppMhMMxX",
             "stppptssppppbbspbbhpspsssppwbwhfpMhwbfsssssfffwwwwXXX",
             "pppppsspppppssssspppsssssssphwhpMMhhbsssssssfpfwoXxXX",
-            "ssppppsssppsshpsssssssppssshhhphhMhwwwwbsssspfwwwxxXX",
+            "ssppppsssppsshpsssssssipssshhhphhMhwwwwbsssspfwwwxxXX",
             "ssspppsssssshhhhhsssssssssfspwwpphpwwwMMbbwMypXXwXXXX",
             "spppsspppsphhphhhppfhpwswfwppMMwMffwwhpXXXXxxXXbXpxxX",
             "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMXddXXbXxXXdDDd",
@@ -132,6 +132,8 @@ public class WorldBuilder {
             return new DesertHills(roads, rivers, state);
         } else if (c == 'o') {
             return new DeepWoodsHex(roads, rivers, state);
+        } else if (c == 'i') {
+            return new IslandHex(roads, rivers, state);
         } else if (c == 'j') {
             return new JungleHex(roads, rivers, state);
         } else if (c == 'X') {
@@ -513,7 +515,6 @@ public class WorldBuilder {
     }
 
     private static void addMonastery(Map<Point, HexContents> contents) {
-        contents.put(FAITH_ISLAND_POSITION, new HexContents(new GrassCorner(), 0, 0));
         contents.put(MONASTERY_POSITION, new HexContents(new MonasteryLocation(), 0, 0));
     }
 

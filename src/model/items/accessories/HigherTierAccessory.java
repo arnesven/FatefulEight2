@@ -25,6 +25,8 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
         this.tier = tier;
     }
 
+    // TODO: Make not craftable (breaks save)
+
     @Override
     protected Sprite getSprite() {
         return sprite;

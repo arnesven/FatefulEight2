@@ -6,12 +6,12 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.*;
-import model.items.books.BookItem;
 import model.items.clothing.JustClothes;
 import model.items.designs.CraftingDesign;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.DailyActionState;
 import model.states.GameState;
+import util.MyLists;
 import util.MyRandom;
 import util.MyTriplet;
 import view.subviews.*;
@@ -21,6 +21,7 @@ import java.util.*;
 public class CraftItemState extends GameState {
 
     private static final Skill SALVAGE_SKILL = Skill.Labor;
+    private static final int CHANCE_TO_LEARN_DESIGN = 2;
 
     public CraftItemState(Model model) {
         super(model);
@@ -31,7 +32,7 @@ public class CraftItemState extends GameState {
         WorkbenchSubView subView = new WorkbenchSubView();
         CollapsingTransition.transition(model, subView);
         println("What would you like to do at the workbench?");
-        do { // FEATURE: Add improves: write name of item, make something randomly!
+        do { // FEATURE: Add improvise: write name of item, make something randomly!
             int selected = multipleOptionArrowMenu(model, 24, 26,
                     List.of("Craft Item", "Upgrade Item", "Salvage Item", "Cancel"));
             if (selected == 1) {
@@ -41,37 +42,24 @@ public class CraftItemState extends GameState {
             } else if (selected == 0) {
                 craftItem(model);
             } else {
-                return new DailyActionState(model);
+                return model.getCurrentHex().getDailyActionState(model);
             }
         } while (true);
     }
 
     private void craftItem(Model model) {
         model.getTutorial().crafting(model);
-        List<Item> allItems = getAllItems(model);
-        allItems.removeIf((Item it) -> it instanceof BookItem || it instanceof Scroll);
-        allItems.addAll(model.getParty().getLearnedCraftingDesigns());
-        allItems.sort((o1, o2) -> { // This should put crafting designs at the top of the list, important for later
-            int i1 = o1 instanceof CraftingDesign ? 0 : 1;
-            int i2 = o2 instanceof CraftingDesign ? 0 : 1;
-            return i1 - i2;
-        });
+        List<Item> allItems = getCraftableItems(model);
+
         if (allItems.isEmpty()) {
             println("You cannot craft since you do not have any suitable items or crafting designs.");
         }
 
-        Set<String> optionNames = new HashSet<>();
+        List<String> optionNames = new ArrayList<>();
         for (Item it : allItems) {
-            if (it instanceof CraftingDesign) {
-                int cost = calculateCost((CraftingDesign) it);
-                if (model.getParty().getInventory().getMaterials() >= cost) {
-                    optionNames.add(((CraftingDesign)it).getCraftableName() + " (d/" + cost + ")");
-                }
-            } else {
-                int cost = calculateCost(it);
-                if (model.getParty().getInventory().getMaterials() >= cost) {
-                    optionNames.add(it.getName() + " (" + cost + ")");
-                }
+            int cost = hasDesignFor(model, it) ? craftingDesignCost(it) : normalCraftCost(it);
+            if (model.getParty().getInventory().getMaterials() >= cost) {
+                optionNames.add(it.getName() + " (" + cost + ")");
             }
         }
         if (optionNames.isEmpty()) {
@@ -83,18 +71,53 @@ public class CraftItemState extends GameState {
             return;
         }
         SubView previous = model.getSubView();
-        model.setSubView(new CraftItemSubView(previous, triplet.first, triplet.second, triplet.third));
-        print("Are you sure you want to spend " + triplet.second +
-                " materials to attempt to craft " + triplet.first.getName() + "? (Y/N) ");
-        if (yesNoInput() && makeItemFromMaterials(model, this, triplet.first, triplet.second, "craft", triplet.third)) {
-            GameStatistics.incrementItemsCrafted(1);
-            model.getParty().addToInventory(triplet.first.copy());
+        CraftItemSubView subView = new CraftItemSubView(previous, triplet.first, triplet.second, triplet.third);
+        model.setSubView(subView);
+
+        int multiplier = 1;
+        if (triplet.second * 2 <= model.getParty().getInventory().getMaterials()) {
+            print("You have enough materials to craft more than one " + triplet.first.getName() + ", do you want to? (Y/N) ");
+            int max = model.getParty().getInventory().getMaterials() / triplet.second;
+            if (yesNoInput()) {
+                do {
+                    print("How many do you want to craft (max " + max + ")? ");
+                    try {
+                        multiplier = Integer.parseInt(lineInput());
+                    } catch (NumberFormatException nfe) {
+                        multiplier = 0;
+                    }
+                } while (multiplier <= 0 || multiplier > max);
+            }
+        }
+
+        if (multiplier > 1) {
+            subView.setMultiplier(multiplier);
+        }
+
+        print("Are you sure you want to spend " + (triplet.second * multiplier) +
+                " materials to attempt to craft " + multiplier + " " + triplet.first.getName() + "(s)? (Y/N) ");
+        if (yesNoInput() && makeItemFromMaterials(model, this, triplet.first, triplet.second, "craft", triplet.third, multiplier)) {
+            for (int i = 0; i < multiplier; ++i) {
+                GameStatistics.incrementItemsCrafted(1);
+                model.getParty().addToInventory(triplet.first.copy());
+                if (MyRandom.rollD10() <= CHANCE_TO_LEARN_DESIGN && !hasDesignFor(model, triplet.first)) {
+                    println("While crafting you've gained special insight! You got a crafting design for " + triplet.first.getName() + ".");
+                    model.getParty().getInventory().add(new CraftingDesign(triplet.first));
+                }
+            }
         }
         model.setSubView(previous);
     }
 
+    private boolean hasDesignFor(Model model, Item it) {
+        return MyLists.any(model.getParty().getInventory().getCraftingDesigns(),
+                cd -> cd.getCraftable().getName().equals(it.getName())) ||
+                MyLists.any(model.getParty().getLearnedCraftingDesigns(),
+                        cd -> cd.getCraftable().getName().equals(it.getName()));
+    }
+
     public static boolean makeItemFromMaterials(Model model, GameState state, Item selectedItem, Integer materialCost,
-                                                String actionName, boolean fromCraftingDesign) {
+                                                String actionName, boolean fromCraftingDesign, int multiplier) {
         GameCharacter crafter = null;
         if (model.getParty().size() > 1) {
             state.println("Which party member should attempt to " + actionName + " the " + selectedItem.getName() + "?");
@@ -120,13 +143,14 @@ public class CraftItemState extends GameState {
                 break;
             }
         }
-        model.getParty().getInventory().addToMaterials(-materialCost);
+        int cost = materialCost * multiplier;
+        model.getParty().getInventory().addToMaterials(-cost);
         if (failure) {
             state.println(crafter.getName() + " has failed to " + actionName + " " + selectedItem.getName() +
-                    " and wasted " + materialCost + " materials while doing so.");
+                    " and wasted " + cost + " materials while doing so.");
             return false;
         }
-        state.println(crafter.getName() + " used " + materialCost + " materials to " +
+        state.println(crafter.getName() + " used " + cost + " materials to " +
                 actionName + " " + selectedItem.getName() + "!");
         return true;
     }
@@ -135,39 +159,31 @@ public class CraftItemState extends GameState {
         return Math.min(4 + selectedItem.getCost() / 10, 16);
     }
 
-    private MyTriplet<Item, Integer, Boolean> getSelectedItem(Model model, Set<String> optionNames, List<Item> allItems) {
-        List<String> options = new ArrayList<>(optionNames);
+    private MyTriplet<Item, Integer, Boolean> getSelectedItem(Model model, List<String> options, List<Item> allItems) {
         options.add("Cancel");
         println("What item would you like to craft?");
         int chosen = showMenu(model, options);
         String selected = options.get(chosen);
         for (Item it : allItems) {
-            if (it instanceof CraftingDesign) {
-                if (selected.contains(((CraftingDesign) it).getCraftableName())) {
-                    Item it2 = ((CraftingDesign) it).getCraftable();
-                    return new MyTriplet<>(it2, calculateCost((CraftingDesign) it), true);
-                }
-            } else {
-                if (selected.contains(it.getName())) {
-                    return new MyTriplet<>(it, calculateCost(it), false);
-                }
+            boolean hasDesign = hasDesignFor(model, it);
+            Integer cost = hasDesign ? craftingDesignCost(it) : normalCraftCost(it);
+            if (selected.contains(it.getName())) {
+                return new MyTriplet<>(it, cost, hasDesign);
             }
         }
         return null; // Cancel chosen
     }
 
-    private Integer calculateCost(Item it) {
+    private Integer normalCraftCost(Item it) {
         return it.getCost() / 2;
     }
 
-    public static int calculateCost(CraftingDesign design) {
-        return design.getCraftable().getCost() / 3;
+    public static int craftingDesignCost(Item it) {
+        return it.getCost() / 3;
     }
 
-    private List<Item> getAllItems(Model model) {
-        List<Item> allItems = new ArrayList<>();
-        allItems.addAll(model.getParty().getInventory().getAllItems());
-        allItems.removeIf((Item it) -> !it.isCraftable());
+    private List<Item> getCraftableItems(Model model) {
+        List<Item> allItems = new ArrayList<>(model.getParty().getInventory().getAllItems());
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (!(gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon)) {
                 allItems.add(gc.getEquipment().getWeapon());
@@ -182,6 +198,14 @@ public class CraftItemState extends GameState {
         if (model.getParty().getInventory().getLockpicks() > 0) {
             allItems.add(new Lockpick());
         }
+        List<Item> itemsFromDesigns = MyLists.transform(
+                model.getParty().getInventory().getCraftingDesigns(), CraftingDesign::getCraftable);
+        itemsFromDesigns.addAll(MyLists.transform(
+                model.getParty().getLearnedCraftingDesigns(), CraftingDesign::getCraftable));
+        allItems.addAll(itemsFromDesigns);
+        allItems.removeIf((Item it) -> !it.isCraftable());
+        allItems = MyLists.uniqueify(allItems, Item::getName);
+        allItems.sort(Comparator.comparing(Item::getName));
         return allItems;
     }
 
@@ -311,7 +335,7 @@ public class CraftItemState extends GameState {
         print("Are you sure you want to attempt to upgrade " + selectedItem.getName() + " to " +
                 potentialItem.getName() + " (cost of " + selectedItem.getCost() + " materials)" +"? (Y/N) ");
         if (yesNoInput()) {
-            if (makeItemFromMaterials(model, this, selectedItem, selectedItem.getCost(), "upgrade", false)) {
+            if (makeItemFromMaterials(model, this, selectedItem, selectedItem.getCost(), "upgrade", false, 1)) {
                 GameStatistics.incrementItemsUpgraded(1);
                 model.getParty().removeFromInventory(selectedItem);
                 potentialItem.addYourself(model.getParty().getInventory());

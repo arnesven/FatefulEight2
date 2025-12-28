@@ -7,7 +7,7 @@ import java.util.List;
 public class TutorialCrafting extends ExpandableHelpDialog {
     private static final String TEXT =
             "During your travels you will collect many materials with which " +
-            "you may craft items. Items can be crafted at work benches which can " +
+            "you may craft items. Items can be crafted at workbenches which can " +
             "be found in towns and castles.\n\n" +
             "You can only craft items which are already in your inventory or currently " +
             "equipped to a party member. Spells and potions cannot be crafted. Crafting an item " +

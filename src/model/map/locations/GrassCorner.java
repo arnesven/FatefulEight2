@@ -1,22 +1,16 @@
 package model.map.locations;
 
-import model.Model;
 import model.map.HexLocation;
 import view.GameView;
 import view.MyColors;
 import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
-import view.subviews.ImageSubView;
-import view.subviews.SubView;
 
 public class GrassCorner extends HexLocation {
 
-    private final ImageSubView subView;
-
     public GrassCorner() {
         super("Island");
-        subView = new ImageSubView("island", "ISLAND", "You are on an island...", true);
     }
 
     @Override
@@ -31,7 +25,7 @@ public class GrassCorner extends HexLocation {
 
     @Override
     public boolean isDecoration() {
-        return false;
+        return true;
     }
 
     @Override
@@ -39,13 +33,4 @@ public class GrassCorner extends HexLocation {
         return new HelpDialog(view, "Island", "An island...");
     }
 
-    @Override
-    public SubView getImageSubView(Model model) {
-        return subView;
-    }
-
-    @Override
-    public boolean showNameOnMap() {
-        return false;
-    }
 }

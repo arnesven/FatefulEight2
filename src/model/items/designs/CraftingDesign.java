@@ -36,8 +36,8 @@ public class CraftingDesign extends WeightlessItem {
 
     @Override
     public boolean isCraftable() {
-        return true;
-    } // Enables crafting of the inner item
+        return false;
+    }
 
     @Override
     public boolean isSellable() {
@@ -52,7 +52,7 @@ public class CraftingDesign extends WeightlessItem {
     @Override
     public String getShoppingDetails() {
         return ", A crafting design of '" + craftable.getName() +
-                "', Material Cost: " + CraftItemState.calculateCost(this) +
+                "', Material Cost: " + CraftItemState.craftingDesignCost(this) +
                 ", Difficulty: " + CraftItemState.calculateDifficulty(craftable);
     }
 

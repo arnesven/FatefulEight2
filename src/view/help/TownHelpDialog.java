@@ -9,7 +9,7 @@ public class TownHelpDialog extends SubChapterHelpDialog {
             "or perhaps you yourself will be interfered with by local law enforcement.\n\n" +
             "Coastal towns often offer trips by sea to other towns, for a small fee. In some towns, there may even " +
             "be ships which can be chartered, so you can steer them anywhere you like.\n\n" +
-            "All towns have a communal work bench where you can tinker away to your hearts desire.";
+            "All towns have a communal workbench where you can tinker away to your hearts desire.";
 
     public TownHelpDialog(GameView view) {
         super(view, "Towns", TEXT);

@@ -11,7 +11,8 @@ public class TutorialCraftingDesigns extends SubChapterHelpDialog {
             "the probability of successfully crafting the item.\n\n" +
             "-The probability of successfully crafting the item (without re-rolls) can be " +
             "seen in an analysis dialog from the Inventory Menu.\n\n" +
-            "Crafting Designs can be learned permanently, see Learning.";
+            "Crafting Designs can be discovered when crafting and can also " +
+                    "be learned permanently, see Learning.";
 
     public TutorialCraftingDesigns(GameView view) {
         super(view, "Crafting Designs", TEXT);

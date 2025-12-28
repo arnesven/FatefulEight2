@@ -16,7 +16,7 @@ public abstract class WorkbenchTask extends DestinationTask {
     private final String verb;
 
     public WorkbenchTask(String verb) {
-        super(null, "Use the work bench in a town or castle to " + verb + " an item.");
+        super(null, "Use the workbench in a town or castle to " + verb + " an item.");
         this.verb = verb;
     }
 

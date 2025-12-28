@@ -5,6 +5,7 @@ import model.actions.DailyAction;
 import model.map.HexLocation;
 import model.states.DailyEventState;
 import model.states.dailyaction.BuyRationsState;
+import model.states.dailyaction.CraftItemState;
 import model.states.events.VisitMonasteryEvent;
 import view.GameView;
 import view.MyColors;
@@ -69,6 +70,7 @@ public class MonasteryLocation extends HexLocation {
         if (VisitMonasteryEvent.hasVisited(model)) {
             acts.add(new DailyAction("Talk to Monks", new VisitMonasteryEvent(model)));
             acts.add(new DailyAction("Buy Rations", new BuyRationsState(model)));
+            acts.add(new DailyAction("Use Workbench", new CraftItemState(model)));
         }
         return acts;
     }

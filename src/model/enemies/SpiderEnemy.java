@@ -17,7 +17,7 @@ public class SpiderEnemy extends BeastEnemy {
     }
 
     public SpiderEnemy(char a) {
-        this(a, "Spider", NORMAL, new ParalysisAttackBehavior(1));
+        this(a, "Spider", NORMAL, new ParalysisAttackBehavior(2));
     }
 
     @Override
