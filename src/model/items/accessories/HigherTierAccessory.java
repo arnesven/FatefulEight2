@@ -31,6 +31,11 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
     }
 
     @Override
+    public boolean supportsHigherTier() {
+        return tier < MAX_TIER;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return sprite;
     }

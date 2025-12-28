@@ -291,7 +291,7 @@ public class CraftItemState extends GameState {
     }
 
     private void upgradeItem(Model model) {
-        model.getTutorial().upgrading(model);
+        model.getTutorial().upgrading(model); // FEATURE: If design, upgrade cost is halved.
         List<Item> upgradeableItems = new ArrayList<>(model.getParty().getInventory().getWeapons());
         upgradeableItems.addAll(model.getParty().getInventory().getClothing());
         upgradeableItems.addAll(model.getParty().getInventory().getAccessories());

@@ -247,7 +247,7 @@ public class PotionsView extends SelectableListMenu {
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
-            currentTier = Arithmetics.incrementWithWrap(currentTier, Item.TIER_PREFIXES.length + 1);
+            currentTier = Arithmetics.incrementWithWrap(currentTier, Item.MAX_TIER + 1);
             countPotions(model);
             madeChanges();
         }

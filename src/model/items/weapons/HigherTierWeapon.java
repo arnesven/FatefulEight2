@@ -52,6 +52,11 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     }
 
     @Override
+    public boolean supportsHigherTier() {
+        return tier < MAX_TIER;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return sprite;
     }

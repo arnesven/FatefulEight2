@@ -28,6 +28,11 @@ public class HigherTierClothing extends Clothing implements HigherTierItem {
     }
 
     @Override
+    public boolean supportsHigherTier() {
+        return tier < MAX_TIER;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return sprite;
     }

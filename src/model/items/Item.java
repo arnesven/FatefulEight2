@@ -26,6 +26,7 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public static final Sprite EMPTY_ITEM_SPRITE = new ItemSprite(0xF, 0);
     public static final String[] TIER_PREFIXES = new String[]{"Fine", "Superior", "Premium", "Exquisite"};
+    public static final int MAX_TIER = TIER_PREFIXES.length;
     private final String name;
     private int cost;
 
@@ -35,8 +36,8 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     protected static String getHigherTierPrefix(int tier) {
-        if (tier > 4) {
-            tier = 4;
+        if (tier > MAX_TIER) {
+            tier = MAX_TIER;
         }
         return TIER_PREFIXES[tier-1];
     }
