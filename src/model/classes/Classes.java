@@ -45,6 +45,7 @@ public interface Classes {
             MAR, MIN, NOB, PAL, PRI, SOR, SPY, THF, WIZ, WIT};
 
     // NPC Classes:
+    CharacterClass ELDER = new ElderNPCClass();
     CharacterClass MAGE = new MageNPCClass();
     CharacterClass FARMER = new FarmerNPCClass();
     CharacterClass MERCHANT = new MerchantNPCClass();

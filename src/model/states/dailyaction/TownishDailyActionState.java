@@ -21,13 +21,17 @@ public class TownishDailyActionState extends AdvancedDailyActionState {
                                    boolean freeLodging, boolean freeRations) {
         super(model);
         this.urbanLocation = urbanLocation;
-        super.addNode(3, 4, new StayHereNode());
+        super.addNode(3, 4, makeStayHereNode());
         addTavernNode(model, freeLodging, urbanLocation);
         addTent(model, freeRations, urbanLocation);
         addNode(7, 2, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
         addTravelNodes(model, hasWaterAccess, urbanLocation);
         addShopsAndMore(model, urbanLocation);
+    }
+
+    protected DailyActionNode makeStayHereNode() {
+        return new StayHereNode();
     }
 
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {

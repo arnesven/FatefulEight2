@@ -19,6 +19,10 @@ public class JungleVillageDailyActionState extends TownishDailyActionState {
         blockPosition(p.x, p.y);
     }
 
+    protected DailyActionNode makeStayHereNode() {
+        return new JungleVillageStayHereNode();
+    }
+
     @Override
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
         addNode(4, 4, new JungleTavernNode(freeLodging));
@@ -28,5 +32,12 @@ public class JungleVillageDailyActionState extends TownishDailyActionState {
     protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
         super.addTravelNodes(model, hasWaterAccess, urbanLocation);
         addNode(3, 0, new CharterBoatAtDocks(model));
+    }
+
+    private static class JungleVillageStayHereNode extends StayHereNode {
+        @Override
+        public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+            // Intentionally left empty
+        }
     }
 }

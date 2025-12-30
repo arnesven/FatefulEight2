@@ -48,6 +48,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     private final int stealMoney;
     private final String interactText;
     private final List<Enemy> companions;
+    private final boolean canAttack;
 
     public enum ProvokedStrategy {
         ALWAYS_ESCAPE,
@@ -55,11 +56,16 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         FIGHT_TO_DEATH
     }
 
-    public GeneralInteractionEvent(Model model, String interactText, int stealMoney) {
+    public GeneralInteractionEvent(Model model, String interactText, int stealMoney, boolean canAttack) {
         super(model);
         this.interactText = interactText;
         this.stealMoney = stealMoney;
         this.companions = getVictimCompanions(model);
+        this.canAttack = canAttack;
+    }
+
+    public GeneralInteractionEvent(Model model, String interactText, int stealMoney) {
+        this(model, interactText, stealMoney, true);
     }
 
     @Override
@@ -120,7 +126,10 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
         while (true) {
             println("How would you like to interact with the " + victim + "?");
-            List<String> options = new ArrayList<>(List.of("Attack " + victim));
+            List<String> options = new ArrayList<>();
+            if (canAttack) {
+                options.add("Attack " + victim);
+            }
             if (withInteract) {
                 options.add(0, this.interactText + " " + victim);
             } else {
@@ -134,7 +143,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             if (chosen == 0) {
                 return false;
             }
-            if (chosen == 1) {
+            if (options.get(chosen).contains("Attack")) {
                 attack(victimChar, companions, strat, true);
                 return true;
             }
@@ -526,7 +535,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
                         "What kingdom is this?", "What can you tell me about these lands?")));
                 if (kingdomCastle == null) {
-                    portraitSay("This is the wilderness, far from the kingdoms of the world.");
+                    portraitSay(getRegionReply());
                 } else {
                     String kingdom = CastleLocation.placeNameToKingdom(kingdomCastle.getPlaceName());
                     portraitSay(MyRandom.sample(List.of("This is", "You are in")) + " the " + kingdom + ".");
@@ -537,10 +546,18 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             } else {
                 String key = options.get(chosen).replace("Ask about ", "");
                 MyPair<String, String> queryAndResponse = specificTopics.get(key);
-                leaderSay(queryAndResponse.first);
-                portraitSay(queryAndResponse.second);
+                specificTopicHook(model, queryAndResponse);
             }
         }
+    }
+
+    protected void specificTopicHook(Model model, MyPair<String, String> queryAndResponse) {
+        leaderSay(queryAndResponse.first);
+        portraitSay(queryAndResponse.second);
+    }
+
+    protected String getRegionReply() {
+        return "This is the wilderness, far from the kingdoms of the world.";
     }
 
     private void askAboutCustomTopic(Model model, GameCharacter victim) {
@@ -574,7 +591,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     private void askAboutNews(Model model, CastleLocation kingdomCastle) {
         leaderSay("Got any news to share?");
         if (kingdomCastle == null) {
-            portraitSay("Not much news out here. Haven't heard much in a while.");
+            portraitSay(getOutsideOfKingdomNews());
             return;
         }
         List<KingdomWar> warsForThisKingdom = getModel().getWarHandler().getWarsForKingdom(kingdomCastle);
@@ -612,6 +629,10 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                     "I've heard there are communities of dwarves that live down in caves. I wonder what that's like.",
                     "Ships travel regularly between most coastal towns. Why walk when you can sail?")));
         }
+    }
+
+    protected String getOutsideOfKingdomNews() {
+        return "Not much news out here. Haven't heard much in a while.";
     }
 
     protected boolean talkAboutFatue(Model model, CastleLocation kingdomCastle) {

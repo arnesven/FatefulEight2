@@ -2,21 +2,27 @@ package model.map.locations;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.classes.Classes;
+import model.mainstory.GainSupportOfJungleTribeTask;
 import model.map.HexLocation;
+import model.races.AllRaces;
+import model.races.Race;
+import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.EasternPalaceDailyActionState;
 import model.states.dailyaction.JungleVillageDailyActionState;
 import model.states.dailyaction.shops.GeneralShopNode;
+import model.states.events.*;
+import util.MyRandom;
 import view.GameView;
 import view.MyColors;
 import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
-import view.subviews.DailyActionSubView;
-import view.subviews.ImageSubView;
-import view.subviews.JungleVillageSubView;
-import view.subviews.SubView;
+import view.subviews.*;
 
 import java.awt.*;
 import java.util.List;
@@ -77,6 +83,11 @@ public class JungleVillageLocation extends TownishLocation {
     }
 
     @Override
+    public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        return new JungleVillageDailyActionState(model, this);
+    }
+
+    @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
         return new JungleVillageSubView(advancedDailyActionState, matrix, getName());
     }
@@ -84,6 +95,30 @@ public class JungleVillageLocation extends TownishLocation {
     @Override
     public int charterBoatEveryNDays() {
         return 0;
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        GainSupportOfJungleTribeTask task = GainSupportOfJungleTribeTask.getTask(model);
+        if (task != null) {
+            DailyEventState event = task.generateTribeCommonerEvent(model);
+            if (event != null) {
+                return event;
+            }
+        }
+        return MyRandom.sample(List.of(
+                new SmithEvent(model, Race.SOUTHERN_HUMAN),
+                new AmazonEvent(model),
+                new BarbarianEvent(model),
+                new FrogmenScoutsEvent(model),
+                new MarketEvent(model),
+                new MosquitoesEvent(model),
+                new MushroomsEvent(model),
+                new ShrineEvent(model),
+                new SpidersEvent(model),
+                new VeteranEvent(model, true, Race.SOUTHERN_HUMAN),
+                new MerchantEvent(model, true,
+                        PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.SOUTHERN_HUMAN))));
     }
 
     @Override

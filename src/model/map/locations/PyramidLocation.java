@@ -8,8 +8,8 @@ import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 
 public class PyramidLocation extends HexLocation {
-    public PyramidLocation() {
-        super("Pyramid");
+    public PyramidLocation(String name) {
+        super(name + " Pyramid");
     }
 
     @Override

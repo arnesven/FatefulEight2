@@ -219,7 +219,7 @@ public abstract class CharacterAppearance implements Serializable {
             }
         }
         if (FatefulEight.inDebugMode()) {
-            screenHandler.put(col, row, femaleGender ? CharSprite.FEMALE : CharSprite.MALE);
+            screenHandler.put(col, row, getGender() ? CharSprite.FEMALE : CharSprite.MALE);
         }
     }
 
@@ -344,7 +344,7 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     public boolean isFemale() {
-        return femaleGender;
+        return getGender();
     }
 
     public Sprite getNormalHair() {

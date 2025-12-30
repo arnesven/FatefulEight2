@@ -85,11 +85,11 @@ public class WorldBuilder {
             "sssssssssssssssssssssssssssssssMMwwwwwwwsssssssssssss",
             "ssssssssssssssssssssssssssssssMhMwwwwswwsssssssssssss",
             "dssssssssssdddssssssssssssssMphMhwhwhwwwsssssssssssss",
-            "jdsssddddddjjjdddssssddssssMhhwwhjjwhwwwdddssssssssdd",
+            "jdsssddddddjjjdddssssddssssMhhwwhpjwhwwwdddssssssssdd",
             "jjdddjjjjjjjjjpjjdpddjjJJjjJJwpjjwjjwjjjjjjddddsdddjj",
             "jjjjjjjjjjjjjjjjbjjbbJJJJJjjjbjjjjjwjjjjjjjddddsdjjjj",
             "jjjjjjjjjjjjjbjbjjjjjjjbJjjbjjjjbpjjjjjjjjdsssssdjjjj",
-            "jjjjjjjjjjjjjjdddjjbbjjjbJJjpbbjjjjbjjjjjdsssssssdjjj",
+            "jjjjjjjjjjjjjjdddjjbbjjjbJJjpbpjjjjbjjjjjdsssssssdjjj",
             "jjjjjjjjjjjjjdssbpjjjbbbbbbbJjjjjbjjjjjjjjjdssssssdjj",
     };
 
@@ -348,6 +348,7 @@ public class WorldBuilder {
 
         addRoadsAndRivers(contents, 29, 32, SOUTH | NORTH, SOUTH_EAST | NORTH_EAST | NORTH);
         addRoadsAndRivers(contents, 30, 32, 0, SOUTH | SOUTH_WEST | NORTH_WEST);
+        contents.put(new Point(33, 32), new HexContents(new PyramidLocation("Sudoq"), 0, 0));
 
         addInn(contents, 18, 33, "Monkey Inn", SOUTH_WEST, SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 19, 33, 0, SOUTH_WEST);
@@ -355,7 +356,7 @@ public class WorldBuilder {
                 0, NORTH));
         addRoadsAndRivers(contents, 29, 33, SOUTH_EAST | NORTH, NORTH_EAST);
 
-        contents.put(new Point(33, 35), new HexContents(new PyramidLocation(), 0, 0));
+        contents.put(new Point(33, 35), new HexContents(new PyramidLocation("Rubiq"), 0, 0));
 
         addRoadsAndRivers(contents, 16, 34, SOUTH | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 17, 34, SOUTH_WEST | NORTH_EAST, 0);
@@ -376,6 +377,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 19, 36, 0, NORTH | NORTH_EAST | SOUTH_EAST | SOUTH);
         addRoadsAndRivers(contents, 20, 36, 0, NORTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 22, 36, 0, SOUTH);
+        contents.put(new Point(30, 36), new HexContents(new PyramidLocation("Qanoi"), 0, 0));
 
         addRoadsAndRivers(contents, 18, 37, 0, NORTH_EAST);
         addRoadsAndRivers(contents, 19, 37, 0, NORTH | NORTH_WEST | SOUTH_WEST | SOUTH | SOUTH_EAST);
