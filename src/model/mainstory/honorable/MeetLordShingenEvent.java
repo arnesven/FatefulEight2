@@ -38,7 +38,7 @@ public class MeetLordShingenEvent extends DailyEventState {
         portraitSay("I don't understand. Are you or are you not?");
         leaderSay(MyStrings.capitalize(iWasOrWeWere()) + " investigating a matter for the " + arkvale.getLordTitle() + ". The quest " +
                 "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
-                iOrWe() + " were wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped " + kingdom +
+                iWasOrWeWere() + " wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped the " + kingdom +
                 " alive. It seems the " + arkvale.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                 "Because of this, the kingdom has descended into disorder.");
         portraitSay("I see. And now you seek refuge here?");

@@ -30,7 +30,7 @@ public class MeetWithJequenEvent extends DailyEventState {
             start += ", and this is my company of adventurers";
         }
         leaderSay(start + ".");
-        leaderSay("As to why we are here...");
+        leaderSay("As to why " + imOrWere() + " here...");
         leaderSay("As you have surely noticed, the world beyond your borders have been more tumultuous lately.");
         CastleLocation ardh = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
         String kingdom = CastleLocation.placeNameToKingdom(ardh.getPlaceName());
@@ -41,13 +41,14 @@ public class MeetWithJequenEvent extends DailyEventState {
         leaderSay("No, or yes... It's complicated.");
         portraitSay("I don't understand. Are you or are you not?");
         leaderSay(MyStrings.capitalize(iWasOrWeWere()) + " investigating a matter for the " + ardh.getLordTitle() + ". The quest " +
-                "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
-                iOrWe() + " were wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped " + kingdom +
+                "finally brought " + meOrUs() + " to the ancient stronghold to the west of these lands. But when " + iOrWe() + " returned " +
+                iWasOrWeWere() + " wrongfully imprisoned!");
+        leaderSay(iOrWeCap() + " narrowly escaped the " + kingdom +
                 " alive. It seems the " + ardh.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                 "Because of this, the kingdom has descended into disorder.");
         portraitSay("I see. And now you seek refuge here?");
         leaderSay("For a time perhaps. " + iOrWeCap() + " aim to rally the support of the kingdoms surrounding the " +
-                kingdom + ". We intend to return to " + kingdom + " to overthrow " +
+                kingdom + ". We intend to return to the " + kingdom + " to overthrow " +
                 ardh.getLordName() + " and root out the evil presence.");
         portraitSay("Ah, now I understand. And you were hoping to petition the King of the southern kingdom to support you in this endeavour.");
         leaderSay("Yes, exactly. If you could distract the armed forces of " + kingdom +

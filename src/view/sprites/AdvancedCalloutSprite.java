@@ -9,13 +9,16 @@ import java.awt.*;
 
 
 public class AdvancedCalloutSprite extends CalloutSprite {
-    private static final int MAX_CALLOUT_WIDTH = 22;
+    private static final int MAX_CALLOUT_WIDTH = 23;
     private static final int MAX_ROWS = 5;
+    private static final int OVERFLOW_SHIFT = 5;
     private final boolean shiftRight;
     private String[] textRows;
+    private String[] overflowRows = null;
 
     private static final Sprite[][] calloutBorders = makeBorderSprites();
     private int maxWidth;
+    private int overflowMaxWidth;
 
     public AdvancedCalloutSprite(String text) {
         this(text, MAX_CALLOUT_WIDTH, MAX_ROWS, true);
@@ -29,66 +32,37 @@ public class AdvancedCalloutSprite extends CalloutSprite {
         } else if (text.endsWith("^")) {
             text = "Level Up!";
         }
-        this.textRows = MyStrings.partition(text, maxWidth);
-        for (int i = 0; i < textRows.length; ++i) {
-            textRows[i] = textRows[i].trim();
-        }
-        fixTextRows(textRows);
+        this.textRows = partitionAndTrim(text, maxWidth);
 
-        // Abbreviate if too long.
         if (textRows.length > maxRows) {
+            StringBuilder extraContent = new StringBuilder();
+            for (int i = maxRows; i < textRows.length; ++i) {
+                extraContent.append(textRows[i] + " ");
+            }
+            this.overflowRows = partitionAndTrim(extraContent.toString(), maxWidth - OVERFLOW_SHIFT);
+            this.overflowMaxWidth = fixTextRows(overflowRows);
+
             String[] oldTextRows = textRows;
             textRows = new String[maxRows];
             for (int i = 0; i < textRows.length; ++i) {
                 textRows[i] = oldTextRows[i];
             }
-            StringBuffer lastRow = new StringBuffer(textRows[textRows.length-1]);
-            boolean letterFound = false;
-            for (int j = lastRow.length()-1; j >= 0; --j) {
-                if (lastRow.charAt(j) != ' ' && !letterFound) {
-                    letterFound = true;
-                }
-                if (lastRow.charAt(j) == ' ' && letterFound) {
-                    if (j > 0 && isPunctuation(lastRow.charAt(j-1))) {
-
-                    }
-                    for (int i = j; i < lastRow.length(); ++i) {
-                        if (i - j < 3) {
-                            lastRow.setCharAt(i, '.');
-                        } else {
-                            lastRow.setCharAt(i, ' ');
-                        }
-                    }
-                    textRows[textRows.length-1] = lastRow.toString();
-                    break;
-                }
-            }
-
         }
-
-    }
-
-    private boolean isPunctuation(char c) {
-        return c == ',' || c == '!' || c == '.' || c == '?';
-    }
-
-    private void fixTextRows(String[] textRows) {
-        this.maxWidth = 0;
-        for (String s : this.textRows) {
-            if (s.length() > maxWidth) {
-                maxWidth = s.length();
-            }
-        }
-        maxWidth = Math.max(maxWidth, 6);
-        for (int i = 0; i < this.textRows.length; ++i) {
-            this.textRows[i] = MyStrings.padRight(this.textRows[i], ' ', maxWidth);
-        }
+        this.maxWidth = fixTextRows(textRows);
     }
 
     public void drawYourself(ScreenHandler screenHandler, Point location) {
-        int shift = shiftRight ? 1 : ((maxWidth - 1) / 2);
+        int shift = shiftRight ? 2 : ((maxWidth - 1) / 2);
         int startX = location.x - shift;
         int startY = location.y - textRows.length + 1;
+        int overflowY = startY + textRows.length + 1;
+        if (overflowRows != null) {
+            drawBorder(screenHandler, startX - 1 + OVERFLOW_SHIFT, overflowY-1, 0, 0);
+            for (int x = 0; x < overflowMaxWidth; ++x) {
+                drawBorder(screenHandler,startX + x + OVERFLOW_SHIFT, overflowY-1, 1, 0);
+            }
+            drawBorder(screenHandler,startX + overflowMaxWidth + OVERFLOW_SHIFT, overflowY-1, 3, 0);
+        }
 
         // TOP ROW
         drawBorder(screenHandler, startX - 1, startY, 0, 0);
@@ -108,14 +82,41 @@ public class AdvancedCalloutSprite extends CalloutSprite {
         // DRAW BOTTOM ROW
         drawBorder(screenHandler,startX - 1, startY + textRows.length + 1, 0, 2);
         for (int x = 0; x < maxWidth; ++x) {
-            if (startX + x == location.x + 2) {
-                drawBorder(screenHandler,startX + x, startY + textRows.length + 2, 1, 2);
-            } else if (startX + x == location.x + 3) {
-                drawBorder(screenHandler,startX + x, startY + textRows.length + 2, 2, 2);
-            }
+            drawArrow(screenHandler, startX + x, startY, location.x);
             drawBorder(screenHandler,startX + x, startY + textRows.length + 1, 1, 1);
         }
         drawBorder(screenHandler,startX + maxWidth, startY + textRows.length + 1, 3, 2);
+
+        if (overflowRows != null) {
+            for (int y = 0; y < overflowRows.length; ++y) {
+                drawBorder(screenHandler,startX - 1 + OVERFLOW_SHIFT, overflowY + y, 0, 1);
+                BorderFrame.drawStringInForeground(screenHandler, overflowRows[y], startX + OVERFLOW_SHIFT, overflowY + y,
+                        MyColors.BLACK, MyColors.WHITE);
+                drawBorder(screenHandler,OVERFLOW_SHIFT + startX + overflowRows[y].length(), overflowY + y, 3, 1);
+            }
+
+            drawBorder(screenHandler,startX - 1 + OVERFLOW_SHIFT, overflowY + overflowRows.length, 0, 2);
+            for (int x = 0; x < overflowMaxWidth; ++x) {
+                drawBorder(screenHandler,startX + x + OVERFLOW_SHIFT, overflowY + overflowRows.length, 1, 1);
+            }
+            drawBorder(screenHandler,startX + overflowMaxWidth + OVERFLOW_SHIFT, overflowY + overflowRows.length, 3, 2);
+        }
+    }
+
+    private void drawArrow(ScreenHandler screenHandler, int currentX, int startY, int locationX) {
+        if (overflowRows == null) {
+            if (currentX == locationX + 2) {
+                drawBorder(screenHandler, currentX, startY + textRows.length + 2, 1, 2);
+            } else if (currentX == locationX + 3) {
+                drawBorder(screenHandler, currentX, startY + textRows.length + 2, 2, 2);
+            }
+        } else {
+            if (currentX == locationX - 2) {
+                drawBorder(screenHandler, currentX, startY + textRows.length + 2, 1, 3);
+            } else if (currentX == locationX - 1) {
+                drawBorder(screenHandler, currentX, startY + textRows.length + 2, 2, 3);
+            }
+        }
     }
 
     private void drawBorder(ScreenHandler screenHandler, int x, int y, int col, int row) {
@@ -123,7 +124,7 @@ public class AdvancedCalloutSprite extends CalloutSprite {
     }
 
     public static Sprite[][] makeBorderSprites() {
-        Sprite[][] result = new Sprite[4][3];
+        Sprite[][] result = new Sprite[4][4];
         for (int y = 0; y < 3; ++y) {
             result[0][y] = new Sprite8x8("calloutborder" + y, "callouts.png", 0x10 * y);
             result[3][y] = new Sprite8x8("calloutborder" + y, "callouts.png", 0x10 * y + 0x03);
@@ -134,6 +135,33 @@ public class AdvancedCalloutSprite extends CalloutSprite {
         result[2][1] =  new Sprite8x8("calloutborderbottomright", "callouts.png", 0x2A);
         result[1][2] =  new Sprite8x8("calloutborderarrowleft", "callouts.png", 0x39);
         result[2][2] =  new Sprite8x8("calloutborderarrowright", "callouts.png", 0x3A);
+
+        result[1][3] = new Sprite8x8("calloutborderarrowflright", "callouts.png", 0x3A);
+        result[1][3].setFlipHorizontal(true);
+        result[2][3] = new Sprite8x8("calloutborderarrowflleft", "callouts.png", 0x39);
+        result[2][3].setFlipHorizontal(true);
         return result;
+    }
+
+    private static String[] partitionAndTrim(String text, int maxWidth) {
+        String[] rows = MyStrings.partition(text, maxWidth);
+        for (int i = 0; i < rows.length; ++i) {
+            rows[i] = rows[i].trim();
+        }
+        return rows;
+    }
+
+    private static int fixTextRows(String[] textRows) {
+        int maxWidth = 0;
+        for (String s : textRows) {
+            if (s.length() > maxWidth) {
+                maxWidth = s.length();
+            }
+        }
+        maxWidth = Math.max(maxWidth, 6);
+        for (int i = 0; i < textRows.length; ++i) {
+            textRows[i] = MyStrings.padRight(textRows[i], ' ', maxWidth);
+        }
+        return maxWidth;
     }
 }

@@ -320,6 +320,7 @@ public class Sprite implements Serializable {
 
     protected void setFlipHorizontal(boolean b) {
         flipHorizontal = b;
+        SpriteCache.invalidate(this);
     }
 
     public char[][] getCharArray() {
