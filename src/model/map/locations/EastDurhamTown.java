@@ -2,6 +2,7 @@ package model.map.locations;
 
 import model.Model;
 import model.map.TownLocation;
+import model.map.WaterLocation;
 import model.states.dailyaction.shops.ArmorShopNode;
 import model.states.dailyaction.shops.GeneralShopNode;
 
@@ -12,7 +13,7 @@ public class EastDurhamTown extends TownLocation {
     public static final String NAME = "East Durham";
 
     public EastDurhamTown() {
-        super(NAME, "Mayor Bison", true);
+        super(NAME, "Mayor Bison", WaterLocation.coastal);
     }
 
     @Override

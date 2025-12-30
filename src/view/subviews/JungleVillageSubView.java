@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.SteppingMatrix;
+import model.map.WaterLocation;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
@@ -23,7 +24,7 @@ public class JungleVillageSubView extends TownishSubView {
                     MyColors.BLACK, PATH_COLOR, MyColors.DARK_GREEN, MyColors.BROWN)
     };
 
-    public JungleVillageSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean coastal, String name) {
-        super(state, matrix, coastal, name, DENSITY, false, HOUSE_SPRITES);
+    public JungleVillageSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, String name) {
+        super(state, matrix, WaterLocation.riverside, name, DENSITY, false, HOUSE_SPRITES);
     }
 }

@@ -9,20 +9,20 @@ import java.awt.Point;
 
 public class TownDailyActionState extends TownishDailyActionState {
 
-    public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation,
+    public TownDailyActionState(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation,
                                 boolean freeLodging, boolean freeRations) {
-        super(model, isCoastal, urbanLocation, freeLodging, freeRations);
+        super(model, hasWaterAccess, urbanLocation, freeLodging, freeRations);
         model.getMainStory().handleTownSetup(this);
     }
 
-    public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
-        this(model, isCoastal, urbanLocation, false, false);
+    public TownDailyActionState(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
+        this(model, hasWaterAccess, urbanLocation, false, false);
     }
 
     @Override
-    protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
-        super.addTravelNodes(model, isCoastal, urbanLocation);
-        if (isCoastal) {
+    protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
+        super.addTravelNodes(model, hasWaterAccess, urbanLocation);
+        if (hasWaterAccess) {
             if (!urbanLocation.noBoat()) {
                 if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 1) {
                     addNode(1, 0, new GoTheDocksNode(model));

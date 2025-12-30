@@ -68,7 +68,7 @@ public class JungleVillageLocation extends TownishLocation {
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new JungleVillageSubView(advancedDailyActionState, matrix, true, getName());
+        return new JungleVillageSubView(advancedDailyActionState, matrix, getName());
     }
 
     @Override

@@ -25,8 +25,8 @@ public class JungleVillageDailyActionState extends TownishDailyActionState {
     }
 
     @Override
-    protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
-        super.addTravelNodes(model, isCoastal, urbanLocation);
+    protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
+        super.addTravelNodes(model, hasWaterAccess, urbanLocation);
         addNode(3, 0, new CharterBoatAtDocks(model));
     }
 }

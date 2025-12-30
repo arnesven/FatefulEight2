@@ -3,6 +3,7 @@ package model.map.locations;
 import model.Model;
 import model.map.MonsterHuntData;
 import model.map.TownLocation;
+import model.map.WaterLocation;
 import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.dailyaction.shops.WeaponShopNode;
 
@@ -13,7 +14,7 @@ public class AckervilleTown extends TownLocation {
     public static final String NAME = "Ackerville";
 
     public AckervilleTown() {
-        super(NAME, "Elder Treya", true);
+        super(NAME, "Elder Treya", WaterLocation.coastal);
     }
 
     @Override

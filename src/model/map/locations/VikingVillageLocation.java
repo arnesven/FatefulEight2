@@ -134,7 +134,7 @@ public class VikingVillageLocation extends TownishLocation {
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new VikingVillageSubView(advancedDailyActionState, matrix, true, getName());
+        return new VikingVillageSubView(advancedDailyActionState, matrix, getName());
     }
 
     @Override

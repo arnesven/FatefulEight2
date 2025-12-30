@@ -41,7 +41,7 @@ public class VikingVillageDailyActionState extends TownishDailyActionState {
     }
 
     @Override
-    protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
+    protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
         super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y,
                 new TravelNode(model, MyColors.WHITE, MyColors.LIGHT_GRAY));
         addNode(1, 0, new CharterBoatAtDocks(model));

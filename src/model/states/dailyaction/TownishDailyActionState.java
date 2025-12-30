@@ -17,7 +17,7 @@ import java.awt.*;
 public class TownishDailyActionState extends AdvancedDailyActionState {
     private final UrbanLocation urbanLocation;
 
-    public TownishDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation,
+    public TownishDailyActionState(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation,
                                    boolean freeLodging, boolean freeRations) {
         super(model);
         this.urbanLocation = urbanLocation;
@@ -26,7 +26,7 @@ public class TownishDailyActionState extends AdvancedDailyActionState {
         addTent(model, freeRations, urbanLocation);
         addNode(7, 2, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
-        addTravelNodes(model, isCoastal, urbanLocation);
+        addTravelNodes(model, hasWaterAccess, urbanLocation);
         addShopsAndMore(model, urbanLocation);
     }
 
@@ -46,7 +46,7 @@ public class TownishDailyActionState extends AdvancedDailyActionState {
         super.addNode(2, TOWN_MATRIX_ROWS-1, new WorkBenchNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
     }
 
-    protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
+    protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
         super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y,
                 new TravelNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
     }

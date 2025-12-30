@@ -17,8 +17,8 @@ public class PirateHavenDailyActionState extends TownishDailyActionState {
     }
 
     @Override
-    protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
-        super.addTravelNodes(model, isCoastal, urbanLocation);
+    protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
+        super.addTravelNodes(model, hasWaterAccess, urbanLocation);
         if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 0) {
             addNode(3, 0, new CharterBoatAtDocks(model));
         }

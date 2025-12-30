@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.SteppingMatrix;
+import model.map.WaterLocation;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
@@ -19,9 +20,8 @@ public class PirateHavenSubView extends TownishSubView {
 
     private static final double TOWN_DENSITY = 0.55;
 
-    public PirateHavenSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
-                              boolean isCoastal, String name) {
-        super(state, matrix, isCoastal, name, TOWN_DENSITY, true, HOUSE_SPRITES);
+    public PirateHavenSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, String name) {
+        super(state, matrix, WaterLocation.coastal, name, TOWN_DENSITY, true, HOUSE_SPRITES);
     }
 
     @Override

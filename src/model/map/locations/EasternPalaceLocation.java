@@ -143,7 +143,7 @@ public class EasternPalaceLocation extends TownishLocation {
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new EasternPalaceSubView(advancedDailyActionState, matrix, true, getName());
+        return new EasternPalaceSubView(advancedDailyActionState, matrix, getName());
     }
 
     @Override

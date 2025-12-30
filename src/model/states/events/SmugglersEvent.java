@@ -47,7 +47,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
     protected void innerDoEvent(Model model) {
         this.meetingPlace = "behind the tavern";
         if (model.getCurrentHex().getLocation() instanceof TownLocation &&
-            ((TownLocation) model.getCurrentHex().getLocation()).isCoastal()) {
+            ((TownLocation) model.getCurrentHex().getLocation()).hasWaterAccess()) {
             meetingPlace = "down by the docks";
         }
         leaderSay("Hmm... let's open it... It just says 'Got the shipment. " +

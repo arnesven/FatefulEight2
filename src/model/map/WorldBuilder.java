@@ -55,7 +55,7 @@ public class WorldBuilder {
     private static final String[] worldTemplate = new String[]{
             "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
             "sssssttuuTTTTTTuuuTTTTTTTuuTTTtTTTtTTTTTttTTTTTTTTTtt",
-            "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuutuTTTuuTTuuTTuuuTuu",
+            "sttstttuTTTTTTTuuuuusuuuuTTTTuuuuutuTTTuuTTuuTTuuuTuu",
             "stssttttWWWWWTTWWWWtWWWWTTWWWWWWWTTTTWWWWWWWWWWWWWWWW",
             "sssssttWWWWWWWTTTWWWWWWWWWWWWTTTTWTTuWWWWWWWWWWWWWWWW",
             "sssssssttttWWWWuTTTttttTtTTTTuttuTTTuttWWtttssWWutttt",
@@ -392,8 +392,8 @@ public class WorldBuilder {
         addInn(contents, 30, 1, "Frigid Slab Inn", SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 31, 2, NORTH_WEST | SOUTH, 0);
 
-        addRoadsAndRivers(contents, 20, 2, 0, SOUTH);
-        contents.put(VIKING_VILLAGE_LOCATION, new HexContents(new VikingVillageLocation(), 0, SOUTH_EAST));
+        addRoadsAndRivers(contents, 20, 2, 0, SOUTH | SOUTH_WEST);
+        contents.put(VIKING_VILLAGE_LOCATION, new HexContents(new VikingVillageLocation(), 0, SOUTH_EAST | NORTH_EAST));
         addRoadsAndRivers(contents, 20, 3, 0, NORTH_WEST | NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 21, 3, 0, SOUTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 21, 4, 0, NORTH | NORTH_EAST | SOUTH_EAST);

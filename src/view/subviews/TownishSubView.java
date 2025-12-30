@@ -3,9 +3,11 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.map.WaterLocation;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
+import sprites.CanalSprite;
 import view.MyColors;
 import view.combat.GrassCombatTheme;
 import view.sprites.LoopingSprite;
@@ -32,7 +34,12 @@ public class TownishSubView extends DailyActionSubView {
     private static final Sprite STREET_EVENING = new Sprite32x32("streetground", "world_foreground.png", 0x02,
             GROUND_COLOR_NIGHT, PATH_COLOR, MyColors.TAN);
 
-    private final boolean isCoastal;
+    private static final Sprite CANAL_DAY = new CanalSprite(TimeOfDay.MIDDAY, false);
+    private static final Sprite CANAL_DAY_BOT = new CanalSprite(TimeOfDay.MIDDAY, true);
+    private static final Sprite CANAL_NIGHT = new CanalSprite(TimeOfDay.EVENING, false);
+    private static final Sprite CANAL_NIGHT_BOT = new CanalSprite(TimeOfDay.EVENING, true);
+
+    private final WaterLocation water;
     private final String townName;
     private final double townDensity;
     private final Sprite[] townHouses;
@@ -40,10 +47,10 @@ public class TownishSubView extends DailyActionSubView {
     private boolean hasLargeTownSquare;
 
     public TownishSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
-                       boolean isCoastal, String townName, double townDensity, boolean hasLargeTownSquare,
+                          WaterLocation water, String townName, double townDensity, boolean hasLargeTownSquare,
                           Sprite[] townHouseSprites) {
         super(state, matrix);
-        this.isCoastal = isCoastal;
+        this.water = water;
         this.townName = townName;
         this.townDensity = townDensity;
         this.townHouses = townHouseSprites;
@@ -54,8 +61,10 @@ public class TownishSubView extends DailyActionSubView {
     @Override
     protected void drawBackground(Model model) {
         drawStreet(model);
-        if (isCoastal) {
+        if (water == WaterLocation.coastal) {
             drawDocks(model);
+        } else if (water == WaterLocation.riverside) {
+            drawRiverside(model);
         } else {
             drawTopRowGrass(model);
         }
@@ -103,6 +112,25 @@ public class TownishSubView extends DailyActionSubView {
             model.getScreenHandler().put(p.x, p.y, dockSprite);
             p.y -= 2;
             model.getScreenHandler().put(p.x, p.y, waterSprite);
+        }
+    }
+
+
+    private void drawRiverside(Model model) {
+        Sprite canal;
+        Sprite canalBot;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            canal = CANAL_NIGHT;
+            canalBot = CANAL_NIGHT_BOT;
+        } else {
+            canal = CANAL_DAY;
+            canalBot = CANAL_DAY_BOT;
+        }
+        for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {
+            Point p = convertToScreen(new Point(col, 0));
+            model.getScreenHandler().put(p.x, p.y, canalBot);
+            p.y -= 2;
+            model.getScreenHandler().put(p.x, p.y, canal);
         }
     }
 

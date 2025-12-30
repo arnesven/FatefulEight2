@@ -96,7 +96,7 @@ public class PirateHavenLocation extends TownishLocation {
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new PirateHavenSubView(advancedDailyActionState, matrix, true, getName());
+        return new PirateHavenSubView(advancedDailyActionState, matrix, getName());
     }
 
     @Override

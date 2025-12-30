@@ -3,6 +3,7 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.map.WaterLocation;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
@@ -36,8 +37,8 @@ public class VikingVillageSubView extends TownishSubView {
             MyColors.WHITE, MyColors.BEIGE, MyColors.BLACK);
 
 
-    public VikingVillageSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean isCoastal, String name) {
-        super(state, matrix, isCoastal, name, TOWN_DENSITY, true, HOUSE_SPRITES);
+    public VikingVillageSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, String name) {
+        super(state, matrix, WaterLocation.coastal, name, TOWN_DENSITY, true, HOUSE_SPRITES);
     }
 
     @Override

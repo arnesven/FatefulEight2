@@ -27,19 +27,19 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     private final String townName;
     private final SubView subView;
     private final String lordName;
-    private final boolean isCoastal;
+    private final WaterLocation water;
     private final Sprite QUEST_SPRITE = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
     private final ImageSubView subViewNight;
     private Headquarters headquarters;
 
-    public TownLocation(String townName, String lordName, boolean isCoastal) {
+    public TownLocation(String townName, String lordName, WaterLocation water) {
         super("Town of " + townName);
         this.townName = townName;
         this.lordName = lordName;
         subView = new ImageSubView("town", "TOWN", "Town of " + townName, true);
         subViewNight = new ImageSubView("townatnight", "TOWN", "Town of " + townName, true);
-        this.isCoastal = isCoastal;
+        this.water = water;
         headquarters = Headquarters.makeRandomHeadquarters(this);
     }
 
@@ -145,7 +145,12 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TownDailyActionState(model, isCoastal, this);
+        return new TownDailyActionState(model, hasWaterAccess(), this);
+    }
+
+    public boolean hasWaterAccess() {
+        return water == WaterLocation.coastal ||
+                water == WaterLocation.riverside;
     }
 
     public Point getTavernPosition() {
@@ -155,14 +160,14 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
         model.getMainStory().setVisitedTown(true);
-        return new TownDailyActionState(model, isCoastal, this, freeLodge, freeRations);
+        return new TownDailyActionState(model, hasWaterAccess(), this, freeLodge, freeRations);
     }
 
     public abstract List<GeneralShopNode> getShops(Model model);
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new TownSubView(advancedDailyActionState, matrix, isCoastal, getTownName());
+        return new TownSubView(advancedDailyActionState, matrix, water, getTownName());
     }
 
     @Override
@@ -223,10 +228,6 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     @Override
     public boolean bothBoatAndCarriage() {
         return false;
-    }
-
-    public boolean isCoastal() {
-        return isCoastal;
     }
 
     @Override

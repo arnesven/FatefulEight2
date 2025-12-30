@@ -2,6 +2,7 @@ package view.subviews;
 
 
 import model.SteppingMatrix;
+import model.map.WaterLocation;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
@@ -21,7 +22,7 @@ public class TownSubView extends TownishSubView {
     private static final double TOWN_DENSITY = 0.3;
 
     public TownSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
-                       boolean isCoastal, String townName) {
-        super(state, matrix, isCoastal, townName, TOWN_DENSITY, true, TOWN_HOUSES);
+                       WaterLocation water, String townName) {
+        super(state, matrix, water, townName, TOWN_DENSITY, true, TOWN_HOUSES);
     }
 }
