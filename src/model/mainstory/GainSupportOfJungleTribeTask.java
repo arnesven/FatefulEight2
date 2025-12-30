@@ -1,13 +1,18 @@
 package model.mainstory;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
+import model.journal.PartSixStoryPart;
+import model.journal.StoryPart;
 import model.map.WorldBuilder;
 import model.quests.Quest;
 import model.races.Race;
+import model.states.GameState;
+import model.states.events.MeetWithJequenEvent;
 import util.MyPair;
 import util.MyTriplet;
 import view.subviews.PortraitSubView;
@@ -16,10 +21,12 @@ import java.awt.*;
 import java.util.List;
 
 public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask {
+    private final AdvancedAppearance jequenPortrait;
     private boolean completed = false;
 
     public GainSupportOfJungleTribeTask(Model model) {
         super(WorldBuilder.JUNGLE_VILLAGE_LOCATION);
+        jequenPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, false);
     }
 
     @Override
@@ -80,6 +87,23 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     @Override
     public String getLeaderName() {
-        return "TODO";
+        return "King Jequen";
+    }
+
+    public AdvancedAppearance getJequenPortrait() {
+        return jequenPortrait;
+    }
+
+    public static GainSupportOfJungleTribeTask getTask(Model model) {
+        for (StoryPart sp : model.getMainStory().getStoryParts()) {
+            if (sp instanceof PartSixStoryPart) {
+                return (GainSupportOfJungleTribeTask) ((PartSixStoryPart) sp).getRemotePeopleTask();
+            }
+        }
+        return null;
+    }
+
+    public GameState generateJequenEvent(Model model) {
+        return new MeetWithJequenEvent(model);
     }
 }

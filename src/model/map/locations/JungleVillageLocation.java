@@ -14,16 +14,21 @@ import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
+import view.subviews.ImageSubView;
 import view.subviews.JungleVillageSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 import java.util.List;
 
 public class JungleVillageLocation extends TownishLocation {
     private static final String DESCRIPTION = "A Village inhabited by the Jungle Tribe.";
+    private final ImageSubView subView;
 
     public JungleVillageLocation() {
         super("Jungle Village");
+        subView = new ImageSubView("junglevillage", "JUNGLE VILLAGE",
+                "You are at the Jungle Village.", true);
     }
 
     @Override
@@ -34,6 +39,11 @@ public class JungleVillageLocation extends TownishLocation {
     @Override
     protected Sprite getLowerSprite() {
         return HexLocationSprite.make("junglegilalgelower", 0x19C, MyColors.BLACK, MyColors.BROWN, MyColors.GRAY, MyColors.DARK_GREEN);
+    }
+
+    @Override
+    public SubView getImageSubView(Model model) {
+        return subView;
     }
 
     @Override
@@ -74,6 +84,11 @@ public class JungleVillageLocation extends TownishLocation {
     @Override
     public int charterBoatEveryNDays() {
         return 0;
+    }
+
+    @Override
+    public boolean hasLodging() {
+        return true;
     }
 
     @Override

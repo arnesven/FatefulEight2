@@ -7,6 +7,7 @@ import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.map.CastleLocation;
 import model.states.DailyEventState;
 import util.MyLists;
+import util.MyStrings;
 
 public class MeetLordShingenEvent extends DailyEventState {
     private final GainSupportOfHonorableWarriorsTask task;
@@ -35,7 +36,7 @@ public class MeetLordShingenEvent extends DailyEventState {
                 arkvale.getLordName() + "?");
         leaderSay("No, or yes... It's complicated.");
         portraitSay("I don't understand. Are you or are you not?");
-        leaderSay(iOrWeCap() + " were investigating a matter for the " + arkvale.getLordTitle() + ". The quest " +
+        leaderSay(MyStrings.capitalize(iWasOrWeWere()) + " investigating a matter for the " + arkvale.getLordTitle() + ". The quest " +
                 "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
                 iOrWe() + " were wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped " + kingdom +
                 " alive. It seems the " + arkvale.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +

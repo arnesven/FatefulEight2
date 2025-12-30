@@ -352,7 +352,7 @@ public class WorldBuilder {
         addInn(contents, 18, 33, "Monkey Inn", SOUTH_WEST, SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 19, 33, 0, SOUTH_WEST);
         contents.put(JUNGLE_VILLAGE_LOCATION, new HexContents(new JungleVillageLocation(),
-                NORTH_WEST | SOUTH_EAST, NORTH));
+                0, NORTH));
         addRoadsAndRivers(contents, 29, 33, SOUTH_EAST | NORTH, NORTH_EAST);
 
         contents.put(new Point(33, 35), new HexContents(new PyramidLocation(), 0, 0));
