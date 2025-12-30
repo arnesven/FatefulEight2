@@ -42,7 +42,7 @@ public class WagonTravelEvent extends DailyEventState {
             if (yesNoInput()) {
                 rideAndThanks(model, path);
             } else {
-                leaderSay("Thanks, but our path leads somewhere else.");
+                leaderSay("Thanks, but " + myOrOur() + " path leads somewhere else.");
                 portraitSay("Safe travels friend.");
             }
         } else {

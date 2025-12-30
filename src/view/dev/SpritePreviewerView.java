@@ -24,10 +24,10 @@ public class SpritePreviewerView extends SelectableListMenu {
     private static final StringBuffer START_STRING = new StringBuffer("items.pngþþþþþþþþþþþ");
     private int[] sizeSet = new int[]{8, 16, 24, 32, 48, 64};
     private MyColors[] colorSet = MyColors.values();
-    private String[] backgroundSetNames = new String[]{"BLACK", "BLUE", "WHITE", "PINK"};
+    private String[] backgroundSetNames = new String[]{"BLACK", "BLUE", "WHITE", "PINK", "GREEN"};
     private Sprite[] backgroundSet = new Sprite[]{
-            new FilledBlockSprite(MyColors.BLACK), new FilledBlockSprite(MyColors.BLACK), new FilledBlockSprite(MyColors.WHITE),
-            new FilledBlockSprite(MyColors.PINK)};
+            new FilledBlockSprite(MyColors.BLACK), new FilledBlockSprite(MyColors.BLUE), new FilledBlockSprite(MyColors.WHITE),
+            new FilledBlockSprite(MyColors.PINK), new FilledBlockSprite(MyColors.GREEN)};
 
     private int[] colors;
     private Point mapPos;

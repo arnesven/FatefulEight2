@@ -19,7 +19,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     private boolean completed = false;
 
     public GainSupportOfJungleTribeTask(Model model) {
-        super(WorldBuilder.JUNGLE_PYRAMID_LOCATION);
+        super(WorldBuilder.JUNGLE_VILLAGE_LOCATION);
     }
 
     @Override

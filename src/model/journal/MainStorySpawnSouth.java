@@ -19,7 +19,7 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
               new Point(36, 29),
               new Point(33, 23),
                 "Jungle Tribe",
-                WorldBuilder.JUNGLE_PYRAMID_LOCATION,
+                WorldBuilder.JUNGLE_VILLAGE_LOCATION,
                 new Point(16, 4));
     }
 

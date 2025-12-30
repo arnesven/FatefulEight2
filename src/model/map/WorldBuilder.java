@@ -29,7 +29,7 @@ public class WorldBuilder {
 
     public static final Point PIRATE_HAVEN_LOCATION = new Point(8, 17);
     public static final Point VIKING_VILLAGE_LOCATION = new Point(19, 3);
-    public static final Point JUNGLE_PYRAMID_LOCATION = new Point(26, 40);
+    public static final Point JUNGLE_VILLAGE_LOCATION = new Point(30, 33);
     public static final Point EASTERN_PALACE_LOCATION = new Point(45, 14);
     public static final Point EASTERN_SMITH_LOCATION = new Point(46, 12);
 
@@ -84,11 +84,11 @@ public class WorldBuilder {
             "ssssssssssssssssssssssssssssssssMMwwwwwwsssssssssssss",
             "sssssssssssssssssssssssssssssssMMwwwwwwwsssssssssssss",
             "ssssssssssssssssssssssssssssssMhMwwwwswwsssssssssssss",
-            "dssssssssssdddssssssssssssssMMhMhwhwhwwwsssssssssssss",
+            "dssssssssssdddssssssssssssssMphMhwhwhwwwsssssssssssss",
             "jdsssddddddjjjdddssssddssssMhhwwhjjwhwwwdddssssssssdd",
-            "jjdddjjjjjjjjjpjjdpddjjJJjjJJjjjjwjjwjjjjjjddddsdddjj",
+            "jjdddjjjjjjjjjpjjdpddjjJJjjJJwpjjwjjwjjjjjjddddsdddjj",
             "jjjjjjjjjjjjjjjjbjjbbJJJJJjjjbjjjjjwjjjjjjjddddsdjjjj",
-            "jjjjjjjjjjjjjbjbjjjjjjjbJjjbjjjjbjjjjjjjjjdsssssdjjjj",
+            "jjjjjjjjjjjjjbjbjjjjjjjbJjjbjjjjbpjjjjjjjjdsssssdjjjj",
             "jjjjjjjjjjjjjjdddjjbbjjjbJJjpbbjjjjbjjjjjdsssssssdjjj",
             "jjjjjjjjjjjjjdssbpjjjbbbbbbbJjjjjbjjjjjjjjjdssssssdjj",
     };
@@ -342,14 +342,26 @@ public class WorldBuilder {
     }
 
     private static void addSouthernContents(Map<Point, HexContents> contents) {
-        addInn(contents, 18, 33, "Monkey Inn", SOUTH_WEST, SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 28, 31, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 29, 31, 0, SOUTH | SOUTH_WEST);
+        addRoadsAndRivers(contents, 30, 31, 0, SOUTH_WEST);
 
+        addRoadsAndRivers(contents, 29, 32, SOUTH | NORTH, SOUTH_EAST | NORTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 30, 32, 0, SOUTH | SOUTH_WEST | NORTH_WEST);
+
+        addInn(contents, 18, 33, "Monkey Inn", SOUTH_WEST, SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 19, 33, 0, SOUTH_WEST);
+        contents.put(JUNGLE_VILLAGE_LOCATION, new HexContents(new JungleVillageLocation(),
+                NORTH_WEST | SOUTH_EAST, NORTH));
+        addRoadsAndRivers(contents, 29, 33, SOUTH_EAST | NORTH, NORTH_EAST);
+
+        contents.put(new Point(33, 35), new HexContents(new PyramidLocation(), 0, 0));
 
         addRoadsAndRivers(contents, 16, 34, SOUTH | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 17, 34, SOUTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 18, 34, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 19, 34, 0, SOUTH_WEST | NORTH_WEST);
+
 
         addRoadsAndRivers(contents, 16, 35, SOUTH | NORTH, SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 17, 35, 0, SOUTH | SOUTH_EAST);

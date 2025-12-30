@@ -39,7 +39,7 @@ public class MainStory implements Serializable {
     public MainStory() {
         List<MainStorySpawnLocation> spawnDataList = List.of(
                 new MainStorySpawnEast(),
-                //new MainStorySpawnSouth(), // TODO: Add when finished
+                new MainStorySpawnSouth(),
                 new MainStorySpawnNorth(),
                 new MainStorySpawnWest()
         );

@@ -150,8 +150,8 @@ public class ChooseStartingCharacterState extends GameState {
         new MagicMirror().addYourself(model.getParty().getInventory());
 
         model.progressMainStoryForTesting(MainStoryStep.STARTED,
-                new MainStorySpawnSouth());
-                //MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(), new MainStorySpawnWest())));
+                MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(),
+                        new MainStorySpawnWest(), new MainStorySpawnSouth())));
         return chars.getLast();
     }
 
