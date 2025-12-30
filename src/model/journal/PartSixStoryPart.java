@@ -243,7 +243,7 @@ public class PartSixStoryPart extends StoryPart {
                     "'s thugs beating me up, and interrogating me.");
             leaderSay("Interrogating you, about what?");
             portraitSay("They were asking about you and that damn crimson pearl.");
-            leaderSay("About us? And the pearl? Wait a minute, Everix, let's back up. " +
+            leaderSay("About " + meOrUs() + "? And the pearl? Wait a minute, Everix, let's back up. " +
                     "Why were you in " + castle.getLordName() + "'s dungeons anyway?");
             String companyName = "'" + model.getParty().getLeader().getFullName() + "'s Company'";
             portraitSay("It was about a week ago I think. " + castle.getLordName() +
@@ -262,9 +262,9 @@ public class PartSixStoryPart extends StoryPart {
             }
             portraitSay("They rounded some of us up, " + uncle +
                     " included, and hauled us off to " + castle.getPlaceName() + ", and tossed us in the dungeon.");
-            leaderSay("What did you tell them.");
+            leaderSay("What did you tell them?");
             portraitSay("Everything I knew, which wasn't much. " + MyStrings.capitalize(uncle) +
-                    " however, when he realized " + castle.getLordTitle() + "'s intentions were less than honorable, he " +
+                    " however, when he realized the " + castle.getLordTitle() + "'s intentions were less than honorable, he " +
                     "wasn't to keen on cooperating.");
             if (model.getParty().getPartyMembers().contains(whosUncle)) {
                 partyMemberSay(whosUncle, "That old fool.");
@@ -322,16 +322,16 @@ public class PartSixStoryPart extends StoryPart {
             CastleLocation castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
             portraitSay(castle.getLordName() + "'s thugs got me. It's alright, just some light bruising.");
             showWitch(model);
-            portraitSay(castle.getLordTitle() + " " + castle.getLordName() + " must have really lost his mind, " +
+            portraitSay(castle.getLordName() + " must really have lost his mind, " +
                     "I keep hearing word about people trying to leave " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
             leaderSay("Why do people want to leave?");
             portraitSay("Because " + castle.getLordName() + "'s troops are everywhere, and they are harassing everybody. Lately it feels " +
                             "like the " + CastleLocation.placeNameToKingdom(castle.getPlaceName()) + " is turning in to a big prison. " +
-                    "Why "  + heOrShe(castle.getLordGender()) + "'s trying to make all of " + hisOrHer(castle.getLordGender()) + " miserable?");
+                    "Why is "  + heOrShe(castle.getLordGender()) + " trying to make all of " + hisOrHer(castle.getLordGender()) + " miserable?");
             leaderSay(iOrWeCap() + " think he may be under the influence of one of those crimson pearls.");
             portraitSay("What makes you think that?");
-            leaderSay("We met one of " + castle.getLordName() + "'s former advisors in the dungeons below " + castle.getPlaceName() + ". " +
-                    "Just a few weeks ago a strange envoy had arrived at the castle bringing gifts. She was acting suspiciously... it was around that time " +
+            leaderSay("We met one of " + castle.getLordName() + "'s former advisors in the dungeons below " + castle.getPlaceName() + ".");
+            leaderSay("Just a few weeks ago a strange envoy had arrived at the castle bringing gifts. She was acting suspiciously... It was around that time " +
                     castle.getLordTitle() + " " + castle.getLordName() + " went nuts.");
             showEverix(model);
             portraitSay("I'm sure this envoy is working for whoever is behind all of this.");

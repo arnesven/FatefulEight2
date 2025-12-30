@@ -88,7 +88,9 @@ public class EventCardSubView extends SubView {
         Sprite[][] borderSprites = AdvancedCalloutSprite.makeBorderSprites();
         for (int j = 0; j < borderSprites.length; ++j) {
             for (Sprite sp : borderSprites[j]) {
-                sp.setColor2(CARD_COLOR);
+                if (sp != null) {
+                    sp.setColor2(CARD_COLOR);
+                }
             }
         }
         return borderSprites;

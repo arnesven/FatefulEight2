@@ -15,6 +15,7 @@ public class AdvancedCalloutSprite extends CalloutSprite {
     private final boolean shiftRight;
     private String[] textRows;
     private String[] overflowRows = null;
+    private int overflowShift;
 
     private static final Sprite[][] calloutBorders = makeBorderSprites();
     private int maxWidth;
@@ -27,6 +28,14 @@ public class AdvancedCalloutSprite extends CalloutSprite {
     public AdvancedCalloutSprite(String text, int maxWidth, int maxRows, boolean shiftRight) {
         super(0, text.length()*4);
         this.shiftRight = shiftRight;
+        int overflowPartition;
+        if (shiftRight) {
+            overflowShift = OVERFLOW_SHIFT;
+            overflowPartition = maxWidth - overflowShift;
+        } else {
+            overflowPartition = maxWidth / 2 - 1;
+            overflowShift = (maxWidth) / 2 + 1;
+        }
         if (text.endsWith("#") || text.endsWith("3")) {
             text = text.substring(0, text.length()-1);
         } else if (text.endsWith("^")) {
@@ -39,7 +48,7 @@ public class AdvancedCalloutSprite extends CalloutSprite {
             for (int i = maxRows; i < textRows.length; ++i) {
                 extraContent.append(textRows[i] + " ");
             }
-            this.overflowRows = partitionAndTrim(extraContent.toString(), maxWidth - OVERFLOW_SHIFT);
+            this.overflowRows = partitionAndTrim(extraContent.toString(), overflowPartition);
             this.overflowMaxWidth = fixTextRows(overflowRows);
 
             String[] oldTextRows = textRows;
@@ -57,11 +66,11 @@ public class AdvancedCalloutSprite extends CalloutSprite {
         int startY = location.y - textRows.length + 1;
         int overflowY = startY + textRows.length + 1;
         if (overflowRows != null) {
-            drawBorder(screenHandler, startX - 1 + OVERFLOW_SHIFT, overflowY-1, 0, 0);
+            drawBorder(screenHandler, startX - 1 + overflowShift, overflowY-1, 0, 0);
             for (int x = 0; x < overflowMaxWidth; ++x) {
-                drawBorder(screenHandler,startX + x + OVERFLOW_SHIFT, overflowY-1, 1, 0);
+                drawBorder(screenHandler,startX + x + overflowShift, overflowY-1, 1, 0);
             }
-            drawBorder(screenHandler,startX + overflowMaxWidth + OVERFLOW_SHIFT, overflowY-1, 3, 0);
+            drawBorder(screenHandler,startX + overflowMaxWidth + overflowShift, overflowY-1, 3, 0);
         }
 
         // TOP ROW
@@ -89,17 +98,17 @@ public class AdvancedCalloutSprite extends CalloutSprite {
 
         if (overflowRows != null) {
             for (int y = 0; y < overflowRows.length; ++y) {
-                drawBorder(screenHandler,startX - 1 + OVERFLOW_SHIFT, overflowY + y, 0, 1);
-                BorderFrame.drawStringInForeground(screenHandler, overflowRows[y], startX + OVERFLOW_SHIFT, overflowY + y,
+                drawBorder(screenHandler,startX - 1 + overflowShift, overflowY + y, 0, 1);
+                BorderFrame.drawStringInForeground(screenHandler, overflowRows[y], startX + overflowShift, overflowY + y,
                         MyColors.BLACK, MyColors.WHITE);
-                drawBorder(screenHandler,OVERFLOW_SHIFT + startX + overflowRows[y].length(), overflowY + y, 3, 1);
+                drawBorder(screenHandler,overflowShift + startX + overflowRows[y].length(), overflowY + y, 3, 1);
             }
 
-            drawBorder(screenHandler,startX - 1 + OVERFLOW_SHIFT, overflowY + overflowRows.length, 0, 2);
+            drawBorder(screenHandler,startX - 1 + overflowShift, overflowY + overflowRows.length, 0, 2);
             for (int x = 0; x < overflowMaxWidth; ++x) {
-                drawBorder(screenHandler,startX + x + OVERFLOW_SHIFT, overflowY + overflowRows.length, 1, 1);
+                drawBorder(screenHandler,startX + x + overflowShift, overflowY + overflowRows.length, 1, 1);
             }
-            drawBorder(screenHandler,startX + overflowMaxWidth + OVERFLOW_SHIFT, overflowY + overflowRows.length, 3, 2);
+            drawBorder(screenHandler,startX + overflowMaxWidth + overflowShift, overflowY + overflowRows.length, 3, 2);
         }
     }
 

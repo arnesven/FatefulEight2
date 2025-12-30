@@ -45,7 +45,7 @@ public class FaeriesEvent extends DailyEventState {
         } else {
             println("The faeries just fly away.");
             model.getParty().randomPartyMemberSay(model, List.of("Awww", "No wait, come back!",
-                    "I guess they didn't trust us."));
+                    "I guess they didn't trust " + meOrUs() + "."));
         }
     }
 }

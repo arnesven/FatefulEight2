@@ -63,8 +63,8 @@ public abstract class GetSupportFromLordEvent extends VisitLordEvent {
                 " to get back to " + kingdom.getPlaceName() + ".");
         portraitSay("My help? What do you expect me to do?");
         leaderSay("Give me your support. First, put diplomatic pressure on " + CastleLocation.placeNameShort(kingdom.getPlaceName()) +
-                ". Secondly, amass your forces along the border, that should get " + kingdom.getLordName() + "'s attention. " +
-                "And finally, lend me a company of your best soldiers. At the opportune moment, we'll storm the castle.");
+                ". Secondly, amass your forces along the border, that should get " + kingdom.getLordName() + "'s attention.");
+        leaderSay("And finally, lend me a company of your best soldiers. At the opportune moment, we'll storm the castle.");
         portraitSay("That's a ludicrous plan, it'll never work.");
         leaderSay("Don't be so sure. I'm making the same proposition to the " + otherNeighbor.getLordTitle() +
                 " of " + CastleLocation.placeNameShort(otherNeighbor.getPlaceName()) +
@@ -81,7 +81,7 @@ public abstract class GetSupportFromLordEvent extends VisitLordEvent {
         leaderSay("I understand.");
         portraitSay("Once the threat of " + getShortThreatDescription(kingdom) +
                 " has been dealt with, I'll send my elite troops to rendezvous with you near " + kingdom.getPlaceName() + ".");
-        leaderSay("Thank you, you won't regret this.");
+        leaderSay("Thank you. You won't regret this.");
         portraitSay("Good bye, and good luck!");
         task.progress();
     }
