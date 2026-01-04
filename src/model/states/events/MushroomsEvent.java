@@ -4,8 +4,11 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
+import model.combat.conditions.PoisonCondition;
+import model.items.potions.PoisonPotion;
 import model.states.DailyEventState;
 import util.MyLists;
+import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
@@ -41,12 +44,19 @@ public class MushroomsEvent extends DailyEventState {
                 model.getParty().addToFood(10);
                 model.getParty().randomPartyMemberSay(model, List.of("What a treat!"));
             } else {
-                println("Each party member suffers 2 damage.");
                 List<GameCharacter> died = new ArrayList<>();
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    gc.addToHP(-2); // TODO: Make poisoned
-                    if (gc.isDead()) {
-                        died.add(gc);
+                    if (MyRandom.flipCoin()) {
+                        println(gc.getFirstName() + " gets a stomache ache and suffers 2 damage.");
+                        gc.addToHP(-2);
+                        if (gc.isDead()) {
+                            died.add(gc);
+                        }
+                    } else if (PoisonPotion.didResistWeakPotion(gc)) {
+                        println(gc.getFirstName() + " is not effected by the poisonous mushrooms.");
+                    } else {
+                        println(gc.getFirstName() + " becomes poisoned!");
+                        gc.addCondition(new PoisonCondition());
                     }
                 }
                 MyLists.forEach(died, (GameCharacter gc) ->
