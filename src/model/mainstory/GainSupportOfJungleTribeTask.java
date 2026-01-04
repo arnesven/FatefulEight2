@@ -34,10 +34,14 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     private boolean completed = false;
     private int step = INITIAL_STEP;
     private Set<String> cluesGiven = new HashSet<>();
+    private AdvancedAppearance friendOfJaqarPortrait;
+    private boolean friendKnown = false;
+    private boolean jaquarTruthKnown = false;
 
     public GainSupportOfJungleTribeTask(Model model) {
         super(WorldBuilder.JUNGLE_VILLAGE_LOCATION);
         jequenPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, false);
+        friendOfJaqarPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, true);
         this.crownLocation = MyRandom.randInt(4) == 0 ? null : MyRandom.sample(getPyramidList(model)).getName();
         if (crownLocation == null) {
             System.out.println("Jade Crown is hidden in village.");
@@ -147,17 +151,17 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     public DailyEventState generateTribeCommonerEvent(Model model) {
         if (jequenMet()) {
-            int dieRoll = MyRandom.rollD6();
-            if (dieRoll == 1) {
-                return new JungleTribeKidEvent(model, this); // Pretty useless.
-            }
-            if (dieRoll < 4) {
-                return new JungleTribeCommonerEvent(model, this);
-            }
-            if (dieRoll < 6) {
-                return new JungleTribeElderEvent(model, this);
-            }
-            //return new FriendOfJaquarEvent(model); // Knows if jaquar came back and where Jaquar may have hid the crown.
+//            int dieRoll = MyRandom.rollD10();
+//            if (dieRoll == 1) {
+//                return new JungleTribeKidEvent(model, this); // Pretty useless.
+//            }
+//            if (dieRoll < 6) {
+//                return new JungleTribeCommonerEvent(model, this);
+//            }
+//            if (dieRoll < 10) {
+//                return new JungleTribeElderEvent(model, this);
+//            }
+            return new FriendOfJaquarEvent(model, this);
         }
         return null;
     }
@@ -190,5 +194,29 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
         return List.of((PyramidLocation)model.getWorld().getLocationByName("Rubiq Pyramid"),
                 (PyramidLocation)model.getWorld().getLocationByName("Qanoi Pyramid"),
                 (PyramidLocation)model.getWorld().getLocationByName("Sudoq Pyramid"));
+    }
+
+    public AdvancedAppearance getFriendPortrait() {
+        return friendOfJaqarPortrait;
+    }
+
+    public boolean isFriendOfJaquarKnown() {
+        return friendKnown;
+    }
+
+    public void setFriendOfJaquarKnown(boolean b) {
+        friendKnown = b;
+    }
+
+    public boolean isCrownInVillage() {
+        return crownLocation == null;
+    }
+
+    public void setTruthAboutJaquarKnown(boolean b) {
+        jaquarTruthKnown = b;
+    }
+
+    public boolean isJaquarTruthKnown() {
+        return jaquarTruthKnown;
     }
 }
