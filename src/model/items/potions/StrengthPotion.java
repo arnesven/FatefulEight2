@@ -1,8 +1,11 @@
 package model.items.potions;
 
+import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
+import model.combat.conditions.FeebleCondition;
 import model.items.Item;
 import util.MyLists;
 import view.GameView;
@@ -28,6 +31,16 @@ public class StrengthPotion extends SkillBoostingPotion {
     @Override
     public Item copy() {
         return new StrengthPotion();
+    }
+
+    @Override
+    public String useYourself(Model model, GameCharacter gc) {
+        String extra = "";
+        if (gc.hasCondition(FeebleCondition.class)) {
+            gc.removeCondition(FeebleCondition.class);
+            extra = " " + gc.getName() + " is no longer enfeebled.";
+        }
+        return super.useYourself(model, gc) + extra;
     }
 
     @Override

@@ -62,7 +62,7 @@ public class HeadquartersEveningState extends EveningState {
             }
             starveAndKill(model, remaining);
         }
-        new LodgingState(model, false).removePoison(model.getParty());
+        new LodgingState(model, false).removeLodgingRestConditions(model.getParty());
     }
 
     protected boolean hasEnoughFood(Model model) {

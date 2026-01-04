@@ -19,7 +19,7 @@ public class StrangenessCondition extends Condition {
     private static final int DURATION_DAYS = 3;
     private final int gottenOnDay;
 
-    public StrangenessCondition(int day) {
+    public StrangenessCondition(int day) { // TODO: Rename to "Repulsive"?
         super("Strangeness", "STN");
         this.gottenOnDay = day;
     }

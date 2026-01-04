@@ -60,7 +60,7 @@ public class BerriesEvent extends DailyEventState {
                         gc.addCondition(new PoisonCondition());
                         println(gc.getName() + " has been poisoned by the bad berries.");
                     } else {
-                        gc.addToHP(-2);
+                        gc.addToHP(-2); // TODO: Poisoned
                     }
                 }
                 removeKilledPartyMembers(model, false);

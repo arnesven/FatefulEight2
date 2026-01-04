@@ -2,6 +2,7 @@ package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.EnemyPoisonCondition;
 import model.combat.conditions.PoisonCondition;
@@ -37,8 +38,11 @@ public class CommonPoison extends PoisonPotion {
     @Override
     public String useYourself(Model model, GameCharacter gc) {
         if (!gc.hasCondition(PoisonCondition.class)) {
-            gc.addCondition(new PoisonCondition());
-            return gc.getName() + " has become poisoned!";
+            if (!didResistWeakPotion(gc)) {
+                gc.addCondition(new PoisonCondition());
+                return gc.getName() + " has become poisoned!";
+            }
+            return gc.getName() + " resisted the poison.";
         }
         return getName() + " had no effect on " + gc.getName() + ".";
     }

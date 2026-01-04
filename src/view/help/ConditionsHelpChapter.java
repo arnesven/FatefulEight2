@@ -61,6 +61,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new ErodeCondition(),
                 new ExposedCondition(),
                 new FatigueCondition(),
+                new FeebleCondition(),
                 new GiantGrowthCondition(2),
                 new ImpaledCondition(null),
                 new IntoxicatedCondition(),

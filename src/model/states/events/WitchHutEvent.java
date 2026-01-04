@@ -6,6 +6,8 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.enemies.Enemy;
+import model.enemies.FormerPartyMemberEnemy;
+import model.enemies.WitchEnemy;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.clothing.CultistsRobes;
@@ -52,6 +54,20 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        println("The witch carefully assesses the party members...");
+        int sum = calculatePartyAlignment(model, this);
+        if (sum > 0) {
+            portraitSay("You" + (model.getParty().size() > 1 ? " lot": "") +
+                    " never should have come here, and now you're going to pay!");
+            println("In a flying rage, the witch draws a dagger and lunges at you!");
+            runCombat(List.of(new WitchEnemy('A', portrait.getRace(), portrait)));
+            return false;
+        }
+        offerPotionsAndChangeClass(model);
+        return true;
+    }
+
+    private void offerPotionsAndChangeClass(Model model) {
         println("She beckons you inside and offers to sell you a couple of bottles of the draft.");
         List<Item> itemList = new ArrayList<>();
         Potion pot = model.getItemDeck().getRandomPotion();
@@ -67,7 +83,6 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
         changeClassEvent.areYouInterested(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, portrait, "Witch");
-        return true;
     }
 
     @Override

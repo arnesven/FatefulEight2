@@ -39,6 +39,9 @@ public class LethalPoison extends PoisonPotion {
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {
+        if (didResistStrongPotion(gc)) {
+            return gc.getName() + " resisted the poison.";
+        }
         gc.addToHP(-gc.getHP() + 1);
         gc.addCondition(new PoisonCondition());
         return gc.getName() + " drank the deadly poison!";

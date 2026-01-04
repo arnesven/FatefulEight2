@@ -40,7 +40,7 @@ public class PoisonCondition extends Condition {
     @Override
     public ConditionHelpDialog getHelpView(GameView view) {
         return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is suffering from " +
-                "poison.\n\nCharacters with this condition will lose health points each day until cured. " +
-                "Resting at inns and taverns normally cures poison.\n\nEnemies with this condition suffer damage each combat round.");
+                "poison.\n\nCharacters with this condition will lose health points each day until cured.\n\n" +
+                "Resting at inns and taverns normally removes this condition.\n\nEnemies with this condition suffer damage each combat round.");
     }
 }

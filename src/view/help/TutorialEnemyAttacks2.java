@@ -11,7 +11,10 @@ public class TutorialEnemyAttacks2 extends SubChapterHelpDialog {
             "Ferocious attacks are simply attacks of high damage - watch out!\n\n" +
             "Spell attacks are usually very powerful but take a whole round to resolve. " +
             "An enemy casting a spell can be interrupted by attacking that " +
-            "enemy.";
+            "enemy.\n\n" +
+            "Summon attacks bring new enemies into battle to fight for the summoner. " +
+            "Such enemies disappear if the summoner should be killed.\n\n" +
+            "Curse attacks can place nasty conditions on the victim, such as Feeble.";
 
     public TutorialEnemyAttacks2(GameView view) {
         super(view, "Enemy Attacks II", TEXT);

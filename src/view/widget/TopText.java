@@ -165,7 +165,7 @@ public class TopText {
     }
 
     private int addAlighment(Model model, int col) {
-        return printWithIcon(model, col, String.format("%3d", DailyEventState.getPartyAlignment(model)),
+        return printWithIcon(model, col, String.format("%+3d", DailyEventState.getPartyAlignment(model)),
                 ALIGNMENT_ICON_SPRITE, MyColors.WHITE);
     }
 

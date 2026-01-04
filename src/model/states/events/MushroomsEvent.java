@@ -44,7 +44,7 @@ public class MushroomsEvent extends DailyEventState {
                 println("Each party member suffers 2 damage.");
                 List<GameCharacter> died = new ArrayList<>();
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    gc.addToHP(-2);
+                    gc.addToHP(-2); // TODO: Make poisoned
                     if (gc.isDead()) {
                         died.add(gc);
                     }

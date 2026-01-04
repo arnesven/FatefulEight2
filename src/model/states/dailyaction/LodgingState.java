@@ -3,6 +3,7 @@ package model.states.dailyaction;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
+import model.combat.conditions.FeebleCondition;
 import model.combat.conditions.PoisonCondition;
 import model.states.EveningState;
 
@@ -35,14 +36,18 @@ public class LodgingState extends EveningState {
                     "Can I have a hot bath too?", "It cost a little, but it was worth it.",
                     "Good food, decent rooms.", "This was a pleasant place. Let's stay here again some time."));
         }
-        removePoison(model.getParty());
+        removeLodgingRestConditions(model.getParty());
     }
 
-    public void removePoison(Party party) {
+    public void removeLodgingRestConditions(Party party) {
         for (GameCharacter gc : party.getPartyMembers()) {
             if (gc.hasCondition(PoisonCondition.class)) {
                 gc.removeCondition(PoisonCondition.class);
                 println(gc.getName() + " is no longer poisoned.");
+            }
+            if (gc.hasCondition(FeebleCondition.class)) {
+                gc.removeCondition(FeebleCondition.class);
+                println(gc.getName() + " is no longer enfeebled.");
             }
         }
     }
