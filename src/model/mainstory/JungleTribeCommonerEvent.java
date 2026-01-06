@@ -1,16 +1,12 @@
 package model.mainstory;
 
 import model.Model;
-import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.enemies.Enemy;
 import model.map.locations.PyramidLocation;
 import model.races.Race;
-import model.states.GameState;
-import model.states.events.GeneralInteractionEvent;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;

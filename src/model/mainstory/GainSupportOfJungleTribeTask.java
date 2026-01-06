@@ -8,7 +8,6 @@ import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.journal.PartSixStoryPart;
 import model.journal.StoryPart;
-import model.map.HexLocation;
 import model.map.WorldBuilder;
 import model.map.locations.PyramidLocation;
 import model.races.Race;
@@ -28,6 +27,8 @@ import java.util.List;
 public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask {
     private static final int INITIAL_STEP = 0;
     private static final int JEQUEN_MET = 1;
+    private static final int CROWN_RECOVERED = 2;
+    private static final int CROWN_GIVEN_TO_JEQUEN = 3;
     private static final String REMOTE_PEOPLE_NAME = "Jungle Tribe";
     private final AdvancedAppearance jequenPortrait;
     private final String crownLocation;
@@ -35,6 +36,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     private int step = INITIAL_STEP;
     private Set<String> cluesGiven = new HashSet<>();
     private AdvancedAppearance friendOfJaqarPortrait;
+
     private boolean friendKnown = false;
     private boolean jaquarTruthKnown = false;
 
@@ -42,7 +44,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
         super(WorldBuilder.JUNGLE_VILLAGE_LOCATION);
         jequenPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, false);
         friendOfJaqarPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, true);
-        this.crownLocation = MyRandom.randInt(4) == 0 ? null : MyRandom.sample(getPyramidList(model)).getName();
+        this.crownLocation = null; //MyRandom.randInt(4) == 0 ? null : MyRandom.sample(getPyramidList(model)).getName();
         if (crownLocation == null) {
             System.out.println("Jade Crown is hidden in village.");
         } else {
@@ -58,13 +60,23 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
                 if (step == INITIAL_STEP) {
                     return "Travel to the southern continent and gain the support of the Jungle Tribe which inhabits that area.";
                 }
-                String extraFromClues = "";
-                for (String str : cluesGiven) {
-                    extraFromClues += "\n\nThe Crown may be in the " + str + ".";
-                }
+                if (step == JEQUEN_MET) {
+                    String extra = "";
+                    for (String str : cluesGiven) {
+                        extra += "\n\nThe Crown may be in the " + str + ".";
+                    }
 
-                return "You've met with prince Jequen who is the sole heir to the throne of the Southern Kingdom. But he cannot " +
-                        "claim the regency without the Jade Crown." + extraFromClues;
+                    if (friendKnown && jaquarTruthKnown) {
+                        extra += "\n\nYou've talked to a friend of Jequen's father, prince Jaquar. He informed you that " +
+                                "prince Jaquar returned with the crown many years ago. It may be hidden somewhere in the village.";
+                    }
+
+                    return "You've met with prince Jequen who is the sole heir to the throne of the Southern Kingdom. But he cannot " +
+                            "claim the regency without the Jade Crown." + extra;
+                }
+                // CROWN GIVEN TO JEQUEN
+                return "You recovered the Jade Crown and given it to prince Jequen. With it he will able to claim regency over the " +
+                        "Jungle Tribe and the Southern Kingdom. As king, Jequen has promised his support to you.\n\nCompleted";
             }
 
             @Override
@@ -91,7 +103,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     @Override
     public void setQuestSuccessful() {
-        this.completed = true;
+        step = CROWN_RECOVERED;
     }
 
     @Override
@@ -113,7 +125,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     @Override
     public CharacterAppearance getLeaderPortrait() {
-        return PortraitSubView.makeRandomPortrait(Classes.AMZ, Race.SOUTHERN_HUMAN); // TODO: Fix
+        return jequenPortrait;
     }
 
     @Override
@@ -151,16 +163,16 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     public DailyEventState generateTribeCommonerEvent(Model model) {
         if (jequenMet()) {
-//            int dieRoll = MyRandom.rollD10();
-//            if (dieRoll == 1) {
-//                return new JungleTribeKidEvent(model, this); // Pretty useless.
-//            }
-//            if (dieRoll < 6) {
-//                return new JungleTribeCommonerEvent(model, this);
-//            }
-//            if (dieRoll < 10) {
-//                return new JungleTribeElderEvent(model, this);
-//            }
+            int dieRoll = MyRandom.rollD10();
+            if (dieRoll == 1) {
+                return new JungleTribeKidEvent(model, this); // Pretty useless.
+            }
+            if (dieRoll < 6) {
+                return new JungleTribeCommonerEvent(model, this);
+            }
+            if (dieRoll < 10) {
+                return new JungleTribeElderEvent(model, this);
+            }
             return new FriendOfJaquarEvent(model, this);
         }
         return null;
@@ -218,5 +230,10 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     public boolean isJaquarTruthKnown() {
         return jaquarTruthKnown;
+    }
+
+    public void setCrownGivenToJequen() {
+        step = CROWN_GIVEN_TO_JEQUEN;
+        completed = true;
     }
 }
