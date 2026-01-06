@@ -4,7 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.journal.PartSixStoryPart;
 import model.journal.StoryPart;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.GameState;

@@ -246,11 +246,16 @@ public abstract class Quest {
 
     public void setRemoteLocation(Model model) {
         if (moveAfter > 0) {
-            this.remotePath = MoveAwayFromCurrentPositionEvent.makePathToRemoteLocation(model, moveAfter);
+            setRemotePath(model, MoveAwayFromCurrentPositionEvent.makePathToRemoteLocation(model, moveAfter));
         } else {
-            this.remotePath = new ArrayList<>(List.of(new Point(model.getParty().getPosition())));
+            setRemotePath(model, new ArrayList<>(List.of(new Point(model.getParty().getPosition()))));
         }
     }
+
+    protected void setRemotePath(Model model, List<Point> path) {
+        this.remotePath = path;
+    }
+
 
     public HeldQuestData getHeldData() {
         return new HeldQuestData(getPortrait(), remotePath);

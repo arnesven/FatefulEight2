@@ -12,28 +12,21 @@ import model.enemies.behaviors.NoAttackCombatBehavior;
 import model.items.Equipment;
 import model.items.accessories.LargeShield;
 import model.items.clothing.LeatherArmor;
-import model.items.clothing.LeatherTunic;
 import model.items.clothing.StuddedJerkin;
 import model.items.weapons.HuntersBow;
-import model.items.weapons.Mace;
 import model.items.weapons.Scepter;
-import model.items.weapons.ShortBow;
-import model.mainstory.GainSupportOfVikingsTask;
 import model.map.CastleLocation;
 import model.map.locations.BogdownCastle;
 import model.map.locations.VikingVillageLocation;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
-import model.states.events.VisitMonasteryEvent;
 import util.MyLists;
 import util.MyRandom;
 import view.combat.DungeonTheme;
-import view.combat.GrassCombatTheme;
 import view.combat.MonastaryWallCombatTheme;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

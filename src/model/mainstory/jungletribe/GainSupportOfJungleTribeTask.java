@@ -1,4 +1,4 @@
-package model.mainstory;
+package model.mainstory.jungletribe;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
@@ -8,8 +8,13 @@ import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.journal.PartSixStoryPart;
 import model.journal.StoryPart;
+import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.WorldBuilder;
 import model.map.locations.PyramidLocation;
+import model.map.locations.QanoiPyramidLocation;
+import model.map.locations.RubiqPyramidLocation;
+import model.map.locations.SudoqPyramidLocation;
+import model.quests.*;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -25,16 +30,19 @@ import java.util.*;
 import java.util.List;
 
 public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask {
+    private static final String REMOTE_PEOPLE_NAME = "Jungle Tribe";
+
     private static final int INITIAL_STEP = 0;
     private static final int JEQUEN_MET = 1;
     private static final int CROWN_RECOVERED = 2;
     private static final int CROWN_GIVEN_TO_JEQUEN = 3;
-    private static final String REMOTE_PEOPLE_NAME = "Jungle Tribe";
+
+    private int step = INITIAL_STEP;
     private final AdvancedAppearance jequenPortrait;
     private final String crownLocation;
     private boolean completed = false;
-    private int step = INITIAL_STEP;
     private Set<String> cluesGiven = new HashSet<>();
+    private Set<String> crownIsNotIn = new HashSet<>();
     private AdvancedAppearance friendOfJaqarPortrait;
 
     private boolean friendKnown = false;
@@ -44,7 +52,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
         super(WorldBuilder.JUNGLE_VILLAGE_LOCATION);
         jequenPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, false);
         friendOfJaqarPortrait = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, true);
-        this.crownLocation = null; //MyRandom.randInt(4) == 0 ? null : MyRandom.sample(getPyramidList(model)).getName();
+        this.crownLocation = MyRandom.randInt(4) == 0 ? null : MyRandom.sample(getPyramidList(model)).getName();
         if (crownLocation == null) {
             System.out.println("Jade Crown is hidden in village.");
         } else {
@@ -61,9 +69,15 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
                     return "Travel to the southern continent and gain the support of the Jungle Tribe which inhabits that area.";
                 }
                 if (step == JEQUEN_MET) {
-                    String extra = "";
+                    String extra = "\n";
+
                     for (String str : cluesGiven) {
-                        extra += "\n\nThe Crown may be in the " + str + ".";
+                        if (!crownIsNotIn.contains(str)) {
+                            extra += "\nThe crown may be in the " + str + ".";
+                        }
+                    }
+                    for (String str : crownIsNotIn) {
+                        extra += "\nYou've searched the " + str + ", but the crown was not hidden there.";
                     }
 
                     if (friendKnown && jaquarTruthKnown) {
@@ -97,13 +111,39 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     }
 
     @Override
-    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
-        return null;
+    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
+        List<MyTriplet<String, CharacterAppearance, String>> list = new ArrayList<>();
+        if (jequenMet() && !completed) {
+            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
+                model.partyIsInOverworldPosition(WorldBuilder.RUBIQ_PYRAMID_LOCATION)) {
+                if (!crownIsNotIn.contains(RubiqPyramidLocation.NAME)) {
+                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(RubiqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
+                }
+            }
+            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
+                    model.partyIsInOverworldPosition(WorldBuilder.SUDOQ_PYRAMID_LOCATION)) {
+                if (!crownIsNotIn.contains(SudoqPyramidLocation.NAME)) {
+                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(SudoqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
+                }
+            }
+            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
+                    model.partyIsInOverworldPosition(WorldBuilder.QANOI_PYRAMID_LOCATION)) {
+                if (!crownIsNotIn.contains(QanoiPyramidLocation.NAME)) {
+                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(QanoiPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
+                }
+            }
+        }
+        return list;
     }
 
     @Override
-    public void setQuestSuccessful() {
-        step = CROWN_RECOVERED;
+    public void setQuestSuccessful(RemotePeopleQuest remotePeopleQuest) {
+        String pyramidName = ((SeekTheJadeCrownQuest)remotePeopleQuest).getPyramidName();
+        if (crownLocation != null && crownLocation.equals(pyramidName)) {
+            step = CROWN_RECOVERED;
+        } else {
+            crownIsNotIn.add(pyramidName);
+        }
     }
 
     @Override
@@ -203,9 +243,9 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     }
 
     private static List<PyramidLocation> getPyramidList(Model model) {
-        return List.of((PyramidLocation)model.getWorld().getLocationByName("Rubiq Pyramid"),
-                (PyramidLocation)model.getWorld().getLocationByName("Qanoi Pyramid"),
-                (PyramidLocation)model.getWorld().getLocationByName("Sudoq Pyramid"));
+        return List.of((PyramidLocation)model.getWorld().getLocationByName(RubiqPyramidLocation.NAME + " Pyramid"),
+                (PyramidLocation)model.getWorld().getLocationByName(QanoiPyramidLocation.NAME + " Pyramid"),
+                (PyramidLocation)model.getWorld().getLocationByName(SudoqPyramidLocation.NAME + " Pyramid"));
     }
 
     public AdvancedAppearance getFriendPortrait() {

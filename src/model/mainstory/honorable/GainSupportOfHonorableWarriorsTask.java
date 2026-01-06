@@ -1,4 +1,4 @@
-package model.mainstory;
+package model.mainstory.honorable;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -17,11 +17,12 @@ import model.items.potions.HealthPotion;
 import model.items.spells.Spell;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
-import model.mainstory.honorable.*;
+import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.HillsHex;
 import model.map.WorldBuilder;
 import model.map.locations.EasternPalaceLocation;
 import model.quests.NightAtTheTheaterQuest;
+import model.quests.RemotePeopleQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -87,17 +88,17 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     @Override
-    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
+    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
         if (model.getCurrentHex().getLocation() instanceof EasternPalaceLocation &&
                 step == SWORD_GIVEN &&
                 !isCompleted()) {
-            return new MyTriplet<>(NightAtTheTheaterQuest.QUEST_NAME, getShingenPortrait(), "Lord Shingen");
+            return List.of(new MyTriplet<>(NightAtTheTheaterQuest.QUEST_NAME, getShingenPortrait(), "Lord Shingen"));
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    public void setQuestSuccessful() {
+    public void setQuestSuccessful(RemotePeopleQuest remotePeopleQuest) {
         completed = true;
     }
 

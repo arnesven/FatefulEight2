@@ -1,4 +1,4 @@
-package model.mainstory;
+package model.mainstory.vikings;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
@@ -10,10 +10,10 @@ import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
-import model.mainstory.vikings.MeetWithChieftainEvent;
-import model.mainstory.vikings.NotAdmittedToLonghouseEvent;
+import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.WorldBuilder;
 import model.map.locations.VikingVillageLocation;
+import model.quests.RemotePeopleQuest;
 import model.quests.SavageVikingsQuest;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -24,6 +24,7 @@ import util.MyTriplet;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
@@ -128,17 +129,17 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
 
     @Override
-    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
+    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
         if (model.getCurrentHex().getLocation() instanceof VikingVillageLocation &&
                 step == INITIAL_STEP) {
-            return new MyTriplet<>(SavageVikingsQuest.QUEST_NAME,
-                    model.getParty().getLeader().getAppearance(), "Yourself");
+            return List.of(new MyTriplet<>(SavageVikingsQuest.QUEST_NAME,
+                    model.getParty().getLeader().getAppearance(), "Yourself"));
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    public void setQuestSuccessful() {
+    public void setQuestSuccessful(RemotePeopleQuest remotePeopleQuest) {
         step = QUEST_DONE;
     }
 

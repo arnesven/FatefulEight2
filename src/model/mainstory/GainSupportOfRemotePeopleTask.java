@@ -5,6 +5,7 @@ import model.actions.DailyAction;
 import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
 import model.quests.Quest;
+import model.quests.RemotePeopleQuest;
 import model.tasks.DestinationTask;
 import util.MyPair;
 import util.MyTriplet;
@@ -38,9 +39,9 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
         return false;
     }
 
-    public abstract MyTriplet<String, CharacterAppearance, String> addQuests(Model model);
+    public abstract List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model);
 
-    public abstract void setQuestSuccessful();
+    public abstract void setQuestSuccessful(RemotePeopleQuest remotePeopleQuest);
 
     public abstract void addFactionString(List<MyPair<String, String>> result);
 

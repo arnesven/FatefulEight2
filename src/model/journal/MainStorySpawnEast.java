@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.mainstory.*;
+import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
 import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;

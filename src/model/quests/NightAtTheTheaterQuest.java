@@ -9,7 +9,7 @@ import model.enemies.Enemy;
 import model.enemies.OrcishBombThrowerEnemy;
 import model.enemies.OrcishNinjaEnemy;
 import model.enemies.OrcishNinjaStarThrowerEnemy;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
 import model.mainstory.honorable.HonorableWarriorAlly;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;

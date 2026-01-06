@@ -3,7 +3,6 @@ package model.mainstory.honorable;
 import model.Model;
 import model.items.weapons.BladedWeapon;
 import model.items.weapons.HigherTierWeapon;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.map.CastleLocation;
 import model.states.DailyEventState;
 import util.MyLists;

@@ -3,7 +3,7 @@ package model.states.dailyaction;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
-import model.mainstory.GainSupportOfVikingsTask;
+import model.mainstory.vikings.GainSupportOfVikingsTask;
 import model.mainstory.vikings.RaidSixthOrderMonastaryEvent;
 import model.map.locations.VikingVillageLocation;
 import model.states.GameState;

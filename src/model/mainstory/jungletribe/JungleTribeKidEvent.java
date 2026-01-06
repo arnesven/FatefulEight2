@@ -1,11 +1,10 @@
-package model.mainstory;
+package model.mainstory.jungletribe;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.ChildAppearance;
 import model.classes.Classes;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;

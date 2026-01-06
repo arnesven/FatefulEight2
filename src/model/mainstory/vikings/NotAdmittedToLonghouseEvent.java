@@ -3,7 +3,6 @@ package model.mainstory.vikings;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
-import model.mainstory.GainSupportOfVikingsTask;
 import model.states.DailyEventState;
 
 import java.util.List;

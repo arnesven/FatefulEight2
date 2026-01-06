@@ -5,7 +5,7 @@ import model.achievements.Achievement;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.items.Item;
-import model.mainstory.GainSupportOfVikingsTask;
+import model.mainstory.vikings.GainSupportOfVikingsTask;
 import model.mainstory.vikings.BeforeTrainMonksEveningState;
 import model.mainstory.vikings.DonateEquipmentToMonastaryState;
 import model.map.TownLocation;
@@ -16,7 +16,6 @@ import model.states.TransferItemState;
 import model.states.TravelBySeaState;
 import util.MyLists;
 import util.MyRandom;
-import util.MyStrings;
 import view.subviews.SubView;
 
 import java.util.ArrayList;

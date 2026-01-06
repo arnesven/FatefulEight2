@@ -1,4 +1,4 @@
-package model.mainstory;
+package model.mainstory.vikings;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;

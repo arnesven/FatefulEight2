@@ -14,7 +14,6 @@ import model.items.weapons.Cutlass;
 import model.items.weapons.Pistol;
 import model.journal.MainStorySpawnLocation;
 import model.journal.MainStorySpawnWest;
-import model.journal.StoryPart;
 import model.mainstory.pirates.PotentialMutineer;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;

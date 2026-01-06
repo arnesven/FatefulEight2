@@ -1,21 +1,22 @@
-package model.mainstory;
+package model.mainstory.pirates;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.journal.JournalEntry;
-import model.journal.MainStorySpawnWest;
 import model.journal.MainStoryTask;
+import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.WorldBuilder;
 import model.map.locations.PirateHavenLocation;
 import model.quests.AvertTheMutinyQuest;
-import model.quests.Quest;
+import model.quests.RemotePeopleQuest;
 import util.MyPair;
 import util.MyTriplet;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
@@ -97,16 +98,16 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     }
 
     @Override
-    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
+    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
         if (model.getCurrentHex().getLocation() instanceof PirateHavenLocation &&
                 blackboneMet && !isCompleted()) {
-            return new MyTriplet<>(AvertTheMutinyQuest.QUEST_NAME, blackboneAppearance, "Captain " + CAPTAIN_NAME);
+            return List.of(new MyTriplet<>(AvertTheMutinyQuest.QUEST_NAME, blackboneAppearance, "Captain " + CAPTAIN_NAME));
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    public void setQuestSuccessful() {
+    public void setQuestSuccessful(RemotePeopleQuest remotePeopleQuest) {
         this.completed = true;
     }
 }

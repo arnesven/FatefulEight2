@@ -2,10 +2,9 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.TimeOfDay;
-import model.mainstory.GainSupportOfVikingsTask;
+import model.mainstory.vikings.GainSupportOfVikingsTask;
 import model.map.locations.VikingVillageLocation;
 import model.states.GameState;
-import model.states.events.NoEventState;
 import model.states.events.SilentNoEventState;
 import view.MyColors;
 import view.sprites.Sprite;

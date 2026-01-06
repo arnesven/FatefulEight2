@@ -1,4 +1,4 @@
-package model.mainstory;
+package model.mainstory.jungletribe;
 
 import model.Model;
 import model.TimeOfDay;

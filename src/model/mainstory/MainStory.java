@@ -160,6 +160,12 @@ public class MainStory implements Serializable {
         map.put(nightAtTheater.getName(), nightAtTheater);
         SavageVikingsQuest vikingsQuest = new SavageVikingsQuest();
         map.put(vikingsQuest.getName(), vikingsQuest);
+        SeekTheJadeCrownInRubiqQuest jadeCrownRubiqQuest = new SeekTheJadeCrownInRubiqQuest();
+        map.put(jadeCrownRubiqQuest.getName(), jadeCrownRubiqQuest);
+        SeekTheJadeCrownInSudoqQuest jadeCrownSudoqQuest = new SeekTheJadeCrownInSudoqQuest();
+        map.put(jadeCrownSudoqQuest.getName(), jadeCrownSudoqQuest);
+        SeekTheJadeCrownInQanoiQuest jadeCrownQanoiQuest = new SeekTheJadeCrownInQanoiQuest();
+        map.put(jadeCrownQanoiQuest.getName(), jadeCrownQanoiQuest);
         MindMachineQuest machineQuest = new MindMachineQuest();
         map.put(machineQuest.getName(), machineQuest);
         return map;

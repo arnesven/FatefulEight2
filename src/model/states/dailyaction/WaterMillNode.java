@@ -2,7 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.TimeOfDay;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
 import model.map.locations.EasternPalaceLocation;
 import model.states.GameState;
 import view.MyColors;
@@ -12,7 +12,6 @@ import view.sprites.Sprite32x32;
 import view.subviews.TownishSubView;
 
 import java.awt.*;
-import java.util.List;
 
 public class WaterMillNode extends DailyActionNode {
 

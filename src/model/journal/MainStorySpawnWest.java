@@ -12,6 +12,7 @@ import model.items.clothing.LeatherTunic;
 import model.items.weapons.Cutlass;
 import model.items.weapons.Pistol;
 import model.mainstory.*;
+import model.mainstory.pirates.GainSupportOfPiratesTask;
 import model.mainstory.pirates.PotentialMutineer;
 import model.map.World;
 import model.map.WorldBuilder;

@@ -97,8 +97,8 @@ public class PartSixStoryPart extends StoryPart {
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
-        MyTriplet<String, CharacterAppearance, String> triplet = gainSupportOfRemotePeopleTask.addQuests(model);
-        if (triplet != null) {
+        List<MyTriplet<String, CharacterAppearance, String>> triplets = gainSupportOfRemotePeopleTask.addQuests(model);
+        for (MyTriplet<String, CharacterAppearance, String> triplet : triplets) {
             quests.add(getQuestAndSetPortrait(triplet.first, triplet.second, triplet.third));
         }
     }

@@ -29,7 +29,7 @@ public abstract class RemotePeopleQuest extends MainQuest {
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
         if (questWasSuccess) {
-            task.setQuestSuccessful();
+            task.setQuestSuccessful(this);
         }
         return toReturn;
     }

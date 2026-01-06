@@ -4,9 +4,8 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.enemies.Enemy;
-import model.mainstory.GainSupportOfJungleTribeTask;
+import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.races.Race;
-import model.states.GameState;
 import util.MyPair;
 import util.MyRandom;
 

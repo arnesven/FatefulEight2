@@ -3,7 +3,6 @@ package model.mainstory.vikings;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.Item;
-import model.mainstory.GainSupportOfVikingsTask;
 import model.states.TransferItemState;
 
 import java.util.HashMap;

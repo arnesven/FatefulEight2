@@ -4,7 +4,6 @@ import model.Model;
 import model.items.Item;
 import model.items.SpecialEasternWeapon;
 import model.items.weapons.*;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.states.DailyEventState;
 import util.MyLists;
 import view.MyColors;

@@ -8,7 +8,6 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.spells.DispelSpell;
-import model.mainstory.GainSupportOfVikingsTask;
 import model.map.CastleLocation;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -20,8 +19,8 @@ import view.subviews.GuildHallImageSubView;
 
 import java.util.List;
 
-import static model.mainstory.GainSupportOfVikingsTask.CHIEFTAIN_NAME;
-import static model.mainstory.GainSupportOfVikingsTask.CHIEFTAIN;
+import static model.mainstory.vikings.GainSupportOfVikingsTask.CHIEFTAIN_NAME;
+import static model.mainstory.vikings.GainSupportOfVikingsTask.CHIEFTAIN;
 
 public class MeetWithChieftainEvent extends DailyEventState {
     private final boolean withIntro;

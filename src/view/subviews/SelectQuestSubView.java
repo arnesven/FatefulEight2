@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.characters.appearance.CharacterAppearance;
+import model.map.objects.ShowLocationNamesFilter;
 import model.quests.Quest;
 import model.quests.QuestDifficulty;
 import util.Arithmetics;
@@ -34,7 +35,12 @@ public class SelectQuestSubView extends SubView {
 
         if (index < quests.size()) {
             List<Point> path = getRemotePath(model);
-            Point mid = path.get(path.size()/2);
+            Point mid = path.get(0);
+            if (path.size() > 1) {
+                Point candidateB = path.get(path.size() / 2);
+                Point candidateA = path.get((path.size() - 1) / 2);
+                mid = getBestCandidate(candidateA, candidateB);
+            }
             model.getWorld().drawYourself(model, mid, model.getParty().getPosition(),
                     4, 4, X_OFFSET, QUEST_MAP_Y_START, path.get(path.size()-1), true,
                     null);
@@ -42,6 +48,30 @@ public class SelectQuestSubView extends SubView {
         }
         drawQuestList(model);
         drawCursor(model);
+    }
+
+    private Point getBestCandidate(Point candidateA, Point candidateB) {
+        if (candidateA.x == candidateB.x) { // NORTH-SOUTH DIRECTION
+            if (candidateA.y > candidateB.y) {
+                return candidateA;
+            }
+            return candidateB;
+        }
+        if (candidateA.x < candidateB.x) { // EAST
+            if (candidateA.y < candidateB.y) { // SOUTH EAST
+                return candidateB;
+            }
+            // NORTH EAST
+            return new Point(candidateB.x, candidateB.y+1);
+        }
+
+        // WEST
+        // SOUTH WEST
+        if (candidateA.y < candidateB.y) {
+            return new Point(candidateA.x, candidateA.y + 1);
+        }
+        // SOUTH EAST
+        return candidateA;
     }
 
     private List<Point> getRemotePath(Model model) {

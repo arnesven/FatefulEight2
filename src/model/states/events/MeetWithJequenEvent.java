@@ -1,7 +1,8 @@
 package model.states.events;
 
 import model.Model;
-import model.mainstory.GainSupportOfJungleTribeTask;
+import model.journal.JournalEntry;
+import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.map.CastleLocation;
 import model.states.DailyEventState;
 import util.MyPair;
@@ -80,6 +81,7 @@ public class MeetWithJequenEvent extends DailyEventState {
         leaderSay("Alright. I guess " + iOrWe() + " have no other choice.");
         portraitSay("Thank you for doing this. And... if you find out what happened to my father, I would like to know.");
         leaderSay(iOrWe() + " will be back.");
+        JournalEntry.printJournalUpdateMessage(model);
         jungleTribeTask.setJequenMet();
     }
 
