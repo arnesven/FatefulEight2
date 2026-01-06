@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.classes.Classes;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
+import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -95,6 +96,7 @@ public class JungleVillageLocation extends TownishLocation {
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        return new RubiqPuzzleEvent(model); /*
         GainSupportOfJungleTribeTask task = GainSupportOfJungleTribeTask.getTask(model);
         if (task != null) {
             DailyEventState event = task.generateTribeCommonerEvent(model);
@@ -115,6 +117,7 @@ public class JungleVillageLocation extends TownishLocation {
                 new VeteranEvent(model, true, Race.SOUTHERN_HUMAN),
                 new MerchantEvent(model, true,
                         PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.SOUTHERN_HUMAN))));
+        */
     }
 
     @Override
