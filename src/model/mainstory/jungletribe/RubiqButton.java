@@ -21,8 +21,11 @@ public abstract class RubiqButton {
     }
 
     public void doAction(List<RubiqBall> balls) {
-        List<RubiqBall> copy = new ArrayList<>(balls);
+        innerDoAction(balls, indices, clockwise);
+    }
 
+    private static void innerDoAction(List<RubiqBall> balls, int[] indices, boolean clockwise) {
+        List<RubiqBall> copy = new ArrayList<>(balls);
         if (clockwise) {
             balls.set(indices[0], copy.get(indices[1]));
             balls.set(indices[1], copy.get(indices[2]));
@@ -38,5 +41,9 @@ public abstract class RubiqButton {
 
     public String getText() {
         return description + " " + (clockwise ? "clockwise" : "counter-clockwise");
+    }
+
+    public void undoAction(List<RubiqBall> list) {
+        innerDoAction(list, indices, !clockwise);
     }
 }

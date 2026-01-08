@@ -96,7 +96,6 @@ public class JungleVillageLocation extends TownishLocation {
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new RubiqPuzzleEvent(model); /*
         GainSupportOfJungleTribeTask task = GainSupportOfJungleTribeTask.getTask(model);
         if (task != null) {
             DailyEventState event = task.generateTribeCommonerEvent(model);
@@ -117,7 +116,6 @@ public class JungleVillageLocation extends TownishLocation {
                 new VeteranEvent(model, true, Race.SOUTHERN_HUMAN),
                 new MerchantEvent(model, true,
                         PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.SOUTHERN_HUMAN))));
-        */
     }
 
     @Override
