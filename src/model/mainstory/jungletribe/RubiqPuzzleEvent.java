@@ -129,13 +129,11 @@ public class RubiqPuzzleEvent extends DailyEventState {
             println("The puzzle has been solved!");
         }
         CollapsingTransition.transition(model, oldSubView);
+        model.getLog().waitForAnimationToFinish();
 
         if (strikes == 3) {
             buttons.getSelectedElement().undoAction(list);
         }
-
-        println("(End of event)");
-        waitForReturn();
     }
 
     private boolean puzzleSolved(List<RubiqBall> list) {
@@ -156,5 +154,13 @@ public class RubiqPuzzleEvent extends DailyEventState {
             }
         }
         return false;
+    }
+
+    public boolean solvedPuzzle() {
+        return puzzleSolved(list);
+    }
+
+    public List<RubiqBall> getPuzzleState() {
+        return list;
     }
 }
