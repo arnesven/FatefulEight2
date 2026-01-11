@@ -10,17 +10,22 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.states.QuestState;
-import model.states.events.PeskyCrowEvent;
 import sound.BackgroundMusic;
 import view.MyColors;
+import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.widget.QuestBackground;
 
+import javax.print.attribute.standard.QueuedJobCount;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     private static final String INTRO_TEXT = "TODO INTRO";
     private static final String ENDING_TEXT = "You leave the pyramid, carrying with you some of the trinkets that you've managed to pick up along the way.";
+    private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackgroundSprites();
+    private static final List<QuestBackground> DECORATIONS = makeDecorations();
 
     private final String pyramidName;
     private final Point pyramidLocation;
@@ -39,7 +44,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
         super.resetQuest();
         oldPuzzleState = null;
         golemVisited = false;
-        getSuccessEndingNode().move(5, 1);
+        getSuccessEndingNode().move(6, 0);
     }
 
     @Override
@@ -60,13 +65,13 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Trek to the pyramid", List.of(
-                    new CombatSubScene(3, 2, makeMonsters(), false) {
+                    new CombatSubScene(3, 2, makeJungleMonsters(), false) {
                         @Override
                         protected String getCombatDetails() {
                             return "many monsters";
                         }
                     },
-                    new CollaborativeSkillCheckSubScene(1, 1, Skill.Survival, 1, // TODO: 15
+                    new CollaborativeSkillCheckSubScene(1, 2, Skill.Survival, 1, // TODO: 15
                             "Perhaps we can find our way through the jungle."))),
                 new QuestScene("Search the pyramid", List.of(
                     new CollaborativeSkillCheckSubScene(5, 7, Skill.Search, 1, // TODO: 14
@@ -74,7 +79,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                             "It may take some time to find where the crown could be hidden.")
                 )),
                 new QuestScene("Denizens of the pyramid", List.of(
-                        new CombatSubScene(6, 5, makeMonsters(), false) {
+                        new CombatSubScene(6, 5, makePyramidDenizens(), false) {
                             @Override
                             protected String getCombatDetails() {
                                 return "many monsters";
@@ -110,16 +115,23 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 )));
     }
 
-    private List<Enemy> makeMonsters() {
+    private List<Enemy> makeJungleMonsters() {
         return List.of(new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'),
                 new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('C'),
                 new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanShamanEnemy('B'),
                 new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'));
     }
 
+    private List<Enemy> makePyramidDenizens() {
+        return List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
+                       new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
+                       new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
+                       new LizardmanEnemy('A'));
+    }
+
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        QuestStartPoint qsp = new QuestStartingPointWithPosition(2, 0,
+        QuestStartPoint qsp = new QuestStartingPointWithPosition(2, 1,
                 List.of(new QuestEdge(scenes.get(0).get(0)),
                         new QuestEdge(scenes.get(0).get(1))),
                 "Do we take the easy way, or the safe way?");
@@ -214,5 +226,106 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
             golemVisited = true;
             return getFailEdge();
         }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+    @Override
+    public List<QuestBackground> getDecorations() {
+        return DECORATIONS;
+    }
+
+
+    private static List<QuestBackground> makeBackgroundSprites() {
+        List<QuestBackground> bg = new ArrayList<>();
+        Sprite skyGradient = new Sprite32x32("skyGradient", "quest.png", 0xAD,
+                MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.PINK, MyColors.ORANGE);
+        Sprite sunset = new Sprite32x32("skyGradient", "quest.png", 0xAE,
+                MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.PINK, MyColors.YELLOW);
+        for (int i = 0; i < 8; ++i) {
+            if (i == 2) {
+                bg.add(new QuestBackground(new Point(i, 0), sunset, true));
+            } else {
+                bg.add(new QuestBackground(new Point(i, 0), skyGradient, true));
+            }
+        }
+
+
+
+        Sprite pyra = new Sprite32x32("pyra", "quest.png", 0x30, MyColors.GRAY_RED,
+                MyColors.GRAY, MyColors.BROWN, MyColors.DARK_GREEN);
+        Sprite pyraFloor = new Sprite32x32("pyradoor", "quest.png", 0x08, MyColors.GRAY_RED,
+                MyColors.GRAY, MyColors.BROWN, MyColors.BROWN);
+        Sprite pyraRoof = new Sprite32x32("pyraroof", "quest.png", 0x32, MyColors.GRAY_RED,
+                MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.BROWN);
+
+        Sprite pyraStairs =  new Sprite32x32("pyrastairs", "quest.png", 0x43, MyColors.GRAY,
+                MyColors.GRAY, MyColors.BROWN, MyColors.DARK_GREEN);
+
+        // PYRAMID
+        bg.add(new QuestBackground(new Point(2, 8), pyra, true));
+        bg.add(new QuestBackground(new Point(3, 8), pyra, true));
+        bg.add(new QuestBackground(new Point(4, 8), pyra, true));
+        bg.add(new QuestBackground(new Point(5, 8), pyra, true));
+        bg.add(new QuestBackground(new Point(6, 8), pyraStairs, true));
+        bg.add(new QuestBackground(new Point(7, 8), pyra, true));
+
+        bg.add(new QuestBackground(new Point(2, 7), pyraRoof, true));
+        for (int x = 3; x < 8; ++x) {
+            bg.add(new QuestBackground(new Point(x, 7), pyraFloor, true));
+        }
+
+        bg.add(new QuestBackground(new Point(2, 6), pyraRoof, true));
+        bg.add(new QuestBackground(new Point(3, 6), pyra, true));
+        bg.add(new QuestBackground(new Point(4, 6), pyra, true));
+        bg.add(new QuestBackground(new Point(5, 6), pyra, true));
+        bg.add(new QuestBackground(new Point(6, 6), pyraStairs, true));
+        bg.add(new QuestBackground(new Point(7, 6), pyra, true));
+
+        bg.add(new QuestBackground(new Point(3, 5), pyraRoof, true));
+        for (int x = 4; x < 8; ++x) {
+            bg.add(new QuestBackground(new Point(x, 5), pyraFloor, true));
+        }
+
+        bg.add(new QuestBackground(new Point(3, 4), pyraRoof, true));
+        bg.add(new QuestBackground(new Point(4, 4), pyra, true));
+        bg.add(new QuestBackground(new Point(5, 4), pyra, true));
+        bg.add(new QuestBackground(new Point(6, 4), pyraStairs, true));
+        bg.add(new QuestBackground(new Point(7, 4), pyra, true));
+
+        bg.add(new QuestBackground(new Point(4, 3), pyraRoof, true));
+        for (int x = 5; x < 8; ++x) {
+            bg.add(new QuestBackground(new Point(x, 3), pyraFloor, true));
+        }
+
+        bg.add(new QuestBackground(new Point(4, 2), pyraRoof, true));
+        bg.add(new QuestBackground(new Point(5, 2), pyra, true));
+        bg.add(new QuestBackground(new Point(6, 2), pyraStairs, true));
+        bg.add(new QuestBackground(new Point(7, 2), pyra, true));
+
+        bg.add(new QuestBackground(new Point(5, 1), pyraRoof, true));
+        bg.add(new QuestBackground(new Point(6, 1), pyraFloor, true));
+        bg.add(new QuestBackground(new Point(7, 1), pyraRoof, true));
+        return bg;
+    }
+
+    private static List<QuestBackground> makeDecorations() {
+        List<QuestBackground> bg = new ArrayList<>();
+        Sprite jungle = new Sprite32x32("jungle", "world_foreground.png", 0x61,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN);
+        for (int i = 0; i < 9; ++i) {
+            bg.add(new QuestBackground(new Point(0, i), jungle, false));
+            if (i < 8) {
+                bg.add(new QuestBackground(new Point(i, 8), jungle, false));
+            }
+        }
+        bg.add(new QuestBackground(new Point(1, 0), jungle, false));
+
+        bg.add(new QuestBackground(new Point(3, 0), jungle, false));
+        bg.add(new QuestBackground(new Point(4, 0), jungle, false));
+        return bg;
     }
 }

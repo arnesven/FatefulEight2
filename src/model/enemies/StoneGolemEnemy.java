@@ -1,10 +1,16 @@
 package model.enemies;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.combat.conditions.Condition;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.NoCombatLoot;
+import model.enemies.behaviors.EnemyAttackBehavior;
+import model.enemies.behaviors.MixedAttackBehavior;
 import model.enemies.behaviors.MultiKnockDownBehavior;
+import model.enemies.behaviors.RangedAttackBehavior;
+import model.states.CombatEvent;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -15,7 +21,20 @@ public class StoneGolemEnemy extends Enemy {
 
     public StoneGolemEnemy(char a) {
         super(a, "Stone Golem");
-        setAttackBehavior(new MultiKnockDownBehavior(2, 3)); // FEATURE: Make golem attack behavior also be able to throw stones?
+        setAttackBehavior(makeRandomAttackBehavior());
+    }
+
+    private EnemyAttackBehavior makeRandomAttackBehavior() {
+        if (MyRandom.flipCoin()) {
+            return new MultiKnockDownBehavior(2, 3);
+        }
+        return new MixedAttackBehavior();
+    }
+
+    @Override
+    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
+        super.takeCombatDamage(combatEvent, damage, damager);
+        setAttackBehavior(makeRandomAttackBehavior());
     }
 
     @Override

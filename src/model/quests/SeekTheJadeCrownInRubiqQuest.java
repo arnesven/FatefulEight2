@@ -1,6 +1,5 @@
 package model.quests;
 
-import model.Model;
 import model.map.WorldBuilder;
 import model.map.locations.RubiqPyramidLocation;
 
