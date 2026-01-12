@@ -3,12 +3,26 @@ package model.enemies;
 import model.Model;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.PersonCombatLoot;
+import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
+import java.util.List;
+
 public class LizardmanEnemy extends Enemy {
-    private static final Sprite SPRITE = new LizardmanSprite();
+
+    private static final List<LizardmanSprite> SPRITES = List.of(
+            new LizardmanSprite(MyColors.GRAY_RED, MyColors.DARK_RED),
+            new LizardmanSprite(MyColors.BROWN, MyColors.DARK_RED),
+            new LizardmanSprite(MyColors.TAN, MyColors.ORANGE),
+            new LizardmanSprite(MyColors.TAN, MyColors.DARK_PURPLE),
+            new LizardmanSprite(MyColors.DARK_GREEN, MyColors.DARK_PURPLE),
+            new LizardmanSprite(MyColors.DARK_RED, MyColors.DARK_BROWN)
+    );
+
+    private Sprite sprite = MyRandom.sample(SPRITES);
 
     public LizardmanEnemy(char enemyGroup) {
         super(enemyGroup, "Lizardman");
@@ -31,7 +45,7 @@ public class LizardmanEnemy extends Enemy {
 
     @Override
     protected Sprite getSprite() {
-        return SPRITE;
+        return sprite;
     }
 
     @Override
@@ -45,13 +59,13 @@ public class LizardmanEnemy extends Enemy {
     }
 
     private static class LizardmanSprite extends LoopingSprite {
-        public LizardmanSprite() {
-            super("lizardman", "enemies.png", 0x62, 32);
+        public LizardmanSprite(MyColors color2, MyColors color3) {
+            super("lizardman", "enemies.png", 0x158, 32);
             setColor1(MyColors.BLACK);
-            setColor2(MyColors.ORANGE);
-            setColor3(MyColors.DARK_RED);
-            setColor4(MyColors.LIGHT_GRAY);
-            setFrames(1);
+            setColor2(color2);
+            setColor3(color3);
+            setColor4(MyColors.GOLD);
+            setFrames(4);
         }
     }
 }
