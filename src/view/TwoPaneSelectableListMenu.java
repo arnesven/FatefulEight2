@@ -59,9 +59,7 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
             content.add(new SelectableListContent(xStart+2, yStart+finalI+2, getEntryName(i)) {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    index = finalI;
-                    indexWasSelected(index);
-                    TwoPaneSelectableListMenu.this.madeChanges();
+                    setSelectedIndex(finalI);
                 }
 
                 @Override
@@ -76,6 +74,13 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
             });
         }
         return content;
+    }
+
+    protected void setSelectedIndex(int finalI) {
+        index = finalI;
+        indexWasSelected(index);
+        setSelectedRow(index);
+        TwoPaneSelectableListMenu.this.madeChanges();
     }
 
     protected void indexWasSelected(int index) { }

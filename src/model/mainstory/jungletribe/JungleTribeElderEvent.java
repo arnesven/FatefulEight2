@@ -4,10 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.journal.JournalEntry;
 import model.map.locations.PyramidLocation;
 import model.races.Race;
 import util.MyPair;
 import util.MyRandom;
+import view.JournalView;
 import view.subviews.PortraitSubView;
 
 import java.util.List;
@@ -36,6 +38,8 @@ public class JungleTribeElderEvent extends JungleTribeGeneralInteractionEvent {
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         portraitSay(MyRandom.sample(List.of("The outsider" + (model.getParty().size() > 1 ? "s":"") + ". Can I help you?",
                 "Did you want something?")));
+        leaderSay("Yes. Can " + iOrWe() + " ask you a few questions?");
+        portraitSay("Of course. What do you want to know?");
         return true;
     }
 
@@ -72,6 +76,7 @@ public class JungleTribeElderEvent extends JungleTribeGeneralInteractionEvent {
         super.specificTopicHook(model, queryAndResponse);
         if (queryAndResponse.first.contains("King Jaq")) {
             task.giveClueAbout(pyramid);
+            JournalEntry.printJournalUpdateMessage(model);
         }
     }
 }

@@ -24,8 +24,10 @@ public class JournalView extends TwoPaneSelectableListMenu {
     private static final int WIDTH = 60;
     private static final int HEIGHT = 35;
     private static final int RIGHT_PANE_WIDTH = WIDTH/2;
+    private static final String ACTIVE_QUEST_FLAG = "ActiveQuestInJournal";
     private ArrayList<JournalEntry> questsAndTasks;
     private FullMapView nextView = null;
+    private int lastSelectedIndex = 0;
 
     public JournalView(GameView previous) {
         super(previous, WIDTH, HEIGHT, RIGHT_PANE_WIDTH);
@@ -44,6 +46,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
         addTravellers(model);
         addDestinationTasks(model);
         sortQuestsAndTasks();
+        setActiveQuest(model);
     }
 
     private void addDestinationTasks(Model model) {
@@ -59,6 +62,35 @@ public class JournalView extends TwoPaneSelectableListMenu {
         }
     }
 
+    @Override
+    public void transitionedFrom(Model model) {
+        for (String key : new ArrayList<>(model.getSettings().getMiscFlags().keySet())) {
+            if (key.contains(ACTIVE_QUEST_FLAG)) {
+                model.getSettings().getMiscFlags().remove(key);
+            }
+        }
+
+        if (!questsAndTasks.isEmpty()) {
+            System.out.println("Setting active quest: " + lastSelectedIndex);
+            model.getSettings().getMiscFlags().put(ACTIVE_QUEST_FLAG + ":" + questsAndTasks.get(lastSelectedIndex).getName(), true);
+        }
+    }
+
+    private void setActiveQuest(Model model) {
+        for (String key : model.getSettings().getMiscFlags().keySet()) {
+            if (key.contains(ACTIVE_QUEST_FLAG)) {
+                String activeQuest = key.split(":")[1];
+                System.out.println("Found active quest: " + activeQuest);
+                for (int i = 0; i < questsAndTasks.size(); ++i) {
+                    if (questsAndTasks.get(i).getName().equals(activeQuest)) {
+                        setSelectedIndex(i);
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("No active quest found.");
+    }
 
     private void addGenericQuests(Model model) {
         for (QuestDeck.LocationAndQuest locationAndQuest : model.getQuestDeck().getLocationsAndQuests()) {
@@ -202,5 +234,10 @@ public class JournalView extends TwoPaneSelectableListMenu {
                 questsAndTasks.add(((DwarvenPuzzleTube)readableItem).getTask(model));
             }
         });
+    }
+
+    @Override
+    protected void indexWasSelected(int index) {
+        lastSelectedIndex = index;
     }
 }

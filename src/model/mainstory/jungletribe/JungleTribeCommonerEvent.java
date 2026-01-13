@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.journal.JournalEntry;
 import model.map.locations.PyramidLocation;
 import model.races.Race;
 import util.MyPair;
@@ -50,6 +51,8 @@ public class JungleTribeCommonerEvent extends JungleTribeGeneralInteractionEvent
             portraitSay(MyRandom.sample(List.of("What do you want?", "Can I help you?",
                     "Did you want something?")));
         }
+        leaderSay(iOrWeCap() + " just need some information.");
+        portraitSay("Okay, but make it quick. I've got chores to do.");
         return true;
     }
 
@@ -85,6 +88,7 @@ public class JungleTribeCommonerEvent extends JungleTribeGeneralInteractionEvent
         super.specificTopicHook(model, queryAndResponse);
         if (queryAndResponse.first.contains("Jade Crown")) {
             task.giveClueAbout(pyramid);
+            JournalEntry.printJournalUpdateMessage(model);
         }
     }
 }

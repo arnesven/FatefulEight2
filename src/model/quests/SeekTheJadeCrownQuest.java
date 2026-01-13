@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.*;
+import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.mainstory.jungletribe.RubiqBall;
 import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -16,13 +17,12 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.widget.QuestBackground;
 
-import javax.print.attribute.standard.QueuedJobCount;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
-    private static final String INTRO_TEXT = "TODO INTRO";
+    private static final String INTRO_TEXT = "Your quest for the Jade Crown has led you to believe it is hidden in the ";
     private static final String ENDING_TEXT = "You leave the pyramid, carrying with you some of the trinkets that you've managed to pick up along the way.";
     private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackgroundSprites();
     private static final List<QuestBackground> DECORATIONS = makeDecorations();
@@ -34,7 +34,8 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     boolean golemVisited;
 
     public SeekTheJadeCrownQuest(String pyramidName, Point pyramidLocation) {
-        super(getQuestName(pyramidName), "UNUSED", QuestDifficulty.VERY_HARD, new Reward(200), 3, INTRO_TEXT, ENDING_TEXT);
+        super(getQuestName(pyramidName), "UNUSED", QuestDifficulty.VERY_HARD, new Reward(200), 3,
+                INTRO_TEXT + pyramidName + " pyramid.", ENDING_TEXT);
         this.pyramidName = pyramidName;
         this.pyramidLocation = pyramidLocation;
     }
@@ -115,6 +116,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 )));
     }
 
+    // The correct pyramid has Frogmen in the jungle. The other two have Lizardmen/Orcs
     private List<Enemy> makeJungleMonsters() {
         return List.of(new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'),
                 new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('C'),
@@ -122,6 +124,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'));
     }
 
+    // The correct pyramid has Lizardmen denizens. The other two have frogmen/Orcs
     private List<Enemy> makePyramidDenizens() {
         return List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
                        new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
@@ -220,6 +223,16 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
             }
             event.doTheEvent(model);
             if (event.solvedPuzzle()) {
+                GainSupportOfJungleTribeTask jungleTask = (GainSupportOfJungleTribeTask) getTask();
+                state.println("By completing the puzzle you unlock the chamber within.");
+                if (jungleTask.isCrownInPyramid(getPyramidName())) {
+                    state.println("There, on a pedastal in the middle of the room, sits a brilliant crown. It matches Jequen's description perfectly.");
+                    state.leaderSay("This must be it!");
+                    state.println("You recovered the Jade Crown!");
+                } else {
+                    state.println("You find plenty of trinkets, but nothing matching the description of the Jade crown.");
+                    state.leaderSay("Well, this was a waste of time.");
+                }
                 return getSuccessEdge();
             }
             oldPuzzleState = event.getPuzzleState();

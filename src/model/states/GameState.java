@@ -127,8 +127,10 @@ public abstract class GameState implements GameStateConstants {
         SubView nextSubView;
         if (showOnRoad(model)) {
             nextSubView = OnTheRoadSubView.instance;
+            System.out.println("Setting on road subview");
         } else {
             nextSubView = model.getCurrentHex().getImageSubView(model);
+            System.out.println("Setting current hex subview");
         }
         if (model.getSubView() != nextSubView) {
             CollapsingTransition.transition(model, nextSubView);

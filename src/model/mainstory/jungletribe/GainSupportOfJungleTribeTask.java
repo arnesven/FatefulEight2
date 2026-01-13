@@ -70,19 +70,24 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
                 }
                 if (step == JEQUEN_MET) {
                     String extra = "\n";
-
-                    for (String str : cluesGiven) {
-                        if (!crownIsNotIn.contains(str)) {
-                            extra += "\nThe crown may be in the " + str + ".";
-                        }
-                    }
-                    for (String str : crownIsNotIn) {
-                        extra += "\nYou've searched the " + str + ", but the crown was not hidden there.";
-                    }
-
                     if (friendKnown && jaquarTruthKnown) {
-                        extra += "\n\nYou've talked to a friend of Jequen's father, prince Jaquar. He informed you that " +
+                        extra += "\nYou've talked to a friend of Jequen's father, prince Jaquar. He informed you that " +
                                 "prince Jaquar returned with the crown many years ago. It may be hidden somewhere in the village.";
+                    } else if (cluesGiven.isEmpty() && crownIsNotIn.isEmpty()) {
+                        extra += "\nYou should try to find out which Pyramid the crown is hidden at.";
+                    } else if (crownIsNotIn.size() == 3) {
+                        extra += "\nYou've searched each pyramid, but the crown was not hidden in any of them. " +
+                                "Perhaps Jaquar was actually successful in recovering it. Somebody in the village may know more.";
+                    } else {
+                        for (String str : crownIsNotIn) {
+                            extra += "\nYou've searched the " + str + ", but the crown was not hidden there.";
+                        }
+
+                        for (String str : cluesGiven) {
+                            if (!crownIsNotIn.contains(str)) {
+                                extra += "\nThe crown may be in the " + str + ".";
+                            }
+                        }
                     }
 
                     return "You've met with prince Jequen who is the sole heir to the throne of the Southern Kingdom. But he cannot " +
@@ -116,19 +121,19 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
         if (jequenMet() && !completed) {
             if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
                 model.partyIsInOverworldPosition(WorldBuilder.RUBIQ_PYRAMID_LOCATION)) {
-                if (!crownIsNotIn.contains(RubiqPyramidLocation.NAME)) {
+                if (!crownIsNotIn.contains(RubiqPyramidLocation.NAME + " Pyramid")) {
                     list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(RubiqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
                 }
             }
             if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
                     model.partyIsInOverworldPosition(WorldBuilder.SUDOQ_PYRAMID_LOCATION)) {
-                if (!crownIsNotIn.contains(SudoqPyramidLocation.NAME)) {
+                if (!crownIsNotIn.contains(SudoqPyramidLocation.NAME + " Pyramid")) {
                     list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(SudoqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
                 }
             }
             if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
                     model.partyIsInOverworldPosition(WorldBuilder.QANOI_PYRAMID_LOCATION)) {
-                if (!crownIsNotIn.contains(QanoiPyramidLocation.NAME)) {
+                if (!crownIsNotIn.contains(QanoiPyramidLocation.NAME + " Pyramid")) {
                     list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(QanoiPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
                 }
             }
@@ -203,17 +208,21 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     public DailyEventState generateTribeCommonerEvent(Model model) {
         if (jequenMet()) {
-            int dieRoll = MyRandom.rollD10();
-            if (dieRoll == 1) {
-                return new JungleTribeKidEvent(model, this); // Pretty useless.
+            if (crownIsNotIn.size() == 3) {
+                return new FriendOfJaquarEvent(model, this);
+            } else {
+                int dieRoll = MyRandom.rollD10();
+                if (dieRoll == 1) {
+                    return new JungleTribeKidEvent(model, this); // Pretty useless.
+                }
+                if (dieRoll < 6) {
+                    return new JungleTribeCommonerEvent(model, this);
+                }
+                if (dieRoll < 10) {
+                    return new JungleTribeElderEvent(model, this);
+                }
+                return new FriendOfJaquarEvent(model, this);
             }
-            if (dieRoll < 6) {
-                return new JungleTribeCommonerEvent(model, this);
-            }
-            if (dieRoll < 10) {
-                return new JungleTribeElderEvent(model, this);
-            }
-            return new FriendOfJaquarEvent(model, this);
         }
         return null;
     }
@@ -275,5 +284,9 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     public void setCrownGivenToJequen() {
         step = CROWN_GIVEN_TO_JEQUEN;
         completed = true;
+    }
+
+    public boolean isCrownInPyramid(String pyramidName) {
+        return pyramidName.equals(crownLocation);
     }
 }

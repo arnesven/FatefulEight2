@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.enemies.Enemy;
+import model.journal.JournalEntry;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.races.Race;
 import util.MyPair;
@@ -25,7 +26,7 @@ public class InteractWithJequenEvent extends GeneralInteractionEvent {
         setCurrentTerrainSubview(model);
         println("You step into Prince Jequen's hut.");
         showExplicitPortrait(model, task.getJequenPortrait(), "Prince Jequen");
-        portraitSay("You have return. Have you found the Jade Crown?");
+        portraitSay("You have returned. Have you found the Jade Crown?");
         leaderSay("No. I wanted to ask you some questions.");
         return true;
     }
@@ -152,6 +153,7 @@ public class InteractWithJequenEvent extends GeneralInteractionEvent {
                 "a force to be reconed with.");
         leaderSay("That's great. Thanks a lot Jequen!");
         task.setCrownGivenToJequen();
+        JournalEntry.printJournalUpdateMessage(model);
     }
 
     @Override

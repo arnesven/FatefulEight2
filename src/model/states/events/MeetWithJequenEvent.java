@@ -103,7 +103,7 @@ public class MeetWithJequenEvent extends DailyEventState {
                 "prince Jaquar was just waiting for the day when Jaq would hand over the Jade Crown."));
         list.add(new MyPair<>(false, "The Jade Crown?"));
         list.add(new MyPair<>(true, "Oh yes, I forgot to mention that. The Jade Crown is the symbol of regency in our kingdom. " +
-                "It is said to be at least a millennia old, and worn by all the kings and queens of the Southern Kingdom. " +
+                "It is said to be at least a millennium old, and worn by all the kings and queens of the Southern Kingdom. " +
                 "No heir to the throne can hope to rule this land without it."));
         list.add(new MyPair<>(false, "I see... so?"));
         list.add(new MyPair<>(true, "What happened to it? Well. When King Jaq had become very old, and could no longer perform his duties everybody expected " +

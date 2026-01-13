@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.journal.JournalEntry;
 import model.map.locations.PyramidLocation;
 import util.MyPair;
 import util.MyRandom;
@@ -42,8 +43,11 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         if (task.isFriendOfJaquarKnown()) {
             portraitSay("Oh, it's you again. Did you want to ask more questions?");
+            leaderSay("Uhm, yes.");
         } else {
             portraitSay("Can I help you?");
+            leaderSay(iOrWeCap() + " just need some information.");
+            portraitSay("Okay, but make it quick. I've got chores to do.");
         }
         return true;
     }
@@ -70,7 +74,7 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
                 "Prince Jaquar", new MyPair<>("Did you know Prince Jaquar?",
                         "PLACEHOLDER - UNUSED"),
                 "Jade Crown", new MyPair<>("Do you know about the Jade Crown?",
-                        "King Jaq hid it in the " + pyramid.getName() + ", to prevent his " +
+                        "King Jaq hid it in the " + pyramid.getName() + ", to prevent " +
                                 "Jaquar from becoming king. I always thought Jaq was too hard on his son."));
     }
 
@@ -78,7 +82,7 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
     protected void specificTopicHook(Model model, MyPair<String, String> queryAndResponse) {
         if (queryAndResponse.first.contains("Prince Jaquar")) {
             leaderSay(queryAndResponse.first);
-            portraitSay("Yes I knew Jaquar pretty well. We gre up together.");
+            portraitSay("Yes I knew Jaquar pretty well. We grew up together.");
             task.setFriendOfJaquarKnown(true);
             showPortrait(model);
             leaderSay("Really? What happened to him?");
@@ -90,6 +94,7 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
             portraitSay("Most people only remember the gossip. Anyway, Jaquar organized an expedition to the " +
                     pyramid.getName() + " to recover the crown.");
             task.giveClueAbout(pyramid);
+            JournalEntry.printJournalUpdateMessage(model);
             leaderSay("Did you go with him?");
             if (task.isCrownInVillage()) {
                 portraitSay("No. I wasn't part of that group, and I'm happy I wasn't. It was not an easy quest. " +
@@ -121,28 +126,29 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
                         "came when he would give it to Jequen?");
                 leaderSay("Yes, that does sound likely. Probably somewhere close to the village, perhaps even in the village itself.");
                 portraitSay("Maybe you should talk to Jequen again. Perhaps he knows of some secret places where his father would go?");
-                leaderSay(iOrWe() + "'ll do that. Thank you. This information has been very valuable. " + iOrWe() +
-                        " are planning to return the crown to Jequen so he may become king of this land.");
+                leaderSay(iOrWe() + "'ll do that. Thank you. This information has been very valuable. " + imOrWere() +
+                        " planning to return the crown to Jequen so he may become king of this land.");
                 portraitSay("Jequen is a good man, and he'll make a good king. I know this is what Jaquar would have wanted.");
                 task.setTruthAboutJaquarKnown(true);
+                JournalEntry.printJournalUpdateMessage(model);
             } else {
                 portraitSay("Yes, me and six others. We made it through the jungle but when we got to the ancient city " +
                         "it had been taken over by lizardmen. We thought we had driven them off, but we were ambushed " +
                         "by another group while we were searching the pyramid for the crown.");
                 leaderSay("Lizardmen are vicious. I'm impressed you survived.");
                 portraitSay("Yes. But sadly, not all of us did. Jaquar was among those who perished. " +
-                        "I was the only one able to make it back. The ordeal still troubles me to this day.");
+                        "Only three of us were able to make it back. The ordeal still troubles me to this day.");
                 leaderSay("So the crown must still be in the " + pyramid.getName() + "?");
                 portraitSay("As far as I know. Are you going after it?");
                 leaderSay("Yes. We need Jequen to become the King.");
                 portraitSay("I see. I hope you are able to achieve what we could not. Jequen is a good man, and he'll " +
                         "make a good king. I know this is what Jaquar would have wanted.");
             }
-            waitForReturn();
         } else {
             super.specificTopicHook(model, queryAndResponse);
             if (queryAndResponse.first.contains("Jade Crown")) {
                 task.giveClueAbout(pyramid);
+                JournalEntry.printJournalUpdateMessage(model);
             }
         }
     }
