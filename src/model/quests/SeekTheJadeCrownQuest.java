@@ -119,21 +119,9 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 )));
     }
 
-    // The correct pyramid has Frogmen in the jungle. The other two have Lizardmen/Orcs
-    private List<Enemy> makeJungleMonsters() {
-        return List.of(new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'),
-                new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('C'),
-                new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanShamanEnemy('B'),
-                new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'));
-    }
+    protected abstract List<Enemy> makeJungleMonsters();
 
-    // The correct pyramid has Lizardmen denizens. The other two have frogmen/Orcs
-    private List<Enemy> makePyramidDenizens() {
-        return List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
-                       new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
-                       new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
-                       new LizardmanEnemy('A'));
-    }
+    protected abstract List<Enemy> makePyramidDenizens();
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
