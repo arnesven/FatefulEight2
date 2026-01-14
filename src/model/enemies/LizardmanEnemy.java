@@ -14,13 +14,16 @@ import java.util.List;
 public class LizardmanEnemy extends Enemy {
 
     private static final List<LizardmanSprite> SPRITES = List.of(
-            new LizardmanSprite(MyColors.GRAY_RED, MyColors.DARK_RED),
-            new LizardmanSprite(MyColors.BROWN, MyColors.DARK_RED),
-            new LizardmanSprite(MyColors.TAN, MyColors.ORANGE),
-            new LizardmanSprite(MyColors.TAN, MyColors.DARK_PURPLE),
-            new LizardmanSprite(MyColors.DARK_GREEN, MyColors.DARK_PURPLE),
-            new LizardmanSprite(MyColors.DARK_RED, MyColors.DARK_BROWN)
-    );
+            new LizardmanSprite(MyColors.GRAY_RED, MyColors.DARK_RED, MyColors.GOLD),
+            new LizardmanSprite(MyColors.BROWN, MyColors.DARK_RED, MyColors.GOLD),
+            new LizardmanSprite(MyColors.TAN, MyColors.ORANGE, MyColors.GOLD),
+            new LizardmanSprite(MyColors.TAN, MyColors.DARK_PURPLE, MyColors.GOLD),
+            new LizardmanSprite(MyColors.DARK_GREEN, MyColors.DARK_PURPLE, MyColors.GOLD),
+            new LizardmanSprite(MyColors.DARK_RED, MyColors.DARK_BROWN, MyColors.GOLD),
+            new LizardmanSprite(MyColors.ORANGE, MyColors.RED, MyColors.CYAN),
+            new LizardmanSprite(MyColors.ORC_GREEN, MyColors.BROWN, MyColors.DARK_RED),
+            new LizardmanSprite(MyColors.DARK_BLUE, MyColors.TAN, MyColors.GRAY)
+            );
 
     private Sprite sprite = MyRandom.sample(SPRITES);
 
@@ -59,12 +62,12 @@ public class LizardmanEnemy extends Enemy {
     }
 
     private static class LizardmanSprite extends LoopingSprite {
-        public LizardmanSprite(MyColors color2, MyColors color3) {
+        public LizardmanSprite(MyColors skinColor, MyColors clothesColor, MyColors spikesColor) {
             super("lizardman", "enemies.png", 0x158, 32);
             setColor1(MyColors.BLACK);
-            setColor2(color2);
-            setColor3(color3);
-            setColor4(MyColors.GOLD);
+            setColor2(skinColor);
+            setColor3(clothesColor);
+            setColor4(spikesColor);
             setFrames(4);
         }
     }
