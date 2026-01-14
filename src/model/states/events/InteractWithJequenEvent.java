@@ -9,6 +9,9 @@ import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.races.Race;
 import util.MyPair;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
+import view.subviews.SubView;
 
 import java.util.List;
 import java.util.Map;
@@ -129,6 +132,11 @@ public class InteractWithJequenEvent extends GeneralInteractionEvent {
         leaderSay("Open it.");
         portraitSay("A letter... and below it. The crown! Yes this must be it. It resembles very much the way " +
                 "it is described by the elders of the village.");
+        SubView current = model.getSubView();
+        model.setSubView(new MiniPictureSubView(current, new MiniPictureSprite(0x43), "The Jade Crown"));
+        println("Press return to continue.");
+        waitForReturn();
+        model.setSubView(current);
         leaderSay("What does the letter say?");
         println("Jequen opens the letter.");
         portraitSay("It's from my father, to me.");
@@ -150,7 +158,7 @@ public class InteractWithJequenEvent extends GeneralInteractionEvent {
                 "become the king of the Southern Kingdom.");
         leaderSay("Huzzah!");
         portraitSay("And you shall have the support you wanted. When the come times, I'll meet you at the rendezvous point with " +
-                "a force to be reconed with.");
+                "a force to be reckoned with.");
         leaderSay("That's great. Thanks a lot Jequen!");
         task.setCrownGivenToJequen();
         JournalEntry.printJournalUpdateMessage(model);

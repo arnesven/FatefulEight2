@@ -18,6 +18,7 @@ import model.quests.*;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.events.GiveCrownToJequenEvent;
 import model.states.events.InteractWithJequenEvent;
 import model.states.events.MeetWithJequenEvent;
 import util.MyPair;
@@ -40,7 +41,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     private int step = INITIAL_STEP;
     private final AdvancedAppearance jequenPortrait;
     private final String crownLocation;
-    private boolean completed = false;
+
     private Set<String> cluesGiven = new HashSet<>();
     private Set<String> crownIsNotIn = new HashSet<>();
     private AdvancedAppearance friendOfJaqarPortrait;
@@ -93,6 +94,9 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
                     return "You've met with prince Jequen who is the sole heir to the throne of the Southern Kingdom. But he cannot " +
                             "claim the regency without the Jade Crown." + extra;
                 }
+                if (step == CROWN_RECOVERED) {
+                    return "You found the Jade Crown in the " + crownLocation + ". You should deliver it to Prince Jequen";
+                }
                 // CROWN GIVEN TO JEQUEN
                 return "You recovered the Jade Crown and given it to prince Jequen. With it he will able to claim regency over the " +
                         "Jungle Tribe and the Southern Kingdom. As king, Jequen has promised his support to you.\n\nCompleted";
@@ -112,13 +116,13 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     @Override
     public boolean isCompleted() {
-        return completed;
+        return step == CROWN_GIVEN_TO_JEQUEN;
     }
 
     @Override
     public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
         List<MyTriplet<String, CharacterAppearance, String>> list = new ArrayList<>();
-        if (jequenMet() && !completed) {
+        if (jequenMet() && !isCompleted()) {
             if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
                 model.partyIsInOverworldPosition(WorldBuilder.RUBIQ_PYRAMID_LOCATION)) {
                 if (!crownIsNotIn.contains(RubiqPyramidLocation.NAME + " Pyramid")) {
@@ -153,14 +157,16 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     @Override
     public void addFactionString(List<MyPair<String, String>> result) {
-        if (jequenMet()) {
+        if (isCompleted()) {
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Ally"));
+        } else if (jequenMet()) {
             result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Friend"));
         }
     }
 
     @Override
     public void setCompleted() {
-        this.completed = true;
+        step = CROWN_GIVEN_TO_JEQUEN;
     }
 
     @Override
@@ -192,6 +198,9 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     }
 
     public GameState generateJequenEvent(Model model) {
+        if (step == CROWN_RECOVERED) {
+            return new GiveCrownToJequenEvent(model, this);
+        }
         if (jequenMet()) {
             return new InteractWithJequenEvent(model, this);
         }
@@ -247,7 +256,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
         return MyRandom.sample(pyramids);
     }
 
-    private PyramidLocation getCrownLocation(Model model) {
+    public PyramidLocation getCrownLocation(Model model) {
         return (PyramidLocation) model.getWorld().getLocationByName(crownLocation);
     }
 
@@ -283,7 +292,6 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     public void setCrownGivenToJequen() {
         step = CROWN_GIVEN_TO_JEQUEN;
-        completed = true;
     }
 
     public boolean isCrownInPyramid(String pyramidName) {

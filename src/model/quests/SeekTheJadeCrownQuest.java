@@ -13,8 +13,11 @@ import model.quests.scenes.CombatSubScene;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import view.MyColors;
+import view.sprites.MiniPictureSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.MiniPictureSubView;
+import view.subviews.SubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -229,6 +232,11 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                     state.println("There, on a pedastal in the middle of the room, sits a brilliant crown. It matches Jequen's description perfectly.");
                     state.leaderSay("This must be it!");
                     state.println("You recovered the Jade Crown!");
+                    SubView current = model.getSubView();
+                    model.setSubView(new MiniPictureSubView(current, new MiniPictureSprite(0x43), "The Jade Crown"));
+                    state.println("Press return to continue.");
+                    state.waitForReturn();
+                    model.setSubView(current);
                 } else {
                     state.println("You find plenty of trinkets, but nothing matching the description of the Jade crown.");
                     state.leaderSay("Well, this was a waste of time.");
