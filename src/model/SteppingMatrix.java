@@ -158,6 +158,7 @@ public class SteppingMatrix<T> {
             selected = getPositionFor(nextSelected);
             return;
         }
+        System.out.println("No approx match found");
         if (firstTime) {
             normalStepping(-dx, -dy, false);
         }
@@ -204,7 +205,6 @@ public class SteppingMatrix<T> {
     private T findApproxMatch(int dx, int dy, boolean searchForward) {
         List<T> candidates = new ArrayList<>();
         candidates.addAll(list);
-        candidates.remove(getSelectedElement());
         final Point origin = getPositionFor(getSelectedElement());
 
         candidates.removeIf((T t) -> {

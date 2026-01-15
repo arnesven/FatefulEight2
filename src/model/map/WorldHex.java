@@ -5,6 +5,7 @@ import model.TimeOfDay;
 import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.mainstory.FugitiveTownEvent;
+import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.states.dailyaction.WildernessDailyAction;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
@@ -63,6 +64,8 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
+        return new QanoiPuzzleEvent(model);
+        /*
         if (isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
@@ -91,7 +94,7 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
-        return eventToReturn;
+        return eventToReturn; */
     }
 
     private boolean isPersonaNonGrata(Model model) {
