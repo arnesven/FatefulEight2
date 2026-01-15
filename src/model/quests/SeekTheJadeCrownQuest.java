@@ -33,7 +33,6 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     private final String pyramidName;
     private final Point pyramidLocation;
 
-    private List<RubiqBall> oldPuzzleState;
     boolean golemVisited;
 
     public SeekTheJadeCrownQuest(String pyramidName, Point pyramidLocation) {
@@ -46,10 +45,12 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     @Override
     protected void resetQuest() {
         super.resetQuest();
-        oldPuzzleState = null;
+        resetPuzzleState();
         golemVisited = false;
         getSuccessEndingNode().move(6, 0);
     }
+
+    protected abstract void resetPuzzleState();
 
     @Override
     public void setRemoteLocation(Model model) {
@@ -206,14 +207,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 state.partyMemberSay(rando, "Perhaps the crown is hidden behind it?");
             }
             model.getLog().waitForAnimationToFinish();
-            RubiqPuzzleEvent event;
-            if (oldPuzzleState != null) {
-                event = new RubiqPuzzleEvent(model, oldPuzzleState);
-            } else {
-                event = new RubiqPuzzleEvent(model);
-            }
-            event.doTheEvent(model);
-            if (event.solvedPuzzle()) {
+            if (isPuzzleEventSolved(model)) {
                 GainSupportOfJungleTribeTask jungleTask = (GainSupportOfJungleTribeTask) getTask();
                 state.println("By completing the puzzle you unlock the chamber within.");
                 if (jungleTask.isCrownInPyramid(getPyramidName())) {
@@ -231,11 +225,12 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 }
                 return getSuccessEdge();
             }
-            oldPuzzleState = event.getPuzzleState();
             golemVisited = true;
             return getFailEdge();
         }
     }
+
+    protected abstract boolean isPuzzleEventSolved(Model model);
 
     @Override
     public List<QuestBackground> getBackgroundSprites() {

@@ -1,12 +1,18 @@
 package model.quests;
 
+import model.Model;
 import model.enemies.*;
+import model.mainstory.jungletribe.RubiqBall;
+import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.map.WorldBuilder;
 import model.map.locations.SudoqPyramidLocation;
 
 import java.util.List;
 
 public class SeekTheJadeCrownInSudoqQuest extends SeekTheJadeCrownQuest {
+
+    private List<RubiqBall> oldPuzzleState;
+
     public SeekTheJadeCrownInSudoqQuest() {
         super(SudoqPyramidLocation.NAME, WorldBuilder.SUDOQ_PYRAMID_LOCATION);
     }
@@ -27,5 +33,23 @@ public class SeekTheJadeCrownInSudoqQuest extends SeekTheJadeCrownQuest {
                 new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('C'),
                 new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanShamanEnemy('B'),
                 new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'));
+    }
+
+    @Override
+    protected void resetPuzzleState() {
+        oldPuzzleState = null;
+    }
+
+    @Override
+    protected boolean isPuzzleEventSolved(Model model) {
+        RubiqPuzzleEvent event;
+        if (oldPuzzleState != null) {
+            event = new RubiqPuzzleEvent(model, oldPuzzleState);
+        } else {
+            event = new RubiqPuzzleEvent(model);
+        }
+        event.doTheEvent(model);
+        oldPuzzleState = event.getPuzzleState();
+        return event.solvedPuzzle();
     }
 }

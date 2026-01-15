@@ -1,12 +1,17 @@
 package model.quests;
 
+import model.Model;
 import model.enemies.*;
+import model.mainstory.jungletribe.RubiqBall;
+import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.map.WorldBuilder;
 import model.map.locations.QanoiPyramidLocation;
 
 import java.util.List;
 
 public class SeekTheJadeCrownInQanoiQuest extends SeekTheJadeCrownQuest {
+    private List<RubiqBall> oldPuzzleState;
+
     public SeekTheJadeCrownInQanoiQuest() {
         super(QanoiPyramidLocation.NAME, WorldBuilder.QANOI_PYRAMID_LOCATION);
     }
@@ -27,5 +32,23 @@ public class SeekTheJadeCrownInQanoiQuest extends SeekTheJadeCrownQuest {
         return List.of(new OrcWarrior('A'), new OrcWarrior('A'), new OrcArcherEnemy('B'),
                 new OrcArcherEnemy('B'),  new OrcArcherEnemy('B'), new OrcBoarRiderEnemy('C'), new OrcBoarRiderEnemy('C'),
                 new OrcWarrior('A'), new OrcWarrior('A'), new OrcArcherEnemy('B'));
+    }
+
+    @Override
+    protected void resetPuzzleState() {
+        oldPuzzleState = null;
+    }
+
+    @Override
+    protected boolean isPuzzleEventSolved(Model model) {
+        RubiqPuzzleEvent event;
+        if (oldPuzzleState != null) {
+            event = new RubiqPuzzleEvent(model, oldPuzzleState);
+        } else {
+            event = new RubiqPuzzleEvent(model);
+        }
+        event.doTheEvent(model);
+        oldPuzzleState = event.getPuzzleState();
+        return event.solvedPuzzle();
     }
 }
