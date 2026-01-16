@@ -2,15 +2,15 @@ package model.quests;
 
 import model.Model;
 import model.enemies.*;
-import model.mainstory.jungletribe.RubiqBall;
-import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.map.WorldBuilder;
 import model.map.locations.QanoiPyramidLocation;
+import model.states.events.QanoiPuzzleEvent;
+import util.MyPair;
 
 import java.util.List;
 
 public class SeekTheJadeCrownInQanoiQuest extends SeekTheJadeCrownQuest {
-    private List<RubiqBall> oldPuzzleState;
+    private MyPair<List<Integer>, List<Integer>> oldSolution;
 
     public SeekTheJadeCrownInQanoiQuest() {
         super(QanoiPyramidLocation.NAME, WorldBuilder.QANOI_PYRAMID_LOCATION);
@@ -22,10 +22,10 @@ public class SeekTheJadeCrownInQanoiQuest extends SeekTheJadeCrownQuest {
     }
 
     protected List<Enemy> makeJungleMonsters() {
-        return List.of(new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'),
-                new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('C'),
-                new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'), new FrogmanShamanEnemy('B'),
-                new FrogmanScoutEnemy('A'), new FrogmanScoutEnemy('A'));
+        return List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
+                new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
+                new LizardmanEnemy('A'), new LizardmanEnemy('A'), new LizardmanEnemy('A'),
+                new LizardmanEnemy('A'));
     }
 
     protected List<Enemy> makePyramidDenizens() {
@@ -36,19 +36,19 @@ public class SeekTheJadeCrownInQanoiQuest extends SeekTheJadeCrownQuest {
 
     @Override
     protected void resetPuzzleState() {
-        oldPuzzleState = null;
+        oldSolution = null;
     }
 
     @Override
     protected boolean isPuzzleEventSolved(Model model) {
-        RubiqPuzzleEvent event;
-        if (oldPuzzleState != null) {
-            event = new RubiqPuzzleEvent(model, oldPuzzleState);
+        QanoiPuzzleEvent event;
+        if (oldSolution != null) {
+            event = new QanoiPuzzleEvent(model, oldSolution);
         } else {
-            event = new RubiqPuzzleEvent(model);
+            event = new QanoiPuzzleEvent(model);
         }
         event.doTheEvent(model);
-        oldPuzzleState = event.getPuzzleState();
+        oldSolution = event.getPuzzleSolution();
         return event.solvedPuzzle();
     }
 }

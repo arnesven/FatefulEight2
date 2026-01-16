@@ -158,7 +158,6 @@ public class SteppingMatrix<T> {
             selected = getPositionFor(nextSelected);
             return;
         }
-        System.out.println("No approx match found");
         if (firstTime) {
             normalStepping(-dx, -dy, false);
         }

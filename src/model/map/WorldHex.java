@@ -64,8 +64,6 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
-        return new QanoiPuzzleEvent(model);
-        /*
         if (isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
@@ -94,7 +92,7 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
-        return eventToReturn; */
+        return eventToReturn;
     }
 
     private boolean isPersonaNonGrata(Model model) {

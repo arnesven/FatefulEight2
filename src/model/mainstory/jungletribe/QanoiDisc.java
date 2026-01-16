@@ -23,8 +23,12 @@ public class QanoiDisc {
         this.sprite = SPRITES[size-1];
     }
 
-    public void drawYourself(ScreenHandler screenHandler, Point newPos) {
-        screenHandler.register(sprite.getName(), newPos, sprite);
+    public void drawYourself(ScreenHandler screenHandler, Point newPos, int layer, int yshift) {
+        screenHandler.register(sprite.getName(), newPos, sprite, layer, 0, 2 + 6 * yshift);
+    }
+
+    public int getSize() {
+        return size;
     }
 
     private static class QanoiDiscSprite extends Sprite32x16 {

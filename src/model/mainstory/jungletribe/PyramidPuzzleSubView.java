@@ -1,6 +1,7 @@
 package model.mainstory.jungletribe;
 
 import model.Model;
+import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;

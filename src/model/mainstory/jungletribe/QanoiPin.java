@@ -17,12 +17,14 @@ public class QanoiPin extends ArrayList<QanoiDisc> {
         screenHandler.register(BASE.getName(), position, BASE);
         for (int y = 1; y <= 4; ++y) {
             Point newPos = new Point(position.x, position.y - 2*y);
-            screenHandler.register(SHAFT.getName(), newPos, SHAFT);
+            if (y < 4) {
+                screenHandler.register(SHAFT.getName(), newPos, SHAFT);
+            }
             if (y <= this.size()) {
-                this.get(y-1).drawYourself(screenHandler, newPos);
+                this.get(y-1).drawYourself(screenHandler, newPos, y, y-1);
             }
         }
-        screenHandler.register(TIP.getName(), new Point(position.x, position.y - 10), SHAFT);
+        screenHandler.register(TIP.getName(), new Point(position.x, position.y - 8), TIP);
     }
 
     public QanoiDisc getTopDisc() {
