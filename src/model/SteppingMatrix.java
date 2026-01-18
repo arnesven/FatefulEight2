@@ -285,4 +285,19 @@ public class SteppingMatrix<T> {
     public void setSoundEnabled(boolean b) {
         this.soundEnabled = b;
     }
+
+    public void swapColumns(int col1, int col2) {
+        List<T> temp = grid.get(col1);
+        grid.set(col1, grid.get(col2));
+        grid.set(col2, temp);
+    }
+
+    public void swapRows(int row1, int row2) {
+        T temp;
+        for (int col = 0; col < getColumns(); ++col) {
+            temp = grid.get(col).get(row1);
+            grid.get(col).set(row1, grid.get(col).get(row2));
+            grid.get(col).set(row2, temp);
+        }
+    }
 }

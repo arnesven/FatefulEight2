@@ -1,9 +1,12 @@
 package model.quests;
 
 import model.Model;
+import model.SteppingMatrix;
 import model.enemies.*;
 import model.mainstory.jungletribe.RubiqBall;
 import model.mainstory.jungletribe.RubiqPuzzleEvent;
+import model.mainstory.jungletribe.SudoqPuzzleEvent;
+import model.mainstory.jungletribe.SudoqSymbol;
 import model.map.WorldBuilder;
 import model.map.locations.SudoqPyramidLocation;
 
@@ -11,7 +14,7 @@ import java.util.List;
 
 public class SeekTheJadeCrownInSudoqQuest extends SeekTheJadeCrownQuest {
 
-    private List<RubiqBall> oldPuzzleState;
+    private SteppingMatrix<SudoqSymbol> oldPuzzleState;
 
     public SeekTheJadeCrownInSudoqQuest() {
         super(SudoqPyramidLocation.NAME, WorldBuilder.SUDOQ_PYRAMID_LOCATION);
@@ -42,11 +45,11 @@ public class SeekTheJadeCrownInSudoqQuest extends SeekTheJadeCrownQuest {
 
     @Override
     protected boolean isPuzzleEventSolved(Model model) {
-        RubiqPuzzleEvent event;
+        SudoqPuzzleEvent event;
         if (oldPuzzleState != null) {
-            event = new RubiqPuzzleEvent(model, oldPuzzleState);
+            event = new SudoqPuzzleEvent(model, oldPuzzleState);
         } else {
-            event = new RubiqPuzzleEvent(model);
+            event = new SudoqPuzzleEvent(model);
         }
         event.doTheEvent(model);
         oldPuzzleState = event.getPuzzleState();

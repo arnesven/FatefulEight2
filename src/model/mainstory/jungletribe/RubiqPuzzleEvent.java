@@ -93,6 +93,7 @@ public class RubiqPuzzleEvent extends DailyEventState {
         SubView oldSubView = model.getSubView();
         RubiqPuzzleSubView rubiqSubView = new RubiqPuzzleSubView(buttons, list);
         CollapsingTransition.transition(model, rubiqSubView);
+        leaderSay("These balls seem to be fitted into circular discs. They seem like they can be turned different ways.");
         do {
             waitForReturnSilently();
             buttons.getSelectedElement().doAction(list);

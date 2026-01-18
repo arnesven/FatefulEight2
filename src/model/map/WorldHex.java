@@ -6,6 +6,7 @@ import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.mainstory.FugitiveTownEvent;
 import model.mainstory.jungletribe.RubiqPuzzleEvent;
+import model.mainstory.jungletribe.SudoqPuzzleEvent;
 import model.states.dailyaction.WildernessDailyAction;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;

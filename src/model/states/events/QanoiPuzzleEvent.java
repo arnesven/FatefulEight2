@@ -48,6 +48,7 @@ public class QanoiPuzzleEvent extends DailyEventState {
         SubView oldSubView = model.getSubView();
         QanoiPuzzleSubView qanoiPuzzleSubView = new QanoiPuzzleSubView(pins, facit);
         CollapsingTransition.transition(model, qanoiPuzzleSubView);
+        leaderSay("Three pins, four discs. I guess " + iOrWe() + " could move the discs to the other pins?");
         int strikes = 0;
         do {
             waitForReturnSilently();
