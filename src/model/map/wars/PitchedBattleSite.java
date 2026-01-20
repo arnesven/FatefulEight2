@@ -24,16 +24,22 @@ public class PitchedBattleSite implements Serializable {
     }
 
     public List<MyPair<Point, BattleTerrain>> getTerrain() {
-        List<Integer> xs = new ArrayList<>(List.of(0, 1, 2, 3, 4, 5, 6, 7));
-        List<Integer> ys = new ArrayList<>(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8));
-        Collections.shuffle(xs);
-        Collections.shuffle(ys);
+        List<MyPair<Integer, Integer>> positions = new ArrayList<>();
+        for (int x = 0; x < 8; ++x) {
+            for (int y = 0; y < 9; ++y) {
+                positions.add(new MyPair<>(x, y));
+            }
+        }
+        Collections.shuffle(positions);
+
         List<MyPair<Point, BattleTerrain>> result = new ArrayList<>();
         for (int i = MyRandom.randInt(3, 9); i > 0; --i) {
-            result.add(new MyPair<>(new Point(xs.remove(0), ys.remove(0)), new WoodsBattleTerrain()));
+            MyPair<Integer, Integer> pos = positions.removeFirst();
+            result.add(new MyPair<>(new Point(pos.first, pos.second), new WoodsBattleTerrain()));
         }
         for (int i = MyRandom.randInt(2, 6); i > 0; --i) {
-            result.add(new MyPair<>(new Point(xs.remove(0), ys.remove(0)), new HillsBattleTerrain(getGroundColor())));
+            MyPair<Integer, Integer> pos = positions.removeFirst();
+            result.add(new MyPair<>(new Point(pos.first, pos.second), new HillsBattleTerrain(getGroundColor())));
         }
         return result;
     }

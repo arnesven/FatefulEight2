@@ -26,9 +26,9 @@ public class MeetWithJequenEvent extends DailyEventState {
         portraitSay("Hello there. You must be the travellers I've heard rumors about.");
         leaderSay("Yes, who are you?");
         portraitSay("I'm prince Jequen. I live here.");
-        leaderSay("Are you the ruler of this kingdom? We need to talk to the person in charge.");
+        leaderSay("Are you the ruler of this kingdom? " + iOrWeCap() + " need to talk to the person in charge.");
         portraitSay("That may be hard. There really isn't anybody in charge. The southern kingdom has been leaderless for many years.");
-        leaderSay("That's unfortunate, we were kind of hoping to talk to a king, or a chieftain or something.");
+        leaderSay("That's unfortunate, " + iWasOrWeWere() + " kind of hoping to talk to a king, or a chieftain or something.");
         portraitSay("The last king of these lands was king Jaq, my grandfather. He's long dead however.");
         leaderSay("But he obviously has a descendant. Why are you not king?");
         portraitSay("It's a bit of a long story. I'll gladly tell it to you, but first please explain who you are.");
