@@ -120,7 +120,7 @@ public class EveningState extends GameState {
                     gc -> gc != mainDissident && gc.getAttitude(mainDissident) < 0);
             if (reacter != null) {
                 partyMemberSay(reacter, MyRandom.sample(List.of("You? Leader?", "You can't be serious.",
-                        "You are hardly leader material " + reacter.getFirstName() + ".",
+                        "You are hardly leader material " + mainDissident.getFirstName() + ".",
                         "You must be joking!")));
             }
         } else {

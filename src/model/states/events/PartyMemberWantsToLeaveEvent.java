@@ -119,7 +119,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
             model.getParty().remove(gc, false, false, 0);
             printAlert(gc.getName() + " has left the party!");
         } else {
-            leaderSay("I'm sorry " + gc.getName() + " but I can't pay you, and I'm going to need those items.");
+            leaderSay("I'm sorry " + gc.getFirstName() + " but I can't pay you, and I'm going to need those items.");
 
             List<GameCharacter> separtists = MyLists.filter(model.getParty().getPartyMembers(), (GameCharacter gc2) ->
                     (gc2 != model.getParty().getLeader() && gc2 != gc && gc2.getAttitude(model.getParty().getLeader()) < 0));
