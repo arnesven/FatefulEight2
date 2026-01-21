@@ -95,14 +95,14 @@ public class MindMachineQuest extends MainQuest {
 
     private static List<QuestBackground> makeBackgroundSprites() {
         List<QuestBackground> result = new ArrayList<>();
-        for (int row = 0; row < 9; ++row) {
+        for (int row = 2; row < 9; ++row) {
             for (int col = 0; col < 8; ++col) {
                 Sprite spr =
                         new FlippedBgSprite("mindmachinebg"+row+":"+col, "castle.png",
                                 row * 0x10 + col);
 
                 MyColors.transformImage(spr);
-                result.add(new QuestBackground(new Point(7 - col, row), spr));
+                result.add(new QuestBackground(new Point(7 - col, row - 2), spr));
             }
         }
         return result;

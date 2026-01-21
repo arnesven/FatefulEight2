@@ -2,6 +2,8 @@ package model.map.locations;
 
 import model.Model;
 import model.map.HexLocation;
+import model.map.JungleHex;
+import model.states.DailyEventState;
 import view.GameView;
 import view.MyColors;
 import view.help.HelpDialog;
@@ -12,10 +14,12 @@ import view.subviews.SubView;
 
 public class PyramidLocation extends HexLocation {
     private final ImageSubView subView;
+    private final JungleHex jungleHex;
 
     public PyramidLocation(String name) {
         super(name + " Pyramid");
         subView = new ImageSubView("pyramid", getName().toUpperCase(), "You are at the " + getName(), true);
+        this.jungleHex = new JungleHex(0, 0, 0);
     }
 
     @Override
@@ -36,6 +40,11 @@ public class PyramidLocation extends HexLocation {
     @Override
     public boolean isDecoration() {
         return false;
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        return jungleHex.generateEvent(model);
     }
 
     @Override

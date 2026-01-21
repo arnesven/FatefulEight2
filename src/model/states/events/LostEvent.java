@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.PersonalityTrait;
 import model.states.DailyEventState;
 import model.states.EveningState;
+import model.states.EveningWithoutQuestState;
 import model.states.GameOverState;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class LostEvent extends DailyEventState {
         } else {
             println("You have lost your way in the wilderness and have made no progress today.");
         }
-        new EveningState(model, false, false, false).run(model);
+        new EveningWithoutQuestState(model, false, false, false).run(model);
         if (model.getParty().isWipedOut()) {
             return;
         }

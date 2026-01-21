@@ -3,7 +3,9 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.combat.conditions.PoisonCondition;
 import model.states.DailyEventState;
+import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
@@ -27,6 +29,10 @@ public class MosquitoesEvent extends DailyEventState {
         } else {
             println("Each party member suffers 1 damage and exhausts 1 SP.");
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (MyRandom.rollD6() == 1) {
+                    gc.addCondition(new PoisonCondition());
+                    println(gc.getName() + " has become poisoned!");
+                }
                 gc.addToSP(-1); // FEATURE: Can get infected (Poison)
                 if (gc.getHP() > 1) {
                     gc.addToHP(-1);

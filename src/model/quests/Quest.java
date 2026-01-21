@@ -271,7 +271,9 @@ public abstract class Quest {
             if (model.getParty().questIsHeld(this)) {
                 path = model.getParty().getHeldDataFor(this).getRemotePath();
             }
-            new ForcedMovementEvent(model, path).doTheEvent(model);
+            if (path.size() > 1) {
+                new ForcedMovementEvent(model, path).doTheEvent(model);
+            }
         }
     }
 

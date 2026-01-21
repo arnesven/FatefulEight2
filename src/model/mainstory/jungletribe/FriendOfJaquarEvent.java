@@ -98,7 +98,7 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
             leaderSay("Did you go with him?");
             if (task.isCrownInVillage()) {
                 portraitSay("No. I wasn't part of that group, and I'm happy I wasn't. It was not an easy quest. " +
-                        "If I recall correctly, they had to fight a dozen Lizardmen, search the vast pyramid, which was riddled with traps and poisonous creatures." +
+                        "If I recall correctly, they had to fight a dozen Lizardmen, search the vast pyramid, which was riddled with traps and poisonous creatures. " +
                         "And finally, the crown was hidden behind a particularly quixotic puzzle.");
                 leaderSay("Wait... I'm confused, who told you about this?");
                 portraitSay("Prince Jaquar did, when he returned.");
