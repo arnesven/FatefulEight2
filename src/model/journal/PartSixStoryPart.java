@@ -10,6 +10,7 @@ import model.mainstory.*;
 import model.map.*;
 import model.quests.*;
 import model.states.DailyEventState;
+import model.states.EveningState;
 import model.states.GameState;
 import model.states.QuestState;
 import model.states.dailyaction.TownDailyActionState;
@@ -101,6 +102,13 @@ public class PartSixStoryPart extends StoryPart {
         for (MyTriplet<String, CharacterAppearance, String> triplet : triplets) {
             quests.add(getQuestAndSetPortrait(triplet.first, triplet.second, triplet.third));
         }
+        if (completed && model.partyIsInOverworldPosition(assaultPoint)) {
+            MainQuest q = getQuestAndSetPortrait(MindMachineQuest.QUEST_NAME, model.getParty().getLeader().getAppearance(),
+                    "Yourself");
+            if (!q.isCompleted(model)) {
+                quests.add(q);
+            }
+        }
     }
 
     @Override
@@ -141,7 +149,7 @@ public class PartSixStoryPart extends StoryPart {
                 }
             }
         }
-        if (allSupportTasksDone() && model.partyIsInOverworldPosition(assaultPoint)) {
+        if (!completed && allSupportTasksDone() && model.partyIsInOverworldPosition(assaultPoint)) {
             return List.of(new DailyAction("Go to Rendezvous", new GoToRendezvousEvent(model, castle)));
         }
         return super.getDailyActions(model, worldHex);
@@ -439,7 +447,6 @@ public class PartSixStoryPart extends StoryPart {
         private final CastleLocation enemyKingdom;
         private final CastleLocation kingdom1;
         private final CastleLocation kingdom2;
-        private boolean questStarted = false;
 
         public GoToRendezvousEvent(Model model, String castle) {
             super(model);
@@ -518,7 +525,6 @@ public class PartSixStoryPart extends StoryPart {
                 leaderSay("Yes " + imOrWere() + " ready. Let's go.");
                 portraitSay("Alright. Good luck!");
                 transitionStep(model);
-                questStarted = true;
                 completed = true;
             } else {
                 leaderSay("Not quite yet, there are still some things that need to be prepared.");
@@ -541,16 +547,6 @@ public class PartSixStoryPart extends StoryPart {
         @Override
         protected boolean allowPartyEvent() {
             return false;
-        }
-
-        @Override
-        protected GameState getEveningState(Model model) {
-            if (questStarted) {
-                MainQuest q = getQuestAndSetPortrait(MindMachineQuest.QUEST_NAME, model.getParty().getLeader().getAppearance(),
-                        "Yourself");
-                return new QuestState(model, q, model.getParty().getPosition());
-            }
-            return super.getEveningState(model);
         }
     }
 }

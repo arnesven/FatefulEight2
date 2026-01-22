@@ -2,8 +2,13 @@ package model.quests;
 
 import model.Model;
 import model.achievements.Achievement;
+import model.classes.Skill;
+import model.enemies.KokodrillionEnemy;
 import model.items.spells.TeleportSpell;
 import model.map.WorldBuilder;
+import model.quests.scenes.CollectiveSkillCheckSubScene;
+import model.quests.scenes.CombatSubScene;
+import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
@@ -52,23 +57,46 @@ public class MindMachineQuest extends MainQuest {
 
     @Override
     protected List<QuestScene> buildScenes() {
-        return List.of();
+        return List.of(new QuestScene("The sewers", List.of(
+                new KokodrillionCombatSubScene(5, 7),
+                new CollectiveSkillCheckSubScene(4, 8, Skill.Endurance, 7, "Yuck what a stench! I guess " +
+                        "that's what the sewage from the whole castle smells like. Or is it these beasts?"),
+                new SoloSkillCheckSubScene(4, 7, Skill.Logic, 14, "These sewers are " +
+                        "like a maze! I know we came this way, but now I can't tell which way to go at all. Can somebody figure " +
+                        "out this maze?")
+        )));
     }
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        return List.of(new MindMachineStartingPoint(new QuestEdge(getSuccessEndingNode(), QuestEdge.VERTICAL)));
+        StoryJunction sj = new StoryJunction(3, 4, new QuestEdge(getSuccessEndingNode())) {
+            @Override
+            protected void doAction(Model model, QuestState state) {
+                // TODO
+            }
+        };
+
+        QuestJunction start = new MindMachineStartingPoint(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL));
+        return List.of(start, sj);
     }
 
     @Override
     protected void connectScenesToJunctions(List<QuestScene> scenes, List<QuestJunction> junctions) {
+        scenes.get(0).get(0).connectSuccess(scenes.get(0).get(1), QuestEdge.VERTICAL);
 
+        scenes.get(0).get(1).connectFail(getFailEndingNode());
+        scenes.get(0).get(1).connectSuccess(scenes.get(0).get(2));
+
+        scenes.get(0).get(2).connectFail(scenes.get(0).get(0));
+        scenes.get(0).get(2).connectSuccess(junctions.get(1));
     }
 
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         GameState toIgnore = super.endOfQuest(model, state, questWasSuccess);
-        teleportToOtherWorld(model, state, new Point(5, 5));
+        if (questWasSuccess) {
+            teleportToOtherWorld(model, state, new Point(5, 5));
+        }
         return toIgnore; // TODO Fix
     }
 
@@ -125,6 +153,17 @@ public class MindMachineQuest extends MainQuest {
         public FlippedBgSprite(String name, String map, int num) {
             super(name, map, num, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE);
             setFlipHorizontal(true);
+        }
+    }
+
+    private class KokodrillionCombatSubScene extends CombatSubScene  {
+        public KokodrillionCombatSubScene(int col, int row) {
+            super(col, row, List.of(new KokodrillionEnemy('A')));
+        }
+
+        @Override
+        protected String getCombatDetails() {
+            return "Monsters";
         }
     }
 }

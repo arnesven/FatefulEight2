@@ -76,10 +76,10 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                             return "many monsters";
                         }
                     },
-                    new CollaborativeSkillCheckSubScene(1, 2, Skill.Survival, 1, // TODO: 15
+                    new CollaborativeSkillCheckSubScene(1, 2, Skill.Survival, 15,
                             "Perhaps we can find our way through the jungle."))),
                 new QuestScene("Search the pyramid", List.of(
-                    new CollaborativeSkillCheckSubScene(5, 7, Skill.Search, 1, // TODO: 14
+                    new CollaborativeSkillCheckSubScene(5, 7, Skill.Search, 14,
                             "This place is larger than expected. " +
                             "It may take some time to find where the crown could be hidden.")
                 )),
@@ -90,12 +90,12 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                                 return "many monsters";
                             }
                         },
-                        new CollectiveSkillCheckSubScene(5, 5, Skill.Sneak, 1, // TODO: 8
+                        new CollectiveSkillCheckSubScene(5, 5, Skill.Sneak, 8,
                                 "No need to disturb them.")
                 )),
                 new QuestScene("Stone Golem", List.of(
                         new PuzzleSubScene(6, 2),
-                        new CombatSubScene(7, 2, List.of(new StoneGolemEnemy('A')), false) { // TODO: Stone Golem enemy
+                        new CombatSubScene(7, 2, List.of(new StoneGolemEnemy('A')), false) {
 
                             @Override
                             protected String getCombatDetails() {
