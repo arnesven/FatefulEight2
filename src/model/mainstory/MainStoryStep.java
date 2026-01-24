@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.preset.KruskTalandro;
 import model.classes.Classes;
+import model.items.special.CommunicatorDevice;
 import model.journal.PartSixStoryPart;
 import model.journal.ZeppelinStoryPart;
 import model.races.Race;
@@ -80,6 +81,7 @@ public enum MainStoryStep {
     }),
     XELBI_MET((model, mainStory) -> {
         mainStory.getStoryParts().get(5).progress();  // Meet Xelbi and find out about zeppelin
+        new CommunicatorDevice(true).addYourself(model.getParty().getInventory());
     }),
     ZEPPELIN_BOUGHT((model, mainStory) -> {
         mainStory.getStoryParts().get(5).progress();  // Zeppelin bought

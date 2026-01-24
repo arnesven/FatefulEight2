@@ -129,13 +129,17 @@ public class PortraitSubView extends SubView {
             String first = splits[0];
             String last = splits[1];
 
-            if (splits.length > 2) {
+            if (splits.length == 3) {
                 last = splits[2];
                 if (first.length() <= last.length()) {
                     first += " " + splits[1];
                 } else {
                     last += " " + splits[1];
                 }
+            }
+            if (splits.length > 3) {
+                first = first + " " + last;
+                last = splits[2] + " " + splits[3];
             }
             BorderFrame.drawCentered(model.getScreenHandler(), first, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
             BorderFrame.drawCentered(model.getScreenHandler(), last, Y_OFFSET + 18, MyColors.LIGHT_GRAY, MyColors.BLACK);

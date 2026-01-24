@@ -6,7 +6,10 @@ import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.normal.NobleClass;
+import model.classes.npcs.RegentClass;
 import model.items.ItemDeck;
 import model.items.spells.Spell;
 import model.journal.MainStorySpawnLocation;
@@ -34,6 +37,7 @@ import view.subviews.PortraitSubView;
 import view.subviews.SubView;
 import view.GameView;
 import view.*;
+import view.subviews.TownishSubView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -528,7 +532,14 @@ public class Model {
 
     public CharacterAppearance getLordPortrait(UrbanLocation location) {
         if (!gameData.savedPortraits.containsKey(location.getLordName())) {
-            CharacterAppearance lordAppearance = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL, location.getLordGender());
+            CharacterClass classToUse;
+            if (location instanceof CastleLocation) {
+                classToUse = new RegentClass(((CastleLocation) location).getCastleColor());
+            } else {
+                classToUse = new NobleClass();
+            }
+
+            CharacterAppearance lordAppearance = PortraitSubView.makeRandomPortrait(classToUse, Race.ALL, location.getLordGender());
             gameData.savedPortraits.put(location.getLordName(), lordAppearance);
         }
         return gameData.savedPortraits.get(location.getLordName());

@@ -13,6 +13,7 @@ import model.races.Race;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.events.ChangeClassEvent;
+import util.MyLists;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 import view.subviews.PortraitSubView;
@@ -102,6 +103,12 @@ public class WitchStoryPart extends StoryPart {
 
     public CharacterAppearance getWitchAppearance() {
         return witchAppearance;
+    }
+
+    public static CharacterAppearance getWitchAppearance(Model model) {
+        WitchStoryPart witchStoryPart = (WitchStoryPart) MyLists.find(model.getMainStory().getStoryParts(),
+                (StoryPart sp) -> sp instanceof WitchStoryPart);
+        return witchStoryPart.getWitchAppearance();
     }
 
     public class FindTheWitch extends MainStoryTask {

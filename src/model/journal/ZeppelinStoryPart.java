@@ -10,6 +10,7 @@ import model.items.Item;
 import model.items.PotionRecipe;
 import model.items.potions.Potion;
 import model.items.potions.ZeppelinFuel;
+import model.items.special.CommunicatorDevice;
 import model.map.WorldHex;
 import model.quests.Quest;
 import model.races.Race;
@@ -141,6 +142,10 @@ public class ZeppelinStoryPart extends StoryPart {
         return step >= BOUGHT;
     }
 
+    public boolean isXelbiMet() {
+        return step > INITIAL_STEP;
+    }
+
     private class ZeppelinJournalEntry extends MainStoryTask {
         public ZeppelinJournalEntry() {
             super("Xelbi's Project");
@@ -205,10 +210,11 @@ public class ZeppelinStoryPart extends StoryPart {
                 println("On the workbench in front of you lay two small circular devices made from brass, " +
                         "each one not larger than a fist. Xelbi picks one up and demonstrates how the device can be opened.");
                 leaderSay("Very pretty. What does it do?");
-                portraitSay("It's a communications device. With this you can communicate over long distances.");
+                portraitSay("It's a communications device. With this you can communicate over vast distances.");
                 leaderSay("Uh-huh...");
                 portraitSay("I'll show you. You take this...");
                 println("He hands you one of the two devices.");
+                new CommunicatorDevice(true).addYourself(model.getParty().getInventory());
                 portraitSay("And I'll go outside....");
                 println("Xelbi leaves the workshop. After a while you can hear his voice from the device in your hand. " +
                         "He asks if you can hear him, and you reply. Then he comes back inside, obviously immensely proud.");

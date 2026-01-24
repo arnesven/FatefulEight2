@@ -70,6 +70,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new CurseCombatAction().getPainCondition(),
                 new ParalysisCondition(),
                 new PoisonCondition(),
+                new PossessedCondition(),
                 new QuickenedCondition(5),
                 new RegenerationCondition(3),
                 new RiposteCombatAction().getCondition(),
@@ -102,10 +103,10 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
         protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
             List<DrawableObject> dobjs = super.buildDecorations(model, xStart, yStart);
             int count = 0;
+            int half = (allConditions.size() + 1) / 2;
             for (Condition cond : allConditions) {
                 int finalY = yStart + count + 3;
                 int column = 0;
-                int half = allConditions.size() / 2 + 1;
                 if (count >= half) {
                     column = 18;
                     finalY -= half;

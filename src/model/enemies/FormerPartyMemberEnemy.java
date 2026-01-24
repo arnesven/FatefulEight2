@@ -19,7 +19,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class FormerPartyMemberEnemy extends Enemy {
+public class FormerPartyMemberEnemy extends HumanoidEnemy {
 
     private final GameCharacter basedOn;
     private static final List<CharacterClass> CLASSES_WHO_DO_MAGIC_DAMAGE =

@@ -19,7 +19,7 @@ public class VampireNPCClass extends NPCClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnFancyRobe(characterAppearance, CLOTHES_COLOR, DETAIL_COLOR);
-        NobleClass.putOnCrown(characterAppearance);
+        NobleClass.putOnCrown(characterAppearance, MyColors.LIGHT_GRAY, MyColors.DARK_RED);
     }
 
     @Override

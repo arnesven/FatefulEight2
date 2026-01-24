@@ -98,6 +98,11 @@ public class InitialStoryPart extends StoryPart {
         return everixPortrait;
     }
 
+    public static CharacterAppearance getEverixAppearance(Model model) {
+        InitialStoryPart init = ((InitialStoryPart)model.getMainStory().getStoryParts().get(0));
+        return init.getEverixPortrait();
+    }
+
     @Override
     public boolean isCompleted() {
         return internalStep > ASK_EVERIX_STEP;

@@ -15,6 +15,8 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.FaceAndClothesSpriteWithBack;
+import view.sprites.PortraitSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -43,10 +45,10 @@ public class NobleClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnFancyRobe(characterAppearance, CLOTHES_COLOR, DETAIL_COLOR);
-        putOnCrown(characterAppearance);
+        putOnCrown(characterAppearance, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY);
     }
 
-    public static void putOnCrown(CharacterAppearance characterAppearance) {
+    public static void putOnCrown(CharacterAppearance characterAppearance, MyColors crownColor, MyColors gemstoneColor) {
         characterAppearance.removeOuterHair();
         int spriteOffset =  0xC8;
         if (characterAppearance.hairOnTop()) {
@@ -54,7 +56,9 @@ public class NobleClass extends CharacterClass {
         }
         for (int y = 1; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
-                characterAppearance.setSprite(x, y, new FaceAndClothesSpriteWithBack(spriteOffset + 0x10 * y + x, characterAppearance.getHairColor(), MyColors.LIGHT_GRAY));
+                PortraitSprite spr = new FaceAndClothesSpriteWithBack(spriteOffset + 0x10 * y + x, characterAppearance.getHairColor(), crownColor);
+                spr.setColor4(gemstoneColor);
+                characterAppearance.setSprite(x, y, spr);
             }
         }
     }

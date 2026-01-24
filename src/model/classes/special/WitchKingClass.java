@@ -32,7 +32,7 @@ public class WitchKingClass extends SpecialCharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, MyColors.DARK_RED);
-        NobleClass.putOnCrown(characterAppearance);
+        NobleClass.putOnCrown(characterAppearance, MyColors.GOLD, MyColors.GOLD);
     }
 
     @Override

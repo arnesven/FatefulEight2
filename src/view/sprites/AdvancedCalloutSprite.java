@@ -50,6 +50,9 @@ public class AdvancedCalloutSprite extends CalloutSprite {
             }
             this.overflowRows = partitionAndTrim(extraContent.toString(), overflowPartition);
             this.overflowMaxWidth = fixTextRows(overflowRows);
+            if (overflowMaxWidth < overflowPartition - 1) {
+                overflowShift += (overflowPartition - overflowMaxWidth - 2);
+            }
 
             String[] oldTextRows = textRows;
             textRows = new String[maxRows];

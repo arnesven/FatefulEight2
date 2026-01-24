@@ -10,8 +10,8 @@ import model.map.UrbanLocation;
 import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
 import model.races.AllRaces;
-import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import util.MyLists;
 import view.SimpleMessageView;
 import view.subviews.PortraitSubView;
 
@@ -29,13 +29,40 @@ public class PartFourStoryPart extends StoryPart {
     private final Point campPoint;
     private AdvancedAppearance general = PortraitSubView.makeRandomPortrait(Classes.PAL, AllRaces.ALL);
     private AdvancedAppearance captain = PortraitSubView.makeRandomPortrait(Classes.CAP, AllRaces.ALL);
-    private AdvancedAppearance marshall = PortraitSubView.makeRandomPortrait(Classes.PAL, AllRaces.ALL);
+    private AdvancedAppearance marshal = PortraitSubView.makeRandomPortrait(Classes.MARSHAL, AllRaces.ALL);
 
 
     public PartFourStoryPart(String castleName, Point campPoint) {
         this.step = INITIAL_STEP;
         this.castleName = castleName;
         this.campPoint = campPoint;
+    }
+
+    public AdvancedAppearance getGeneralAppearance() {
+        return general;
+    }
+
+    public static AdvancedAppearance getGeneralAppearance(Model model) {
+        PartFourStoryPart sp = (PartFourStoryPart) MyLists.find(model.getMainStory().getStoryParts(), stp -> stp instanceof PartFourStoryPart);
+        return sp.getGeneralAppearance();
+    }
+
+    public AdvancedAppearance getCaptainAppearance() {
+        return captain;
+    }
+
+    public static AdvancedAppearance getCaptainAppearance(Model model) {
+        PartFourStoryPart sp = (PartFourStoryPart) MyLists.find(model.getMainStory().getStoryParts(), stp -> stp instanceof PartFourStoryPart);
+        return sp.getCaptainAppearance();
+    }
+
+    public AdvancedAppearance getMarshalAppearance() {
+        return marshal;
+    }
+
+    public static AdvancedAppearance getMarshalAppearance(Model model) {
+        PartFourStoryPart sp = (PartFourStoryPart) MyLists.find(model.getMainStory().getStoryParts(), stp -> stp instanceof PartFourStoryPart);
+        return sp.getMarshalAppearance();
     }
 
     @Override
@@ -154,7 +181,7 @@ public class PartFourStoryPart extends StoryPart {
                 showExplicitPortrait(model, captain, "Captain");
                 portraitSay("I'm sorry general, but I think you are mistaken. Our scouts report movement " +
                         "from this direction.");
-                showExplicitPortrait(model, marshall, "Marshall");
+                showExplicitPortrait(model, marshal, "Marshal");
                 portraitSay("You're both wrong. This field camp is just a diversion, the real threat is somewhere else.");
                 showLord(model);
                 portraitSay("Hmm... This is very troublesome...");
@@ -181,7 +208,7 @@ public class PartFourStoryPart extends StoryPart {
                 portraitSay("We should deploy our army here, where our scouts spotted the large war camp.");
                 showExplicitPortrait(model, captain, "Captain");
                 portraitSay("We must protect our settlements, we should deploy our forces to the border villages!");
-                showExplicitPortrait(model, marshall, "Marshall");
+                showExplicitPortrait(model, marshal, "Marshal");
                 portraitSay("We must protect our keep. We should keep most of our forces here. But we still need more intel.");
                 println("The " + castle.getLordTitle() + " turns to you again.");
                 showLord(model);
@@ -227,9 +254,9 @@ public class PartFourStoryPart extends StoryPart {
                 println("The " + castle.getLordTitle() + " hands you a rather sizable purse.");
                 println("The party receives 300 gold!");
                 model.getParty().earnGold(300);
-                portraitSay("Secondly, I've asked my marshall to fetch the finest equipment we have from our armory. " +
+                portraitSay("Secondly, I've asked my marshal to fetch the finest equipment we have from our armory. " +
                         "Here he comes now.");
-                showExplicitPortrait(model, marshall, "Marshall");
+                showExplicitPortrait(model, marshal, "Marshal");
                 portraitSay("These have been kept in display cases in the armory. Please take good care of them, " +
                         "our artisans manufactured with great expenditure of time and resources.");
                 for (int i = 0; i < 4; ++i) {

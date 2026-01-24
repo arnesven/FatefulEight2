@@ -6,13 +6,13 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
+import model.items.spells.VomitSpell;
 import model.mainstory.*;
+import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.map.*;
 import model.quests.*;
 import model.states.DailyEventState;
-import model.states.EveningState;
-import model.states.GameState;
-import model.states.QuestState;
 import model.states.dailyaction.TownDailyActionState;
 import model.tasks.DestinationTask;
 import util.MyLists;
@@ -305,11 +305,8 @@ public class PartSixStoryPart extends StoryPart {
 
         public VisitWitchEvent(Model model) {
             super(model);
-            WitchStoryPart witchStoryPart = (WitchStoryPart) MyLists.find(model.getMainStory().getStoryParts(),
-                    (StoryPart sp) -> sp instanceof WitchStoryPart);
-            this.witchAppearance = witchStoryPart.getWitchAppearance();
-            InitialStoryPart init = ((InitialStoryPart)model.getMainStory().getStoryParts().get(0));
-            this.everixAppearance = init.getEverixPortrait();
+            this.witchAppearance = WitchStoryPart.getWitchAppearance(model);
+            this.everixAppearance = InitialStoryPart.getEverixAppearance(model);
         }
 
         @Override
@@ -489,7 +486,11 @@ public class PartSixStoryPart extends StoryPart {
                 portraitSay("And, we've had reports that " + model.getMainStory().getRemotePeopleName() +
                         " have been raiding the shores of " + CastleLocation.placeNameShort(enemyKingdom.getPlaceName()) + ".");
             } else {
-                showExplicitPortrait(model, gainSupportOfRemotePeopleTask.getLeaderPortrait(), gainSupportOfRemotePeopleTask.getLeaderName());
+                CharacterAppearance remotePeoplePortrait = gainSupportOfRemotePeopleTask.getLeaderPortrait();
+                if (gainSupportOfRemotePeopleTask instanceof GainSupportOfJungleTribeTask) {
+                    remotePeoplePortrait.setClass(Classes.KING_OF_THE_SOUTH);
+                }
+                showExplicitPortrait(model, remotePeoplePortrait, gainSupportOfRemotePeopleTask.getLeaderName());
                 portraitSay("Those cowards are fleeing before my warriors before we can even get close.");
                 leaderSay(gainSupportOfRemotePeopleTask.getLeaderName() + "! What are you doing here?");
                 portraitSay("I promised you my support didn't I? I am a man of my word.");
@@ -524,6 +525,16 @@ public class PartSixStoryPart extends StoryPart {
             if (yesNoInput()) {
                 leaderSay("Yes " + imOrWere() + " ready. Let's go.");
                 portraitSay("Alright. Good luck!");
+                showExplicitPortrait(model, WitchStoryPart.getWitchAppearance(model), "Witch of the Woods");
+                portraitSay("Before you go. I have something for you.");
+                println("The witch hands you a spellbook.");
+                new VomitSpell().addYourself(model.getParty().getInventory());
+                leaderSay("What's this?");
+                portraitSay("It's a spell for making a person vomit. If " + enemyKingdom.getLordName() + " is " +
+                        "being controlled because " + heOrShe(enemyKingdom.getLordGender()) + " has ingested a Crimson Pearl, " +
+                        "this spell could come in handy.");
+                leaderSay(iOrWe() + " keep it in mind. Thanks.");
+                portraitSay("I wish you well.");
                 transitionStep(model);
                 completed = true;
             } else {

@@ -271,6 +271,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new SummonFamiliarSpell(),
                 new SummonTreeHerderSpell(),
                 new WerewolfFormSpell(),
+                new VomitSpell(),
                 // BLACK
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),

@@ -67,6 +67,8 @@ public interface Classes {
     CharacterClass GARDENER = new GardenerNPCClass();
     CharacterClass ARTIST = new ArtistNPCClass();
     CharacterClass PIRATE = new PirateClass();
+    CharacterClass KING_OF_THE_SOUTH = new KingOfTheSouthClass();
+    CharacterClass MARSHAL = new MarshalNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
