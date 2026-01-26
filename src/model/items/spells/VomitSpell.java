@@ -9,6 +9,7 @@ import model.enemies.HumanoidEnemy;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
+import sprites.CombatSpeechBubble;
 import view.MyColors;
 import view.sprites.GreenSpellSprite;
 import view.sprites.Sprite;
@@ -41,13 +42,23 @@ public class VomitSpell extends CombatSpell {
         if (target instanceof GameCharacter || target instanceof HumanoidEnemy) {
             combat.println(target.getName() + " becomes queasy.");
             if (target.hasCondition(PossessedCondition.class)) {
-               if (castCounts.containsKey(target) && castCounts.get(target) == CASTS_REQUIRED_TO_VOMIT_PEARL) {
-                   combat.println(target.getName() + " vomits out a crimson pearl!");
-                   target.removeCondition(PossessedCondition.class);
-               } else if (!castCounts.containsKey(target)) {
+              if (!castCounts.containsKey(target)) {
                    castCounts.put(target, 1);
                } else {
-                   combat.println(target.getName() + " bends forward, as if to throw up, but manages to hold it back.");
+                   castCounts.put(target, castCounts.get(target) + 1);
+                   if (castCounts.get(target) == 2) {
+                       combat.println(target.getName() + " bends forward, as if to throw up, but manages to hold it back.");
+                       model.getLog().waitForAnimationToFinish();
+                       combat.addSpecialEffect(target, new CombatSpeechBubble());
+                       combat.printQuote(target.getName(), "Ugh...");
+                   } else if (castCounts.get(target) == CASTS_REQUIRED_TO_VOMIT_PEARL) {
+                       combat.println(target.getName() + " vomits out a crimson pearl!");
+                       target.removeCondition(PossessedCondition.class);
+                       model.getLog().waitForAnimationToFinish();
+                       combat.addSpecialEffect(target, new CombatSpeechBubble());
+                       combat.printQuote(target.getName(), "What's going on here! Stop this fighting at once!");
+                       combat.setTimeLimit(0);
+                   }
                }
             }
         } else {

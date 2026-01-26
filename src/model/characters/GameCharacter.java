@@ -703,7 +703,7 @@ public class GameCharacter extends Combatant {
             String reductionString = "";
             if (isPhysicalAttack || equipment.applyArmorToMagicAttacks()) {
                 int reduction = Math.min(damage, calculateDamageReduction());
-                if (getAP() > 0) {
+                if (getAP() > 0 && reduction > 0) {
                     reductionString = " (reduced by " + reduction + ")";
                 }
                 damage = damage - reduction;

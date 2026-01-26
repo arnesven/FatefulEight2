@@ -15,11 +15,11 @@ import java.util.List;
 
 public class RestorationSpellAttackBehavior extends SpellAttackBehavior {
 
-    private final MagicRangedAttackBehavior normalAttack;
+    private final EnemyAttackBehavior normalAttack;
 
-    public RestorationSpellAttackBehavior() {
+    public RestorationSpellAttackBehavior(EnemyAttackBehavior backupAttack) {
         super("Restoration", 0);
-        this.normalAttack = new MagicRangedAttackBehavior();
+        this.normalAttack = backupAttack;
     }
 
     @Override
@@ -57,5 +57,10 @@ public class RestorationSpellAttackBehavior extends SpellAttackBehavior {
             return null;
         }
         return enms.getFirst();
+    }
+
+    @Override
+    public boolean canAttackBackRow() {
+        return normalAttack.canAttackBackRow();
     }
 }

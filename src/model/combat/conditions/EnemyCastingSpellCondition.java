@@ -28,7 +28,7 @@ public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
     @Override
     public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, int damage) {
         if (damage > 0) {
-            if (MyRandom.flipCoin()) {
+            if (MyRandom.rollD6() > 4) {
                 enemy.removeCondition(EnemyCastingSpellCondition.class);
                 combat.println(enemy.getName() + "'s concentration was broken and " +
                         "is no longer casting the spell.");

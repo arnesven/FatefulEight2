@@ -4,6 +4,7 @@ import model.Model;
 import model.items.Inventory;
 import model.items.Item;
 import model.items.special.MagicBroom;
+import model.items.special.StoryItem;
 import model.map.Direction;
 import model.map.UrbanLocation;
 import model.states.events.RiverEvent;
@@ -93,7 +94,9 @@ public class TravelState extends GameState {
         do {
             options.clear();
             for (Item it : model.getParty().getInventory().getAllItems()) {
-                options.add(it.getName() + " (" + (it.getWeight() / 1000.0) + ")");
+                if (!(it instanceof StoryItem)) {
+                    options.add(it.getName() + " (" + (it.getWeight() / 1000.0) + ")");
+                }
             }
             options.sort(Comparator.naturalOrder());
             int lockpicks = model.getParty().getInventory().getLockpicks();

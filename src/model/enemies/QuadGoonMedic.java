@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.MagicRangedAttackBehavior;
 import model.enemies.behaviors.RestorationSpellAttackBehavior;
 import model.races.Race;
 import view.MyColors;
@@ -10,7 +11,7 @@ public class QuadGoonMedic extends QuadGoonEnemy {
     private Sprite sprite;
 
     public QuadGoonMedic(char a) {
-        super(a, "Medic", new RestorationSpellAttackBehavior());
+        super(a, "Medic", new RestorationSpellAttackBehavior(new MagicRangedAttackBehavior()));
         this.sprite = new MedicSprite(Race.randomRace());
     }
 

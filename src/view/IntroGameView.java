@@ -60,7 +60,7 @@ public class IntroGameView extends GameView implements Animation {
             model.getScreenHandler().put(x*4, 46, BLACK_SPRITE);
         }
         BorderFrame.drawCentered(model.getScreenHandler(), "Alt + Enter for fullscreen", 47, MyColors.WHITE);
-        BorderFrame.drawCentered(model.getScreenHandler(), "Fateful Eight v " + FatefulEight.version + " - Written by Erik A. Nilsson - Copyright (C) 2025", 49, MyColors.CYAN);
+        BorderFrame.drawCentered(model.getScreenHandler(), "Fateful Eight v " + FatefulEight.version + " - Written by Erik A. Nilsson - Copyright (C) 2026", 49, MyColors.CYAN);
         model.getScreenHandler().clearForeground();
         if (!fading) {
             model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex]);
