@@ -201,25 +201,37 @@ public abstract class Quest {
         model.getParty().stopHoldingQuest(state.getQuest());
         model.setTimeOfDay(TimeOfDay.EVENING);
         if (!questWasSuccess) {
-            state.partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of(
-                    "That could have gone better.",
-                    "We need to do better.",
-                    "Was it just bad luck?",
-                    "I hope things will turn around soon.",
-                    "I don't think this was my fault.",
-                    "Let's not blame anybody, OK?")));
+            if (state.getQuest().sayCommentAfterFailure()) {
+                state.partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of(
+                        "That could have gone better.",
+                        "We need to do better.",
+                        "Was it just bad luck?",
+                        "I hope things will turn around soon.",
+                        "I don't think this was my fault.",
+                        "Let's not blame anybody, OK?")));
+            }
             adjustAttitudes(model, -10);
         } else if (payWages) {
             new PayWagesState(model).run(model);
         } else {
-            state.partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of(
-                    "Go us!", "This was a good experience for me.",
-                    "I think we're doing pretty well.", "Times are good!",
-                    "We all contributed on this one.", "Good team work everybody."
-            )));
+            if (state.getQuest().sayCommentAfterSuccess()) {
+                state.partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of(
+                        "Go us!", "This was a good experience for me.",
+                        "I think we're doing pretty well.", "Times are good!",
+                        "We all contributed on this one.", "Good team work everybody."
+                )));
+            }
             adjustAttitudes(model, 7);
         }
         return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    protected boolean sayCommentAfterSuccess() {
+        return true;
+    }
+
+    protected boolean sayCommentAfterFailure() {
+        return true;
     }
 
     private static void adjustAttitudes(Model model, int attitude) {

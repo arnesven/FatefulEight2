@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.GainSupportOfNeighborKingdomTask;
 import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.World;
@@ -88,4 +89,6 @@ public abstract class MainStorySpawnLocation implements Serializable {
     public Point getPastEntryPoint() {
         return pastEntryPoint;
     }
+
+    public abstract AdvancedAppearance getArabellaAppearance();
 }

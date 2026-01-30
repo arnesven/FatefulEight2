@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 public class QuestSubView extends AvatarSubView {
     private final QuestState state;
     private final Quest quest;
+    private final String title;
     private MyColors backgroundColor;
     private Sprite bgSprite;
     private final SteppingMatrix<QuestNode> matrix;
@@ -37,6 +38,7 @@ public class QuestSubView extends AvatarSubView {
         avatarEnabled = true;
         backgroundColor = quest.getBackgroundColor();
         bgSprite = new FilledBlockSprite(backgroundColor);
+        this.title = "QUEST - " + quest.getName().toUpperCase();
     }
 
     @Override
@@ -146,7 +148,7 @@ public class QuestSubView extends AvatarSubView {
 
     @Override
     protected String getTitleText(Model model) {
-        return "QUEST - " + quest.getName().toUpperCase();
+        return title;
     }
 
     @Override

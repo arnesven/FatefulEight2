@@ -7,13 +7,18 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.classes.SkillChecks;
 import model.classes.npcs.RegentClass;
 import model.combat.conditions.PossessedCondition;
 import model.enemies.*;
 import model.items.special.CommunicatorDevice;
+import model.items.spells.Spell;
+import model.items.spells.TelekinesisSpell;
 import model.journal.PartFourStoryPart;
 import model.journal.StoryPart;
 import model.journal.ZeppelinStoryPart;
+import model.mainstory.ArabellasWorkshopEvent;
+import model.mainstory.LandedInThePastEvent;
 import model.map.CastleLocation;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
@@ -24,6 +29,7 @@ import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import util.MyLists;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -32,6 +38,7 @@ import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MindMachineQuest extends MainQuest {
@@ -40,7 +47,7 @@ public class MindMachineQuest extends MainQuest {
             "Once aside, a labyrinth of watery passageways lay between you and the castle dungeons. " +
             "If you can find the way through you may be able to get into the castle, but what will you find inside?";
 
-    private static final String ENDING_TEXT = "TODO Ending";
+    private static final String ENDING_TEXT = "The blinding light penetrates your very essence, and transports you into the beyond...";
     private List<QuestBackground> backgroundSprites = makeBackgroundSprites();
 
     public MindMachineQuest() {
@@ -50,7 +57,8 @@ public class MindMachineQuest extends MainQuest {
 
     @Override
     public Achievement.Data getAchievementData() {
-        return makeAchievement(this, "TODO");
+        return makeAchievement(this,
+                "You destroyed Arabella's Mind Machine and stopped her plot to take over the entire kingdom.");
     }
 
     @Override
@@ -74,20 +82,50 @@ public class MindMachineQuest extends MainQuest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("The sewers", List.of(
-                    new KokodrillionCombatSubScene(6, 7),        // TODO: Difficulty 7
-                    new CollectiveSkillCheckSubScene(5, 8, Skill.Endurance, 1, "Yuck what a stench! I guess " +
+                    new KokodrillionCombatSubScene(6, 7),
+                    new CollectiveSkillCheckSubScene(5, 8, Skill.Endurance, 7, "Yuck what a stench! I guess " +
                             "that's what the sewage from the whole castle smells like. Or is it these beasts?"),
-                    new SoloSkillCheckSubScene(5, 7, Skill.Logic, 1, "These sewers are " + // TODO: 14
+                    new SoloSkillCheckSubScene(5, 7, Skill.Logic, 14, "These sewers are " +
                             "like a maze! I know we came this way, but now I can't tell which way to go at all. Can somebody figure " +
                             "out this maze?"))),
                 new QuestScene("The Castle", List.of(
                         new EvidenceChectSubScene(7, 4),
-                        new CombatLordSubScene(6, 0)
+                        new CombatLordSubScene(6, 0))),
+                new QuestScene("The Machine", List.of(
+                        new SoloSkillCheckSubScene(2, 4, Skill.Acrobatics, 18, "Quick, throw something at the pearl!"),
+                        new SoloSkillCheckSubScene(4, 5, Skill.Bows, 16, "Quick, shoot the pearl!")
                 )));
     }
 
     @Override
+    protected boolean sayCommentAfterSuccess() {
+        return false;
+    }
+
+    @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
+
+        StoryJunction sj4 = new StoryJunctionWithEvent(2, 6, new QuestEdge(getSuccessEndingNode())) {
+
+            @Override
+            public DailyEventState makeEvent(Model model, QuestState state) {
+                return new FinalEvent(model);
+            }
+        };
+
+        QuestDecisionPoint qdp = new QuestDecisionPoint(3, 3, List.of(
+                new QuestEdge(scenes.get(2).get(0)), new QuestEdge(scenes.get(2).get(1))
+        ), "");
+
+        qdp.addSpellCallback(new TelekinesisSpell().getName(), (SpellCallback) (model, state, spell, caster) -> {
+            state.println("The pearl stops in mid-air, then zooms over to " + caster.getFirstName() + "'s hand");
+            state.partyMemberSay(caster, "I'll take that.");
+            if (caster != model.getParty().getLeader()) {
+                state.leaderSay("Nice one " + caster.getFirstName() + ".");
+            }
+            return new QuestEdge(sj4, QuestEdge.VERTICAL);
+        });
+
         StoryJunction sj1 = new StoryJunctionWithEvent(7, 3, new QuestEdge(scenes.get(1).get(1), QuestEdge.VERTICAL)) {
             @Override
             public DailyEventState makeEvent(Model model, QuestState state) {
@@ -95,7 +133,7 @@ public class MindMachineQuest extends MainQuest {
             }
         };
 
-        StoryJunction sj3 = new StoryJunctionWithEvent(3, 3, new QuestEdge(getSuccessEndingNode())) {
+        StoryJunction sj3 = new StoryJunctionWithEvent(3, 2, new QuestEdge(qdp)) {
             @Override
             public DailyEventState makeEvent(Model model, QuestState state) {
                 return new ArabellasWorkshopEvent(model);
@@ -110,8 +148,8 @@ public class MindMachineQuest extends MainQuest {
         };
 
 
-        QuestJunction start = new MindMachineStartingPoint(new QuestEdge(sj2, QuestEdge.VERTICAL)); // TODO: scenes.get(0).get(0)
-        return List.of(start, sj1, sj2, sj3);
+        QuestJunction start = new MindMachineStartingPoint(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL));
+        return List.of(start, sj1, sj2, sj3, qdp, sj4);
     }
 
     @Override
@@ -128,15 +166,22 @@ public class MindMachineQuest extends MainQuest {
 
         scenes.get(1).get(1).connectSuccess(junctions.get(2));
         scenes.get(1).get(1).connectFail(getFailEndingNode());
+
+        scenes.get(2).get(0).connectSuccess(junctions.get(5), QuestEdge.VERTICAL);
+        scenes.get(2).get(0).connectFail(getFailEndingNode());
+
+        scenes.get(2).get(1).connectSuccess(junctions.get(5), QuestEdge.VERTICAL);
+        scenes.get(2).get(1).connectFail(getFailEndingNode());
     }
 
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         GameState toIgnore = super.endOfQuest(model, state, questWasSuccess);
         if (questWasSuccess) {
-            teleportToOtherWorld(model, state, new Point(5, 5));
+            teleportToOtherWorld(model, state, model.getMainStory().getPastEntryPosition());
+            return new LandedInThePastEvent(model);
         }
-        return toIgnore; // TODO Fix
+        return toIgnore;
     }
 
     public static void teleportToOtherWorld(Model model, GameState state, Point destinationPosition) {
@@ -434,15 +479,55 @@ public class MindMachineQuest extends MainQuest {
         }
     }
 
-    private class ArabellasWorkshopEvent extends DailyEventState {
-        public ArabellasWorkshopEvent(Model model) {
+    private class FinalEvent extends DailyEventState {
+        public FinalEvent(Model model) {
             super(model);
         }
 
         @Override
         protected void doEvent(Model model) {
-            println("Arabella TODO");
-            waitForReturn();
+            println("Arabella curses loudly.");
+            showExplicitPortrait(model,  model.getMainStory().getArabellaAppearance(),
+                    "Arabella");
+            portraitSay("Confounded interloper" + (model.getParty().size() > 1 ? "s" : "")
+                    + "! Well, no matter, I have plenty of crimson pearls!");
+            println("She waves her wand once and then goes invisible.");
+            model.getLog().waitForAnimationToFinish();
+            removePortraitSubView(model);
+            leaderSay("She must be going to get another pearl. " + (model.getParty().size() > 1 ? "Let's" : "I'll")
+                    + " destroy this machine while " + iOrWe() + " have the chance.");
+            if (model.getParty().size() > 1) {
+                println("The party starts hacking and bashing the machine with their weapons.");
+            } else {
+                println(model.getParty().getLeader().getFirstName() + " starts hacking and bashing the machine with " +
+                        hisOrHer(model.getParty().getLeader().getGender()) + " weapon.");
+            }
+            println("The machine starts to glow and sparkle and is making an even louder noise than before.");
+            GameCharacter willis = MyLists.find(model.getParty().getPartyMembers(), gc -> gc == model.getMainStory().getWillisCharacter());
+            if (willis != null) {
+                partyMemberSay(willis, "This is not a good idea at all! " +
+                        "There's no telling what this machine will do if we continue wrecking it.");
+            }
+            println("Out of thin air, Arabella appears.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model,  model.getMainStory().getArabellaAppearance(),
+                    "Arabella");
+            portraitSay("What are you doing! Stop! You're ruining everything!");
+            leaderSay(imOrWereCap() + " putting an end to your crazy plan Arabella. " + imOrWereCap() + " going to...");
+            println(model.getParty().getLeader().getFirstName() + " is interrupted by an ear-splitting noise from the machine. Then, " +
+                    "as suddenly as it started, it stops");
+            leaderSay("What...");
+            println("A blazing light then fills the room. It's brightness forcing everybody to cover their eyes.");
+            MyLists.forEach(model.getParty().getPartyMembers(), gc ->
+                                    model.getParty().forceEyesClosed(gc, true));
+            removePortraitSubView(model);
+            List<GameCharacter> screamers = new ArrayList<>(model.getParty().getPartyMembers());
+            Collections.shuffle(screamers);
+            for (GameCharacter gc : screamers) {
+                partyMemberSay(gc, MyRandom.sample(List.of("My eyes!", "Aaaagh", "What is going on?",
+                        "Help!", "I can't see!", "Eeeiii!", "Ouch!", "That light... aaaaah!",
+                        "So bright....")));
+            }
         }
     }
 }

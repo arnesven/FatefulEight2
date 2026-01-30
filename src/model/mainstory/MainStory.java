@@ -3,6 +3,7 @@ package model.mainstory;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.special.WillisCharacter;
 import model.journal.*;
 import model.map.*;
@@ -329,5 +330,9 @@ public class MainStory implements Serializable {
 
     public Point getPastEntryPosition() {
         return spawnData.getPastEntryPoint();
+    }
+
+    public AdvancedAppearance getArabellaAppearance() {
+        return spawnData.getArabellaAppearance();
     }
 }

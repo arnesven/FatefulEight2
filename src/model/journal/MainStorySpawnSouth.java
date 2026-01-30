@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.map.World;
@@ -11,6 +12,8 @@ import java.awt.Point;
 import java.util.List;
 
 public class MainStorySpawnSouth extends MainStorySpawnLocation {
+    private AdvancedAppearance arabella = new SouthernArabellaAppearance();
+
     public MainStorySpawnSouth() {
         super(new SouthMeadhomeTown().getName(),
               new ArdhCastle().getName(),
@@ -43,5 +46,10 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(new Point(20, 18));
+    }
+
+    @Override
+    public AdvancedAppearance getArabellaAppearance() {
+        return arabella;
     }
 }

@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.vikings.GainSupportOfVikingsTask;
 import model.map.World;
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.util.List;
 
 public class MainStorySpawnNorth extends MainStorySpawnLocation {
+    private AdvancedAppearance arabella = new DarkElfArabellaAppearance();;
+
     public MainStorySpawnNorth() {
         super(new EbonshireTown().getName(),
               new BogdownCastle().getName(),
@@ -43,5 +46,10 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(new Point(14, 4));
+    }
+
+    @Override
+    public AdvancedAppearance getArabellaAppearance() {
+        return arabella;
     }
 }

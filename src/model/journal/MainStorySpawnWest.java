@@ -43,6 +43,7 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
 
     private final List<PotentialMutineer> potentialMutineers;
     private final PotentialMutineer realMutineer;
+    private AdvancedAppearance arabella = new DarkElfArabellaAppearance();
 
     public MainStorySpawnWest() {
         super(new LittleErindeTown().getName(),
@@ -78,6 +79,11 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(new Point(0, 14));
+    }
+
+    @Override
+    public AdvancedAppearance getArabellaAppearance() {
+        return arabella;
     }
 
     private List<PotentialMutineer> makePotentialMutineers() {

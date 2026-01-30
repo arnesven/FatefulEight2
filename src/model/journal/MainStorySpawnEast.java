@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
 import model.map.World;
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.util.List;
 
 public class MainStorySpawnEast extends MainStorySpawnLocation {
+    private AdvancedAppearance arabella = new SouthernArabellaAppearance();
+
     public MainStorySpawnEast() {
         super(new AshtonshireTown().getName(),
               new ArkvaleCastle().getName(),
@@ -43,5 +46,10 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(new Point(30, 10));
+    }
+
+    @Override
+    public AdvancedAppearance getArabellaAppearance() {
+        return arabella;
     }
 }
