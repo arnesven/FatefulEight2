@@ -5,8 +5,6 @@ import model.TimeOfDay;
 import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.mainstory.FugitiveTownEvent;
-import model.mainstory.jungletribe.RubiqPuzzleEvent;
-import model.mainstory.jungletribe.SudoqPuzzleEvent;
 import model.states.dailyaction.WildernessDailyAction;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
@@ -521,7 +519,7 @@ public abstract class WorldHex {
         return preparedEvent.first;
     }
 
-    public abstract WorldHex makePastSelf(Point position);
+    public abstract WorldHex makePastSelf(Point oldPosition, Point newPosition);
 
     protected int getNumberOfBorderingRiver() {
         List<Integer> direction = List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.SOUTH_EAST,

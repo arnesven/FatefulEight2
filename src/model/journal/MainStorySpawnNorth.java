@@ -45,7 +45,12 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
 
     @Override
     public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(new Point(14, 4));
+        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+    }
+
+    @Override
+    public Point getPastUpperLeftCornerPoint() {
+        return new Point(14, 4);
     }
 
     @Override

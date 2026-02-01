@@ -84,15 +84,15 @@ public class WorldBuilder {
             "ssphsddddDmdddDdddDmMpwwdwpbbbffphMpffpfwooooooooooww",
             "ssppppddmDDDddDDpdpDddsdsddddddffhhpwfffoooooooooowss",
             "ssppppddDDDDphphfsspsssssssssssdfMMMwwwooooooooowwsss",
-            "ssssssssssssssssssssssssssssssssMMwwwwwwsssssssssssss",
+            "sssssssssssssssdssssssssssssssssMMwwwwwwsssssssssssss",
             "sssssssssssssssssssssssssssssssMMwwwwwwwsssssssssssss",
-            "ssssssssssssssssssssssssssssssMhMwwwwswwsssssssssssss",
+            "sssssssssssssdddssssssssssssssMhMwwwwswwsssssssssssss",
             "dssssssssssdddssssssssssssssMphMhwhwhwwwsssssssssssss",
             "jdsssddddddjjjdddssssddssssMhhwwhpjwhwwwdddssssssssdd",
             "jjdddjjjjjjjjjpjjdpddjjJJjjJJwpjjwjjwjjjjjjddddsdddjj",
             "jjjjjjjjjjjjjjjjbjjbbJJJJJjjjbjjjjjwjjjjjjjddddsdjjjj",
             "jjjjjjjjjjjjjbjbjjjjjjjbJjjbjjjjbpjjjjjjjjdsssssdjjjj",
-            "jjjjjjjjjjjjjjdddjjbbjjjbJJjpbpjjjjbjjjjjdsssssssdjjj",
+            "jjjjjjjjjjjjjjdddjjbbjjjbJJppbpjjjjbjjjjjdsssssssdjjj",
             "jjjjjjjjjjjjjdssbpjjjbbbbbbbJjjjjbjjjjjjjjjdssssssdjj",
     };
 
@@ -316,7 +316,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
         addEvilTower(contents, getFortressPosition(EXPAND_SOUTH), EXPAND_SOUTH);
 
-        addTomb(contents, 28, 36, "Uzoctl", 0, 0);
+        addTomb(contents, 27, 36, "Uzoctl", 0, 0);
         addTomb(contents, 14, 33, "Xalardium", SOUTH_EAST, 0);
 
         addEasternContents(contents);
@@ -345,6 +345,9 @@ public class WorldBuilder {
     }
 
     private static void addSouthernContents(Map<Point, HexContents> contents) {
+        addRoadsAndRivers(contents, 14, 30, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 15, 30, 0, SOUTH_WEST);
+
         addRoadsAndRivers(contents, 28, 31, 0, NORTH_EAST);
         addRoadsAndRivers(contents, 29, 31, 0, SOUTH | SOUTH_WEST);
         addRoadsAndRivers(contents, 30, 31, 0, SOUTH_WEST);
@@ -390,6 +393,7 @@ public class WorldBuilder {
             addRoadsAndRivers(contents, x + 1, 37, 0, NORTH_WEST | NORTH | NORTH_EAST);
         }
         addRoadsAndRivers(contents, 27, 37, 0, SOUTH_WEST);
+
     }
 
     private static void addNorthernContents(Map<Point, HexContents> contents) {
@@ -576,7 +580,8 @@ public class WorldBuilder {
         WorldHex[][] hexes = new WorldHex[bounds.width][bounds.height];
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {
-                hexes[x][y] = originalHexes[x + upperLeftPoint.x][y + upperLeftPoint.y].makePastSelf(new Point(x, y));
+                Point oldPos = new Point(x + upperLeftPoint.x, y + upperLeftPoint.y);
+                hexes[x][y] = originalHexes[oldPos.x][oldPos.y].makePastSelf(oldPos, new Point(x, y));
             }
         }
         makeSeaBorders(hexes);

@@ -90,5 +90,7 @@ public abstract class MainStorySpawnLocation implements Serializable {
         return pastEntryPoint;
     }
 
+    public abstract Point getPastUpperLeftCornerPoint();
+
     public abstract AdvancedAppearance getArabellaAppearance();
 }

@@ -73,7 +73,7 @@ public class JungleHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
-        return new PastJungleHex(getRivers(), getState());
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
+        return new PastWoodsLocation(getRivers(), getState());
     }
 }

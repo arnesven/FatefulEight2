@@ -97,7 +97,13 @@ public class SeaHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
+        if ((oldPosition.x == 15 && oldPosition.y == 29) ||
+                (oldPosition.x == 15 && oldPosition.y == 31) ||
+                (oldPosition.x == 14 && oldPosition.y == 31)) {
+            return new PastSwampHex(getRivers(), getState());
+
+        }
         return new PastSeaHex(getState());
     }
 }

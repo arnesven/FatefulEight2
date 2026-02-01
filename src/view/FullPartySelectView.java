@@ -1,6 +1,7 @@
 package view;
 
 import model.headquarters.Headquarters;
+import model.items.special.MagicMirror;
 import model.journal.*;
 import model.mainstory.MainStoryStep;
 import model.Model;
@@ -378,6 +379,7 @@ public class FullPartySelectView extends SelectableListMenu {
                         result.addAll(ItemDeck.allPotions());
                         result.add(new HorseStartingItem(new Regal()));
                         result.add(new HorseStartingItem(new Pony()));
+                        result.add(new MagicMirror());
                         return result;
                     }
 

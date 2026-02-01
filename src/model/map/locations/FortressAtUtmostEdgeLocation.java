@@ -70,4 +70,9 @@ public class FortressAtUtmostEdgeLocation extends HexLocation {
     public boolean hasDailyActions() {
         return true;
     }
+
+    @Override
+    public boolean showNameOnMap() {
+        return false;
+    }
 }

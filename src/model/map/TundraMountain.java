@@ -13,10 +13,10 @@ public class TundraMountain extends TundraHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
-        if (position.y >= 6) {
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
+        if (newPosition.y >= 6) {
             return new PastMountainHex(getRivers(), getState());
         }
-        return super.makePastSelf(position);
+        return super.makePastSelf(oldPosition, newPosition);
     }
 }

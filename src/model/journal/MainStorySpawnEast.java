@@ -24,7 +24,7 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new Point(33, 11),
                 "Honorable Warriors",
                 WorldBuilder.EASTERN_PALACE_LOCATION,
-              new Point(7, 8));
+              new Point(7, 2));
     }
 
     @Override
@@ -45,7 +45,12 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
 
     @Override
     public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(new Point(30, 10));
+        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+    }
+
+    @Override
+    public Point getPastUpperLeftCornerPoint() {
+        return new Point(30, 10);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
               new Point(33, 23),
                 "Jungle Tribe",
                 WorldBuilder.JUNGLE_VILLAGE_LOCATION,
-                new Point(16, 4));
+                new Point(18, 1));
     }
 
     @Override
@@ -45,7 +45,12 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
 
     @Override
     public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(new Point(20, 18));
+        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+    }
+
+    @Override
+    public Point getPastUpperLeftCornerPoint() {
+        return new Point(14, 23);
     }
 
     @Override

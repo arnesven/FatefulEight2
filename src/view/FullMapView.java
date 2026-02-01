@@ -6,9 +6,9 @@ import model.map.World;
 import model.map.WorldBuilder;
 import model.map.WorldType;
 import model.map.objects.*;
+import model.map.objects.AllSpawnDataFilter;
 import util.Arithmetics;
 import view.help.SpecificTerrainHelpDialog;
-import view.sprites.Animation;
 import view.sprites.AnimationManager;
 import view.widget.FullMapTopText;
 import view.widget.TopText;
@@ -119,7 +119,8 @@ public class FullMapView extends GameView {
     }
 
     private void cycleView(Model model) {
-        viewType = Arithmetics.incrementWithWrap(viewType, maxViews);
+        int max = FatefulEight.inDebugMode() ? maxViews + 1 : maxViews;
+        viewType = Arithmetics.incrementWithWrap(viewType, max);
         if (viewType == 1) {
             //currentFilter = new WaterPathDistancesFilter();
             currentFilter = new ShowLocationNamesFilter();
@@ -132,6 +133,9 @@ public class FullMapView extends GameView {
             worldToDraw = model.getWorld();
         } else if (viewType == 4) {
             currentFilter = new DiscoveredTravelRoutesFilter();
+            worldToDraw = model.getWorld();
+        } else if (viewType == 5) { // Only in debug
+            currentFilter = new AllSpawnDataFilter();
             worldToDraw = model.getWorld();
         } else { // 0
             currentFilter = null;

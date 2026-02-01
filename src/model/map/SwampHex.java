@@ -97,7 +97,16 @@ public class SwampHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
-        return new PastSeaHex(getState());
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
+        if (oldPosition.getY() < 25) {
+            return new PastSeaHex(getState());
+        }
+        if (oldPosition.getY() > 33) {
+            if (getLocation() instanceof SwampMountainLocation) {
+                return new PastMountainHex(getRivers(), getState());
+            }
+            return new PastPlainsHex(getRivers(), getState(), null);
+        }
+        return new PastSwampHex(getRivers(), getState());
     }
 }

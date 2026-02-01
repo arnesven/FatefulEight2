@@ -164,7 +164,7 @@ public class CaveHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
         throw new IllegalStateException("No caves in the past!");
     }
 }

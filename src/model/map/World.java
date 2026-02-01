@@ -1,19 +1,15 @@
 package model.map;
 
-import control.FatefulEight;
 import model.Model;
 import model.map.objects.MapFilter;
 import model.map.objects.MapObject;
-import model.map.objects.WaterPathDistancesFilter;
 import model.states.dailyaction.town.FlagPoleNode;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.DrawingArea;
-import view.MyColors;
 import view.ScreenHandler;
-import view.sprites.CharSprite;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 import view.subviews.SubView;

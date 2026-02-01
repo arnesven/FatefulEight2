@@ -83,7 +83,7 @@ public abstract class PastLandHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
         throw new IllegalStateException("Should not make past on past!");
     }
 }

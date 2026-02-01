@@ -91,10 +91,10 @@ public class TundraHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
-        if (position.y >= 6) {
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
+        if (newPosition.y >= 6) {
             return new PastPlainsHex(getRivers(), getState(), makePastLocation());
-        } else if ((position.x * 199 + position.y * 53) % 4 == 0) {
+        } else if ((newPosition.x * 199 + newPosition.y * 53) % 4 == 0) {
             return new PastTundraWoodsHex(getRivers(), getState());
         }
         return new PastTundraHex(getRivers(), getState(), makePastLocation());

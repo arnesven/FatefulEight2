@@ -98,7 +98,7 @@ public class HillsHex extends WorldHex {
     }
 
     @Override
-    public WorldHex makePastSelf(Point position) {
+    public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
         return new PastHillsHex(getRivers(), getState());
     }
 }
