@@ -153,6 +153,8 @@ public class JournalView extends TwoPaneSelectableListMenu {
             if (je.getPosition(model) != null) {
                 if (!model.isInOriginalWorld()) {
                     textColor = MyColors.GRAY;
+                } else {
+                    textColor = MyColors.WHITE;
                 }
                 BorderFrame.drawString(model.getScreenHandler(), "Press F3 to see in map.",
                         x+1, y + parts.length + 5, textColor, MyColors.BLUE);

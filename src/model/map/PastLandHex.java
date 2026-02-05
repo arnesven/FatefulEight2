@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
+import model.states.events.NoEventState;
 import model.states.events.QuadGoonsEvent;
 import view.MyColors;
 import view.sprites.PastLandHexSprite;
@@ -45,7 +46,7 @@ public abstract class PastLandHex extends WorldHex {
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new QuadGoonsEvent(model); /*
+        //return new QuadGoonsEvent(model);
         DailyEventState event;
         for (int i = 0; i < 10; ++i) {
             event = template.generateEvent(model);
@@ -59,7 +60,7 @@ public abstract class PastLandHex extends WorldHex {
                 return event;
             }
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     @Override

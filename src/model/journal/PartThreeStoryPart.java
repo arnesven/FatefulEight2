@@ -122,7 +122,10 @@ public class PartThreeStoryPart extends StoryPart {
             if (internalStep == INITIAL_STEP) {
                 return model.getMainStory().getCastlePosition(model);
             }
-            return model.getWorld().getPositionForLocation(model.getWorld().getTownByName(libraryTown));
+            if (model.isInOriginalWorld()) {
+                return model.getWorld().getPositionForLocation(model.getWorld().getTownByName(libraryTown));
+            }
+            return null;
         }
     }
 

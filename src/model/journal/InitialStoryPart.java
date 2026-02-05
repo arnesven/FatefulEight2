@@ -144,7 +144,10 @@ public class InitialStoryPart extends StoryPart {
 
         @Override
         public Point getPosition(Model model) {
-            return model.getWorld().getPositionForLocation(model.getWorld().getTownByName(townName));
+            if (model.isInOriginalWorld()) {
+                return model.getWorld().getPositionForLocation(model.getWorld().getTownByName(townName));
+            }
+            return null;
         }
     }
 }

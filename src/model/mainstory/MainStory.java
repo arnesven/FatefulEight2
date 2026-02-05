@@ -277,7 +277,10 @@ public class MainStory implements Serializable {
     }
 
     public Point getCastlePosition(Model model) {
-        return model.getWorld().getPositionForLocation(model.getWorld().getCastleByName(getCastleName()));
+        if (model.isInOriginalWorld()) {
+            return model.getWorld().getPositionForLocation(model.getWorld().getCastleByName(getCastleName()));
+        }
+        return null;
     }
 
     public boolean isCompleted(Model model) {
