@@ -5,10 +5,15 @@ import model.characters.GameCharacter;
 import model.characters.preset.KruskTalandro;
 import model.classes.Classes;
 import model.items.special.CommunicatorDevice;
+import model.items.special.MagicMirror;
+import model.journal.PartSevenStoryPart;
 import model.journal.PartSixStoryPart;
 import model.journal.ZeppelinStoryPart;
+import model.quests.MindMachineQuest;
 import model.races.Race;
 import util.MyStrings;
+
+import java.awt.*;
 
 public enum MainStoryStep {
     NOT_STARTED((model, mainStory) -> {
@@ -105,8 +110,17 @@ public enum MainStoryStep {
     THREE_SUPPORT_GOT((model, mainStory) -> {
         PartSixStoryPart partSix = (PartSixStoryPart) mainStory.getStoryParts().get(7);
         partSix.setSupportTasksCompleted();
+    }),
+    AT_RENDEZVOUS((model, mainStory) -> {
+        PartSixStoryPart partSix = (PartSixStoryPart) mainStory.getStoryParts().get(7);
+        partSix.setCompleted(true);
+        partSix.transitionStep(model);
+    }),
+    INTO_THE_PAST((model, mainStory) -> {
+        PartSevenStoryPart partSeven = (PartSevenStoryPart) mainStory.getStoryParts().get(8);
+        partSeven.progress();
+        new MagicMirror().addYourself(model.getParty().getInventory());
     });
-
 
     private final MainStoryProgressor progressor;
 

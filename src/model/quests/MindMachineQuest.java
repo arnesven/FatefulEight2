@@ -82,7 +82,7 @@ public class MindMachineQuest extends MainQuest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("The sewers", List.of(
-                    new KokodrillionCombatSubScene(6, 7),
+                        new KokodrillionCombatSubScene(6, 7),
                     new CollectiveSkillCheckSubScene(5, 8, Skill.Endurance, 7, "Yuck what a stench! I guess " +
                             "that's what the sewage from the whole castle smells like. Or is it these beasts?"),
                     new SoloSkillCheckSubScene(5, 7, Skill.Logic, 14, "These sewers are " +
@@ -176,6 +176,7 @@ public class MindMachineQuest extends MainQuest {
 
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        setStoryPart(model.getMainStory().getStoryParts().getLast()); // Otherwise this quest points to part six story part.
         GameState toIgnore = super.endOfQuest(model, state, questWasSuccess);
         if (questWasSuccess) {
             teleportToOtherWorld(model, state, model.getMainStory().getPastEntryPosition());
@@ -220,7 +221,7 @@ public class MindMachineQuest extends MainQuest {
         return backgroundSprites;
     }
 
-    private class MindMachineStartingPoint extends QuestStartPointWithoutDecision{
+    private static class MindMachineStartingPoint extends QuestStartPointWithoutDecision{
         public MindMachineStartingPoint(QuestEdge questEdge) {
             super(questEdge, "");
             setColumn(7);
@@ -235,7 +236,7 @@ public class MindMachineQuest extends MainQuest {
         }
     }
 
-    private class KokodrillionCombatSubScene extends CombatSubScene  {
+    private static class KokodrillionCombatSubScene extends CombatSubScene  {
         public KokodrillionCombatSubScene(int col, int row) {
             super(col, row, List.of(new KokodrillionEnemy('A')));
         }
@@ -247,7 +248,9 @@ public class MindMachineQuest extends MainQuest {
 
         @Override
         public List<Enemy> getEnemies() {
-            return List.of(new CrowEnemy('A'));
+            return List.of(new CrocodileEnemy('A'), new CrocodileEnemy('A'),
+                    new KokodrillionEnemy('C'), new KokodrillionEnemy('C'), new KokodrillionEnemy('C'), new KokodrillionEnemy('C'),
+                    new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A'));
         }
     }
 

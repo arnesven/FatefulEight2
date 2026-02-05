@@ -41,6 +41,10 @@ public class PartSixStoryPart extends StoryPart {
         setAssaultPoint(model);
     }
 
+    public void setCompleted(boolean b) {
+        this.completed = b;
+    }
+
     private void setAssaultPoint(Model model) {
         Map<Integer, Integer> expandDirMap = Map.of(
                 WorldBuilder.EXPAND_EAST, Direction.SOUTH,
@@ -117,7 +121,8 @@ public class PartSixStoryPart extends StoryPart {
         if (witchPoint.x == x && witchPoint.y == y && internalStep == 2) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         }
-        if (allSupportTasksDone() && assaultPoint.x == x && assaultPoint.y == y) {
+        MainQuest mmq = MainStory.getQuest(MindMachineQuest.QUEST_NAME);
+        if (allSupportTasksDone() && assaultPoint.x == x && assaultPoint.y == y && !mmq.isCompleted(model)) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         } else if (internalStep > 2) {
             for (DestinationTask dt : getAllSupportTasks()) {
@@ -536,7 +541,7 @@ public class PartSixStoryPart extends StoryPart {
                 leaderSay(iOrWe() + " keep it in mind. Thanks.");
                 portraitSay("I wish you well.");
                 transitionStep(model);
-                completed = true;
+                setCompleted(true);
             } else {
                 leaderSay("Not quite yet, there are still some things that need to be prepared.");
                 portraitSay("Okay. Return here when you are ready. But don't take too long. " +
