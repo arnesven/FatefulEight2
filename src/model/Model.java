@@ -643,4 +643,8 @@ public class Model {
     public GameAchievements getAchievements() {
         return gameData.achievements;
     }
+
+    public boolean isInPastWorld() {
+        return gameData.currentWorld == WorldType.thePast;
+    }
 }

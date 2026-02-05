@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.GainSupportOfNeighborKingdomTask;
 import model.mainstory.GainSupportOfRemotePeopleTask;
+import model.mainstory.MainStoryPastData;
 import model.map.World;
 import view.MyColors;
 
@@ -22,10 +23,10 @@ public abstract class MainStorySpawnLocation implements Serializable {
     private final String libraryTown;
     private MyColors[] code;
     private final Point xelbiPosition;
-    private final Point pastEntryPoint;
+    private final MainStoryPastData pastData;
 
     public MainStorySpawnLocation(String town, String castle, Point witchLocation, String libraryTown, int expandedMapState, Point camp,
-                                  Point xelbiPosition, String remotePeopleName, Point remotePeoplePosition, Point pastEntryPoint) {
+                                  Point xelbiPosition, String remotePeopleName, Point remotePeoplePosition, MainStoryPastData pastData) {
         this.town = town;
         this.castle = castle;
         this.witch = witchLocation;
@@ -35,7 +36,7 @@ public abstract class MainStorySpawnLocation implements Serializable {
         this.xelbiPosition = xelbiPosition;
         this.remotePeopleName = remotePeopleName;
         this.remotePeoplePosition = remotePeoplePosition;
-        this.pastEntryPoint = pastEntryPoint;
+        this.pastData = pastData;
     }
 
     public abstract GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model);
@@ -87,10 +88,24 @@ public abstract class MainStorySpawnLocation implements Serializable {
     public abstract World buildPastWorld();
 
     public Point getPastEntryPoint() {
-        return pastEntryPoint;
+        return pastData.entryPoint;
     }
 
-    public abstract Point getPastUpperLeftCornerPoint();
+    public Point getPastUpperLeftCornerPoint() {
+        return pastData.upperLeftCorner;
+    }
 
     public abstract AdvancedAppearance getArabellaAppearance();
+
+    public String getPastCapitalCity() {
+        return pastData.capitalCity;
+    }
+
+    public String getPastCityA() {
+        return pastData.cityA;
+    }
+
+    public String getPastCityB() {
+        return pastData.cityB;
+    }
 }

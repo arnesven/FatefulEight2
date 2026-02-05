@@ -14,6 +14,8 @@ import model.items.weapons.Pistol;
 import model.mainstory.*;
 import model.mainstory.pirates.GainSupportOfPiratesTask;
 import model.mainstory.pirates.PotentialMutineer;
+import model.map.RuinsLocation;
+import model.map.TombLocation;
 import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;
@@ -55,7 +57,7 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
               new Point(19, 27),
               "Pirates",
                WorldBuilder.PIRATE_HAVEN_LOCATION,
-               new Point(15, 12));
+               new MainStoryPastData(new Point(15, 12), new Point(0, 14), TombLocation.CATRIONA_TOMB, RuinsLocation.ZAND_RUINS, TombLocation.MIRON_TOMB));
         this.potentialMutineers = makePotentialMutineers();
         this.realMutineer = MyRandom.sample(potentialMutineers);
     }
@@ -79,11 +81,6 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
-    }
-
-    @Override
-    public Point getPastUpperLeftCornerPoint() {
-        return new Point(0, 14);
     }
 
     @Override

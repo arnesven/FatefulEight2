@@ -157,11 +157,11 @@ public class WorldBuilder {
         addNorthernContents(contents);
         addWesternContents(contents);
         addEvilTower(contents, getFortressPosition(EXPAND_NORTH), EXPAND_NORTH);
-        addTomb(contents, 15, 7, "Haarfagre", 0, 0);
-        addTomb(contents, 35, 8, "Vorhundren", 0, 0);
+        addTomb(contents, 15, 7, TombLocation.HAARFAGRE_TOMB, 0, 0);
+        addTomb(contents, 35, 8, TombLocation.VORHUNDREN_TOMB, 0, 0);
 
         addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);
-        addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
+        addRuins(contents, 28, 10, RuinsLocation.GROUND_RUINS, SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,30, 10, SOUTH_WEST | SOUTH_EAST | NORTH, 0);
 
         addTemple(contents, TEMPLE_CRYSTAL.x, TEMPLE_CRYSTAL.y, "Crystal");
@@ -176,11 +176,11 @@ public class WorldBuilder {
         addTown(contents, 32, 12, new UrnTownTown(), NORTH | SOUTH, 0);
         addRoadsAndRivers(contents,36, 12, SOUTH_WEST | NORTH, 0);
         addRoadsAndRivers(contents, 42, 11, 0, SOUTH);
-        addTomb(contents, 42, 12, "Kzinric", 0, SOUTH | SOUTH_EAST | NORTH_EAST | NORTH);
+        addTomb(contents, 42, 12, TombLocation.KZINRIC_TOMB, 0, SOUTH | SOUTH_EAST | NORTH_EAST | NORTH);
         addRoadsAndRivers(contents, 43, 12, 0, SOUTH_WEST);
 
         addCastle(contents, 15, 13, new BogdownCastle(), 0, 0);
-        addRuins(contents, 19, 13, "Urh", 0, 0);
+        addRuins(contents, 19, 13, RuinsLocation.URH_RUINS, 0, 0);
         addInn(contents, WATERFRONT_INN_POISITION.x, WATERFRONT_INN_POISITION.y, "Waterfront Inn", SOUTH_EAST, 0);
         addRoadsAndRivers(contents,32, 13, NORTH | NORTH_EAST, 0);
         addRoadsAndRivers(contents,33, 13, SOUTH_WEST | SOUTH_EAST, 0);
@@ -190,7 +190,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,27, 14, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,28, 14, NORTH_WEST | SOUTH, 0);
 
-        addTomb(contents, 3, 15, "King Miron", 0, 0);
+        addTomb(contents, 3, 15, TombLocation.MIRON_TOMB, 0, 0);
         addTown(contents, TOWN_ROUKON.x, TOWN_ROUKON.y, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
         addMonastery(contents);
         addRoadsAndRivers(contents,28, 15, SOUTH | NORTH, 0);
@@ -199,7 +199,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 16, 16, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 28, 16, SOUTH | NORTH, SOUTH_WEST | SOUTH | NORTH_WEST);
         addTown(contents, 34, 16, new AshtonshireTown(), 0, 0);
-        addTomb(contents, 44, 16, "Shakma", 0, 0);
+        addTomb(contents, 44, 16, TombLocation.SHAKMA_TOMB, 0, 0);
 
         addRoadsAndRivers(contents, 14, 17, 0, SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 15, 17, 0, SOUTH);
@@ -238,7 +238,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 29, 19, 0, NORTH);
         addRoadsAndRivers(contents, 31, 19, 0, NORTH | SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 32, 19, 0, SOUTH_WEST | NORTH_WEST);
-        addRuins(contents, 38, 19, "Ronk", 0, 0);
+        addRuins(contents, 38, 19, RuinsLocation.RONK_RUINS, 0, 0);
 
         addRoadsAndRivers(contents, 17, 20, 0, NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 18, 20, 0, NORTH_WEST | SOUTH_WEST | SOUTH);
@@ -273,7 +273,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 22, SOUTH_EAST | NORTH_WEST, 0);
         addRoadsAndRivers(contents, 38, 22, SOUTH | NORTH_WEST, 0);
 
-        addTomb(contents, 4, 23, "Catriona", 0, 0);
+        addTomb(contents, 4, 23, TombLocation.CATRIONA_TOMB, 0, 0);
         addRoadsAndRivers(contents, 17, 23, 0, NORTH_WEST);
         addRoadsAndRivers(contents, 18, 23, NORTH | SOUTH_WEST, 0);
         addRoadsAndRivers(contents, 21, 23, 0, NORTH | NORTH_EAST);
@@ -284,7 +284,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 30, 23, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 38, 23, SOUTH_WEST | NORTH | NORTH_EAST, 0);
 
-        addRuins(contents, 14, 24, "Zand", 0, 0);
+        addRuins(contents, 14, 24, RuinsLocation.ZAND_RUINS, 0, 0);
         addRoadsAndRivers(contents, 26, 24, 0, SOUTH);
         addRoadsAndRivers(contents, 30, 24, 0, SOUTH_WEST);
         addRoadsAndRivers(contents, 31, 24, NORTH_WEST | SOUTH_EAST, 0);
@@ -316,8 +316,8 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
         addEvilTower(contents, getFortressPosition(EXPAND_SOUTH), EXPAND_SOUTH);
 
-        addTomb(contents, 27, 36, "Uzoctl", 0, 0);
-        addTomb(contents, 14, 33, "Xalardium", SOUTH_EAST, 0);
+        addTomb(contents, 27, 36, TombLocation.UZOCTL_TOMB, 0, 0);
+        addTomb(contents, 14, 33, TombLocation.XALARDIUM_TOMB, SOUTH_EAST, 0);
 
         addEasternContents(contents);
         addSouthernContents(contents);

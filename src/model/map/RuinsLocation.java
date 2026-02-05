@@ -23,6 +23,10 @@ import java.util.List;
 
 public class RuinsLocation extends HexLocation {
 
+    public static final String URH_RUINS = "Urh";
+    public static final String RONK_RUINS = "Ronk";
+    public static final String ZAND_RUINS = "Zand";
+    public static final String GROUND_RUINS = "Grond";
     private SubView subView;
 
     public RuinsLocation(String ruinsName) {

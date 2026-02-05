@@ -23,6 +23,15 @@ import java.util.List;
 
 public class TombLocation extends HexLocation {
 
+    public static final String HAARFAGRE_TOMB = "Haarfagre";
+    public static final String VORHUNDREN_TOMB = "Vorhundren";
+    public static final String KZINRIC_TOMB = "Kzinric";
+    public static final String MIRON_TOMB = "Miron";
+    public static final String SHAKMA_TOMB = "Shakma";
+    public static final String CATRIONA_TOMB = "Catriona";
+    public static final String UZOCTL_TOMB = "Uzoctl";
+    public static final String XALARDIUM_TOMB = "Xalardium";
+
     private final SubView subView;
 
     public TombLocation(String tombName) {

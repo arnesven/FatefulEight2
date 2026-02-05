@@ -200,7 +200,7 @@ public class WitchStoryPart extends StoryPart {
             } else if (internalStep == QUEST_DONE) {
                 leaderSay("We've done your little task, at some great personal expense. Now please tell us about this pearl");
                 portraitSay("Then sit down, and I'll tell you the story.");
-                portraitSay("A long time ago there was an evil king who ruled over all this land. He was hated by all his subjects, " +
+                portraitSay("A long time ago there was an evil king who ruled the kingdom of Recca. He was hated by all his subjects, " +
                         "except for his vassals which were loyal to him");
                 portraitSay("The people were in despair. How to overthrow the despot? One group of powerful sorcerers banded together. " +
                         "In service of the people and the greater good, they vowed to make changes.");

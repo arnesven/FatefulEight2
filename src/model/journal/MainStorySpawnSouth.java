@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
+import model.map.RuinsLocation;
+import model.map.TombLocation;
 import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;
@@ -24,7 +26,7 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
               new Point(33, 23),
                 "Jungle Tribe",
                 WorldBuilder.JUNGLE_VILLAGE_LOCATION,
-                new Point(18, 1));
+                new MainStoryPastData(new Point(18, 1), new Point(14, 23), RuinsLocation.ZAND_RUINS, TombLocation.UZOCTL_TOMB, TombLocation.XALARDIUM_TOMB));
     }
 
     @Override
@@ -46,11 +48,6 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
-    }
-
-    @Override
-    public Point getPastUpperLeftCornerPoint() {
-        return new Point(14, 23);
     }
 
     @Override

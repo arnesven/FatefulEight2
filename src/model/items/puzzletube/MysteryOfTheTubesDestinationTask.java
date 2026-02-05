@@ -25,6 +25,9 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
     }
 
     public boolean isInKingdom(Model model) {
+        if (!model.isInOriginalWorld()) {
+            return false;
+        }
         CastleLocation kingdomForToymaker = model.getWorld().getKingdomForPosition(getPosition());
         return kingdomForToymaker == model.getWorld().getKingdomForPosition(model.getParty().getPosition());
     }

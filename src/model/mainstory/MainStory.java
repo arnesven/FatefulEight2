@@ -338,4 +338,17 @@ public class MainStory implements Serializable {
     public AdvancedAppearance getArabellaAppearance() {
         return spawnData.getArabellaAppearance();
     }
+
+    public String getPastCapitalCity() {
+        return spawnData.getPastCapitalCity();
+    }
+
+    public String getPastCityA() {
+        return spawnData.getPastCityA();
+    }
+
+    public String getPastCapityB() {
+        return spawnData.getPastCityB();
+    }
+
 }

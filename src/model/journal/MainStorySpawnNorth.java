@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.vikings.GainSupportOfVikingsTask;
+import model.map.RuinsLocation;
+import model.map.TombLocation;
 import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;
@@ -24,7 +26,7 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
               new Point(18, 14),
                 "Vikings",
                 WorldBuilder.VIKING_VILLAGE_LOCATION,
-                new Point(1, 9));
+                new MainStoryPastData(new Point(1, 9), new Point(14, 4), TombLocation.HAARFAGRE_TOMB, RuinsLocation.URH_RUINS, RuinsLocation.GROUND_RUINS)); // TODO
     }
 
     @Override
@@ -46,11 +48,6 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
-    }
-
-    @Override
-    public Point getPastUpperLeftCornerPoint() {
-        return new Point(14, 4);
     }
 
     @Override

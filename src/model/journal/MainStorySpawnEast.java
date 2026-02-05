@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
+import model.map.RuinsLocation;
+import model.map.TombLocation;
 import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;
@@ -24,7 +26,7 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new Point(33, 11),
                 "Honorable Warriors",
                 WorldBuilder.EASTERN_PALACE_LOCATION,
-              new Point(7, 2));
+              new MainStoryPastData(new Point(7, 2), new Point(30, 10), TombLocation.SHAKMA_TOMB, RuinsLocation.RONK_RUINS, TombLocation.KZINRIC_TOMB));
     }
 
     @Override
@@ -46,11 +48,6 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
     @Override
     public World buildPastWorld() {
         return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
-    }
-
-    @Override
-    public Point getPastUpperLeftCornerPoint() {
-        return new Point(30, 10);
     }
 
     @Override

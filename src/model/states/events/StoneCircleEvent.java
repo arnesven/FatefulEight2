@@ -5,13 +5,31 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.combat.conditions.VampirismCondition;
+import model.enemies.Enemy;
+import model.enemies.FormerPartyMemberEnemy;
+import model.items.Equipment;
+import model.items.accessories.Circlet;
+import model.items.accessories.LeatherCap;
+import model.items.clothing.JustClothes;
+import model.items.clothing.LeatherTunic;
+import model.items.clothing.MagesRobes;
+import model.items.weapons.Mace;
+import model.items.weapons.OldStaff;
+import model.items.weapons.ShortSword;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyLists;
+import util.MyRandom;
 import view.subviews.PortraitSubView;
 
-public class StoneCircleEvent extends DailyEventState {
+import java.util.ArrayList;
+import java.util.List;
+
+public class StoneCircleEvent extends GeneralInteractionEvent {
+    private AdvancedAppearance appearance;
+
     public StoneCircleEvent(Model model) {
-        super(model);
+        super(model, "Talk to", 20, true);
     }
 
     @Override
@@ -20,19 +38,58 @@ public class StoneCircleEvent extends DailyEventState {
     }
 
     @Override
-    protected void doEvent(Model model) {
-        AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.DRU);
-        showExplicitPortrait(model, app, "Druid");
+    protected boolean doIntroAndContinueWithEvent(Model model) {
+        this.appearance = PortraitSubView.makeRandomPortrait(Classes.DRU);
+        showExplicitPortrait(model, appearance, "Druid");
         showEventCard("In a wide field, the party encounters a ring of standing " +
                 "stones. In the middle lay one large slab which seems to be " +
                 "intended as an altar. A druid is there with a gathering of " +
                 "a few followers and is just about to perform a nature " +
-                "ritual. You wait until the ceremony has concluded.");
+                "ritual");
+        return true;
+    }
+
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        showEventCard("You wait until the ceremony has concluded.");
         if (vampireInParty(model)) {
-            cureVampirismRitual(model, app);
-        } else {
-            offerDruidismLessons(model);
+            cureVampirismRitual(model, appearance);
+            return false;
         }
+        offerDruidismLessons(model);
+        return true;
+    }
+
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a druid. I perform rituals of nature and tend to animals.";
+    }
+
+    @Override
+    protected GameCharacter getVictimCharacter(Model model) {
+        return new GameCharacter("Druid", "", appearance.getRace(), Classes.DRU, appearance, Classes.NO_OTHER_CLASSES,
+                new Equipment(new OldStaff(), new MagesRobes(), new Circlet()));
+    }
+
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
+        List<Enemy> enms = new ArrayList<>();
+        for (int i = 8; i > 0; --i) {
+            Race race = Race.randomRace();
+            if (MyRandom.flipCoin()) {
+                enms.add(new FormerPartyMemberEnemy(new GameCharacter("Druid", "", race, Classes.DRU,
+                        PortraitSubView.makeRandomPortrait(Classes.DRU, race), Classes.NO_OTHER_CLASSES, new Equipment(new Mace(), new MagesRobes(), null))));
+            } else {
+                enms.add(new FormerPartyMemberEnemy(new GameCharacter("Follower", "", race, Classes.None,
+                        PortraitSubView.makeRandomPortrait(Classes.None, race), Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new LeatherTunic(), new LeatherCap()))));
+            }
+        }
+        return enms;
+    }
+
+    @Override
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
     }
 
     @Override

@@ -19,6 +19,7 @@ import model.items.puzzletube.MysteryOfTheTubesDestinationTask;
 import model.items.spells.Spell;
 import model.items.spells.TelekinesisSpell;
 import model.journal.JournalEntry;
+import model.journal.PartSevenStoryPart;
 import model.map.*;
 import model.map.wars.KingdomWar;
 import model.races.Race;
@@ -375,7 +376,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         for (BountyDestinationTask task : tasks) {
             MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(
                     model, this, Skill.SeekInfo, BountyDestinationTask.SEEK_INFO_DIFFICULTY);
-            if (!pair.first) {
+            if (!model.isInOriginalWorld() && !pair.first) {
                 partyMemberSay(pair.second, "Uh... do you know " + task.getBountyName() + "?");
                 portraitSay("I'm afraid I don't.");
                 continue;
@@ -416,6 +417,11 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         println(model.getParty().getLeader().getFirstName() + " brings out a Dwarven Puzzle " +
                 "Tubes and shows it to " + victimChar.getName() + ".");
         leaderSay("Ever seen anything like this?");
+        if (!model.isInOriginalWorld()) {
+            portraitSay("Can't say I have. Looks expensive.");
+            leaderSay("Never mind then.");
+            return;
+        }
         boolean hasKnowledge = victimChar.getCharClass().id() == Classes.NOB.id() ||
                 victimChar.getCharClass().id() == Classes.ART.id() ||
                 victimChar.getCharClass().id() == Classes.MAG.id();
@@ -535,6 +541,13 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
                         "What kingdom is this?", "What can you tell me about these lands?")));
                 if (kingdomCastle == null) {
+                    if (model.isInPastWorld()) {
+                        if (model.getMainStory().getStoryParts().size() >= 9) {
+                            PartSevenStoryPart partSeven = (PartSevenStoryPart) model.getMainStory().getStoryParts().get(8);
+                            partSeven.askAboutRegion(model, this, getPortraitSubView());
+                            return;
+                        }
+                    }
                     portraitSay(getRegionReply());
                 } else {
                     String kingdom = CastleLocation.placeNameToKingdom(kingdomCastle.getPlaceName());
@@ -591,6 +604,12 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     private void askAboutNews(Model model, CastleLocation kingdomCastle) {
         leaderSay("Got any news to share?");
         if (kingdomCastle == null) {
+            if (model.isInPastWorld()) {
+                portraitSay(MyRandom.sample(List.of("The Quadrificus' Goons are everywhere. Harassing everybody. Thing's have never been this bad.",
+                        "Things are bad since the Quadrificus took power.", "People are starving. The land is suffering. Things are bad.",
+                        "Some people are resisting the Quadrificus. Some brave people!")));
+                return;
+            }
             portraitSay(getOutsideOfKingdomNews());
             return;
         }

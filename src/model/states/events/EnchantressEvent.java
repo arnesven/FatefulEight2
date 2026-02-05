@@ -47,6 +47,10 @@ public class EnchantressEvent extends DailyEventState {
         super(model);
     }
 
+    @Override
+    public boolean exclusiveToOriginalWorld() {
+        return true;
+    }
 
     public static Achievement.Data getAchievementData() {
         return new Achievement.Data(EnchantressEvent.class.getCanonicalName(), "Magical Control Freak",

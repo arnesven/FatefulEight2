@@ -140,4 +140,26 @@ public class Direction {
     public static Point getDxDyForDirection(Point position, int direction) {
         return getDxDyDirections(position).get(dirList.indexOf(direction));
     }
+
+    public static String getLongNameForPath(Point currentPosition, List<Point> path) {
+        if (path.size() > 2) {
+            Point last = path.getLast();
+            Point first = path.getFirst();
+            if (Math.abs(last.y - first.y) <= path.size() / 6) {
+                if (last.x < first.x) {
+                    return "west";
+                }
+                return "east";
+            }
+
+            if (Math.abs(last.x - first.x) <= path.size() / 6) {
+                if (last.y < first.y) {
+                    return "north";
+                }
+                return "south";
+            }
+        }
+        Point dxDy = new Point(path.get(1).x - path.get(0).x, path.get(1).y - path.get(0).y);
+        return getLongNameForDirection(getDirectionForDxDy(currentPosition, dxDy));
+    }
 }
