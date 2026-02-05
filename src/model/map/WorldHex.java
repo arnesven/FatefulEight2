@@ -526,4 +526,8 @@ public abstract class WorldHex {
                 Direction.SOUTH, Direction.SOUTH_WEST, Direction.NORTH_WEST);
         return MyLists.intAccumulate(direction, dir -> getRiversInDirection(dir) ? 1 : 0);
     }
+
+    public void setLocation(HexLocation loc) {
+        this.hexLocation = loc;
+    }
 }

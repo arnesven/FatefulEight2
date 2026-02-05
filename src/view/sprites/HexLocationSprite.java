@@ -30,4 +30,8 @@ public class HexLocationSprite extends Sprite32x16 {
     public static HexLocationSprite make(String name, int num, MyColors color1, MyColors color2, MyColors color3) {
         return make(name, num, color1, color2, color3, color3);
     }
+
+    public void setFlip(boolean b) {
+        setFlipHorizontal(b);
+    }
 }

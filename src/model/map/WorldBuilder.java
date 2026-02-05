@@ -1,6 +1,7 @@
 package model.map;
 
 import model.map.locations.*;
+import util.MyPair;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -81,8 +82,8 @@ public class WorldBuilder {
             "sspfhhpsssppMhhhhppsphfpbbpwwfwfMfhfffpwowXbbbbbMxxXX",
             "ssspppssppddmDdDmDdmmppswwwppppwMMMMhppppwwbbbbooMMxM",
             "sssssssdDdDmdDddddddmMpwwMwwwspppMMhfpffwwoobboooooMb",
-            "ssphsddddDmdddDdddDmMpwwdwpbbbffphMpffpfwooooooooooww",
-            "ssppppddmDDDddDDpdpDddsdsddddddffhhpwfffoooooooooowss",
+            "ssphsddddDmdddDdddDmMpwwdwpbbbffphMpffpfwooooooooowww",
+            "ssppppddmDDDddDDpdpDddsdsddddddffhhpwfffoooooooooopss",
             "ssppppddDDDDphphfsspsssssssssssdfMMMwwwooooooooowwsss",
             "sssssssssssssssdssssssssssssssssMMwwwwwwsssssssssssss",
             "sssssssssssssssssssssssssssssssMMwwwwwwwsssssssssssss",
@@ -342,6 +343,12 @@ public class WorldBuilder {
 
     private static void addWesternContents(Map<Point, HexContents> contents) {
         contents.put(PIRATE_HAVEN_LOCATION, new HexContents(new PirateHavenLocation(), NONE, NONE));
+        contents.put(new Point(9, 15), new HexContents(new FishingVillageLocation(SOUTH), 0, 0));
+        contents.put(new Point(2, 17), new HexContents(new FishingVillageLocation(NORTH), NORTH_EAST, 0));
+        contents.put(new Point(2, 22), new HexContents(new FishingVillageLocation(SOUTH), NORTH, 0));
+        addRoadsAndRivers(contents, 2, 21, NORTH | SOUTH, 0);
+        addRoadsAndRivers(contents, 2, 20, NORTH | SOUTH, 0);
+        contents.put(new Point(7, 24), new HexContents(new FishingVillageLocation(NORTH_WEST), NORTH, 0));
     }
 
     private static void addSouthernContents(Map<Point, HexContents> contents) {
@@ -349,9 +356,10 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 15, 30, 0, SOUTH_WEST);
 
         addRoadsAndRivers(contents, 28, 31, 0, NORTH_EAST);
-        addRoadsAndRivers(contents, 29, 31, 0, SOUTH | SOUTH_WEST);
+        contents.put(new Point(29, 31), new HexContents(new FishingVillageLocation(NORTH_WEST), SOUTH, SOUTH | SOUTH_WEST));
         addRoadsAndRivers(contents, 30, 31, 0, SOUTH_WEST);
 
+        contents.put(new Point(21, 32), new HexContents(new FishingVillageLocation(NORTH_EAST), SOUTH_EAST, 0));
         addRoadsAndRivers(contents, 29, 32, SOUTH | NORTH, SOUTH_EAST | NORTH_EAST | NORTH);
         addRoadsAndRivers(contents, 30, 32, 0, SOUTH | SOUTH_WEST | NORTH_WEST);
         contents.put(SUDOQ_PYRAMID_LOCATION, new HexContents(new SudoqPyramidLocation(), 0, 0));
@@ -398,6 +406,7 @@ public class WorldBuilder {
 
     private static void addNorthernContents(Map<Point, HexContents> contents) {
 
+        contents.put(new Point(22, 8), new HexContents(new FishingVillageLocation(SOUTH_EAST), SOUTH_WEST, 0));
         addInn(contents, 30, 1, "Frigid Slab Inn", SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 31, 2, NORTH_WEST | SOUTH, 0);
 
@@ -431,6 +440,9 @@ public class WorldBuilder {
     }
 
     private static void addEasternContents(Map<Point, HexContents> contents) {
+        contents.put(new Point(40, 10), new HexContents(new FishingVillageLocation(SOUTH_EAST), SOUTH_WEST, 0));
+        addRoadsAndRivers(contents, 39, 11, SOUTH_WEST | NORTH_EAST, 0);
+
         contents.put(EASTERN_SMITH_LOCATION,
                 new HexContents(new HillsWithHutLocation(), SOUTH_WEST, SOUTH | SOUTH_EAST));
         addRoadsAndRivers(contents, 47, 12, 0, SOUTH);
@@ -513,6 +525,8 @@ public class WorldBuilder {
 
         addRoadsAndRivers(contents, 51, 25, 0, NORTH | NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 52, 25, 0, NORTH_WEST);
+
+        contents.put(new Point(50, 26), new HexContents(new FishingVillageLocation(SOUTH_EAST), 0, 0));
     }
 
     private static void addRoadsAndRivers(Map<Point, HexContents> contents, int x, int y, int roads, int rivers) {
@@ -585,8 +599,7 @@ public class WorldBuilder {
             }
         }
         makeSeaBorders(hexes);
-        World result = new World(hexes, bounds, WorldType.thePast);
-        return result;
+        return new World(hexes, bounds, WorldType.thePast);
     }
 
     public static int getStateForXY(int x, int y) {

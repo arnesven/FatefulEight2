@@ -49,6 +49,11 @@ public class HillsWithHutLocation extends HillsLocation {
     }
 
     @Override
+    public boolean showNameOnMap() {
+        return false;
+    }
+
+    @Override
     public DailyEventState generateEvent(Model model) {
         if (model.getMainStory().getStoryParts().getLast() instanceof PartSixStoryPart) {
             return new EasternSmithEvent(model);

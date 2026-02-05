@@ -4,11 +4,10 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
-import model.map.RuinsLocation;
-import model.map.TombLocation;
-import model.map.World;
-import model.map.WorldBuilder;
+import model.map.*;
 import model.map.locations.*;
+import util.MyPair;
+import view.MyColors;
 
 import java.awt.Point;
 import java.util.List;
@@ -47,7 +46,28 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
 
     @Override
     public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+        World world = WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+        addRoads(world);
+        addFishingVillages(world);
+        return world;
+    }
+
+    private void addFishingVillages(World world) {
+        world.getHex(new Point(15, 3)).setLocation(new PastFishingVillage(Direction.SOUTH));
+    }
+
+    private void addRoads(World world) {
+        List<MyPair<Point, Integer>> pastRoads =
+        List.of(
+                new MyPair<>(new Point(16, 1), Direction.SOUTH_WEST | Direction.NORTH_EAST),
+                new MyPair<>(new Point(17, 1), Direction.SOUTH_WEST),
+                new MyPair<>(new Point(18, 0), Direction.SOUTH_WEST | Direction.SOUTH_EAST),
+                new MyPair<>(new Point(19, 1), Direction.NORTH_WEST | Direction.SOUTH),
+                new MyPair<>(new Point(19, 2), Direction.NORTH)
+        );
+        for (MyPair<Point, Integer> pair : pastRoads) {
+            world.getHex(pair.first).setRoads(pair.second);
+        }
     }
 
     @Override

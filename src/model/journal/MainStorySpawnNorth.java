@@ -4,10 +4,7 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.vikings.GainSupportOfVikingsTask;
-import model.map.RuinsLocation;
-import model.map.TombLocation;
-import model.map.World;
-import model.map.WorldBuilder;
+import model.map.*;
 import model.map.locations.*;
 
 import java.awt.*;
