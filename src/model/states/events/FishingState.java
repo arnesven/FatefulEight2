@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.GameStatistics;
 import model.Model;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -40,10 +41,12 @@ public class FishingState extends GameState {
             println("Unfortunately, you don't have a fishing pole.");
             return model.getCurrentHex().getDailyActionState(model);
         }
-        multipleFishingAttempts(model, 1);
-        print("If you wish to travel today you must leave now. Do you want to continue fishing? (Y/N) ");
-        if (!yesNoInput()) {
-            return model.getCurrentHex().getDailyActionState(model);
+        if (model.getTimeOfDay() == TimeOfDay.MORNING) {
+            multipleFishingAttempts(model, 1);
+            print("If you wish to travel today you must leave now. Do you want to continue fishing? (Y/N) ");
+            if (!yesNoInput()) {
+                return model.getCurrentHex().getDailyActionState(model);
+            }
         }
         multipleFishingAttempts(model, ATTEMPTS_PER_PERSON_LONG);
         return model.getCurrentHex().getEveningState(model, false, false);

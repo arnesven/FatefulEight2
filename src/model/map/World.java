@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.map.objects.MapFilter;
 import model.map.objects.MapObject;
+import model.races.Race;
 import model.states.dailyaction.town.FlagPoleNode;
 import model.tasks.DestinationTask;
 import util.MyLists;

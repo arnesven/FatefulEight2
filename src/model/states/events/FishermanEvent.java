@@ -9,7 +9,7 @@ import model.items.weapons.FishingPole;
 import java.util.ArrayList;
 
 public class FishermanEvent extends RiverEvent {
-    private static final int COST = 15;
+    public static final int COST = 15;
 
     public FishermanEvent(Model model) {
         super(model, false);

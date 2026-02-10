@@ -9,6 +9,7 @@ import model.states.dailyaction.town.CharterBoatAtDocks;
 public class FishingVillageActionState extends TownishDailyActionState {
     public FishingVillageActionState(Model model, FishingVillageLocation loc) {
         super(model, true, loc, false, false);
+        addNode(5, 0, new FishingNode());
         addNode(5, 3, new BuyFoodStandNode());
     }
 
@@ -22,7 +23,7 @@ public class FishingVillageActionState extends TownishDailyActionState {
     protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
         super.addTravelNodes(model, hasWaterAccess, urbanLocation);
         if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 0) {
-            addNode(3, 0, new CharterBoatAtDocks(model));
+            addNode(2, 0, new CharterBoatAtDocks(model));
         }
     }
 }

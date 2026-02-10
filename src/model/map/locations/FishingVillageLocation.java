@@ -12,15 +12,17 @@ import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.FishingVillageActionState;
 import model.states.dailyaction.TownishDailyActionState;
 import model.states.dailyaction.shops.GeneralShopNode;
+import model.states.events.FishingVillageCommonerEvent;
+import model.states.events.FishingVillageFisherEvent;
+import model.states.events.MerchantEvent;
+import util.MyRandom;
 import view.GameView;
 import view.MyColors;
 import view.help.FishingVillageHelpDialog;
 import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
-import view.subviews.DailyActionSubView;
-import view.subviews.FishingVillageSubView;
-import view.subviews.TownishSubView;
+import view.subviews.*;
 
 import java.awt.*;
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.List;
 public class FishingVillageLocation extends TownishLocation {
     private static final MyColors HUT_COLOR = MyColors.BROWN;
     private static final MyColors ROOF_COLOR = MyColors.GRAY;
+    private final ImageSubView subView;
     private final int direction;
     private final MyColors waterColor;
 
@@ -35,6 +38,7 @@ public class FishingVillageLocation extends TownishLocation {
         super("Fishing Village");
         this.direction = direction;
         this.waterColor = waterColor;
+        subView = new ImageSubView("fishing_village", getName().toUpperCase(), "You are in a " + getName(), true);
     }
 
     public FishingVillageLocation(int direction) {
@@ -47,8 +51,19 @@ public class FishingVillageLocation extends TownishLocation {
     }
 
     @Override
+    public SubView getImageSubView(Model model) {
+        return subView;
+    }
+
+
+    @Override
     public GameState getDailyActionState(Model model) {
         return new FishingVillageActionState(model, this);
+    }
+
+    @Override
+    public boolean inhibitOnRoadSubview() {
+        return true;
     }
 
     @Override
@@ -58,7 +73,12 @@ public class FishingVillageLocation extends TownishLocation {
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return super.generateEvent(model); // TODO: Add some events...
+        return MyRandom.sample(List.of(
+                new MerchantEvent(model),
+                new FishingVillageFisherEvent(model),
+                new FishingVillageCommonerEvent(model),
+                new FishingVillageCommonerEvent(model)
+                ));
     }
 
     @Override
