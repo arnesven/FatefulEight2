@@ -24,6 +24,7 @@ public class ArtisanClass extends CharacterClass {
     public ArtisanClass() {
         super("Artisan", "ART", 7, 4, false, 25,
                 new WeightedSkill[]{
+                        new WeightedSkill(Skill.Academics, 2),
                         new WeightedSkill(Skill.Axes, 3),
                         new WeightedSkillMinus(Skill.Blades, 3),
                         new WeightedSkill(Skill.Entertain, 2),
@@ -32,7 +33,6 @@ public class ArtisanClass extends CharacterClass {
                         new WeightedSkill(Skill.Mercantile, 5),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 2),
-                        new WeightedSkill(Skill.Search, 2),
                         new WeightedSkill(Skill.Security, 4),
                         new WeightedSkill(Skill.SeekInfo, 2)
                 });

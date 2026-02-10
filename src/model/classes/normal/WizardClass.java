@@ -23,6 +23,7 @@ public class WizardClass extends CharacterClass {
     public WizardClass() {
         super("Wizard", "WIZ", 5, 3, false, 24,
                 new WeightedSkill[]{
+                        new WeightedSkill(Skill.Academics, 4),
                         new WeightedSkill(Skill.BluntWeapons, 2),
                         new WeightedSkill(Skill.Entertain, 2),
                         new WeightedSkill(Skill.Logic, 5),
@@ -31,7 +32,6 @@ public class WizardClass extends CharacterClass {
                         new WeightedSkill(Skill.MagicRed, 2),
                         new WeightedSkillMinus(Skill.MagicWhite, 4),
                         new WeightedSkill(Skill.Mercantile, 2),
-                        new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkillPlus(Skill.Search, 2),
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.SpellCasting, 5)

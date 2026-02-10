@@ -27,16 +27,15 @@ public class NobleClass extends CharacterClass {
     public NobleClass() {
         super("Noble", "N", 7, 4, false, 30,
                 new WeightedSkill[]{
+                        new WeightedSkill(Skill.Academics, 3),
                         new WeightedSkill(Skill.Acrobatics, 1),
                         new WeightedSkillMinus(Skill.Blades, 3),
                         new WeightedSkill(Skill.Bows, 3),
                         new WeightedSkill(Skill.Entertain, 4),
                         new WeightedSkill(Skill.Leadership, 5),
-                        new WeightedSkill(Skill.Logic, 3),
+                        new WeightedSkill(Skill.Logic, 2),
                         new WeightedSkill(Skill.Mercantile, 4),
-                        new WeightedSkill(Skill.Perception, 2),
                         new WeightedSkillMinus(Skill.Persuade, 5),
-                        new WeightedSkill(Skill.Search, 2),
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.Sneak, 1)
                 });

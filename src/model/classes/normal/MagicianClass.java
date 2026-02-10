@@ -23,13 +23,13 @@ public class MagicianClass extends CharacterClass {
     public MagicianClass() {
         super("Magician", "MAG", 7, 5, false, 24,
                 new WeightedSkill[]{
+                        new WeightedSkill(Skill.Academics, 4),
                         new WeightedSkillPlus(Skill.Acrobatics, 1),
                         new WeightedSkill(Skill.Entertain, 5),
                         new WeightedSkill(Skill.Logic, 4),
                         new WeightedSkill(Skill.MagicBlue, 4),
                         new WeightedSkill(Skill.MagicRed, 3),
                         new WeightedSkill(Skill.Mercantile, 3),
-                        new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 4),
                         new WeightedSkill(Skill.Security, 3),
                         new WeightedSkill(Skill.Sneak, 2),

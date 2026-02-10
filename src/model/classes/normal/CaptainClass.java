@@ -25,6 +25,7 @@ public class CaptainClass extends CharacterClass {
     protected CaptainClass(String className, String shortName) {
         super(className, shortName, 8, 4, true, 14,
                 new WeightedSkill[]{
+                        new WeightedSkillMinus(Skill.Academics, 2),
                         new WeightedSkill(Skill.Blades, 4),
                         new WeightedSkillMinus(Skill.Bows, 2),
                         new WeightedSkill(Skill.Endurance, 3),

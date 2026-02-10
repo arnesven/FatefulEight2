@@ -31,6 +31,7 @@ public class WitchClass extends CharacterClass {
                         new WeightedSkillMinus(Skill.Sneak, 3),
                         new WeightedSkillPlus(Skill.SpellCasting, 3),
                         new WeightedSkillPlus(Skill.Survival, 3),
+                        new WeightedSkillMinus(Skill.UnarmedCombat, 2)
                 });
     }
 

@@ -30,8 +30,9 @@ public class AssassinClass extends CharacterClass {
                         new WeightedSkill(Skill.Perception, 3),
                         new WeightedSkill(Skill.Search, 4),
                         new WeightedSkillMinus(Skill.Security, 4),
-                        new WeightedSkill(Skill.SeekInfo, 4),
-                        new WeightedSkill(Skill.Sneak, 5)}
+                        new WeightedSkill(Skill.SeekInfo, 3),
+                        new WeightedSkill(Skill.Sneak, 5),
+                        new WeightedSkillPlus(Skill.UnarmedCombat, 2)}
                 );
         clothingColor = suitColor;
     }

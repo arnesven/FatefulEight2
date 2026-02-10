@@ -634,11 +634,9 @@ public class GentlepersonsClubEvent extends DailyEventState {
         private List<MyPair<Skill, Integer>> calculateSkillDeficiencies(Model model) {
             List<MyPair<Skill, Integer>> skillDeficiencies = new ArrayList<>();
             for (Skill s : Skill.values()) {
-                if (s != Skill.UnarmedCombat) {
-                    int maxRank = MyLists.maximum(model.getParty().getPartyMembers(),
-                            (GameCharacter gc) -> gc.getRankForSkill(s));
-                    skillDeficiencies.add(new MyPair<>(s, RATING_MAX_RANK - Math.min(maxRank, 5))); // No rank higher than 5 considered.
-                }
+                int maxRank = MyLists.maximum(model.getParty().getPartyMembers(),
+                        (GameCharacter gc) -> gc.getRankForSkill(s));
+                skillDeficiencies.add(new MyPair<>(s, RATING_MAX_RANK - Math.min(maxRank, 5))); // No rank higher than 5 considered.
             }
             skillDeficiencies.sort(Comparator.comparingInt(p -> p.second));
             return skillDeficiencies;

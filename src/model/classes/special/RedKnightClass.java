@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
 import model.classes.Skill;
 import model.classes.WeightedSkill;
+import model.classes.normal.WeightedSkillPlus;
 import model.items.Equipment;
 import model.items.RedKnightsHelm;
 import model.items.clothing.RedKnightsArmor;
@@ -26,7 +27,8 @@ public class RedKnightClass extends SpecialCharacterClass {
                 new WeightedSkill(Skill.Labor, 3),
                 new WeightedSkill(Skill.Search, 2),
                 new WeightedSkill(Skill.SeekInfo, 3),
-                new WeightedSkill(Skill.Survival, 5)
+                new WeightedSkill(Skill.Survival, 5),
+                new WeightedSkillPlus(Skill.UnarmedCombat, 4)
         });
     }
 

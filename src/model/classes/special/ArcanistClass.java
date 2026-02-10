@@ -14,6 +14,7 @@ public class ArcanistClass extends SpecialCharacterClass {
     public ArcanistClass() {
         super("Arcanist", "ARC", 6, 2, false, 0,
                 new WeightedSkill[]{
+                        new WeightedSkill(Skill.Academics, 5),
                         new WeightedSkill(Skill.Entertain, 3),
                         new WeightedSkill(Skill.Labor, 4),
                         new WeightedSkill(Skill.Logic, 5),
@@ -21,7 +22,6 @@ public class ArcanistClass extends SpecialCharacterClass {
                         new WeightedSkill(Skill.MagicGreen, 2),
                         new WeightedSkill(Skill.MagicWhite, 4),
                         new WeightedSkill(Skill.Perception, 5),
-                        new WeightedSkill(Skill.Search, 5),
                         new WeightedSkill(Skill.Sneak, 3),
                         new WeightedSkill(Skill.SpellCasting, 3),
         });

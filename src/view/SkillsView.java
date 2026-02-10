@@ -13,9 +13,10 @@ import java.util.List;
 
 public class SkillsView extends SelectableListMenu {
     public static final int ROW_OFFSET = 14;
+    private static final int SKILL_NAME_WIDTH = 14;
 
     public SkillsView(GameView previous) {
-        super(previous, 45, 39);
+        super(previous, 45, 41);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class SkillsView extends SelectableListMenu {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             for (int i = gc.getFirstName().length() - 1; i >= 0; --i) {
                 BorderFrame.drawString(model.getScreenHandler(), "" + gc.getFirstName().charAt(i),
-                        x + 3 * charNum + 15, y + i - gc.getFirstName().length() + 12,
+                        x + 3 * charNum + SKILL_NAME_WIDTH + 2, y + i - gc.getFirstName().length() + 12,
                         model.getParty().getColorForPartyMember(gc), MyColors.BLUE);
             }
             print(model.getScreenHandler(), x + 14 + 3*charNum, y + row - 1, littleLine);
@@ -70,11 +71,11 @@ public class SkillsView extends SelectableListMenu {
         List<ListContent> result = new ArrayList<>();
         int row = ROW_OFFSET;
         for (Skill skill : Skill.values()) {
-            if (skill.areEqual(Skill.UnarmedCombat) || skill.areEqual(Skill.MagicAny)) {
+            if (skill.areEqual(Skill.MagicAny)) {
                 continue;
             }
             StringBuilder bldr = new StringBuilder();
-            bldr.append(String.format("%-13s", skill.getName()));
+            bldr.append(String.format("%-" + SKILL_NAME_WIDTH + "s", skill.getName()));
             int best = 0;
             int bestXpos = 0;
             int charNum = 0;
@@ -87,7 +88,7 @@ public class SkillsView extends SelectableListMenu {
                 }
                 if (rank > best) {
                     best = rank;
-                    bestXpos = 3*charNum + 14;
+                    bestXpos = 3*charNum + SKILL_NAME_WIDTH + 1;
                 }
                 charNum++;
             }

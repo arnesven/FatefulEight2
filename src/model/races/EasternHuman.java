@@ -22,7 +22,7 @@ public class EasternHuman extends HumanRace {
 
     public EasternHuman() {
         super("Human", MyColors.BEIGE,
-                new Skill[]{Skill.Logic, Skill.SeekInfo, Skill.UnarmedCombat},
+                new Skill[]{Skill.Academics, Skill.SeekInfo, Skill.UnarmedCombat},
                 "Eastern humans are found in the far east of the world. " +
                         "Their attributes are notably average in many regards. Eastern humans take up " +
                         "all kinds of professions but it is not " +

@@ -73,7 +73,7 @@ public class TreasureHuntQuest extends Quest {
                 new QuestScene("Finding the Stash",
                         List.of(new CollaborativeSkillCheckSubScene(2, 5, Skill.Search, 12,
                                 "There are some landmarks drawn on the map, can we find them?"),
-                                new CollaborativeSkillCheckSubScene(3, 5, Skill.Logic, 10,
+                                new CollaborativeSkillCheckSubScene(3, 5, Skill.Academics, 10,
                                 "Wait, there seems to be some clues on this map. Can anybody make sense out of this?"),
                                 new CollaborativeSkillCheckSubScene(4, 7, Skill.Search, 7,
                                         "Now to find the exact, final location of the stash."))),

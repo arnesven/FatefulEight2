@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public enum Skill implements Comparable<Skill> {
+    Academics("Academics", "Aca", "knowledge in academic subjects, like history, geography, literature, linguistics, politics and science."),
     Acrobatics("Acrobatics", "Acr","acrobatic and athletic activities, like climbing, jumping, swimming, tumbling, running and crawling.\n\nSpecifically this skill is used in combat to avoid opportunity attacks when a character is moving from front formation to back."),       // 12
     Axes("Axes", "Axe","handling all types of axes, both during common work and in combat."),                   // 1
     Blades("Blades", "Bla", "handling and fighting with all types of bladed weapons, from daggers to claymores."),               // 3
@@ -32,7 +33,6 @@ public enum Skill implements Comparable<Skill> {
     Sneak("Sneak", "Sne", "moving covertly and hiding."),                 // 13
     SpellCasting("Spell Casting", "SpC", "casting spells.\n\nA character's rank in this skill is added to each skill check when that character is attempting to cast a spell."),  // 3
     Survival("Survival", "Sur", "knowledge and ability to be able to survive in the wilderness. This includes many things like navigating rough terrain, taming animals, finding food and being able to cook it and setting up an adequate shelter or avoiding injury while traveling."),           // 16
-
     UnarmedCombat("Unarmed Combat", "UnC", "for fighting without a weapon.\n\nA character does not have ranks in this skill, but it is used when making an unarmed attack in combat and can receive bonuses in certain situations.");
 
     private static final Map<String, List<Skill>> ATTRIBUTES =

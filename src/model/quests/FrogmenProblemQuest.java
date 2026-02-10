@@ -309,7 +309,7 @@ public class FrogmenProblemQuest extends MainQuest {
         private FrogmanPortrait2Event event;
 
         public UnderstandFrogmenLanguageSubScene(int col, int row) {
-            super(col, row, Skill.Logic, 7,
+            super(col, row, Skill.Academics, 7,
                     "Can anybody make any sense out of their garbled words?");
         }
 

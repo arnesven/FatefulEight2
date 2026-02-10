@@ -10,6 +10,7 @@ import java.util.*;
 
 public class ClassGraph extends ArrayList<CharacterClass> {
 
+    // These solutions are Obsolete, run this tool again before using as basis of implementation!
         /*
     ORIGINAL:
               1          2          3
@@ -315,6 +316,7 @@ Cost: 785
             System.out.println("2 = Rotate Counter-Clockwise");
             System.out.println("3 = Invert");
             System.out.println("4 = Swap inner/outer");
+            System.out.println("5 = Print with costs");
             System.out.println("9 = Quit");
             int op = scanner.nextInt();
             if (op == 9) {
@@ -331,6 +333,9 @@ Cost: 785
             }
             if (op == 4) {
                 classGraph.swapInnerOuter();
+            }
+            if (op == 5) {
+                classGraph.print();
             }
             classGraph.printNoCosts();
 

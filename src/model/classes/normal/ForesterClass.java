@@ -23,7 +23,6 @@ public class ForesterClass extends CharacterClass {
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 2),
                         new WeightedSkill(Skill.Axes, 5),
-                        new WeightedSkill(Skill.BluntWeapons, 1),
                         new WeightedSkill(Skill.Bows, 3),
                         new WeightedSkillMinus(Skill.Endurance, 4),
                         new WeightedSkill(Skill.Entertain, 1),
@@ -31,7 +30,8 @@ public class ForesterClass extends CharacterClass {
                         new WeightedSkill(Skill.Leadership, 4),
                         new WeightedSkill(Skill.Perception, 2),
                         new WeightedSkillMinus(Skill.Search, 4),
-                        new WeightedSkillMinus(Skill.Survival, 5)
+                        new WeightedSkillMinus(Skill.Survival, 5),
+                        new WeightedSkillPlus(Skill.UnarmedCombat, 2)
                 });
     }
 
