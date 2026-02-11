@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.Model;
+import model.map.WorldType;
 import model.states.GameState;
 import model.states.InitialLeadsEveningState;
 import view.LogView;
@@ -23,4 +24,5 @@ public interface JournalEntry {
     }
 
     Point getPosition(Model model);
+    default WorldType getWorld() { return WorldType.original; }
 }

@@ -8,7 +8,7 @@ import model.tasks.DestinationTask;
 
 import java.awt.*;
 
-public class VisitAncientCityTask extends DestinationTask {
+public class VisitAncientCityTask extends PastWorldDestinationTask {
     private final String cityName;
     private final Point destinationPoint;
 
@@ -20,7 +20,7 @@ public class VisitAncientCityTask extends DestinationTask {
 
     @Override
     public JournalEntry getJournalEntry(Model model) {
-        return new JournalEntry() {
+        return new ThePastJournalEntry() {
             @Override
             public String getName() {
                 return getDestinationDescription();

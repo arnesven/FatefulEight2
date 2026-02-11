@@ -111,7 +111,7 @@ public class FullMapView extends GameView {
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
                 model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(),
                         worldToDraw.getHex(cursorPos), model.getMapObjects(cursorPos), true));
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F4 && model.isInOriginalWorld()) {
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F4) {
                 cycleView(model);
                 madeChanges();
             }
@@ -121,6 +121,9 @@ public class FullMapView extends GameView {
     private void cycleView(Model model) {
         int max = FatefulEight.inDebugMode() ? maxViews + 1 : maxViews;
         viewType = Arithmetics.incrementWithWrap(viewType, max);
+        if (!model.isInOriginalWorld() && viewType > 1) {
+            viewType = 0;
+        }
         if (viewType == 1) {
             //currentFilter = new WaterPathDistancesFilter();
             currentFilter = new ShowLocationNamesFilter();

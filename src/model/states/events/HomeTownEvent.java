@@ -24,7 +24,7 @@ public class HomeTownEvent extends DailyEventState {
     }
 
     private static boolean isInHomeTown(Model model, GameCharacter gc) {
-        return gc.hasHomeTown() && gc.getHomeTown(model) == model.getCurrentHex().getLocation();
+        return model.isInOriginalWorld() && gc.hasHomeTown() && gc.getHomeTown(model) == model.getCurrentHex().getLocation();
     }
 
     private static int getDoneCounter(Model model, GameCharacter gc) {

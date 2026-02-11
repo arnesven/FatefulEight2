@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.mainstory.thepast.ThePastJournalEntry;
 import model.mainstory.thepast.VisitAncientCityTask;
 import model.map.Direction;
 import model.map.locations.AncientCityLocation;
@@ -153,7 +154,6 @@ public class PartSevenStoryPart extends StoryPart {
                 leaderSay("It doesn't look much different than the future actually. But I'd better come up with a plan if I ever want to get back home.");
                 leaderSay("Maybe the Quad knows something about time travel? They may not be the friendliest people, but it's the best lead I've got.");
                 leaderSay("And I can't let Arabella roam free either. Who knows what temporal paradoxes may occur if I don't get her before she can get to the Quad.");
-                // TODO: More
             } else {
                 GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                 GameCharacter other2 = other;
@@ -214,7 +214,7 @@ public class PartSevenStoryPart extends StoryPart {
         }
     }
 
-    private class PartSevenJournalEntry implements JournalEntry {
+    private class PartSevenJournalEntry extends ThePastJournalEntry {
 
         @Override
         public String getName() {

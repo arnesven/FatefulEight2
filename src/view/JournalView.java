@@ -151,7 +151,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
                         textColor, MyColors.BLUE);
             }
             if (je.getPosition(model) != null) {
-                if (!model.isInOriginalWorld()) {
+                if (model.getWorld().getWorldType() == je.getWorld()) {
                     textColor = MyColors.GRAY;
                 } else {
                     textColor = MyColors.WHITE;
@@ -206,11 +206,14 @@ public class JournalView extends TwoPaneSelectableListMenu {
 
     @Override
     public void specificHandleEvent(KeyEvent keyEvent, Model model, int index) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_F3 && model.isInOriginalWorld()) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
             if (!questsAndTasks.isEmpty()) {
-                Point position = questsAndTasks.get(index).getPosition(model);
-                this.nextView = new FullMapView(this, position);
-                setTimeToTransition(true);
+                JournalEntry je = questsAndTasks.get(index);
+                if (je.getWorld() == model.getWorld().getWorldType()) {
+                    Point position = je.getPosition(model);
+                    this.nextView = new FullMapView(this, position);
+                    setTimeToTransition(true);
+                }
             }
         }
     }

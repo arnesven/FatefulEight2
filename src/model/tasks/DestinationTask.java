@@ -3,6 +3,7 @@ package model.tasks;
 import model.Model;
 import model.actions.DailyAction;
 import model.journal.JournalEntry;
+import model.map.WorldType;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -41,4 +42,8 @@ public abstract class DestinationTask implements Serializable {
     }
 
     public void runStartOfDayHook(Model model) { }
+
+    public WorldType getWorld() {
+        return WorldType.original;
+    }
 }

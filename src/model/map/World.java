@@ -150,7 +150,9 @@ public class World implements Serializable {
     private void drawDestinationTasks(Model model, int x, int y, int screenX, int screenY) {
         for (DestinationTask dt : model.getParty().getDestinationTasks()) {
             Point pos = dt.getPosition(); // TODO: Fix so that destination tasks aren't drawn in wrong world.
-            if (dt.drawTaskOnMap(model) && pos != null && pos.x == x && pos.y == y && !dt.isCompleted() && !dt.isFailed(model)) {
+            if (dt.drawTaskOnMap(model) && pos != null && pos.x == x && pos.y == y &&
+                    dt.getWorld() == model.getWorld().getWorldType() &&
+                    !dt.isCompleted() && !dt.isFailed(model)) {
                 model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
             }
         }
