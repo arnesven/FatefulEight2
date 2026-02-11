@@ -10,120 +10,27 @@ import java.util.*;
 
 public class ClassGraph extends ArrayList<CharacterClass> {
 
-    // These solutions are Obsolete, run this tool again before using as basis of implementation!
-        /*
-    ORIGINAL:
-              1          2          3
-             SOR--------WIT--------BBN
-            /   \11    12|     13/    \
-           /     MAR----FOR----AMZ     \
-        0 /   10/                 \14   \4
-       BKN----CAP                 WIZ----DRU
-       9|    19|                   |15    |5
-       MIN----PAL                 MAG----PRI
-          \     \                 /     /
-           \     NOB----BRD----SPY     /
-            \   /18    17|      16\   /
-             ART--------THF--------ASN
-              8          7          6
-    */
-
-
-        /*
-    New Best so far:
-         AMZ-------- F --------MIN
+         /*
+         BKN--------SOR--------PRI
         /   \        |       /    \
-       /     MAR---- C ----PAL     \
+       /      D ----WIT----WIZ     \
       /     /                 \     \
-   WIT----ASN                 BKN----BBN
+   BBN----PAL                 MAG---- N
     |      |                   |      |
-   SPY---- T                  SOR---- D
+   MIN---- C                  ART----BRD
       \     \                 /     /
-       \     BRD----MAG----WIZ     /
+       \     AMZ----ASN---- T      /
         \   /        |        \   /
-         ART-------- N --------PRI
-Cost: 734
-Alternatively, (for the same cost) the lower left corner can be arranged like this:
-
-       \     ART----MAG----
-        \   /        |
-          N --------BRD--
+          F --------MAR--------SPY
+Cost: 169
 
     */
 
     private static final List<CharacterClass> BEST_SOLUTION_SO_FAR = List.of(
-            Classes.WIT, Classes.AMZ, Classes.FOR, Classes.MIN, Classes.BBN,
-            Classes.DRU, Classes.PRI, Classes.NOB, Classes.ART, Classes.SPY,
-            Classes.ASN, Classes.MAR, Classes.CAP, Classes.PAL, Classes.BKN,
-            Classes.SOR, Classes.WIZ, Classes.MAG, Classes.BRD, Classes.THF);
-
-    /*
-    Other variants:
-         WIZ--------SOR--------BKN
-        /   \        |       /    \
-       /     PRI---- D ----BBN     \
-      /     /                 \     \
-   MAG----BRD                 MIN----PAL
-    |      |                   |      |
-   ART---- N                   F ---- C
-      \     \                 /     /
-       \      T ----ASN----MAR     /
-        \   /        |        \   /
-         SPY--------WIT--------AMZ
-Cost: 735
-
-         MAR-------- C --------PAL
-        /   \        |       /    \
-       /     AMZ---- F ----MIN     \
-      /     /                 \     \
-   ASN----WIT                 BBN----BKN
-    |      |                   |      |
-    T ----SPY                 SOR---- D
-      \     \                 /     /
-       \     ART----MAG----WIZ     /
-        \   /        |        \   /
-          N --------BRD--------PRI
-Cost: 746
-
-          T --------ASN--------WIT
-        /   \        |       /    \
-       /     SPY----MAR----AMZ     \
-      /     /                 \     \
-   BRD----MAG                  D ----SOR
-    |      |                   |      |
-   PRI----WIZ                  C ----BKN
-      \     \                 /     /
-       \     ART----MIN----PAL     /
-        \   /        |        \   /
-          N -------- F --------BBN
-Cost: 772
-
-         PAL-------- C --------AMZ
-        /   \        |       /    \
-       /     MIN---- F ----MAR     \
-      /     /                 \     \
-   BKN----BBN                  T ----ASN
-    |      |                   |      |
-   SOR---- D                  BRD----MAG
-      \     \                 /     /
-       \     WIT----WIZ----PRI     /
-        \   /        |        \   /
-         SPY--------ART-------- N
-Cost: 762
-
-         SOR--------MAG--------BRD
-        /   \        |       /    \
-       /     WIZ----PRI---- N      \
-      /     /                 \     \
-    D ----WIT                 SPY---- T
-    |      |                   |      |
-   MAR----AMZ                 ART----ASN
-      \     \                 /     /
-       \      F ----BBN----MIN     /
-        \   /        |        \   /
-          C --------PAL--------BKN
-Cost: 785
-    */
+            Classes.BBN, Classes.BKN, Classes.SOR, Classes.PRI, Classes.NOB,
+            Classes.BRD, Classes.SPY, Classes.MAR, Classes.FOR, Classes.MIN,
+            Classes.PAL, Classes.DRU, Classes.WIT, Classes.WIZ, Classes.MAG,
+            Classes.ART, Classes.THF, Classes.ASN, Classes.AMZ, Classes.CAP);
 
     private final HashMap<CharacterClass, Integer> indices;
     private final ClassDiffCostTable costTable;
@@ -258,8 +165,8 @@ Cost: 785
         costTable.printOptimumCosts();
 
         System.out.println("Starting from:");
-        //ClassGraph classGraph = new ClassGraph(costTable);
-        ClassGraph classGraph = new ClassGraph(costTable, makeRandomGraph());
+        ClassGraph classGraph = new ClassGraph(costTable);
+        //ClassGraph classGraph = new ClassGraph(costTable, makeRandomGraph());
         System.out.println();
         classGraph.print();
         System.out.println();

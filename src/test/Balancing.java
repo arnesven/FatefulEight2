@@ -249,14 +249,27 @@ public class Balancing {
     }
 
     private static double calcClassScore(CharacterClass charClass) {
-        double sum = 0;
-        for (Skill s : charClass.getSkills()) {
-            sum += charClass.getWeightForSkill(s).getBalancingScore();
-        }
+        double sum = skillScore(charClass);
         sum += charClass.getHP() * 1.5;
         sum += charClass.getSpeed() / 2.0;
         sum += charClass.getStartingGold() / 5.0;
         sum += charClass.canUseHeavyArmor() ? 6 : 0;
+        return sum;
+    }
+
+    private static double skillScore(CharacterClass charClass) {
+        double sum = 0;
+        for (Skill s : charClass.getSkills()) {
+            sum += charClass.getWeightForSkill(s).getBalancingScore();
+        }
+        double bestFightingSkill = MyLists.maximumDouble(
+                MyLists.filter(charClass.getSkills(), Skill::isFightingSkill),
+                s -> charClass.getWeightForSkill(s).getBalancingScore());
+        sum += bestFightingSkill;
+        double bestMagicSkill = MyLists.maximumDouble(
+                MyLists.filter(charClass.getSkills(), Skill::isMagic),
+                s -> charClass.getWeightForSkill(s).getBalancingScore());
+        sum += bestMagicSkill;
         return sum;
     }
 }

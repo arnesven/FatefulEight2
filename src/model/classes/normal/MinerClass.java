@@ -27,8 +27,8 @@ public class MinerClass extends CharacterClass {
                         new WeightedSkillMinus(Skill.Endurance, 5),
                         new WeightedSkill(Skill.Entertain, 1),
                         new WeightedSkill(Skill.Labor, 5),
-                        new WeightedSkill(Skill.Mercantile, 3),
-                        new WeightedSkill(Skill.Perception, 2),
+                        new WeightedSkill(Skill.Mercantile, 2),
+                        new WeightedSkillPlus(Skill.Perception, 1),
                         new WeightedSkill(Skill.Search, 4),
                         new WeightedSkill(Skill.Survival, 2)
                 });

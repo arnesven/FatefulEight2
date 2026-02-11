@@ -27,7 +27,7 @@ public class WitchClass extends CharacterClass {
                         new WeightedSkillPlus(Skill.MagicGreen, 2),
                         new WeightedSkill(Skill.Perception, 3),
                         new WeightedSkill(Skill.Persuade, 2),
-                        new WeightedSkillMinus(Skill.Search, 4),
+                        new WeightedSkillMinus(Skill.Search, 3),
                         new WeightedSkillMinus(Skill.Sneak, 3),
                         new WeightedSkillPlus(Skill.SpellCasting, 3),
                         new WeightedSkillPlus(Skill.Survival, 3),

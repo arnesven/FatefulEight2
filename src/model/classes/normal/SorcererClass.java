@@ -26,8 +26,7 @@ public class SorcererClass extends CharacterClass {
     public SorcererClass() {
         super("Sorcerer", "SOR", 8, 4, false, 28,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Blades, 2),
-                        new WeightedSkillPlus(Skill.BluntWeapons, 4),
+                        new WeightedSkillPlus(Skill.BluntWeapons, 3),
                         new WeightedSkill(Skill.Endurance, 2),
                         new WeightedSkill(Skill.Logic, 4),
                         new WeightedSkill(Skill.MagicBlack, 2),

@@ -33,7 +33,8 @@ public class AmazonClass extends CharacterClass {
                         new WeightedSkill(Skill.Polearms, 4),
                         new WeightedSkill(Skill.Search, 3),
                         new WeightedSkill(Skill.Sneak, 4),
-                        new WeightedSkill(Skill.Survival, 5)
+                        new WeightedSkill(Skill.Survival, 5),
+                        new WeightedSkill(Skill.UnarmedCombat, 3)
                 });
         this.spear = new SpearInHandDetail();
     }

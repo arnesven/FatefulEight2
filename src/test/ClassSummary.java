@@ -19,7 +19,7 @@ public class ClassSummary {
          classes.remove(Classes.None);
 
         //List<CharacterClass> classes =
-        //List.of(Classes.DRU, Classes.MAG, Classes.PRI, Classes.WIZ, Classes.WIT, Classes.SOR);
+        //List.of(Classes.THF, Classes.SPY);
 
 
         System.out.println("SKILLS / CLASSES");

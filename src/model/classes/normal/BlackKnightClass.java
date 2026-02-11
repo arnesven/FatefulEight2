@@ -12,6 +12,7 @@ import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.Mace;
 import model.items.weapons.Scepter;
+import model.items.weapons.UnarmedCombatWeapon;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
@@ -27,10 +28,11 @@ public class BlackKnightClass extends CharacterClass {
                         new WeightedSkill(Skill.Endurance, 2),
                         new WeightedSkill(Skill.Labor, 2),
                         new WeightedSkill(Skill.Leadership, 2),
-                        new WeightedSkill(Skill.Perception, 4),
+                        new WeightedSkill(Skill.Perception, 3),
                         new WeightedSkillPlus(Skill.Persuade, 2),
                         new WeightedSkill(Skill.Search, 1),
-                        new WeightedSkillPlus(Skill.Survival, 2)
+                        new WeightedSkillPlus(Skill.Survival, 2),
+                        new WeightedSkillMinus(Skill.UnarmedCombat, 3)
                 });
     }
 

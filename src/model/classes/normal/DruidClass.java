@@ -27,7 +27,7 @@ public class DruidClass extends CharacterClass {
         super("Druid", "D", 6, 4, false, 12,
                 new WeightedSkill[]{
                         new WeightedSkillPlus(Skill.Blades, 2),
-                        new WeightedSkill(Skill.BluntWeapons, 4),
+                        new WeightedSkill(Skill.BluntWeapons, 3),
                         new WeightedSkill(Skill.Endurance, 4),
                         new WeightedSkill(Skill.Labor, 3),
                         new WeightedSkillPlus(Skill.Leadership, 3),

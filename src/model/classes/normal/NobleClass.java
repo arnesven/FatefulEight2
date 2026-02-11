@@ -27,7 +27,7 @@ public class NobleClass extends CharacterClass {
     public NobleClass() {
         super("Noble", "N", 7, 4, false, 30,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Academics, 3),
+                        new WeightedSkill(Skill.Academics, 4),
                         new WeightedSkill(Skill.Acrobatics, 1),
                         new WeightedSkillMinus(Skill.Blades, 3),
                         new WeightedSkill(Skill.Bows, 3),

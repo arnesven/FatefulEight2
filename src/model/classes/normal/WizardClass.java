@@ -33,7 +33,7 @@ public class WizardClass extends CharacterClass {
                         new WeightedSkillMinus(Skill.MagicWhite, 4),
                         new WeightedSkill(Skill.Mercantile, 2),
                         new WeightedSkillPlus(Skill.Search, 2),
-                        new WeightedSkill(Skill.SeekInfo, 4),
+                        new WeightedSkill(Skill.SeekInfo, 2),
                         new WeightedSkill(Skill.SpellCasting, 5)
                 });
         this.staff = new SpiralStaffDetail();

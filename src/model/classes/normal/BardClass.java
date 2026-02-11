@@ -21,6 +21,7 @@ public class BardClass extends CharacterClass {
     public BardClass() {
         super("Bard", "BRD", 6, 5, false, 16,
                 new WeightedSkill[]{
+                        new WeightedSkillPlus(Skill.Academics, 2),
                         new WeightedSkill(Skill.Acrobatics, 3),
                         new WeightedSkillMinus(Skill.BluntWeapons, 2),
                         new WeightedSkill(Skill.Entertain, 5),

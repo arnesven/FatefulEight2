@@ -28,7 +28,7 @@ public class AssassinClass extends CharacterClass {
                         new WeightedSkill(Skill.Bows, 3),
                         new WeightedSkillMinus(Skill.MagicBlue, 2),
                         new WeightedSkill(Skill.Perception, 3),
-                        new WeightedSkill(Skill.Search, 4),
+                        new WeightedSkill(Skill.Search, 3),
                         new WeightedSkillMinus(Skill.Security, 4),
                         new WeightedSkill(Skill.SeekInfo, 3),
                         new WeightedSkill(Skill.Sneak, 5),

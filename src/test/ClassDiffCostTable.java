@@ -33,12 +33,12 @@ public class ClassDiffCostTable extends HashMap<CharacterClass, HashMap<Characte
     private static int classDifference(CharacterClass classOne, CharacterClass classTwo) {
         double skillDiff = 0.0;
         for (Skill s : Skill.values()) {
-            skillDiff += Math.abs(classOne.getWeightForSkill(s).getBalancingScore() - classTwo.getWeightForSkill(s).getBalancingScore());
+            skillDiff += Math.pow(classOne.getWeightForSkill(s).getBalancingScore() - classTwo.getWeightForSkill(s).getBalancingScore(), 2);
         }
-        double hpDiff = Math.abs(classOne.getHP() * 1.5 - classTwo.getHP() * 1.5);
-        double hvyDiff = classOne.canUseHeavyArmor() == classTwo.canUseHeavyArmor() ? 0 : 6;
-        double alignDiff = Math.abs(getAlignment(classOne) - getAlignment(classTwo)) * 3;
-        return (int)Math.round(skillDiff + hpDiff + hvyDiff + alignDiff) - 10;
+        double hpDiff = Math.pow(classOne.getHP() * 1.5 - classTwo.getHP() * 1.5, 2);
+        double hvyDiff = classOne.canUseHeavyArmor() == classTwo.canUseHeavyArmor() ? 0 : 36;
+        double alignDiff = Math.pow(getAlignment(classOne) * 3 - getAlignment(classTwo) * 3, 2);
+        return (int)Math.round(Math.sqrt(skillDiff + hpDiff + hvyDiff + alignDiff)) - 5;
     }
 
     private static int getAlignment(CharacterClass cls) {
