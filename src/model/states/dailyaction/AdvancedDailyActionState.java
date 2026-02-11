@@ -3,6 +3,7 @@ package model.states.dailyaction;
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.map.WorldType;
 import model.states.GameState;
 import model.tutorial.TutorialHandler;
 import sound.BackgroundMusic;
@@ -78,8 +79,9 @@ public abstract class AdvancedDailyActionState extends GameState {
             waitForReturnSilently();
             daily = matrix.getSelectedElement();
             Point oldPartyPos = new Point(model.getParty().getPosition());
+            WorldType oldWorld = model.getWorld().getWorldType();
             model.handleCastSpells();
-            if (!model.partyIsInOverworldPosition(oldPartyPos)) { // Spell has moved party
+            if (!oldPartyPos.equals(model.getParty().getPosition()) || oldWorld != model.getWorld().getWorldType()) { // Spell has moved party
                 return model.getCurrentHex().getDailyActionState(model);
             }
             if (model.getSubView() != subView) {

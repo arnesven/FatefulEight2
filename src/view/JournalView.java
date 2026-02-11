@@ -151,7 +151,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
                         textColor, MyColors.BLUE);
             }
             if (je.getPosition(model) != null) {
-                if (model.getWorld().getWorldType() == je.getWorld()) {
+                if (model.getWorld().getWorldType() != je.getWorld()) {
                     textColor = MyColors.GRAY;
                 } else {
                     textColor = MyColors.WHITE;

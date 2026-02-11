@@ -48,6 +48,12 @@ public abstract class PastLandHex extends WorldHex {
     public DailyEventState generateEvent(Model model) {
         //return new QuadGoonsEvent(model);
         DailyEventState event;
+        if (getLocation() != null && !getLocation().isDecoration()) {
+            event = getLocation().generateEvent(model);
+            if (event != null) {
+                return event;
+            }
+        }
         for (int i = 0; i < 10; ++i) {
             event = template.generateEvent(model);
             if (!event.exclusiveToOriginalWorld()) {

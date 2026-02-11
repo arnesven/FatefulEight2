@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.mainstory.thepast.FindArabellaTask;
 import model.mainstory.thepast.ThePastJournalEntry;
 import model.mainstory.thepast.VisitAncientCityTask;
 import model.map.Direction;
@@ -73,7 +74,7 @@ public class PartSevenStoryPart extends StoryPart {
                     "People thought things would get better now... If only we had known.");
             state.leaderSay("The Quadrificus? Must be the Quad. Incredible... What do you know about the Quadrificus?");
             port.portraitSay(model, state, "They appeared in this kingdom a few years ago. Powerful mages it is said that they are. And they must be, " +
-                    "King Maximus ruled this Recca with an iron fist, but somehow they overthrew him.");
+                    "King Maximus ruled Recca with an iron fist, but somehow they overthrew him.");
             state.leaderSay("Where are they?");
             port.portraitSay(model, state, "They're holed up in the capital city and nobody can get close to them. " +
                     "They're hated by everybody, except for their goons, which they send all over the kingdom to collect taxes and harass people.");
@@ -199,15 +200,15 @@ public class PartSevenStoryPart extends StoryPart {
                             "those resisting them will actually be successful.");
                 }
                 partyMemberSay(other2, "And...?");
-                leaderSay("And if we through Arabella into the mix, who knows what's going to happen. Maybe the Quad won't be overthrown.");
-                partyMemberSay(other, "Maybe Arabella will manage to usurp the thrown herself.");
+                leaderSay("And if we throw Arabella into the mix, who knows what's going to happen. Maybe the Quad won't be overthrown.");
+                partyMemberSay(other, "Maybe Arabella will manage to usurp the throne herself.");
                 partyMemberSay(other2, "And that changes the future?");
                 leaderSay("It could. Or perhaps not. I'm not sure. But we can't take the chance that it doesn't.");
                 partyMemberSay(other2, "Alright, you've convinced me.");
             }
             AncientCityLocation capital = getCapitalCity(model);
             Point p = model.getWorld().getPositionForLocation(capital);
-            model.getParty().addDestinationTask(new VisitAncientCityTask(p, capital));
+            model.getParty().addDestinationTask(new FindArabellaTask(p));
             JournalEntry.printJournalUpdateMessage(model);
             progress();
             super.locationSpecificEvening(model);
@@ -234,8 +235,7 @@ public class PartSevenStoryPart extends StoryPart {
             if (step == COME_UP_WITH_PLAN) {
                 return "You've decided to try to get close to the Quad and potentially meet with them. " +
                         "The Quad's magic seems like your best hope of getting back to your own time.\n\n" +
-                        "However, the fact that Arabella roams free and could link up with the Quad worries you. " +
-                        "You must find her and stop her.";
+                        "They are apparently located in the capital of Recca." ;
             }
             return "In an attempt to stop Arabella's plans you tried to destroy her Mind Machine. " +
                     "The machine malfunctioned and transported you to an unknown location.\n\n" +
