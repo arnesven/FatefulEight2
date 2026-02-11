@@ -351,4 +351,11 @@ public class MainStory implements Serializable {
         return spawnData.getPastCityB();
     }
 
+    public EveningState getEveningState(Model model, boolean freeLodging, boolean freeRations) {
+        EveningState ev = generateInitialLeadsEveningState(model, freeLodging, freeRations);
+        if (ev != null) {
+            return ev;
+        }
+        return storyParts.getLast().generateEveningState(model, freeLodging, freeRations);
+    }
 }

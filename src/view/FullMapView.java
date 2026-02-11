@@ -111,7 +111,7 @@ public class FullMapView extends GameView {
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
                 model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(),
                         worldToDraw.getHex(cursorPos), model.getMapObjects(cursorPos), true));
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F4) {
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F4 && model.isInOriginalWorld()) {
                 cycleView(model);
                 madeChanges();
             }

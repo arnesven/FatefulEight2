@@ -92,11 +92,13 @@ public class TundraHex extends WorldHex {
 
     @Override
     public WorldHex makePastSelf(Point oldPosition, Point newPosition) {
+        HexLocation pastLocation = makePastLocation();
         if (newPosition.y >= 6) {
-            return new PastPlainsHex(getRivers(), getState(), makePastLocation());
-        } else if ((newPosition.x * 199 + newPosition.y * 53) % 4 == 0) {
+            return new PastPlainsHex(getRivers(), getState(), pastLocation);
+        } else if ((newPosition.x * 199 + newPosition.y * 53) % 4 == 0 &&
+                (pastLocation == null || pastLocation.isDecoration())) {
             return new PastTundraWoodsHex(getRivers(), getState());
         }
-        return new PastTundraHex(getRivers(), getState(), makePastLocation());
+        return new PastTundraHex(getRivers(), getState(), pastLocation);
     }
 }

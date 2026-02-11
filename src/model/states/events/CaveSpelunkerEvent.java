@@ -38,7 +38,7 @@ public class CaveSpelunkerEvent extends DailyEventState {
 
     public static DailyEventState generateEvent(Model model) {
         if (!model.isInOriginalWorld()) {
-            return new CaveSpelunkerEvent(model, null);
+            return null;
         }
 
         if (alreadyDone(model) || calculateAverageLevel(model) < 2.5 ||

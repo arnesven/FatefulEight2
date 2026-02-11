@@ -1,26 +1,27 @@
 package model.journal;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.mainstory.thepast.VisitAncientCityTask;
 import model.map.Direction;
-import model.map.WorldBuilder;
-import model.map.WorldHex;
 import model.map.locations.AncientCityLocation;
 import model.quests.MindMachineQuest;
 import model.quests.Quest;
+import model.states.EveningState;
 import model.states.GameState;
 import model.states.dailyaction.TownDailyActionState;
-import model.states.events.GeneralInteractionEvent;
 import view.JournalView;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class PartSevenStoryPart extends StoryPart {
     private static final int INITIAL_STEP = 0;
     private static final int TRAVELED_TO_THE_PAST = 1;
     private static final int FOUND_OUT_STUFF = 2;
+    private static final int COME_UP_WITH_PLAN = 3;
     private final String castle;
     private int step = INITIAL_STEP;
 
@@ -30,47 +31,8 @@ public class PartSevenStoryPart extends StoryPart {
 
     @Override
     public List<JournalEntry> getJournalEntries() {
-        return List.of(new JournalEntry() {
-            @Override
-            public String getName() {
-                return "The Prophecy of the Quad";
-            }
-
-            @Override
-            public String getText() {
-                if (step == INITIAL_STEP) {
-                    return "Complete the quest " + MindMachineQuest.QUEST_NAME + ".";
-                }
-                if (step == FOUND_OUT_STUFF) {
-                    return "You have been transported back in time to the time when the " +
-                            "Quad took control of the ancient kingdom of Recca.\n\n" +
-                            "You need to figure out what to do next.";
-                }
-                return "In an attempt to stop Arabella's plans you tried to destroy her Mind Machine. " +
-                        "The machine malfunctioned and transported you to an unknown location.\n\n" +
-                        "Now you need to figure out where you are.";
-            }
-
-            @Override
-            public boolean isComplete() {
-                return false;
-            }
-
-            @Override
-            public boolean isFailed() {
-                return false;
-            }
-
-            @Override
-            public boolean isTask() {
-                return true;
-            }
-
-            @Override
-            public Point getPosition(Model model) {
-                return null;
-            }
-        });
+        JournalEntry mainEntry = new PartSevenJournalEntry();
+        return List.of(mainEntry);
     }
 
     @Override
@@ -113,9 +75,10 @@ public class PartSevenStoryPart extends StoryPart {
                     "King Maximus ruled this Recca with an iron fist, but somehow they overthrew him.");
             state.leaderSay("Where are they?");
             port.portraitSay(model, state, "They're holed up in the capital city and nobody can get close to them. " +
-                    "They're hated by everybody, except for their goons, which they send all over the kingdom to collect taxes, harass people and " +
-                    "enforce the Quad's stringent laws.");
-            state.leaderSay("The capital? And where's that?");
+                    "They're hated by everybody, except for their goons, which they send all over the kingdom to collect taxes and harass people.");
+            port.portraitSay(model, state, "And they enforce the Quad's stringent laws. Anybody who commits the smallest transgression is " +
+                    "arrested and taken to work in their mines.");
+            state.leaderSay("They're in the capital? And where's that?");
             AncientCityLocation capital = getCapitalCity(model);
             model.getWorld().dijkstrasByLand(model.getParty().getPosition());
             List<Point> path = model.getWorld().generalShortestPath(0, worldHex -> worldHex.getLocation() == capital);
@@ -147,7 +110,18 @@ public class PartSevenStoryPart extends StoryPart {
             port.portraitSay(model, state, "Safe travels friend.");
             progress();
             JournalEntry.printJournalUpdateMessage(model);
+            model.getParty().addDestinationTask(new VisitAncientCityTask(path.getLast(), cityA));
+            path = model.getWorld().generalShortestPath(0, worldHex -> worldHex.getLocation() == cityB);
+            model.getParty().addDestinationTask(new VisitAncientCityTask(path.getLast(), cityB));
         }
+    }
+
+    @Override
+    public EveningState generateEveningState(Model model, boolean freeLodging, boolean freeRations) {
+        if (step == FOUND_OUT_STUFF) {
+            return new MakeUpAPlanForThePastEventEveningState(model, freeLodging, freeRations);
+        }
+        return null;
     }
 
     private static AncientCityLocation internalGetCity(Model model, String cityName) {
@@ -164,5 +138,132 @@ public class PartSevenStoryPart extends StoryPart {
 
     public static AncientCityLocation getCityB(Model model) {
         return internalGetCity(model, model.getMainStory().getPastCapityB());
+    }
+
+    private class MakeUpAPlanForThePastEventEveningState extends EveningState {
+        public MakeUpAPlanForThePastEventEveningState(Model model, boolean freeLodging, boolean freeRations) {
+            super(model, freeLodging, freeRations, true);
+        }
+
+        @Override
+        protected void locationSpecificEvening(Model model) {
+            if (model.getParty().size() == 1) {
+                leaderSay("So... this is the past...");
+                println(model.getParty().getLeader().getFirstName() + " looks around.");
+                leaderSay("It doesn't look much different than the future actually. But I'd better come up with a plan if I ever want to get back home.");
+                leaderSay("Maybe the Quad knows something about time travel? They may not be the friendliest people, but it's the best lead I've got.");
+                leaderSay("And I can't let Arabella roam free either. Who knows what temporal paradoxes may occur if I don't get her before she can get to the Quad.");
+                // TODO: More
+            } else {
+                GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                GameCharacter other2 = other;
+                for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                    if (gc != other && gc != model.getParty().getLeader() &&
+                            gc != model.getMainStory().getWillisCharacter() &&
+                            gc != model.getMainStory().getCaidCharacter()) {
+                        other2 = gc;
+                        break;
+                    }
+                }
+                partyMemberSay(other, "So... this is the past...");
+                println(other.getFirstName() + " looks around.");
+                partyMemberSay(other, "It doesn't look much different than the future actually.");
+                leaderSay("Yeah. But we'd better come up with a plan if we ever want to get home.");
+                partyMemberSay(other2, "Arabella built the machine that transported us back in time. Maybe she knows how to get us back?");
+                leaderSay("I don't think so. It appeared the machine was malfunctioning when that happened. I don't think Arabella ever intended it to do that.");
+                partyMemberSay(other, "Maybe the Quad knows something about time travel? Aren't they supposed to be some kind of super powerful mages?");
+                leaderSay("Perhaps they do. But by the sound of things, they aren't very friendly.");
+                partyMemberSay(other, "But what other leads do we have?");
+                leaderSay("None really. We'd better get to the capital then, and I've got a feeling that's where Arabella is headed too.");
+                partyMemberSay(other2, "I thought you said she couldn't help us get home.");
+                leaderSay("No, I don't think she can. But she's an evil sorceress who worships the Quad. She'll probably try to ingratiate " +
+                        "herself with them to learn all their magical secrets.");
+                GameCharacter caid = model.getMainStory().getCaidCharacter();
+                if (model.getParty().getPartyMembers().contains(caid)) {
+                    partyMemberSay(caid, "We don't want that, trust me. Arabella almost was a very dangerous magic user even before she found the Ancient Stronghold. " +
+                            "She made a big mess back in my kingdom.");
+                    leaderSay("We've got to stop her.");
+                } else {
+                    partyMemberSay(other, "That would be bad for us.");
+                    leaderSay("For everybody, in the past, in the future or anywhere. We've got to stop her.");
+                }
+                partyMemberSay(other2, "Wait... why should we care what happens here in the past? As long as we can get home, what does it matter what happens to Arabella?");
+                leaderSay("We can't rule out that our actions here in the past will affect what happens in the future.");
+                partyMemberSay(other2, "What do you mean?");
+                GameCharacter willis = model.getMainStory().getWillisCharacter();
+                if (model.getParty().getPartyMembers().contains(willis)) {
+                    partyMemberSay(willis, "In the book... The Quad was actually overthrown too at some point. " +
+                            "That means that those resisting them will actually be successful.");
+                } else {
+                    leaderSay("Do you remember what Willis told us? The Quad was actually overthrown too at some point. That means that " +
+                            "those resisting them will actually be successful.");
+                }
+                partyMemberSay(other2, "And...?");
+                leaderSay("And if we through Arabella into the mix, who knows what's going to happen. Maybe the Quad won't be overthrown.");
+                partyMemberSay(other, "Maybe Arabella will manage to usurp the thrown herself.");
+                partyMemberSay(other2, "And that changes the future?");
+                leaderSay("It could. Or perhaps not. I'm not sure. But we can't take the chance that it doesn't.");
+                partyMemberSay(other2, "Alright, you've convinced me.");
+            }
+            AncientCityLocation capital = getCapitalCity(model);
+            Point p = model.getWorld().getPositionForLocation(capital);
+            model.getParty().addDestinationTask(new VisitAncientCityTask(p, capital));
+            JournalEntry.printJournalUpdateMessage(model);
+            progress();
+            super.locationSpecificEvening(model);
+        }
+    }
+
+    private class PartSevenJournalEntry implements JournalEntry {
+
+        @Override
+        public String getName() {
+            return "The Prophecy of the Quad";
+        }
+
+        @Override
+        public String getText() {
+            if (step == INITIAL_STEP) {
+                return "Complete the quest " + MindMachineQuest.QUEST_NAME + ".";
+            }
+            if (step == FOUND_OUT_STUFF) {
+                return "You have been transported back in time to the time when the " +
+                        "Quad took control of the ancient kingdom of Recca.\n\n" +
+                        "You need to figure out what to do next.";
+            }
+            if (step == COME_UP_WITH_PLAN) {
+                return "You've decided to try to get close to the Quad and potentially meet with them. " +
+                        "The Quad's magic seems like your best hope of getting back to your own time.\n\n" +
+                        "However, the fact that Arabella roams free and could link up with the Quad worries you. " +
+                        "You must find her and stop her.";
+            }
+            return "In an attempt to stop Arabella's plans you tried to destroy her Mind Machine. " +
+                    "The machine malfunctioned and transported you to an unknown location.\n\n" +
+                    "Now you need to figure out where you are.";
+        }
+
+        @Override
+        public boolean isComplete() {
+            return false;
+        }
+
+        @Override
+        public boolean isFailed() {
+            return false;
+        }
+
+        @Override
+        public boolean isTask() {
+            return true;
+        }
+
+        @Override
+        public Point getPosition(Model model) {
+            if (step == COME_UP_WITH_PLAN) {
+                AncientCityLocation cap = getCapitalCity(model);
+                return model.getWorld().getPositionForLocation(cap);
+            }
+            return null;
+        }
     }
 }

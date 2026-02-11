@@ -9,7 +9,7 @@ import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.MainQuest;
 import model.quests.Quest;
-import model.states.DailyEventState;
+import model.states.EveningState;
 import model.states.dailyaction.TownDailyActionState;
 import util.MyPair;
 import view.sprites.Sprite;
@@ -70,5 +70,9 @@ public abstract class StoryPart implements Serializable {
 
     public void addFactionStrings(List<MyPair<String, String>> result) {
 
+    }
+
+    public EveningState generateEveningState(Model model, boolean freeLodging, boolean freeRations) {
+        return null;
     }
 }

@@ -420,10 +420,11 @@ public abstract class WorldHex {
     }
 
     public GameState getEveningState(Model model, boolean freeLodging, boolean freeRations) {
-        EveningState initialLeadsEveningState = model.getMainStory().generateInitialLeadsEveningState(model, freeLodging, freeRations);
-        if (initialLeadsEveningState != null) {
-            return initialLeadsEveningState;
+        EveningState mainStoryEveningState = model.getMainStory().getEveningState(model, freeLodging, freeRations);
+        if (mainStoryEveningState != null) {
+            return mainStoryEveningState;
         }
+
         if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.getEveningState(model, freeLodging, freeRations);
         }
