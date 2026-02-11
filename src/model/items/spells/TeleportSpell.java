@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.Prevalence;
+import model.map.WorldType;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.BlueSpellSprite;
@@ -20,10 +21,12 @@ public class TeleportSpell extends ImmediateSpell {
 
     private static class TeleportPosition {
         private Point position;
+        private WorldType worldType;
         private boolean inCaves;
 
-        public TeleportPosition(Integer markedX, Integer markedY, Boolean caves) {
+        public TeleportPosition(Integer markedX, Integer markedY, WorldType worldType, Boolean caves) {
             this.position = new Point(markedX, markedY);
+            this.worldType = worldType;
             this.inCaves = caves;
         }
     }
@@ -56,7 +59,7 @@ public class TeleportSpell extends ImmediateSpell {
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         state.println(caster.getName() + " is preparing to cast teleport.");
         TeleportPosition tpPos = loadMarkedPosition(model);
-        if (tpPos != null) {
+        if (tpPos != null && tpPos.worldType == model.getWorld().getWorldType()) {
             state.print("You previously marked " + model.getHexInfo(tpPos.position));
         } else {
             state.print("You have no previously marked location");
@@ -72,7 +75,7 @@ public class TeleportSpell extends ImmediateSpell {
         if (markedX == null || markedY == null || caves == null) {
             return null;
         }
-        return new TeleportPosition(markedX, markedY, caves);
+        return new TeleportPosition(markedX, markedY, model.getWorld().getWorldType(), caves);
     }
 
     @Override

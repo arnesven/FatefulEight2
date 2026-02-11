@@ -656,4 +656,8 @@ public class World implements Serializable {
             }
         }
     }
+
+    public WorldType getWorldType() {
+        return type;
+    }
 }

@@ -258,7 +258,7 @@ public class RecruitState extends GameState {
         print("Which party member do you wish to dismiss? ");
         model.getTutorial().dismiss(model);
         GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
-        if (model.getParty().getHeadquarters() != null && TransferCharacterHeadquartersAction.canDoDropOff(model)) {
+        if (model.getParty().getHeadquarters() != null && TransferCharacterHeadquartersAction.canDoDropOff(model) && model.isInOriginalWorld()) {
             print("Do you wish to dismiss " + toDismiss.getName() + " permanently (Y) or send " +
                     himOrHer(toDismiss.getGender()) + " to your headquarters (N) in " + model.getParty().getHeadquarters().getLocationName() + "? ");
             if (!yesNoInput()) {

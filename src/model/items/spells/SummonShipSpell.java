@@ -162,6 +162,9 @@ public class SummonShipSpell extends ImmediateSpell {
     }
 
     private boolean canSummonZeppelin(Model model) {
+        if (!model.isInOriginalWorld()) {
+            return false;
+        }
         if (model.getCurrentHex().getLocation() instanceof UrbanLocation ||
             model.getCurrentHex().getLocation() instanceof InnLocation ||
             model.getCurrentHex().getLocation() instanceof TempleLocation) {
