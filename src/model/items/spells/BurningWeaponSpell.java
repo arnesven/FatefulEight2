@@ -56,6 +56,11 @@ public class BurningWeaponSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Increases the damage of a weapon during combat.";
     }

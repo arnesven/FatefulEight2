@@ -356,6 +356,9 @@ public class MainStory implements Serializable {
         if (ev != null) {
             return ev;
         }
+        if (storyParts.isEmpty()) {
+            return null;
+        }
         return storyParts.getLast().generateEveningState(model, freeLodging, freeRations);
     }
 }

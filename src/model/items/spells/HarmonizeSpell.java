@@ -68,6 +68,11 @@ public class HarmonizeSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public Integer[] getThresholds() {
         return new Integer[]{20, 50, 100, 200};
     }

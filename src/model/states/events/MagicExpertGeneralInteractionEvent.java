@@ -103,7 +103,8 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
                 ChannelingSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(ChannelingSpell.SPELL_NAME),
                 DarkShroudSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(DarkShroudSpell.SPELL_NAME),
                 MindControlSpell.SPELL_NAME.toLowerCase(),  SkillBoostingSpell.getMagicExpertTips(MindControlSpell.SPELL_NAME),
-                OpeningSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(OpeningSpell.SPELL_NAME)
+                OpeningSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(OpeningSpell.SPELL_NAME),
+                MassSpell.SPELL_NAME.toLowerCase(), MassSpell.getMagicExpertTips()
             ));
 
         map.put("mastery", MasterySpell.getMagicExpertTips());

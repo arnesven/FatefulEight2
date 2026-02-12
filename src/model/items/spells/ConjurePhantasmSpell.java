@@ -65,4 +65,9 @@ public class ConjurePhantasmSpell extends CombatSpell {
         }
     }
 
+    @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
 }

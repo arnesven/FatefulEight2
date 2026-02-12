@@ -67,6 +67,11 @@ public class VomitSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Forces a humanoid target to vomit.";
     }

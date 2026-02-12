@@ -153,6 +153,11 @@ public class DragonTamingSpell extends AuxiliarySpell {
             }
         }
 
+        @Override
+        public boolean canBeUsedWithMass() {
+            return false;
+        }
+
         private int calculatedDifficulty(DragonEnemy dragon) {
             switch (dragon.getAggressiveness()) {
                 case BeastEnemy.RAMPAGING:

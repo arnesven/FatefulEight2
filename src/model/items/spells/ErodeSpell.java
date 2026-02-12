@@ -44,6 +44,11 @@ public class ErodeSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Wears down a physical object until it crumbles to dust.";
     }

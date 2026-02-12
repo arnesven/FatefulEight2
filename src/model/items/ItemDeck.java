@@ -292,7 +292,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new ImbueWeaponSpell(),
                 new TelekinesisSpell(),
                 new SummonShipSpell(),
-                new ScrollMakingSpell()
+                new ScrollMakingSpell(),
+                new MassSpell()
                 );
     }
 

@@ -42,4 +42,8 @@ public abstract class SummonCombatSpell extends CombatSpell {
 
     protected abstract GameCharacter makeSummon(Model model, CombatEvent combat, GameCharacter performer, Combatant target);
 
+    @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
 }

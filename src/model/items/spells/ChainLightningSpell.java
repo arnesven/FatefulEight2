@@ -102,6 +102,11 @@ public class ChainLightningSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "A deadly discharge that can fork several times and hit multiple enemies.";
     }

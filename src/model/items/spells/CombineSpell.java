@@ -105,19 +105,18 @@ public class CombineSpell extends AuxiliarySpell {
         List<Spell> result = new ArrayList<>();
         Set<String> set = new HashSet<>();
         for (Spell sp : model.getParty().getSpells()) {
-            if (isCombatSpell(sp) && !set.contains(sp.getName())) {
-                result.add(sp);
-                set.add(sp.getName());
+            if (!(sp instanceof CombineSpell)) {
+                Spell candidate = sp;
+               if (sp instanceof AuxiliarySpell && ((AuxiliarySpell) sp).canBeCastInCombat()) {
+                   candidate = ((AuxiliarySpell) sp).getCombatSpell();
+               }
+               if (!set.contains(candidate.getName())) {
+                   result.add(candidate);
+                   set.add(candidate.getName());
+               }
             }
         }
         return result;
-    }
-
-    private boolean isCombatSpell(Spell sp) {
-        if (sp instanceof CombineSpell) {
-            return false;
-        }
-        return sp instanceof CombatSpell || (sp instanceof AuxiliarySpell && ((AuxiliarySpell) sp).canBeCastInCombat());
     }
 
     @Override
@@ -132,7 +131,7 @@ public class CombineSpell extends AuxiliarySpell {
 
     @Override
     public String getDescription() {
-        return "Enables the effects of several spells to be chained with a single cast.";
+        return "Chains the effects of several spells with a single cast.";
     }
 
     public static MyPair<Skill, Integer> getResultingSkill(List<Spell> combined) {
@@ -192,6 +191,11 @@ public class CombineSpell extends AuxiliarySpell {
                     }
                 }
             }
+        }
+
+        @Override
+        public boolean canBeUsedWithMass() {
+            return false;
         }
 
         private void applyCombatSpellIfAble(Model model, CombatEvent combat, GameCharacter performer, Combatant target, CombatSpell csp) {

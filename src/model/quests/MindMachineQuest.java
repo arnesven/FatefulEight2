@@ -43,7 +43,7 @@ import java.util.List;
 
 public class MindMachineQuest extends MainQuest {
     public static final String QUEST_NAME = "Mind Machine";
-    private static final String INTRO_TEXT = "You find yourself back at the sewage pipe from you once escaped. " +
+    private static final String INTRO_TEXT = "You find yourself back at the sewage pipe through which you once escaped. " +
             "Once aside, a labyrinth of watery passageways lay between you and the castle dungeons. " +
             "If you can find the way through you may be able to get into the castle, but what will you find inside?";
 

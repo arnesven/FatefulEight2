@@ -57,6 +57,11 @@ public class EntropicBoltSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "A spell which projects an energy missile at an enemy.";
     }

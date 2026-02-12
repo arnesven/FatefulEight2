@@ -53,4 +53,9 @@ public class TurnUndeadSpell extends CombatSpell {
             combat.println(getName() + " has no effect on " + target.getName() + ".");
         }
     }
+
+    @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
 }

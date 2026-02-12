@@ -52,6 +52,11 @@ public class ShiningAegisSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public boolean masteriesEnabled() {
         return true;
     }

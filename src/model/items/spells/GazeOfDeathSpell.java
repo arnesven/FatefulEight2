@@ -56,6 +56,11 @@ public class GazeOfDeathSpell extends CombatSpell {
         }
     }
 
+    @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
     private boolean doWithAnimation(Model model, CombatEvent combat, GameCharacter performer,
                                  Combatant target, int difficulty, CombatSubView subView) {
         DarkenCombatAnimation darken = new DarkenCombatAnimation(8);

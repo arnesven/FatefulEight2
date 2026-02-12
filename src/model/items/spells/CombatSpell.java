@@ -50,4 +50,6 @@ public abstract class CombatSpell extends MasterySpell {
         }
         return getName() + " can only be cast in combat.";
     }
+
+    public abstract boolean canBeUsedWithMass();
 }

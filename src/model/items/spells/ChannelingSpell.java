@@ -81,6 +81,11 @@ public class ChannelingSpell extends SkillBoostingSpell {
             }
 
             @Override
+            public boolean canBeUsedWithMass() {
+                return false;
+            }
+
+            @Override
             public String getDescription() {
                 return "";
             }

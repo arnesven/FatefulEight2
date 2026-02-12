@@ -63,6 +63,11 @@ public class BlackPactSpell extends AuxiliarySpell {
             }
 
             @Override
+            public boolean canBeUsedWithMass() {
+                return false;
+            }
+
+            @Override
             public String getDescription() {
                 return BlackPactSpell.this.getDescription();
             }

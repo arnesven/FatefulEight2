@@ -44,6 +44,11 @@ public class WardSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Protection which makes the target immune to magic attacks for 2 rounds.";
     }

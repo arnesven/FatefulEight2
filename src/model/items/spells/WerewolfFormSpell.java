@@ -55,6 +55,11 @@ public class WerewolfFormSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Transforms the caster into a werewolf for " + MyStrings.numberWord(TURNS) + " turns.";
     }

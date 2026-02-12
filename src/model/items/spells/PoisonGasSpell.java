@@ -39,6 +39,11 @@ public class PoisonGasSpell extends CombatSpell {
         addPoisonGasEffect(combat, performer, target);
     }
 
+    @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
     public void addPoisonGasEffect(CombatEvent combat, GameCharacter performer, Combatant target) {
         if (target instanceof UndeadEnemy || target instanceof AutomatonEnemy ||
                 target.hasCondition(EnemyPoisonCondition.class)) {

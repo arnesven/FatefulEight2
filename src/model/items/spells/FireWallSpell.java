@@ -49,6 +49,11 @@ public class FireWallSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Conjures a barrier of fire for one combat turn, " +
                 "damaging combatants that come close.";

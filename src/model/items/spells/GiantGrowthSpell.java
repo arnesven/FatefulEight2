@@ -53,6 +53,11 @@ public class GiantGrowthSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Targets HP is increased by 2 and gets +2 to attack rolls this combat.";
     }

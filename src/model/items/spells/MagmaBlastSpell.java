@@ -53,6 +53,11 @@ public class MagmaBlastSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public boolean masteriesEnabled() {
         return true;
     }

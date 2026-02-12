@@ -26,7 +26,6 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
         super(model);
         this.location = castleLocation;
         super.addNode(3, 4, new StayHereNode());
-        addNode(7, 1, new FlagPoleNode());
         super.addNode(location.getTavernPosition().x, location.getTavernPosition().y, new TavernNode(freeLodge));
         super.addNode(3, 2, new GoToCastleActionNode(location));
         if (model.getParty().hasHeadquartersIn(castleLocation)) {

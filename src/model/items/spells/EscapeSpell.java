@@ -44,6 +44,11 @@ public class EscapeSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Teleports the party out of combat.";
     }

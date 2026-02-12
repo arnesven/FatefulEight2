@@ -47,6 +47,11 @@ public class BindDaemonSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Binds a daemon and compels it to return to its demonic realm.";
     }

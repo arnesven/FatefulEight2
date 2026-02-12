@@ -54,6 +54,11 @@ public class ResurrectSpell extends CombatSpell implements FullRoundSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Brings a character back to life. Takes a full combat round to cast.";
     }

@@ -62,6 +62,11 @@ public class BoneArmorSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return false;
+    }
+
+    @Override
     public String getDescription() {
         return "Provides the caster with a suit of armor of bone for the remainder of combat.";
     }

@@ -52,6 +52,11 @@ public class TransfigurationSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Transforms the target into a harmless animal for 3 rounds.";
     }

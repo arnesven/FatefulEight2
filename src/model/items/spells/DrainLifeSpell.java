@@ -69,6 +69,11 @@ public class DrainLifeSpell extends CombatSpell {
     }
 
     @Override
+    public boolean canBeUsedWithMass() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Absorbs up to 4 health points from the target.";
     }
