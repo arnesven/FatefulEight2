@@ -12,6 +12,7 @@ public class TownDailyActionState extends TownishDailyActionState {
     public TownDailyActionState(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation,
                                 boolean freeLodging, boolean freeRations) {
         super(model, hasWaterAccess, urbanLocation, freeLodging, freeRations);
+        addNode(7, 1, new FlagPoleNode());
         model.getMainStory().handleTownSetup(this);
     }
 

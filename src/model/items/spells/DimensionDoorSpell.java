@@ -20,6 +20,9 @@ public class DimensionDoorSpell extends ImmediateSpell {
         if (model.getParty().getHeadquarters() == null) {
             return  "You cannot cast " + getName() + " right now. (You do not have a Headquarters.)";
         }
+        if (!model.isInOriginalWorld()) {
+            return "You cannot cast " + getName() + " right now.";
+        }
         return super.tryCastSpell(model, gc);
     }
 

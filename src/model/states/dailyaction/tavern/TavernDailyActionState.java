@@ -24,13 +24,13 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         this.inTown = inTown;
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
             addNode(2, 5, new CardGameNode());
-        } else {
+        } else if (getModel().isInOriginalWorld()) {
             addNode(2, 5, new RecruitNode(model));
         }
         addNode(6, 1, new LodgingNode(freeLodging));
         addNode(2, 3, new TalkToBartenderNode(model, inTown));
         addNode(5, 5, new TalkToPartyNode());
-        if (model.getParty().getActiveTravellers().isEmpty()) {
+        if (getModel().isInOriginalWorld() && model.getParty().getActiveTravellers().isEmpty()) {
             addNode(2, 2, new TravellerNode(model));
         }
         if (inTown) {

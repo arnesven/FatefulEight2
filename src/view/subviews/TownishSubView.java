@@ -24,14 +24,14 @@ public class TownishSubView extends DailyActionSubView {
     public static final MyColors PATH_COLOR = MyColors.DARK_GRAY;
     public static final MyColors STREET_COLOR = MyColors.GRAY;
     public static final Sprite STREET = new Sprite32x32("streetground", "world_foreground.png", 0x02, GROUND_COLOR, PATH_COLOR, MyColors.TAN);
-    private static final Sprite STREET_INNER = new Sprite32x32("streetground", "world_foreground.png", 0x02, STREET_COLOR, PATH_COLOR, MyColors.TAN);
+    protected static final Sprite STREET_INNER = new Sprite32x32("streetground", "world_foreground.png", 0x02, STREET_COLOR, PATH_COLOR, MyColors.TAN);
     private static final Sprite WATER_DAY = new DockSprite(0xA6, MyColors.LIGHT_BLUE, MyColors.CYAN);
     private static final Sprite WATER_EVENING = new DockSprite(0xA6, MyColors.DARK_BLUE, MyColors.BLUE);
     private static final Sprite DOCK_DAY = new DockSprite(0xB6, MyColors.LIGHT_BLUE, MyColors.CYAN);
     private static final Sprite DOCK_EVENING = new DockSprite(0xB6, MyColors.DARK_BLUE, MyColors.BLUE);
-    private static final Sprite STREET_DAY = new Sprite32x32("streetground", "world_foreground.png", 0x02,
+    protected static final Sprite STREET_DAY = new Sprite32x32("streetground", "world_foreground.png", 0x02,
             GROUND_COLOR, PATH_COLOR, MyColors.TAN);
-    private static final Sprite STREET_EVENING = new Sprite32x32("streetground", "world_foreground.png", 0x02,
+    protected static final Sprite STREET_EVENING = new Sprite32x32("streetground", "world_foreground.png", 0x02,
             GROUND_COLOR_NIGHT, PATH_COLOR, MyColors.TAN);
 
     private static final Sprite CANAL_DAY = new CanalSprite(TimeOfDay.MIDDAY, false);
@@ -71,12 +71,15 @@ public class TownishSubView extends DailyActionSubView {
         Random rnd = new Random(townName.hashCode());
         for (int col = 0; col < 8; col++) {
             for (int row = 1; row < 8; row++) {
-                if (getMatrix().getElementAt(col, row) == null
+                Sprite townHouse = townHouses[rnd.nextInt(townHouses.length)];
+                boolean isBlocked = getMatrix().getElementAt(col, row) != null ||
+                        (getMatrix().getElementAt(col, row + 1) != null && townHouse.getHeight() > 32);
+
+                if (!isBlocked
                         && rnd.nextDouble() > (1.0- townDensity)
                         && isOutsideTownSquare(col, row)
                         && !state.isPositionBlocked(col, row)) {
                     Point p = convertToScreen(new Point(col, row));
-                    Sprite townHouse = townHouses[rnd.nextInt(townHouses.length)];
                     model.getScreenHandler().register(townHouse.getName(), p, townHouse);
                 }
             }
@@ -134,7 +137,7 @@ public class TownishSubView extends DailyActionSubView {
         }
     }
 
-    private void drawTopRowGrass(Model model) {
+    protected void drawTopRowGrass(Model model) {
         Random random = new Random(8);
         for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {
             Point p = convertToScreen(new Point(col, 0));
