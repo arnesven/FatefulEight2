@@ -170,6 +170,8 @@ public class BoozersEvent extends DailyEventState {
             boozer1Say("Eeeh he he... Maybe thish feller might be alright, eh?");
             boozer2Say("Hic! Yeash, seems like a good egg... hic...");
             boozer1Say("Stay and drink with ussh for a bit eh?");
+            model.getLog().waitForAnimationToFinish();
+            getPortraitSubView().forceEyesClosed(true);
             print("You stay for a while with the two drunks. They keep bringing out more bottles out of a bag. " +
                     "Soon they are both snoring loudly. Do you want to loot the bag? (Y/N) ");
             if (yesNoInput()) {

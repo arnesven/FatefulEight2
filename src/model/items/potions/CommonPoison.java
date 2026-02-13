@@ -27,7 +27,7 @@ public class CommonPoison extends PoisonPotion {
 
     @Override
     public String getShoppingDetails() {
-        return "Toxic when consumed, applies Poisoned condition when thrown.";
+        return ", Toxic when consumed, applies Poisoned condition when thrown.";
     }
 
     @Override

@@ -41,12 +41,15 @@ public class AlchemistEvent extends DailyEventState {
                 "chore that needs doing. Would you spread the word about my new shop?");
         print("Will you help Durok? (Y/N) ");
         if (yesNoInput()) {
+            removePortraitSubView(model);
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Entertain, 8);
             if (success) {
                 println("You go to the town square and start chanting about Durok's new business. You even manage to " +
                         "make up a little song. Before long, a few townsfolk gather around, amused and intrigued. " +
                         "You keep it up for a few hours. Afterwards, you return to Durok's shop.");
-               portraitSay("There you are! I've had many customers since you left. Whatever you did, it worked. " +
+                model.getLog().waitForAnimationToFinish();
+                showExplicitPortrait(model, durok, "Durok");
+                portraitSay("There you are! I've had many customers since you left. Whatever you did, it worked. " +
                         "Please permit me to reward you!");
                Potion potion = model.getItemDeck().getRandomPotion();
                println("The party gains a " + potion.getName() + ".");
@@ -64,6 +67,8 @@ public class AlchemistEvent extends DailyEventState {
                         "Grrr... why won't people listen to us? So annoying!");
                 leaderSay("I'm sure Durok's business will take off once people get to know him.");
                 println("You return to Durok's shop, which is quiet.");
+                model.getLog().waitForAnimationToFinish();
+                showExplicitPortrait(model, durok, "Durok");
                 portraitSay("Oh, hello. Nice to see somebody in here. I wonder if people don't understand what " +
                         "an apothecary is?");
                 model.getParty().randomPartyMemberSay(model, List.of("They're probably just shy..."));
