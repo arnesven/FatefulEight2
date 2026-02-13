@@ -102,7 +102,7 @@ public abstract class AnalyzeSkillDialog extends AnalyzeDialog {
                 int row = SkillsView.ROW_OFFSET - 1;
                 for (MyPair<Skill, List<Integer>> pair : content) {
                     int finalY = y + row;
-                    BorderFrame.drawString(model.getScreenHandler(), String.format("%-13s", pair.first.getName()),
+                    BorderFrame.drawString(model.getScreenHandler(), String.format("%-14s", pair.first.getName()),
                             x, finalY, MyColors.WHITE, MyColors.BLUE);
 
                     int charNum = 0;

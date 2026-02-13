@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.TimeOfDay;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -78,8 +79,12 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
     }
 
     private void goToMeetingPlace(Model model, boolean withConstable) {
+        removePortraitSubView(model);
+        model.setTimeOfDay(TimeOfDay.EVENING);
+        setCurrentTerrainSubview(model);
         println("You wait for nightfall, then you go " + meetingPlace + ".");
         if (withConstable) {
+            showConstablePortrait(model);
             portraitSay("Okay, now listen. I'll hide behind that corner while you meet with " +
                     "whoever sent the letter. If anything illegal seems to be going on, just say 'looks like bad weather', " +
                     "and I'll pop out like a jack-in-the-box. Got that?");
@@ -197,6 +202,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
         } else {
             leaderSay("One of the smugglers must have gotten away with the crate. That's too bad.");
             if (constableFights) {
+                showConstablePortrait(model);
                 portraitSay("How unfortunate, well. At least now they may think twice before doing their shady deals " +
                         "in our town again. Thank you for your service.");
                 println(model.getParty().getLeader().getFirstName() + " makes a little salute. " +

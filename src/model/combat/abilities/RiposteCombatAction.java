@@ -90,7 +90,7 @@ public class RiposteCombatAction extends StaminaCombatAbility implements SkillAb
     private static class RiposteStanceCondition extends Condition {
         public RiposteStanceCondition() {
             super("Riposte", "RIP");
-            setDuration(2);
+            setDuration(6);
         }
 
         @Override

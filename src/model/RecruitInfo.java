@@ -28,8 +28,16 @@ public enum RecruitInfo {
     public boolean doRecruitTalk(Model model, RecruitState state, RecruitableCharacter rgc) {
         GameCharacter selected = rgc.getCharacter();
         if (this == none) {
-            state.leaderSay("Who are you?");
-            state.candidateSay(rgc, "I'm " + selected.getName() + ".");
+            if (MyRandom.flipCoin()) {
+                state.leaderSay("Who are you?");
+            } else {
+                state.leaderSay("What is your name?");
+            }
+            state.candidateSay(rgc, MyRandom.sample(List.of(
+                    "I'm " + selected.getName() + ".",
+                    "My name is " + selected.getName() + ".",
+                    selected.getName() + ".",
+                    selected.getFirstName() + ". " + selected.getFullName() + ".")));
             return true;
         }
 
@@ -42,11 +50,11 @@ public enum RecruitInfo {
         if (this == profession) {
             state.leaderSay("What are your qualifications?");
             List<MyPair<Skill, Integer>> topSkills = MyLists.transform(new ArrayList<>(rgc.getCharacter().getSkillSet()),
-                    s -> new MyPair<>(s, rgc.getCharacter().getRankForSkill(s)));
+                    s -> new MyPair<>(s, rgc.getCharacter().getCharClass().getWeightForSkill(s).getWeight()));
             topSkills.sort(Comparator.comparingInt(o -> o.second));
             topSkills = topSkills.reversed();
             state.candidateSay(rgc, "I'm skilled in " + MyLists.commaAndJoin(topSkills.subList(0, Math.min(3, topSkills.size())),
-                    p-> p.first.isMagic() ? p.first.getName().replace("Magic (", "").replace(")", "magic") :
+                    p-> p.first.isMagic() ? p.first.getName().replace("Magic (", "").replace(")", " Magic") :
                             p.first.getName()) + ".");
             return true;
         } else if (this == qualifications) {

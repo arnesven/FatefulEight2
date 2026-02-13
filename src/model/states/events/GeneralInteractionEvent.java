@@ -205,7 +205,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 println("The " + victim + " is enraged and stomps off.");
             }
         } else if (strat == ProvokedStrategy.FIGHT_IF_ADVANTAGE &&
-                CowardlyCondition.goodGuysHasTheAdvantage(getModel(), makeEnemyTeam(victimChar, companions),
+                CowardlyCondition.goodGuysHasTheAdvantage(getModel(), this, makeEnemyTeam(victimChar, companions),
                         getModel().getParty().getPartyMembers())) {
             portraitSay("I would fight you... but uh... Well, I just don't want to.");
             print("Do you want to attack the " + victim + "? (Y/N) ");

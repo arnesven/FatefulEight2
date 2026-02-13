@@ -34,22 +34,26 @@ public class CowardlyCondition extends Condition {
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         super.endOfCombatRoundTrigger(model, state, comb);
         if (state instanceof CombatEvent) {
-            if (goodGuysHasTheAdvantage(model, team, ((CombatEvent) state).getAllies())) {
+            if (goodGuysHasTheAdvantage(model, state, team, ((CombatEvent) state).getAllies())) {
                 state.println(comb.getName() + " flees from combat!");
                 ((CombatEvent) state).retreatEnemy(comb);
             }
         }
     }
 
-    public static boolean goodGuysHasTheAdvantage(Model model, List<Enemy> enemyTeam, List<GameCharacter> allies) {
-        return calculatePartyCombatStrength(model, allies) > calculateBadGuyCombatStrength(enemyTeam);
+    public static boolean goodGuysHasTheAdvantage(Model model, GameState state, List<Enemy> enemyTeam, List<GameCharacter> allies) {
+        return calculatePartyCombatStrength(model, allies) > calculateBadGuyCombatStrength(state, enemyTeam);
     }
 
-    private static int calculateBadGuyCombatStrength(List<Enemy> team) {
+    private static int calculateBadGuyCombatStrength(GameState state, List<Enemy> team) {
         int badGuyCombatPower = 0;
         for (Enemy e : team) {
-            badGuyCombatPower += e.getThreat();
+            if (!(state instanceof CombatEvent) ||
+                    (((CombatEvent)state).getEnemies().contains(e) && !e.isDead())) {
+                badGuyCombatPower += e.getThreat();
+            }
         }
+        System.out.println("Bad guys power : " + badGuyCombatPower);
         return badGuyCombatPower;
     }
 
