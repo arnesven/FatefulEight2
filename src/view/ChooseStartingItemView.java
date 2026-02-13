@@ -6,9 +6,12 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.items.Item;
+import model.items.accessories.Buckler;
+import model.items.potions.RejuvenationPotion;
 import model.items.special.TentUpgradeItem;
 import model.items.weapons.Dagger;
 import model.items.weapons.Dirk;
+import model.items.weapons.Longsword;
 import util.Arithmetics;
 import util.MyStrings;
 import view.party.CharacterCreationView;
@@ -55,7 +58,13 @@ public class ChooseStartingItemView extends SelectableListMenu {
         Map<String, Item> itemMap = new HashMap<>();
         for (Item it : gc.getCharClass().getStartingItems()) {
             itemMap.put(it.getName(), it);
-        } // TODO: Add some more default starting items?
+        }
+        if (!itemMap.containsKey(new Longsword().getName())) {
+            itemMap.put(new Longsword().getName(), new Longsword());
+        } else {
+            itemMap.put(new Buckler().getName(), new Buckler());
+        }
+        itemMap.put(new RejuvenationPotion().getName(), new RejuvenationPotion());
         return new ArrayList<>(itemMap.values());
     }
 
