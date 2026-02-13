@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.mainstory.thepast.FindArabellaTask;
 import model.mainstory.thepast.ThePastJournalEntry;
 import model.mainstory.thepast.VisitAncientCityTask;
@@ -68,6 +69,9 @@ public class PartSevenStoryPart extends StoryPart {
             state.leaderSay("'Recca', that sounds familiar... Wait a minute. What year is it?");
             port.portraitSay(model, state, "Year? Uhm, I think it's 2425, or is it 26 now?");
             model.getParty().randomPartyMemberSay(model, List.of("Good golly. We've been transported back in time!"));
+            state.randomSayIfPersonality(PersonalityTrait.irritable, List.of(), "Grrr, and I was just getting used to the present!");
+            state.randomSayIfPersonality(PersonalityTrait.calm, List.of(), "Let's not freak out about this.");
+            state.randomSayIfPersonality(PersonalityTrait.intellectual, List.of(), "But it's fascinating! We are now time-travelling adventurers.");
             port.portraitSay(model, state, "Back in time? Whatever do you mean?");
             state.leaderSay("Never mind that. This is the kingdom of Recca? Which is ruled by an evil king?");
             port.portraitSay(model, state, "King Maximus, yes, or it was. Until the Quadrificus took over. " +

@@ -4,17 +4,16 @@ import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
 import model.map.locations.EbonshireTown;
 
+import java.util.List;
+
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAR;
 import static model.races.Race.HIGH_ELF;
 
-public class MelethainGauthCharacter extends model.characters.GameCharacter {
+public class MelethainGauthCharacter extends PresetCharacter {
     public MelethainGauthCharacter() {
         super("Melethain", "Gauth", HIGH_ELF, BBN,
-                new MelethainGauth(), new CharacterClass[]{BBN, THF, ASN, MAR});
-        addToPersonality(PersonalityTrait.aggressive);
-        addToPersonality(PersonalityTrait.mischievous);
-        addToPersonality(PersonalityTrait.romantic);
-        setHomeTown(EbonshireTown.NAME);
+                new MelethainGauth(), new CharacterClass[]{BBN, THF, ASN, MAR},
+                EbonshireTown.NAME, List.of(PersonalityTrait.aggressive, PersonalityTrait.mischievous, PersonalityTrait.romantic));
     }
 }

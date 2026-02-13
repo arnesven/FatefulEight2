@@ -5,17 +5,16 @@ import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
 import model.map.locations.BogdownCastle;
 
+import java.util.List;
+
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
 import static model.races.Race.HALF_ORC;
 
-public class KruskTalandroCharacter extends GameCharacter {
+public class KruskTalandroCharacter extends PresetCharacter {
     public KruskTalandroCharacter() {
         super("Krusk", "Talandro", HALF_ORC, WIT,
-                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
-        addToPersonality(PersonalityTrait.generous);
-        addToPersonality(PersonalityTrait.lawful);
-        addToPersonality(PersonalityTrait.intellectual);
-        setHomeTown(BogdownCastle.CASTLE_NAME);
+                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR},
+                BogdownCastle.CASTLE_NAME, List.of(PersonalityTrait.generous, PersonalityTrait.lawful, PersonalityTrait.intellectual));
     }
 }

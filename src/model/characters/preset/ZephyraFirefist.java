@@ -5,8 +5,8 @@ import model.races.Race;
 import view.MyColors;
 import view.party.CharacterCreationView;
 
-public class ZephyreFirefist extends AdvancedAppearance {
-    public ZephyreFirefist() {
+public class ZephyraFirefist extends AdvancedAppearance {
+    public ZephyraFirefist() {
         super(Race.DARK_ELF, true, MyColors.DARK_RED, CharacterCreationView.mouthSet[11],
                 CharacterCreationView.noseSet[5], CharacterEyes.allEyes[6],
                 new RoughLongHairStyle(),

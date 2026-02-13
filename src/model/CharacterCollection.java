@@ -2,12 +2,8 @@ package model;
 
 import model.characters.*;
 import model.characters.preset.*;
-import model.classes.CharacterClass;
 
 import java.util.ArrayList;
-
-import static model.classes.Classes.*;
-import static model.races.Race.*;
 
 public class CharacterCollection extends ArrayList<GameCharacter> {
     public CharacterCollection() {
@@ -39,7 +35,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new LonnieLiebgottCharacter());
         add(new RiboxAnariCharacter());
         add(new LianaClearwaterCharacter());
-        add(new ZephyreFirefistCharacter());
+        add(new ZephyraFirefistCharacter());
         add(new MuldanEbonclawCharacter());
         add(new FattyGoldenrodCharacter());
         add(new StellaComptonCharacter());
