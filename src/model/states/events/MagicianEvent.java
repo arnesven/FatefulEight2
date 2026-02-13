@@ -81,7 +81,7 @@ public class MagicianEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Magician", "", portrait.getRace(), Classes.MAG, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(model.getItemDeck().getRandomWand(), new MesmersRobes(),
+                new Equipment(model.getItemDeck().getRandomWand(), new MesmersRobes(),
                 model.getItemDeck().getRandomJewelry()));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;

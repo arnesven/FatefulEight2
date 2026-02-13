@@ -269,11 +269,9 @@ public class TownFairQuest extends Quest {
             List<GameCharacter> opponents = List.of(
                     new GameCharacter("Tamara", "Didriksson", Race.NORTHERN_HUMAN, Classes.MAR,
                         PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, true),
-                        Classes.NO_OTHER_CLASSES,
                             new Equipment(new CompetitionBow())),
                     new GameCharacter("Golbert", "Volantis", Race.DARK_ELF, Classes.FOR,
                         PortraitSubView.makeRandomPortrait(Classes.FOR, Race.DARK_ELF, false),
-                        Classes.NO_OTHER_CLASSES,
                             new Equipment(new YewBow())));
             MyLists.forEach(opponents, (GameCharacter gc) -> gc.setLevel(4));
             archeryState.addNPCShooters(opponents);

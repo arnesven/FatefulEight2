@@ -1,5 +1,6 @@
 package view;
 
+import model.characters.preset.PresetCharacter;
 import model.headquarters.Headquarters;
 import model.items.special.MagicMirror;
 import model.journal.*;
@@ -176,12 +177,13 @@ public class FullPartySelectView extends SelectableListMenu {
                     if (isVacant(finalI+1)) {
                         return;
                     }
-                    GameCharacter gc = getSelectedCharacter(finalI+1);
-                    for (int i = 0; i < gc.getClasses().length; ++i) {
-                        if (gc.getClasses()[i] == gc.getCharClass()) {
-                            int index = Arithmetics.decrementWithWrap(i, gc.getClasses().length);
-                            gc.setClass(gc.getClasses()[index]);
-                            break;
+                    if (getSelectedCharacter(finalI + 1) instanceof PresetCharacter gc) {
+                        for (int i = 0; i < gc.getClasses().length; ++i) {
+                            if (gc.getClasses()[i] == gc.getCharClass()) {
+                                int index = Arithmetics.decrementWithWrap(i, gc.getClasses().length);
+                                gc.setClass(gc.getClasses()[index]);
+                                break;
+                            }
                         }
                     }
                 }
@@ -191,12 +193,13 @@ public class FullPartySelectView extends SelectableListMenu {
                     if (isVacant(finalI+1)) {
                         return;
                     }
-                    GameCharacter gc = getSelectedCharacter(finalI+1);
-                    for (int i = 0; i < gc.getClasses().length; ++i) {
-                        if (gc.getClasses()[i] == gc.getCharClass()) {
-                            int index = Arithmetics.incrementWithWrap(i, gc.getClasses().length);
-                            gc.setClass(gc.getClasses()[index]);
-                            break;
+                    if (getSelectedCharacter(finalI+1) instanceof PresetCharacter gc) {
+                        for (int i = 0; i < gc.getClasses().length; ++i) {
+                            if (gc.getClasses()[i] == gc.getCharClass()) {
+                                int index = Arithmetics.incrementWithWrap(i, gc.getClasses().length);
+                                gc.setClass(gc.getClasses()[index]);
+                                break;
+                            }
                         }
                     }
                 }

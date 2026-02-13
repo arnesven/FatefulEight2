@@ -41,7 +41,7 @@ public abstract class FarmerEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return new GameCharacter("Farmer", "", portrait.getRace(), Classes.FARMER,
-                portrait, Classes.NO_OTHER_CLASSES, new Equipment(randomWeapon()));
+                portrait, new Equipment(randomWeapon()));
     }
 
     private Weapon randomWeapon() {

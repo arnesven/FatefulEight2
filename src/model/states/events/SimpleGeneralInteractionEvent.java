@@ -44,7 +44,6 @@ public abstract class SimpleGeneralInteractionEvent extends GeneralInteractionEv
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter(name, "", race, charClass, portrait,
-                Classes.NO_OTHER_CLASSES,
                 new Equipment(model.getItemDeck().getRandomWeapon(),
                         model.getItemDeck().getRandomApparel(), null));
         gc.setLevel(MyRandom.randInt(1, 4));

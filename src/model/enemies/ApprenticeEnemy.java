@@ -10,7 +10,6 @@ import model.items.weapons.Weapon;
 public class ApprenticeEnemy extends FormerPartyMemberEnemy{
     public ApprenticeEnemy(AdvancedAppearance app, Weapon weapon) {
         super(new GameCharacter("Apprentice", "", app.getRace(), Classes.None, new LonnieLiebgott(),
-                Classes.NO_OTHER_CLASSES,
                 new Equipment(weapon)));
     }
 }

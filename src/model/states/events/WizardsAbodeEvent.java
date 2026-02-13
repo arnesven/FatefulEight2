@@ -84,7 +84,7 @@ public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Wizard", "", portrait.getRace(), Classes.WIZ, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new PineWand(), new MesmersRobes(), model.getItemDeck().getRandomJewelry()));
+                new Equipment(new PineWand(), new MesmersRobes(), model.getItemDeck().getRandomJewelry()));
         gc.setLevel(MyRandom.randInt(3, 6));
         return gc;
     }

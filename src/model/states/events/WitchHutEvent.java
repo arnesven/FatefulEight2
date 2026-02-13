@@ -97,7 +97,7 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Witch", "", portrait.getRace(), Classes.WIT, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new SkullWand(), new CultistsRobes(), model.getItemDeck().getRandomJewelry()));
+                new Equipment(new SkullWand(), new CultistsRobes(), model.getItemDeck().getRandomJewelry()));
         gc.setLevel(MyRandom.randInt(3, 6));
         return gc;
     }

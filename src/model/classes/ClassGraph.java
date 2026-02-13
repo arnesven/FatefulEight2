@@ -33,6 +33,8 @@ public class ClassGraph {
             int wrap = ((i - ringSize) + 5) % ringSize + ringSize;
             graph.put(list.get(i).id(), Set.of(list.get(forward), list.get(backward), list.get(across), list.get(wrap)));
         }
+
+        graph.put(Classes.None.id(), new HashSet<>(list)); // From Classless you can go to any class.
         return graph;
     }
 

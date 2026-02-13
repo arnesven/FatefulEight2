@@ -2,15 +2,19 @@ package model;
 
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.states.RecruitState;
 import util.MyLists;
+import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public enum RecruitInfo {
@@ -37,17 +41,13 @@ public enum RecruitInfo {
         }
         if (this == profession) {
             state.leaderSay("What are your qualifications?");
-            List<CharacterClass> classList = new ArrayList<>(Arrays.asList(selected.getClasses()));
-            classList.remove(selected.getCharClass());
-            classList.removeIf(cls -> cls == Classes.None);
-            if (classList.isEmpty()) {
-                state.candidateSay(rgc, "I've devoted my entire career to being " +
-                        MyStrings.aOrAn(selected.getCharClass().getFullName()) + " " +
-                        selected.getCharClass().getFullName() + ". I haven't tried any other fields of work.");
-            } else {
-                state.candidateSay(rgc, "I have previously worked as " + MyLists.commaAndJoin(classList,
-                        cls -> MyStrings.aOrAn(cls.getFullName()) + " " + cls.getFullName()) + ".");
-            }
+            List<MyPair<Skill, Integer>> topSkills = MyLists.transform(new ArrayList<>(rgc.getCharacter().getSkillSet()),
+                    s -> new MyPair<>(s, rgc.getCharacter().getRankForSkill(s)));
+            topSkills.sort(Comparator.comparingInt(o -> o.second));
+            topSkills = topSkills.reversed();
+            state.candidateSay(rgc, "I'm skilled in " + MyLists.commaAndJoin(topSkills.subList(0, Math.min(3, topSkills.size())),
+                    p-> p.first.isMagic() ? p.first.getName().replace("Magic (", "").replace(")", "magic") :
+                            p.first.getName()) + ".");
             return true;
         } else if (this == qualifications) {
             state.leaderSay("Would you contribute any gold or equipment to the party if you joined?");
@@ -97,15 +97,11 @@ public enum RecruitInfo {
         if (knownInfo == 1) {
             return String.format("%s", gc.getFullName());
         }
-        if (knownInfo == 2) {
+        if (knownInfo <= 3) {
             return String.format("%s, %s %d", gc.getFullName(),
                     gc.getCharClass().getShortName(), gc.getLevel());
         }
-        if (knownInfo == 3) {
-            return String.format("%s, %s %d, %s", gc.getFullName(),
-                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses());
-        }
-        return String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),
-                gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGold);
+        return String.format("%s, %s, %s %d, %d gold", gc.getFullName(), gc.getRace().getName(),
+                gc.getCharClass().getShortName(), gc.getLevel(), startingGold);
     }
 }

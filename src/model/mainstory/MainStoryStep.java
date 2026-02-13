@@ -21,7 +21,7 @@ public enum MainStoryStep {
 
     STARTED((model, mainStory) -> {
         GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
-                new KruskTalandro(), Classes.NO_OTHER_CLASSES);
+                new KruskTalandro());
         mainStory.setupStory(dummy); // Get task "visit uncle"
     }),
     UNCLE_VISITED((model, mainStory) -> {

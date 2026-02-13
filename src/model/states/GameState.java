@@ -258,8 +258,7 @@ public abstract class GameState implements GameStateConstants {
             lastNames.addAll(COMMON_LAST_NAMES);
         }
         String lastName = lastNames.remove(MyRandom.randInt(lastNames.size()));
-        GameCharacter gc = new GameCharacter(firstName, lastName, race, cls, portrait,
-                makeRandomClassSet(cls));
+        GameCharacter gc = new GameCharacter(firstName, lastName, race, cls, portrait);
         gc.setLevel(level);
         return gc;
     }

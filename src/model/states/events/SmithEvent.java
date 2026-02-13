@@ -76,7 +76,7 @@ public class SmithEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Smith", "", portrait.getRace(), new ArtisanEvent.Smith().makeArtisanSubClass(), portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new Warhammer(), new LeatherArmor(), null));
+                new Equipment(new Warhammer(), new LeatherArmor(), null));
         gc.setLevel(MyRandom.randInt(3, 6));
         return gc;
     }

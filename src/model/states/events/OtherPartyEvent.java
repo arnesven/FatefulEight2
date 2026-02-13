@@ -5,6 +5,7 @@ import model.Party;
 import model.RecruitInfo;
 import model.RecruitableCharacter;
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import model.classes.*;
 import model.classes.normal.BardClass;
 import model.classes.normal.MagicianClass;
@@ -298,7 +299,7 @@ public class OtherPartyEvent extends DailyEventState {
         this.attitudeTowardLeaderMap = new HashMap<>();
         this.baseAttitudeVsLeader = MyRandom.randInt(-2, 2);
         for (int i = MyRandom.randInt(3, 8); i > 0; --i) {
-            GameCharacter rando;
+            PresetCharacter rando;
             while (true) {
                 rando = MyRandom.sample(model.getAllCharacters());
                 if (!otherPartyMembers.contains(rando)) {

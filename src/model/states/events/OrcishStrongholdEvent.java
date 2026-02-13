@@ -5,6 +5,7 @@ import model.RecruitableCharacter;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.preset.PresetCharacter;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -139,7 +140,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
             chest.doEvent(model);
         } else {
             boolean gender = MyRandom.randInt(2) == 0;
-            List<GameCharacter> list = new ArrayList<>();
+            List<PresetCharacter> list = new ArrayList<>();
             list.add(MyRandom.sample(model.getAvailableCharactersByGender(gender)));
             list.get(0).setLevel(4);
             list.get(0).setRandomStartingClass();

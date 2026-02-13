@@ -391,7 +391,7 @@ public class MainStoryTest {
     private static void precondition(Model model) {
         model.resetMainStory();
         GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
-                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
+                new KruskTalandro());
         model.getMainStory().setupStory(dummy);                // Get task "visit uncle"
     }
 

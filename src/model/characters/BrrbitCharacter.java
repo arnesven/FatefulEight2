@@ -9,7 +9,7 @@ import model.races.Race;
 
 public class BrrbitCharacter extends GameCharacter {
     public BrrbitCharacter(String firstName) {
-        super(firstName, "", Race.FROGMAN, Classes.FROGMAN, new FrogmanAppearance(), Classes.NO_OTHER_CLASSES,
+        super(firstName, "", Race.FROGMAN, Classes.FROGMAN, new FrogmanAppearance(),
                 new Equipment(new UnarmedCombatWeapon(), new LeatherTunic(), null));
     }
 }

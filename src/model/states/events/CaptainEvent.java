@@ -62,7 +62,7 @@ public class CaptainEvent extends CombatExpertGeneralInteractionEvent {
         Weapon weapon = MyRandom.sample(List.of(new Longsword(), new Spear(), new Estoc(), new Glaive(), new LongBow()));
         Clothing armor = MyRandom.sample(List.of(new ChainMail(), new BreastPlate(), new LeatherArmor()));
         GameCharacter gc = new GameCharacter("Mater-at-arms", "", portrait.getRace(), Classes.CAP, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(weapon, armor, null));
+                new Equipment(weapon, armor, null));
         gc.setLevel(MyRandom.randInt(4, 6));
         return gc;
     }

@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import model.items.Item;
 import model.states.RecruitState;
 import util.MyRandom;
@@ -17,8 +18,8 @@ public class RecruitableCharacter implements Serializable {
 
     public RecruitableCharacter(GameCharacter gc, boolean randomStartingClass) {
         this.character = gc;
-        if (randomStartingClass) {
-            character.setRandomStartingClass();
+        if (randomStartingClass && gc instanceof PresetCharacter) {
+            ((PresetCharacter)character).setRandomStartingClass();
         }
         startingGold = Math.max(0, MyRandom.randInt(gc.getCharClass().getStartingGold()-10,
                 gc.getCharClass().getStartingGold()));

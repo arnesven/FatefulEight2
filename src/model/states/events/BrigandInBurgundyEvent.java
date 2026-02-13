@@ -52,8 +52,7 @@ public class BrigandInBurgundyEvent extends DailyEventState {
         }
         String firstName = "Brigand in";
         String lastName = "Burgundy";
-        brigand = new GameCharacter(firstName, lastName, portrait.getRace(), Classes.BRIGAND, portrait,
-                Classes.NO_OTHER_CLASSES);
+        brigand = new GameCharacter(firstName, lastName, portrait.getRace(), Classes.BRIGAND, portrait);
         brigand.setEquipment(new Equipment((Weapon) new Rapier().makeHigherTierCopy(1),
                 new LeatherTunic(), new LuckyTalisman()));
         brigand.setLevel((int)GameState.calculateAverageLevel(model));

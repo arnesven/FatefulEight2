@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.journal.JournalEntry;
@@ -43,7 +44,7 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
         showExplicitPortrait(model, friend, friend.getRace().getName());
         portraitSay("Do you have any strawberries left? I simply must have some!");
         showExplicitPortrait(model, farmerPortrait, "Farmer");
-        portraitSay("Yes, one box... but uh... I think this " + (main.getGender() ? "lady":"gentleman") +
+        portraitSay("Yes, one box... but uh... I think this " + (main.getGender() ? "lady" : "gentleman") +
                 " had expressed an interest in them.");
         model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, friend, friend.getRace().getName());
@@ -59,7 +60,7 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
         showExplicitPortrait(model, friend, friend.getRace().getName());
         portraitSay("Yeah, that's right. I grew up there... ");
         partyMemberSay(main, "...");
-        String friendName = friend.getGender() ? "Hala":"Haldir";
+        String friendName = friend.getGender() ? "Hala" : "Haldir";
         partyMemberSay(main, friendName + "?");
         println("The expression on the " + friend.getRace().getName().toLowerCase() +
                 " changes from a scowl to mild surprise.");
@@ -85,12 +86,15 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
         portraitSay("Oh, I see.");
         println(friendName + " seems slightly disappointed.");
 
-        GameCharacter friendCharacter = new GameCharacter(friendName, randomLastName(), main.getRace(), Classes.None,
-                friend, new CharacterClass[]{Classes.CAP, Classes.ART, Classes.FOR, Classes.MAG});
         UrbanLocation mainHomeTown = main.getHomeTown(model);
+        String friendHomeTown = null;
         if (mainHomeTown instanceof TownLocation) {
-            friendCharacter.setHomeTown(((TownLocation) mainHomeTown).getTownName());
+            friendHomeTown = ((TownLocation) mainHomeTown).getTownName();
+        } else {
+            friendHomeTown = mainHomeTown.getPlaceName();
         }
+        PresetCharacter friendCharacter = new PresetCharacter(friendName, randomLastName(), main.getRace(), Classes.None,
+                friend, new CharacterClass[]{Classes.CAP, Classes.ART, Classes.FOR, Classes.MAG}, friendHomeTown, List.of(PersonalityTrait.friendly));
         int topic = topicChoice(model, main, friendCharacter);
         println("The two keep talking but evening is soon approaching.");
         portraitSay("I'm afraid I need to run along now. It's a been a pleasure seeing you again " + main.getFirstName() +

@@ -64,8 +64,7 @@ public class JungleTribeCommonerEvent extends JungleTribeGeneralInteractionEvent
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return new GameCharacter(job.first, "", Race.SOUTHERN_HUMAN, job.second,
-                portrait,
-                Classes.NO_OTHER_CLASSES);
+                portrait);
     }
 
     @Override

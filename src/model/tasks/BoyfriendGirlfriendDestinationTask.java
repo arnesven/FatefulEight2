@@ -4,6 +4,7 @@ import control.FatefulEight;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import model.journal.JournalEntry;
 import model.states.GameState;
 import model.states.events.RevisitBoyfriendGirlfriendEvent;
@@ -12,7 +13,7 @@ import java.awt.*;
 
 public class BoyfriendGirlfriendDestinationTask extends DestinationTask {
     private final GameCharacter main;
-    private final GameCharacter friend;
+    private final PresetCharacter friend;
     private final String townName;
     private int lastDay;
     private int previousEventChoice;
@@ -22,7 +23,7 @@ public class BoyfriendGirlfriendDestinationTask extends DestinationTask {
     private boolean failed = false;
 
     public BoyfriendGirlfriendDestinationTask(Point position, String townName,
-                                              GameCharacter mainCharacter, GameCharacter friendCharacter,
+                                              GameCharacter mainCharacter, PresetCharacter friendCharacter,
                                               int previousEventChoice, int lastDay) {
         super(position, "");
         this.townName = townName;

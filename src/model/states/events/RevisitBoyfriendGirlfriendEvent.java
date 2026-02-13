@@ -4,6 +4,7 @@ import model.Model;
 import model.RecruitInfo;
 import model.RecruitableCharacter;
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.states.RecruitState;
@@ -18,12 +19,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
-    private final GameCharacter friend;
+    private final PresetCharacter friend;
     private final int prevEventChoice;
     private final int step;
 
     public RevisitBoyfriendGirlfriendEvent(Model model, GameCharacter main,
-                                           GameCharacter friend, int previousEventChoice,
+                                           PresetCharacter friend, int previousEventChoice,
                                            int step) {
         super(model, main);
         this.friend = friend;
@@ -216,7 +217,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         tryRecruit(model, main, friend);
     }
 
-    private void tryRecruit(Model model, GameCharacter main, GameCharacter friend) {
+    private void tryRecruit(Model model, GameCharacter main, PresetCharacter friend) {
         println("The two head to the tavern where they find the rest of the party.");
         model.getLog().waitForAnimationToFinish();
         model.getParty().unbenchAll();

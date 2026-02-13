@@ -100,7 +100,7 @@ public class PriestEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Priest", "", portrait.getRace(), Classes.PRI, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new Scepter(), new PilgrimsCloak(), new LargeShield()));
+                new Equipment(new Scepter(), new PilgrimsCloak(), new LargeShield()));
         gc.setLevel(MyRandom.randInt(1, 6));
         return gc;
     }

@@ -119,7 +119,7 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
             CharacterClass cls = new PirateClass(colorList.get(i));
             AdvancedAppearance app = PortraitSubView.makeRandomPortrait(cls, races.get(i), femaleBody.get(i));
             GameCharacter chara = new GameCharacter(names.get(i), "", races.get(i),
-                    cls, app, Classes.NO_OTHER_CLASSES,
+                    cls, app,
                     new Equipment(usesPistol.get(i) ? new Pistol() : new Cutlass(), new LeatherTunic(), null));
             list.add(new PotentialMutineer(chara, traits.get(i % traits.size()), i == transIndex, likesRum.get(i),
                     MyRandom.rollD6() == 1));

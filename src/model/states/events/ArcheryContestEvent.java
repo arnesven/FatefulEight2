@@ -390,45 +390,44 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     private List<GameCharacter> makeMarksmen(Model model) {
         List<GameCharacter> result = new ArrayList<>();
-        CharacterClass[] noClasses = Classes.NO_OTHER_CLASSES;
         result.add(new GameCharacter("Ruben", "Hodd", Race.NORTHERN_HUMAN, Classes.MAR,
-                PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, false), randomBow()));
         result.add(new GameCharacter("Ivar", "Longfellow", Race.NORTHERN_HUMAN, Classes.MAR,
-                PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, false), randomBow()));
         result.add(new GameCharacter("Fanny", "Ovuldsgain", Race.DWARF, Classes.NOB,
-                PortraitSubView.makeRandomPortrait(Classes.NOB, Race.DWARF, true), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.NOB, Race.DWARF, true), randomBow()));
         result.add(new GameCharacter("Tessa", "Crowvald", Race.HALF_ORC, Classes.AMZ,
-                PortraitSubView.makeRandomPortrait(Classes.AMZ, Race.HALF_ORC, true), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.AMZ, Race.HALF_ORC, true), randomBow()));
         result.add(new GameCharacter("Masked Ranger", "", Race.HALFLING, Classes.ASN,
-                PortraitSubView.makeRandomPortrait(Classes.ASN, Race.HALFLING, MyRandom.flipCoin()), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.ASN, Race.HALFLING, MyRandom.flipCoin()), randomBow()));
         result.add(new GameCharacter("Vanessa", "Firsov", Race.SOUTHERN_HUMAN, Classes.CAP,
-                PortraitSubView.makeRandomPortrait(Classes.CAP, Race.SOUTHERN_HUMAN, true), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.CAP, Race.SOUTHERN_HUMAN, true), randomBow()));
         result.add(new GameCharacter("Goblin", "", Race.GOBLIN, Classes.GOBLIN,
-                new GoblinAppearance(), new CharacterClass[]{Classes.GOBLIN, None, None, None}, randomBow()));
+                new GoblinAppearance(), randomBow()));
         result.add(new GameCharacter("Locky", "Roseville", Race.WOOD_ELF, Classes.FOR,
-                PortraitSubView.makeRandomPortrait(Classes.FOR, Race.WOOD_ELF, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.FOR, Race.WOOD_ELF, false), randomBow()));
         result.add(new GameCharacter("Endath", "Virmansee", Race.DARK_ELF, Classes.MAR,
-                PortraitSubView.makeRandomPortrait(Classes.MAR, Race.DARK_ELF, true), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.MAR, Race.DARK_ELF, true), randomBow()));
         result.add(new GameCharacter("Filavandrel", "Oakborn", Race.HIGH_ELF, Classes.NOB,
-                PortraitSubView.makeRandomPortrait(Classes.NOB, Race.HIGH_ELF, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.NOB, Race.HIGH_ELF, false), randomBow()));
         result.add(new GameCharacter("Marcus", "Felbottom", Race.DWARF, Classes.AMZ,
-                PortraitSubView.makeRandomPortrait(Classes.AMZ, Race.DWARF, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.AMZ, Race.DWARF, false), randomBow()));
         result.add(new GameCharacter("Woods Girl", "", Race.WOOD_ELF, None,
-                PortraitSubView.makeRandomPortrait(None, Race.WOOD_ELF, true), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(None, Race.WOOD_ELF, true), randomBow()));
         result.add(new GameCharacter("Anthony", "McCormic", Race.HALFLING, Classes.CAP,
-                PortraitSubView.makeRandomPortrait(Classes.CAP, Race.HALFLING, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.CAP, Race.HALFLING, false), randomBow()));
         result.add(new GameCharacter("Shagra", "Vull", Race.HALF_ORC, Classes.BBN,
-                PortraitSubView.makeRandomPortrait(Classes.BBN, Race.HALF_ORC, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.BBN, Race.HALF_ORC, false), randomBow()));
         result.add(new GameCharacter("Jeremy", "Inklepod", Race.SOUTHERN_HUMAN, Classes.DRU,
-                PortraitSubView.makeRandomPortrait(Classes.DRU, Race.SOUTHERN_HUMAN, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.DRU, Race.SOUTHERN_HUMAN, false), randomBow()));
         result.add(new GameCharacter("The Fool", "", Race.NORTHERN_HUMAN, None,
-                PortraitSubView.makeRandomPortrait(None, Race.NORTHERN_HUMAN, MyRandom.flipCoin()), noClasses, new Equipment(new ShortBow())));
+                PortraitSubView.makeRandomPortrait(None, Race.NORTHERN_HUMAN, MyRandom.flipCoin()), new Equipment(new ShortBow())));
         result.add(new GameCharacter("Jeim", "Ecthelion", Race.WOOD_ELF, Classes.NOB,
-                PortraitSubView.makeRandomPortrait(Classes.NOB, Race.WOOD_ELF, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.NOB, Race.WOOD_ELF, false), randomBow()));
         result.add(new GameCharacter("Rutte", "Kolantis", Race.DWARF, Classes.BRD,
-                PortraitSubView.makeRandomPortrait(Classes.BRD, Race.DWARF, false), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.BRD, Race.DWARF, false), randomBow()));
         result.add(new GameCharacter("Esmeralda", "Vix", Race.DARK_ELF, Classes.THF,
-                PortraitSubView.makeRandomPortrait(Classes.THF, Race.DARK_ELF, true), noClasses, randomBow()));
+                PortraitSubView.makeRandomPortrait(Classes.THF, Race.DARK_ELF, true), randomBow()));
         int lvl = (int)Math.round(GameState.calculateAverageLevel(model));
         MyLists.forEach(result, (GameCharacter chara) ->
             chara.setLevel(Math.max(1, lvl + MyRandom.randInt(3) - 1)));

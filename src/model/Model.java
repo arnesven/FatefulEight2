@@ -6,6 +6,7 @@ import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.normal.NobleClass;
@@ -330,7 +331,7 @@ public class Model {
         return gameData.itemDeck;
     }
 
-    public List<GameCharacter> getAllCharacters() {
+    public List<PresetCharacter> getAllCharacters() {
         return gameData.allCharacters;
     }
 
@@ -339,14 +340,14 @@ public class Model {
         dialog.transitionedTo(this);
     }
 
-    public List<GameCharacter> getAvailableCharactersOfRace(Race race) {
-        return MyLists.filter(getAllCharacters(), (GameCharacter gc) ->
+    public List<PresetCharacter> getAvailableCharactersOfRace(Race race) {
+        return MyLists.filter(getAllCharacters(), (PresetCharacter gc) ->
                 (gc.getRace().id() == race.id() || race.id() == Race.ALL.id()) &&
                         !getParty().getPartyMembers().contains(gc));
     }
 
-    public List<GameCharacter> getAvailableCharactersByGender(boolean gender) {
-        return MyLists.filter(getAllCharacters(), (GameCharacter gc) ->
+    public List<PresetCharacter> getAvailableCharactersByGender(boolean gender) {
+        return MyLists.filter(getAllCharacters(), (PresetCharacter gc) ->
             gc.getGender() == gender && !getParty().getPartyMembers().contains(gc));
     }
 

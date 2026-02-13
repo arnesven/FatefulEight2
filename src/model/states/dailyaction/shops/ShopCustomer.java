@@ -30,7 +30,7 @@ public class ShopCustomer {
         }
         CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(randClass);
         avatar = new GameCharacter("", "", randApp.getRace(),
-                randClass, randApp, Classes.NO_OTHER_CLASSES);
+                randClass, randApp);
     }
 
     public static Achievement.Data getAchievemetnData() {

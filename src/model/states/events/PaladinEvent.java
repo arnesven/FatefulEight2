@@ -64,8 +64,7 @@ public class PaladinEvent extends DailyEventState {
                 CombatEvent combat = new CombatEvent(model, List.of(monster));
                 this.portrait = PortraitSubView.makeRandomPortrait(Classes.PAL, race);
                 GameCharacter paladin = new GameCharacter("Paladin", "", race, Classes.PAL, portrait,
-                            Classes.NO_OTHER_CLASSES,
-                            new Equipment(new Warhammer(), new ScaleArmor(), new SkullCap()));
+                                new Equipment(new Warhammer(), new ScaleArmor(), new SkullCap()));
                 paladin.setLevel(3);
                 combat.addAllies(List.of(paladin));
                 combat.run(model);
@@ -83,7 +82,7 @@ public class PaladinEvent extends DailyEventState {
                         portraitSay("I've been looking for a purpose for some time. You people seem to " +
                                 "have the right attitude. Need an extra hand?");
                         GameCharacter paladin2 = new GameCharacter(randomFirstName(paladin.getGender()), randomLastName(),
-                                paladin.getRace(), Classes.PAL, portrait, makeRandomClassSet(Classes.PAL), paladin.getEquipment());
+                                paladin.getRace(), Classes.PAL, portrait, paladin.getEquipment());
                         paladin2.setLevel((int)Math.ceil(calculateAverageLevel(model)));
                         new RecruitState(model, RecruitableCharacter.makeOneRecruitable(paladin2, RecruitInfo.none));
                     } else {

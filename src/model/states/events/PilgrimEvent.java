@@ -28,7 +28,7 @@ public class PilgrimEvent extends MeetTravellerEvent {
     private static GameCharacter makePilgrim() {
         CharacterAppearance portrait = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER);
         GameCharacter pilgrim = new GameCharacter("Pilgrim", "", portrait.getRace(), Classes.TRAVELLER, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new LongStaff(), new PilgrimsCloak(), null));
+                new Equipment(new LongStaff(), new PilgrimsCloak(), null));
         pilgrim.setLevel(MyRandom.randInt(1, 4));
         return pilgrim;
     }

@@ -187,8 +187,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
 
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
-        return new GameCharacter("Old Woman", "", portrait.getRace(), Classes.None, portrait,
-                Classes.NO_OTHER_CLASSES);
+        return new GameCharacter("Old Woman", "", portrait.getRace(), Classes.None, portrait);
     }
 
     @Override

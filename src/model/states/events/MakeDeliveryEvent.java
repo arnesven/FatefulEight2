@@ -26,7 +26,7 @@ public class MakeDeliveryEvent extends GeneralInteractionEvent {
         CharacterAppearance portrait = deliverTask.makePortrait();
         this.recipientCharacter = new GameCharacter(deliverParcelTask.getSender() + "'s " +
                 deliverTask.getRecipient(), "", portrait.getRace(),
-                Classes.None, portrait, Classes.NO_OTHER_CLASSES);
+                Classes.None, portrait);
     }
 
     @Override

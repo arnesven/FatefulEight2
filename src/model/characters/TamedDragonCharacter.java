@@ -13,7 +13,7 @@ public class TamedDragonCharacter extends GameCharacter {
     public TamedDragonCharacter(GameCharacter master, DragonEnemy dragon) {
         super(master.getFirstName() + "'s Dragon", "", Race.NORTHERN_HUMAN,
                 new DragonClass(dragon), new LonnieLiebgott(),
-                Classes.NO_OTHER_CLASSES, dragon.getTamedEquipment());
+                dragon.getTamedEquipment());
         this.dragon = dragon;
     }
 

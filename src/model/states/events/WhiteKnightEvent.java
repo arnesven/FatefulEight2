@@ -36,7 +36,7 @@ public class WhiteKnightEvent extends GeneralInteractionEvent {
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.PAL);
-        pala = new GameCharacter("Paladin", "", app.getRace(), Classes.PAL, app, Classes.NO_OTHER_CLASSES,
+        pala = new GameCharacter("Paladin", "", app.getRace(), Classes.PAL, app,
                 new Equipment(new BastardSword(), new PlateMailArmor(), new GreatHelm()));
         showExplicitPortrait(model, pala.getAppearance(), "Paladin");
         showEventCard("You meet a white knight, a paladin.");
@@ -79,10 +79,10 @@ public class WhiteKnightEvent extends GeneralInteractionEvent {
     protected List<Enemy> getVictimCompanions(Model model) {
         AdvancedAppearance squireApp = PortraitSubView.makeRandomPortrait(Classes.CAP);
         Enemy squire = new FormerPartyMemberEnemy(new GameCharacter("Squire", "", squireApp.getRace(), Classes.CAP,
-                squireApp, Classes.NO_OTHER_CLASSES, new Equipment(new Spear(), new LeatherArmor(), new LeatherBoots())));
+                squireApp, new Equipment(new Spear(), new LeatherArmor(), new LeatherBoots())));
         AdvancedAppearance armorerApp = PortraitSubView.makeRandomPortrait(Classes.ART);
         Enemy armorer = new FormerPartyMemberEnemy(new GameCharacter("Armorer", "", armorerApp.getRace(), Classes.ART,
-                armorerApp, Classes.NO_OTHER_CLASSES, new Equipment(new Warhammer(), new LeatherTunic(), new LeatherGloves())));
+                armorerApp, new Equipment(new Warhammer(), new LeatherTunic(), new LeatherGloves())));
         Enemy servant = new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None));
         return List.of(squire, armorer, servant);
     }

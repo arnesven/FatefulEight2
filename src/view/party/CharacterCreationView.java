@@ -60,9 +60,6 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedHairColor = 1;
     private int selectedHairStyle = 0;
     private int selectedClass = 0;
-    private int other1 = 0;
-    private int other2 = 0;
-    private int other3 = 0;
     private List<Integer> accessories = new ArrayList<>();
     private int selectedDetailColor = 0;
     private List<Integer> detailColors = new ArrayList<>();
@@ -136,8 +133,7 @@ public class CharacterCreationView extends SelectableListMenu {
     }
 
     private GameCharacter makeCharacter() {
-        return new GameCharacter(buffers.get(0).getText(), buffers.get(1).getText(), raceSet[selectedRace], classSet[selectedClass], makeAppearance(),
-                new CharacterClass[]{classSet[selectedClass], classSet[other1], classSet[other2], classSet[other3]});
+        return new GameCharacter(buffers.get(0).getText(), buffers.get(1).getText(), raceSet[selectedRace], classSet[selectedClass], makeAppearance());
     }
 
 
@@ -177,8 +173,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         "Eyes", "Eye Shadow", "Nose",
                         "Mouth", "Lipstick", "Beard", "Ears", "Shoulders", "Neck", "",
                         "Hair", "  Color", "", "Details", "  Color", "", "", "",
-                        "Class", "", "Other Class 1", "",
-                        "Other Class 2", "", "Other Class 3"};
+                        "Class"};
                 for (int i = 0; i < labels.length; ++i) {
                     BorderFrame.drawString(model.getScreenHandler(), labels[i], x, y++, MyColors.WHITE, MyColors.BLUE);
                 }
@@ -187,7 +182,6 @@ public class CharacterCreationView extends SelectableListMenu {
                 int row = 17;
                 drawCharacterDetails(model, lastCharacter, midX, row);
                 drawChecksAndNotOk(model, x);
-
             }
         });
     }
@@ -197,15 +191,10 @@ public class CharacterCreationView extends SelectableListMenu {
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
 
         model.getScreenHandler().put(x+COLUMN_SKIP-4, 36, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
-
-        model.getScreenHandler().put(x+COLUMN_SKIP+8, 38, other1!=0?CHECK_SPRITE:NOT_OK_SPRITE);
-        model.getScreenHandler().put(x+COLUMN_SKIP+8, 40, other2!=0?CHECK_SPRITE:NOT_OK_SPRITE);
-        model.getScreenHandler().put(x+COLUMN_SKIP+8, 42, other3!=0?CHECK_SPRITE:NOT_OK_SPRITE);
     }
 
     private boolean selectedClassOk() {
-        return selectedClass!=0 &&
-                (selectedClass != other1 && selectedClass != other2 && selectedClass != other3);
+        return selectedClass != 0;
     }
 
     public static void drawCharacterDetails(Model model, GameCharacter lastCharacter, int midX, int row) {
@@ -228,8 +217,11 @@ public class CharacterCreationView extends SelectableListMenu {
         row++;
 
         for (Skill s : lastCharacter.getSkillSet()) {
-            BorderFrame.drawString(model.getScreenHandler(), String.format("%-13s%2d", s.getName(),
-                    lastCharacter.getRankForSkill(s)), midX, row++, MyColors.WHITE, MyColors.BLUE);
+            int rank = lastCharacter.getRankForSkill(s);
+            if (rank > 0) {
+                BorderFrame.drawString(model.getScreenHandler(), String.format("%-14s%2d", s.getName(),
+                        lastCharacter.getRankForSkill(s)), midX, row++, MyColors.WHITE, MyColors.BLUE);
+            }
         }
         Weapon w = lastCharacter.getCharClass().getDefaultEquipment().getWeapon();
         if (w != null) {
@@ -464,39 +456,6 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 35, classSet[other1].getShortName()) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new SelectOtherClassMenu(CharacterCreationView.this, x, y, classSet) {
-                            @Override
-                            protected void actionPerformedCallback(int index) {
-                                setOther1(index);
-                            }
-                        }, model);
-                    }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 37, classSet[other2].getShortName()) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new SelectOtherClassMenu(CharacterCreationView.this, x, y, classSet) {
-                            @Override
-                            protected void actionPerformedCallback(int index) {
-                                setOther2(index);
-                            }
-                        }, model);
-                    }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 39, classSet[other3].getShortName()) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new SelectOtherClassMenu(CharacterCreationView.this, x, y, classSet) {
-                            @Override
-                            protected void actionPerformedCallback(int index) {
-                                setOther3(index);
-                            }
-                        }, model);
-                    }
-                },
                 new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
                     @Override
                     public void performAction(Model model, int x, int y) {
@@ -507,8 +466,7 @@ public class CharacterCreationView extends SelectableListMenu {
                     public boolean isEnabled(Model model) {
                         boolean namesOk = nameOk(1) && nameOk(2);
                         boolean classOk = selectedClassOk();
-                        return other1 != 0 && other2 != 0 && other3 != 0 && classOk && namesOk;
-
+                        return classOk && namesOk;
                     }
                 },
                 new SelectableListContent(xStart + COLUMN_SKIP + 10, yStart + 42, "CANCEL") {
@@ -537,18 +495,6 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private boolean nameOk(int i) {
         return buffers.get(i-1).hasChanged();
-    }
-
-    private void setOther1(int index) {
-        this.other1 = index;
-    }
-
-    public void setOther2(int index) {
-        this.other2 = index;
-    }
-
-    public void setOther3(int index) {
-        this.other3 = index;
     }
 
     @Override
@@ -644,47 +590,6 @@ public class CharacterCreationView extends SelectableListMenu {
             });
             return result;
         }
-
-        @Override
-        protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
-    }
-
-    private abstract class SelectOtherClassMenu extends FixedPositionSelectableListMenu {
-        private final CharacterClass[] someSet;
-
-        public SelectOtherClassMenu(GameView game, int x, int y, CharacterClass[] someSet) {
-            super(game, 5, 7, x, y);
-            this.someSet = someSet;
-        }
-
-        @Override
-        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-            return new ArrayList<>();
-        }
-
-        @Override
-        protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-            List<ListContent> result = new ArrayList<>();
-            for (int i = 0; i < someSet.length; ++i) {
-                int finalI = i;
-                result.add(new SelectableListContent(xStart+1, yStart+i+1, someSet[finalI].getShortName()) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        actionPerformedCallback(finalI);
-                        setTimeToTransition(true);
-                        rebuildAppearance();
-                    }
-
-                    @Override
-                    public boolean isEnabled(Model model) {
-                        return finalI != selectedClass && finalI != other1 && finalI != other2 && finalI != other3;
-                    }
-                });
-            }
-            return result;
-        }
-
-        protected abstract void actionPerformedCallback(int index);
 
         @Override
         protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }

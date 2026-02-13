@@ -43,7 +43,7 @@ public class RecruitNode extends DailyActionNode {
             }
             CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(randClass);
             GameCharacter gc = new GameCharacter("", "", randApp.getRace(),
-                    randClass, randApp, Classes.NO_OTHER_CLASSES);
+                    randClass, randApp);
             defaultGuys.add(new RecruitableCharacter(gc));
         }
     }

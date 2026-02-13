@@ -38,12 +38,23 @@ public class BarbarianClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnHideRight(characterAppearance, CLOTHING_COLOR);
+        MyColors clothing = CLOTHING_COLOR;
+        if (characterAppearance.getRace().id() == Race.SOUTHERN_HUMAN.id()) {
+            clothing = MyColors.GOLD;
+        }
+        Looks.putOnHideRight(characterAppearance, clothing);
     }
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x100, CLOTHING_COLOR, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
+        MyColors clothing = CLOTHING_COLOR;
+        if (appearance.getRace().id() == Race.SOUTHERN_HUMAN.id()) {
+            clothing = MyColors.GOLD;
+        }
+        AvatarSprite aspr = new AvatarSprite(race, appearance.getGender() ? 0x420 : 0x100, clothing,
+                race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
+        aspr.setColor4(appearance.getRace().getMouthDefaultColor());
+        return aspr;
     }
 
     @Override

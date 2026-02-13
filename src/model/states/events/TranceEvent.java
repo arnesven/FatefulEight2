@@ -3,10 +3,12 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import model.classes.ClassGraph;
 import model.classes.Classes;
 import model.states.DailyEventState;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TranceEvent extends DailyEventState {
@@ -34,7 +36,7 @@ public class TranceEvent extends DailyEventState {
             println(trancer.getName() + " has fallen into a trance!");
             CharacterClass newClass = null;
             do {
-                newClass = trancer.getClasses()[MyRandom.randInt(trancer.getClasses().length)];
+                newClass = MyRandom.sample(new ArrayList<>(ClassGraph.get(trancer.getCharClass().id())));
             } while (newClass.id() == trancer.getCharClass().id());
             ChangeClassEvent change = new ChangeClassEvent(model, newClass);
             println("From the deep recess of " + hisOrHer(trancer.getGender()) + " mind, " + trancer.getName() +
@@ -45,11 +47,6 @@ public class TranceEvent extends DailyEventState {
     }
 
     private boolean hasOtherClasses(GameCharacter trancer) {
-        for (CharacterClass cls : trancer.getClasses()) {
-            if (cls.id() != trancer.getCharClass().id()) {
-                return true;
-            }
-        }
-        return false;
+        return !ClassGraph.get(trancer.getCharClass().id()).isEmpty();
     }
 }

@@ -70,7 +70,6 @@ public class MinerEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Miner", "", app.getRace(), Classes.MIN, app,
-                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Pickaxe(), new LeatherArmor(), new SkullCap()));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;

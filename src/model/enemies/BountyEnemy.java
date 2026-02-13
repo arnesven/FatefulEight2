@@ -22,7 +22,7 @@ public class BountyEnemy extends FormerPartyMemberEnemy {
     }
 
     private static GameCharacter makeCharacter(String firstName, String lastName, CharacterClass cls, CharacterAppearance app, Weapon weapon, int level) {
-        GameCharacter gc = new GameCharacter(firstName, lastName, app.getRace(), cls, app, Classes.NO_OTHER_CLASSES);
+        GameCharacter gc = new GameCharacter(firstName, lastName, app.getRace(), cls, app);
         gc.setLevel(level);
         Equipment eq = new Equipment(weapon);
 

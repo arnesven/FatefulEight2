@@ -1,11 +1,10 @@
 package model;
 
-import model.characters.*;
 import model.characters.preset.*;
 
 import java.util.ArrayList;
 
-public class CharacterCollection extends ArrayList<GameCharacter> {
+public class CharacterCollection extends ArrayList<PresetCharacter> {
     public CharacterCollection() {
         add(new KruskTalandroCharacter());
         add(new AudreyPuddleCharacter());

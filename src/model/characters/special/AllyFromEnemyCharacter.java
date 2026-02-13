@@ -26,7 +26,7 @@ public class AllyFromEnemyCharacter extends GameCharacter {
 
     public AllyFromEnemyCharacter(Enemy enemy) {
         super(enemy.getName(), "", Race.NORTHERN_HUMAN, Classes.CAP, new LonnieLiebgott(),
-                Classes.NO_OTHER_CLASSES, makeEquipmentFrom(enemy));
+                makeEquipmentFrom(enemy));
         setLevel(1 + enemy.getMaxHP() / 4 + enemy.getDamage() / 3);
         this.enemy = enemy;
     }

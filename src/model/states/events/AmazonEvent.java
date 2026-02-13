@@ -55,7 +55,7 @@ public class AmazonEvent extends CombatExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Amazon", "", portrait.getRace(), Classes.AMZ, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new Spear(), new FurArmor(), model.getItemDeck().getRandomShoes()));
+                new Equipment(new Spear(), new FurArmor(), model.getItemDeck().getRandomShoes()));
         gc.setLevel(MyRandom.randInt(2, 6));
         return gc;
     }

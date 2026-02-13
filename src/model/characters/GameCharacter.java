@@ -54,7 +54,6 @@ public class GameCharacter extends Combatant {
     private final String firstName;
     private final String lastName;
     private final Race race;
-    private final CharacterClass[] classes;
     private AvatarSprite avatarSprite;
     private CharacterClass charClass;
     private CharacterAppearance appearance;
@@ -71,14 +70,12 @@ public class GameCharacter extends Combatant {
     private final SpellMasteries spellMasteries = new SpellMasteries();
     private String homeTownName = null;
 
-    public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
-                         CharacterClass[] classes, Equipment equipment) {
+    public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance, Equipment equipment) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.race = race;
         this.appearance = appearance;
         this.level = 1;
-        this.classes = classes;
         this.equipment = equipment;
         deadAppearance = new SkeletonAppearance(appearance.getShoulders(), appearance.getGender());
         setClass(charClass);
@@ -87,8 +84,8 @@ public class GameCharacter extends Combatant {
     }
 
     public GameCharacter(String firstName, String lastName, Race race,
-                         CharacterClass charClass, CharacterAppearance appearance, CharacterClass[] classes) {
-        this(firstName, lastName, race, charClass, appearance, classes, charClass.getDefaultEquipment());
+                         CharacterClass charClass, CharacterAppearance appearance) {
+        this(firstName, lastName, race, charClass, appearance, charClass.getDefaultEquipment());
     }
 
     public static int getXPForNextLevel(int level) {
@@ -570,21 +567,6 @@ public class GameCharacter extends Combatant {
         return skillSet;
     }
 
-    public String getOtherClasses() {
-        StringBuilder bldr = new StringBuilder();
-        for (CharacterClass cls : classes) {
-            if (cls != charClass) {
-                bldr.append(cls.getShortName());
-                bldr.append(", ");
-            }
-        }
-        return bldr.substring(0, bldr.length()-2);
-    }
-
-    public CharacterClass[] getClasses() {
-        return classes;
-    }
-
     public void setClass(CharacterClass newClass) {
         if (newClass == charClass) { // No need to change anything.
             return;
@@ -611,7 +593,7 @@ public class GameCharacter extends Combatant {
     }
 
     public GameCharacter copy() {
-        GameCharacter clone = new GameCharacter(firstName, lastName, race, charClass, appearance.copy(), classes, equipment);
+        GameCharacter clone = new GameCharacter(firstName, lastName, race, charClass, appearance.copy(), equipment);
         clone.setLevel(getLevel());
         for (Condition cond : getConditions()) {
             clone.addCondition(cond);
@@ -646,14 +628,6 @@ public class GameCharacter extends Combatant {
             this.currentXp = XP_LEVELS[i - 1];
         }
         this.setCurrentHp(getMaxHP());
-    }
-
-    public void setRandomStartingClass() {
-        if (classes != Classes.NO_OTHER_CLASSES) {
-            setClass(MyRandom.sample(Arrays.asList(classes)));
-            this.equipment = charClass.getDefaultEquipment();
-            super.setCurrentHp(getMaxHP());
-        }
     }
 
     public void setEquipment(Equipment equipment) {
@@ -758,12 +732,7 @@ public class GameCharacter extends Combatant {
     }
 
     public boolean canAssumeClass(int id) {
-        for (CharacterClass cc : classes) {
-            if (cc.id() == id) {
-                return true;
-            }
-        }
-        return false;
+        return MyLists.any(new ArrayList<>(ClassGraph.get(charClass.id())), cls -> cls.id() == id);
     }
 
     public void addTemporaryBonus(Skill skill, int bonus, boolean persistent) {

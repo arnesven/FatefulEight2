@@ -102,7 +102,6 @@ public class NoblemanEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter chara = new GameCharacter("Noble", "", portrait.getRace(), Classes.NOB, portrait,
-                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Longsword()));
         chara.setLevel(MyRandom.randInt(1, 4));
         return chara;

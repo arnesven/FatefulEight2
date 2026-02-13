@@ -83,7 +83,7 @@ public class JesterEvent extends GeneralInteractionEvent {
     protected GameCharacter getVictimCharacter(Model model) {
         Weapon weapon = MyRandom.sample(List.of(new MorningStar(), new Warhammer(), new Club(), new Scepter(), new Flail()));
         GameCharacter gc = new GameCharacter(fullName, "", race, Classes.BRD, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(weapon, new FancyJerkin(), model.getItemDeck().getRandomJewelry()));
+                new Equipment(weapon, new FancyJerkin(), model.getItemDeck().getRandomJewelry()));
         gc.setLevel(MyRandom.randInt(2, 6));
         return gc;
     }

@@ -15,7 +15,7 @@ import view.party.CharacterCreationView;
 public class CaidCharacter extends GameCharacter {
     public CaidCharacter() {
         super("Caid", "Sanchez", Race.NORTHERN_HUMAN, Classes.SWORD_MASTER,
-                new CaidAppearance(), new CharacterClass[]{Classes.SWORD_MASTER, Classes.None, Classes.None, Classes.None},
+                new CaidAppearance(),
                 new Equipment(new Katana(), new LeatherArmor(), new ComfyShoes()));
     }
 

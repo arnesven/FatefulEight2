@@ -61,7 +61,7 @@ public class FriendOfJaquarEvent extends JungleTribeGeneralInteractionEvent {
     protected GameCharacter getVictimCharacter(Model model) {
         AdvancedAppearance portrait = task.getFriendPortrait();
         return new GameCharacter(getNameOfFriend(), "",
-                portrait.getRace(), Classes.None, portrait, Classes.NO_OTHER_CLASSES);
+                portrait.getRace(), Classes.None, portrait);
     }
 
     @Override

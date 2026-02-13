@@ -68,7 +68,7 @@ public class FishingVillageFisherEvent extends GeneralInteractionEvent {
 
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
-        return new GameCharacter(name, "", portrait.getRace(), Classes.None, portrait, Classes.NO_OTHER_CLASSES, new Equipment(new FishingPole()));
+        return new GameCharacter(name, "", portrait.getRace(), Classes.None, portrait, new Equipment(new FishingPole()));
     }
 
     @Override

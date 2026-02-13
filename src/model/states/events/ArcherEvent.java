@@ -69,7 +69,7 @@ public class ArcherEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Archer", "", appearance.getRace(), Classes.MAR,
-                appearance, Classes.NO_OTHER_CLASSES, new Equipment(new CompositeBow(), new StuddedJerkin(), new EmeraldRing()));
+                appearance, new Equipment(new CompositeBow(), new StuddedJerkin(), new EmeraldRing()));
         gc.setLevel(MyRandom.randInt(3, 6));
         return gc;
     }

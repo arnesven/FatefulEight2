@@ -90,7 +90,7 @@ public class Balancing {
         for (int i = 0; i < MAX_RANKS; ++i) {
             GameCharacter testDummy = new GameCharacter("Test Dummy", "",
                     Race.NORTHERN_HUMAN, Classes.None,
-                    new LonnieLiebgott(), Classes.NO_OTHER_CLASSES);
+                    new LonnieLiebgott());
             testDummy.addTemporaryBonus(weapon.getSkill(), i, true);
             testDummy.getEquipment().setWeapon(weapon);
             sum += testDummy.calcAverageDamage();

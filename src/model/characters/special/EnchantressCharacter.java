@@ -10,8 +10,7 @@ import view.party.CharacterCreationView;
 
 public class EnchantressCharacter extends GameCharacter {
     public EnchantressCharacter() {
-        super("Enchantress", "", Race.WOOD_ELF, Classes.ENCHANTRESS, new EnchantressAppearance(),
-                new CharacterClass[]{Classes.ENCHANTRESS, Classes.None, Classes.None, Classes.None});
+        super("Enchantress", "", Race.WOOD_ELF, Classes.ENCHANTRESS, new EnchantressAppearance());
     }
 
     private static class EnchantressAppearance extends AdvancedAppearance {

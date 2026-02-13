@@ -87,7 +87,7 @@ public class MerchantEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter merchant = new GameCharacter("Merchant", "", apperance.getRace(), Classes.MERCHANT, apperance,
-                Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new PilgrimsCloak(), null));
+                new Equipment(new ShortSword(), new PilgrimsCloak(), null));
         merchant.setLevel(MyRandom.randInt(1, 4));
         return merchant;
     }
@@ -121,7 +121,7 @@ public class MerchantEvent extends GeneralInteractionEvent {
     private GameCharacter makeCharacter() {
         GameCharacter merchant = new GameCharacter("Merchant", "",
                 apperance.getRace(), Classes.MERCHANT, apperance,
-                Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new PilgrimsCloak(), null));
+                new Equipment(new ShortSword(), new PilgrimsCloak(), null));
         merchant.setLevel(MyRandom.randInt(1, 4));
         return merchant;
     }

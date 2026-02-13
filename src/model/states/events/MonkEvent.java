@@ -29,7 +29,7 @@ public class MonkEvent extends MeetTravellerEvent {
     private static GameCharacter makeMonk() {
         CharacterAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.PRI);
         GameCharacter monk = new GameCharacter("Monk", "", appearance.getRace(), Classes.PRI, appearance,
-                Classes.NO_OTHER_CLASSES, new Equipment(new LongStaff()));
+                new Equipment(new LongStaff()));
         monk.setLevel(MyRandom.randInt(1, 4));
         return monk;
     }

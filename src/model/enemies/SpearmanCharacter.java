@@ -12,7 +12,6 @@ import model.races.Race;
 public class SpearmanCharacter extends GameCharacter {
     public SpearmanCharacter(String firstName, String lastName, Race race) {
         super(firstName, lastName, race, Classes.CAP, new RandomAppearance(race),
-                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Spear(), new LeatherArmor(), new SkullCap()));
     }
 }

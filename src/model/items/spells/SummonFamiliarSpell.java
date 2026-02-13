@@ -45,7 +45,7 @@ public class SummonFamiliarSpell extends SummonCombatSpell {
     private static class FamiliarAlly extends GameCharacter {
         public FamiliarAlly() {
             super("Familiar", "", Race.SOUTHERN_HUMAN, Classes.FAMILIAR,
-                    new LonnieLiebgott(), new CharacterClass[0], new Equipment(new FamiliarWeapon()));
+                    new LonnieLiebgott(), new Equipment(new FamiliarWeapon()));
         }
     }
 }

@@ -70,7 +70,7 @@ public class AcceptDeliveryEvent extends GeneralInteractionEvent {
         println("A commoner approaches you.");
         CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.None);
         this.commoner = new GameCharacter("Commoner", "", app.getRace(), Classes.None, app,
-                                            Classes.NO_OTHER_CLASSES, new Equipment(new Club()));
+                                            new Equipment(new Club()));
         setUpDeliveryData(model);
         showExplicitPortrait(model, commoner.getAppearance(), commoner.getName());
         return true;

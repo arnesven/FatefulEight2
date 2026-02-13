@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import util.Arithmetics;
 import view.party.CharacterCreationView;
@@ -35,7 +36,11 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             return null;
         }
         GameCharacter gc = currentSet[selectedIndex];
-        classSet = gc.getClasses();
+        if (gc instanceof PresetCharacter) {
+            classSet = ((PresetCharacter)gc).getClasses();
+        } else {
+            classSet = new CharacterClass[]{currentSet[selectedIndex].getCharClass()};
+        }
         gc.setClass(classSet[selectedClass]);
         gc.addToHP(1000); // Start with max hp for class.
         gc.setEquipment(classSet[selectedClass].getDefaultEquipment());
@@ -60,6 +65,10 @@ public abstract class StartingCharacterView extends SelectableListMenu {
                     gc.drawAppearance(model.getScreenHandler(), x + 6, y + 3);
                     BorderFrame.drawCentered(model.getScreenHandler(), gc.getRace().getQualifiedName(),
                             y+10, MyColors.WHITE, MyColors.BLUE);
+                    if (classSet.length == 1) {
+                        BorderFrame.drawString(model.getScreenHandler(), gc.getCharClass().getFullName() + " (" + gc.getCharClass().getShortName() + ")",
+                                x + 1, y+12, MyColors.WHITE, MyColors.BLUE);
+                    }
                     CharacterCreationView.drawClassDetails(model, gc, x+1, y+14);
                 }
             }
@@ -87,18 +96,20 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             content.add(new ListContent(xStart+3, yStart+3, getSelectedCharacter().getFullName()));
         }
 
-        content.add(new CarouselListContent(xStart+3, yStart+14, getSelectedCharacter().getCharClass().getFullName() +
-                " (" + getSelectedCharacter().getCharClass().getShortName() + ")") {
-            @Override
-            public void turnLeft(Model model) {
-                selectedClass = Arithmetics.decrementWithWrap(selectedClass, classSet.length);
-            }
+        if (classSet.length > 1) {
+            content.add(new CarouselListContent(xStart + 3, yStart + 14, getSelectedCharacter().getCharClass().getFullName() +
+                    " (" + getSelectedCharacter().getCharClass().getShortName() + ")") {
+                @Override
+                public void turnLeft(Model model) {
+                    selectedClass = Arithmetics.decrementWithWrap(selectedClass, classSet.length);
+                }
 
-            @Override
-            public void turnRight(Model model) {
-                selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
-            }
-        });
+                @Override
+                public void turnRight(Model model) {
+                    selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
+                }
+            });
+        }
 
         content.add(new SelectableListContent(xStart + 11, yStart+39, "OK") {
             @Override

@@ -78,8 +78,7 @@ public class HermitEvent extends GeneralInteractionEvent {
 
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
-        return new GameCharacter("Hermit", "", portrait.getRace(), Classes.HERMIT, portrait,
-                Classes.NO_OTHER_CLASSES);
+        return new GameCharacter("Hermit", "", portrait.getRace(), Classes.HERMIT, portrait);
     }
 
     @Override

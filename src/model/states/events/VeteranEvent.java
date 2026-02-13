@@ -91,7 +91,7 @@ public class VeteranEvent extends CombatExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Veteran", "", app.getRace(), Classes.None, app,
-                Classes.NO_OTHER_CLASSES, new Equipment(new Longsword()));
+                new Equipment(new Longsword()));
         gc.setLevel(MyRandom.randInt(3, 6));
         return gc;
     }

@@ -167,7 +167,7 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Mage", "", appearance.getRace(), Classes.MAGE, appearance,
-                Classes.NO_OTHER_CLASSES, new Equipment(mageRandomWeapon(), mageRandomClothes(),
+                new Equipment(mageRandomWeapon(), mageRandomClothes(),
                 (Accessory) MyRandom.sample(ItemDeck.allJewelry()).copy()));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;

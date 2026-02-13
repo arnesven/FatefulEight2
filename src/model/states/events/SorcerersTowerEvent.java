@@ -86,7 +86,7 @@ public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Sorcerer", "", portrait.getRace(), Classes.SOR, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new MorningStar(), new MagesRobes(), model.getItemDeck().getRandomJewelry()));
+                new Equipment(new MorningStar(), new MagesRobes(), model.getItemDeck().getRandomJewelry()));
         gc.setLevel(MyRandom.randInt(3, 6));
         return gc;
     }

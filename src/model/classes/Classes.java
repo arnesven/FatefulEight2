@@ -83,7 +83,6 @@ public interface Classes {
     CharacterClass FROGMAN = new FrogmanClass();
     CharacterClass BRIGAND = new BrigandClass();
 
-    CharacterClass[] NO_OTHER_CLASSES = Classes.NO_OTHER_CLASSES;
     CharacterClass BEAUTY = new BeautyNPCClass();
 
     Map<Integer, Integer> ALIGNMENT = Map.of(

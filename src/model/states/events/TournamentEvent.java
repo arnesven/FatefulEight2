@@ -153,8 +153,7 @@ public class TournamentEvent extends DailyEventState {
             Race race = Race.randomRace();
             AdvancedAppearance app = PortraitSubView.makeRandomPortrait(selectedClass, race, name.gender);
             GameCharacter fighter = new GameCharacter(name.firstName, name.lastName, race, selectedClass, app,
-                    Classes.NO_OTHER_CLASSES,
-                    generateEquipmentFor(selectedClass));
+                        generateEquipmentFor(selectedClass));
             fighter.setLevel((int)Math.ceil(GameState.calculateAverageLevel(model)));
             result.add(fighter);
         }

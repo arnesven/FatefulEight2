@@ -8,6 +8,7 @@ import model.classes.Classes;
 import model.items.Item;
 import model.items.special.TentUpgradeItem;
 import model.items.weapons.Dagger;
+import model.items.weapons.Dirk;
 import util.Arithmetics;
 import util.MyStrings;
 import view.party.CharacterCreationView;
@@ -52,14 +53,9 @@ public class ChooseStartingItemView extends SelectableListMenu {
 
     private static List<Item> getStartingItems(GameCharacter gc) {
         Map<String, Item> itemMap = new HashMap<>();
-        for (int i = 0; i < gc.getClasses().length; ++i) {
-            CharacterClass cls = gc.getClasses()[i];
-            if (cls != Classes.None) {
-                for (Item it : cls.getStartingItems()) {
-                    itemMap.put(it.getName(), it);
-                }
-            }
-        }
+        for (Item it : gc.getCharClass().getStartingItems()) {
+            itemMap.put(it.getName(), it);
+        } // TODO: Add some more default starting items?
         return new ArrayList<>(itemMap.values());
     }
 

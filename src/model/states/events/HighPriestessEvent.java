@@ -87,7 +87,7 @@ public class HighPriestessEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return new GameCharacter("High Priestess", "", priestessApp.getRace(), Classes.PRI,
-                priestessApp, Classes.NO_OTHER_CLASSES, new Equipment(new GrandStaff(), new MagesRobes(), new Circlet()));
+                priestessApp, new Equipment(new GrandStaff(), new MagesRobes(), new Circlet()));
     }
 
     @Override

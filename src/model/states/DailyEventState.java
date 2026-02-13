@@ -5,6 +5,7 @@ import model.RecruitableCharacter;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.CombatAdvantage;
@@ -93,7 +94,7 @@ public abstract class DailyEventState extends GameState {
     public void doTheEvent(Model model) { doEvent(model); }
 
     protected void adventurerWhoMayJoin(Model model, Race race) {
-        List<GameCharacter> list = model.getAvailableCharactersOfRace(race);
+        List<PresetCharacter> list = model.getAvailableCharactersOfRace(race);
         if (list.isEmpty()) {
             println("n old friend with whom you exchange a few stories. You then part ways.");
         } else {

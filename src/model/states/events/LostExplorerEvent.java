@@ -45,7 +45,7 @@ public class LostExplorerEvent extends MeetTravellerEvent {
     private static GameCharacter makeLostExplorer() {
         CharacterAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER);
         GameCharacter explorer = new GameCharacter("Explorer", "", appearance.getRace(), Classes.TRAVELLER, appearance,
-                Classes.NO_OTHER_CLASSES, new Equipment(new Longsword(), new LeatherArmor(), new Buckler()));
+                new Equipment(new Longsword(), new LeatherArmor(), new Buckler()));
         explorer.setLevel(MyRandom.randInt(3, 4));
         return explorer;
     }

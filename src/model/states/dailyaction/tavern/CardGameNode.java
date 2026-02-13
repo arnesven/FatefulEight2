@@ -36,7 +36,7 @@ public class CardGameNode extends DailyActionNode {
         for (int i = MyRandom.randInt(1, 3); i >= 0; --i) {
             CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(Classes.None);
             GameCharacter gc = new GameCharacter("", "", randApp.getRace(),
-                    Classes.None, randApp, Classes.NO_OTHER_CLASSES);
+                    Classes.None, randApp);
             defaultGuys.add(gc);
         }
     }

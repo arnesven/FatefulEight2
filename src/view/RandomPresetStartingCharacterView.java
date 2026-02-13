@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import util.MyRandom;
 
 public class RandomPresetStartingCharacterView extends StartingCharacterView {
@@ -9,8 +10,8 @@ public class RandomPresetStartingCharacterView extends StartingCharacterView {
         super(model, new GameCharacter[]{pickRandomPresetCharacter(model)});
     }
 
-    private static GameCharacter pickRandomPresetCharacter(Model model) {
-        GameCharacter gc = MyRandom.sample(model.getAllCharacters());
+    private static PresetCharacter pickRandomPresetCharacter(Model model) {
+        PresetCharacter gc = MyRandom.sample(model.getAllCharacters());
         gc.setRandomStartingClass();
         return gc;
     }

@@ -14,7 +14,6 @@ import view.MyColors;
 public class WillisCharacter extends GameCharacter {
     public WillisCharacter() {
         super("Willis", "Johanssen", Race.DARK_ELF, Classes.ARCANIST, new WillisJohanssen(),
-                new CharacterClass[]{Classes.ARCANIST, Classes.None, Classes.None, Classes.None},
                 new Equipment(new MagesStaff(), new PilgrimsCloak(), new FancyGloves()));
     }
 

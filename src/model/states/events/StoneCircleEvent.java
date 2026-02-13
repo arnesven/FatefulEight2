@@ -69,7 +69,7 @@ public class StoneCircleEvent extends GeneralInteractionEvent {
 
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
-        return new GameCharacter("Druid", "", appearance.getRace(), Classes.DRU, appearance, Classes.NO_OTHER_CLASSES,
+        return new GameCharacter("Druid", "", appearance.getRace(), Classes.DRU, appearance,
                 new Equipment(new OldStaff(), new MagesRobes(), new Circlet()));
     }
 
@@ -80,10 +80,10 @@ public class StoneCircleEvent extends GeneralInteractionEvent {
             Race race = Race.randomRace();
             if (MyRandom.flipCoin()) {
                 enms.add(new FormerPartyMemberEnemy(new GameCharacter("Druid", "", race, Classes.DRU,
-                        PortraitSubView.makeRandomPortrait(Classes.DRU, race), Classes.NO_OTHER_CLASSES, new Equipment(new Mace(), new MagesRobes(), null))));
+                        PortraitSubView.makeRandomPortrait(Classes.DRU, race), new Equipment(new Mace(), new MagesRobes(), null))));
             } else {
                 enms.add(new FormerPartyMemberEnemy(new GameCharacter("Follower", "", race, Classes.None,
-                        PortraitSubView.makeRandomPortrait(Classes.None, race), Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new LeatherTunic(), new LeatherCap()))));
+                        PortraitSubView.makeRandomPortrait(Classes.None, race), new Equipment(new ShortSword(), new LeatherTunic(), new LeatherCap()))));
             }
         }
         return enms;

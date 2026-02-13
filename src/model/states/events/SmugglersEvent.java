@@ -157,8 +157,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
         if (constableFights) {
             CharacterAppearance copy = constableAppearance.copy();
             allies.add(new GameCharacter("Constable", "", copy.getRace(), Classes.CAP, copy,
-                    Classes.NO_OTHER_CLASSES,
-                    new Equipment(new TwoHandedSword(), new ScaleArmor(), new GrayRing())));
+                        new Equipment(new TwoHandedSword(), new ScaleArmor(), new GrayRing())));
         }
 
         runCombat(enemies, model.getCurrentHex().getCombatTheme(), true, CombatAdvantage.Neither, allies);

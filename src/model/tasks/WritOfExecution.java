@@ -108,7 +108,7 @@ public class WritOfExecution implements Serializable {
 
     public GameCharacter makeVictim() {
         return new GameCharacter(firstName, lastName, appearance.getRace(),
-                charClass, appearance, Classes.NO_OTHER_CLASSES, ENDING_MAP.get(charClass.id()).getEquipment());
+                charClass, appearance, ENDING_MAP.get(charClass.id()).getEquipment());
     }
 
     public int getDaysLeft(Model model) {

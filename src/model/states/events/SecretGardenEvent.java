@@ -178,7 +178,7 @@ public class SecretGardenEvent extends DailyEventState {
             exploreRuinsState.printQuote("Elf", "My ancestors planted this garden many centuries ago. I come " +
                     "here every so often to check on things. I never imagined I would lose my way in here however. " +
                     "I really would like to get out of here now. You don't suppose I could tag along with you for a while?");
-            List<GameCharacter> list = model.getAvailableCharactersOfRace(Race.WOOD_ELF);
+            List<GameCharacter> list = new ArrayList<>(model.getAvailableCharactersOfRace(Race.WOOD_ELF));
             if (list.isEmpty()) {
                 list.add(GameState.makeRandomCharacter(4, Race.WOOD_ELF));
             }

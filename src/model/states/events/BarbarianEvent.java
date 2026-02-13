@@ -81,7 +81,7 @@ public class BarbarianEvent extends CombatExpertGeneralInteractionEvent {
     protected GameCharacter getVictimCharacter(Model model) {
         Weapon weapon = MyRandom.sample(List.of(new BastardSword(), new GreatAxe(), new GrandMaul()));
         GameCharacter barb = new GameCharacter("Barbarian", "", portrait.getRace(), Classes.BBN, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(weapon, new FurArmor(), new WolfHead()));
+                new Equipment(weapon, new FurArmor(), new WolfHead()));
         barb.setLevel(MyRandom.randInt(3, 6));
         return barb;
     }

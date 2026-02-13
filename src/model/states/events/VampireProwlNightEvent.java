@@ -136,7 +136,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
         }
         CharacterAppearance vampirePortrait = PortraitSubView.makeOldPortrait(Classes.VAMPIRE, race, gender);
         GameCharacter gc = new GameCharacter("Vampire", "", race, Classes.VAMPIRE,
-                vampirePortrait, Classes.NO_OTHER_CLASSES, new Equipment());
+                vampirePortrait, new Equipment());
         VampirismCondition cond = new VampirismCondition(5, 0);
         gc.addCondition(cond);
         cond.updateAppearance(gc);

@@ -291,8 +291,6 @@ public class PartyView extends SelectableListMenu {
                 print(model.getScreenHandler(), rightColumnX, skillsEndRow,
                         String.format("Avg Damage %1.1f", gc.calcAverageDamage()));
                 ++skillsEndRow;
-                print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, "Other Classes");
-                print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, gc.getOtherClasses());
             }
         });
     }

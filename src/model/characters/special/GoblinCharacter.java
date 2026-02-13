@@ -12,7 +12,7 @@ import static model.classes.Classes.None;
 public class GoblinCharacter extends GameCharacter {
     public GoblinCharacter() {
         super("Goblin", "", Race.GOBLIN, Classes.GOBLIN,
-                new GoblinAppearance(), new CharacterClass[]{Classes.GOBLIN, None, None, None});
+                new GoblinAppearance());
     }
 
     @Override

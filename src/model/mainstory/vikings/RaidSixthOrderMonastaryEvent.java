@@ -108,7 +108,7 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
             eq.setClothing(MyRandom.sample(List.of(new PlateMailArmor(), new ChainMail(), new Brigandine(), new LeatherArmor())));
             eq.setAccessory(MyRandom.sample(List.of(new Buckler(), new LargeShield(), new KiteShield(), new SpikedShield())));
             GameCharacter viking = new GameCharacter("Viking", "", appearance.getRace(), Classes.VIKING, appearance,
-                    Classes.NO_OTHER_CLASSES, eq);
+                    eq);
             viks.add(viking);
         }
         return viks;
@@ -130,7 +130,7 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
         eq.setAccessory(MyRandom.sample(List.of(new GoldRing(), new SapphireRing(), new TopazRing(), new EmeraldRing(),
                     new ShinyAmulet(), new AnkhPendant())));
         GameCharacter monk = new GameCharacter("Sixth Monk", "", appearance.getRace(), Classes.PRI, appearance,
-                Classes.NO_OTHER_CLASSES, eq);
+                eq);
         return monk;
     }
 

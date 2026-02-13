@@ -244,8 +244,7 @@ public class AbandonedMineQuest extends Quest {
         @Override
         protected List<GameCharacter> getAllies() {
             GameCharacter murak = new GameCharacter("Murak", "", Race.DWARF, Classes.MIN, new JordynStrong(),
-                    Classes.NO_OTHER_CLASSES,
-                    new Equipment(new Pickaxe(), new LeatherArmor(), new FullHelm()));
+                        new Equipment(new Pickaxe(), new LeatherArmor(), new FullHelm()));
             return List.of(murak);
         }
     }

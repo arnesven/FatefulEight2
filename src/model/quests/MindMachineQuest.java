@@ -424,7 +424,7 @@ public class MindMachineQuest extends MainQuest {
             psv.portraitSay(model, state, "You again? Guards, eliminate them!");
             state.leaderSay("Oh come on... But we can't just kill him. What do we do?");
             GameCharacter lordCharacter = new GameCharacter(castle.getLordName(), "", app.getRace(),
-                    new RegentClass(castle.getCastleColor()), app, Classes.NO_OTHER_CLASSES);
+                    new RegentClass(castle.getCastleColor()), app);
             Enemy lordEnemy = new FormerPartyMemberEnemy(lordCharacter);
             lordEnemy.addCondition(new PossessedCondition());
             enemies.add(new BattleMageEnemy('B'));

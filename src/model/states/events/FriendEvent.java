@@ -4,6 +4,7 @@ import model.Model;
 import model.RecruitInfo;
 import model.RecruitableCharacter;
 import model.characters.GameCharacter;
+import model.characters.preset.PresetCharacter;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.RecruitState;
@@ -25,7 +26,7 @@ public class FriendEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         String textStart = "One of the party members encounters an old friend. After speaking a bit, the friend ";
-        List<GameCharacter> list = model.getAvailableCharactersOfRace(Race.ALL);
+        List<PresetCharacter> list = model.getAvailableCharactersOfRace(Race.ALL);
         if (model.getParty().size() == 8 || list.isEmpty()) {
             showEventCard("Friend", textStart + " sets own about its own affairs.");
         } else {

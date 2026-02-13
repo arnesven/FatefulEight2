@@ -58,7 +58,6 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
 
     private static GameCharacter makeDummyCharacter() {
         return new GameCharacter("Dummy", "", Race.HALFLING, Classes.CAP, new RandomAppearance(Race.HALFLING),
-                Classes.NO_OTHER_CLASSES,
                 new Equipment());
     }
 

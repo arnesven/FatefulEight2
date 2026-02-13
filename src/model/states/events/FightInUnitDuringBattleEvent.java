@@ -48,17 +48,14 @@ public class FightInUnitDuringBattleEvent extends GameState {
             int raceIndex = MyRandom.randInt(AllRaces.allRaces.length);
             if (dieRoll < 3) {
                 allies.add(new GameCharacter(origin + " Militia", "", AllRaces.allRaces[raceIndex], Classes.CAP, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                        Classes.NO_OTHER_CLASSES,
                         new Equipment(new Longsword(), new LeatherArmor(), new SkullCap())));
             } else if (dieRoll < 6) {
                 allies.add(new SpearmanCharacter(origin + " Spearman", "", AllRaces.allRaces[raceIndex]));
             } else if (dieRoll < 9) {
                 allies.add(new GameCharacter(origin + " Archer", "", AllRaces.allRaces[raceIndex], Classes.MAR, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                        Classes.NO_OTHER_CLASSES,
                         new Equipment(new ShortBow(), new OutlawArmor(), new LeatherCap())));
             } else {
                 allies.add(new GameCharacter(origin + " Swordsman", "", AllRaces.allRaces[raceIndex], Classes.PAL, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                        Classes.NO_OTHER_CLASSES,
                         new Equipment(new Longsword(), new ScaleArmor(), new HeraldicShield())));
             }
         }

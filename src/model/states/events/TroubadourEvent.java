@@ -30,7 +30,7 @@ public class TroubadourEvent extends MeetTravellerEvent {
     private static GameCharacter makeTroubadour() {
         CharacterAppearance portrait = PortraitSubView.makeRandomPortrait(Classes.BRD);
         return new GameCharacter("Troubadour", "", portrait.getRace(), Classes.BRD, portrait,
-                Classes.NO_OTHER_CLASSES, new Equipment(new Lute()));
+                new Equipment(new Lute()));
     }
 
     protected boolean doMainEventAndShowDarkDeeds(Model model) {

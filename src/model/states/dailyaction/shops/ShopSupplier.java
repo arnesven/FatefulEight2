@@ -30,7 +30,7 @@ public class ShopSupplier {
 
         CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(Classes.ART);
         this.avatar = new GameCharacter("", "", randApp.getRace(),
-                Classes.ART, randApp, Classes.NO_OTHER_CLASSES);
+                Classes.ART, randApp);
     }
 
     public static int getDealDay(Model model) {

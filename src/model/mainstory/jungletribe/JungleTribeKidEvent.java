@@ -81,6 +81,6 @@ public class JungleTribeKidEvent extends JungleTribeGeneralInteractionEvent {
 
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
-        return new GameCharacter("Kid", "", portrait.getRace(), Classes.None, portrait, Classes.NO_OTHER_CLASSES);
+        return new GameCharacter("Kid", "", portrait.getRace(), Classes.None, portrait);
     }
 }

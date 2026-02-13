@@ -74,7 +74,7 @@ public class InteractWithJequenEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return new GameCharacter("Prince Jequen", "", Race.SOUTHERN_HUMAN, Classes.None,
-                task.getJequenPortrait(), Classes.NO_OTHER_CLASSES);
+                task.getJequenPortrait());
     }
 
     @Override

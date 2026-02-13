@@ -79,7 +79,7 @@ public class RaiseBoneWalkerSpell extends SummonCombatSpell {
     private static class BoneWalkerAlly extends GameCharacter {
         public BoneWalkerAlly() {
             super("Bone Walker", "", Race.DARK_ELF, Classes.BONE_WALKER,
-                    new LonnieLiebgott(), new CharacterClass[0], new Equipment(new Longsword(), new OutlawArmor(), new SkullCap()));
+                    new LonnieLiebgott(), new Equipment(new Longsword(), new OutlawArmor(), new SkullCap()));
         }
     }
 

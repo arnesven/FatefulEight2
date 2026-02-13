@@ -57,7 +57,7 @@ public class NoClass extends CharacterClass {
     public String getDescription() {
         return "No Class - Classless characters cannot " +
                 "gain Experience Points but will be elevated to the average party level " +
-                "once they change to anther class.";
+                "once they change to another class.";
     }
 
     @Override

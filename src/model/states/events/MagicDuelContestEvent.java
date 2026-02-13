@@ -495,38 +495,37 @@ public class MagicDuelContestEvent extends TournamentEvent {
 
     private List<GameCharacter> makeDuelists(Model model, int number) {
         List<GameCharacter> result = new ArrayList<>();
-        CharacterClass[] noClasses = Classes.NO_OTHER_CLASSES;
         List<GameCharacter> allDuelists = new ArrayList<>(List.of(
                 new GameCharacter("Grundolf", "the Green", Race.NORTHERN_HUMAN, Classes.DRU,
-                        PortraitSubView.makeRandomPortrait(Classes.DRU, Race.NORTHERN_HUMAN, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.DRU, Race.NORTHERN_HUMAN, false)),
                 new GameCharacter("Galdricia", "Goldleaf", Race.WOOD_ELF, Classes.DRU,
-                        PortraitSubView.makeOldPortrait(Classes.DRU, Race.WOOD_ELF, true), noClasses),
+                        PortraitSubView.makeOldPortrait(Classes.DRU, Race.WOOD_ELF, true)),
                 new GameCharacter("Redaka", "the Wicked", Race.DARK_ELF, Classes.WIT,
-                        PortraitSubView.makeRandomPortrait(Classes.WIT, Race.DARK_ELF, true), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.WIT, Race.DARK_ELF, true)),
                 new GameCharacter("Aegbert", "Inderwald", Race.HALFLING, Classes.WIT,
-                        PortraitSubView.makeRandomPortrait(Classes.WIT, Race.HALFLING, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.WIT, Race.HALFLING, false)),
                 new GameCharacter("Godric", "Gorthaur", Race.SOUTHERN_HUMAN, Classes.SOR,
-                        PortraitSubView.makeRandomPortrait(Classes.SOR, Race.SOUTHERN_HUMAN, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.SOR, Race.SOUTHERN_HUMAN, false)),
                 new GameCharacter("Lilith", "Everdark", Race.HIGH_ELF, Classes.SOR,
-                        PortraitSubView.makeRandomPortrait(Classes.SOR, Race.HIGH_ELF, true), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.SOR, Race.HIGH_ELF, true)),
                 new GameCharacter("Arbock", "Dimbelthor", Race.DWARF, Classes.WIZ,
-                        PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.DWARF, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.DWARF, false)),
                 new GameCharacter("Jonathan", "Helmsplitter", Race.DARK_ELF, Classes.SOR,
-                        PortraitSubView.makeRandomPortrait(Classes.SOR, Race.DARK_ELF, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.SOR, Race.DARK_ELF, false)),
                 new GameCharacter("Ruthenia", "Moon", Race.SOUTHERN_HUMAN, Classes.WIZ,
-                        PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.SOUTHERN_HUMAN, true), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.SOUTHERN_HUMAN, true)),
                 new GameCharacter("Jerome", "Granger", Race.SOUTHERN_HUMAN, Classes.WIZ,
-                        PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.SOUTHERN_HUMAN, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.SOUTHERN_HUMAN, false)),
                 new GameCharacter("Mary-Jean", "Lockwell", Race.HALFLING, Classes.MAG,
-                        PortraitSubView.makeRandomPortrait(Classes.MAG, Race.HALFLING, true), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.MAG, Race.HALFLING, true)),
                 new GameCharacter("Wolunda", "Knull", Race.HALF_ORC, Classes.MAG,
-                        PortraitSubView.makeRandomPortrait(Classes.MAR, Race.HALF_ORC, true), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.MAR, Race.HALF_ORC, true)),
                 new GameCharacter("Anaethim", "Redstone", Race.DARK_ELF, Classes.PRI,
-                        PortraitSubView.makeRandomPortrait(Classes.PRI, Race.DARK_ELF, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.PRI, Race.DARK_ELF, false)),
                 new GameCharacter("Marduk", "Cabbage", Race.WOOD_ELF, Classes.MAGE,
-                        PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.WOOD_ELF, false), noClasses),
+                        PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.WOOD_ELF, false)),
                 new GameCharacter("Leovald", "Bluesea", Race.HIGH_ELF, Classes.ARCANIST,
-                        PortraitSubView.makeRandomPortrait(Classes.ARCANIST, Race.HIGH_ELF, false), noClasses)));
+                        PortraitSubView.makeRandomPortrait(Classes.ARCANIST, Race.HIGH_ELF, false))));
 
 
         Collections.shuffle(allDuelists);
