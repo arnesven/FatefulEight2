@@ -15,6 +15,8 @@ import model.journal.MainStorySpawnNorth;
 import model.journal.MainStorySpawnSouth;
 import model.journal.MainStorySpawnWest;
 import model.mainstory.MainStoryStep;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import view.*;
 import view.party.CharacterCreationView;
@@ -34,6 +36,7 @@ public class ChooseStartingCharacterState extends GameState {
     public GameState run(Model model) {
         print("How would you like to select your starting character? ");
         model.getLog().waitForAnimationToFinish();
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
         GameCharacter gc;
         Item selectedStartingItem = null;
         while (true) {

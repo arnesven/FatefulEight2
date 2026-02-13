@@ -143,7 +143,6 @@ public class Model {
         System.out.println("Set state to ChooseStartingCharacterState");
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
         if (FatefulEight.TEST_MODE) {
             //MainStoryTest.testSuit(this);
         }
