@@ -3,6 +3,7 @@ package view.help;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import model.classes.ClassGraph;
 import model.classes.Skill;
 import model.classes.WeightedSkill;
 import model.combat.abilities.AbilityCombatAction;
@@ -20,12 +21,16 @@ import java.util.List;
 
 public class SpecificClassHelpDialog extends SubChapterHelpDialog {
     private final CharacterClass charClass;
+    private final String related;
 
     public SpecificClassHelpDialog(GameView view, CharacterClass characterClass) {
         super(view, characterClass.getFullName() + " (" + characterClass.getShortName() + ")",
                 new String[]{"\n\n\n\n\n" + characterClass.getDescription(),
                             makeClassTable(characterClass)});
         this.charClass = characterClass;
+        Set<CharacterClass> related = ClassGraph.get(characterClass.id());
+        this.related = related.isEmpty() ? "*None*" : MyLists.commaAndJoin(new ArrayList<>(related),
+                CharacterClass::getShortName);
     }
 
     @Override
@@ -69,6 +74,14 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
             public void drawYourself(Model model, int x, int y) {
                 print(model.getScreenHandler(), x, y,
                         "Armor Class " + (charClass.canUseHeavyArmor() ? "HEAVY" : "LIGHT"));
+            }
+        });
+        yOff += 2;
+        textContent.add(new DrawableObject(xStart + xOff, yStart + yOff) {
+            @Override
+            public void drawYourself(Model model, int x, int y) {
+                print(model.getScreenHandler(), x, y, "Related classes:");
+                print(model.getScreenHandler(), x, y+1, related);
             }
         });
 

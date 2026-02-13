@@ -9,10 +9,14 @@ public abstract class ExpandableHelpDialog extends HelpDialog {
     private boolean expanded = false;
     private final List<HelpDialog> subsections;
 
-    public ExpandableHelpDialog(GameView view, String title, String text, boolean midLevel) {
+    public ExpandableHelpDialog(GameView view, String title, String[] text, boolean midLevel) {
         super(view, title, text);
         subsections = makeSubSections(view);
         this.midLevel = midLevel;
+    }
+
+    public ExpandableHelpDialog(GameView view, String title, String text, boolean midLevel) {
+        this(view, title, new String[]{text}, midLevel);
     }
 
     protected abstract List<HelpDialog> makeSubSections(GameView view);

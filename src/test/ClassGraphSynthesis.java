@@ -8,35 +8,36 @@ import util.MyStrings;
 
 import java.util.*;
 
-public class ClassGraph extends ArrayList<CharacterClass> {
+public class ClassGraphSynthesis extends ArrayList<CharacterClass> {
 
-         /*
-         BKN--------SOR--------PRI
-        /   \        |       /    \
-       /      D ----WIT----WIZ     \
-      /     /                 \     \
-   BBN----PAL                 MAG---- N
+ /*
+        \            |            /
+         WIZ--------WIT-------- D
+        /   \        |       /     \
+       /     SPY----MAR----AMZ      \
+      /     /   \    |    /   \      \
+ --PRI----ART--             -- F ---- C --
     |      |                   |      |
-   MIN---- C                  ART----BRD
-      \     \                 /     /
-       \     AMZ----ASN---- T      /
-        \   /        |        \   /
-          F --------MAR--------SPY
-Cost: 169
-
+ --PAL----MIN--             --BRD---- N --
+      \     \   /    |    \   /      /
+       \     BBN----ASN---- T       /
+        \   /        |        \    /
+         BKN--------SOR--------MAG
+        /            |            \
+Cost: 256
     */
 
     private static final List<CharacterClass> BEST_SOLUTION_SO_FAR = List.of(
-            Classes.BBN, Classes.BKN, Classes.SOR, Classes.PRI, Classes.NOB,
-            Classes.BRD, Classes.SPY, Classes.MAR, Classes.FOR, Classes.MIN,
-            Classes.PAL, Classes.DRU, Classes.WIT, Classes.WIZ, Classes.MAG,
-            Classes.ART, Classes.THF, Classes.ASN, Classes.AMZ, Classes.CAP);
+            Classes.PRI, Classes.WIZ, Classes.WIT, Classes.DRU, Classes.CAP,
+            Classes.NOB, Classes.MAG, Classes.SOR, Classes.BKN, Classes.PAL,
+            Classes.ART, Classes.SPY, Classes.MAR, Classes.AMZ, Classes.FOR,
+            Classes.BRD, Classes.THF, Classes.ASN, Classes.BBN, Classes.MIN);
 
     private final HashMap<CharacterClass, Integer> indices;
     private final ClassDiffCostTable costTable;
 
-    public ClassGraph(ClassDiffCostTable costTable,
-                      List<CharacterClass> contents) {
+    public ClassGraphSynthesis(ClassDiffCostTable costTable,
+                               List<CharacterClass> contents) {
         addAll(contents);
         this.costTable = costTable;
         this.indices = new HashMap<>();
@@ -45,7 +46,7 @@ Cost: 169
         }
     }
 
-    public ClassGraph(ClassDiffCostTable costTable) {
+    public ClassGraphSynthesis(ClassDiffCostTable costTable) {
         this(costTable, BEST_SOLUTION_SO_FAR);
         // Sanity check:
         for (CharacterClass cls : this) {
@@ -60,8 +61,8 @@ Cost: 169
     }
 
 
-    private ClassGraph copy() {
-        return new ClassGraph(costTable, this);
+    private ClassGraphSynthesis copy() {
+        return new ClassGraphSynthesis(costTable, this);
     }
 
     private int analyzeGraph() {
@@ -84,7 +85,14 @@ Cost: 169
 
     private List<CharacterClass> getNeighbors(CharacterClass key) {
         int idx = indices.get(key);
-        return List.of(getLeftNeighbor(idx), getRightNeighbor(idx), getAcrossNeighbor(idx));
+        return List.of(getLeftNeighbor(idx), getRightNeighbor(idx), getAcrossNeighbor(idx), getWrapNeighbor(idx));
+    }
+
+    private CharacterClass getWrapNeighbor(int idx) {
+        if (idx < 10) {
+            return get((idx + 5) % 10);
+        }
+        return get((idx - 5) % 10 + 10);
     }
 
     private CharacterClass getAcrossNeighbor(int idx) {
@@ -100,28 +108,30 @@ Cost: 169
     }
 
     private void printNoCosts() {
+        System.out.printf("        \\            |            /\n");
         System.out.printf("         %3s--------%3s--------%3s\n", shortName(1), shortName(2), shortName(3));
-        System.out.printf("        /   \\        |       /    \\\n");
-        System.out.printf("       /     %3s----%3s----%3s     \\\n", shortName(11), shortName(12), shortName(13));
-        System.out.printf("      /     /                 \\     \\\n");
-        System.out.printf("   %3s----%3s                 %3s----%3s\n", shortName(0), shortName(10), shortName(14), shortName(4));
+        System.out.printf("        /   \\        |       /     \\\n");
+        System.out.printf("       /     %3s----%3s----%3s      \\\n", shortName(11), shortName(12), shortName(13));
+        System.out.printf("      /     /   \\    |    /   \\      \\\n");
+        System.out.printf(" --%3s----%3s--             --%3s----%3s--\n", shortName(0), shortName(10), shortName(14), shortName(4));
         System.out.printf("    |      |                   |      |\n");
-        System.out.printf("   %3s----%3s                 %3s----%3s\n", shortName(9), shortName(19), shortName(15), shortName(5));
-        System.out.printf("      \\     \\                 /     /\n");
-        System.out.printf("       \\     %3s----%3s----%3s     /\n", shortName(18), shortName(17), shortName(16));
-        System.out.printf("        \\   /        |        \\   /\n");
+        System.out.printf(" --%3s----%3s--             --%3s----%3s--\n", shortName(9), shortName(19), shortName(15), shortName(5));
+        System.out.printf("      \\     \\   /    |    \\   /      /\n");
+        System.out.printf("       \\     %3s----%3s----%3s      /\n", shortName(18), shortName(17), shortName(16));
+        System.out.printf("        \\   /        |        \\    /\n");
         System.out.printf("         %3s--------%3s--------%3s\n", shortName(8), shortName(7), shortName(6));
+        System.out.printf("        /            |            \\\n");
     }
 
     private void print() {
-        System.out.printf("               %2d         %2d\n", cost(1, 2), cost(2, 3));
+        System.out.printf("       %2d      %2d   %2d    %2d      %2d\n", cost(1, 6), cost(1, 2), cost(2, 7), cost(2, 3), cost(3, 8));
         System.out.printf("         %3s--------%3s--------%3s\n", shortName(1), shortName(2), shortName(3));
         System.out.printf("        /   \\%2d      |%2d     /%2d  \\\n", cost(1, 11), cost(2, 12), cost(3, 13));
         System.out.printf("     %2d/     %3s----%3s----%3s     \\%2d\n", cost(0, 1), shortName(11), shortName(12), shortName(13), cost(3, 4));
-        System.out.printf("      /%2d %2d/    %2d     %2d    \\%2d %2d\\\n", cost(0, 10), cost(10, 11), cost(11, 12), cost(12, 13), cost(13, 14), cost(4, 14));
-        System.out.printf("   %3s----%3s                 %3s----%3s\n", shortName(0), shortName(10), shortName(14), shortName(4));
+        System.out.printf("      /%2d %2d/ %2d %2d %2d %2d %2d  \\%2d %2d\\\n", cost(0, 10), cost(10, 11), cost(11, 16), cost(11, 12), cost(12, 17), cost(12, 13), cost(13, 18), cost(13, 14), cost(4, 14));
+        System.out.printf("%2d %3s----%3s %2d           %2d %3s----%3s\n", cost(0, 5), shortName(0), shortName(10), cost(10, 15), cost(14, 19), shortName(14), shortName(4));
         System.out.printf("  %2d|      |%2d               %2d|      |%2d\n", cost(9, 0), cost(19, 10), cost(14, 15), cost(4, 5));
-        System.out.printf("   %3s----%3s                 %3s----%3s\n", shortName(9), shortName(19), shortName(15), shortName(5));
+        System.out.printf("%2d %3s----%3s                 %3s----%3s\n", cost(9, 4), shortName(9), shortName(19), shortName(15), shortName(5));
         System.out.printf("      \\%2d %2d\\    %2d     %2d    /%2d %2d/\n", cost(9, 19), cost(18, 19), cost(17, 18), cost(16, 17), cost(15, 16), cost(5, 15));
         System.out.printf("     %2d\\     %3s----%3s----%3s     /%2d\n", cost(8, 9), shortName(18), shortName(17), shortName(16), cost(5, 6));
         System.out.printf("        \\   /%2d      |%2d      \\%2d /\n", cost(8, 18), cost(7, 17), cost(6, 16));
@@ -165,8 +175,8 @@ Cost: 169
         costTable.printOptimumCosts();
 
         System.out.println("Starting from:");
-        ClassGraph classGraph = new ClassGraph(costTable);
-        //ClassGraph classGraph = new ClassGraph(costTable, makeRandomGraph());
+        //ClassGraphSynthesis classGraph = new ClassGraphSynthesis(costTable);
+        ClassGraphSynthesis classGraph = new ClassGraphSynthesis(costTable, makeRandomGraph());
         System.out.println();
         classGraph.print();
         System.out.println();
@@ -180,7 +190,7 @@ Cost: 169
 
         boolean betterFound = false;
         for (int i = 0; i < 2000000; i++) { // 1000000
-            ClassGraph copy = classGraph.copy();
+            ClassGraphSynthesis copy = classGraph.copy();
             int steps = MyRandom.randInt(3) + MyRandom.randInt(3) + 1;
             if (steps == 5) {
                 steps += MyRandom.randInt(4);
@@ -245,7 +255,7 @@ Cost: 169
                 classGraph.print();
             }
             classGraph.printNoCosts();
-
+            System.out.println("Cost: " + total);
         } while (true);
         System.out.println("Cost: " + total);
         classGraph.printAsList();
