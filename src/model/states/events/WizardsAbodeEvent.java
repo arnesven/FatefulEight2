@@ -3,14 +3,17 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.SpellMasteries;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.clothing.MesmersRobes;
+import model.items.spells.Spell;
 import model.items.weapons.PineWand;
 import model.races.Race;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -63,6 +66,9 @@ public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
             change.areYouInterested(model);
             setCurrentTerrainSubview(model);
             showExplicitPortrait(model, portrait, "Wizard");
+            model.getLog().waitForAnimationToFinish();
+            SpellMasteries.offersToTutorSpells(model, this,
+                    "the wizard", MyLists.filter(Classes.WIZ.getSkills(), Skill::isMagic));
             return true;
         }
         model.getParty().randomPartyMemberSay(model, List.of("Agh, I don't get it. Let's just give up.#"));

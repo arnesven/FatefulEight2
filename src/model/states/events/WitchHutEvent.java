@@ -3,8 +3,10 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.SpellMasteries;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.enemies.WitchEnemy;
@@ -63,11 +65,11 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
             runCombat(List.of(new WitchEnemy('A', portrait.getRace(), portrait)));
             return false;
         }
-        offerPotionsAndChangeClass(model);
+        offerServices(model);
         return true;
     }
 
-    private void offerPotionsAndChangeClass(Model model) {
+    private void offerServices(Model model) {
         println("She beckons you inside and offers to sell you a couple of bottles of the draft.");
         List<Item> itemList = new ArrayList<>();
         Potion pot = model.getItemDeck().getRandomPotion();
@@ -83,6 +85,8 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
         changeClassEvent.areYouInterested(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, portrait, "Witch");
+        model.getLog().waitForAnimationToFinish();
+        SpellMasteries.offersToTutorSpells(model, this, "the witch", List.of(Skill.MagicBlack, Skill.MagicGreen));
     }
 
     @Override

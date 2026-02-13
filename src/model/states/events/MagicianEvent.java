@@ -3,13 +3,16 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.SpellMasteries;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.clothing.MesmersRobes;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -62,6 +65,9 @@ public class MagicianEvent extends MagicExpertGeneralInteractionEvent {
                 changeEvents.areYouInterested(model);
                 setCurrentTerrainSubview(model);
                 showExplicitPortrait(model, portrait, "Magician");
+                model.getLog().waitForAnimationToFinish();
+                SpellMasteries.offersToTutorSpells(model, this, "the magician",
+                        MyLists.filter(Classes.MAG.getSkills(), Skill::isMagic));
             }
         }
         return true;

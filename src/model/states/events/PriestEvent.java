@@ -3,8 +3,10 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.SpellMasteries;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
@@ -12,6 +14,7 @@ import model.items.Equipment;
 import model.items.accessories.LargeShield;
 import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.Scepter;
+import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.PortraitSubView;
@@ -83,6 +86,8 @@ public class PriestEvent extends GeneralInteractionEvent {
         changeClassEvent.areYouInterested(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, portrait, "Priest");
+        model.getLog().waitForAnimationToFinish();
+        SpellMasteries.offersToTutorSpells(model, this, "the priest", MyLists.filter(Classes.PRI.getSkills(), Skill::isMagic));
         return true;
     }
 

@@ -2,8 +2,10 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.SpellMasteries;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
@@ -170,6 +172,10 @@ public class StoneCircleEvent extends GeneralInteractionEvent {
             if (yesNoInput()) {
                 model.getParty().spendGold(amount);
                 change.doEvent(model);
+                setCurrentTerrainSubview(model);
+                showExplicitPortrait(model, appearance, "Druid");
+                model.getLog().waitForAnimationToFinish();
+                SpellMasteries.offersToTutorSpells(model, this, "the druid", MyLists.filter(Classes.DRU.getSkills(), Skill::isMagic));
             }
             println("You part ways with the druid.");
         } else if (change.noOfCandidates() > 0) {

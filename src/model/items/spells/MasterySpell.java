@@ -21,13 +21,17 @@ public abstract class MasterySpell extends Spell {
         if (masteriesEnabled()) {
             int masteryTimes = getMasteryTimes(caster);
             for (int i = 0; i < masteryTimes; ++i) {
-                boolean updated = caster.getMasteries().registerSuccessfullCast(model, this);
-                if (updated) {
-                    model.getLog().addAnimated(LogView.PURPLE_COLOR + caster.getName() + " has achieved mastery level " +
-                            getMasteryLevel(caster) + " for " + getName() + "!\n" + LogView.DEFAULT_COLOR);
-                    model.getTutorial().spellMasteries(model);
-                }
+                incrementMastery(model, caster);
             }
+        }
+    }
+
+    public void incrementMastery(Model model, GameCharacter caster) {
+        boolean updated = caster.getMasteries().registerSuccessfullCast(model, this);
+        if (updated) {
+            model.getLog().addAnimated(LogView.PURPLE_COLOR + caster.getName() + " has achieved mastery level " +
+                    getMasteryLevel(caster) + " for " + getName() + "!\n" + LogView.DEFAULT_COLOR);
+            model.getTutorial().spellMasteries(model);
         }
     }
 

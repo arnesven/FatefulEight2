@@ -10,7 +10,7 @@ import util.MyStrings;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class ItemSummary {
+public class WeaponSummary {
 
     private static HashMap<Weapon, Double> avgDamageMap;
     private static final Scanner scanner = new Scanner(System.in);
@@ -84,11 +84,11 @@ public class ItemSummary {
             if (firstCharIs(input, 'N')) {
                 weapons.sort(Comparator.comparing(Item::getName));
             } else if (firstCharIs(input, 'D')) {
-                weapons.sort(Comparator.comparing(ItemSummary::getDistance));
+                weapons.sort(Comparator.comparing(WeaponSummary::getDistance));
             } else if (firstCharIs(input, 'T')) {
-                weapons.sort(Comparator.comparing(ItemSummary::getWeaponType));
+                weapons.sort(Comparator.comparing(WeaponSummary::getWeaponType));
             } else if (firstCharIs(input, 'A')) {
-                weapons.sort(Comparator.comparingDouble(ItemSummary::getAverageDamage));
+                weapons.sort(Comparator.comparingDouble(WeaponSummary::getAverageDamage));
             } else if (firstCharIs(input, 'C')) {
                 weapons.sort(Comparator.comparingInt(Item::getCost));
             } else if (firstCharIs(input, 'P')) {
@@ -116,17 +116,17 @@ public class ItemSummary {
             if (firstCharIs(input, 'N')) {
                 return MyLists.filter(weapons, stringFilter("Name", Weapon::getName));
             } else if (firstCharIs(input, 'T')) {
-                return MyLists.filter(weapons, stringFilter("Type", ItemSummary::getWeaponType));
+                return MyLists.filter(weapons, stringFilter("Type", WeaponSummary::getWeaponType));
             } else if (firstCharIs(input, 'P')) {
-                return MyLists.filter(weapons, stringFilter("Prevalence", ItemSummary::getPrevalence));
+                return MyLists.filter(weapons, stringFilter("Prevalence", WeaponSummary::getPrevalence));
             } else if (firstCharIs(input, 'D')) {
-                return MyLists.filter(weapons, stringFilter("Distance", ItemSummary::getDistance));
+                return MyLists.filter(weapons, stringFilter("Distance", WeaponSummary::getDistance));
             } else if (firstCharIs(input, 'S')) {
-                return MyLists.filter(weapons, stringFilter("Skill", ItemSummary::getSkillName));
+                return MyLists.filter(weapons, stringFilter("Skill", WeaponSummary::getSkillName));
             } else if (firstCharIs(input, 'C')) {
-                return MyLists.filter(weapons, minMaxFilter("cost", ItemSummary::getWeaponCost));
+                return MyLists.filter(weapons, minMaxFilter("cost", WeaponSummary::getWeaponCost));
             } else if (firstCharIs(input, 'A')) {
-                return MyLists.filter(weapons, minMaxFilter("damage", ItemSummary::getAverageDamage));
+                return MyLists.filter(weapons, minMaxFilter("damage", WeaponSummary::getAverageDamage));
             }
         }
         return weapons;

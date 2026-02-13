@@ -137,6 +137,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new TournamentEvent(model, this),
                     new TroubadourEvent(model),
                     new WantedPosterEvent(model)
+                    // new ScholarEvent(),
                     // FEATURE: new BookShopEvent() (where you can order a spell book)
                     // new SewersEvent
                     // new BeautySalonEvent

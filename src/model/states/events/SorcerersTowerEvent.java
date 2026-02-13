@@ -3,9 +3,11 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.SpellMasteries;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.classes.normal.SorcererClass;
 import model.enemies.ApprenticeEnemy;
 import model.enemies.Enemy;
 import model.items.Equipment;
@@ -14,6 +16,7 @@ import model.items.clothing.MagesRobes;
 import model.items.weapons.MorningStar;
 import model.items.weapons.OldWand;
 import model.states.ShopState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -70,6 +73,8 @@ public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
         shop.run(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, portrait, "Sorcerer");
+        model.getLog().waitForAnimationToFinish();
+        SpellMasteries.offersToTutorSpells(model, this, "the sorcerer", MyLists.filter(Classes.SOR.getSkills(), Skill::isMagic));
         return true;
     }
 

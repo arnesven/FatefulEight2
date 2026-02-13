@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.SpellMasteries;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -16,15 +17,18 @@ import model.items.Item;
 import model.items.ItemDeck;
 import model.items.accessories.Accessory;
 import model.items.clothing.*;
+import model.items.spells.MasterySpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
 import model.states.ShopState;
 import model.states.duel.MagicDuelEvent;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MageEvent extends MagicExpertGeneralInteractionEvent {
@@ -58,13 +62,23 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        if (MyRandom.rollD6() > 2) {
-            return favoriteSpell(model);
+        int dieRoll = MyRandom.rollD6();
+        if (dieRoll == 1) {
+            return mageIsOffended(model);
         }
-        return MageIsOffended(model);
+        if (dieRoll < 3) {
+            return offerTutoring(model);
+        }
+        return favoriteSpell(model);
     }
 
-    private boolean MageIsOffended(Model model) {
+    private boolean offerTutoring(Model model) {
+        List<Skill> spellColors = MyLists.filter(Arrays.stream(Skill.values()).toList(), Skill::isMagic);
+        SpellMasteries.offersToTutorSpells(model, this, "the mage", spellColors);
+        return true;
+    }
+
+    private boolean mageIsOffended(Model model) {
         println("After talking a bit with the mage, a heated discussion erupts about the finer points of magic.");
         portraitSay("Now really. You can't be serious! That's just preposterous.");
         leaderSay("I'm afraid your wrong about this.");
