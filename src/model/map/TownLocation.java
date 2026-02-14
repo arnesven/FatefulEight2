@@ -94,7 +94,6 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new MayorEvent(model); /*
         if (MyRandom.rollD10() >= 2) {
             return MyRandom.sample(List.of(
                     new AcceptDeliveryEvent(model),
@@ -141,7 +140,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new GuideEvent(model, 2)
             ));
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     @Override
