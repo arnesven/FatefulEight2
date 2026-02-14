@@ -167,8 +167,24 @@ public abstract class GameState implements GameStateConstants {
         getModel().getParty().partyMemberSay(getModel(), getModel().getParty().getLeader(), line);
     }
 
+    public void leaderSayWithSurprise(String line) {
+        getModel().getLog().waitForAnimationToFinish();
+        getModel().getParty().setEyesSurprised(getModel().getParty().getLeader(), true);
+        leaderSay(line);
+        getModel().getLog().waitForAnimationToFinish();
+        getModel().getParty().setEyesSurprised(getModel().getParty().getLeader(), false);
+    }
+
     public void partyMemberSay(GameCharacter gc, String line) {
         getModel().getParty().partyMemberSay(getModel(), gc, line);
+    }
+
+    public void partyMemberSayWithSurprise(GameCharacter gc, String line) {
+        getModel().getLog().waitForAnimationToFinish();
+        getModel().getParty().setEyesSurprised(gc, true);
+        partyMemberSay(gc, line);
+        getModel().getLog().waitForAnimationToFinish();
+        getModel().getParty().setEyesSurprised(gc, false);
     }
 
     public void notLeaderSay(String line) {
