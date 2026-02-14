@@ -13,6 +13,11 @@ public class Zweihander extends BladedWeapon {
         super("Zweihander", 30, new int[]{6, 8, 11, 14, 14}, true, 1);
     }
 
+//    @Override
+//    public int getWeight() {
+//        return 5000; // TODO:
+//    }
+
     @Override
     protected Sprite getSprite() {
         return SPRITE;

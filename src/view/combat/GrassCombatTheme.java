@@ -17,7 +17,7 @@ public class GrassCombatTheme extends CombatTheme {
     private static Sprite upperContour = new Sprite32x32("treecontourupper", "combat.png", 0x20, MyColors.BLACK, MyColors.DARK_GRAY, MyColors.WHITE);
     private static Sprite lowerContour = new Sprite32x32("treecontourlower", "combat.png", 0x21, MyColors.BLACK, MyColors.RED, MyColors.RED);
     public static Sprite[] grassSprites = makeGroundSprites(MyColors.GREEN, MyColors.LIGHT_GREEN, GRASSY_ROW);
-    public static Sprite[] darkGrassSprites = makeGroundSprites(MyColors.DARK_GREEN, MyColors.GREEN, GRASSY_ROW);
+    public static Sprite[] darkGrassSprites = makeGroundSprites(MyColors.DARK_GREEN, MyColors.TAN, GRASSY_ROW);
 
 
     @Override

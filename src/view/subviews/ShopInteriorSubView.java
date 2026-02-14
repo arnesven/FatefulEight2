@@ -39,6 +39,7 @@ public class ShopInteriorSubView extends RoomDailyActionSubView {
     @Override
     protected void drawBackgroundRoom(Model model, Random random) {
         super.drawSmallRoom(model, shoppingNode.getLowerWallSprite(), shoppingNode.getDoorSprite(), 3);
+        drawStreetOrPath(model, random, true, 7, 7);
         Point p = convertToScreen(new Point(5, 1));
         model.getScreenHandler().put(p.x, p.y, LodgingNode.SPRITE);
     }

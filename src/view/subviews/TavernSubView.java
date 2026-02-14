@@ -7,21 +7,16 @@ import model.races.Race;
 import model.states.dailyaction.*;
 import model.states.dailyaction.tavern.RecruitNode;
 import model.states.dailyaction.tavern.TavernDailyActionState;
-import sound.ClientSound;
-import sound.SoundEffects;
-import sprites.CombatSpeechBubble;
-import util.MyPair;
+
 import view.MyColors;
 import view.combat.GrassCombatTheme;
 import view.sprites.*;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static view.subviews.TownHallSubView.DOOR;
-import static view.subviews.TownHallSubView.OPEN_DOOR;
 
 public class TavernSubView extends RoomDailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.DARK_BROWN;
@@ -75,7 +70,7 @@ public class TavernSubView extends RoomDailyActionSubView {
 
     @Override
     protected void drawBackgroundRoom(Model model, Random random) {
-        for (int row = 0; row < 9; ++row) {
+        for (int row = 0; row < 8; ++row) {
             for (int col = 0; col < 8; ++col) {
                 Point p = convertToScreen(new Point(col, row));
                 if ((col == 0 || col == 7) && row < 7) {
@@ -88,23 +83,16 @@ public class TavernSubView extends RoomDailyActionSubView {
                     } else {
                         model.getScreenHandler().put(p.x, p.y, WALL);
                     }
-                } else if (row == 7) {
+                } else { // row == 7
                     if (col == 3) {
                         model.getScreenHandler().put(p.x, p.y, DOOR);
                     } else {
                         model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
                     }
-                } else {
-                    Sprite spr;
-                    if (model.getTimeOfDay() == TimeOfDay.EVENING) {
-                        spr = GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
-                    } else {
-                        spr = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
-                    }
-                    model.getScreenHandler().put(p.x, p.y, spr);
                 }
             }
         }
+        super.drawStreetOrPath(model, random, inTown, 8, 8);
     }
 
     @Override

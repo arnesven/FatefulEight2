@@ -3,11 +3,13 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import sound.SoundEffects;
 import util.MyPair;
 import view.MyColors;
+import view.combat.GrassCombatTheme;
 import view.sprites.*;
 
 import java.awt.*;
@@ -21,6 +23,13 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
     public static final Sprite OPEN_DOOR = new Sprite32x32("door", "world_foreground.png", 0x6E,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
+
+    private static final Sprite[] STREET_DAY = makeStreetSprites(MyColors.GRAY, MyColors.GREEN, MyColors.LIGHT_GREEN);
+    private static final Sprite STREET_PATH_DAY = new Sprite32x32("innstreetpathday", "world_foreground.png", 0xE9,
+            MyColors.GRAY, MyColors.GREEN, MyColors.LIGHT_GREEN, MyColors.DARK_GRAY);
+    private static final Sprite[] STREET_NIGHT = makeStreetSprites(MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.GREEN);
+    private static final Sprite STREET_PATH_NIGHT = new Sprite32x32("innstreetnight", "world_foreground.png", 0xE9,
+            MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.TAN, MyColors.DARK_GRAY);
 
     private boolean openDoorAnimation = false;
     private boolean playedOpenDoorSound = false;
@@ -124,4 +133,36 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
         otherEffects.add(new MyPair<>(new NonCombatSpeechBubble(length), convertToScreen(p)));
     }
 
+    private static Sprite[] makeStreetSprites(MyColors color1, MyColors color2, MyColors color3) {
+        Sprite[] sprites = new Sprite[3];
+        for (int x = 0; x < 3; ++x) {
+            sprites[x] = new Sprite32x32("street", "world_foreground.png", 0xE6 + x, color1, color2, color3, MyColors.DARK_GRAY);
+        }
+        return sprites;
+    }
+
+    protected void drawStreetOrPath(Model model, Random random, boolean inTown, int row, int width) {
+         for (int col = 0; col < width; col++) {
+            Point p = convertToScreen(new Point(col, row));
+            Sprite spr;
+            if (col == 3) {
+                spr = model.getTimeOfDay() == TimeOfDay.EVENING ? STREET_PATH_NIGHT : STREET_PATH_DAY;
+            } else {
+                if (inTown) {
+                    if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+                        spr = STREET_NIGHT[random.nextInt(STREET_NIGHT.length)];
+                    } else {
+                        spr = STREET_DAY[random.nextInt(STREET_DAY.length)];
+                    }
+                 } else {
+                    if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+                        spr = GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                    } else {
+                        spr = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                    }
+                }
+            }
+            model.getScreenHandler().put(p.x, p.y, spr);
+        }
+    }
 }

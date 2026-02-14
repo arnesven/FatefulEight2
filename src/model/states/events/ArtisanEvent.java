@@ -145,7 +145,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
-        GameCharacter gc = new GameCharacter(subType.getName(), "", portrait.getRace(), Classes.ART, portrait,
+        GameCharacter gc = new GameCharacter(subType.getName(), "", portrait.getRace(), subType.makeArtisanSubClass(), portrait,
                 new Equipment(new Warhammer(), new FancyJerkin(), null));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;
