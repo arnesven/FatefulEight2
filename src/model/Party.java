@@ -929,6 +929,10 @@ public class Party implements Serializable {
         portraitAnimations.forceEyesClosed(victim, closed);
     }
 
+    public void setEyesSurprised(GameCharacter target, boolean surprised) {
+        portraitAnimations.setEyesSurprised(target, surprised);
+    }
+
     public void setGuide(int days) {
         this.guide = days;
     }

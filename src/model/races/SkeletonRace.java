@@ -8,7 +8,7 @@ import view.sprites.FaceSprite;
 import view.sprites.PortraitSprite;
 
 public class SkeletonRace extends Race {
-    public static final CharacterEyes EYES = new CharacterEyes(0x167, 0x169, "", 0);
+    public static final CharacterEyes EYES = new CharacterEyes(0x167, 0x169, "", 0, 0);
     private static final PortraitSprite BLOCK_SPRITE = new FaceSprite(0x0F);
 
     public SkeletonRace() {

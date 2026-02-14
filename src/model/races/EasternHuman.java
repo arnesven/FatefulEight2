@@ -10,10 +10,10 @@ import java.util.List;
 public class EasternHuman extends HumanRace {
 
     public static final List<CharacterEyes> EYES = List.of(
-            new CharacterEyes(0x1AF, 0x1BF, "", 6),
-            new CharacterEyes(0x1CF, 0x1DF, "", 6),
-            new CharacterEyes(0x1EF, 0x1FF, "", 6),
-            new CharacterEyes(0x19D, 0x19E, "", 6)
+            new CharacterEyes(0x1AF, 0x1BF, "", 6, 4),
+            new CharacterEyes(0x1CF, 0x1DF, "", 6, 4),
+            new CharacterEyes(0x1EF, 0x1FF, "", 6, 4),
+            new CharacterEyes(0x19D, 0x19E, "", 6, 4)
     );
     private static final List<MyColors> HAIR_COLORS = List.of(MyColors.DARK_GRAY,
             MyColors.DARK_BROWN, MyColors.GRAY, MyColors.BROWN, MyColors.DARK_RED, MyColors.TAN);

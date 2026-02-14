@@ -256,6 +256,14 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     @Override
+    protected int getSurprisedIndex() {
+        if (eyes != null) {
+            return eyes.getSurprisedIndex();
+        }
+        return 0;
+    }
+
+    @Override
     protected PortraitSprite getOuterFrameSprite(int i) {
         if (hairStyle.getOuterFrame() != null) {
             return new HairSpriteWithFrame(hairStyle.getOuterFrame()[i-1], getHairColor());
@@ -332,6 +340,21 @@ public class AdvancedAppearance extends CharacterAppearance {
                             MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE));
         }
         return super.makeBlinkSprites(mascaraColor);
+    }
+
+    @Override
+    protected MyPair<Sprite8x8, Sprite8x8> makeSurprisedSprites(MyColors mascaraColor) {
+        if (faceDetails == null) {
+            return super.makeSurprisedSprites(mascaraColor);
+        }
+        FaceDetail detail = MyLists.find(faceDetails, fd -> fd instanceof GlassesDetail);
+        if (detail != null) {
+            return new MyPair<>(new Sprite8x8("suprisedleft", "mouth.png", 0x60 + 2 * getSurprisedIndex(),
+                    MyColors.BLACK, getEyeballColor(), detail.getColor(), mascaraColor),
+                    new Sprite8x8("surprisedright", "mouth.png", 0x61 + 2 * getSurprisedIndex(),
+                            MyColors.BLACK, getEyeballColor(), detail.getColor(), mascaraColor));
+        }
+        return super.makeSurprisedSprites(mascaraColor);
     }
 
     @Override

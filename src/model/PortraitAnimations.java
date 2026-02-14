@@ -2,6 +2,7 @@ package model;
 
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
 import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
@@ -20,6 +21,7 @@ public class PortraitAnimations implements Serializable {
     private final Map<CharacterAppearance, SpeakingAnimation> speakingAnimations = new HashMap<>();
     private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
     private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
+    private final Set<CharacterAppearance> surprised = new HashSet<>();
     private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
     private final Map<CharacterAppearance, VampireFeedingLook> feedingLooks = new HashMap<>();
     private Map<Integer, Integer> slotAnimations = new HashMap<>();
@@ -28,9 +30,11 @@ public class PortraitAnimations implements Serializable {
         if (!app.showFacialHair()) {
             return;
         }
-        handleLook(screenHandler, app, p);
-        handleBlink(screenHandler, app, p);
-        handleMisc(screenHandler, app);
+        if (!handleSurprised(screenHandler, app, p)) {
+            handleLook(screenHandler, app, p);
+            handleBlink(screenHandler, app, p);
+            handleMisc(screenHandler, app);
+        }
     }
 
     private void handleLook(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
@@ -47,6 +51,13 @@ public class PortraitAnimations implements Serializable {
         if (lookers.containsKey(app)) {
             app.drawDrawLook(screenHandler, lookers.get(app), p.x+3, p.y+6);
         }
+    }
+
+    private boolean handleSurprised(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
+        if (surprised.contains(app)) {
+            app.drawSurprised(screenHandler, p.x+3, p.y+6);
+        }
+        return false;
     }
 
     private void handleBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
@@ -142,8 +153,20 @@ public class PortraitAnimations implements Serializable {
         }
     }
 
+    public void setEyesSurprised(CharacterAppearance app, boolean isSurprised) {
+        if (isSurprised) {
+            surprised.add(app);
+        } else {
+            surprised.remove(app);
+        }
+    }
+
     public void forceEyesClosed(GameCharacter victim, boolean closed) {
         forceEyesClosed(victim.getAppearance(), closed);
+    }
+
+    public void setEyesSurprised(GameCharacter target, boolean surprised) {
+        setEyesSurprised(target.getAppearance(), surprised);
     }
 
     private void handleMisc(ScreenHandler screenHandler, CharacterAppearance appearance) {

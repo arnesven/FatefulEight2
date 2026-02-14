@@ -26,6 +26,7 @@ public abstract class CharacterAppearance implements Serializable {
     private MyPair<Sprite8x8, Sprite8x8> blinkSprites;
     private MyPair<Sprite8x8, Sprite8x8> lookLeft;
     private MyPair<Sprite8x8, Sprite8x8> lookRight;
+    private MyPair<Sprite8x8, Sprite8x8> surprised;
     private MyColors hairColor;
     private MyColors mascaraColor;
     private MyColors lipColor;
@@ -438,6 +439,14 @@ public abstract class CharacterAppearance implements Serializable {
                 MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE),
                 new Sprite8x8("lookrightright", "mouth.png", lookRight+2,
                         MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE));
+        this.surprised = makeSurprisedSprites(mascaraColor);
+    }
+
+    protected MyPair<Sprite8x8, Sprite8x8> makeSurprisedSprites(MyColors mascaraColor) {
+        return new MyPair<>(new Sprite8x8("suprisedleft", "mouth.png", 0x50 + 2*getSurprisedIndex(),
+                MyColors.BLACK, getEyeballColor(), MyColors.BROWN, mascaraColor),
+                new Sprite8x8("surprisedright", "mouth.png", 0x51 + 2*getSurprisedIndex(),
+                        MyColors.BLACK, getEyeballColor(), MyColors.BROWN, mascaraColor));
     }
 
     protected MyPair<Sprite8x8, Sprite8x8> makeBlinkSprites(MyColors mascaraColor) {
@@ -450,6 +459,8 @@ public abstract class CharacterAppearance implements Serializable {
     protected int getLookIndex() {
         return 0;
     }
+
+    protected int getSurprisedIndex() { return 0; }
 
     protected Sprite getBlinkLeft() {
         return blinkSprites.first;
@@ -492,5 +503,10 @@ public abstract class CharacterAppearance implements Serializable {
 
     public boolean supportsSpeakingAnimation() {
         return true;
+    }
+
+    public void drawSurprised(ScreenHandler screenHandler, int x, int y) {
+        screenHandler.register("surprisedleft", new Point(x - 1, y), surprised.first);
+        screenHandler.register("surprisedright", new Point(x + 1, y), surprised.second);
     }
 }

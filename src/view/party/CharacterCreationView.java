@@ -69,6 +69,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedShoulders = 0;
     private int selectedNeck = 0;
     private boolean showSkeleton = false;
+    private boolean showSurprised = false;
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
     private Sprite avatarBack = null;
@@ -161,6 +162,9 @@ public class CharacterCreationView extends SelectableListMenu {
                 String title = "- CUSTOM CHARACTER -";
                 BorderFrame.drawCentered(model.getScreenHandler(), title, y++, MyColors.WHITE, MyColors.BLUE);
                 lastAppearance.drawYourself(model.getScreenHandler(), x+COLUMN_SKIP+17, y+2);
+                if (showSurprised) {
+                    lastAppearance.drawSurprised(model.getScreenHandler(), x+COLUMN_SKIP+17+3, y+2+3);
+                }
                 model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
                         new Point(x+COLUMN_SKIP+24, y+3),
                         lastCharacter.getAvatarSprite());
@@ -454,6 +458,13 @@ public class CharacterCreationView extends SelectableListMenu {
                     @Override
                     public void turnRight(Model model) {
                         selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
+                    }
+                },
+                new SelectableListContent(xStart + 3, yStart + 35, (showSurprised ? "Hide" : "Show") + " Surprised Eyes") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        showSurprised = !showSurprised;
+                        rebuildAppearance();
                     }
                 },
                 new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {

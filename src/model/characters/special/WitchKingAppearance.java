@@ -20,4 +20,7 @@ public class WitchKingAppearance extends AdvancedAppearance {
 
     @Override
     public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
+
+    @Override
+    public void drawSurprised(ScreenHandler screenHandler, int x, int y) {}
 }

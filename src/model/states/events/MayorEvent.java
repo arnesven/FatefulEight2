@@ -28,11 +28,15 @@ public class MayorEvent extends DailyEventState {
             showEventCard("A group of nobles are engrossed in a conversation on a street corner " +
                     "when a wagon, fully loaded with huge wine barrels passes by. Suddenly a barrel " +
                     "tumbles off the wagon and rolls straight at one of the nobles.");
+            model.getLog().waitForAnimationToFinish();
+            model.getParty().setEyesSurprised(model.getParty().getLeader(), true);
             leaderSay("Watch out!");
             println(model.getParty().getLeader().getName() + " pushes the noble out of the way. The wine barrel " +
                     "smashes into a stone wall and splashes wine all over the street.");
             model.getParty().randomPartyMemberSay(model, List.of("Darn, I wasn't quick enough with my cup.",
                     "That was a close one.", "Somebody could have been killed!", "What a mess."));
+            model.getLog().waitForAnimationToFinish();
+            model.getParty().setEyesSurprised(model.getParty().getLeader(), false);
             leaderSay("Are you alright sir?");
             boolean gender = town.getLordGender();
             println("The noble picks " + himOrHer(gender) +
