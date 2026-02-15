@@ -119,7 +119,7 @@ public class KidsWantFireworksEvent extends DailyEventState {
                 println("The kids seem more curious than impressed.");
                 showExplicitPortrait(model, kid1, "Kid 1");
                 portraitSay("Do more do more!");
-                leaderSay("I think that's enough for now. We got places to be you know.");
+                leaderSay("I think that's enough for now. " + iOrWeCap() + "'ve got places to be you know.");
                 portraitSay("Awww... okay...");
                 leaderSay("Bye kids.");
                 println("Each party member gains 5 experience points.");

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -33,7 +34,7 @@ public class GuideEvent extends DailyEventState {
         showRandomPortrait(model, Classes.None, guideRace, "Guide");
         model.getParty().randomPartyMemberSay(model, List.of("This place is pretty big. I wonder where..."));
         portraitSay("Where the tavern is? Where the general store is? The smith?");
-        model.getParty().randomPartyMemberSay(model, List.of("Uhm... can we help you?"));
+        partyMemberSay(model.getParty().getRandomPartyMember(), "Uhm... can we help you?", FacialExpression.questioning);
         portraitSay("No, hehe, but for a few coins I'll gladly show you around. How 'bout it?");
         model.getTutorial().guides(model);
         if (model.getParty().getGold() < cost) {

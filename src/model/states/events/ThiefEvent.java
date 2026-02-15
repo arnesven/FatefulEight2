@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -35,7 +36,7 @@ public class ThiefEvent extends DailyEventState {
             showEventCard("A stranger comes up to you and asks for directions.");
         }
         if (spotThief(model)) {
-            model.getParty().randomPartyMemberSay(model, List.of("Did you think you could pull a fast one on us?"));
+            partyMemberSay(model.getParty().getRandomPartyMember(), "Did you think you could pull a fast one on us?", FacialExpression.angry);
             printQuote("Thief", "Come on guys, I just need enough for food, and maybe a beer.");
             print("Do you treat the thief to some rations and a drink? (Y/N) ");
             if (yesNoInput()) {
@@ -51,7 +52,8 @@ public class ThiefEvent extends DailyEventState {
                 print("The thief is also willing to show you some tricks, ");
                 change.areYouInterested(model);
             } else {
-                model.getParty().randomPartyMemberSay(model, List.of("Shove off you! Don't let us catch you near us again!"));
+                partyMemberSay(model.getParty().getRandomPartyMember(), "Shove off you! Don't let us catch you near us again!",
+                        FacialExpression.angry);
             }
         } else {
             println("Slightly confused over the stranger's line of questions you try your best to answer. " +
@@ -88,7 +90,7 @@ public class ThiefEvent extends DailyEventState {
             GameCharacter gc = resultAndSpotter.second;
             println(gc.getName() + " spots the stranger trying to snatch your purse. (Perception " +
                     resultAndSpotter.first.asString() + ")");
-            model.getParty().partyMemberSay(model, gc, "Hey, there! THIEF!");
+            partyMemberSay(gc, "Hey, there! THIEF!", FacialExpression.angry);
             return true;
         }
         return false;

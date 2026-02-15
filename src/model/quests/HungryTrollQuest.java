@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.AbnormallyLargeTrollEnemy;
@@ -107,11 +108,11 @@ public class HungryTrollQuest extends Quest {
                 if (model.getParty().getFood() > 10) {
                     int lost = model.getParty().getFood() / 3;
                     state.println("You have lost " + lost + " rations.");
-                    state.leaderSay("Hey! That's our food!");
+                    state.leaderSay("Hey! That's our food!", FacialExpression.angry);
                     model.getParty().addToFood(-lost);
                 } else {
                     state.println("Fortunately, it did not contain anything too important.");
-                    state.partyMemberSay(model.getParty().getRandomPartyMember(), "Hey, those were my spare clothes!");
+                    state.partyMemberSay(model.getParty().getRandomPartyMember(), "Hey, those were my spare clothes!", FacialExpression.angry);
                 }
                 state.printQuote("Troll", "YUM YUM.... GOOD FOOD.");
                 state.leaderSay("Okay troll, you've had a snack. Ready to talk now?");
@@ -129,7 +130,7 @@ public class HungryTrollQuest extends Quest {
                     Horse horse = model.getParty().getHorseHandler().get(0);
                     state.println("The troll has eaten one of your horses.");
                     model.getParty().getHorseHandler().removeHorse(horse);
-                    state.leaderSay("Hey! That poor " + horse.getType() + "!");
+                    state.leaderSay("Hey! That poor " + horse.getType() + "!", FacialExpression.angry);
                 } else {
                     state.print("The troll has eaten another one of your backpacks. ");
                     if (model.getParty().getFood() > 10) {
@@ -138,11 +139,12 @@ public class HungryTrollQuest extends Quest {
                         model.getParty().addToFood(-lost);
                     } else {
                         state.println("Fortunately, it did not contain anything too important.");
-                        state.partyMemberSay(model.getParty().getRandomPartyMember(), "Hey, the cooking stuff was in there!");
+                        state.partyMemberSay(model.getParty().getRandomPartyMember(),
+                                "Hey, the cooking stuff was in there!", FacialExpression.angry);
                     }
                 }
                 state.printQuote("Troll", "AAAAH, SO GOOD...");
-                state.leaderSay("Troll, I'm losing my patience with you! You can't just eat the next thing you see.");
+                state.leaderSay("Troll, I'm losing my patience with you! You can't just eat the next thing you see.", FacialExpression.angry);
                 state.printQuote("Troll", "BUT I'M SO HUNGRY, ALL THE TIME! MUST EEEEEAAAAAT.");
             }
         };

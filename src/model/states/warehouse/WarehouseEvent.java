@@ -3,6 +3,7 @@ package model.states.warehouse;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.items.spells.TelekinesisSpell;
 import model.states.DailyEventState;
@@ -35,6 +36,7 @@ public class WarehouseEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         CharacterAppearance workerAppearance = PortraitSubView.makeRandomPortrait(Classes.None);
+        getPortraitSubView().setFacialExpression(FacialExpression.sad);
         showExplicitPortrait(model, workerAppearance, "Worker");
         println("You pass by a warehouse. Outside is a young " + manOrWoman(workerAppearance.getGender()) +
                 ", " + heOrShe(workerAppearance.getGender()) + " looks exhausted.");
@@ -47,12 +49,16 @@ public class WarehouseEvent extends DailyEventState {
         portraitSay("No can do. If the boss finds out I'm leaving goods out in the open, " +
                 "he'll give me a good thrashing. I just need to figure out how to move things around in there.");
         leaderSay("Maybe I can help?");
+        model.getLog().waitForAnimationToFinish();
+        getPortraitSubView().setFacialExpression(FacialExpression.none);
         portraitSay("Would you? I'll give you a reward if you can get the white box to the door. " +
                 "I don't care if you move the others ones. " +
                 "Oh, and don't even bother with the gray ones, they're super heavy.");
         print("Help the worker with the boxes in the warehouse? (Y/N) ");
         if (!yesNoInput()) {
             leaderSay("On second thought, we have places to be.");
+            model.getLog().waitForAnimationToFinish();
+            getPortraitSubView().setFacialExpression(FacialExpression.sad);
             portraitSay("Okay, I better get back to work. I just need to catch my breath first.");
             return;
         }

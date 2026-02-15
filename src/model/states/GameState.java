@@ -180,7 +180,7 @@ public abstract class GameState implements GameStateConstants {
     public void partyMemberSay(GameCharacter gc, String line, FacialExpression expression) {
         getModel().getLog().waitForAnimationToFinish();
         getModel().getParty().setFacialExpression(gc, expression);
-        leaderSay(line);
+        partyMemberSay(gc, line);
         getModel().getLog().waitForAnimationToFinish();
         getModel().getParty().setFacialExpression(gc, FacialExpression.none);
     }
@@ -306,7 +306,7 @@ public abstract class GameState implements GameStateConstants {
         return Math.min(max, Math.max(1, model.getParty().partyStrength() / (enemy).getThreat()));
     }
 
-    public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {
+    public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line, FacialExpression facialExpression) {
         List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
         candidates.removeAll(model.getParty().getBench());
         candidates.removeAll(excluding);
@@ -315,8 +315,12 @@ public abstract class GameState implements GameStateConstants {
             return false;
         }
         GameCharacter speaker = MyRandom.sample(candidates);
-        partyMemberSay(speaker, line);
+        partyMemberSay(speaker, line, facialExpression);
         return true;
+    }
+
+    public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {
+        return randomSayIfPersonality(trait, excluding, line, FacialExpression.none);
     }
 
     public MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty, Skill bonusFromSkill) {

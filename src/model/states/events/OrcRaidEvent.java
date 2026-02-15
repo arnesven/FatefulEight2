@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.characters.appearance.RandomAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -42,9 +43,9 @@ public class OrcRaidEvent extends DailyEventState {
         showEventCard("Orc Raid", "Suddenly you hear a bell clamoring. You hear shouting and people start " +
                 "running into their houses, shutting doors and windows.");
         showRandomPortrait(model, Classes.CONSTABLE, "Militia");
-        portraitSay("Orc Raid! Everybody, take up arms to defend our town!");
+        portraitSay("Orc Raid! Everybody, take up arms to defend our town!", FacialExpression.angry);
         randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
-                "We must protect these innocent people!");
+                "We must protect these innocent people!", FacialExpression.surprised);
         randomSayIfPersonality(PersonalityTrait.cold, List.of(model.getParty().getLeader()),
                 "Why should we stick our necks out for these people? Let's just get out of town while there's still time.");
         randomSayIfPersonality(PersonalityTrait.calm, List.of(model.getParty().getLeader()),

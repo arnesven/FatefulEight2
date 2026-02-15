@@ -27,7 +27,7 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
     private static final Sprite[] STREET_DAY = makeStreetSprites(MyColors.GRAY, MyColors.GREEN, MyColors.LIGHT_GREEN);
     private static final Sprite STREET_PATH_DAY = new Sprite32x32("innstreetpathday", "world_foreground.png", 0xE9,
             MyColors.GRAY, MyColors.GREEN, MyColors.LIGHT_GREEN, MyColors.DARK_GRAY);
-    private static final Sprite[] STREET_NIGHT = makeStreetSprites(MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.GREEN);
+    private static final Sprite[] STREET_NIGHT = makeStreetSprites(MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.TAN);
     private static final Sprite STREET_PATH_NIGHT = new Sprite32x32("innstreetnight", "world_foreground.png", 0xE9,
             MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.TAN, MyColors.DARK_GRAY);
 
