@@ -190,7 +190,7 @@ public class RecruitState extends GameState {
                     "Are you in, " + firstName + "?",
                     "The jobs yours " + firstName + ". Do you want it?")));
             if (rgc.getInfo() == RecruitInfo.none) {
-                candidateSay(rgc, "My name is " + rgc.getCharacter().getName() + ".");
+                candidateSay(rgc, "I do. And my name is " + rgc.getCharacter().getName() + ".");
             } else {
                 newPartyMemberComment(rgc);
             }

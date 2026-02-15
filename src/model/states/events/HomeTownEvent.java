@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -66,7 +67,8 @@ public class HomeTownEvent extends DailyEventState {
                     "Hey, I know this " + loc.getLocationType() + "! This is where I grew up.",
                     "I'm familiar with this place. I used to live here.",
                     "I know this place like the back of my hand. Lived here for years!",
-                    "Looks like things haven't changed much around here. I used to live here you know.")));
+                    "Looks like things haven't changed much around here. I used to live here you know.")),
+                    FacialExpression.relief);
             leaderSay("Maybe you could show us around. What's worth seeing or doing?");
         }
         increaseDoneCounter(model, homeGuy);

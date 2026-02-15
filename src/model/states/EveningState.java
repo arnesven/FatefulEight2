@@ -4,6 +4,7 @@ import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.items.Inventory;
 import model.map.*;
@@ -121,7 +122,7 @@ public class EveningState extends GameState {
             if (reacter != null) {
                 partyMemberSay(reacter, MyRandom.sample(List.of("You? Leader?", "You can't be serious.",
                         "You are hardly leader material " + mainDissident.getFirstName() + ".",
-                        "You must be joking!")));
+                        "You must be joking!")), FacialExpression.questioning);
             }
         } else {
             partyMemberSay(mainDissident, "I think " + proposedLeader.getFirstName() + " would be a great leader.");

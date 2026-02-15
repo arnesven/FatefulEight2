@@ -36,8 +36,8 @@ public class WarehouseEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         CharacterAppearance workerAppearance = PortraitSubView.makeRandomPortrait(Classes.None);
-        getPortraitSubView().setFacialExpression(FacialExpression.sad);
         showExplicitPortrait(model, workerAppearance, "Worker");
+        getPortraitSubView().setFacialExpression(FacialExpression.sad);
         println("You pass by a warehouse. Outside is a young " + manOrWoman(workerAppearance.getGender()) +
                 ", " + heOrShe(workerAppearance.getGender()) + " looks exhausted.");
         leaderSay("Are you all right?");

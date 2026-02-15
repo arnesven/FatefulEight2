@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.journal.JournalEntry;
 import model.map.TownLocation;
 
@@ -22,7 +23,7 @@ public class InitialLeadsEveningState extends EveningState {
         {
             GameCharacter gc = notTheLeader(model);
             model.getParty().partyMemberSay(model, gc, "And I've heard there are ruins that contain riches.");
-            leaderSay("Riches? But dangers too right?");
+            leaderSay("Riches? But dangers too right?", FacialExpression.questioning);
             model.getParty().partyMemberSay(model, gc, "Probably. We should make sure we're ready for that before " +
                     "we get us into more trouble than we can handle.");
             leaderSay("That sounds reasonable. If we could recruit some more party members, " +
@@ -40,7 +41,7 @@ public class InitialLeadsEveningState extends EveningState {
             gc.setHomeTown(loc.getTownName());
             model.getParty().partyMemberSay(model, gc, "Oh, and I have an uncle in " + loc.getTownName() +
                     " who's been asking me to bring in a group of fighters to deal with a problem.");
-            leaderSay("What's the trouble?");
+            leaderSay("What's the trouble?", FacialExpression.questioning);
             model.getParty().partyMemberSay(model, gc, "Apparently some trouble with the local population of frogmen.");
             leaderSay("Could be interesting... Well, good night everybody.");
         }

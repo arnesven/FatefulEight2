@@ -107,7 +107,7 @@ public abstract class AnalyzeSkillDialog extends AnalyzeDialog {
 
                     int charNum = 0;
                     for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                        int finalX = 14 + x + 3 * charNum;
+                        int finalX = 15 + x + 3 * charNum;
                         if (pair.second.get(charNum) == null) {
                             BorderFrame.drawString(model.getScreenHandler(), NA_STRING, finalX, finalY, MyColors.RED, MyColors.BLUE);
                         } else {

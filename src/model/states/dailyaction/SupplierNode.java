@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.states.GameState;
 import model.states.dailyaction.shops.ShopSupplier;
 import util.MyRandom;
@@ -75,7 +76,7 @@ public class SupplierNode extends DailyActionNode {
             }
 
             println("The supplier looks upset.");
-            leaderSay("What's the matter. Don't like the prices?");
+            leaderSay("What's the matter. Don't like the prices?", FacialExpression.questioning);
             supplierSay("What? Oh, no I'm not a customer. I supply goods to this shop. " +
                     "I'm a little annoyed at the moment. The shopkeeper just backed out of a deal on me.");
             leaderSay("What's the deal?");
