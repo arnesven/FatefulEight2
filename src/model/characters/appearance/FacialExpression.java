@@ -1,19 +1,19 @@
 package model.characters.appearance;
 
-public enum FacialExpression { angry, surprised, afraid, sad, questioning, relief, wicked, none;
+public enum FacialExpression { angry, surprised, afraid, sad, questioning, relief, wicked, disappointed, excited, none;
 
     public int getEyeSpriteIndex() {
         return switch (this) {
             case questioning -> 1;
             case relief, sad -> 2;
-            case wicked -> 0;
+            case wicked, disappointed, excited -> 0;
             default -> ordinal();
         };
     }
 
     public boolean hasBigEyes() {
         return switch (this) {
-            case angry, surprised, afraid -> true;
+            case angry, surprised, afraid, excited -> true;
             default -> false;
         };
     }
@@ -29,13 +29,13 @@ public enum FacialExpression { angry, surprised, afraid, sad, questioning, relie
             case afraid -> {
                 return 0x0B;
             }
-            case sad -> {
+            case sad, disappointed -> {
                 return 0x0A;
             }
             case questioning -> {
                 return 0x08;
             }
-            case wicked, relief -> {
+            case wicked, relief, excited -> {
                 return 0x0C;
             }
         }
@@ -54,13 +54,13 @@ public enum FacialExpression { angry, surprised, afraid, sad, questioning, relie
             case afraid -> {
                 return 0x1B;
             }
-            case sad -> {
+            case sad, disappointed -> {
                 return 0x1A;
             }
             case questioning -> {
                 return 0x18;
             }
-            case wicked, relief -> {
+            case wicked, relief, excited -> {
                 return 0x1C;
             }
         }
@@ -78,13 +78,13 @@ public enum FacialExpression { angry, surprised, afraid, sad, questioning, relie
             case afraid -> {
                 return 0x0B;
             }
-            case sad -> {
+            case sad, disappointed -> {
                 return 0x0A;
             }
             case questioning -> {
                 return 0x48;
             }
-            case wicked, relief -> {
+            case wicked, relief, excited -> {
                 return 0x0C;
             }
         }
