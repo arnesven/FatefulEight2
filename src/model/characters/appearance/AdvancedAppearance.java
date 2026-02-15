@@ -343,9 +343,9 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     @Override
-    protected MyPair<Sprite8x8, Sprite8x8> makeSurprisedSprites(MyColors mascaraColor) {
+    protected MyPair<Sprite8x8, Sprite8x8> makeBigEyesSprites(MyColors mascaraColor) {
         if (faceDetails == null) {
-            return super.makeSurprisedSprites(mascaraColor);
+            return super.makeBigEyesSprites(mascaraColor);
         }
         FaceDetail detail = MyLists.find(faceDetails, fd -> fd instanceof GlassesDetail);
         if (detail != null) {
@@ -354,7 +354,15 @@ public class AdvancedAppearance extends CharacterAppearance {
                     new Sprite8x8("surprisedright", "mouth.png", 0x61 + 2 * getSurprisedIndex(),
                             MyColors.BLACK, getEyeballColor(), detail.getColor(), mascaraColor));
         }
-        return super.makeSurprisedSprites(mascaraColor);
+        return super.makeBigEyesSprites(mascaraColor);
+    }
+
+    @Override
+    protected boolean hasThinEyebrows() {
+        if (hairStyle == null) {
+            return false;
+        }
+        return hairStyle.hasThinEyebrows();
     }
 
     @Override

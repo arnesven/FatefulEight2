@@ -36,9 +36,9 @@ public class DoublePortraitSubView extends SubView {
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET, Y_OFFSET+7,
                 X_MAX-X_OFFSET-1, PORTRAIT_FRAME_HEIGHT-2, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         leftApp.drawYourself(model.getScreenHandler(), X_OFFSET+5, Y_OFFSET+9);
-        portraitAnimations.drawBlink(model.getScreenHandler(), leftApp, CHAR_LOCATION_LEFT);
+        portraitAnimations.drawBlink(model.getScreenHandler(), leftApp, CHAR_LOCATION_LEFT, false);
         rightApp.drawYourself(model.getScreenHandler(), X_MAX-12, Y_OFFSET+9);
-        portraitAnimations.drawBlink(model.getScreenHandler(), rightApp, CHAR_LOCATION_RIGHT);
+        portraitAnimations.drawBlink(model.getScreenHandler(), rightApp, CHAR_LOCATION_RIGHT, false);
         portraitAnimations.drawSpeakAnimations(model.getScreenHandler());
     }
 

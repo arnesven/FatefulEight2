@@ -5,6 +5,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.*;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
@@ -164,27 +165,24 @@ public abstract class GameState implements GameStateConstants {
     }
 
     public void leaderSay(String line) {
-        getModel().getParty().partyMemberSay(getModel(), getModel().getParty().getLeader(), line);
+        partyMemberSay(model.getParty().getLeader(), line);
     }
 
-    public void leaderSayWithSurprise(String line) {
-        getModel().getLog().waitForAnimationToFinish();
-        getModel().getParty().setEyesSurprised(getModel().getParty().getLeader(), true);
-        leaderSay(line);
-        getModel().getLog().waitForAnimationToFinish();
-        getModel().getParty().setEyesSurprised(getModel().getParty().getLeader(), false);
+    public void leaderSay(String line, FacialExpression expression) {
+        GameCharacter gc = model.getParty().getLeader();
+        partyMemberSay(gc, line, expression);
     }
 
     public void partyMemberSay(GameCharacter gc, String line) {
         getModel().getParty().partyMemberSay(getModel(), gc, line);
     }
 
-    public void partyMemberSayWithSurprise(GameCharacter gc, String line) {
+    public void partyMemberSay(GameCharacter gc, String line, FacialExpression expression) {
         getModel().getLog().waitForAnimationToFinish();
-        getModel().getParty().setEyesSurprised(gc, true);
-        partyMemberSay(gc, line);
+        getModel().getParty().setFacialExpression(gc, expression);
+        leaderSay(line);
         getModel().getLog().waitForAnimationToFinish();
-        getModel().getParty().setEyesSurprised(gc, false);
+        getModel().getParty().setFacialExpression(gc, FacialExpression.none);
     }
 
     public void notLeaderSay(String line) {

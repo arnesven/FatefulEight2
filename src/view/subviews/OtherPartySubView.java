@@ -81,7 +81,8 @@ public class OtherPartySubView extends TopMenuSubView {
                     model.getScreenHandler().register("attitude", new Point(xPos, yPos),
                             PartyAttitudesDialog.getSymbolForAttitude(attitudes.get(matrix.getElementAt(c, r))));
                     model.getScreenHandler().register("attitudeCover", new Point(xPos, yPos), ATTITUDE_COVER);
-                    partyAnis.drawBlink(model.getScreenHandler(), matrix.getElementAt(c, r).getAppearance(), new Point(xPos, yPos-3));
+                    partyAnis.drawBlink(model.getScreenHandler(), matrix.getElementAt(c, r).getAppearance(),
+                            new Point(xPos, yPos-3), matrix.getElementAt(c, r).hasCondition(VampirismCondition.class));
                 }
                 if (matrix.getElementAt(c, r) == leader) {
                     String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});

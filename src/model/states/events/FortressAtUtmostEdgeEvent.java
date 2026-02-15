@@ -20,10 +20,7 @@ public class FortressAtUtmostEdgeEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         leaderSay("What is this place?");
-        if (model.getParty().size() > 1) {
-            GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
-            partyMemberSay(gc, "Looks like some kind of evil temple.");
-        }
+        notLeaderSay("Looks like some kind of evil temple.");
         leaderSay("Something's written here: 'Fortress of at the Utmost Edge'... I wonder what that means.");
         print("Do you enter? (Y/N) ");
         if (!yesNoInput()) {

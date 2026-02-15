@@ -1,6 +1,7 @@
 package model.characters.special;
 
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.races.Race;
 import view.MyColors;
 import view.ScreenHandler;
@@ -67,5 +68,11 @@ public class GoblinAppearance extends CharacterAppearance {
     @Override
     public boolean supportsSpeakingAnimation() {
         return false;
+    }
+
+    @Override
+    public void drawFacialExpression(ScreenHandler screenHandler, int x, int y,
+                                     FacialExpression emphasis, boolean mouth, boolean vamp) {
+
     }
 }

@@ -92,7 +92,7 @@ public class RecruitSubView extends TopMenuSubView {
         if (info >= 2) {
             BorderFrame.drawString(model.getScreenHandler(), gc.getCharClass().getShortName() + " " + gc.getLevel(), xPos, yPos + 9, MyColors.WHITE, MyColors.BLUE);
         }
-        portraitAnis.drawBlink(model.getScreenHandler(), gc.getAppearance(), new Point(xPos, yPos-3));
+        portraitAnis.drawBlink(model.getScreenHandler(), gc.getAppearance(), new Point(xPos, yPos-3), rgc.getCharacter().hasCondition(VampirismCondition.class));
     }
 
     @Override

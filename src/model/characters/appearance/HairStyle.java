@@ -195,4 +195,8 @@ public abstract class HairStyle implements Serializable {
     protected void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean hasThinEyebrows() {
+        return false;
+    }
 }

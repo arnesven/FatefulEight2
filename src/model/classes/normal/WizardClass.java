@@ -94,4 +94,9 @@ public class WizardClass extends CharacterClass {
     public List<Item> getStartingItems() {
         return List.of(new EntropicBoltSpell(), new EscapeSpell(), new QuickeningSpell(), new BlackPactSpell());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

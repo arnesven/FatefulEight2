@@ -22,5 +22,5 @@ public class WitchKingAppearance extends AdvancedAppearance {
     public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
 
     @Override
-    public void drawSurprised(ScreenHandler screenHandler, int x, int y) {}
+    public void drawFacialExpression(ScreenHandler screenHandler, int x, int y, FacialExpression eye, boolean drawMouth, boolean vamp) {}
 }

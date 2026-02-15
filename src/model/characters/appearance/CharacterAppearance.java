@@ -4,14 +4,15 @@ import control.FatefulEight;
 import model.classes.CharacterClass;
 import model.races.Race;
 import model.races.Shoulders;
-import model.races.SkeletonRace;
 import util.MyPair;
+import util.MyTriplet;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CharacterAppearance implements Serializable {
@@ -26,7 +27,9 @@ public abstract class CharacterAppearance implements Serializable {
     private MyPair<Sprite8x8, Sprite8x8> blinkSprites;
     private MyPair<Sprite8x8, Sprite8x8> lookLeft;
     private MyPair<Sprite8x8, Sprite8x8> lookRight;
-    private MyPair<Sprite8x8, Sprite8x8> surprised;
+    private MyPair<Sprite8x8, Sprite8x8> bigEyesSprites;
+    private List<MyPair<Sprite8x8, Sprite8x8>> eyebrows;
+    private List<MyTriplet<Sprite8x8, Sprite8x8, Sprite8x8>> mouthExpressions;
     private MyColors hairColor;
     private MyColors mascaraColor;
     private MyColors lipColor;
@@ -37,6 +40,7 @@ public abstract class CharacterAppearance implements Serializable {
     private TorsoNeck neck;
     private boolean showFacialHair = true;
     private PortraitSprite[][] grid;
+    private boolean showEyebrows = true;
 
     public CharacterAppearance(Race race, boolean femaleGender, MyColors hairColor) {
         this.hairColor = hairColor;
@@ -248,6 +252,9 @@ public abstract class CharacterAppearance implements Serializable {
         if (charClass.showHairInBack()) {
             addHairInBack();
         }
+        if (charClass.coversEyebrows()) {
+            showEyebrows = false;
+        }
     }
 
     public void setSpecificClothing(PortraitClothing clothing) {
@@ -439,10 +446,43 @@ public abstract class CharacterAppearance implements Serializable {
                 MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE),
                 new Sprite8x8("lookrightright", "mouth.png", lookRight+2,
                         MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE));
-        this.surprised = makeSurprisedSprites(mascaraColor);
+        this.bigEyesSprites = makeBigEyesSprites(mascaraColor);
+        this.eyebrows = makeEyebrows(mascaraColor);
+        this.mouthExpressions = makeMouthExpressions();
     }
 
-    protected MyPair<Sprite8x8, Sprite8x8> makeSurprisedSprites(MyColors mascaraColor) {
+    private List<MyTriplet<Sprite8x8, Sprite8x8, Sprite8x8>> makeMouthExpressions() {
+        List<MyTriplet<Sprite8x8, Sprite8x8, Sprite8x8>> sprites = new ArrayList<>();
+        for (int i = 0; i < FacialExpression.values().length-1; ++i) {
+            sprites.add(new MyTriplet<>(new Sprite8x8("defaultmouth", "mouth.png",
+                    FacialExpression.values()[i].getDefaultMouth(),
+                    MyColors.BLACK, lipColor, MyColors.WHITE, race.getColor()),
+            new Sprite8x8("tuskmouth", "mouth.png",
+                    FacialExpression.values()[i].getTuskMouth(),
+                    MyColors.BLACK, lipColor, MyColors.BEIGE, race.getColor()),
+            new Sprite8x8("vampiremouth", "mouth.png",
+                    FacialExpression.values()[i].getVampireMouth(),
+                    MyColors.BLACK, lipColor, MyColors.WHITE, race.getColor())));
+        }
+        return sprites;
+    }
+
+    private List<MyPair<Sprite8x8, Sprite8x8>> makeEyebrows(MyColors mascaraColor) {
+        List<MyPair<Sprite8x8, Sprite8x8>> sprites = new ArrayList<>();
+        int[] indices = new int[]{0, 1, 2, 3, 1, 0};
+        int extraForThin = hasThinEyebrows() ? 4 : 0;
+        for (int i = 0; i < 3; ++i) {
+            sprites.add(new MyPair<>(new Sprite8x8("eyebrowleft", "mouth.png", 0x70 + indices[i * 2] + extraForThin,
+                    MyColors.BLACK, hairColor, race.getColor(), mascaraColor),
+                    new Sprite8x8("eyebrowright", "mouth.png", 0x70 + indices[i*2 + 1] + extraForThin,
+                            MyColors.BLACK, hairColor, race.getColor(), mascaraColor)));
+        }
+        return sprites;
+    }
+
+    protected boolean hasThinEyebrows() { return false; }
+
+    protected MyPair<Sprite8x8, Sprite8x8> makeBigEyesSprites(MyColors mascaraColor) {
         return new MyPair<>(new Sprite8x8("suprisedleft", "mouth.png", 0x50 + 2*getSurprisedIndex(),
                 MyColors.BLACK, getEyeballColor(), MyColors.BROWN, mascaraColor),
                 new Sprite8x8("surprisedright", "mouth.png", 0x51 + 2*getSurprisedIndex(),
@@ -505,8 +545,24 @@ public abstract class CharacterAppearance implements Serializable {
         return true;
     }
 
-    public void drawSurprised(ScreenHandler screenHandler, int x, int y) {
-        screenHandler.register("surprisedleft", new Point(x - 1, y), surprised.first);
-        screenHandler.register("surprisedright", new Point(x + 1, y), surprised.second);
+    public void drawFacialExpression(ScreenHandler screenHandler, int x, int y,
+                                     FacialExpression emphasis, boolean drawDefaultMouth, boolean isVampire) {
+        if (emphasis.hasBigEyes()) {
+            screenHandler.register("surprisedleft", new Point(x - 1, y), bigEyesSprites.first);
+            screenHandler.register("surprisedright", new Point(x + 1, y), bigEyesSprites.second);
+        }
+        int index = emphasis.getEyeSpriteIndex();
+        if (showEyebrows) {
+            if (emphasis != FacialExpression.questioning) {
+                screenHandler.register("raisedeyebrowleft", new Point(x - 1, y - 1), eyebrows.get(index).first, 0, 1, 0);
+            }
+            screenHandler.register("raisedeyebrowright", new Point(x + 1, y - 1), eyebrows.get(index).second, 0, -1, 0);
+        }
+        if (drawDefaultMouth) {
+            MyTriplet<Sprite8x8, Sprite8x8, Sprite8x8> mouthPair = mouthExpressions.get(emphasis.ordinal());
+            screenHandler.register("facialexpressionmouth", new Point(x, y + 1),
+                    isVampire ? mouthPair.third
+                    : (hasTuskMouth() ? mouthPair.second : mouthPair.first));
+        }
     }
 }

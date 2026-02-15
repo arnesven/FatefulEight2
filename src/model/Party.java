@@ -4,6 +4,7 @@ import model.actions.DailyAction;
 import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.characters.TamedDragonCharacter;
+import model.characters.appearance.FacialExpression;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -16,8 +17,6 @@ import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
-import model.items.potions.CommonPoison;
-import model.items.potions.HealthPotion;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
@@ -143,7 +142,7 @@ public class Party implements Serializable {
                     gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
                 }
                 if (!gc.isDead() && !bench.contains(gc)) {
-                    portraitAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
+                    portraitAnimations.drawBlink(screenHandler, gc.getAppearance(), p, gc.hasCondition(VampirismCondition.class));
                 }
             } else {
                 Point wordLocation = new Point(p.x + (drawPartyVertically && count >= 4 ? 3 : 8), p.y + 2);
@@ -929,8 +928,8 @@ public class Party implements Serializable {
         portraitAnimations.forceEyesClosed(victim, closed);
     }
 
-    public void setEyesSurprised(GameCharacter target, boolean surprised) {
-        portraitAnimations.setEyesSurprised(target, surprised);
+    public void setFacialExpression(GameCharacter target, FacialExpression expression) {
+        portraitAnimations.setFacialExpression(target.getAppearance(), expression);
     }
 
     public void setGuide(int days) {

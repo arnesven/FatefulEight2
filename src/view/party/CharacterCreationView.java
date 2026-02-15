@@ -11,7 +11,6 @@ import model.items.weapons.Weapon;
 import model.races.EasternHuman;
 import model.races.Race;
 import util.Arithmetics;
-import util.MyLists;
 import util.MyRandom;
 import view.BorderFrame;
 import view.DrawingArea;
@@ -26,7 +25,6 @@ import view.widget.InputBufferWidget;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CharacterCreationView extends SelectableListMenu {
@@ -69,11 +67,12 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedShoulders = 0;
     private int selectedNeck = 0;
     private boolean showSkeleton = false;
-    private boolean showSurprised = false;
+    private FacialExpression selectedFacialExpression = FacialExpression.none;
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
     private Sprite avatarBack = null;
     private boolean canceled = false;
+    private boolean isVampire = false;
 
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
@@ -162,8 +161,9 @@ public class CharacterCreationView extends SelectableListMenu {
                 String title = "- CUSTOM CHARACTER -";
                 BorderFrame.drawCentered(model.getScreenHandler(), title, y++, MyColors.WHITE, MyColors.BLUE);
                 lastAppearance.drawYourself(model.getScreenHandler(), x+COLUMN_SKIP+17, y+2);
-                if (showSurprised) {
-                    lastAppearance.drawSurprised(model.getScreenHandler(), x+COLUMN_SKIP+17+3, y+2+3);
+                if (selectedFacialExpression != FacialExpression.none) {
+                    lastAppearance.drawFacialExpression(model.getScreenHandler(), x+COLUMN_SKIP+17+3, y+2+3,
+                            selectedFacialExpression, true, isVampire);
                 }
                 model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
                         new Point(x+COLUMN_SKIP+24, y+3),
@@ -429,7 +429,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         }
                     }
                 },
-                new SelectableListContent(xStart+3, yStart + 30, "Remove last") {
+                new SelectableListContent(xStart + 3, yStart + 30, "Remove last") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         detailColors.removeLast();
@@ -460,14 +460,24 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
                     }
                 },
-                new SelectableListContent(xStart + 3, yStart + 35, (showSurprised ? "Hide" : "Show") + " Surprised Eyes") {
+                new CarouselListContent(xStart + 3, yStart + 35, "Expression: " + FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
                     @Override
-                    public void performAction(Model model, int x, int y) {
-                        showSurprised = !showSurprised;
-                        rebuildAppearance();
+                    public void turnLeft(Model model) {
+                        selectedFacialExpression = FacialExpression.values()[Arithmetics.decrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        selectedFacialExpression = FacialExpression.values()[Arithmetics.incrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
+                new SelectableListContent(xStart + 3, yStart + 36, "Vampire: " + (isVampire ? "Yes" : "No")) {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        isVampire = !isVampire;
+                    }
+                },
+        new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setTimeToTransition(true);

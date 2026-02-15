@@ -176,4 +176,8 @@ public abstract class CharacterClass implements Serializable {
     protected static List<Item> horseOrPony() {
         return List.of(new HorseStartingItem(new OldMaidHorse()), new HorseStartingItem(new OldPony()));
     }
+
+    public boolean coversEyebrows() {
+        return false;
+    }
 }

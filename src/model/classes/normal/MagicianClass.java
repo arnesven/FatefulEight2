@@ -107,4 +107,9 @@ public class MagicianClass extends CharacterClass {
     public List<Item> getStartingItems() {
         return List.of(new ClaspedOrb(), new TelekinesisSpell(), new CreatureComfortsSpell());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

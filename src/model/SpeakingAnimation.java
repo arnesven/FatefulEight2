@@ -19,7 +19,8 @@ public class SpeakingAnimation implements Serializable {
         callout = makeCalloutSprite(text);
         if (app.showFacialHair() && app.supportsSpeakingAnimation()) {
             MyColors skinColor = app.hasAlternateSkinColor() ? app.getAlternateSkinColor() : app.getRace().getColor();
-            mouthAnimation = new MouthMovementSprite(text.length(), skinColor,
+            int lengthOfMovement = Math.max(15, text.length());
+            mouthAnimation = new MouthMovementSprite(lengthOfMovement, skinColor,
                     app.getLipColor(), app.hasTuskMouth(), vampireTeeth);
         } else {
             mouthAnimation = null;

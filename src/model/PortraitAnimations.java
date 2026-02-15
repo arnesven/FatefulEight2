@@ -2,7 +2,7 @@ package model;
 
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
+import model.characters.appearance.FacialExpression;
 import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
@@ -21,16 +21,16 @@ public class PortraitAnimations implements Serializable {
     private final Map<CharacterAppearance, SpeakingAnimation> speakingAnimations = new HashMap<>();
     private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
     private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
-    private final Set<CharacterAppearance> surprised = new HashSet<>();
+    private final Map<CharacterAppearance, FacialExpression> facialExpressions = new HashMap<>();
     private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
     private final Map<CharacterAppearance, VampireFeedingLook> feedingLooks = new HashMap<>();
     private Map<Integer, Integer> slotAnimations = new HashMap<>();
 
-    public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
+    public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p, boolean isVampire) {
         if (!app.showFacialHair()) {
             return;
         }
-        if (!handleSurprised(screenHandler, app, p)) {
+        if (!handleFacialExpression(screenHandler, app, p, isVampire)) {
             handleLook(screenHandler, app, p);
             handleBlink(screenHandler, app, p);
             handleMisc(screenHandler, app);
@@ -53,9 +53,10 @@ public class PortraitAnimations implements Serializable {
         }
     }
 
-    private boolean handleSurprised(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
-        if (surprised.contains(app)) {
-            app.drawSurprised(screenHandler, p.x+3, p.y+6);
+    private boolean handleFacialExpression(ScreenHandler screenHandler, CharacterAppearance app, Point p, boolean isVampire) {
+        if (facialExpressions.containsKey(app)) {
+            app.drawFacialExpression(screenHandler, p.x+3, p.y+6, facialExpressions.get(app),
+                    !speakingAnimations.containsKey(app), isVampire);
         }
         return false;
     }
@@ -153,20 +154,16 @@ public class PortraitAnimations implements Serializable {
         }
     }
 
-    public void setEyesSurprised(CharacterAppearance app, boolean isSurprised) {
-        if (isSurprised) {
-            surprised.add(app);
+    public void setFacialExpression(CharacterAppearance app, FacialExpression emph) {
+        if (emph == FacialExpression.none) {
+            facialExpressions.remove(app);
         } else {
-            surprised.remove(app);
+            facialExpressions.put(app, emph);
         }
     }
 
     public void forceEyesClosed(GameCharacter victim, boolean closed) {
         forceEyesClosed(victim.getAppearance(), closed);
-    }
-
-    public void setEyesSurprised(GameCharacter target, boolean surprised) {
-        setEyesSurprised(target.getAppearance(), surprised);
     }
 
     private void handleMisc(ScreenHandler screenHandler, CharacterAppearance appearance) {

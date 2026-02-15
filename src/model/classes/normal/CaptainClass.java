@@ -102,4 +102,9 @@ public class CaptainClass extends CharacterClass {
     public List<Item> getStartingItems() {
         return List.of(new Broadsword(), new RustyRingMail(), new Helm());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

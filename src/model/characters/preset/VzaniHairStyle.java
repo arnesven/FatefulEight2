@@ -14,4 +14,9 @@ public class VzaniHairStyle extends ExplicitHairStyle {
         appearance.setSprite(1, 4, new FaceSpriteWithHair(0xF0, appearance.getHairColor()));
         appearance.setSprite(5, 4, new FaceSpriteWithHair(0xF1, appearance.getHairColor()));
     }
+
+    @Override
+    public boolean hasThinEyebrows() {
+        return true;
+    }
 }

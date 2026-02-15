@@ -17,6 +17,11 @@ public class HeartHairStyle extends HairStyle {
     }
 
     @Override
+    public boolean hasThinEyebrows() {
+        return true;
+    }
+
+    @Override
     public void apply(AdvancedAppearance appearance) {
         super.apply(appearance);
         innerHairStyle.apply(appearance);

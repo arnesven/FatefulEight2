@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.map.UrbanLocation;
@@ -29,7 +30,7 @@ public class MayorEvent extends DailyEventState {
                     "when a wagon, fully loaded with huge wine barrels passes by. Suddenly a barrel " +
                     "tumbles off the wagon and rolls straight at one of the nobles.");
             model.getLog().waitForAnimationToFinish();
-            leaderSayWithSurprise("Watch out!");
+            leaderSay("Watch out!", FacialExpression.surprised);
             println(model.getParty().getLeader().getName() + " pushes the noble out of the way. The wine barrel " +
                     "smashes into a stone wall and splashes wine all over the street.");
             model.getParty().randomPartyMemberSay(model, List.of("Darn, I wasn't quick enough with my cup.",

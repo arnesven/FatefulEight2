@@ -118,4 +118,9 @@ public class BlackKnightClass extends CharacterClass {
     public List<Item> getStartingItems() {
         return List.of(new Scepter(), new RustyChestPlate(), new HeraldicShield());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

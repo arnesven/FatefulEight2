@@ -84,4 +84,9 @@ public class WitchClass extends CharacterClass {
     public List<Item> getStartingItems() {
         return List.of(new PoisonGasSpell(), new MagicBroom(), new TransfigurationSpell());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

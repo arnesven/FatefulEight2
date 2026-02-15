@@ -120,7 +120,7 @@ public class PortraitSubView extends SubView {
                 PORTRAIT_FRAME_WIDTH, PORTRAIT_FRAME_HEIGHT, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
-            portraitAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION);
+            portraitAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION, false);
         } else {
             silhouetteAppearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         }
@@ -164,13 +164,18 @@ public class PortraitSubView extends SubView {
         return previous;
     }
 
-    public void portraitSay(Model model, GameState state, String line) {
+    public void portraitSay(Model model, GameState state, String line, FacialExpression expression) {
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(portraitName, pair.second);
         if (appearance != null) {
+            portraitAnimations.setFacialExpression(appearance, expression);
             portraitAnimations.addSpeakAnimation(CHAR_LOCATION, line, appearance, false);
         }
+    }
+
+    public void portraitSay(Model model, GameState state, String line) {
+        portraitSay(model, state, line, FacialExpression.none);
     }
 
     public boolean getPortraitGender() {

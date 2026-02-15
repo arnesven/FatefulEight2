@@ -101,4 +101,9 @@ public class SorcererClass extends CharacterClass {
     public List<Item> getStartingItems() {
         return List.of(new MagesStaff(), new FireWallSpell(), new WeakenSpell());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

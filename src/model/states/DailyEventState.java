@@ -5,6 +5,7 @@ import model.RecruitableCharacter;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -306,9 +307,13 @@ public abstract class DailyEventState extends GameState {
         portraitSubView = null;
     }
 
-    protected void portraitSay(String line) {
-        portraitSubView.portraitSay(getModel(), this, line);
+    protected void portraitSay(String line, FacialExpression expression) {
+        portraitSubView.portraitSay(getModel(), this, line, expression);
         getModel().getLog().waitForAnimationToFinish();
+    }
+
+    protected void portraitSay(String line) {
+        portraitSay(line, FacialExpression.none);
     }
 
     protected boolean getPortraitGender() {

@@ -94,4 +94,9 @@ public class MinerClass extends CharacterClass {
         list.addAll(CharacterClass.horseOrPony());
         return list;
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

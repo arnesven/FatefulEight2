@@ -24,5 +24,5 @@ public class MikoAppearance extends AdvancedAppearance {
     public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
 
     @Override
-    public void drawSurprised(ScreenHandler screenHandler, int x, int y) {}
+    public void drawFacialExpression(ScreenHandler screenHandler, int x, int y, FacialExpression exp, boolean mouth, boolean vamp) {}
 }
