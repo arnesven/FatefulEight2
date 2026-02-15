@@ -46,7 +46,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.hairColor = hairColor;
         this.race = race;
         this.mascaraColor = race.getColor();
-        setBlinkSprites();
+        setFaceOverlaySprites();
         this.lipColor = race.getMouthDefaultColor();
         this.femaleGender = femaleGender;
         shoulders = race.makeShoulders(femaleGender);
@@ -403,11 +403,12 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void setMascaraColor(MyColors myColors) {
         this.mascaraColor = myColors;
-        setBlinkSprites();
+        setFaceOverlaySprites();
     }
 
     public void setLipColor(MyColors myColors) {
         this.lipColor = myColors;
+        setFaceOverlaySprites();
     }
 
     public void setShoulders(Shoulders newShoulders) {
@@ -434,7 +435,7 @@ public abstract class CharacterAppearance implements Serializable {
         return showFacialHair;
     }
 
-    protected void setBlinkSprites() {
+    protected void setFaceOverlaySprites() {
         this.blinkSprites = makeBlinkSprites(mascaraColor);
         int lookLeft = 0x22 + getLookIndex() * 4;
         int lookRight = 0x23 + getLookIndex() * 4;
@@ -456,13 +457,13 @@ public abstract class CharacterAppearance implements Serializable {
         for (int i = 0; i < FacialExpression.values().length-1; ++i) {
             sprites.add(new MyTriplet<>(new Sprite8x8("defaultmouth", "mouth.png",
                     FacialExpression.values()[i].getDefaultMouth(),
-                    MyColors.BLACK, lipColor, MyColors.WHITE, race.getColor()),
+                    MyColors.BLACK, getLipColor(), MyColors.WHITE, race.getColor()),
             new Sprite8x8("tuskmouth", "mouth.png",
                     FacialExpression.values()[i].getTuskMouth(),
-                    MyColors.BLACK, lipColor, MyColors.BEIGE, race.getColor()),
+                    MyColors.BLACK, getLipColor(), MyColors.BEIGE, race.getColor()),
             new Sprite8x8("vampiremouth", "mouth.png",
                     FacialExpression.values()[i].getVampireMouth(),
-                    MyColors.BLACK, lipColor, MyColors.WHITE, race.getColor())));
+                    MyColors.BLACK, getLipColor(), MyColors.WHITE, race.getColor())));
         }
         return sprites;
     }

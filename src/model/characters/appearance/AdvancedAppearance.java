@@ -37,7 +37,7 @@ public class AdvancedAppearance extends CharacterAppearance {
         this.hairStyle = hair;
         this.beard = beard;
         makeAvatarHairSprites(hair, race);
-        setBlinkSprites();
+        setFaceOverlaySprites();
     }
 
     private void makeAvatarHairSprites(HairStyle hair, Race race) {
@@ -273,12 +273,12 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     public void addFaceDetail(FaceDetail detail) {
         this.faceDetails.add(detail);
-        setBlinkSprites();
+        setFaceOverlaySprites();
     }
 
     public void setDetailColor(MyColors color) {
         this.faceDetails.getLast().setColor(color);
-        setBlinkSprites();
+        setFaceOverlaySprites();
     }
 
     @Override

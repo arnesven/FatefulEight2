@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -61,7 +62,7 @@ public class GardenMazeEvent extends DailyEventState {
         portraitSay("Howdy, you here to meet the master?");
         leaderSay("Actually, we've lost our way. Can you point us in the direction of town?");
         portraitSay("Hehe. Well don't go this way, my maze in the master's garden will get you even more lost.");
-        leaderSay("A maze?");
+        leaderSay("A maze?", FacialExpression.questioning);
         portraitSay("Yessir. You see those tall hedges over there? They're quite the labyrinth. I've been working on it for years. " +
                 "The master even got lost in there once!");
         leaderSay("Can't be that tricky...");

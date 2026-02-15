@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -57,9 +58,10 @@ public class VampireProwlNightEvent extends NightTimeEvent {
             println(victim.getFirstName() + " wakes up and finds a dark figure standing next to " +
                     hisOrHer(victim.getGender()) + " bed, leaning over " + himOrHer(victim.getGender()) +
                     "! Fearing it may be a vampire, panic starts to set in.");
+            model.getParty().setFacialExpression(victim, FacialExpression.surprised);
             print("Do you call out for help (Y) or do you let the vampire feed on you (N)? ");
             if (yesNoInput()) {
-                partyMemberSay(victim, "Help! A vampire!!!");
+                partyMemberSay(victim, "Help! A vampire!!!", FacialExpression.afraid);
                 model.getParty().unbenchAll();
                 if (model.getParty().size() > 1) {
                     print("The party members quickly scramble for their gear. ");

@@ -56,7 +56,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         println("");
-        portraitSay("Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?");
+        portraitSay("Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?", FacialExpression.sad);
         leaderSay("What's the problem then?");
         portraitSay("My cat, Quincy. He won't come down. I think he chased a squirrel up there, " +
                 "and now he can't get down.");
@@ -167,7 +167,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
                     " has fallen to " + GameState.hisOrHer(result.second.getGender()) + " death!",
                     true);
         } else {
-            model.getParty().partyMemberSay(model, result.second, "Ouch!#");
+            partyMemberSay(result.second, "Ouch!#", FacialExpression.surprised);
         }
         return false;
     }

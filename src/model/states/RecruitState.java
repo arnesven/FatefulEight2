@@ -185,7 +185,7 @@ public class RecruitState extends GameState {
             } else {
                 System.out.println("rgc.getInfo() = " + rgc.getInfo().name());
             }
-            leaderSay(MyRandom.sample(List.of("Want to join the party " + gc.getName() + "?",
+            leaderSay(MyRandom.sample(List.of("Want to join the party " + name + "?",
                     "Welcome aboard " + name + "! If you're still interested.",
                     "Are you in, " + firstName + "?",
                     "The jobs yours " + firstName + ". Do you want it?")));

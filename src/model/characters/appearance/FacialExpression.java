@@ -1,17 +1,21 @@
 package model.characters.appearance;
 
-public enum FacialExpression { angry, surprised, afraid, sad, questioning, none;
+public enum FacialExpression { angry, surprised, afraid, sad, questioning, relief, wicked, none;
 
     public int getEyeSpriteIndex() {
         return switch (this) {
             case questioning -> 1;
-            case sad -> 2;
+            case relief, sad -> 2;
+            case wicked -> 0;
             default -> ordinal();
         };
     }
 
     public boolean hasBigEyes() {
-        return this != sad && this != questioning;
+        return switch (this) {
+            case angry, surprised, afraid -> true;
+            default -> false;
+        };
     }
 
     public int getDefaultMouth() {
@@ -31,6 +35,9 @@ public enum FacialExpression { angry, surprised, afraid, sad, questioning, none;
             case questioning -> {
                 return 0x08;
             }
+            case wicked, relief -> {
+                return 0x0C;
+            }
         }
         return 0x00;
     }
@@ -48,10 +55,13 @@ public enum FacialExpression { angry, surprised, afraid, sad, questioning, none;
                 return 0x1B;
             }
             case sad -> {
-                return 0x0A;
+                return 0x1A;
             }
             case questioning -> {
                 return 0x18;
+            }
+            case wicked, relief -> {
+                return 0x1C;
             }
         }
         return 0x10;
@@ -73,6 +83,9 @@ public enum FacialExpression { angry, surprised, afraid, sad, questioning, none;
             }
             case questioning -> {
                 return 0x48;
+            }
+            case wicked, relief -> {
+                return 0x0C;
             }
         }
         return 0x00;

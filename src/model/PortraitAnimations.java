@@ -57,6 +57,7 @@ public class PortraitAnimations implements Serializable {
         if (facialExpressions.containsKey(app)) {
             app.drawFacialExpression(screenHandler, p.x+3, p.y+6, facialExpressions.get(app),
                     !speakingAnimations.containsKey(app), isVampire);
+            return true;
         }
         return false;
     }
@@ -158,11 +159,14 @@ public class PortraitAnimations implements Serializable {
         if (emph == FacialExpression.none) {
             facialExpressions.remove(app);
         } else {
+            blinking.remove(app);
+            lookers.remove(app);
             facialExpressions.put(app, emph);
         }
     }
 
     public void forceEyesClosed(GameCharacter victim, boolean closed) {
+        facialExpressions.remove(victim.getAppearance());
         forceEyesClosed(victim.getAppearance(), closed);
     }
 
@@ -173,6 +177,7 @@ public class PortraitAnimations implements Serializable {
     }
 
     public void setVampireFeedingLookEnabledFor(CharacterAppearance app, Point point) {
+        facialExpressions.remove(app);
         Point p = new Point(point);
         p.x += 3;
         p.y += 2;
