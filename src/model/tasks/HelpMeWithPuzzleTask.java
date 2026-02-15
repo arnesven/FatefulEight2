@@ -2,6 +2,7 @@ package model.tasks;
 
 import model.Model;
 import model.Summon;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.map.UrbanLocation;
 
@@ -21,7 +22,7 @@ public class HelpMeWithPuzzleTask extends SummonTask {
     protected void doEvent(Model model) {
         portraitSay("Come over here and look at this table. I'm having some real troubles with this " +
                 "jigsaw puzzle. Could you help me?");
-        model.getParty().randomPartyMemberSay(model, List.of("Really? This is the problem you need help with?"));
+        partyMemberSay(model.getParty().getRandomPartyMember(), "Really? This is the problem you need help with?", FacialExpression.surprised);
         print("Do you wish to help with the jigsaw puzzle now? (Y/N) ");
         if (yesNoInput()) {
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Logic, 8);
@@ -29,7 +30,7 @@ public class HelpMeWithPuzzleTask extends SummonTask {
                 println("You spend a few hours helping " + location.getLordName() + " with the puzzle.");
                 summon.increaseStep();
                 portraitSay("Ahh perfect, it's all done! Please let me " +
-                        "give you something for spending your time here.");
+                        "give you something for spending your time here.", FacialExpression.relief);
                 println("The party receives 15 gold.");
                 model.getParty().earnGold(15);
             }

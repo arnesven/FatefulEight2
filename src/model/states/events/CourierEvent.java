@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.map.UrbanLocation;
@@ -59,7 +60,7 @@ public class CourierEvent extends DailyEventState {
         println(heOrSheCap(getPortraitGender()) + " hands you a letter which reads: 'You have been summoned by the honorable " + destination.getLordName() + " to " +
                 destination.getPlaceName() + ".'");
         println("That's all the letter says. You stare blankly at it and then look at the messenger.");
-        leaderSay("Do you know what this is about?");
+        leaderSay("Do you know what this is about?", FacialExpression.questioning);
         portraitSay("Sorry, I'm just a messenger.");
         println(heOrSheCap(getPortraitGender()) + " quickly takes off in the same direction from which " + heOrShe(getPortraitGender()) + " came. " +
                 "You put the letter in your pocket and continue on your journey.");

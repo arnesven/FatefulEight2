@@ -193,7 +193,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                         hq.getCost() + " gold. Why don't you buy it? You could make it the " +
                         "headquarters for your adventuring party.");
                 if (hq.getCost() > model.getParty().getGold()) {
-                    leaderSay("I'm afraid it's a little over our budget.");
+                    leaderSay("I'm afraid it's a little over " + myOrOur() + " budget.");
                     portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
                 } else {
                     print("Buy the house? (Y/N) ");

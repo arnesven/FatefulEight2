@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.appearance.DogAppearance;
+import model.characters.appearance.FacialExpression;
 import model.combat.conditions.BleedingCondition;
 import model.horses.DogHorse;
 import model.states.DailyEventState;
@@ -70,7 +71,7 @@ public class DogEvent extends DailyEventState {
                 println("The dog finally release your hand, and scampers away.");
                 println(model.getParty().getLeader().getName() + "'s hand is bleeding ");
                 model.getParty().getLeader().addCondition(new BleedingCondition());
-                leaderSay("Darn mutt!");
+                leaderSay("Darn mutt!", FacialExpression.angry);
             } else if (model.getParty().getFood() > 4) {
                 println("You approach the dog carefully. You bring out some meat from one of your bags and offer it to the dog.");
                 if (MyRandom.rollD10() > 3) {
@@ -78,7 +79,7 @@ public class DogEvent extends DailyEventState {
                     leaderSay("Hungry eh? Well I'm afraid that's all I can spare for now. We better get going.");
                     println("You start to leave, but the dog will not leave your side.");
                     portraitSay("Ruff ruff!");
-                    leaderSay("You wanna come with?");
+                    leaderSay("You wanna come with?", FacialExpression.questioning);
                     portraitSay("Ruff ruff ruff!");
                     DogHorse dog = new DogHorse();
                     leaderSay("Alright " + boyOrGirl(dog.getGender()) + ", you can come along.");
