@@ -31,6 +31,11 @@ public class HalfOrc extends Race {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.GRAY;
+    }
+
+    @Override
     public Shoulders makeShoulders(boolean gender) {
         if (gender) {
             return new NormalShoulders(true);

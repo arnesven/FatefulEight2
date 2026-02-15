@@ -15,6 +15,11 @@ public class SouthernHuman extends HumanRace {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.BROWN;
+    }
+
+    @Override
     public String getQualifiedName() {
         return getName() + " (South)";
     }

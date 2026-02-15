@@ -54,4 +54,9 @@ public class Halfling extends Race {
     public String getShortDescription() {
         return "small human-like creatures, with curly hair. They're agile and witty.";
     }
+
+    @Override
+    public MyColors getFreckleColor() {
+        return MyColors.BROWN;
+    }
 }

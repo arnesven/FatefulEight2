@@ -2,6 +2,7 @@ package model.races;
 
 import model.characters.appearance.*;
 import model.classes.Skill;
+import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 import view.party.CharacterCreationView;
@@ -76,6 +77,10 @@ public abstract class Race implements Serializable {
     public abstract PortraitSprite getLeftEar(MyColors hairColor);
 
     public abstract PortraitSprite getRightEar(MyColors hairColor);
+
+    public MyColors getFreckleColor() {
+        return getMouthDefaultColor();
+    }
 
     public int getSpeedModifier() {
         return speedModifier;
@@ -198,6 +203,11 @@ public abstract class Race implements Serializable {
                     appearance.addFaceDetail(MyRandom.flipCoin() ? new RoundEarringsDetail() : new TriangularEarringsDetail());
                     appearance.setDetailColor(detailColor);
                 }
+            }
+            int freckleRatio = appearance.getGender() ? 25 : 60;
+            if (MyRandom.randInt(freckleRatio) == 0) {
+                appearance.addFaceDetail(new FrecklesDetail());
+                appearance.setDetailColor(appearance.getRace().getFreckleColor());
             }
         }
     }

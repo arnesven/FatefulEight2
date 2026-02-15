@@ -30,6 +30,11 @@ public class EasternHuman extends HumanRace {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.PINK;
+    }
+
+    @Override
     public String getQualifiedName() {
         return getName() + " (East)";
     }

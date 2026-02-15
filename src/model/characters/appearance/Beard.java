@@ -19,7 +19,7 @@ public class Beard implements Serializable {
             new Beard(6, 0x42),
             new Beard(7, 0x00, false),
             new Beard(8, 0x00, false),
-            new Beard(9, 0x00, false),
+            new AckneBeard(),
             new Beard(0xA, 0x00, false),
             new Beard(0xB, 0x00, false),
             new Beard(0xC, 0x00, false),

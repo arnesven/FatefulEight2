@@ -15,6 +15,11 @@ public class WoodElf extends ElvenRace {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.PEACH;
+    }
+
+    @Override
     public String getShortDescription() {
         return "tall, and have olive skin, friendly and care-free.";
     }

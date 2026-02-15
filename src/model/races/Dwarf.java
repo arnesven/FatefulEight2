@@ -29,6 +29,11 @@ public class Dwarf extends Race {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.LIGHT_RED;
+    }
+
+    @Override
     public boolean isShort() {
         return true;
     }

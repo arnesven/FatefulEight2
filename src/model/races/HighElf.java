@@ -18,6 +18,11 @@ public class HighElf extends ElvenRace {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.PINK;
+    }
+
+    @Override
     public String getShortDescription() {
         return "tall, fair, well-spoken and gentle but perhaps sometimes a little aloof.";
     }

@@ -41,7 +41,7 @@ public class ShopKeeperNode extends DailyActionNode {
             return new ShopKeeperRefusesToTradeState(model, true);
         }
         state.leaderSay(MyRandom.sample(List.of("Got anything good?", "Can I see your wares?",
-                "How is business?", "I want to do some shopping")));
+                "How is business?", "I want to do some shopping.")));
         String line = MyRandom.sample(List.of("Lot's of good stuff. Have a look.",
                 "I have some new stuff, and all the usual things as well.",
                 "You've come to the right place.", "Please, browse freely.",

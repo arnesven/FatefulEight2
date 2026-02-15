@@ -28,6 +28,11 @@ public class OrcRace extends Race {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.GRAY;
+    }
+
+    @Override
     public Shoulders makeShoulders(boolean gender) {
         return new HunkyShoulders(gender);
     }

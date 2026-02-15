@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -36,7 +37,7 @@ public class BarbershopEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showEventCard("Barber Shop", "You enter a shop...");
-        leaderSay("Wait this isn't a shop...");
+        leaderSay("Wait this isn't a shop...", FacialExpression.questioning);
         CharacterAppearance barberAppearance = PortraitSubView.makeRandomPortrait(Classes.BARBER, barberRace);
         showExplicitPortrait(model, barberAppearance, "Barber");
         portraitSay("This sir, is a barber shop!");

@@ -4,6 +4,7 @@ import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.states.DailyEventState;
 
@@ -74,12 +75,14 @@ public class StarvingFarmerEvent extends DailyEventState {
                 }
             }
         } else if (options.get(selected).contains("gold")) {
-            portraitSay("Bless you traveller, this will help us more than you can imagine!");
-            leaderSay("I'm just glad we can help.");
+            getPortraitSubView().setFacialExpression(FacialExpression.surprised);
+            portraitSay("Bless you traveller, this will help us more than you can imagine!", FacialExpression.surprised);
+            leaderSay("I'm just glad we can help.", FacialExpression.relief);
         } else {
+            getPortraitSubView().setFacialExpression(FacialExpression.relief);
             leaderSay("Here, take some of our rations. They're nothing fancy, but they fill up the belly.");
             portraitSay("Thank you traveller, you've done a good deed today.");
-            leaderSay("I'm just glad we can help.");
+            leaderSay("I'm just glad we can help.", FacialExpression.relief);
         }
         println("You leave the farm.");
     }

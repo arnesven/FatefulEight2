@@ -16,6 +16,11 @@ public class DarkElf extends ElvenRace {
     }
 
     @Override
+    public MyColors getFreckleColor() {
+        return MyColors.GRAY_RED;
+    }
+
+    @Override
     public MyColors getMouthDefaultColor() {
         return MyColors.DARK_GRAY;
     }
