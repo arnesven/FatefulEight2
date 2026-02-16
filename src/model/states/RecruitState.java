@@ -206,7 +206,6 @@ public class RecruitState extends GameState {
             println("You recruited " + gc.getFullName() + "!");
             model.getParty().recruit(gc, model.getDay());
             model.getAllCharacters().remove(gc);
-            otherPartyMemberComment(model, gc);
             int amount = rgc.getStartingGold();
             if (amount != 0) {
                 model.getParty().goldTransaction(amount);
@@ -219,6 +218,7 @@ public class RecruitState extends GameState {
                     println(gc.getName() + " contributed " + makeStartingItemString(it) + " to the party.");
                 }
             }
+            otherPartyMemberComment(model, gc);
             model.getTutorial().leader(model);
         }
     }
@@ -230,34 +230,40 @@ public class RecruitState extends GameState {
                 other = model.getParty().getRandomPartyMember();
             } while (other == gc || other == model.getParty().getLeader());
 
-            if (other.getAttitude(gc) < 0) {
+            if (other.getAttitude(gc) < -1) {
                 if (MyRandom.flipCoin()) {
-                    partyMemberSay(other, "Uh, hi.", FacialExpression.disappointed);
+                    partyMemberSay(other, MyRandom.sample(List.of(
+                            "A newcomer? Don't get killed.",
+                            "Don't get in my way.",
+                            "Hmph...")), FacialExpression.disappointed);
                 } else {
                     String raceString = gc.getRace().getName();
-                    if (gc.getRace() instanceof ElvenRace) {
+                    if (!(other.getRace() instanceof ElvenRace) && gc.getRace() instanceof ElvenRace) {
                         raceString = "elf";
                     }
                     partyMemberSay(other, "Not another " + raceString + "...", FacialExpression.disappointed);
                     partyMemberSay(gc, "Hey!", FacialExpression.angry);
                     leaderSay(other.getFirstName() + ", be nice!", FacialExpression.disappointed);
                 }
+            } else if (other.getAttitude(gc) < 0) {
+                partyMemberSay(other, "Uh... hi");
             } else if (other.getAttitude(gc) > 0) {
                 if (MyRandom.flipCoin()) {
                     partyMemberSay(other, "Hello there. I'm " + other.getFirstName() + ".");
                 } else {
                     String raceString = gc.getRace().getName();
-                    if (gc.getRace() instanceof ElvenRace) {
+                    if (!(other.getRace() instanceof ElvenRace) && gc.getRace() instanceof ElvenRace) {
                         raceString = "elf";
                     }
                     partyMemberSay(other, "Nice to see another " + raceString + " in the party. I'm " + other.getFirstName() + ".", FacialExpression.relief);
                     partyMemberSay(gc, "Hi.", FacialExpression.relief);
                 }
-            } else {
+            } else { // = 0
                 partyMemberSay(other, MyRandom.sample(List.of("Hello there. I'm " + other.getFirstName() + ".",
-                        "Hi.", "Nice to meet you, I am " + other.getFirstName() + ".",
+                        "Hi.", "Nice to meet you. I am " + other.getFirstName() + ".",
                         "How do you do?",
                         "Welcome aboard " + gc.getFirstName(),
+                        "Welcome to the gang.",
                         "Pleased to meet you " + gc.getFirstName(),
                         (model.getTimeOfDay() == TimeOfDay.MORNING ? "Good morning" : "Good afternoon") +
                                 ". I'm " + other.getFirstName())));
