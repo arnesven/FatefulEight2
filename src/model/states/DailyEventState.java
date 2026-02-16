@@ -172,6 +172,7 @@ public abstract class DailyEventState extends GameState {
         if (toRemove.isEmpty()) {
             return;
         }
+        model.getParty().addToUnhandledGrief(toRemove);
         String names = MyLists.commaAndJoin(toRemove, GameCharacter::getName);
         printAlert(names + " " + (toRemove.size()>1?"have":"has")+ " died.");
         if (!abandonEquipment && model.getParty().size() > 0) {
@@ -193,9 +194,10 @@ public abstract class DailyEventState extends GameState {
             event.waitForReturn();
             model.setGameOver(true);
         } else {
-            model.getParty().randomPartyMemberSay(model, List.of(gc.getFirstName().toUpperCase() + "!!!"));
-            model.getParty().randomPartyMemberSay(model, List.of("..."));
-            model.getParty().randomPartyMemberSay(model, List.of("Gone! " + gc.getFirstName() + " is gone!"));
+            event.partyMemberSay(model.getParty().getRandomPartyMember(), gc.getFirstName().toUpperCase() + "!!!", FacialExpression.surprised);
+            event.partyMemberSay(model.getParty().getRandomPartyMember(), "...", FacialExpression.surprised);
+            event.partyMemberSay(model.getParty().getRandomPartyMember(), "Gone! " + gc.getFirstName() + " is gone!", FacialExpression.surprised);
+            model.getParty().addToUnhandledGrief(List.of(gc));
             if (wasLeader) {
                 event.println(model.getParty().getLeader().getName() + " is now the new leader of the party.");
             }

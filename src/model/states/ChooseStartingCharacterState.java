@@ -155,6 +155,16 @@ public class ChooseStartingCharacterState extends GameState {
         model.progressMainStoryForTesting(MainStoryStep.THREE_SUPPORT_GOT,
                 MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(),
                         new MainStorySpawnWest(), new MainStorySpawnSouth())));
+
+        for (int i = 0; i < 2000; ++i) {
+            GameCharacter a = MyRandom.sample(chars);
+            GameCharacter b;
+            do {
+                b = MyRandom.sample(chars);
+            } while (b == a);
+            b.addToAttitude(a, MyRandom.rollD10() - 5);
+        }
+
         return chars.getLast();
     }
 

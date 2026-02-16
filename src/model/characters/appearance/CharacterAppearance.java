@@ -549,6 +549,7 @@ public abstract class CharacterAppearance implements Serializable {
     public void drawFacialExpression(ScreenHandler screenHandler, int x, int y,
                                      FacialExpression emphasis, boolean drawDefaultMouth, boolean isVampire) {
         if (emphasis.hasBigEyes()) {
+            // TODO: Make a method of this, then override in advanced appearance and check for eyepatch
             screenHandler.register("surprisedleft", new Point(x - 1, y), bigEyesSprites.first);
             screenHandler.register("surprisedright", new Point(x + 1, y), bigEyesSprites.second);
         }

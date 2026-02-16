@@ -5,7 +5,10 @@ import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.classes.Skill;
+import model.classes.normal.DruidClass;
 import model.items.Inventory;
 import model.map.*;
 import model.quests.Quest;
@@ -21,6 +24,7 @@ import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
 import view.LogView;
+import view.PartyAttitudesDialog;
 import view.subviews.*;
 
 import java.awt.*;
@@ -60,6 +64,7 @@ public class EveningState extends GameState {
         checkBounties(model);
         checkTravellers(model);
         checkGuides(model);
+        checkGrief(model);
         checkForVampireFeeding(model, this instanceof LodgingState);
         checkForNightTimeEvent(model);
         locationSpecificEvening(model);
@@ -382,6 +387,7 @@ public class EveningState extends GameState {
         }
         return result;
     }
+
     protected void notLodging(Model model) {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
@@ -415,7 +421,6 @@ public class EveningState extends GameState {
             starveAndKill(model, remaining);
         }
     }
-
     private void randomComment(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of(
                 "I think I'm lying on a root.#",
@@ -589,4 +594,133 @@ public class EveningState extends GameState {
         return true;
     }
 
+
+    private void checkGrief(Model model) {
+        List<GameCharacter> deadPeople = model.getParty().getUnhandledGrief();
+        if (deadPeople.isEmpty()) {
+            return;
+        }
+        GameCharacter subject = MyRandom.sample(deadPeople);
+        String theyOrHeOrShe = deadPeople.size() > 1 ? "they" : heOrShe(subject.getGender());
+        String themHimOrHer = deadPeople.size() > 1 ? "them" : himOrHer(subject.getGender());
+        String theyAreOrHeOrSheIs = deadPeople.size() > 1 ? "they are" : (heOrShe(subject.getGender()) + " is");
+        String pluralS = (deadPeople.size() > 1 ? "s" : "");
+        String articleA = (deadPeople.size() == 1 ? "a" : "");
+        String names = MyLists.commaAndJoin(model.getParty().getUnhandledGrief(), GameCharacter::getFirstName);
+        leaderSay(names + "... I can't believe " + theyAreOrHeOrSheIs + " dead.", FacialExpression.sad);
+        if (model.getParty().size() == 1) {
+            println("You think back on your journey together with " + names + "...");
+            model.getLog().waitForAnimationToFinish();
+            leaderSay("I will remember them fondly.");
+        } else {
+            leaderSay((deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (gc != model.getParty().getLeader()) {
+                    if (gc.getAttitude(subject) < -5) {
+                        if (gc.hasPersonality(PersonalityTrait.snobby)) {
+                            partyMemberSay(gc, "... kind of trashy to be honest.");
+                        } else if (gc.hasPersonality(PersonalityTrait.unkind)) {
+                            partyMemberSay(gc, "... a bit of a git. I never really liked " + themHimOrHer + ".", FacialExpression.disappointed);
+                        } else if (gc.hasPersonality(PersonalityTrait.cold)) {
+                            partyMemberSay(gc, "Who cares? We can just hire on some more hands.", FacialExpression.questioning);
+                        } else if (gc.hasPersonality(PersonalityTrait.critical)) {
+                            partyMemberSay(gc, "... not all that clever actually. In the end, it got " + themHimOrHer + " killed.");
+                        } else if (gc.hasPersonality(PersonalityTrait.irritable)) {
+                            partyMemberSay(gc, "... a pain in my but!", FacialExpression.disappointed);
+                        } else if (gc.hasPersonality(PersonalityTrait.cowardly)) {
+                            partyMemberSay(gc, "... foolhardy. Let that be a lesson to the rest of us.", FacialExpression.disappointed);
+                        } else if (gc.hasPersonality(PersonalityTrait.aggressive)) {
+                            partyMemberSay(gc, "... always getting in my way.", FacialExpression.angry);
+                        } else if (gc.hasPersonality(PersonalityTrait.greedy) || gc.hasPersonality(PersonalityTrait.stingy)) {
+                            partyMemberSay(gc, "... " + theyOrHeOrShe + " owed me money.", FacialExpression.disappointed);
+                        } else if (gc.hasPersonality(PersonalityTrait.prudish)) {
+                            partyMemberSay(gc, "... always trying to sneak a peak when I was washing!", FacialExpression.angry);
+                        } else if (gc.hasPersonality(PersonalityTrait.rude) || gc.hasPersonality(PersonalityTrait.jovial)) {
+                            partyMemberSay(gc, "... kind of smelly?", FacialExpression.wicked);
+                        } else {
+                            partyMemberSay(gc, "... not my favorite " + (deadPeople.size() > 1 ? " people" : "person") + ". Good riddance.");
+                        }
+                        leaderSay(gc.getFirstName() + "! " + MyRandom.sample(List.of("Can't you say something nice?",
+                                "We're trying to have a respectful moment here.", "Shut your mouth!", "Come on!")),
+                                FacialExpression.angry);
+                        partyMemberSay(gc, MyRandom.sample(List.of("What? It's true!", "Whatever.")));
+                        leaderSay("Just... keep your mouth shut. Anyway... " + names + ". " +
+                                (deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+                    } else if (gc.getAttitude(subject) > 25) {
+                        partyMemberSay(gc, MyRandom.sample(List.of(
+                                "... special... I don't think I've ever met, or ever will meet somebody like " + themHimOrHer + ".",
+                                (deadPeople.size() > 1 ? "True friends" : "A true friend") + ". I can't really put it any other way",
+                                "Wonderful. Just wonderful. I'm so sad " + theyAreOrHeOrSheIs + " gone.")), FacialExpression.sad);
+                    } else if (gc.getAttitude(subject) > 10) {
+                        if (gc.hasPersonality(PersonalityTrait.encouraging)) {
+                            partyMemberSay(gc, "... " + articleA + " worthy companion" + pluralS + ". But " + theyAreOrHeOrSheIs + " going to keep living in our hearts.", FacialExpression.relief);
+                        } else if (gc.hasPersonality(PersonalityTrait.friendly)) {
+                            partyMemberSay(gc, "... " + articleA + " good friend" + pluralS + ". Don't you think?", FacialExpression.relief);
+                        } else if (gc.hasPersonality(PersonalityTrait.jovial) || gc.hasPersonality(PersonalityTrait.playful)) {
+                            partyMemberSay(gc, "... always up for a good laugh. Oh the jokes " + theyOrHeOrShe + " would tell!", FacialExpression.relief);
+                        } else if (gc.hasPersonality(PersonalityTrait.diplomatic)) {
+                            partyMemberSay(gc, "... " + articleA + " dependable partner" + pluralS + "! Through thick and thin!", FacialExpression.relief);
+                        } else if (gc.hasPersonality(PersonalityTrait.romantic)) {
+                            if (deadPeople.size() == 1) {
+                                partyMemberSay(gc, "... quite the looker. A should have been more open about my feelings.", FacialExpression.sad);
+                            } else {
+                                partyMemberSay(gc, "... fashionable adventurers. They always looked good while fighting.", FacialExpression.relief);
+                            }
+                        } else if (gc.hasPersonality(PersonalityTrait.calm)) {
+                            partyMemberSay(gc, "... " + articleA + " good comrade" + pluralS + ". But death is a natural part of life.");
+                        } else if (gc.hasPersonality(PersonalityTrait.benevolent)) {
+                            partyMemberSay(gc, "... the best of party members. Can't think of anything bad about " + themHimOrHer + ".", FacialExpression.sad);
+                        } else if (gc.hasPersonality(PersonalityTrait.lawful)) {
+                            partyMemberSay(gc, "... " + articleA + " good citizen" + pluralS + ". Always did the right thing.");
+                        } else if (gc.hasPersonality(PersonalityTrait.forgiving)) {
+                            partyMemberSay(gc, "... not always the brightest, but " + theyOrHeOrShe + " had heart. No doubt about it.", FacialExpression.sad);
+                        } else {
+                            partyMemberSay(gc, "... " + articleA + " real hero" + pluralS + ". Deserving to be remembered.");
+                        }
+                        leaderSay("Well said " + gc.getFirstName() + ". " + theyOrHeOrShe + " always liked you.", FacialExpression.relief);
+                        leaderSay((deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+                    } else {
+                        subject = MyRandom.sample(deadPeople);
+                        String type;
+                        if (MyRandom.flipCoin()) {
+                            type = MyRandom.sample(List.of(
+                                    " good friend", " pleasant " + subject.getRace().getName().toLowerCase(),
+                                    " great companion", " trusty party member", "someone to look up to",
+                                    " role model", " decent person"));
+                        } else if (subject.getCharClass().id() == Classes.DRU.id() || subject.getCharClass().id() == Classes.FOR.id()) {
+                            type = " lover of nature.";
+                        } else if (subject.getCharClass().id() == Classes.BBN.id() || subject.getCharClass().id() == Classes.AMZ.id()) {
+                            type = " fierce fighter";
+                        } else if (subject.getCharClass().id() == Classes.NOB.id() || subject.getCharClass().id() == Classes.BRD.id()) {
+                            type = " well-spoken fellow";
+                        } else if (subject.getCharClass().id() == Classes.ART.id() || subject.getCharClass().id() == Classes.MIN.id()) {
+                            type = " skilled individual";
+                        } else if (subject.getCharClass().id() == Classes.MAG.id() || subject.getCharClass().id() == Classes.WIZ.id()) {
+                            type = " powerful magic user";
+                        } else if (subject.getCharClass().id() == Classes.WIT.id() || subject.getCharClass().id() == Classes.SOR.id()) {
+                            type = " fearsome magic user";
+                        } else if (subject.getCharClass().id() == Classes.SPY.id() || subject.getCharClass().id() == Classes.ASN.id()) {
+                            type = " stealthy cutthroat! Good to have on our side";
+                        } else if (subject.getCharClass().id() == Classes.THF.id() || subject.getCharClass().id() == Classes.BKN.id()) {
+                            type = " a bit of a rogue. But with a heart of gold";
+                        } else if (subject.getCharClass().id() == Classes.CAP.id() || subject.getCharClass().id() == Classes.MAR.id()) {
+                            type = " a dutiful soldier";
+                        } else if (subject.getCharClass().id() == Classes.PRI.id() || subject.getCharClass().id() == Classes.PAL.id()) {
+                            type = " a righteous cleric";
+                        } else {
+                            type = " good friend";
+                        }
+                        partyMemberSay(gc, subject.getFirstName() + " was a" + type + ". I'll miss " + himOrHer(subject.getGender()) + ".",
+                                MyRandom.flipCoin() ? FacialExpression.sad : FacialExpression.relief);
+                        leaderSay(MyRandom.sample(List.of(
+                                "I agree.", "Here here!", "So true.", "Well said.", "Yes, " + heOrShe(subject.getGender()) + " was.")) +
+                                " " + (deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+                    }
+                }
+            }
+            leaderSay("Our companion" + pluralS + ". A toast to our fallen comrade" + pluralS + "!", FacialExpression.sad);
+            println("Everyone raises their glasses. Drinks, then stays silent for a few minutes.");
+            leaderSay("May " + theyOrHeOrShe + " rest in peace.");
+        }
+    }
 }

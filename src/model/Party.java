@@ -79,6 +79,7 @@ public class Party implements Serializable {
     private boolean drawPartyVertically = false;
     private final List<DiscoveredRoute> discoveredRoutes = new ArrayList<>();
     private final List<Item> permanentlyLearnedItems = new ArrayList<>();
+    private List<GameCharacter> unhandledGrief = new ArrayList<>();
 
     public Party() {
         cursorSprites = makeCursorSprites();
@@ -1075,5 +1076,17 @@ public class Party implements Serializable {
 
     public void removeFromInventory(Item it) {
         inventory.remove(it);
+    }
+
+    public void addToUnhandledGrief(List<GameCharacter> gc) {
+        unhandledGrief.addAll(gc);
+    }
+
+    public List<GameCharacter> getUnhandledGrief() {
+        return unhandledGrief;
+    }
+
+    public void clearUnhandledGrief() {
+        unhandledGrief.clear();
     }
 }
