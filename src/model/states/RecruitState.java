@@ -2,6 +2,7 @@ package model.states;
 
 import model.*;
 import model.characters.*;
+import model.characters.appearance.FacialExpression;
 import model.headquarters.TransferCharacterHeadquartersAction;
 import model.items.InventoryDummyItem;
 import model.items.Item;
@@ -205,6 +206,7 @@ public class RecruitState extends GameState {
             println("You recruited " + gc.getFullName() + "!");
             model.getParty().recruit(gc, model.getDay());
             model.getAllCharacters().remove(gc);
+            otherPartyMemberComment(model, gc);
             int amount = rgc.getStartingGold();
             if (amount != 0) {
                 model.getParty().goldTransaction(amount);
@@ -221,6 +223,48 @@ public class RecruitState extends GameState {
         }
     }
 
+    private void otherPartyMemberComment(Model model, GameCharacter gc) {
+        if (model.getParty().size() > 2) {
+            GameCharacter other;
+            do {
+                other = model.getParty().getRandomPartyMember();
+            } while (other == gc || other == model.getParty().getLeader());
+
+            if (other.getAttitude(gc) < 0) {
+                if (MyRandom.flipCoin()) {
+                    partyMemberSay(other, "Uh, hi.", FacialExpression.disappointed);
+                } else {
+                    String raceString = gc.getRace().getName();
+                    if (gc.getRace() instanceof ElvenRace) {
+                        raceString = "elf";
+                    }
+                    partyMemberSay(other, "Not another " + raceString + "...", FacialExpression.disappointed);
+                    partyMemberSay(gc, "Hey!", FacialExpression.angry);
+                    leaderSay(other.getFirstName() + ", be nice!", FacialExpression.disappointed);
+                }
+            } else if (other.getAttitude(gc) > 0) {
+                if (MyRandom.flipCoin()) {
+                    partyMemberSay(other, "Hello there. I'm " + other.getFirstName() + ".");
+                } else {
+                    String raceString = gc.getRace().getName();
+                    if (gc.getRace() instanceof ElvenRace) {
+                        raceString = "elf";
+                    }
+                    partyMemberSay(other, "Nice to see another " + raceString + " in the party. I'm " + other.getFirstName() + ".", FacialExpression.relief);
+                    partyMemberSay(gc, "Hi.", FacialExpression.relief);
+                }
+            } else {
+                partyMemberSay(other, MyRandom.sample(List.of("Hello there. I'm " + other.getFirstName() + ".",
+                        "Hi.", "Nice to meet you, I am " + other.getFirstName() + ".",
+                        "How do you do?",
+                        "Welcome aboard " + gc.getFirstName(),
+                        "Pleased to meet you " + gc.getFirstName(),
+                        (model.getTimeOfDay() == TimeOfDay.MORNING ? "Good morning" : "Good afternoon") +
+                                ". I'm " + other.getFirstName())));
+            }
+        }
+    }
+
     public static String makeStartingItemString(Item it) {
         if (it instanceof InventoryDummyItem) {
             return ((InventoryDummyItem)it).getDescription();
@@ -230,27 +274,34 @@ public class RecruitState extends GameState {
 
     private void newPartyMemberComment(RecruitableCharacter rgc) {
         GameCharacter gc = rgc.getCharacter();
-        if (gc.hasPersonality(PersonalityTrait.narcissistic) || gc.hasPersonality(PersonalityTrait.snobby)) {
-            candidateSay(rgc, "You should be honored to have me. Okay.");
-        } else if (gc.hasPersonality(PersonalityTrait.intellectual)) {
-            candidateSay(rgc, "Of course. It will be a good learning experience for me.");
-        } else if (gc.hasPersonality(PersonalityTrait.critical)) {
-            candidateSay(rgc, "Hmm... Yes, for now.");
-        } else if (gc.hasPersonality(PersonalityTrait.encouraging) || gc.hasPersonality(PersonalityTrait.brave)) {
-            candidateSay(rgc, "Yes, this is so exciting!");
-        } else if (gc.hasPersonality(PersonalityTrait.diplomatic) || gc.hasPersonality(PersonalityTrait.calm)) {
-            candidateSay(rgc, "Yes, it is a good deal for both of us.");
-        } else if (gc.hasPersonality(PersonalityTrait.friendly) || gc.hasPersonality(PersonalityTrait.benevolent)) {
-            candidateSay(rgc, "Absolutely. It's good to meet you.");
-        } else if (gc.hasPersonality(PersonalityTrait.greedy) || gc.hasPersonality(PersonalityTrait.stingy)) {
-            candidateSay(rgc, "Okay. When do I get my wages?");
-        } else if (gc.hasPersonality(PersonalityTrait.unkind) || gc.hasPersonality(PersonalityTrait.rude)) {
-            candidateSay(rgc, "Reluctantly, yes.");
-        } else if (gc.hasPersonality(PersonalityTrait.playful) || gc.hasPersonality(PersonalityTrait.jovial)) {
-            candidateSay(rgc, "Hooray, I finally get to go into the wilderness!");
-        } else {
-            candidateSay(rgc, MyRandom.sample(List.of("Yes.", "I shall.", "I accept.")));
+        List<MyPair<String, List<PersonalityTrait>>> comments = new ArrayList<>();
+        comments.add(new MyPair<>("You should be honored to have me. Okay.", List.of(
+                PersonalityTrait.narcissistic, PersonalityTrait.snobby)));
+        comments.add(new MyPair<>("Of course. It will be a good learning experience for me.", List.of(
+                PersonalityTrait.intellectual)));
+        comments.add(new MyPair<>("Hmm... Yes, for now.", List.of(
+                PersonalityTrait.critical)));
+        comments.add(new MyPair<>("Yes, this is so exciting!",
+                List.of(PersonalityTrait.encouraging, PersonalityTrait.brave)));
+        comments.add(new MyPair<>("Yes, it is a good deal for both of us.", List.of(
+                PersonalityTrait.diplomatic, PersonalityTrait.calm)));
+        comments.add(new MyPair<>("Absolutely. It's good to meet you.",
+                List.of(PersonalityTrait.friendly, PersonalityTrait.benevolent)));
+        comments.add(new MyPair<>("Okay. When do I get my wages?",
+                List.of(PersonalityTrait.greedy, PersonalityTrait.stingy)));
+        comments.add(new MyPair<>("Reluctantly, yes.", List.of(
+                PersonalityTrait.unkind, PersonalityTrait.rude)));
+        comments.add(new MyPair<>("Hooray, I finally get to go into the wilderness!",
+                List.of(PersonalityTrait.playful, PersonalityTrait.jovial)));
+        Collections.shuffle(comments);
+
+        for (MyPair<String, List<PersonalityTrait>> pair : comments) {
+            if (MyLists.any(pair.second, pt -> rgc.getCharacter().hasPersonality(pt))) {
+                candidateSay(rgc, pair.first);
+                return;
+            }
         }
+        candidateSay(rgc, MyRandom.sample(List.of("Yes.", "I shall.", "I accept.")));
     }
 
     public void candidateSay(RecruitableCharacter gc, String s) {

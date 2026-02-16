@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.journal.InitialStoryPart;
 import model.journal.StoryPart;
@@ -92,11 +93,11 @@ public class VisitUncleNode extends DailyActionNode {
                     portraitSay("Indeed. These damnable frogmen. They've always been a bit of a nuisance, raiding " +
                             "our stores, clogging our canals with their fishing nets.");
                 }
-                portraitSay("But now they're worse than ever. It's like they've gone mad or something.");
-                leaderSay("Seems odd. Frogmen are usually quite peaceful. Tell me more.");
+                portraitSay("But now they're worse than ever. It's like they've gone mad or something.", FacialExpression.sad);
+                leaderSay("Seems odd. Frogmen are usually quite peaceful. Tell me more.", FacialExpression.questioning);
                 portraitSay("Well it started a few months ago. We were a few townspeople up at the mill. " +
                         "Suddenly they just attacked out of nowhere! We fought them off best we could, " +
-                        "Jimmy got wounded, and Emma's mom still hasn't recovered.");
+                        "Jimmy got wounded, and Emma's mom still hasn't recovered.", FacialExpression.disappointed);
                 leaderSay("Why did they attack you?");
                 portraitSay("I don't know. They didn't even respond when we tried to communicate with them. " +
                         "Normally you can make out a few words between the croaks. They just seemed filled with rage.");
@@ -107,20 +108,20 @@ public class VisitUncleNode extends DailyActionNode {
                         "wipe out the settlement of Frogmen.");
                 println("Suddenly, a druid enters the hut.");
                 showEverixPortrait(model);
-                portraitSay("Don't even think about it!");
-                portraitSay("The frogman population is an integral part of the ecosystem. You can't just wipe them out!");
+                portraitSay("Don't even think about it!", FacialExpression.angry);
+                portraitSay("The frogman population is an integral part of the ecosystem. You can't just wipe them out!", FacialExpression.angry);
                 showUnclePortrait(model);
                 portraitSay("Hello Everix, don't you knock before entering someone's home? This is Everix, the town's druid. " +
-                        "She's been trying to convince me that there's a 'peaceful solution' to our problem.");
+                        "She's been trying to convince me that there's a 'peaceful solution' to our problem.", FacialExpression.relief);
                 leaderSay("Maybe there is.");
-                portraitSay("I doubt it. These creatures are dimwitted and a travesty to nature.");
+                portraitSay("I doubt it. These creatures are dimwitted and a travesty to nature.", FacialExpression.wicked);
                 showEverixPortrait(model);
-                portraitSay("And you are an old fool. Ignorant and naive.");
+                portraitSay("And you are an old fool. Ignorant and naive.", FacialExpression.disappointed);
                 showUnclePortrait(model);
                 portraitSay("Nevertheless, they need to be dealt with. If you lot could look into this we would sure " +
                         "greatly appreciate it. Even you Everix, have been attacked by them.");
                 showEverixPortrait(model);
-                portraitSay("Yes, but... they're just not acting normally...");
+                portraitSay("Yes, but... they're just not acting normally...", FacialExpression.sad);
                 portraitSay("I implore you. Try to find out more about this. We've managed to coexist in peace for centuries. " +
                         "Sure there's been the occasional spat. But normally the townsfolk and the frogmen just ignore each other and go on " +
                         "with their lives. What's changed?");
@@ -133,14 +134,14 @@ public class VisitUncleNode extends DailyActionNode {
                 portraitSay("Please take care of the Frogmen as soon as you can!");
                 leaderSay("Don't worry, we will");
                 showEverixPortrait(model);
-                portraitSay("And no violence!");
+                portraitSay("And no violence!", FacialExpression.angry);
                 showUnclePortrait(model);
-                portraitSay("Everix, get out of my house.");
+                portraitSay("Everix, get out of my house.", FacialExpression.disappointed);
             } else if (storyPart.getStep() == 2) {
                 showUnclePortrait(model);
                 portraitSay("Oh, there you are! Thanks again for handling the frogmen problem for us!");
-                leaderSay("No trouble at all. Didn't you say there was a monetary reward for dealing with the frogmen?");
-                portraitSay("Yes... about that.");
+                leaderSay("No trouble at all. Didn't you say there was a monetary reward for dealing with the frogmen?", FacialExpression.questioning);
+                portraitSay("Yes... about that.", FacialExpression.relief);
                 if (model.getParty().size() > 1) {
                     partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "Typical...");
                 }
@@ -148,20 +149,20 @@ public class VisitUncleNode extends DailyActionNode {
                                  " has informed med that...");
                 leaderSay("Yes?");
                 portraitSay("Well, there's no nice way of putting it. The money has all been spent.");
-                leaderSay("So there is no reward?");
+                leaderSay("So there is no reward?", FacialExpression.questioning);
                 portraitSay("Well, actually, there could be.");
                 leaderSay("But there's a catch?");
                 portraitSay("You would have to collect it yourself from the " + castle.getLordTitle() + " of " + castle.getName() + ".");
                 portraitSay("The " + castle.getLordTitle() + " owes our town " + InitialStoryPart.REWARD_GOLD + " gold. Originally we had set the reward for " +
                         "handling the frogmen problem at 100 gold. But you can collect the full " + InitialStoryPart.REWARD_GOLD + " and we'll call it even.");
                 leaderSay("I guess you leave me no choice.");
-                portraitSay("Sorry again.");
+                portraitSay("Sorry again.", FacialExpression.relief);
                 leaderSay("By the way. I found this crimson orb. The frogman chieftain had it in his stomach. " +
-                        "It looks odd. Could be magical. Do you know anything about it?");
+                        "It looks odd. Could be magical. Do you know anything about it?", FacialExpression.questioning);
                 portraitSay("No, I'm sorry. Maybe you can ask Everix about that? She's in charge of magical issues in this town.");
                 leaderSay("Okay. Thanks.");
                 if (model.getParty().getPartyMembers().contains(storyPart.getWhosUncle())) {
-                    partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!");
+                    partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!", FacialExpression.relief);
                     portraitSay("Good bye " + storyPart.getWhosUncle().getFirstName() + ". Have fun on your adventures, and stay safe.");
                 }
                 storyPart.increaseStep(model);
@@ -170,7 +171,7 @@ public class VisitUncleNode extends DailyActionNode {
                 showUnclePortrait(model);
                 portraitSay("Thanks again for helping us. Safe travels!");
                 if (model.getParty().getPartyMembers().contains(storyPart.getWhosUncle())) {
-                    partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!");
+                    partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!", FacialExpression.relief);
                     portraitSay("Good bye " + storyPart.getWhosUncle().getFirstName() + ". Have fun on your adventures, and stay safe.");
                 }
             }

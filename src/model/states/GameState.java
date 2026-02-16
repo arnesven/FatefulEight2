@@ -139,7 +139,7 @@ public abstract class GameState implements GameStateConstants {
     }
 
     protected void stepToNextDay(Model model) {
-        MyLists.forEach(model.getParty().getPartyMembers(),
+        MyLists.forEach(new ArrayList<>(model.getParty().getPartyMembers()),
                 (GameCharacter gc) -> gc.conditionsEndOfDayTrigger(model, this));
         model.incrementDay();
     }

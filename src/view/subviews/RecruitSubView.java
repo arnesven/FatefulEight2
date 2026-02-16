@@ -62,7 +62,7 @@ public class RecruitSubView extends TopMenuSubView {
             Point p = new Point(matrix.getSelectedPoint());
             p.x = X_OFFSET + p.x * 14 + 6;
             p.y = Y_OFFSET + p.y * 12 - 1;
-            model.getScreenHandler().register("recruitcursor", p, cursor, 2);
+            model.getScreenHandler().register("recruitcursor", p, cursor, 4);
             this.cursorPosition = p;
         }
     }

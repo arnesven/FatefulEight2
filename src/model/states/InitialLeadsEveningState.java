@@ -43,7 +43,11 @@ public class InitialLeadsEveningState extends EveningState {
                     " who's been asking me to bring in a group of fighters to deal with a problem.");
             leaderSay("What's the trouble?", FacialExpression.questioning);
             model.getParty().partyMemberSay(model, gc, "Apparently some trouble with the local population of frogmen.");
-            leaderSay("Could be interesting... Well, good night everybody.");
+            String everybody = "everybody";
+            if (model.getParty().size() == 2) {
+                everybody = model.getParty().getRandomPartyMember(model.getParty().getLeader()).getFirstName();
+            }
+            leaderSay("Could be interesting... Well, good night " + everybody + ".");
         }
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc != model.getParty().getLeader()) {

@@ -96,7 +96,7 @@ public class GardenMazeEvent extends DailyEventState {
         portraitSay("Take all the time you want here on the porch. " +
                 "You can even come back up here if you need to take another look.");
         leaderSay("I don't think I'll need to.");
-        portraitSay("Sure you wont.");
+        portraitSay("Sure you won't.");
         model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);
 
@@ -125,7 +125,7 @@ public class GardenMazeEvent extends DailyEventState {
         do {
             waitUntil(subView, GardenMazeSubView::isDone);
             if (subView.statueFound()) {
-                leaderSay("There's the statue. What's written on the bottom? " + "Hey gardener! " + MyRandom.sample(STATUE_NAMES) + "!");
+                leaderSay("There's the statue. What's written on the bottom? " + "Hey gardener! '" + MyRandom.sample(STATUE_NAMES) + "'!");
                 printQuote("Gardener", "Shucks!");
                 println("Press enter to continue");
                 waitForReturnSilently();
@@ -146,7 +146,7 @@ public class GardenMazeEvent extends DailyEventState {
         if (betWin) {
             setCurrentTerrainSubview(model);
             showExplicitPortrait(model, gardener, "Gardener");
-            leaderSay("Like I said gardener, it wasn't too tricky.");
+            leaderSay("Like I said gardener, it wasn't too tricky.", FacialExpression.wicked);
             portraitSay("I commend your sense of direction! I must keep working and make " +
                     "my maze even more difficult to solve. Here's your money.");
             println("You got " + betSize + " gold from the gardener.");

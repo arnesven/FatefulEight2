@@ -422,7 +422,14 @@ public class EveningState extends GameState {
         }
     }
     private void randomComment(Model model) {
-        model.getParty().randomPartyMemberSay(model, List.of(
+        GameCharacter speaker = model.getParty().getRandomPartyMember();
+        String everybody = "everybody";
+        if (model.getParty().size() == 2) {
+            everybody = model.getParty().getRandomPartyMember(speaker).getFirstName();
+        } else if (model.getParty().size() == 1) {
+            everybody = speaker.getFirstName();
+        }
+        partyMemberSay(speaker, MyRandom.sample(List.of(
                 "I think I'm lying on a root.#",
                 "This tent is nice, but a bit small.",
                 "It's peaceful around here.",
@@ -441,7 +448,7 @@ public class EveningState extends GameState {
                 "These rations are a bit stale.",
                 "It's been an alright day I suppose.",
                 "I wish we would stay at a tavern.",
-                "Yaaawn!", "Good night everybody."));
+                "Yaaawn!", "Good night " + everybody + ".")));
     }
 
     private void personalityComment(Model model) {
