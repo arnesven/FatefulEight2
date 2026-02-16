@@ -4,8 +4,10 @@ import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import util.MyLists;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,23 +30,24 @@ public class PayWagesState extends GameState{
             model.getTutorial().wages(model);
             int wages = selectWage(model);
             if (wages == 0) {
-                leaderSay("Sorry, no wages this time. The company needs it for provisions and gear.");
+                leaderSay("Sorry, no wages this time. The company needs it for provisions and gear.",
+                        MyRandom.flipCoin() ? FacialExpression.wicked : FacialExpression.relief);
                 if (rando.hasPersonality(PersonalityTrait.forgiving)) {
                     partyMemberSay(rando, "I guess that's reasonable.");
                     leaderSay("Thank you for understanding");
                 } else {
-                    partyMemberSay(rando, "What!? This is an outrage!");
+                    partyMemberSay(rando, "What!? This is an outrage!", FacialExpression.angry);
                     rando.addToAttitude(leader, -10);
                 }
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
                     if (gc != leader && gc != rando) {
                         if (gc.hasPersonality(PersonalityTrait.forgiving)) {
-                            partyMemberSay(gc, "I guess it's okay. I don't really need my wages right now.");
+                            partyMemberSay(gc, "I guess it's okay. I don't really need my wages right now.", FacialExpression.relief);
                         } else {
                             partyMemberSay(gc, MyRandom.sample(List.of("Despicable!", "Unbelievable!",
                                     "That sucks!", "How disappointing.", "That's low, " + leader.getFirstName(),
                                     "I should have joined another party.", "I want you to know that this upsets me.",
-                                    "Grrr!")));
+                                    "Grrr!")), FacialExpression.disappointed);
                             gc.addToAttitude(leader, -10);
                         }
                     }
@@ -57,15 +60,16 @@ public class PayWagesState extends GameState{
                 GameStatistics.incrementWagesPaid(totalWages);
                 adjustAttitudes(model, wages/2);
                 if (rando.hasPersonality(PersonalityTrait.greedy)) {
-                    partyMemberSay(rando, "I expected more.");
-                    leaderSay("Of course you did.");
+                    partyMemberSay(rando, "I expected more.", FacialExpression.disappointed);
+                    leaderSay("Of course you did.", FacialExpression.disappointed);
                 } else {
                     if (wages == WAGE_SIZES[0]) {
                         partyMemberSay(rando, "Paltry. But better than nothing.");
                     } else if (wages == WAGE_SIZES[1]) {
                         partyMemberSay(rando, "A decent pay, but I expected more.");
                     } else {
-                        partyMemberSay(rando, "A generous pay out! Three cheers for " + leader.getFirstName() + "!");
+                        partyMemberSay(rando, "A generous pay out! Three cheers for " +
+                                leader.getFirstName() + "!", FacialExpression.excited);
                     }
                 }
             }

@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.appearance.ChildAppearance;
+import model.characters.appearance.FacialExpression;
 import model.combat.abilities.InvisibilityCombatAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
@@ -101,7 +102,7 @@ public class KidsWantFireworksEvent extends DailyEventState {
                 println("After a little while, " + caster.getFirstName() + " becomes visible again, right behind the kids.");
                 caster.removeCondition(InvisibilityCondition.class);
                 model.getParty().unbenchAll();
-                partyMemberSay(caster, "Booo!");
+                partyMemberSay(caster, "Booo!", FacialExpression.wicked);
                 showExplicitPortrait(model, kid4, "Kid 4");
                 portraitSay("Eeeeh!");
                 println("The kids shout with glee and jump around " + caster.getFirstName() + ".");

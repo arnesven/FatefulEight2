@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.states.DailyEventState;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class RationsGoneBadEvent extends DailyEventState {
             return;
         }
         if (model.getParty().size() > 1) {
-            model.getParty().randomPartyMemberSay(model, List.of("Yuck, what is that smell?"));
+            partyMemberSay(model.getParty().getRandomPartyMember(), "Yuck, what is that smell?", FacialExpression.questioning);
             model.getParty().randomPartyMemberSay(model, List.of("It's coming from one of our knapsacks..."));
             randomSayIfPersonality(PersonalityTrait.critical, List.of(model.getParty().getLeader()),
                     "Who bought this stuff anyway?");

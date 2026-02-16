@@ -54,7 +54,7 @@ public class MayorEvent extends DailyEventState {
             } else {
                 leaderSay("Don't even think about it. Hopefully one day somebody will do the same for me.");
                 boolean didSay = randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()),
-                        "What are you doing? Take the money?");
+                        "What are you doing? Take the money!", FacialExpression.angry);
                 if (didSay) {
                     leaderSay("I wouldn't dream of it!");
                 }

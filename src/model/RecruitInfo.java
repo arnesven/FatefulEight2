@@ -12,10 +12,7 @@ import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public enum RecruitInfo {
     none,
@@ -51,7 +48,7 @@ public enum RecruitInfo {
             state.leaderSay("What are your qualifications?");
             List<MyPair<Skill, Integer>> topSkills = MyLists.transform(new ArrayList<>(rgc.getCharacter().getSkillSet()),
                     s -> new MyPair<>(s, rgc.getCharacter().getCharClass().getWeightForSkill(s).getWeight()));
-            topSkills.sort(Comparator.comparingInt(o -> o.second));
+            topSkills.sort((o1, o2) -> skillScore(o1) - skillScore(o2));
             topSkills = topSkills.reversed();
             state.candidateSay(rgc, "I'm skilled in " + MyLists.commaAndJoin(topSkills.subList(0, Math.min(3, topSkills.size())),
                     p-> p.first.isMagic() ? p.first.getName().replace("Magic (", "").replace(")", " Magic") :
@@ -95,6 +92,10 @@ public enum RecruitInfo {
         state.candidateSay(rgc, MyRandom.sample(List.of("Definitely.", "I think so.",
                 "Absolutely.", "Of course.", "That's me.", "Yes.", "No doubt about it.")));
         return false;
+    }
+
+    private int skillScore(MyPair<Skill, Integer> pair) {
+        return pair.second * 1000 + (pair.first.isMagic() ? 10 : (pair.first.isFightingSkill() ? 5 : 0));
     }
 
     public String getFormattedString(GameCharacter gc, int startingGold) {
