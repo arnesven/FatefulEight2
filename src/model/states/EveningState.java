@@ -19,10 +19,7 @@ import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
-import util.MyLists;
-import util.MyPair;
-import util.MyRandom;
-import util.MyStrings;
+import util.*;
 import view.LogView;
 import view.PartyAttitudesDialog;
 import view.subviews.*;
@@ -624,27 +621,26 @@ public class EveningState extends GameState {
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc != model.getParty().getLeader()) {
                     if (gc.getAttitude(subject) < -5) {
-                        if (gc.hasPersonality(PersonalityTrait.snobby)) {
-                            partyMemberSay(gc, "... kind of trashy to be honest.");
-                        } else if (gc.hasPersonality(PersonalityTrait.unkind)) {
-                            partyMemberSay(gc, "... a bit of a git. I never really liked " + themHimOrHer + ".", FacialExpression.disappointed);
-                        } else if (gc.hasPersonality(PersonalityTrait.cold)) {
-                            partyMemberSay(gc, "Who cares? We can just hire on some more hands.", FacialExpression.questioning);
-                        } else if (gc.hasPersonality(PersonalityTrait.critical)) {
-                            partyMemberSay(gc, "... not all that clever actually. In the end, it got " + themHimOrHer + " killed.");
-                        } else if (gc.hasPersonality(PersonalityTrait.irritable)) {
-                            partyMemberSay(gc, "... a pain in my but!", FacialExpression.disappointed);
-                        } else if (gc.hasPersonality(PersonalityTrait.cowardly)) {
-                            partyMemberSay(gc, "... foolhardy. Let that be a lesson to the rest of us.", FacialExpression.disappointed);
-                        } else if (gc.hasPersonality(PersonalityTrait.aggressive)) {
-                            partyMemberSay(gc, "... always getting in my way.", FacialExpression.angry);
-                        } else if (gc.hasPersonality(PersonalityTrait.greedy) || gc.hasPersonality(PersonalityTrait.stingy)) {
-                            partyMemberSay(gc, "... " + theyOrHeOrShe + " owed me money.", FacialExpression.disappointed);
-                        } else if (gc.hasPersonality(PersonalityTrait.prudish)) {
-                            partyMemberSay(gc, "... always trying to sneak a peak when I was washing!", FacialExpression.angry);
-                        } else if (gc.hasPersonality(PersonalityTrait.rude) || gc.hasPersonality(PersonalityTrait.jovial)) {
-                            partyMemberSay(gc, "... kind of smelly?", FacialExpression.wicked);
-                        } else {
+                        List<MyTriplet<List<PersonalityTrait>, String, FacialExpression>> list = new ArrayList<>();
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.snobby), "... kind of trashy to be honest.", FacialExpression.questioning));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.unkind), "... a bit of a git. I never really liked " + themHimOrHer + ".", FacialExpression.disappointed));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.cold), "Who cares? We can just hire on some more hands.", FacialExpression.questioning));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.critical), "... not all that clever actually. In the end, it got " + themHimOrHer + " killed.", FacialExpression.none));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.irritable), "... a pain in my but!", FacialExpression.disappointed));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.cowardly), "... foolhardy. Let that be a lesson to the rest of us.", FacialExpression.disappointed));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.aggressive), "... always getting in my way.", FacialExpression.angry));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.greedy, PersonalityTrait.stingy), "... " + theyOrHeOrShe + " owed me money.", FacialExpression.disappointed));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.prudish), "... always trying to sneak a peak when I was washing!", FacialExpression.angry));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.rude, PersonalityTrait.jovial), "... kind of smelly?", FacialExpression.wicked));
+                        Collections.shuffle(list);
+                        boolean found = false;
+                        for (MyTriplet<List<PersonalityTrait>, String, FacialExpression> triplet : list) {
+                            if (MyLists.any(triplet.first, gc::hasPersonality)) {
+                                found = true;
+                                partyMemberSay(gc, triplet.second, triplet.third);
+                            }
+                        }
+                        if (!found) {
                             partyMemberSay(gc, "... not my favorite " + (deadPeople.size() > 1 ? " people" : "person") + ". Good riddance.");
                         }
                         if (model.getParty().getLeader().getAttitude(subject) < -5) {
@@ -665,31 +661,32 @@ public class EveningState extends GameState {
                                 (deadPeople.size() > 1 ? "True friends" : "A true friend") + ". I can't really put it any other way",
                                 "Wonderful. Just wonderful. I'm so sad " + theyAreOrHeOrSheIs + " gone.")), FacialExpression.sad);
                     } else if (gc.getAttitude(subject) > 10) {
-                        if (gc.hasPersonality(PersonalityTrait.encouraging)) {
-                            partyMemberSay(gc, "... " + articleA + " worthy companion" + pluralS + ". But " + theyAreOrHeOrSheIs + " going to keep living in our hearts.", FacialExpression.relief);
-                        } else if (gc.hasPersonality(PersonalityTrait.friendly)) {
-                            partyMemberSay(gc, "... " + articleA + " good friend" + pluralS + ". Don't you think?", FacialExpression.relief);
-                        } else if (gc.hasPersonality(PersonalityTrait.jovial) || gc.hasPersonality(PersonalityTrait.playful)) {
-                            partyMemberSay(gc, "... always up for a good laugh. Oh the jokes " + theyOrHeOrShe + " would tell!", FacialExpression.relief);
-                        } else if (gc.hasPersonality(PersonalityTrait.diplomatic)) {
-                            partyMemberSay(gc, "... " + articleA + " dependable partner" + pluralS + "! Through thick and thin!", FacialExpression.relief);
-                        } else if (gc.hasPersonality(PersonalityTrait.romantic)) {
-                            if (deadPeople.size() == 1) {
-                                partyMemberSay(gc, "... quite the looker. A should have been more open about my feelings.", FacialExpression.sad);
-                            } else {
-                                partyMemberSay(gc, "... fashionable adventurers. They always looked good while fighting.", FacialExpression.relief);
+                        List<MyTriplet<List<PersonalityTrait>, String, FacialExpression>> list = new ArrayList<>();
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.encouraging), "... " + articleA + " worthy companion" + pluralS + ". But " + theyAreOrHeOrSheIs + " going to keep living in our hearts.", FacialExpression.relief));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.friendly), "... " + articleA + " good friend" + pluralS + ". Don't you think?", FacialExpression.relief));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.jovial, PersonalityTrait.playful), "... always up for a good laugh. Oh the jokes " + theyOrHeOrShe + " would tell!", FacialExpression.relief));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.diplomatic), "... " + articleA + " dependable partner" + pluralS + "! Through thick and thin!", FacialExpression.relief));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.romantic),
+                                deadPeople.size() == 1 ? "... quite the looker. A should have been more open about my feelings."
+                                        : "... fashionable adventurers. They always looked good while fighting.",
+                                deadPeople.size() == 1 ? FacialExpression.sad : FacialExpression.relief));
+
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.calm), "... " + articleA + " good comrade" + pluralS + ". But death is a natural part of life.", FacialExpression.none));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.benevolent), "... the best of party members. Can't think of anything bad about " + themHimOrHer + ".", FacialExpression.sad));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.lawful), "... " + articleA + " good citizen" + pluralS + ". Always did the right thing.", FacialExpression.none));
+                        list.add(new MyTriplet<>(List.of(PersonalityTrait.forgiving), "... not without flaws, but " + theyOrHeOrShe + " had heart. No doubt about it.", FacialExpression.sad));
+                        Collections.shuffle(list);
+                        boolean found = false;
+                        for (MyTriplet<List<PersonalityTrait>, String, FacialExpression> triplet : list) {
+                            if (MyLists.any(triplet.first, gc::hasPersonality)) {
+                                found = true;
+                                partyMemberSay(gc, triplet.second, triplet.third);
                             }
-                        } else if (gc.hasPersonality(PersonalityTrait.calm)) {
-                            partyMemberSay(gc, "... " + articleA + " good comrade" + pluralS + ". But death is a natural part of life.");
-                        } else if (gc.hasPersonality(PersonalityTrait.benevolent)) {
-                            partyMemberSay(gc, "... the best of party members. Can't think of anything bad about " + themHimOrHer + ".", FacialExpression.sad);
-                        } else if (gc.hasPersonality(PersonalityTrait.lawful)) {
-                            partyMemberSay(gc, "... " + articleA + " good citizen" + pluralS + ". Always did the right thing.");
-                        } else if (gc.hasPersonality(PersonalityTrait.forgiving)) {
-                            partyMemberSay(gc, "... not always the brightest, but " + theyOrHeOrShe + " had heart. No doubt about it.", FacialExpression.sad);
-                        } else {
+                        }
+                        if (!found) {
                             partyMemberSay(gc, "... " + articleA + " real hero" + pluralS + ". Deserving to be remembered.");
                         }
+
                         if (model.getParty().getLeader().getAttitude(subject) < -5) {
                             leaderSay(MyRandom.sample(List.of("I wouldn't go that far...", "Really?", "Okay...", "I can't say I agree.",
                                     "Not really.", "No, I don't think so.", "Seriously?")), FacialExpression.questioning);
