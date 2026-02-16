@@ -520,13 +520,22 @@ public abstract class CharacterAppearance implements Serializable {
         this.race = race;
     }
 
-    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) {
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y, boolean leftEye, boolean rightEye) {
         if (left) {
-            screenHandler.register("lookLeftleft", new Point(x - 1, y), lookLeft.first);
-            screenHandler.register("lookLeftRight", new Point(x + 1, y), lookLeft.second);
+            if (leftEye) {
+                screenHandler.register("lookLeftleft", new Point(x - 1, y), lookLeft.first);
+            }
+            if (rightEye) {
+                screenHandler.register("lookLeftRight", new Point(x + 1, y), lookLeft.second);
+            }
         } else {
-            screenHandler.register("lookRightleft", new Point(x - 1, y), lookRight.first);
-            screenHandler.register("lookRightRight", new Point(x + 1, y), lookRight.second);
+            if (leftEye) {
+                screenHandler.register("lookRightleft", new Point(x - 1, y), lookRight.first);
+            }
+
+            if (rightEye) {
+                screenHandler.register("lookRightRight", new Point(x + 1, y), lookRight.second);
+            }
         }
     }
 
@@ -549,9 +558,7 @@ public abstract class CharacterAppearance implements Serializable {
     public void drawFacialExpression(ScreenHandler screenHandler, int x, int y,
                                      FacialExpression emphasis, boolean drawDefaultMouth, boolean isVampire) {
         if (emphasis.hasBigEyes()) {
-            // TODO: Make a method of this, then override in advanced appearance and check for eyepatch
-            screenHandler.register("surprisedleft", new Point(x - 1, y), bigEyesSprites.first);
-            screenHandler.register("surprisedright", new Point(x + 1, y), bigEyesSprites.second);
+            drawBigEyes(screenHandler, x, y, true, true);
         }
         int index = emphasis.getEyeSpriteIndex();
         if (showEyebrows) {
@@ -565,6 +572,15 @@ public abstract class CharacterAppearance implements Serializable {
             screenHandler.register("facialexpressionmouth", new Point(x, y + 1),
                     isVampire ? mouthPair.third
                     : (hasTuskMouth() ? mouthPair.second : mouthPair.first));
+        }
+    }
+
+    protected void drawBigEyes(ScreenHandler screenHandler, int x, int y, boolean left, boolean right) {
+        if (left) {
+            screenHandler.register("surprisedleft", new Point(x - 1, y), bigEyesSprites.first);
+        }
+        if (right) {
+            screenHandler.register("surprisedright", new Point(x + 1, y), bigEyesSprites.second);
         }
     }
 }

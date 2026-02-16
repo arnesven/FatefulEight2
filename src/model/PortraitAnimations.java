@@ -50,7 +50,7 @@ public class PortraitAnimations implements Serializable {
         }
 
         if (lookers.containsKey(app)) {
-            app.drawDrawLook(screenHandler, lookers.get(app), p.x+3, p.y+6);
+            app.drawDrawLook(screenHandler, lookers.get(app), p.x+3, p.y+6, true, true);
         }
     }
 

@@ -366,10 +366,15 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     @Override
-    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) {
-        if (!(MyLists.any(faceDetails, detail -> detail instanceof EyePatchDetail))) {
-            super.drawDrawLook(screenHandler, left, x, y);
-        }
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y, boolean leftEye, boolean rightEye) {
+        super.drawDrawLook(screenHandler, left, x, y,
+                leftEye && !MyLists.any(faceDetails, detail -> detail instanceof EyePatchDetail), rightEye);
+    }
+
+    @Override
+    protected void drawBigEyes(ScreenHandler screenHandler, int x, int y, boolean left, boolean right) {
+        super.drawBigEyes(screenHandler, x, y,
+                left && !MyLists.any(faceDetails, detail -> detail instanceof EyePatchDetail), right);
     }
 
     public void setMouth(int mouth) {

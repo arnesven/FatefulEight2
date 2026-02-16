@@ -62,7 +62,7 @@ public class FrogmanAppearance extends CharacterAppearance {
     public void drawBlink(ScreenHandler screenHandler, int x, int y) { }
 
     @Override
-    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y, boolean leftEye, boolean rightEye) { }
 
     @Override
     public boolean supportsSpeakingAnimation() {
