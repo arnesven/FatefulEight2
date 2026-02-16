@@ -14,6 +14,7 @@ import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
+import java.util.List;
 import java.awt.*;
 import java.util.Random;
 
@@ -44,11 +45,12 @@ public class TownishSubView extends DailyActionSubView {
     private final double townDensity;
     private final Sprite[] townHouses;
     private final AdvancedDailyActionState state;
+    private final List<Point> decorativeHousePositions;
     private boolean hasLargeTownSquare;
 
     public TownishSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                           WaterLocation water, String townName, double townDensity, boolean hasLargeTownSquare,
-                          Sprite[] townHouseSprites) {
+                          Sprite[] townHouseSprites, List<Point> decorativeHousePositions) {
         super(state, matrix, ORTHOGONAL_MOVEMENT);
         this.water = water;
         this.townName = townName;
@@ -56,6 +58,13 @@ public class TownishSubView extends DailyActionSubView {
         this.townHouses = townHouseSprites;
         this.state = state;
         this.hasLargeTownSquare = hasLargeTownSquare;
+        this.decorativeHousePositions = decorativeHousePositions;
+    }
+
+    public TownishSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
+                          WaterLocation water, String townName, double townDensity, boolean hasLargeTownSquare,
+                          Sprite[] townHouseSprites) {
+        this(state, matrix, water, townName, townDensity, hasLargeTownSquare, townHouseSprites, null);
     }
 
     @Override
@@ -69,18 +78,26 @@ public class TownishSubView extends DailyActionSubView {
             drawTopRowGrass(model);
         }
         Random rnd = new Random(townName.hashCode());
-        for (int col = 0; col < 8; col++) {
-            for (int row = 1; row < 8; row++) {
+        if (decorativeHousePositions != null) {
+            for (Point p2 : decorativeHousePositions) {
                 Sprite townHouse = townHouses[rnd.nextInt(townHouses.length)];
-                boolean isBlocked = getMatrix().getElementAt(col, row) != null ||
-                        (getMatrix().getElementAt(col, row + 1) != null && townHouse.getHeight() > 32);
+                Point p = convertToScreen(new Point(p2.x, p2.y));
+                model.getScreenHandler().register(townHouse.getName(), p, townHouse);
+            }
+        } else {
+            for (int col = 0; col < 8; col++) {
+                for (int row = 1; row < 8; row++) {
+                    Sprite townHouse = townHouses[rnd.nextInt(townHouses.length)];
+                    boolean isBlocked = getMatrix().getElementAt(col, row) != null ||
+                            (getMatrix().getElementAt(col, row + 1) != null && townHouse.getHeight() > 32);
 
-                if (!isBlocked
-                        && rnd.nextDouble() > (1.0- townDensity)
-                        && isOutsideTownSquare(col, row)
-                        && !state.isPositionBlocked(col, row)) {
-                    Point p = convertToScreen(new Point(col, row));
-                    model.getScreenHandler().register(townHouse.getName(), p, townHouse);
+                    if (!isBlocked
+                            && rnd.nextDouble() > (1.0- townDensity)
+                            && isOutsideTownSquare(col, row)
+                            && !state.isPositionBlocked(col, row)) {
+                        Point p = convertToScreen(new Point(col, row));
+                        model.getScreenHandler().register(townHouse.getName(), p, townHouse);
+                    }
                 }
             }
         }

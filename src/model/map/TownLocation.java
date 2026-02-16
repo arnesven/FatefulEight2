@@ -167,7 +167,11 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new TownSubView(advancedDailyActionState, matrix, water, getTownName());
+        return new TownSubView(advancedDailyActionState, matrix, water, getTownName(), getDecorativeHousePositions());
+    }
+
+    public List<Point> getDecorativeHousePositions() {
+        return null;
     }
 
     @Override

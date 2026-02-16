@@ -13,6 +13,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -108,32 +109,74 @@ public abstract class DailyActionSubView extends AvatarSubView {
     public void animateMovement(Model model, Point from, Point to) {
         setDrawAvatarEnabled(false);
         AvatarSprite avatar = model.getParty().getLeader().getAvatarSprite();
-        if (movementType == DIRECT_MOVEMENT || from.x == to.x) {
+        if (movementType == DIRECT_MOVEMENT || from.y == to.y) {
             directMovement(avatar, from, to);
         } else { // Orthogonal
-            int maxY = Math.max(from.y, to.y);
-            int minY = Math.min(from.y, to.y);
-            int currentColumn = from.x;
-            int freeColumn = -1;
-            for (int step = 0; step < 8; ++step) {
-                currentColumn = from.x + step;
-                if (currentColumn < 8) {
-                    if (isFreeColumn(currentColumn, minY, maxY)) {
-                        freeColumn = currentColumn;
+            boolean orthoPossible = tryFindOrthoPath(avatar, from, to, false);
+
+            if (!orthoPossible) {
+                System.out.println("Searching down from to");
+                for (int yExtra = 1; yExtra < 7; ++yExtra) {
+                    if (to.y + yExtra > 8 || state.isPositionFilled(to.x, to.y + yExtra)) {
+                        break;
+                    }
+                    Point preMid = new Point(to.x, to.y + yExtra);
+                    if (tryFindOrthoPath(avatar, from, preMid, false)) {
+                        directMovement(avatar, preMid, to);
+                        orthoPossible = true;
                         break;
                     }
                 }
-
-                currentColumn = from.x - step;
-                if (currentColumn >= 0) {
-                    if (isFreeColumn(currentColumn, minY, maxY)) {
-                        freeColumn = currentColumn;
+            }
+            if (!orthoPossible) {
+                for (int yExtra = 1; yExtra < 7; ++yExtra) {
+                    System.out.println("Search down from from");
+                    if (from.y + yExtra > 8 || state.isPositionFilled(from.x, from.y + yExtra)) {
+                        break;
+                    }
+                    Point preMid = new Point(from.x, from.y + yExtra);
+                    if (tryFindOrthoPath(avatar, preMid, to, true)) {
+                        directMovement(avatar, from, preMid);
+                        tryFindOrthoPath(avatar, preMid, to, false);
+                        orthoPossible = true;
                         break;
                     }
                 }
             }
 
-            if (freeColumn >= 0) {
+            if (!orthoPossible) {// no free column
+                System.out.println("No ortho movement possible.");
+                directMovement(avatar, from, to);
+            }
+        }
+        setDrawAvatarEnabled(true);
+    }
+
+    private boolean tryFindOrthoPath(AvatarSprite avatar, Point from, Point to, boolean dryRun) {
+        int maxY = Math.max(from.y, to.y);
+        int minY = Math.min(from.y, to.y);
+        int currentColumn = from.x;
+        int freeColumn = -1;
+        for (int step = 0; step < 8; ++step) {
+            currentColumn = from.x + step;
+            if (currentColumn < 8) {
+                if (isFreeColumn(currentColumn, minY, maxY)) {
+                    freeColumn = currentColumn;
+                    break;
+                }
+            }
+
+            currentColumn = from.x - step;
+            if (currentColumn >= 0) {
+                if (isFreeColumn(currentColumn, minY, maxY)) {
+                    freeColumn = currentColumn;
+                    break;
+                }
+            }
+        }
+
+        if (freeColumn >= 0) {
+            if (!dryRun) {
                 System.out.println("Ortho movment from " + from);
                 Point mid = new Point(freeColumn, from.y);
                 System.out.println(" .... to " + mid);
@@ -143,11 +186,10 @@ public abstract class DailyActionSubView extends AvatarSubView {
                 directMovement(avatar, mid, mid2);
                 System.out.println(" .... and finally to " + to);
                 directMovement(avatar, mid2, to);
-            } else { // no free column
-                directMovement(avatar, from, to);
             }
+            return true;
         }
-        setDrawAvatarEnabled(true);
+        return false;
     }
 
     private void directMovement(AvatarSprite avatarSprite, Point from, Point to) {
@@ -157,8 +199,8 @@ public abstract class DailyActionSubView extends AvatarSubView {
     }
 
     private boolean isFreeColumn(int currentColumn, int minY, int maxY) {
-        for (int y = maxY; y > minY; --y) {
-            if (matrix.getElementAt(currentColumn, y) != null || state.isPositionBlocked(currentColumn, y)) {
+        for (int y = maxY; y >= minY; --y) {
+            if (state.isPositionFilled(currentColumn, y)) {
                 return false;
             }
         }

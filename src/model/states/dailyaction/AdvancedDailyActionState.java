@@ -155,4 +155,8 @@ public abstract class AdvancedDailyActionState extends GameState {
     protected void blockPosition(int col, int row) {
         blockedPositions.add(row * 1000 + col);
     }
+
+    public boolean isPositionFilled(int col, int row) {
+        return matrix.getElementAt(col, row) != null || isPositionBlocked(col, row);
+    }
 }

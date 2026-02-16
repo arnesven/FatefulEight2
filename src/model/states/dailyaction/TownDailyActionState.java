@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.states.dailyaction.town.*;
 import view.subviews.TownSubView;
@@ -14,6 +15,15 @@ public class TownDailyActionState extends TownishDailyActionState {
         super(model, hasWaterAccess, urbanLocation, freeLodging, freeRations);
         addNode(7, 1, new FlagPoleNode());
         model.getMainStory().handleTownSetup(this);
+        if (urbanLocation instanceof TownLocation && ((TownLocation) urbanLocation).getDecorativeHousePositions() != null) {
+            for (Point p : ((TownLocation) urbanLocation).getDecorativeHousePositions()) {
+                if (isPositionFilled(p.x, p.y)) {
+                    throw new IllegalStateException("Tried blocking a position that was already filled! Was blocked? " + isPositionBlocked(p.x, p.y));
+                } else {
+                    blockPosition(p.x, p.y);
+                }
+            }
+        }
     }
 
     public TownDailyActionState(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {

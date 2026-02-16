@@ -22,6 +22,17 @@ public class SouthMeadhomeTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return List.of(new Point(6, 1), // TODO: Do this for the other towns and castles as well.
+            new Point(1, 2), new Point(3, 2),
+            new Point(0, 3), new Point(1, 3),
+            new Point(6, 5),
+            new Point(5, 6), new Point(6, 6),
+            new Point(0, 7), new Point(2, 7),
+            new Point(5, 7), new Point(6, 7));
+    }
+
+    @Override
     public boolean getLordGender() {
         return true;
     }

@@ -9,6 +9,9 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
+import java.util.List;
+import java.awt.Point;
+
 public class TownSubView extends TownishSubView {
 
     public static final Sprite[] TOWN_HOUSES = new Sprite[]{
@@ -22,7 +25,7 @@ public class TownSubView extends TownishSubView {
     private static final double TOWN_DENSITY = 0.3;
 
     public TownSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
-                       WaterLocation water, String townName) {
-        super(state, matrix, water, townName, TOWN_DENSITY, true, TOWN_HOUSES);
+                       WaterLocation water, String townName, List<Point> decorativeHousePositions) {
+        super(state, matrix, water, townName, TOWN_DENSITY, true, TOWN_HOUSES, decorativeHousePositions);
     }
 }
