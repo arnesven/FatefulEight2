@@ -640,12 +640,18 @@ public class EveningState extends GameState {
                         } else {
                             partyMemberSay(gc, "... not my favorite " + (deadPeople.size() > 1 ? " people" : "person") + ". Good riddance.");
                         }
-                        leaderSay(gc.getFirstName() + "! " + MyRandom.sample(List.of("Can't you say something nice?",
-                                "We're trying to have a respectful moment here.", "Shut your mouth!", "Come on!")),
-                                FacialExpression.angry);
-                        partyMemberSay(gc, MyRandom.sample(List.of("What? It's true!", "Whatever.")));
-                        leaderSay("Just... keep your mouth shut. Anyway... " + names + ". " +
-                                (deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+                        if (model.getParty().getLeader().getAttitude(subject) < -5) {
+                            leaderSay(MyRandom.sample(List.of("I can believe that.", "I guess that's fair.", "I agree.",
+                                    "I was think that too.", "Yeah.", "I'm not going to say differently.")) + " " +
+                                    names + ". " + (deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+                        } else {
+                            leaderSay(gc.getFirstName() + "! " + MyRandom.sample(List.of("Can't you say something nice?",
+                                            "We're trying to have a respectful moment here.", "Shut your mouth!", "Come on!")),
+                                    FacialExpression.angry);
+                            partyMemberSay(gc, MyRandom.sample(List.of("What? It's true!", "Whatever.")));
+                            leaderSay("Just... keep your mouth shut. Anyway... " + names + ". " +
+                                    (deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
+                        }
                     } else if (gc.getAttitude(subject) > 25) {
                         partyMemberSay(gc, MyRandom.sample(List.of(
                                 "... special... I don't think I've ever met, or ever will meet somebody like " + themHimOrHer + ".",
@@ -677,7 +683,12 @@ public class EveningState extends GameState {
                         } else {
                             partyMemberSay(gc, "... " + articleA + " real hero" + pluralS + ". Deserving to be remembered.");
                         }
-                        leaderSay("Well said " + gc.getFirstName() + ". " + theyOrHeOrShe + " always liked you.", FacialExpression.relief);
+                        if (model.getParty().getLeader().getAttitude(subject) < -5) {
+                            leaderSay(MyRandom.sample(List.of("I wouldn't go that far...", "Really?", "Okay...", "I can't say I agree.",
+                                    "Not really.", "No, I don't think so.", "Seriously?")), FacialExpression.questioning);
+                        } else {
+                            leaderSay("Well said " + gc.getFirstName() + ". " + theyOrHeOrShe + " always liked you.", FacialExpression.relief);
+                        }
                         leaderSay((deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
                     } else {
                         subject = MyRandom.sample(deadPeople);
@@ -722,5 +733,6 @@ public class EveningState extends GameState {
             println("Everyone raises their glasses. Drinks, then stays silent for a few minutes.");
             leaderSay("May " + theyOrHeOrShe + " rest in peace.");
         }
+        model.getParty().clearUnhandledGrief();
     }
 }
