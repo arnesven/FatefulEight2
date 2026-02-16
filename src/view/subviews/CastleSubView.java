@@ -29,7 +29,7 @@ public class CastleSubView extends DailyActionSubView {
     private final String placeName;
 
     public CastleSubView(AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix, String placeName, MyColors color) {
-        super(advancedDailyActionState, matrix);
+        super(advancedDailyActionState, matrix, ORTHOGONAL_MOVEMENT);
         this.placeName = placeName;
 
 

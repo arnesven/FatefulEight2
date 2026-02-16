@@ -39,7 +39,7 @@ public class KeepSubView extends DailyActionSubView {
 
     public KeepSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                        boolean drawLord, CastleLocation location) {
-        super(state, matrix);
+        super(state, matrix, DIRECT_MOVEMENT);
         this.drawLord = drawLord;
         this.lordSprite = new Sprite32x32("lord", "world_foreground.png", 0x67,
                 MyColors.BLACK, MyColors.DARK_BLUE, location.getLordRace().getColor(), MyColors.PURPLE);

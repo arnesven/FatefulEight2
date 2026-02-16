@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.map.CaveHex;
 import model.ruins.objects.FatueKeyObject;
+import model.states.DailyEventState;
 import model.states.fatue.FortressAtUtmostEdgeState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
@@ -31,7 +32,7 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
     private final FortressAtUtmostEdgeState state;
 
     public FortressAtUtmostEdgeSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
-        super(state, matrix);
+        super(state, matrix, DailyActionSubView.DIRECT_MOVEMENT);
         this.state = (FortressAtUtmostEdgeState)state;
     }
 

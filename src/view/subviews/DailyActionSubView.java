@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import view.combat.GrassCombatTheme;
+import view.sprites.AvatarSprite;
 import view.sprites.CombatCursorSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -17,14 +18,20 @@ import java.util.Random;
 
 public abstract class DailyActionSubView extends AvatarSubView {
 
+    public static final int ORTHOGONAL_MOVEMENT = 1;
+    public static final int DIRECT_MOVEMENT = 2;
+
     private final AdvancedDailyActionState state;
     private final SteppingMatrix<DailyActionNode> matrix;
+    private final int movementType;
     private boolean avatarEnabled = true;
     private boolean cursorEnabled = true;
 
-    public DailyActionSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
+    public DailyActionSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
+                              int movementType) {
         this.state = state;
         this.matrix = matrix;
+        this.movementType = movementType;
     }
 
     public SteppingMatrix<DailyActionNode> getMatrix() {
@@ -100,10 +107,62 @@ public abstract class DailyActionSubView extends AvatarSubView {
 
     public void animateMovement(Model model, Point from, Point to) {
         setDrawAvatarEnabled(false);
-        addMovementAnimation(model.getParty().getLeader().getAvatarSprite(), convertToScreen(from), convertToScreen(to));
+        AvatarSprite avatar = model.getParty().getLeader().getAvatarSprite();
+        if (movementType == DIRECT_MOVEMENT || from.x == to.x) {
+            directMovement(avatar, from, to);
+        } else { // Orthogonal
+            int maxY = Math.max(from.y, to.y);
+            int minY = Math.min(from.y, to.y);
+            int currentColumn = from.x;
+            int freeColumn = -1;
+            for (int step = 0; step < 8; ++step) {
+                currentColumn = from.x + step;
+                if (currentColumn < 8) {
+                    if (isFreeColumn(currentColumn, minY, maxY)) {
+                        freeColumn = currentColumn;
+                        break;
+                    }
+                }
+
+                currentColumn = from.x - step;
+                if (currentColumn >= 0) {
+                    if (isFreeColumn(currentColumn, minY, maxY)) {
+                        freeColumn = currentColumn;
+                        break;
+                    }
+                }
+            }
+
+            if (freeColumn >= 0) {
+                System.out.println("Ortho movment from " + from);
+                Point mid = new Point(freeColumn, from.y);
+                System.out.println(" .... to " + mid);
+                directMovement(avatar, from, mid);
+                Point mid2 = new Point(freeColumn, to.y);
+                System.out.println(" .... to " + mid2);
+                directMovement(avatar, mid, mid2);
+                System.out.println(" .... and finally to " + to);
+                directMovement(avatar, mid2, to);
+            } else { // no free column
+                directMovement(avatar, from, to);
+            }
+        }
+        setDrawAvatarEnabled(true);
+    }
+
+    private void directMovement(AvatarSprite avatarSprite, Point from, Point to) {
+        addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(to));
         waitForAnimation();
         removeMovementAnimation();
-        setDrawAvatarEnabled(true);
+    }
+
+    private boolean isFreeColumn(int currentColumn, int minY, int maxY) {
+        for (int y = maxY; y > minY; --y) {
+            if (matrix.getElementAt(currentColumn, y) != null || state.isPositionBlocked(currentColumn, y)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setCursorEnabled(boolean b) {

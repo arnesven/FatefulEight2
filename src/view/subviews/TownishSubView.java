@@ -49,7 +49,7 @@ public class TownishSubView extends DailyActionSubView {
     public TownishSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                           WaterLocation water, String townName, double townDensity, boolean hasLargeTownSquare,
                           Sprite[] townHouseSprites) {
-        super(state, matrix);
+        super(state, matrix, ORTHOGONAL_MOVEMENT);
         this.water = water;
         this.townName = townName;
         this.townDensity = townDensity;

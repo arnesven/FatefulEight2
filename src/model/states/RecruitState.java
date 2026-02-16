@@ -246,7 +246,7 @@ public class RecruitState extends GameState {
                     leaderSay(other.getFirstName() + ", be nice!", FacialExpression.disappointed);
                 }
             } else if (other.getAttitude(gc) < 0) {
-                partyMemberSay(other, "Uh... hi");
+                partyMemberSay(other, "Uh... hi.");
             } else if (other.getAttitude(gc) > 0) {
                 if (MyRandom.flipCoin()) {
                     partyMemberSay(other, "Hello there. I'm " + other.getFirstName() + ".");

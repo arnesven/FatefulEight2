@@ -39,7 +39,7 @@ public abstract class RoomDailyActionSubView extends DailyActionSubView {
 
     public RoomDailyActionSubView(AdvancedDailyActionState state,
                                   SteppingMatrix<DailyActionNode> matrix) {
-        super(state, matrix);
+        super(state, matrix, DIRECT_MOVEMENT);
     }
 
     @Override

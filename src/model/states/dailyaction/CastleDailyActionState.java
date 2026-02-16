@@ -51,6 +51,19 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
             Point club = location.getClubPosition();
             addNode(club.x, club.y, new GentlepersonsClubNode());
         }
+        blockForCastleWalls();
+    }
+
+    private void blockForCastleWalls() {
+        for (int row = 0; row < 7; row++) {
+            blockPosition(0, row);
+            blockPosition(7, row);
+        }
+        for (int col = 0; col < 7; ++col) {
+            if (col != 3) {
+                blockPosition(col, 7);
+            }
+        }
     }
 
     public CastleDailyActionState(Model model, CastleLocation castleLocation) {

@@ -52,6 +52,7 @@ public class TownDailyActionState extends TownishDailyActionState {
     @Override
     protected void addShopsAndMore(Model model, UrbanLocation urbanLocation) {
         super.addNode(3, 3, new TownHallNode());
+        blockPosition(4, 3);
         super.addShopsAndMore(model, urbanLocation);
         Point careerOfficePosition = urbanLocation.getCareerOfficePosition();
         if (careerOfficePosition != null) {
