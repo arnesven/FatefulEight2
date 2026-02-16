@@ -928,8 +928,8 @@ public class Party implements Serializable {
         portraitAnimations.forceEyesClosed(victim, closed);
     }
 
-    public void setFacialExpression(GameCharacter target, FacialExpression expression) {
-        portraitAnimations.setFacialExpression(target.getAppearance(), expression);
+    public void setFacialExpression(GameCharacter target, FacialExpression expression, int expressionLifetime) {
+        portraitAnimations.setFacialExpression(target.getAppearance(), expression, expressionLifetime);
     }
 
     public void setGuide(int days) {
@@ -998,6 +998,7 @@ public class Party implements Serializable {
     }
 
     public void startOfDayUpdate(Model model) {
+        portraitAnimations.clearFacialExpressions();
         setRecruitmentPersistence(null);
         getHorseHandler().startOfDayUpdate(model);
         addToNotoriety(-(MyRandom.rollD6()+1)/2);

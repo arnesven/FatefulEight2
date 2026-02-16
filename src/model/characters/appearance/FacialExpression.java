@@ -2,6 +2,9 @@ package model.characters.appearance;
 
 public enum FacialExpression { angry, surprised, afraid, sad, questioning, relief, wicked, disappointed, excited, none;
 
+    public static final int END_OF_CALLOUT = 1;
+    public static final int PERMANENT = 2;
+
     public int getEyeSpriteIndex() {
         return switch (this) {
             case questioning -> 1;

@@ -190,7 +190,11 @@ public class RecruitState extends GameState {
                     "Are you in, " + firstName + "?",
                     "The jobs yours " + firstName + ". Do you want it?")));
             if (rgc.getInfo() == RecruitInfo.none) {
-                candidateSay(rgc, "I do. And my name is " + rgc.getCharacter().getName() + ".");
+                candidateSay(rgc, MyRandom.sample(List.of(
+                        "Yes. And my name is " + rgc.getCharacter().getName() + ".",
+                        "Not much of an interview. But I'll tag along. I'm " + rgc.getCharacter().getFirstName() + " by the way.",
+                        "I'm in. You can call me " + rgc.getCharacter().getFirstName() + ".")));
+
             } else {
                 newPartyMemberComment(rgc);
             }

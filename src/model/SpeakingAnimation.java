@@ -42,6 +42,10 @@ public class SpeakingAnimation implements Serializable {
         }
     }
 
+    public boolean isMouthMoving() {
+        return mouthAnimation != null && !mouthAnimation.isDone();
+    }
+
     public boolean isDone() {
         return callout.isDone() && (mouthAnimation == null || mouthAnimation.isDone());
     }

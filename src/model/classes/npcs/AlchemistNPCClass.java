@@ -14,4 +14,9 @@ public class AlchemistNPCClass extends NPCClass {
         Looks.putOnPointyHat(characterAppearance, MyColors.DARK_GREEN, MyColors.BLACK, MyColors.GOLD);
         Looks.putOnTunic(characterAppearance, MyColors.DARK_GREEN);
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

@@ -2,6 +2,9 @@ package model.states.dailyaction.town;
 
 import model.Model;
 import model.TimeOfDay;
+import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.states.GameState;
@@ -46,7 +49,10 @@ public class CourseCoordinator extends CareerOfficePersonNode {
                 leaderSay("Oh really, what is it?");
                 coordinatorSay("It's all about how to become a " + cls.getFullName().toLowerCase() +
                         ". Are you interested in taking the course?");
-                leaderSay("I could be. What's the entry fee?");
+                if (partyCommentsOnClass(model, cls)) {
+                    model.getLog().waitForAnimationToFinish();
+                }
+                leaderSay("What's the entry fee?");
                 coordinatorSay("For 15 gold, your entire party can attend. It's in the amphitheatre behind our building.");
                 int cost = 15;
                 if (model.getParty().getGold() < cost) {
@@ -74,6 +80,37 @@ public class CourseCoordinator extends CareerOfficePersonNode {
                 }
             }
             return model.getCurrentHex().getDailyActionState(model);
+        }
+
+        private boolean partyCommentsOnClass(Model model, CharacterClass cls) {
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (gc.canAssumeClass(cls.id())) {
+                    partyMemberSay(gc, MyRandom.sample(List.of("Sounds interesting.",
+                            "Could be worth our time.", "We should check it out.",
+                            "A " + cls.getFullName().toLowerCase() + "? Hmm...")));
+                    return true;
+                }
+            }
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (gc.getCharClass().id() == cls.id()) {
+                    if (gc.hasPersonality(PersonalityTrait.critical)) {
+                        partyMemberSay(gc, "It's actually more complicated than it seems. " +
+                                "They'll probably only cover the fundamentals.");
+                        return true;
+                    }
+                    if (gc.hasPersonality(PersonalityTrait.encouraging)) {
+                        partyMemberSay(gc, "Oh good. More people should take up the profession.");
+                        return true;
+                    }
+                    if (gc.hasPersonality(PersonalityTrait.snobby)) {
+                        partyMemberSay(gc, "Hmph. Not everybody has the required talent...", FacialExpression.disappointed);
+                        return true;
+                    }
+                    partyMemberSay(gc, "That's basic stuff. No need to attend.");
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void coordinatorSay(String s) {

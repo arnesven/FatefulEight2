@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.headquarters.Headquarters;
 import model.items.Item;
@@ -32,7 +33,7 @@ public class InvestInShopEvent extends DailyEventState {
         }
         return new GuideData("Go to empty shop",
                 "I know a particular shop in town. It's been around for ages, but... I don't think it's doing too well. " +
-                        "I went in there recently and they didn't have a single thing for sale!");
+                        "I went in there recently and they didn't have a single thing for sale");
     }
 
     public static int updateHeadquarters(Model model, String hqLocation) {
@@ -145,7 +146,7 @@ public class InvestInShopEvent extends DailyEventState {
         portraitSay("Hello there. How can I help you?");
         leaderSay("Uhm, well, I would browse your wares but...");
         println("You look around the shop and see nothing but empty shelves and dusty display cases.");
-        leaderSay("Did a supply shipment get lost or something?");
+        leaderSay("Did a supply shipment get lost or something?", FacialExpression.questioning);
         portraitSay("Actually... times have not been the best for us. " +
                 "We're currently seeking investors to help us get back on our feet. Would you be interested in helping our business?");
         leaderSay("Possibly... What would be the arrangement, and what sums are we talking about?");
@@ -153,6 +154,7 @@ public class InvestInShopEvent extends DailyEventState {
                 "say " + INVEST_LEVELS[0] + " gold, I could give you 5% of my weekly earnings. " +
                 "A medium investment of " + INVEST_LEVELS[1] + " gold, and I would give you 10%.");
         leaderSay("How about a " + INVEST_LEVELS[2] + " gold?");
+        super.portraitPermanentExpression(FacialExpression.excited);
         portraitSay("Such a large investment would really help! In return, I'd give you 20% of my weekly earnings.");
         println("How much would you like to invest in the shop?");
         int choice = multipleOptionArrowMenu(model, 24, 24, List.of("Small (" + INVEST_LEVELS[0] + " gold)",
@@ -163,15 +165,18 @@ public class InvestInShopEvent extends DailyEventState {
         }
         if (investment == 0) {
             leaderSay("I think " + iOrWe() + " need some time to think about this.");
+            portraitPermanentExpression(FacialExpression.none);
             portraitSay("I understand. One should always think carefully before entering into a partnership.");
         } else {
             if (model.getParty().getGold() < investment) {
                 leaderSay("I would love to invest " + investment + " gold, but " + iOrWe() +
                         " just don't have the money right now.");
+                portraitPermanentExpression(FacialExpression.none);
                 portraitSay("Yeah, times are tough.");
             } else {
                 setInvestedInTown(model, investment);
                 leaderSay("I want to invest " + investment + " gold.");
+                portraitPermanentExpression(FacialExpression.relief);
                 portraitSay("You do? That's fantastic.");
                 println("You hand over " + investment + " gold to the shopkeeper.");
                 model.getParty().spendGold(investment);

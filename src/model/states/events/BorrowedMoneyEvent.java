@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -46,7 +47,7 @@ public class BorrowedMoneyEvent extends DailyEventState {
                 model.getParty().earnGold(15);
                 partyMemberSay(main, "Thank you.");
                 randomSayIfPersonality(PersonalityTrait.greedy, List.of(main),
-                        "That's it? What about the interest?");
+                        "That's it? What about the interest?", FacialExpression.questioning);
                 randomSayIfPersonality(PersonalityTrait.generous, List.of(main),
                         "Oh, it was only 15 gold. Why bother with it?");
             } else {

@@ -3,6 +3,7 @@ package model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.FacialExpression;
+import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
@@ -21,7 +22,7 @@ public class PortraitAnimations implements Serializable {
     private final Map<CharacterAppearance, SpeakingAnimation> speakingAnimations = new HashMap<>();
     private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
     private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
-    private final Map<CharacterAppearance, FacialExpression> facialExpressions = new HashMap<>();
+    private final Map<CharacterAppearance, MyPair<FacialExpression, Integer>> facialExpressions = new HashMap<>();
     private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
     private final Map<CharacterAppearance, VampireFeedingLook> feedingLooks = new HashMap<>();
     private Map<Integer, Integer> slotAnimations = new HashMap<>();
@@ -55,11 +56,15 @@ public class PortraitAnimations implements Serializable {
 
     private boolean handleFacialExpression(ScreenHandler screenHandler, CharacterAppearance app, Point p, boolean isVampire) {
         if (facialExpressions.containsKey(app)) {
-            app.drawFacialExpression(screenHandler, p.x+3, p.y+6, facialExpressions.get(app),
-                    !speakingAnimations.containsKey(app), isVampire);
+            app.drawFacialExpression(screenHandler, p.x+3, p.y+6, facialExpressions.get(app).first,
+                    !isMovingMouth(app), isVampire);
             return true;
         }
         return false;
+    }
+
+    private boolean isMovingMouth(CharacterAppearance app) {
+        return !speakingAnimations.containsKey(app) || speakingAnimations.get(app).isMouthMoving();
     }
 
     private void handleBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
@@ -82,13 +87,21 @@ public class PortraitAnimations implements Serializable {
     public synchronized void drawSpeakAnimations(ScreenHandler screenHandler) {
         for (CharacterAppearance app : new ArrayList<>(speakingAnimations.keySet())) {
             SpeakingAnimation speakAni = speakingAnimations.get(app);
-            if (speakAni == null) {
-                continue;
+            if (speakAni != null) {
+                speakAni.drawYourself(screenHandler);
+                if (speakAni.isDone()) {
+                    speakAni.unregister();
+                    speakingAnimations.remove(app);
+                    removeFacialExpressionWithCalloutLifetime(app);
+                }
             }
-            speakAni.drawYourself(screenHandler);
-            if (speakAni.isDone()) {
-                speakAni.unregister();
-                speakingAnimations.remove(app);
+        }
+    }
+
+    private void removeFacialExpressionWithCalloutLifetime(CharacterAppearance app) {
+        if (facialExpressions.containsKey(app)) {
+            if (facialExpressions.get(app).second == FacialExpression.END_OF_CALLOUT) {
+                facialExpressions.remove(app);
             }
         }
     }
@@ -103,6 +116,7 @@ public class PortraitAnimations implements Serializable {
         if (speakingAnimations.containsKey(appearance)) {
             speakingAnimations.get(appearance).unregister();
             speakingAnimations.remove(appearance);
+            removeFacialExpressionWithCalloutLifetime(appearance);
         }
         speakingAnimations.put(appearance, makeSpeakingAnimation(p, text, appearance, vampireTeeth));
     }
@@ -155,13 +169,11 @@ public class PortraitAnimations implements Serializable {
         }
     }
 
-    public void setFacialExpression(CharacterAppearance app, FacialExpression emph) {
-        if (emph == FacialExpression.none) {
-            facialExpressions.remove(app);
-        } else {
+    public void setFacialExpression(CharacterAppearance app, FacialExpression emph, int expressionLifetime) {
+        if (emph != FacialExpression.none) {
             blinking.remove(app);
             lookers.remove(app);
-            facialExpressions.put(app, emph);
+            facialExpressions.put(app, new MyPair<>(emph, expressionLifetime));
         }
     }
 
@@ -219,5 +231,9 @@ public class PortraitAnimations implements Serializable {
         } else if (isVacant) {
             BorderFrame.drawString(screenHandler, vacantString, wordLocation.x, wordLocation.y, MyColors.GRAY, MyColors.BLACK);
         }
+    }
+
+    public void clearFacialExpressions() {
+        facialExpressions.clear();
     }
 }

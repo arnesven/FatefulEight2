@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Item;
@@ -11,6 +12,7 @@ import model.races.Race;
 import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyPair;
+import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class AlchemistEvent extends DailyEventState {
         showEventCard("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
         leaderSay("Opening up a new shop?");
+        model.getLog().waitForAnimationToFinish();
+        getPortraitSubView().setFacialExpression(FacialExpression.relief);
         portraitSay("Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.");
         randomSayIfPersonality(PersonalityTrait.encouraging, new ArrayList<>(),
                 "That's fantastic, one should always pursue one's dreams!");
@@ -59,19 +63,19 @@ public class AlchemistEvent extends DailyEventState {
                alchemistShop(model, true);
             } else {
                 println("You go to the town square and start to randomly shout at people about Durok's new shop.");
-                model.getParty().randomPartyMemberSay(model, List.of("Nobody seems to care...",
-                        "We're just scaring people away..."));
+                partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of("Nobody seems to care...",
+                        "We're just scaring people away...")), FacialExpression.disappointed);
                 println("You keep trying for some time, but ultimately you realize you're not getting anybody's " +
                         "attention. Frustrated and ashamed you decide to abandon the effort and go on with your day.");
                 randomSayIfPersonality(PersonalityTrait.irritable, List.of(model.getParty().getLeader()),
-                        "Grrr... why won't people listen to us? So annoying!");
+                        "Grrr... why won't people listen to us? So annoying!", FacialExpression.angry);
                 leaderSay("I'm sure Durok's business will take off once people get to know him.");
                 println("You return to Durok's shop, which is quiet.");
                 model.getLog().waitForAnimationToFinish();
                 showExplicitPortrait(model, durok, "Durok");
                 portraitSay("Oh, hello. Nice to see somebody in here. I wonder if people don't understand what " +
                         "an apothecary is?");
-                model.getParty().randomPartyMemberSay(model, List.of("They're probably just shy..."));
+                partyMemberSay(model.getParty().getRandomPartyMember(), "They're probably just shy...", FacialExpression.relief);
                 portraitSay("Well, I have lots of potions for sale. Are you interested?");
                 waitForReturn();
                 alchemistShop(model, false);

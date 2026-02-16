@@ -409,4 +409,9 @@ public abstract class DailyEventState extends GameState {
     public void showEventCard(String cardText) {
         showEventCard(null, cardText);
     }
+
+    protected void portraitPermanentExpression(FacialExpression facialExpression) {
+        getModel().getLog().waitForAnimationToFinish();
+        portraitSubView.setFacialExpression(facialExpression);
+    }
 }

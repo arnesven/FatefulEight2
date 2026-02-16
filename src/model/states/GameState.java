@@ -179,10 +179,8 @@ public abstract class GameState implements GameStateConstants {
 
     public void partyMemberSay(GameCharacter gc, String line, FacialExpression expression) {
         getModel().getLog().waitForAnimationToFinish();
-        getModel().getParty().setFacialExpression(gc, expression);
         partyMemberSay(gc, line);
-        getModel().getLog().waitForAnimationToFinish();
-        getModel().getParty().setFacialExpression(gc, FacialExpression.none);
+        getModel().getParty().setFacialExpression(gc, expression, FacialExpression.END_OF_CALLOUT);
     }
 
     public void notLeaderSay(String line) {

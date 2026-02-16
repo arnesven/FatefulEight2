@@ -41,7 +41,7 @@ public class MayorEvent extends DailyEventState {
             println("The noble picks " + himOrHer(gender) +
                     "self off the ground and dusts off " + hisOrHer(gender) + " robes.");
             showExplicitPortrait(model, model.getLordPortrait(town), "Noble");
-            portraitSay("That would have been the end of me. If not for you. Thank you.");
+            portraitSay("That would have been the end of me. If not for you. Thank you.", FacialExpression.relief);
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Damn wine sellers!",
                     "Be more careful in the future", "My pleasure.", "Don't worry about it."));
             portraitSay("You must be rewarded, uhm, won't you take this gold?");

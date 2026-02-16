@@ -58,7 +58,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
             println(victim.getFirstName() + " wakes up and finds a dark figure standing next to " +
                     hisOrHer(victim.getGender()) + " bed, leaning over " + himOrHer(victim.getGender()) +
                     "! Fearing it may be a vampire, panic starts to set in.");
-            model.getParty().setFacialExpression(victim, FacialExpression.surprised);
+            model.getParty().setFacialExpression(victim, FacialExpression.surprised, FacialExpression.PERMANENT);
             print("Do you call out for help (Y) or do you let the vampire feed on you (N)? ");
             if (yesNoInput()) {
                 partyMemberSay(victim, "Help! A vampire!!!", FacialExpression.afraid);

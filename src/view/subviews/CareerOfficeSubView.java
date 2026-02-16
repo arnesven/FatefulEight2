@@ -45,6 +45,7 @@ public class CareerOfficeSubView extends RoomDailyActionSubView {
     @Override
     protected void drawBackgroundRoom(Model model, Random random) {
         super.drawSmallRoom(model, LOWER_WALL, DOOR, 3);
+        drawStreetOrPath(model, random, true, 7, 7);
     }
 
     @Override

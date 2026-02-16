@@ -169,13 +169,13 @@ public class PortraitSubView extends SubView {
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(portraitName, pair.second);
         if (appearance != null) {
-            setFacialExpression(expression);
             portraitAnimations.addSpeakAnimation(CHAR_LOCATION, line, appearance, false);
+            portraitAnimations.setFacialExpression(appearance, expression, FacialExpression.END_OF_CALLOUT);
         }
     }
 
     public void setFacialExpression(FacialExpression expression) {
-        portraitAnimations.setFacialExpression(appearance, expression);
+        portraitAnimations.setFacialExpression(appearance, expression, FacialExpression.PERMANENT);
     }
 
     public void portraitSay(Model model, GameState state, String line) {

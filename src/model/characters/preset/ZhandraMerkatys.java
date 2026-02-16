@@ -8,7 +8,7 @@ public class ZhandraMerkatys extends AdvancedAppearance {
     public ZhandraMerkatys() {
         super(Race.SOUTHERN_HUMAN, true, MyColors.DARK_RED, 1, 0xA, new NormalBigEyes(),
                 new HairStyle3x2(0x164, true, true, true, false, 0x19, 0x00, 0x32, 0x00, "Zhandra"), null);
-        setMascaraColor(MyColors.DARK_GRAY);
+        setMascaraColor(MyColors.DARK_BLUE);
     }
 
     @Override

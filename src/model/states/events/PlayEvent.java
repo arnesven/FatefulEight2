@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.combat.conditions.VampirismCondition;
 import model.states.DailyEventState;
@@ -26,7 +27,7 @@ public class PlayEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showEventCard("Play", "There's apparently a play running in town. Everybody is talking about it. It is supposed to be pretty good.");
         randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(),
-                "This sounds like a genuine waste of time.");
+                "This sounds like a genuine waste of time.", FacialExpression.disappointed);
         randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(),
                 "Oh please spare me...");
         randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(),
@@ -34,7 +35,7 @@ public class PlayEvent extends DailyEventState {
         randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(),
                 "Sounds fun, we should go!");
         randomSayIfPersonality(PersonalityTrait.encouraging, new ArrayList<>(),
-                "We rarely do something like this for ourselves, we should take this opportunity.");
+                "We rarely do something like this for ourselves, we should take this opportunity.", FacialExpression.excited);
         print("The entrance fee is 1 gold per person.");
         int cost = model.getParty().size();
         if (model.getParty().getGold() < cost) {
