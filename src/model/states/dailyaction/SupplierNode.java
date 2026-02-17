@@ -12,7 +12,7 @@ import view.subviews.ShopInteriorSubView;
 import java.awt.*;
 import java.util.List;
 
-public class SupplierNode extends DailyActionNode {
+public class SupplierNode extends InsideDailyActionNode {
     private static final Point CURSOR_SHIFT = new Point(+4, -4);
     private final ShopSupplier supplier;
 

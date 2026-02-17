@@ -9,6 +9,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import model.states.events.LeagueOfMagesEvent;
 import util.MyRandom;
 import view.sprites.Sprite;
@@ -18,7 +19,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourtMageNode extends DailyActionNode {
+public class CourtMageNode extends InsideDailyActionNode {
 
     private final CastleLocation castle;
     private boolean didTeleport;

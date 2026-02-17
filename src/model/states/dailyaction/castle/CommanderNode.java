@@ -7,6 +7,7 @@ import model.map.wars.KingdomWar;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import model.tasks.BattleDestinationTask;
 import model.tasks.DestinationTask;
 import util.MyLists;
@@ -16,7 +17,7 @@ import view.subviews.KeepSubView;
 
 import java.util.List;
 
-public class CommanderNode extends DailyActionNode {
+public class CommanderNode extends InsideDailyActionNode {
     private final CastleLocation castle;
 
     public CommanderNode(CastleLocation location) {

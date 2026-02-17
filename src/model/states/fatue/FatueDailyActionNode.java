@@ -11,6 +11,12 @@ abstract class FatueDailyActionNode extends DailyActionNode {
         super(name);
     }
 
+
+    @Override
+    public boolean blocksPassage() {
+        return false;
+    }
+
     @Override
     public Sprite getBackgroundSprite() {
         return null;

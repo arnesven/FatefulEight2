@@ -9,6 +9,7 @@ import model.states.cardgames.CardGameState;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CardGameNode extends DailyActionNode {
+public class CardGameNode extends InsideDailyActionNode {
     public static final Sprite TABLE = new Sprite32x32("cardstable", "world_foreground.png", 0x88,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN, MyColors.WHITE);
     private final ArrayList<Point> offsets;

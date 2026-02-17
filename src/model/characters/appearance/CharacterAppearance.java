@@ -252,9 +252,7 @@ public abstract class CharacterAppearance implements Serializable {
         if (charClass.showHairInBack()) {
             addHairInBack();
         }
-        if (charClass.coversEyebrows()) {
-            showEyebrows = false;
-        }
+        showEyebrows = charClass.coversEyebrows();
     }
 
     public void setSpecificClothing(PortraitClothing clothing) {

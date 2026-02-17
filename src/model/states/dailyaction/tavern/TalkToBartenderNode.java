@@ -15,6 +15,7 @@ import model.items.weapons.FishingPole;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -24,7 +25,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TalkToBartenderNode extends DailyActionNode {
+public class TalkToBartenderNode extends InsideDailyActionNode {
     private static final Sprite STOOL = new Sprite32x32("barstool", "world_foreground.png", 0x55,
             MyColors.GRAY, MyColors.DARK_RED, MyColors.DARK_GREEN, MyColors.CYAN);
     private final boolean inTown;

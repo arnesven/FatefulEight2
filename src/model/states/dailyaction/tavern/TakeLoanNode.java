@@ -6,6 +6,7 @@ import model.races.Race;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -13,7 +14,7 @@ import view.subviews.TavernSubView;
 
 import java.awt.*;
 
-public class TakeLoanNode extends DailyActionNode {
+public class TakeLoanNode extends InsideDailyActionNode {
     private static final Sprite LOAN_SHARK = new Sprite32x32("loanshark", "world_foreground.png", 0x85,
             MyColors.BLACK, MyColors.BROWN, Race.DARK_ELF.getColor());
 

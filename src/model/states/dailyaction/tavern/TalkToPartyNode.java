@@ -8,6 +8,7 @@ import model.states.PayWagesState;
 import model.states.RecruitState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import util.MyLists;
 import util.MyRandom;
 import view.sprites.Sprite;
@@ -15,7 +16,7 @@ import view.subviews.TavernSubView;
 
 import java.util.*;
 
-public class TalkToPartyNode extends DailyActionNode {
+public class TalkToPartyNode extends InsideDailyActionNode {
     public TalkToPartyNode() {
         super("Interact with party members");
     }

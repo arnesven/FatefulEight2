@@ -95,7 +95,9 @@ public abstract class AdvancedDailyActionState extends GameState {
                     break;
                 } else {
                     subView.setCursorEnabled(false);
+                    subView.setAvatarFacingUp(matrix.getSelectedElement().blocksPassage());
                     GameState nextState = daily.getDailyAction(model, this).run(model);
+                    subView.setAvatarFacingUp(false);
                     subView.setCursorEnabled(true);
                     daily.setTimeOfDay(model, this);
                     if (daily.returnNextState() && nextState != null) {

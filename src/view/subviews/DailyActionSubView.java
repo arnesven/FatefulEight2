@@ -28,6 +28,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
     private final int movementType;
     private boolean avatarEnabled = true;
     private boolean cursorEnabled = true;
+    private boolean avatarFlipped = false;
 
     public DailyActionSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                               int movementType) {
@@ -82,7 +83,13 @@ public abstract class DailyActionSubView extends AvatarSubView {
     private void drawAvatar(Model model) {
         if (model.getParty().getLeader() != null) { // If party has been wiped out and this is just before game over screen
             Point p = convertToScreen(state.getCurrentPosition());
-            model.getScreenHandler().register("townavatar", p, model.getParty().getLeader().getAvatarSprite(), 2);
+            Sprite spr;
+            if (avatarFlipped) {
+                spr = model.getParty().getLeader().getAvatarSprite().getAvatarBack();
+            } else {
+                spr = model.getParty().getLeader().getAvatarSprite();
+            }
+            model.getScreenHandler().register("townavatar", p, spr, 2);
         }
     }
 
@@ -167,10 +174,12 @@ public abstract class DailyActionSubView extends AvatarSubView {
             }
         }
 
-        for (int currentColumn = maxX; currentColumn != minX && freeColumn == -1; currentColumn = Arithmetics.incrementWithWrap(currentColumn, 8)) {
+        int tries = 0;
+        for (int currentColumn = maxX; tries < 8 && freeColumn == -1; currentColumn = Arithmetics.incrementWithWrap(currentColumn, 8)) {
             if (isFreeColumn(currentColumn, minY, maxY)) {
                 freeColumn = currentColumn;
             }
+            tries++;
         }
 
         if (freeColumn >= 0) {
@@ -197,7 +206,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
     }
 
     private boolean isFreeColumn(int currentColumn, int minY, int maxY) {
-        for (int y = maxY; y >= minY; --y) {
+        for (int y = maxY; y > minY; --y) {
             if (state.isPositionFilled(currentColumn, y)) {
                 return false;
             }
@@ -259,5 +268,9 @@ public abstract class DailyActionSubView extends AvatarSubView {
                 }
             }
         }
+    }
+
+    public void setAvatarFacingUp(boolean b) {
+        this.avatarFlipped = b;
     }
 }

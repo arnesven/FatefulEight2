@@ -175,6 +175,9 @@ public class PortraitAnimations implements Serializable {
             lookers.remove(app);
             facialExpressions.put(app, new MyPair<>(emph, expressionLifetime));
         }
+        if (expressionLifetime == FacialExpression.PERMANENT && emph == FacialExpression.none) {
+            facialExpressions.remove(app);
+        }
     }
 
     public void forceEyesClosed(GameCharacter victim, boolean closed) {

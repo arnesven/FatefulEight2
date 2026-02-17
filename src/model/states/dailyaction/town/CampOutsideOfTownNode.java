@@ -30,6 +30,11 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     }
 
     @Override
+    public boolean blocksPassage() {
+        return false;
+    }
+
+    @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return new NoLodgingState(model, freeRations);
     }

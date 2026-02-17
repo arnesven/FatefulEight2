@@ -11,6 +11,7 @@ import model.states.GameState;
 import model.states.RecruitState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.InsideDailyActionNode;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -23,7 +24,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class RecruitNode extends DailyActionNode {
+public class RecruitNode extends InsideDailyActionNode {
     public static final Sprite TABLE = new Sprite32x32("table", "world_foreground.png", 0x04,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN, MyColors.WHITE);
     private final List<Point> offsets;
@@ -46,6 +47,11 @@ public class RecruitNode extends DailyActionNode {
                     randClass, randApp);
             defaultGuys.add(new RecruitableCharacter(gc));
         }
+    }
+
+    @Override
+    public boolean blocksPassage() {
+        return false;
     }
 
     @Override
