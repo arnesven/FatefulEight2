@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import util.Arithmetics;
 import view.combat.GrassCombatTheme;
 import view.sprites.AvatarSprite;
 import view.sprites.CombatCursorSprite;
@@ -155,23 +156,20 @@ public abstract class DailyActionSubView extends AvatarSubView {
     private boolean tryFindOrthoPath(AvatarSprite avatar, Point from, Point to, boolean dryRun) {
         int maxY = Math.max(from.y, to.y);
         int minY = Math.min(from.y, to.y);
-        int currentColumn = from.x;
+        //int currentColumn = from.x;
         int freeColumn = -1;
-        for (int step = 0; step < 8; ++step) {
-            currentColumn = from.x + step;
-            if (currentColumn < 8) {
-                if (isFreeColumn(currentColumn, minY, maxY)) {
-                    freeColumn = currentColumn;
-                    break;
-                }
-            }
 
-            currentColumn = from.x - step;
-            if (currentColumn >= 0) {
-                if (isFreeColumn(currentColumn, minY, maxY)) {
-                    freeColumn = currentColumn;
-                    break;
-                }
+        int maxX = Math.max(from.x, to.x);
+        int minX = Math.min(from.x, to.x);
+        for (int currentColumn = minX; currentColumn <= maxX && freeColumn == -1; ++currentColumn) {
+            if (isFreeColumn(currentColumn, minY, maxY)) {
+                freeColumn = currentColumn;
+            }
+        }
+
+        for (int currentColumn = maxX; currentColumn != minX && freeColumn == -1; currentColumn = Arithmetics.incrementWithWrap(currentColumn, 8)) {
+            if (isFreeColumn(currentColumn, minY, maxY)) {
+                freeColumn = currentColumn;
             }
         }
 

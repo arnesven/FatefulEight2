@@ -38,6 +38,18 @@ public class SaintQuellinTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                ".X......" +
+                "........" +
+                "X......X" +
+                "......X." +
+                "........" +
+                "..X....." +
+                ".....XX.");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It lies just south of the desert of Zind.";
     }

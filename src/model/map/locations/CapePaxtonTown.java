@@ -52,6 +52,18 @@ public class CapePaxtonTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "X.X..XX." +
+                "...X..X." +
+                ".X......" +
+                "X......X" +
+                ".X....X." +
+                ".......X" +
+                "..X.....");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's on the eastern side of the Icy Bay.";
     }

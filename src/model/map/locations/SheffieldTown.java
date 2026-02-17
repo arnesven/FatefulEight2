@@ -38,6 +38,18 @@ public class SheffieldTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+          "....X..." +
+                      "X..X...." +
+                      ".X.....X" +
+                      "........" +
+                      "........" +
+                      "...XX..." +
+                      "..X.....");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It lies just west of Castle Ardh";
     }

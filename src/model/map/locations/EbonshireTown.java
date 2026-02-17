@@ -49,6 +49,18 @@ public class EbonshireTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                ".X......" +
+                "........" +
+                "X......." +
+                "......X." +
+                ".X.....X" +
+                "X....XX." +
+                ".....XX.");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's right where the Ojai river meets the Sea.";
     }

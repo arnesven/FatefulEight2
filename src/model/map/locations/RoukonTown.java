@@ -38,7 +38,7 @@ public class RoukonTown extends TownLocation {
 
     @Override
     public Point getCareerOfficePosition() {
-        return new Point(5, 3);
+        return new Point(5, 2);
     }
 
     @Override
@@ -48,6 +48,18 @@ public class RoukonTown extends TownLocation {
                        "East Durham........Rarely",
                        "Cape Paxton........Rarely",
                        "Chartered Boats.....Often"); // Often = 2-3)
+    }
+
+    @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "XX......" +
+                "......X." +
+                "X......." +
+                ".......X" +
+                "......X." +
+                ".X......" +
+                "....XXX.");
     }
 
     @Override

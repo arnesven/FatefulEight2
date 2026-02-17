@@ -49,6 +49,17 @@ public class EastDurhamTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions("XX.XX.X." +
+                "..XXX..." +
+                "X.....XX" +
+                ".X......" +
+                "........" +
+                "........" +
+                "...X.XX.");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's on the western shore of the Icy Bay.";
     }

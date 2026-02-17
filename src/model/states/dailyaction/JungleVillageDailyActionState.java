@@ -25,6 +25,7 @@ public class JungleVillageDailyActionState extends TownishDailyActionState {
 
     @Override
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
+        blockPosition(4, 3);
         addNode(4, 4, new JungleTavernNode(freeLodging));
     }
 

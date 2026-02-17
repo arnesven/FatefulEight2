@@ -50,4 +50,9 @@ public class SaveGameNode extends DailyActionNode {
         sprite.setDelay(4);
         return sprite;
     }
+
+    @Override
+    public boolean blocksPassage() {
+        return false;
+    }
 }

@@ -7,6 +7,7 @@ import model.states.dailyaction.shops.ArmorShopNode;
 import model.states.dailyaction.shops.GeneralShopNode;
 
 import java.awt.*;
+import java.lang.classfile.instruction.ConvertInstruction;
 import java.util.List;
 
 public class LowerThelnTown extends TownLocation {
@@ -46,6 +47,19 @@ public class LowerThelnTown extends TownLocation {
                        "Upper Theln.........Often",
                        "Little Erinde......Rarely",
                        "Chartered Boats....Rarely"); // Rarely = 6+)
+    }
+
+    @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "........" +
+                        "X..X...." +
+                        "X......." +
+                        ".......X" +
+                        "........" +
+                        ".X.X...." +
+                        ".XX....."
+        );
     }
 
     @Override

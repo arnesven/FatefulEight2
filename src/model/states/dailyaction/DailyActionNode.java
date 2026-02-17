@@ -54,4 +54,8 @@ public abstract class DailyActionNode implements Serializable {
     public int getWidth() {
         return 1;
     }
+
+    public boolean blocksPassage() {
+        return true;
+    }
 }

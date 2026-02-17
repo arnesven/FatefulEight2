@@ -157,6 +157,6 @@ public abstract class AdvancedDailyActionState extends GameState {
     }
 
     public boolean isPositionFilled(int col, int row) {
-        return matrix.getElementAt(col, row) != null || isPositionBlocked(col, row);
+        return (matrix.getElementAt(col, row) != null && matrix.getElementAt(col, row). blocksPassage())  || isPositionBlocked(col, row);
     }
 }

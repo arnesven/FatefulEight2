@@ -33,6 +33,18 @@ public class BullsVilleTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                ".X..X..." +
+                "......X." +
+                ".....XXX" +
+                "........" +
+                "XX......" +
+                "..XX.X.X" +
+                "X...X...");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's a farming village east of Castle Ardh.";
     }

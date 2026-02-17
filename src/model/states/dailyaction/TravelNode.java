@@ -61,4 +61,8 @@ class TravelNode extends DailyActionNode {
         // Done by state
     }
 
+    @Override
+    public boolean blocksPassage() {
+        return false;
+    }
 }

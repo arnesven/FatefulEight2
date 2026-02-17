@@ -21,6 +21,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TownLocation extends HexLocation implements UrbanLocation {
@@ -241,5 +242,18 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     public List<String> getSeaTravelRoutes() {
         return List.of();
+    }
+
+    protected static List<Point> convertToPositions(String housesString) {
+        assert housesString.length() == 7 * 8;
+        List<Point> result = new ArrayList<>();
+        for (int y = 0; y < 7; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                if (housesString.charAt(y * 8 + x) == 'X') {
+                    result.add(new Point(x, y+1));
+                }
+            }
+        }
+        return result;
     }
 }

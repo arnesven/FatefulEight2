@@ -33,6 +33,18 @@ public class UrnTownTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "X...X.X." +
+                "....X.X." +
+                "X.....X." +
+                "......X." +
+                ".X....X." +
+                "..X.X.X." +
+                "........");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It lies west of Arkvale Castle, on the other side of the mountains.";
     }

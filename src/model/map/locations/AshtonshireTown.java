@@ -36,6 +36,18 @@ public class AshtonshireTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "X...X..." +
+                "....X.X." +
+                ".......X" +
+                "X......." +
+                "X....X.X" +
+                "..XXXXX." +
+                "......X");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's a village on the edge of the Eastern Woodland.";
     }

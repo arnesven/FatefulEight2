@@ -29,6 +29,11 @@ class StayHereNode extends DailyActionNode {
     }
 
     @Override
+    public boolean blocksPassage() {
+        return false;
+    }
+
+    @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         List<DailyAction> actions = new ArrayList<>();
         actions.add(new RandomEventDailyAction(model));

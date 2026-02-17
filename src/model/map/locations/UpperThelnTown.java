@@ -52,6 +52,18 @@ public class UpperThelnTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "........" +
+                        "....XX.." +
+                        "........" +
+                        "X......." +
+                        ".X...X.." +
+                        "...X...." +
+                        "XX..XX..");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's on the river Thelnius, surrounded by vast farmlands.";
     }

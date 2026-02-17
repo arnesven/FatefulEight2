@@ -41,6 +41,18 @@ public class AckervilleTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+          "..X....." +
+                ".X.XX..." +
+                ".....X.." +
+                "XX.....X" +
+                "........" +
+                "XX.....X" +
+                "..X.....");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It's close to the swamps of the Great Forest, on the shores of Lake Acker.";
     }

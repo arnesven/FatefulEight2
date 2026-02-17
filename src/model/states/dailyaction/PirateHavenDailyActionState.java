@@ -25,6 +25,7 @@ public class PirateHavenDailyActionState extends TownishDailyActionState {
     }
 
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
+        blockPosition(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y - 1);
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new PirateTavernNode(freeLodging));
     }
 }

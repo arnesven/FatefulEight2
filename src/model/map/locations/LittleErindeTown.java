@@ -41,6 +41,18 @@ public class LittleErindeTown extends TownLocation {
     }
 
     @Override
+    public List<Point> getDecorativeHousePositions() {
+        return TownLocation.convertToPositions(
+                "...X...." +
+                "X......." +
+                "XX......" +
+                "........" +
+                "......X." +
+                "X..X...." +
+                "....X.X.");
+    }
+
+    @Override
     public String getGeographicalDescription() {
         return "It lies to the north of the desert of Drize, on the Ojai River.";
     }

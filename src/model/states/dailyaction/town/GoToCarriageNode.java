@@ -27,6 +27,11 @@ public class GoToCarriageNode extends DailyActionNode {
     }
 
     @Override
+    public boolean blocksPassage() {
+        return false;
+    }
+
+    @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return travelState;
     }
