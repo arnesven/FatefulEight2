@@ -24,6 +24,11 @@ public class WorkBenchNode extends DailyActionNode {
     }
 
     @Override
+    public boolean blocksPassage() {
+        return false;
+    }
+
+    @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return new CraftItemState(model);
     }

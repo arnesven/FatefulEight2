@@ -229,6 +229,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
         for (int i = 24; i > 0; --i) {
             new LethalPoison().addYourself(model.getParty().getInventory());
         }
+        GeneralInteractionEvent.addToNotoriety(model, this, 35);
     }
 
     private void reportToConstable(Model model) {
