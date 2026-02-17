@@ -74,12 +74,26 @@ public class PartyView extends SelectableListMenu {
             content.add(new SelectableListContent(x, y++, "Not Leader") {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    PartyView.super.setInnerMenu(new SetLeaderMenu(PartyView.this, gc, x, y), model);
+                    if (model.isInQuest()) {
+                        PartyView.super.setInnerMenu(new SimpleMessageView(PartyView.this,
+                                "You cannot change the party leader while on a Quest."), model);
+                    } else if (model.isInCombat()) {
+                        PartyView.super.setInnerMenu(new SimpleMessageView(PartyView.this,
+                                "You cannot change the party leader during combat."), model);
+                    } else if (model.isInDungeon()) {
+                        PartyView.super.setInnerMenu(new SimpleMessageView(PartyView.this,
+                                "You cannot change the party leader while in a Dungeon."), model);
+                    } else if (model.getParty().getLeaderLockedUntil() > model.getDay()) {
+                        PartyView.super.setInnerMenu(new SimpleMessageView(PartyView.this,
+                                "You cannot change the party leader right now."), model);
+                    } else {
+                        PartyView.super.setInnerMenu(new SetLeaderMenu(PartyView.this, gc, x, y), model);
+                    }
                 }
 
                 @Override
                 public boolean isEnabled(Model model) {
-                    return !model.isInQuest() && !model.isInCombat() && !model.isInDungeon();
+                    return true;
                 }
             });
         }

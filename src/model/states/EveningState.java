@@ -5,10 +5,8 @@ import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.classes.normal.DruidClass;
 import model.items.Inventory;
 import model.map.*;
 import model.quests.Quest;
@@ -21,7 +19,6 @@ import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import util.*;
 import view.LogView;
-import view.PartyAttitudesDialog;
 import view.subviews.*;
 
 import java.awt.*;
@@ -142,7 +139,9 @@ public class EveningState extends GameState {
             if (oldLeader != model.getParty().getLeader() && mainDissident != oldLeader) {
                 mainDissident.addToAttitude(oldLeader, MyRandom.randInt(1, 3));
             }
-            println(mainDissident.getName() + " has been appeased.");
+            println(mainDissident.getName() + " has been appeased, but you will not be able to manually " +
+                    "change the party leader for the next two days.");
+            model.getParty().setLeaderLockedUntil(model.getDay() + 3);
         } else {
             if (MyRandom.flipCoin()) {
                 leaderSay("No way " + mainDissident.getFirstName() + ".");

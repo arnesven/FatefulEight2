@@ -80,6 +80,7 @@ public class Party implements Serializable {
     private final List<DiscoveredRoute> discoveredRoutes = new ArrayList<>();
     private final List<Item> permanentlyLearnedItems = new ArrayList<>();
     private List<GameCharacter> unhandledGrief = new ArrayList<>();
+    private int leaderLockedUntil = 0;
 
     public Party() {
         cursorSprites = makeCursorSprites();
@@ -1088,5 +1089,13 @@ public class Party implements Serializable {
 
     public void clearUnhandledGrief() {
         unhandledGrief.clear();
+    }
+
+    public void setLeaderLockedUntil(int day) {
+        this.leaderLockedUntil = day;
+    }
+
+    public int getLeaderLockedUntil() {
+        return this.leaderLockedUntil;
     }
 }
