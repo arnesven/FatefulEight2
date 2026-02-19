@@ -3,6 +3,8 @@ package model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.FacialExpression;
+import model.characters.appearance.WeepingAmount;
+import model.characters.appearance.WeepingAnimation;
 import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
@@ -25,6 +27,7 @@ public class PortraitAnimations implements Serializable {
     private final Map<CharacterAppearance, MyPair<FacialExpression, Integer>> facialExpressions = new HashMap<>();
     private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
     private final Map<CharacterAppearance, VampireFeedingLook> feedingLooks = new HashMap<>();
+    private final Map<CharacterAppearance, WeepingAnimation> weepingAnimations = new HashMap<>();
     private Map<Integer, Integer> slotAnimations = new HashMap<>();
 
     public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p, boolean isVampire) {
@@ -34,8 +37,9 @@ public class PortraitAnimations implements Serializable {
         if (!handleFacialExpression(screenHandler, app, p, isVampire)) {
             handleLook(screenHandler, app, p);
             handleBlink(screenHandler, app, p);
-            handleMisc(screenHandler, app);
         }
+        handleMisc(screenHandler, app);
+
     }
 
     private void handleLook(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
@@ -189,6 +193,9 @@ public class PortraitAnimations implements Serializable {
         if (feedingLooks.containsKey(appearance)) {
             feedingLooks.get(appearance).drawYourself(screenHandler);
         }
+        if (weepingAnimations.containsKey(appearance)) {
+            weepingAnimations.get(appearance).drawYourself(screenHandler);
+        }
     }
 
     public void setVampireFeedingLookEnabledFor(CharacterAppearance app, Point point) {
@@ -238,5 +245,15 @@ public class PortraitAnimations implements Serializable {
 
     public void clearFacialExpressions() {
         facialExpressions.clear();
+    }
+
+    public void setWeeping(Point location, CharacterAppearance app, WeepingAmount amount) {
+        if (amount == WeepingAmount.none) {
+            weepingAnimations.remove(app);
+        } else {
+            Point p = new Point(location.x, location.y);
+            p.y += 3;
+            weepingAnimations.put(app, new WeepingAnimation(p, amount));
+        }
     }
 }

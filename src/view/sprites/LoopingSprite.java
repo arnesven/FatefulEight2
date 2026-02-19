@@ -34,8 +34,12 @@ public class LoopingSprite extends Sprite implements Animation {
     public void stepAnimation(long elapsedTimeMs, Model model) {
         count++;
         if (count % delay == 0) {
-            currentFrame = (currentFrame + 1) % getFrames();
+            currentFrame = stepToNextFrame(currentFrame);
         }
+    }
+
+    protected int stepToNextFrame(int currentFrame) {
+        return (currentFrame + 1) % getFrames();
     }
 
     @Override

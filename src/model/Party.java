@@ -5,6 +5,7 @@ import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.characters.TamedDragonCharacter;
 import model.characters.appearance.FacialExpression;
+import model.characters.appearance.WeepingAmount;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -1097,5 +1098,9 @@ public class Party implements Serializable {
 
     public int getLeaderLockedUntil() {
         return this.leaderLockedUntil;
+    }
+
+    public void setWeeping(GameCharacter chara, WeepingAmount weep) {
+        portraitAnimations.setWeeping(getLocationForPartyMember(partyMembers.indexOf(chara)), chara.getAppearance(), weep);
     }
 }

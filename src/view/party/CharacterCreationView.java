@@ -73,6 +73,9 @@ public class CharacterCreationView extends SelectableListMenu {
     private Sprite avatarBack = null;
     private boolean canceled = false;
     private boolean isVampire = false;
+    private boolean eyesClosed = false;
+    private WeepingAmount currentWeepAmount = WeepingAmount.none;
+    private WeepingAnimation weepingAnimation = null;
 
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
@@ -160,10 +163,17 @@ public class CharacterCreationView extends SelectableListMenu {
             public void drawYourself(Model model, int x, int y) {
                 String title = "- CUSTOM CHARACTER -";
                 BorderFrame.drawCentered(model.getScreenHandler(), title, y++, MyColors.WHITE, MyColors.BLUE);
-                lastAppearance.drawYourself(model.getScreenHandler(), x+COLUMN_SKIP+17, y+2);
+                Point appearancePos = new Point(x+COLUMN_SKIP+17, y+2);
+                lastAppearance.drawYourself(model.getScreenHandler(), appearancePos.x, appearancePos.y);
                 if (selectedFacialExpression != FacialExpression.none) {
-                    lastAppearance.drawFacialExpression(model.getScreenHandler(), x+COLUMN_SKIP+17+3, y+2+3,
+                    lastAppearance.drawFacialExpression(model.getScreenHandler(), appearancePos.x+3, appearancePos.y+3,
                             selectedFacialExpression, true, isVampire);
+                }
+                if (eyesClosed) {
+                    lastAppearance.drawBlink(model.getScreenHandler(), appearancePos.x+3, appearancePos.y+3);
+                }
+                if (weepingAnimation != null) {
+                    weepingAnimation.drawYourself(model.getScreenHandler());
                 }
                 model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
                         new Point(x+COLUMN_SKIP+24, y+3),
@@ -475,6 +485,35 @@ public class CharacterCreationView extends SelectableListMenu {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         isVampire = !isVampire;
+                    }
+                },
+                new SelectableListContent(xStart + 3, yStart + 37, "Eyes: " + (eyesClosed ? "Closed" : "Open")) {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        eyesClosed = !eyesClosed;
+                    }
+                },
+                new CarouselListContent(xStart + 3, yStart + 38, "Weeping: " + WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
+                    final Point appearancePoint = new Point(47, 7);
+
+                    @Override
+                    public void turnLeft(Model model) {
+                        currentWeepAmount = WeepingAmount.values()[Arithmetics.decrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
+                        if (currentWeepAmount != WeepingAmount.none) {
+                            weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
+                        } else {
+                            weepingAnimation = null;
+                        }
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        currentWeepAmount = WeepingAmount.values()[Arithmetics.incrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
+                        if (currentWeepAmount != WeepingAmount.none) {
+                            weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
+                        } else {
+                            weepingAnimation = null;
+                        }
                     }
                 },
         new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
