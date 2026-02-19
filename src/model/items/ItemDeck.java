@@ -28,6 +28,13 @@ public class ItemDeck extends ArrayList<Item> {
             //             8     9    10    11    12    13    14     15
                          0.35, 0.05, 0.15, 0.25, 0.05, 0.15, 0.25, 0.35};
 
+    // two higher levels percentages:
+    //             0     1      2       3      4       5       6     7
+//                0.01, 0.025, 0.0625, 0.125, 0.2025, 0.0025, 0.15, 0.25,
+    //             8     9    10    11    12    13    14     15
+  //             0.35, 0.05, 0.15, 0.25, 0.05, 0.15, 0.25, 0.35};
+
+
     private static final int MAX_HIGHER_ITEM_TIERS = 4;
     private int standardTier = standardTiersPerLevel[1];
     private double higherTierChance = higherTierChancePerLevel[1];
@@ -72,7 +79,7 @@ public class ItemDeck extends ArrayList<Item> {
         if (MyRandom.nextDouble() < (1.0 - higherTierChance)) {
             return standardTier;
         }
-        return Math.min(standardTier+1, MAX_HIGHER_ITEM_TIERS);
+        return Math.min(1 + randomizeTier(0.05), MAX_HIGHER_ITEM_TIERS);
     }
 
     public List<Item> draw(int count, Prevalence prevalence, double higherTierChance) {
@@ -337,8 +344,13 @@ public class ItemDeck extends ArrayList<Item> {
         allWeapons.addAll(allWands());
         allWeapons.addAll(allBows());
         allWeapons.addAll(allSpears());
+        allWeapons.addAll(allBrawlingWeapons());
         allWeapons.addAll(allSpecialWeapons());
         return allWeapons;
+    }
+
+    private static List<? extends Weapon> allBrawlingWeapons() {
+        return List.of(new BrassKnuckles(), new SpikedKnuckles(), new Claws(), new Tonfa());
     }
 
     public static List<? extends Weapon> allSpears() {

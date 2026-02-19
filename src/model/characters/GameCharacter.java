@@ -39,6 +39,8 @@ import view.widget.HealthBar;
 import java.awt.Point;
 import java.util.*;
 
+import static util.MyRandom.rollD10;
+
 public class GameCharacter extends Combatant {
     private static final MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
                                                         MyColors.LIGHT_BLUE, MyColors.BEIGE, MyColors.WHITE, MyColors.LIGHT_PINK, MyColors.LIGHT_YELLOW};
@@ -703,16 +705,18 @@ public class GameCharacter extends Combatant {
 
     private boolean checkForBlock(Enemy enemy) {
         int defendBonus = DefendCombatAction.isDefending(this) ? 2 : 0;
-        if (equipment.getAccessory() instanceof ShieldItem) {
-            return MyRandom.rollD10() <= ((ShieldItem)equipment.getAccessory()).getBlockChance() + defendBonus;
-        }
-        return false;
+        int blockFromAccessory = equipment.getAccessory() instanceof BlockingItem
+                ? ((BlockingItem) equipment.getAccessory()).getBlockChance() : 0;
+        int blockFromWeapon = equipment.getWeapon() instanceof BlockingItem
+                ? ((BlockingItem) equipment.getWeapon()).getBlockChance() : 0;
+        int total = defendBonus + blockFromAccessory + blockFromWeapon;
+        return MyRandom.rollD10() <= total;
     }
 
     private boolean checkForEvade(Enemy enemy) {
         int speedDiff = Math.max(getSpeed() - enemy.getSpeed(), 0) / 2;
         speedDiff += RiposteCombatAction.getEvadeBonus(this);
-        int roll = MyRandom.rollD10();
+        int roll = rollD10();
         return roll <= speedDiff && roll != 10;
     }
 
@@ -722,7 +726,7 @@ public class GameCharacter extends Combatant {
                 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}; // assuming 20 AP is absolute maximum.
         int ap = getAP();
         while (ap > 0) {
-            int roll = MyRandom.rollD10();
+            int roll = rollD10();
             if (roll >= levels[ap-1]) {
                 return ap;
             }

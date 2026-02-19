@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
+import model.items.BlockingItem;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
@@ -18,7 +19,7 @@ import view.sprites.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeaponPair extends Weapon {
+public class WeaponPair extends Weapon implements BlockingItem {
     private static final AvatarItemSprite[] TWIN_BLADES =  makeShiftedSpriteSet(
             new AvatarItemSprite(0x40, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
     private static final AvatarItemSprite[] OTHER_WEAPONS =  makeShiftedSpriteSet(
@@ -182,10 +183,17 @@ public class WeaponPair extends Weapon {
 
     @Override
     public String getExtraText() {
-        if (super.getExtraText().equals("")) {
+        String base = super.getExtraText();
+        if (getBlockChance() > 0) {
+            if (!base.isEmpty()) {
+                base += ",";
+            }
+            base += "Block " + getBlockChance() + ",";
+        }
+        if (base.equals("")) {
             return "(Paired Weapons)";
         }
-        return super.getExtraText() + ", (Paired Weapons)";
+        return base + ", (Paired Weapons)";
     }
 
 
@@ -250,8 +258,6 @@ public class WeaponPair extends Weapon {
         return "Split";
     }
 
-
-
     @Override
     public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
         return new YesNoMessageView(innerView, "Split this weapon into the two underlying weapons?") {
@@ -266,5 +272,12 @@ public class WeaponPair extends Weapon {
         model.getParty().removeFromInventory(this);
         mainHand.addYourself(model.getParty().getInventory());
         offHand.addYourself(model.getParty().getInventory());
+    }
+
+    @Override
+    public int getBlockChance() {
+        int mainBlock = mainHand instanceof BlockingItem ? ((BlockingItem) mainHand).getBlockChance() : 0;
+        int offBlock = offHand instanceof BlockingItem ? ((BlockingItem) offHand).getBlockChance() : 0;
+        return mainBlock + offBlock;
     }
 }

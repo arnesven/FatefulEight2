@@ -23,7 +23,7 @@ public class StandardCombatLoot extends CombatLoot {
         if (dieRoll <= 7) {
             gold = dieRoll - 1;
         } else if (dieRoll <= 9) {
-            items.add(makeItem(model, 0.1));
+            items.add(makeItem(model, model.getItemDeck().getStandardHigherTierChance()));
         }
         if (dieRoll == 7) {
             gold++;

@@ -13,6 +13,11 @@ public abstract class SmallBladedWeapon extends BladedWeapon {
     }
 
     @Override
+    public int getWeight() {
+        return 500;
+    }
+
+    @Override
     public AvatarItemSprite getOnAvatarSprite(int index) {
         return SMALL_BLADES[index];
     }

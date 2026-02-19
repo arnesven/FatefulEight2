@@ -44,7 +44,7 @@ public class PlateGauntlets extends GlovesItem {
     @Override
     public String getExtraText() {
         return "Unarmed Attack [6/7/9]";
-    }
+    } // TODO: Remove this? It doesn't really make sense with unarmed combat weapons.
 
     @Override
     public boolean isHeavy() {

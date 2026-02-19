@@ -1,11 +1,12 @@
 package model.items.accessories;
 
 import model.characters.GameCharacter;
+import model.items.BlockingItem;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 
-public abstract class ShieldItem extends Accessory {
+public abstract class ShieldItem extends Accessory implements BlockingItem {
 
     private final boolean heavyArmor;
     private final int block;

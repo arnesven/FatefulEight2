@@ -41,7 +41,7 @@ public class NinjaClass extends PrestigeClass {
                         new WeightedSkill(Skill.Security, 5),
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.Sneak, 6),
-                        new WeightedSkill(Skill.UnarmedCombat, 4)}
+                        new WeightedSkill(Skill.UnarmedCombat, 5)}
         );
         this.clothingColor = MyColors.DARK_GRAY;
         this.descriptionClasses = MyLists.commaAndJoin(FROM_CLASSES, x ->
