@@ -1,10 +1,12 @@
 package model.states;
 
 import model.Model;
+import model.Party;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
+import model.characters.appearance.WeepingAmount;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Inventory;
@@ -611,6 +613,17 @@ public class EveningState extends GameState {
         String articleA = (deadPeople.size() == 1 ? "a" : "");
         String names = MyLists.commaAndJoin(model.getParty().getUnhandledGrief(), GameCharacter::getFirstName);
         leaderSay(names + "... I can't believe " + theyAreOrHeOrSheIs + " dead.", FacialExpression.sad);
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc != model.getParty().getLeader() && MyLists.any(deadPeople, dp -> gc.getAttitude(dp) > 25) &&
+                MyRandom.randInt(4) == 0) {
+                println(gc.getName() + " starts to weep.");
+                model.getParty().forceEyesClosed(gc, true);
+                model.getParty().setWeeping(gc, MyRandom.sample(List.of(WeepingAmount.aLittle, WeepingAmount.aLot)));
+                model.getParty().setFacialExpression(gc, MyRandom.sample(List.of(FacialExpression.sad, FacialExpression.afraid)),
+                        FacialExpression.PERMANENT);
+            }
+        }
+
         if (model.getParty().size() == 1) {
             println("You think back on your journey together with " + names + "...");
             model.getLog().waitForAnimationToFinish();
@@ -655,10 +668,15 @@ public class EveningState extends GameState {
                                     (deadPeople.size() > 1 ? "They were" : (heOrSheCap(deadPeople.getFirst().getGender()) + " was")) + "...", FacialExpression.sad);
                         }
                     } else if (gc.getAttitude(subject) > 25) {
+                        if (MyRandom.flipCoin()) {
+                            model.getParty().forceEyesClosed(gc, true);
+                        }
+                        model.getParty().setWeeping(gc, MyRandom.sample(Arrays.asList(WeepingAmount.values())));
                         partyMemberSay(gc, MyRandom.sample(List.of(
                                 "... special... I don't think I've ever met, or ever will meet somebody like " + themHimOrHer + ".",
                                 (deadPeople.size() > 1 ? "True friends" : "A true friend") + ". I can't really put it any other way",
-                                "Wonderful. Just wonderful. I'm so sad " + theyAreOrHeOrSheIs + " gone.")), FacialExpression.sad);
+                                "Wonderful. Just wonderful. I'm so sad " + theyAreOrHeOrSheIs + " gone.",
+                                "*Sob* *sob*")), FacialExpression.sad);
                     } else if (gc.getAttitude(subject) > 10) {
                         List<MyTriplet<List<PersonalityTrait>, String, FacialExpression>> list = new ArrayList<>();
                         list.add(new MyTriplet<>(List.of(PersonalityTrait.encouraging), "... " + articleA + " worthy companion" + pluralS + ". But " + theyAreOrHeOrSheIs + " going to keep living in our hearts.", FacialExpression.relief));
@@ -737,5 +755,8 @@ public class EveningState extends GameState {
             leaderSay("May " + theyOrHeOrShe + " rest in peace.");
         }
         model.getParty().clearUnhandledGrief();
+        MyLists.forEach(model.getParty().getPartyMembers(), gc -> {
+                model.getParty().setWeeping(gc, WeepingAmount.none);
+                model.getParty().forceEyesClosed(gc, false);});
     }
 }
