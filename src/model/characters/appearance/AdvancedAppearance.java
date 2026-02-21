@@ -332,14 +332,15 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (faceDetails == null) {
             return super.makeBlinkSprites(mascaraColor);
         }
+        FaceDetail eyePatch = MyLists.find(faceDetails, fd -> fd instanceof EyePatchDetail);
+        MyColors color4 = eyePatch != null ? eyePatch.getColor() : mascaraColor;
         FaceDetail detail = MyLists.find(faceDetails, fd -> fd instanceof GlassesDetail);
-        if (detail != null) {
-            return new MyPair<>(new Sprite8x8("blinkleftwglasses", "mouth.png", 0x33,
-                    MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE),
-                    new Sprite8x8("blinkrightwclasses", "mouth.png", 0x34,
-                            MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE));
-        }
-        return super.makeBlinkSprites(mascaraColor);
+        MyColors color3 = detail != null ? detail.getColor() : MyColors.BROWN;
+        int num = detail != null ? 0x33 : 0x20;
+        return new MyPair<>(new Sprite8x8("blinkleftwglasses", "mouth.png", num,
+                MyColors.BLACK, mascaraColor, color3, color4),
+                new Sprite8x8("blinkrightwclasses", "mouth.png", num+1,
+                        MyColors.BLACK, mascaraColor, color3, color4));
     }
 
     @Override

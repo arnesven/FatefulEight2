@@ -135,6 +135,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new GardenMazeEvent(model),
                     new BoozersEvent(model),
                     new KidsWantFireworksEvent(model),
+                    new WeepingWomanEvent(model),
                     new WarehouseEvent(model),
                     new WarehouseEvent(model),
                     new GuideEvent(model, 1),

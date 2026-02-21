@@ -252,7 +252,7 @@ public abstract class CharacterAppearance implements Serializable {
         if (charClass.showHairInBack()) {
             addHairInBack();
         }
-        showEyebrows = charClass.coversEyebrows();
+        showEyebrows = !charClass.coversEyebrows();
     }
 
     public void setSpecificClothing(PortraitClothing clothing) {
@@ -490,9 +490,9 @@ public abstract class CharacterAppearance implements Serializable {
 
     protected MyPair<Sprite8x8, Sprite8x8> makeBlinkSprites(MyColors mascaraColor) {
         return new MyPair<>(new Sprite8x8("blinkleft", "mouth.png", 0x20,
-                MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE),
+                MyColors.BLACK, mascaraColor, MyColors.BROWN, mascaraColor),
                 new Sprite8x8("blinkright", "mouth.png", 0x21,
-                        MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE));
+                        MyColors.BLACK, mascaraColor, MyColors.BROWN, mascaraColor));
     }
 
     protected int getLookIndex() {

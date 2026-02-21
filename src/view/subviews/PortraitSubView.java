@@ -72,7 +72,7 @@ public class PortraitSubView extends SubView {
                     appearance.setLipColor(lipColor);
                 }
             }
-            if (MyRandom.randInt(10) == 0) {
+            if (MyRandom.randInt(15) == 0) {
                 appearance.addFaceDetail(new RougeDetail());
                 appearance.setDetailColor(MakeUpColors.randomRougeColor(raceToUse));
             }
@@ -235,5 +235,9 @@ public class PortraitSubView extends SubView {
 
     public void replaceEventCardContents(String title, String cardText) {
         ((EventCardSubView)previous).setTitleAndContents(title, cardText);
+    }
+
+    public void setWeeping(WeepingAmount weepingAmount) {
+        portraitAnimations.setWeeping(CHAR_LOCATION, appearance, weepingAmount);
     }
 }

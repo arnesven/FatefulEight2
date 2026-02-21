@@ -34,10 +34,10 @@ public class PortraitAnimations implements Serializable {
         if (!app.showFacialHair()) {
             return;
         }
-        if (!handleFacialExpression(screenHandler, app, p, isVampire)) {
+        if (!handleFacialExpression(screenHandler, app, p, isVampire) && !weepingAnimations.containsKey(app)) {
             handleLook(screenHandler, app, p);
-            handleBlink(screenHandler, app, p);
         }
+        handleBlink(screenHandler, app, p);
         handleMisc(screenHandler, app);
 
     }
@@ -68,7 +68,7 @@ public class PortraitAnimations implements Serializable {
     }
 
     private boolean isMovingMouth(CharacterAppearance app) {
-        return !speakingAnimations.containsKey(app) || speakingAnimations.get(app).isMouthMoving();
+        return speakingAnimations.containsKey(app) && speakingAnimations.get(app).isMouthMoving();
     }
 
     private void handleBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
@@ -175,7 +175,6 @@ public class PortraitAnimations implements Serializable {
 
     public void setFacialExpression(CharacterAppearance app, FacialExpression emph, int expressionLifetime) {
         if (emph != FacialExpression.none) {
-            blinking.remove(app);
             lookers.remove(app);
             facialExpressions.put(app, new MyPair<>(emph, expressionLifetime));
         }
@@ -185,7 +184,6 @@ public class PortraitAnimations implements Serializable {
     }
 
     public void forceEyesClosed(GameCharacter victim, boolean closed) {
-        facialExpressions.remove(victim.getAppearance());
         forceEyesClosed(victim.getAppearance(), closed);
     }
 
@@ -254,6 +252,7 @@ public class PortraitAnimations implements Serializable {
             Point p = new Point(location.x, location.y);
             p.y += 3;
             weepingAnimations.put(app, new WeepingAnimation(p, amount));
+            lookers.remove(app);
         }
     }
 }
