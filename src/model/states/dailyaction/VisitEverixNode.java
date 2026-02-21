@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.normal.WitchClass;
 import model.journal.InitialStoryPart;
@@ -60,7 +61,7 @@ public class VisitEverixNode extends DailyActionNode {
             if (storyPart.getStep() == 3) {
                 setCurrentTerrainSubview(model);
                 showEverixPortrait(model);
-                portraitSay("So you've taken care of the 'frogmen problem'. What can I help you with?");
+                portraitSay("So you've taken care of the 'frogmen problem'. What can I help you with?", FacialExpression.questioning);
                 leaderSay("I found this crimson orb. It was in the stomach of the frogman chieftain. " +
                         "Do you know anything about it?");
                 println("You hand Everix the orb, and she examines it closely.");
@@ -70,7 +71,7 @@ public class VisitEverixNode extends DailyActionNode {
                 portraitSay("Could be.");
                 leaderSay("Could it be valuable?");
                 portraitSay("Could be, if you found the right buyer. But I'm not really an expert in this field of study.");
-                leaderSay("Oh...");
+                leaderSay("Oh... That's too bad.", FacialExpression.sad);
                 portraitSay("But I know somebody who is.");
                 leaderSay("Oh!");
                 portraitSay("It's just...");
@@ -87,9 +88,9 @@ public class VisitEverixNode extends DailyActionNode {
                 leaderSay("I don't mind witches. Where can I find her?");
                 portraitSay("I'll mark the location of her hut on your map. But you should know that she never does " +
                         "anything for free. She'll likely have a task she'll want you to do before answering any of your " +
-                        "questions.");
-                leaderSay("Naturally. Why be helpful?");
-                portraitSay("Oh, she'll be helpful. She's just... well let's just call it self preservation.");
+                        "questions.", FacialExpression.wicked);
+                leaderSay("Naturally. Why be helpful?", FacialExpression.disappointed);
+                portraitSay("Oh, she'll be helpful. She's just... well let's just call it self preservation.", FacialExpression.relief);
                 storyPart.increaseStep(model);
                 storyPart.transitionStep(model, 1);
             } else if (storyPart.getStep() < 3) {

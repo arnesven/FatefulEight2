@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.enemies.FrogmanChiefEnemy;
 import model.enemies.FrogmanLeaderEnemy;
@@ -112,14 +113,14 @@ public class FrogmenProblemQuest extends MainQuest {
                 state.println("The frogmen seem to have calmed down. It appears the reason they have been so aggressive lately " +
                         "is due to their new leadership. A very aggressive chieftain from a nearby settlement. But the chieftain has " +
                         "become ill. He is lying on a cot, feverish and dry.");
-                state.leaderSay("Perhaps if we gave him some of our medicine?");
+                state.leaderSay("Perhaps if we gave him some of our medicine?", FacialExpression.questioning);
                 state.println("You try to treat the frogman as best you can. After a while he retches violently.");
                 if (model.getParty().size() > 1) {
                     GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
-                    state.partyMemberSay(gc, "Disgusting!");
+                    state.partyMemberSay(gc, "Disgusting!", FacialExpression.surprised);
                 }
-                state.leaderSay("Wait a moment. What's that on the floor?");
-                state.leaderSay("What's this? A red pearl? Why would a frogman have it in his belly. Did he eat it by mistake?");
+                state.leaderSay("Wait a moment. What's that on the floor?", FacialExpression.questioning);
+                state.leaderSay("What's this? A red pearl? Why would a frogman have it in his belly. Did he eat it by mistake?", FacialExpression.questioning);
                 state.println("You clean the pearl a bit and put it into your pocket.");
                 state.leaderSay("Perhaps it is valuable?");
                 getCrimsonPearl(model, state);

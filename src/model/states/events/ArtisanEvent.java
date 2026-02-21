@@ -125,7 +125,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         while (yesNoInput()) {
             print("For whom do you want to upgrade an item?");
             GameCharacter gc = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-            if (subType.didImprove(model, this, gc)) {
+            if (subType.didImprove(model, this, gc, itemList)) {
                 partyMemberSay(gc, MyRandom.sample(List.of("Thank you!", "Much obliged.", "It looks great!", "Beautiful!")));
                 improvedTimes++;
             }
@@ -219,13 +219,18 @@ public class ArtisanEvent extends GeneralInteractionEvent {
             return itemType;
         }
 
-        public boolean didImprove(Model model, ArtisanEvent artisanEvent, GameCharacter gc) {
+        public boolean didImprove(Model model, ArtisanEvent artisanEvent, GameCharacter gc,
+                                  List<Item> sellItems) {
             Item it = getItemForUpgrade(gc.getEquipment());
             if (it == null) {
                 artisanEvent.println("That character does not have an item which the " + getName() + " can upgrade.");
                 return false;
             }
             artisanEvent.portraitSay("Do you want me to upgrade something? Let's see...");
+            if (sellItems.contains(it)) {
+                artisanEvent.portraitSay("You mean the item I just sold you? Sorry, I made that as good as I can already!");
+                return false;
+            }
             int cost = 0;
             if (it.getPrevalence() == Prevalence.common || it instanceof StartingItem) {
                 artisanEvent.portraitSay("Oh, it's a " + it.getName() + ". I've seen countless of these. Upgrading it should be easy.");

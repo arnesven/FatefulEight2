@@ -262,7 +262,7 @@ public class RecruitState extends GameState {
                 partyMemberSay(other, MyRandom.sample(List.of("Hello there. I'm " + other.getFirstName() + ".",
                         "Hi.", "Nice to meet you. I am " + other.getFirstName() + ".",
                         "How do you do?",
-                        "Welcome aboard " + gc.getFirstName(),
+                        "Welcome aboard " + gc.getFirstName() + ".",
                         "Welcome to the gang.",
                         "Pleased to meet you " + gc.getFirstName(),
                         (model.getTimeOfDay() == TimeOfDay.MORNING ? "Good morning" : "Good afternoon") +

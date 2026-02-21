@@ -32,4 +32,9 @@ public class FarmerNPCClass extends NPCClass {
         return new AvatarSprite(race, 0x220, MyColors.BEIGE, race.getColor(),
                 appearance.getNormalHair(), appearance.getFullBackHair());
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

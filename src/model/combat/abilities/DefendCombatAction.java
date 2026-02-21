@@ -19,7 +19,8 @@ import java.util.List;
 
 public class DefendCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final int DEFEND_SKILL_RANKS = 3;
-    private static final List<Skill> SKILLS = List.of(Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms);
+    private static final List<Skill> SKILLS = List.of(Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms,
+            Skill.UnarmedCombat);
 
     public DefendCombatAction() {
         super("Defend", false, false);

@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.Party;
 import model.TimeOfDay;
+import model.characters.ConvoLine;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
@@ -459,18 +460,18 @@ public class EveningState extends GameState {
             other = MyRandom.sample(model.getParty().getPartyMembers());
         }
 
-        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> allConvos = PersonalityTrait.makeEveningConversation(model, mainPerson, other);
+        Map<PersonalityTrait, List<ConvoLine>> allConvos = PersonalityTrait.makeEveningConversation(model, mainPerson, other);
         List<PersonalityTrait> traits = MyLists.filter(new ArrayList<>(allConvos.keySet()), mainPerson::hasPersonality);
         if (traits.isEmpty()) {
             randomComment(model);
         } else {
             Collections.shuffle(traits);
-            List<MyPair<GameCharacter, String>> convo = allConvos.get(traits.getFirst());
-            for (MyPair<GameCharacter, String> p : convo) {
-                if (p.first == null) {
-                    println(p.second);
+            List<ConvoLine> convo = allConvos.get(traits.getFirst());
+            for (ConvoLine p : convo) {
+                if (p.getPerson() == null) {
+                    println(p.getLine());
                 } else {
-                    partyMemberSay(p.first, p.second);
+                    partyMemberSay(p.getPerson(), p.getLine(), p.getExpression());
                 }
             }
         }

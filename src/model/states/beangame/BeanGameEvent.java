@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -185,7 +186,7 @@ public class BeanGameEvent extends DailyEventState {
             }
         } else {
             leaderSay(MyRandom.sample(List.of("Yes!", "I won!", "Yay!", "Superb.", "That's the way!",
-                    "Lucky!", "In the pocket!", "Great. Pay up!", "I knew it!")));
+                    "Lucky!", "In the pocket!", "Great. Pay up!", "I knew it!")), FacialExpression.wicked);
             gamblerSay("Okay, here's your money.");
             int money = prize * 5;
             println("The gambler hands you " + money + " obols.");
@@ -244,18 +245,18 @@ public class BeanGameEvent extends DailyEventState {
     }
 
     private void jackpotWin(Model model, List<Integer> prizes) {
-        leaderSay("JACKPOT!!!");
+        leaderSay("JACKPOT!!!", FacialExpression.surprised);
         model.getLog().waitForAnimationToFinish();
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, gamblerAppearance, "Gambler");
         println("The gambler's enthusiasm is quickly replaced by obvious disappointment.");
-        portraitSay("Jackpot indeed.");
+        portraitSay("Jackpot indeed.", FacialExpression.disappointed);
         leaderSay("I guess this is my lucky day.");
         int result = prizes.get(0) * prizes.get(1) * prizes.get(2);
         SkillCheckResult skillResult = model.getParty().getLeader().testSkillHidden(Skill.Logic,
                 SkillChecks.adjustDifficulty(model, 8), 0);
         if (result <= 10 || skillResult.isSuccessful()) {
-            leaderSay("Now pay me my " + result + " gold please.");
+            leaderSay("Now pay me my " + result + " gold please.", FacialExpression.wicked);
             println("(" + skillResult.asString() + ".)");
             portraitSay("Hmm... yes, congratulations...");
             println("The gambler brings out a bag of money and counts up your prize. You get " + result + " gold.");
@@ -266,7 +267,7 @@ public class BeanGameEvent extends DailyEventState {
                     MyStrings.numberWord(prizes.get(2)) + " is ...");
             int fakeResult = (result * 2) / 3;
             println("The gambler brings out a bag of money and counts up coins.");
-            portraitSay(" uhm, it's " + fakeResult + " gold. Here you go.");
+            portraitSay(" uhm, it's " + fakeResult + " gold. Here you go.", FacialExpression.wicked);
 
             MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.Logic, 8);
 
@@ -274,8 +275,8 @@ public class BeanGameEvent extends DailyEventState {
                 GameCharacter gc = passiveResult.second;
                 println(gc.getName() + " does some quick counting on " + hisOrHer(gc.getGender()) +
                         " fingers (" + skillResult.asString() + ") ");
-                partyMemberSay(gc, "Hey, that doesn't seem right! I get it to " + result + " gold.");
-                portraitSay("Yes, of course, how silly of me. An honest mistake, here you go.");
+                partyMemberSay(gc, "Hey, that doesn't seem right! I get it to " + result + " gold.", FacialExpression.questioning);
+                portraitSay("Yes, of course, how silly of me. An honest mistake, here you go.", FacialExpression.relief);
                 println("The gambler nervously pulls out some more money. You get " + result + " gold.");
                 model.getParty().earnGold(result);
                 return;

@@ -130,7 +130,7 @@ public class WarehouseEvent extends DailyEventState {
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, workerAppearance, "Worker");
         portraitSay("I can't believe you actually got it out.");
-        leaderSay("Piece of cake!");
+        leaderSay("Piece of cake!", FacialExpression.wicked);
         portraitSay("Here's your reward. I'm sorry I don't have more to give you.");
         println("You get 15 gold.");
         model.getParty().earnGold(15);

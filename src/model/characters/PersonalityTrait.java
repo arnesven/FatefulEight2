@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.items.weapons.NaturalWeapon;
 import model.states.GameState;
 import model.states.events.*;
@@ -220,8 +221,8 @@ public enum PersonalityTrait {
         return answers;
     }
 
-    public static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeEveningConversation(Model model, GameCharacter main, GameCharacter other) {
-        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> convos = new HashMap<>();
+    public static Map<PersonalityTrait, List<ConvoLine>> makeEveningConversation(Model model, GameCharacter main, GameCharacter other) {
+        Map<PersonalityTrait, List<ConvoLine>> convos = new HashMap<>();
 
         if (MyRandom.flipCoin() &&
                 !main.getEquipment().getWeapon().isRangedAttack() &&
@@ -233,246 +234,246 @@ public enum PersonalityTrait {
         return convos;
     }
 
-    private static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeRationsConvos(Model model, GameCharacter main, GameCharacter other) {
-        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> convos = new HashMap<>();
-        List<MyPair<GameCharacter, String>> primer = new ArrayList<>(List.of(
-                new MyPair<>(null, main.getFirstName() + " is counting the rations.")));
+    private static Map<PersonalityTrait, List<ConvoLine>> makeRationsConvos(Model model, GameCharacter main, GameCharacter other) {
+        Map<PersonalityTrait, List<ConvoLine>> convos = new HashMap<>();
+        List<ConvoLine> primer = new ArrayList<>();
+        primer.add(new ConvoLine(null, main.getFirstName() + " is counting the rations."));
 
         if (model.getParty().getFood() < model.getParty().size() * 3) { // low rations
             convos.put(PersonalityTrait.stingy,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "We're running low. Perhaps we should go down to half rations."),
-                            new MyPair<>(other, "What? You can't be serious?"),
-                            new MyPair<>(main, "Well... Nobody eats more than their share!"),
-                            new MyPair<>(other, "Relax! Jeez..."))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "We're running low. Perhaps we should go down to half rations."),
+                            new ConvoLine(other, "What? You can't be serious?"),
+                            new ConvoLine(main, "Well... Nobody eats more than their share!", FacialExpression.disappointed),
+                            new ConvoLine(other, "Relax! Jeez..."))));
 
             convos.put(PersonalityTrait.aggressive,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "I think somebody's been having late night snacks..."),
-                            new MyPair<>(other, "You think somebody is stealing food?"),
-                            new MyPair<>(main, "Arrrg... when I get my hands on them!"),
-                            new MyPair<>(other, "You probably just counted wrong."),
-                            new MyPair<>(null, main.getFirstName() + " spends the rest of the evening interrogating the other party members about the alleged theft."),
-                            new MyPair<>(main, "I'm so pissed off!"))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "I think somebody's been having late night snacks..."),
+                            new ConvoLine(other, "You think somebody is stealing food?"),
+                            new ConvoLine(main, "Arrrg... when I get my hands on them!", FacialExpression.angry),
+                            new ConvoLine(other, "You probably just counted wrong.", FacialExpression.relief),
+                            new ConvoLine(null, main.getFirstName() + " spends the rest of the evening interrogating the other party members about the alleged theft."),
+                            new ConvoLine(main, "I'm so pissed off!", FacialExpression.angry))));
 
             convos.put(PersonalityTrait.diplomatic,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "We're low. If things get bad, we need to figure out who gets to eat."),
-                            new MyPair<>(other, "Uh-huh, and I suppose you are a priority?"),
-                            new MyPair<>(main, "Actually yes. If I'm fed I can more easily secure food for the rest of the party."),
-                            new MyPair<>(other, "Let's make sure it doesn't come to that."))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "We're low. If things get bad, we need to figure out who gets to eat."),
+                            new ConvoLine(other, "Uh-huh, and I suppose you are a priority?"),
+                            new ConvoLine(main, "Actually yes. If I'm fed I can more easily secure food for the rest of the party."),
+                            new ConvoLine(other, "Let's make sure it doesn't come to that."))));
 
             convos.put(PersonalityTrait.cold,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "We're low. Perhaps we will starve soon."),
-                            new MyPair<>(other, "You really think so?"),
-                            new MyPair<>(main, "Of course. Plenty of people starve every day. It's bound to happen to us sooner or later."),
-                            new MyPair<>(other,"I'm trying not to think about it."))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "We're low. Perhaps we will starve soon."),
+                            new ConvoLine(other, "You really think so?"),
+                            new ConvoLine(main, "Of course. Plenty of people starve every day. It's bound to happen to us sooner or later."),
+                            new ConvoLine(other,"I'm trying not to think about it."))));
 
             convos.put(PersonalityTrait.calm,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "We're low."),
-                            new MyPair<>(other, "Are we going to run out?"),
-                            new MyPair<>(main, "We'll be fine."))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "We're low."),
+                            new ConvoLine(other, "Are we going to run out?", FacialExpression.questioning),
+                            new ConvoLine(main, "We'll be fine."))));
 
             convos.put(PersonalityTrait.benevolent,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "We're low. But I don't have to eat so much. Somebody else probably needs it more."),
-                            new MyPair<>(other, "That's generous of you. But we all need to keep up our strength."))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "We're low. But I don't have to eat so much. Somebody else probably needs it more.", FacialExpression.relief),
+                            new ConvoLine(other, "That's generous of you. But we all need to keep up our strength."))));
 
             convos.put(PersonalityTrait.anxious,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "How are we on rations " + main.getFirstName() + "?"),
-                            new MyPair<>(main, "We're low. What if we run out?"),
-                            new MyPair<>(other, "I'm sure we'll be able to get some more soon."),
-                            new MyPair<>(main, "I hope so. I don't want to starve."))));
+                            new ConvoLine(other, "How are we on rations " + main.getFirstName() + "?"),
+                            new ConvoLine(main, "We're low. What if we run out?"),
+                            new ConvoLine(other, "I'm sure we'll be able to get some more soon."),
+                            new ConvoLine(main, "I hope so. I don't want to starve."))));
         }
 
         if (model.getParty().getFood() > model.getParty().size() * 7) { // high rations
             convos.put(PersonalityTrait.naive,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "Checking on the rations?"),
-                            new MyPair<>(main, "Yeah, I was thinking, since we have so much. Maybe we should eat more."),
-                            new MyPair<>(other, "We'll just get sick if we eat too much."),
-                            new MyPair<>(main, "Maybe."))));
+                            new ConvoLine(other, "Checking on the rations?"),
+                            new ConvoLine(main, "Yeah, I was thinking, since we have so much. Maybe we should eat more."),
+                            new ConvoLine(other, "We'll just get sick if we eat too much."),
+                            new ConvoLine(main, "Maybe."))));
 
             convos.put(PersonalityTrait.gluttonous,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "Checking on the rations?"),
-                            new MyPair<>(main, "Yes... we have a lot. And I'm hungry..."),
-                            new MyPair<>(other, "Hey! Didn't we just eat?"),
-                            new MyPair<>(main, "Yummy yummy...."),
-                            new MyPair<>(other, "I'm keeping my eye on you!"))));
+                            new ConvoLine(other, "Checking on the rations?"),
+                            new ConvoLine(main, "Yes... we have a lot. And I'm hungry..."),
+                            new ConvoLine(other, "Hey! Didn't we just eat?", FacialExpression.disappointed),
+                            new ConvoLine(main, "Yummy yummy....", FacialExpression.relief),
+                            new ConvoLine(other, "I'm keeping my eye on you!", FacialExpression.angry))));
 
             convos.put(PersonalityTrait.encouraging,
                     MyLists.merge(primer, List.of(
-                            new MyPair<>(other, "Checking on the rations?"),
-                            new MyPair<>(main, "Yes... we have plenty. Enough for everybody"),
-                            new MyPair<>(other, "That's good to hear."))));
+                            new ConvoLine(other, "Checking on the rations?"),
+                            new ConvoLine(main, "Yes... we have plenty. Enough for everybody"),
+                            new ConvoLine(other, "That's good to hear."))));
         }
 
         convos.put(PersonalityTrait.prudish,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Checking on the rations?"),
-                        new MyPair<>(main, "I'm sick of this stuff. I want a real meal."),
-                        new MyPair<>(other, "We'll hit a tavern sooner or later."),
-                        new MyPair<>(null, main.getFirstName() + " picks up some dry bread."),
-                        new MyPair<>(main, "Yuck..."))));
+                        new ConvoLine(other, "Checking on the rations?"),
+                        new ConvoLine(main, "I'm sick of this stuff. I want a real meal.", FacialExpression.disappointed),
+                        new ConvoLine(other, "We'll hit a tavern sooner or later."),
+                        new ConvoLine(null, main.getFirstName() + " picks up some dry bread."),
+                        new ConvoLine(main, "Yuck...", FacialExpression.disappointed))));
 
         convos.put(PersonalityTrait.romantic,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "It would be better with some real food, yeah?"),
-                        new MyPair<>(main, "I don't mind actually. I imagine it's the most scrumptious entry at the finest diner, and it tastes a lot better."),
-                        new MyPair<>(other, "I wish I had your imagination."))));
+                        new ConvoLine(other, "It would be better with some real food, yeah?"),
+                        new ConvoLine(main, "I don't mind actually. I imagine it's the most scrumptious entry at the finest diner, and it tastes a lot better."),
+                        new ConvoLine(other, "I wish I had your imagination.", FacialExpression.disappointed))));
 
         convos.put(PersonalityTrait.snobby,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "It would be better with some real food, yeah?"),
-                        new MyPair<>(main, "Indeed. This stuff is basically swill."),
-                        new MyPair<>(other, "I wouldn't go that far."))));
+                        new ConvoLine(other, "It would be better with some real food, yeah?"),
+                        new ConvoLine(main, "Indeed. This stuff is basically swill.", FacialExpression.disappointed),
+                        new ConvoLine(other, "I wouldn't go that far.", FacialExpression.disappointed))));
 
         convos.put(PersonalityTrait.rude,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Checking on the rations?"),
-                        new MyPair<>(main, "Yeah. Have you been stealing?"),
-                        new MyPair<>(other, "What!? Of course not."),
-                        new MyPair<>(main, "Just don't get any ideas."),
-                        new MyPair<>(other, "I don't like your tone " + main.getFirstName() + "."),
-                        new MyPair<>(main, "That sounds like a you-problem."),
-                        new MyPair<>(null, other.getFirstName() + " is offended and walks off."))));
+                        new ConvoLine(other, "Checking on the rations?"),
+                        new ConvoLine(main, "Yeah. Have you been stealing?"),
+                        new ConvoLine(other, "What!? Of course not.", FacialExpression.surprised),
+                        new ConvoLine(main, "Just don't get any ideas."),
+                        new ConvoLine(other, "I don't like your tone " + main.getFirstName() + ".", FacialExpression.disappointed),
+                        new ConvoLine(main, "That sounds like a you-problem.", FacialExpression.disappointed),
+                        new ConvoLine(null, other.getFirstName() + " is offended and walks off."))));
 
         convos.put(PersonalityTrait.greedy,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Checking on the rations?"),
-                        new MyPair<>(main, "Yeah. I think I deserve double rations."),
-                        new MyPair<>(other, "Really? Why."),
-                        new MyPair<>(main, "I just do."))));
+                        new ConvoLine(other, "Checking on the rations?"),
+                        new ConvoLine(main, "Yeah. I think I deserve double rations."),
+                        new ConvoLine(other, "Really? Why.", FacialExpression.questioning),
+                        new ConvoLine(main, "I just do."))));
         return convos;
     }
 
-    private static Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> makeCleanWeaponConvos(GameCharacter main, GameCharacter other) {
-        Map<PersonalityTrait, List<MyPair<GameCharacter, String>>> convos = new HashMap<>();
+    private static Map<PersonalityTrait, List<ConvoLine>> makeCleanWeaponConvos(GameCharacter main, GameCharacter other) {
+        Map<PersonalityTrait, List<ConvoLine>> convos = new HashMap<>();
 
-        List<MyPair<GameCharacter, String>> primer = new ArrayList<>(List.of(
-                new MyPair<>(null, main.getFirstName() + " is cleaning " + GameState.hisOrHer(main.getGender()) + " " + main.getEquipment().getWeapon().getName().toLowerCase() + ".")));
+        List<ConvoLine> primer = new ArrayList<>(List.of(
+                new ConvoLine(null, main.getFirstName() + " is cleaning " + GameState.hisOrHer(main.getGender()) + " " + main.getEquipment().getWeapon().getName().toLowerCase() + ".")));
 
         convos.put(PersonalityTrait.aggressive,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Yes. I can't wait to get back into the fight!"))));
+                        new ConvoLine(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Yes. I can't wait to get back into the fight!"))));
 
         convos.put(PersonalityTrait.brave,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "I have to. It won't do for it to be rusty when we need to defend ourselves."))));
+                        new ConvoLine(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "I have to. It won't do for it to be rusty when we need to defend ourselves."))));
 
         convos.put(PersonalityTrait.lawful,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Are you expecting to use that soon?"),
-                        new MyPair<>(main, "I've heard there are bandits around here. We should bring them to justice."))));
+                        new ConvoLine(other, "Are you expecting to use that soon?"),
+                        new ConvoLine(main, "I've heard there are bandits around here. We should bring them to justice."))));
 
         convos.put(PersonalityTrait.stingy,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "This equipment is expensive, we should take good care of it."))));
+                        new ConvoLine(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "This equipment is expensive, we should take good care of it."))));
 
         convos.put(PersonalityTrait.romantic,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "What's the point of cleaning that, " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "I have to. What if I meet a cute " + GameState.boyOrGirl(MyRandom.flipCoin()) + "? " +
+                        new ConvoLine(other, "What's the point of cleaning that, " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "I have to. What if I meet a cute " + GameState.boyOrGirl(MyRandom.flipCoin()) + "? " +
                                 "They'll run the other way if my gear looks shabby."),
-                        new MyPair<>(other, "That's your reason for doing that? Incredible."))));
+                        new ConvoLine(other, "That's your reason for doing that? Incredible.", FacialExpression.questioning))));
 
         convos.put(PersonalityTrait.cold,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Are those blood stains?"),
-                        new MyPair<>(main, "They are. Been doing a lot of killing."),
-                        new MyPair<>(other, "..."))));
+                        new ConvoLine(other, "Are those blood stains?"),
+                        new ConvoLine(main, "They are. Been doing a lot of killing.", FacialExpression.wicked),
+                        new ConvoLine(other, "..."))));
 
         convos.put(PersonalityTrait.calm,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Yes. This is almost like meditation for me."))));
+                        new ConvoLine(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Yes. This is almost like meditation for me."))));
 
         convos.put(PersonalityTrait.benevolent,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Are you expecting to use that soon?"),
-                        new MyPair<>(main, "I hope not. I actually abhor violence."))));
+                        new ConvoLine(other, "Are you expecting to use that soon?"),
+                        new ConvoLine(main, "I hope not. I actually abhor violence.", FacialExpression.sad))));
 
         convos.put(PersonalityTrait.jovial,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Are those blood stains?"),
-                        new MyPair<>(main, "No no, this is jam. I was preparing a very large sandwich earlier."),
-                        new MyPair<>(other, "Uhm... I don't think I"),
-                        new MyPair<>(main, "I'm just yanking your chain mate."),
-                        new MyPair<>(other, "Oh. Ha-ha."))));
+                        new ConvoLine(other, "Are those blood stains?"),
+                        new ConvoLine(main, "No no, this is jam. I was preparing a very large sandwich earlier."),
+                        new ConvoLine(other, "Uhm... I don't think I"),
+                        new ConvoLine(main, "I'm just yanking your chain mate.", FacialExpression.relief),
+                        new ConvoLine(other, "Oh. Ha-ha."))));
 
         convos.put(PersonalityTrait.irritable,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Mind your own business " + other.getName() + "."),
-                        new MyPair<>(other, "Hmph!"))));
+                        new ConvoLine(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Mind your own business " + other.getName() + ".", FacialExpression.disappointed),
+                        new ConvoLine(other, "Hmph!", FacialExpression.disappointed))));
 
         convos.put(PersonalityTrait.prudish,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Yes... but can you do this for me?"),
-                        new MyPair<>(other, "What? Why should I?"),
-                        new MyPair<>(main, "Well... I don't want to get dirty."),
-                        new MyPair<>(null, other.getFirstName() + " turns away in disgust."))));
+                        new ConvoLine(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Yes... but can you do this for me?"),
+                        new ConvoLine(other, "What? Why should I?", FacialExpression.angry),
+                        new ConvoLine(main, "Well... I don't want to get dirty.", FacialExpression.disappointed),
+                        new ConvoLine(null, other.getFirstName() + " turns away in disgust."))));
 
         convos.put(PersonalityTrait.snobby,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Yes... but can you do this for me?"),
-                        new MyPair<>(other, "What? Why should I?"),
-                        new MyPair<>(main, "This type of chore is beneath me. It's servant stuff."),
-                        new MyPair<>(other, "Are you saying I'm your servant?"),
-                        new MyPair<>(main, "No but..."),
-                        new MyPair<>(null, other.getFirstName() + " turns away in disgust."))));
+                        new ConvoLine(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Yes... but can you do this for me?"),
+                        new ConvoLine(other, "What? Why should I?"),
+                        new ConvoLine(main, "This type of chore is beneath me. It's servant stuff."),
+                        new ConvoLine(other, "Are you saying I'm your servant?", FacialExpression.disappointed),
+                        new ConvoLine(main, "No but..."),
+                        new ConvoLine(null, other.getFirstName() + " turns away in disgust."))));
 
         convos.put(PersonalityTrait.rude,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Not all of us want to have dirty gear " + other.getName() + "."),
-                        new MyPair<>(other, "Hey!"))));
+                        new ConvoLine(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Not all of us want to have dirty gear " + other.getName() + "."),
+                        new ConvoLine(other, "Hey!", FacialExpression.disappointed))));
 
         convos.put(PersonalityTrait.encouraging,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it clean " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Yes. The way I see it, why not look good while we're fighting?"),
-                        new MyPair<>(other, "Can't argue with that."))));
+                        new ConvoLine(other, "Keeping it clean " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Yes. The way I see it, why not look good while we're fighting?", FacialExpression.relief),
+                        new ConvoLine(other, "Can't argue with that."))));
 
         convos.put(PersonalityTrait.intellectual,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Keeping it sharp " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "Dirt can actually degrade your weapon faster than using it in battle."),
-                        new MyPair<>(other, "I don't know if I believe that."),
-                        new MyPair<>(main, "Well, it's true. I once attended a lecture about it..."),
-                        new MyPair<>(null, main.getName() + " starts reminiscing about " + GameState.hisOrHer(main.getGender()) + " time at college."),
-                        new MyPair<>(other, "Fine, I believe you. Just stop talking please..."))));
+                        new ConvoLine(other, "Keeping it sharp " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "Dirt can actually degrade your weapon faster than using it in battle."),
+                        new ConvoLine(other, "I don't know if I believe that."),
+                        new ConvoLine(main, "Well, it's true. I once attended a lecture about it..."),
+                        new ConvoLine(null, main.getName() + " starts reminiscing about " + GameState.hisOrHer(main.getGender()) + " time at college."),
+                        new ConvoLine(other, "Fine, I believe you. Just stop talking please...", FacialExpression.sad))));
 
         convos.put(PersonalityTrait.cowardly,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "Are you expecting to use that soon?"),
-                        new MyPair<>(main, "Actually, I don't know why I lug this thing around. " +
-                                "Am I expected to use it in combat?"),
-                        new MyPair<>(other, "Uhm, yeah."),
-                        new MyPair<>(main, "Sounds risky."),
-                        new MyPair<>(other, "Adventuring is risky business " + main.getFirstName() +
+                        new ConvoLine(other, "Are you expecting to use that soon?"),
+                        new ConvoLine(main, "Actually, I don't know why I lug this thing around. " +
+                                "Am I expected to use it in combat?", FacialExpression.afraid),
+                        new ConvoLine(other, "Uhm, yeah."),
+                        new ConvoLine(main, "Sounds risky."),
+                        new ConvoLine(other, "Adventuring is risky business " + main.getFirstName() +
                                 ". You'd better get used to it, or find another occupation."),
-                        new MyPair<>(main, "I'll be fine. Let's just keep the fighting to a minimum."))));
+                        new ConvoLine(main, "I'll be fine. Let's just keep the fighting to a minimum."))));
 
         convos.put(PersonalityTrait.narcissistic,
                 MyLists.merge(primer, List.of(
-                        new MyPair<>(other, "What's the point of cleaning that, " + main.getFirstName() + "?"),
-                        new MyPair<>(main, "I want it to look extra shiny. This weapon is part of my image."))));
+                        new ConvoLine(other, "What's the point of cleaning that, " + main.getFirstName() + "?"),
+                        new ConvoLine(main, "I want it to look extra shiny. This weapon is part of my image."))));
         return convos;
     }
 }

@@ -149,17 +149,17 @@ public class PayWagesState extends GameState{
     private void  bribePartyMember(GameCharacter target, int bribe) {
         target.addToAttitude(getModel().getParty().getLeader(), goldToAttitudeBonus(bribe));
         if (target.hasPersonality(PersonalityTrait.rude)) {
-            partyMemberSay(target, MyRandom.sample(List.of("It's about time!", "Finally, some appreciation.")));
+            partyMemberSay(target, MyRandom.sample(List.of("It's about time!", "Finally, some appreciation.")), FacialExpression.disappointed);
         } else if (target.hasPersonality(PersonalityTrait.greedy)) {
             partyMemberSay(target, MyRandom.sample(List.of(bribe + " gold, that's it? Pitiful.", "More please!",
-                    "I think " + (bribe * 2) + " would have been more suitable!")));
+                    "I think " + (bribe * 2) + " would have been more suitable!")), FacialExpression.disappointed);
         } else if (target.hasPersonality(PersonalityTrait.generous)) {
             partyMemberSay(target, MyRandom.sample(List.of("Are you sure we can afford this?",
-                    "Somebody else probably needs this more than me.")));
+                    "Somebody else probably needs this more than me.")), FacialExpression.questioning);
         } else{
             partyMemberSay(target, MyRandom.sample(List.of("Much appreciated!", "Thank you!",
                     "How kind!", "I deserved this.", "My fair share, I'm sure.",
-                    "My wage? Okay.")));
+                    "My wage? Okay.")), FacialExpression.relief);
         }
         getModel().getParty().loseGold(bribe);
         GameStatistics.incrementWagesPaid(bribe);

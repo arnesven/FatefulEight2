@@ -3,6 +3,7 @@ package model.states.events;
 import model.GameStatistics;
 import model.Model;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -39,27 +40,28 @@ public class LetterFromMotherEvent extends DailyEventState {
                 " catches " + hisOrHer(getPortraitGender()) + " breath.");
         portraitSay("'" + model.getParty().getLeader().getFullName() + "' - that's you right? I have a package for you.");
         println(model.getParty().getLeader().getFirstName() + " opens the package, inside is a letter.");
-        leaderSay("Hmm... Oh! It's from my mother.");
+        leaderSay("Hmm... Oh! It's from my mother.", FacialExpression.surprised);
         randomSayIfPersonality(PersonalityTrait.jovial, List.of(model.getParty().getLeader()), "Time for you to come home for dinner?");
         println("Under the letter is a pouch. It clinks in a promising way when you lift it up.");
-        leaderSay("Oh mother, you shouldn't have...");
+        leaderSay("Oh mother, you shouldn't have...", FacialExpression.relief);
         println("The party gains " + GOLD_FROM_MOTHER + " gold!");
         model.getParty().earnGold(GOLD_FROM_MOTHER);
         if (model.getParty().size() > 1) {
-            partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "What does the letter say?");
+            partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "What does the letter say?", FacialExpression.questioning);
         }
         println(model.getParty().getLeader().getFirstName() + " reads the letter out loud.");
         String sellWhat = MyRandom.sample(List.of("comic book collection", "action figure collection", "collection of dress-up clothes",
                 "large dollhouse", "stamp collection"));
         leaderSay("'Dear " + model.getParty().getLeader().getFirstName() + ". Since you have not been home for " +
-                "quite some time I've been cleaning out your room. I'm turning it into an art studio. I took the liberty of " +
+                "quite some time I've been cleaning out your room. I'm turning it into " +
+                MyRandom.sample(List.of("an art studio", "a gym", "a home spa", "a guest room")) + ". I took the liberty of " +
                 "selling some of your things. In particular, I sold your " + sellWhat + ". I hope you don't mind.");
-        leaderSay("Drat.");
+        leaderSay("Drat.", FacialExpression.disappointed);
         randomSayIfPersonality(PersonalityTrait.jovial, List.of(model.getParty().getLeader()), "And you were saving that for your own kids one day!");
         leaderSay("'Inside this package are some of the proceeds from the sale. Make good use of them and good luck " +
                 "in your adventuring career. Know that you always have a home to come home to here. Albeit without your own room. " +
                 "Lots of hugs and kisses. Your Mother.'");
         randomSayIfPersonality(PersonalityTrait.romantic, List.of(model.getParty().getLeader()), "Awww! That's so sweet!3");
-        leaderSay("Well we sure can use the money. Thanks mom.");
+        leaderSay("Well, we sure can use the money. Thanks mom.", FacialExpression.relief);
     }
 }

@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillChecks;
 import model.states.DailyEventState;
@@ -58,12 +59,12 @@ public class PartyCookingEvent extends DailyEventState {
                 if (diff > 0) {
                     println(gc.getFirstName() + " enjoyed the special meal.");
                     if (gc.hasPersonality(PersonalityTrait.gluttonous)) {
-                        partyMemberSay(gc, "GIVE... ME... MORE!");
+                        partyMemberSay(gc, "GIVE... ME... MORE!", FacialExpression.excited);
                     } else {
-                        model.getParty().partyMemberSay(model, gc,
+                        partyMemberSay(gc, MyRandom.sample(
                                 List.of("Yummy!", "Can I have some more?", "Ah, what lovely seasoning!<3",
                                         "Perfection!<3", "So creamy!", "This is my favorite food.",
-                                        "A secret recipe?", "Lovely."));
+                                        "A secret recipe?", "Lovely.")), FacialExpression.relief);
                     }
                     gc.addToAttitude(cooker, diff);
                     cooker.addToAttitude(gc, diff/2);
@@ -72,14 +73,14 @@ public class PartyCookingEvent extends DailyEventState {
                     if (gc.hasPersonality(PersonalityTrait.unkind) ||
                             gc.hasPersonality(PersonalityTrait.rude) ||
                             gc.hasPersonality(PersonalityTrait.cold)) {
-                        model.getParty().partyMemberSay(model, gc,
+                        partyMemberSay(gc, MyRandom.sample(
                                 List.of("Yuck!", "You are an awful cook", "Bloody terrible!",
                                         "Did you follow a recipe, or did you just toss random things into the pot?",
-                                        "Are you trying to poison me?"));
+                                        "Are you trying to poison me?")), FacialExpression.disappointed);
                     } else {
-                        model.getParty().partyMemberSay(model, gc,
+                        partyMemberSay(gc, MyRandom.sample(
                                 List.of("Uhm, I think I've had enough.", "Is this a hair?",
-                                        "This is still raw.", "Definitely overcooked.", "Not my favorite."));
+                                        "This is still raw.", "Definitely overcooked.", "Not my favorite.")), FacialExpression.questioning);
                     }
                     gc.addToAttitude(cooker, diff/2);
                     cooker.addToAttitude(gc, diff/4);
