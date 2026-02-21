@@ -10,8 +10,10 @@ public class FrecklesDetail extends FaceDetail {
 
     @Override
     public void applyYourself(AdvancedAppearance appearance, Race race, boolean coversEars) {
-        Sprite8x8 frecks = new Sprite8x8("freckles", "clothes.png", 0x4C);
-        frecks.setColor1(getColor());
-        appearance.addSpriteOnTop(3, 3, frecks);
+        for (int i = 0; i < 3; ++i) {
+            Sprite8x8 frecks = new Sprite8x8("freckles", "clothes.png", 0x1A8 + i);
+            frecks.setColor1(getColor());
+            appearance.addSpriteOnTop(2+i, 3, frecks);
+        }
     }
 }
