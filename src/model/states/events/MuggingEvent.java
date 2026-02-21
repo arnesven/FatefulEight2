@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.enemies.MuggerEnemy;
 import model.states.DailyEventState;
@@ -19,8 +20,10 @@ public class MuggingEvent extends DailyEventState {
         showRandomPortrait(model, Classes.BANDIT, "Muggers");
         showEventCard("Muggers", "Some scruffy men approach the party as you cut through" +
                 " an alley.");
-        printQuote("Thug", "Okay kid, hand it over!");
-        randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Forget about it, numb-skulls!");
+        portraitSay( "Okay kid, hand it over!", FacialExpression.wicked);
+        randomSayIfPersonality(PersonalityTrait.narcissistic, List.of(), "Who are you calling kid?", FacialExpression.questioning);
+        randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Forget about it, numb-skulls!", FacialExpression.angry);
+        randomSayIfPersonality(PersonalityTrait.anxious, List.of(), "These guys look kind of scary.", FacialExpression.afraid);
         model.getParty().randomPartyMemberSay(model, List.of("Are we just gonna let these bozos take our stuff?"));
         print("Fight the muggers? (Y/N) ");
         if (yesNoInput()) {

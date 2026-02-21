@@ -1,7 +1,9 @@
 package model.quests;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -212,25 +214,27 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
                     "Then you realize...");
             leaderSay("My goodness... their orcs!");
             showExplicitPortrait(model, orcPortrait, "Orc Confectionist");
+            randomSayIfPersonality(PersonalityTrait.anxious, List.of(), "Help, an Orc! Somebody call the guards!",
+                    FacialExpression.afraid);
             portraitSay("Huh, what are you doing in here?");
             if (badEnding) {
                 leaderSay("We're here to shut this thing down. Did you think your little scheme would work, " +
-                        "poisoning our town with your dirty pastries?");
+                        "poisoning our town with your dirty pastries?", FacialExpression.disappointed);
                 portraitSay("What are you talking about? What poison?");
-                leaderSay("Enough talking. Clear out, or else!");
+                leaderSay("Enough talking. Clear out, or else!", FacialExpression.angry);
                 portraitSay("Boyz! These rascals want to fight. Let's teach'em a lesson!");
             } else {
-                leaderSay("We're your delivery service. Your treats have become quite popular.");
+                leaderSay("We're your delivery service. Your treats have become quite popular.", FacialExpression.relief);
                 portraitSay("That's great!");
-                leaderSay("Uhm, if you don't mind me asking... Don't orcs usually live in the hills and ...");
+                leaderSay("Uhm, if you don't mind me asking... Don't orcs usually live in the hills and ...", FacialExpression.questioning);
                 portraitSay("And what?");
-                leaderSay("Well, you know... Raid, pillage, and that sort of stuff?");
+                leaderSay("Well, you know... Raid, pillage, and that sort of stuff?", FacialExpression.questioning);
                 portraitSay("Yes, I suppose that's normally the case. Awfully dreadful stuff in my opinion.");
                 println("You are surprised of how well spoken this orc is.");
                 leaderSay("But you seem slightly... different.");
                 portraitSay("Yes. I never really fit in with my gruff brethren. They were always harassing me about " +
                         "joining raid parties and that sort of thing. I just wanted to bake.");
-                leaderSay("You're quite talented.");
+                leaderSay("You're quite talented.", FacialExpression.relief);
                 portraitSay("Thank you for noticing. In our camp, nobody ever did. So one day I decided to leave, taking a few of my friends with me. " +
                         "I figured if I managed to get my baked goods popular in town, maybe people wouldn't care that an Orc had baked them.");
                 leaderSay("Well, now you have.");

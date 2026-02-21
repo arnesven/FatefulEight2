@@ -226,7 +226,7 @@ public class WeepingWomanEvent extends DailyEventState {
             leaderSay("Thank you for telling us about Arthur. He sounds like a wonderful person.");
             portraitSay("He really was. But he's gone, and I should try to move on. But sometimes... sometimes I get so lonely.");
             leaderSay("What about your son? Doesn't he visit you?");
-            portraitSay("He does but, well since Arthur passed, he's been more distance.");
+            portraitSay("He does but, well since Arthur passed, he's been more distant.");
             leaderSay("Talk to him. Now is your chance to strengthen your relationship.");
             portraitSay("How very true. Thank you so much for comforting me.");
             leaderSay("It was no trouble at all.");
@@ -243,7 +243,7 @@ public class WeepingWomanEvent extends DailyEventState {
             leaderSay("Thank you. It will be an honor to wield Arthur's sword.");
             println("You leave the woman's home, feeling sad about the story of Arthur's passing, but much uplifted by " +
                     "the experience of helping the woman handling her grief.");
-            println(MyLists.commaAndJoin(usedCharacters, GameCharacter::getFullName) + " gain 30 XP each!");
+            println("Each party member gains 30 XP.");
             MyLists.forEach(model.getParty().getPartyMembers(), gc -> model.getParty().giveXP(model, gc, 30));
             model.getLog().waitForAnimationToFinish();
         } else {
