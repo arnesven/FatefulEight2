@@ -32,7 +32,7 @@ public class HalfOrc extends Race {
 
     @Override
     public MyColors getFreckleColor() {
-        return MyColors.GRAY;
+        return MyColors.GREEN;
     }
 
     @Override

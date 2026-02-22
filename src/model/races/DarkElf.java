@@ -17,7 +17,7 @@ public class DarkElf extends ElvenRace {
 
     @Override
     public MyColors getFreckleColor() {
-        return MyColors.GRAY_RED;
+        return MyColors.GRAY;
     }
 
     @Override

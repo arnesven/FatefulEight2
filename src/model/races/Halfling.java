@@ -57,6 +57,6 @@ public class Halfling extends Race {
 
     @Override
     public MyColors getFreckleColor() {
-        return MyColors.BROWN;
+        return MyColors.GOLD;
     }
 }

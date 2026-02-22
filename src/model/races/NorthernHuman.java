@@ -16,7 +16,7 @@ public class NorthernHuman extends HumanRace {
 
     @Override
     public MyColors getFreckleColor() {
-        return MyColors.LIGHT_RED;
+        return MyColors.PEACH;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Dwarf extends Race {
 
     @Override
     public MyColors getFreckleColor() {
-        return MyColors.LIGHT_RED;
+        return MyColors.PEACH;
     }
 
     @Override

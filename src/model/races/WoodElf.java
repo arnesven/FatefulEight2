@@ -16,7 +16,7 @@ public class WoodElf extends ElvenRace {
 
     @Override
     public MyColors getFreckleColor() {
-        return MyColors.PEACH;
+        return MyColors.YELLOW;
     }
 
     @Override
