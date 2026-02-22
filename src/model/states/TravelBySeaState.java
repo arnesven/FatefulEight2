@@ -15,6 +15,7 @@ import view.subviews.MapSubView;
 import java.awt.*;
 
 public class TravelBySeaState extends GameState {
+    private static final int TRIP_TIME_DAYS = 2;
     private final MyPair<TownLocation, Integer> ship;
     private boolean didTravel = false;
     public static final Sprite SHIP_AVATAR = new Sprite32x32("shipavatar", "world.png", 0x26,
@@ -37,7 +38,7 @@ public class TravelBySeaState extends GameState {
         } else {
             int cost = ship.second * model.getParty().size();
             println("This ship is departing for the " + ship.first.getName() + " soon." +
-                    " The captain will take your party for " + cost + " gold. The voyage takes 2 days.");
+                    " The captain will take your party for " + cost + " gold. The voyage takes " + TRIP_TIME_DAYS + " days.");
             if (finalCheck(model, cost)) {
                 model.getParty().spendGold(cost);
                 travelTo(model, ship.first);
@@ -54,15 +55,27 @@ public class TravelBySeaState extends GameState {
             return false;
         }
         print("Do you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
-        if (yesNoInput()) {
-            if (MyLists.any(model.getParty().getPartyMembers(), gc -> gc.hasCondition(PoisonCondition.class))) {
-                println("One or more of your party members are currently poisoned and will take damage during the trip.");
-                print("Are you sure you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
-                return yesNoInput();
-            }
-            return true;
+        if (!yesNoInput()) {
+            return false;
         }
-        return false;
+
+        if (model.getParty().getFood() < TRIP_TIME_DAYS * model.getParty().size()) {
+            println("You do not have enough rations to last the entire journey.");
+            print("Are you sure you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
+            if (!yesNoInput()) {
+                return false;
+            }
+        }
+
+        if (MyLists.any(model.getParty().getPartyMembers(), gc -> gc.hasCondition(PoisonCondition.class))) {
+            println("One or more of your party members are currently poisoned and will take damage during the trip.");
+            print("Are you sure you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
+            if (!yesNoInput()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void travelTo(Model model, TownLocation first) {
@@ -115,9 +128,9 @@ public class TravelBySeaState extends GameState {
         }
 
         model.getCurrentHex().travelFrom(model);
-        if (voyageTakesTwoDays) {
-            state.stepToNextDay(model);
+        if (voyageTakesTwoDays) { // TODO: Perhaps put this in the middle of the loop above
             state.println("The party spends the day on the ship traveling to " + destinationName + ".");
+            new EveningDuringLineTravelState(model).noLodging(model);
             state.stepToNextDay(model);
         }
         System.out.println("TravelBySeaState: after step to next day.");

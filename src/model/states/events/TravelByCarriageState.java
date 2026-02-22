@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.conditions.PoisonCondition;
 import model.map.DiscoveredRoute;
 import model.map.TownLocation;
+import model.states.EveningDuringLineTravelState;
 import model.states.GameState;
 import model.states.TravelTable;
 import util.MyLists;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class TravelByCarriageState extends GameState {
 
+    private static final int TRIP_TIME_DAYS = 3;
     private final MyPair<TownLocation, Integer> carriage;
     private final int limit;
     private boolean didTravel;
@@ -29,7 +31,7 @@ public class TravelByCarriageState extends GameState {
     public TravelByCarriageState(Model model) {
         super(model);
         this.carriage = rollOnTable(model, (TownLocation)model.getCurrentHex().getLocation());
-        this.limit = MyRandom.randInt(5, 7);
+        this.limit = 6;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class TravelByCarriageState extends GameState {
             } else {
                 int cost = Math.max(1, carriage.second * model.getParty().size() / 2);
                 println("This carriage is departing for the " + carriage.first.getName() + " soon." +
-                        " The driver will take your party for " + cost + " gold. The trip takes 3 days.");
+                        " The driver will take your party for " + cost + " gold. The trip takes " + TRIP_TIME_DAYS + " days.");
                 if (finalCheck(model, cost)) {
                     model.getParty().spendGold(cost);
                     travelTo(model, carriage);
@@ -60,16 +62,28 @@ public class TravelByCarriageState extends GameState {
             println("Unfortunately you cannot afford it and must decline.");
             return false;
         }
+
         print("Do you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
-        if (yesNoInput()) {
-            if (MyLists.any(model.getParty().getPartyMembers(), gc -> gc.hasCondition(PoisonCondition.class))) {
-                println("One or more of your party members are currently poisoned and will take damage during the trip.");
-                print("Are you sure you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
-                return yesNoInput();
-            }
-            return true;
+        if (!yesNoInput()) {
+            return false;
         }
-        return false;
+
+        if (model.getParty().getFood() < TRIP_TIME_DAYS * model.getParty().size()) {
+            println("You do not have enough rations to last the entire journey.");
+            print("Are you sure you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
+            if (!yesNoInput()) {
+                return false;
+            }
+        }
+
+        if (MyLists.any(model.getParty().getPartyMembers(), gc -> gc.hasCondition(PoisonCondition.class))) {
+            println("One or more of your party members are currently poisoned and will take damage during the trip.");
+            print("Are you sure you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
+            if (!yesNoInput()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void travelTo(Model model, MyPair<TownLocation, Integer> carriage) {
@@ -108,10 +122,13 @@ public class TravelByCarriageState extends GameState {
 
 
         model.getCurrentHex().travelFrom(model);
+        new EveningDuringLineTravelState(model).noLodging(model); // TODO: Perhaps put this in the middle of the loop above
         state.stepToNextDay(model);
         state.println("The party spends the day on the carriage traveling to the " + carriage.first.getName());
+        new EveningDuringLineTravelState(model).noLodging(model);
         state.stepToNextDay(model);
         state.println("The party spends the day on the carriage traveling to the " + carriage.first.getName());
+        new EveningDuringLineTravelState(model).noLodging(model);
         state.stepToNextDay(model);
         model.getParty().setPosition(newPosition);
         model.getCurrentHex().travelTo(model);
