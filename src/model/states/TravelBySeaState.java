@@ -1,7 +1,9 @@
 package model.states;
 
 import model.Model;
+import model.combat.conditions.PoisonCondition;
 import model.map.*;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -36,19 +38,31 @@ public class TravelBySeaState extends GameState {
             int cost = ship.second * model.getParty().size();
             println("This ship is departing for the " + ship.first.getName() + " soon." +
                     " The captain will take your party for " + cost + " gold. The voyage takes 2 days.");
-            if (cost > model.getParty().getGold()) {
-                println("Unfortunately you cannot afford to take the trip right now.");
+            if (finalCheck(model, cost)) {
+                model.getParty().spendGold(cost);
+                travelTo(model, ship.first);
             } else {
-                print("Do you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
-                if (yesNoInput()) {
-                    model.getParty().spendGold(cost);
-                    travelTo(model, ship.first);
-                } else {
-                    println("Ok. But come back soon if you change your mind. The ship will not wait for you.");
-                }
+                println("Ok. But come back soon if you change your mind. The ship will not wait for you.");
             }
         }
         return model.getCurrentHex().getDailyActionState(model);
+    }
+
+    private boolean finalCheck(Model model, int cost) {
+        if (cost > model.getParty().getGold()) {
+            println("Unfortunately you cannot afford to take the trip right now.");
+            return false;
+        }
+        print("Do you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
+        if (yesNoInput()) {
+            if (MyLists.any(model.getParty().getPartyMembers(), gc -> gc.hasCondition(PoisonCondition.class))) {
+                println("One or more of your party members are currently poisoned and will take damage during the trip.");
+                print("Are you sure you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
+                return yesNoInput();
+            }
+            return true;
+        }
+        return false;
     }
 
     private void travelTo(Model model, TownLocation first) {

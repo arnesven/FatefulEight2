@@ -1,10 +1,12 @@
 package model.states.events;
 
 import model.Model;
+import model.combat.conditions.PoisonCondition;
 import model.map.DiscoveredRoute;
 import model.map.TownLocation;
 import model.states.GameState;
 import model.states.TravelTable;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -42,8 +44,7 @@ public class TravelByCarriageState extends GameState {
                 int cost = Math.max(1, carriage.second * model.getParty().size() / 2);
                 println("This carriage is departing for the " + carriage.first.getName() + " soon." +
                         " The driver will take your party for " + cost + " gold. The trip takes 3 days.");
-                print("Do you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
-                if (yesNoInput()) {
+                if (finalCheck(model, cost)) {
                     model.getParty().spendGold(cost);
                     travelTo(model, carriage);
                 } else {
@@ -52,6 +53,23 @@ public class TravelByCarriageState extends GameState {
             }
         }
         return model.getCurrentHex().getDailyActionState(model);
+    }
+
+    private boolean finalCheck(Model model, int cost) {
+        if (cost > model.getParty().getGold()) {
+            println("Unfortunately you cannot afford it and must decline.");
+            return false;
+        }
+        print("Do you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
+        if (yesNoInput()) {
+            if (MyLists.any(model.getParty().getPartyMembers(), gc -> gc.hasCondition(PoisonCondition.class))) {
+                println("One or more of your party members are currently poisoned and will take damage during the trip.");
+                print("Are you sure you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
+                return yesNoInput();
+            }
+            return true;
+        }
+        return false;
     }
 
     private void travelTo(Model model, MyPair<TownLocation, Integer> carriage) {
