@@ -21,6 +21,7 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class DruidClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.DARK_GREEN;
     private final GnarledStaffDetail staff;
 
     public DruidClass() {
@@ -42,8 +43,8 @@ public class DruidClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnRobe(characterAppearance, MyColors.DARK_GREEN, MyColors.GREEN);
-        Looks.putOnHood(characterAppearance, MyColors.DARK_GREEN);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, MyColors.GREEN);
+        Looks.putOnHood(characterAppearance, ROBE_COLOR);
         if (characterAppearance instanceof AdvancedAppearance) {
             staff.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());
@@ -52,7 +53,7 @@ public class DruidClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0xE0, MyColors.DARK_GREEN, race.getColor(),
+        return new AvatarSprite(race, 0xE0, ROBE_COLOR, race.getColor(), appearance.getGender() ? MyColors.BLACK : ROBE_COLOR,
                 appearance.getFacialOnly(), CharacterAppearance.noHair());
     }
 

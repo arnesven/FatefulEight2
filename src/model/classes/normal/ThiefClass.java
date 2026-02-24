@@ -23,6 +23,8 @@ import view.sprites.Sprite8x8;
 import java.util.List;
 
 public class ThiefClass extends CharacterClass {
+    private static final MyColors CLOTHING_COLOR = MyColors.BROWN;
+
     public ThiefClass() {
         super("Thief", "T", 6, 6, false, 12,
                 new WeightedSkill[]{
@@ -43,8 +45,8 @@ public class ThiefClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.BROWN);
-        Looks.putOnHood(characterAppearance, MyColors.BROWN);
+        Looks.putOnTunic(characterAppearance, CLOTHING_COLOR);
+        Looks.putOnHood(characterAppearance, CLOTHING_COLOR);
         putOnThiefsMask(characterAppearance);
     }
 
@@ -58,7 +60,8 @@ public class ThiefClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x00, MyColors.BROWN, race.getColor(), appearance.getFacialOnly(), CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0x00, CLOTHING_COLOR, race.getColor(), appearance.getGender() ? MyColors.BLACK : CLOTHING_COLOR,
+                appearance.getFacialOnly(), CharacterAppearance.noHair());
     }
 
     @Override

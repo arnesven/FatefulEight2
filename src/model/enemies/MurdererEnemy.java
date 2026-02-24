@@ -1,6 +1,7 @@
 package model.enemies;
 
 import model.Model;
+import model.characters.preset.LonnieLiebgott;
 import model.classes.Classes;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.PersonCombatLoot;
@@ -8,7 +9,7 @@ import model.races.Race;
 import view.sprites.Sprite;
 
 public class MurdererEnemy extends HumanoidEnemy {
-    private static Sprite avatar = Classes.ASN.getAvatar(Race.DWARF, null);
+    private static Sprite avatar = Classes.ASN.getAvatar(Race.DWARF, new LonnieLiebgott());
 
     public MurdererEnemy(char a) {
         super(a, "Murderer");
