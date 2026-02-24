@@ -85,6 +85,11 @@ public class ThiefClass extends CharacterClass {
     }
 
     @Override
+    public boolean showDetail() {
+        return false;
+    }
+
+    @Override
     public boolean showHairInBack() {
         return false;
     }
