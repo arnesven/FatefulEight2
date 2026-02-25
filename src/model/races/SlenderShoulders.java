@@ -127,4 +127,16 @@ public class SlenderShoulders extends Shoulders {
         characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x119, susColor));
         characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x129, susColor));
     }
+
+    public void putOnSkimpyDressLeft(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x160, baseColor, detailColor));
+        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x170, baseColor, detailColor));
+        characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0x171, baseColor, detailColor));
+    }
+
+    public void putOnSkimpyDressRight(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        characterAppearance.setSprite(5, 5, new FaceAndClothesSprite(0x163, baseColor, detailColor));
+        characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0x173, baseColor, detailColor));
+        characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0x172, baseColor, detailColor));
+    }
 }

@@ -84,4 +84,18 @@ public class HunkyShoulders extends BroadShoulders {
         characterAppearance.addSpriteOnTop(2, 5, new ClothesSprite(0x11D, MyColors.BLACK));
         characterAppearance.addSpriteOnTop(4, 5, new ClothesSprite(0x11F, MyColors.BLACK));
     }
+
+    @Override
+    public void putOnSkimpyDressLeft(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        super.putOnSkimpyDressLeft(characterAppearance, baseColor, detailColor);
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x269, baseColor, detailColor));
+    }
+
+    @Override
+    public void putOnSkimpyDressRight(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        super.putOnSkimpyDressRight(characterAppearance, baseColor, detailColor);
+        FaceAndClothesSprite spr = new FaceAndClothesSprite(0x269, baseColor, detailColor);
+        spr.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 5, spr);
+    }
 }

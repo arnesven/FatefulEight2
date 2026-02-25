@@ -13,4 +13,9 @@ public class FaceAndClothesSprite extends FaceSprite {
     public FaceAndClothesSprite(int i, MyColors color) {
         this(i, color, MyColors.BLACK);
     }
+
+    @Override
+    public void setFlipHorizontal(boolean b) {
+        super.setFlipHorizontal(b);
+    }
 }

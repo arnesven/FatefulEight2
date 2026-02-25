@@ -153,4 +153,24 @@ public class NarrowShoulders extends Shoulders {
         characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x11B, susColor));
         characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x12B, susColor));
     }
+
+    @Override
+    public void putOnSkimpyDressLeft(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x268, baseColor, detailColor));
+        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x278, baseColor, detailColor));
+        characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0x279, baseColor, detailColor));
+    }
+
+    @Override
+    public void putOnSkimpyDressRight(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        FaceAndClothesSprite ur = new FaceAndClothesSprite(0x268, baseColor, detailColor);
+        ur.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 5, ur);
+        FaceAndClothesSprite lr = new FaceAndClothesSprite(0x278, baseColor, detailColor);
+        lr.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 6, lr);
+        FaceAndClothesSprite mid = new FaceAndClothesSprite(0x279, baseColor, detailColor);
+        mid.setFlipHorizontal(true);
+        characterAppearance.setSprite(4, 6, mid);
+    }
 }

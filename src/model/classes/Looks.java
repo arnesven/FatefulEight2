@@ -7,8 +7,6 @@ import model.races.Shoulders;
 import view.MyColors;
 import view.sprites.*;
 
-import java.time.temporal.Temporal;
-
 public abstract class Looks {
     public static void putOnTunic(CharacterAppearance characterAppearance, MyColors color) {
         Race race = characterAppearance.getRace();
@@ -191,16 +189,12 @@ public abstract class Looks {
         }
     }
 
-    public static void putOnFancyDress(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+    public static void putOnSkimpyDress(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
         if (characterAppearance.getRace().isSkeleton()) {
             return;
         }
-        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x160, baseColor, detailColor));
-        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x170, baseColor, detailColor));
-        characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0x171, baseColor, detailColor));
-        characterAppearance.setSprite(5, 5, new FaceAndClothesSprite(0x163, baseColor, detailColor));
-        characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0x173, baseColor, detailColor));
-        characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0x172, baseColor, detailColor));
+        characterAppearance.getShoulders().putOnSkimpyDressLeft(characterAppearance, baseColor, detailColor);
+        characterAppearance.getShoulders().putOnSkimpyDressRight(characterAppearance, baseColor, detailColor);
     }
 
     public static void putOnLightArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors shirtColor) {

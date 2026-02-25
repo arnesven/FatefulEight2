@@ -35,7 +35,7 @@ public class EnchantressClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnFancyDress(characterAppearance, MyColors.GREEN, MyColors.GOLD);
+        Looks.putOnSkimpyDress(characterAppearance, MyColors.GREEN, MyColors.GOLD);
     }
 
     @Override

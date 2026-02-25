@@ -185,5 +185,23 @@ public abstract class Shoulders implements Serializable {
         characterAppearance.addSpriteOnTop(2, 5, new ClothesSprite(0x11C, MyColors.BLACK));
         characterAppearance.addSpriteOnTop(4, 5, new ClothesSprite(0x11E, MyColors.BLACK));
     }
+
+    public void putOnSkimpyDressLeft(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x26A, baseColor, detailColor));
+        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x27A, baseColor, detailColor));
+        characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0x171, baseColor, detailColor));
+    }
+
+    public void putOnSkimpyDressRight(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        FaceAndClothesSprite ur = new FaceAndClothesSprite(0x26A, baseColor, detailColor);
+        ur.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 5, ur);
+
+        FaceAndClothesSprite lr = new FaceAndClothesSprite(0x27A, baseColor, detailColor);
+        lr.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 6, lr);
+
+        characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0x172, baseColor, detailColor));
+    }
 }
 
