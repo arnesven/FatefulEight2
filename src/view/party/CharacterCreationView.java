@@ -7,6 +7,7 @@ import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.classes.special.EnchantressClass;
 import model.items.weapons.Weapon;
 import model.races.EasternHuman;
 import model.races.Race;
@@ -45,7 +46,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
     public static final MyColors[] detailColorSet = MyColors.values();
     private static final MyColors[] makeupColorSet = MyColors.values();
-    private static final CharacterClass[] classSet = Classes.allClasses;
+    private static final CharacterClass[] classSet = makeClassSet();
     private static final Ears[] earSet = Ears.allEars;
     private static final String[] shoulderSet = ShouldersFactory.shoulderNames;
     private static final String[] neckSet = NeckFactory.neckNames;
@@ -687,5 +688,16 @@ public class CharacterCreationView extends SelectableListMenu {
             result[index++] = eyes;
         }
         return result;
+    }
+
+    private static CharacterClass[] makeClassSet() {
+        CharacterClass[] arr = Classes.allClasses;
+        if (!FatefulEight.inDebugMode()) {
+            return arr;
+        }
+        CharacterClass[] arr2 = new CharacterClass[arr.length+1];
+        System.arraycopy(arr, 0, arr2, 0, arr.length);
+        arr2[arr.length] = Classes.ENCHANTRESS;
+        return arr2;
     }
 }
