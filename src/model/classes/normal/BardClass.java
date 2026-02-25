@@ -11,6 +11,7 @@ import model.items.accessories.JestersHat;
 import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.Scepter;
+import model.races.HumanRace;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -38,7 +39,12 @@ public class BardClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnLooseShirt(characterAppearance, MyColors.PURPLE);
+        if (characterAppearance.getGender()) {
+            MyColors detailColor = characterAppearance.getRace().getColor() == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
+            Looks.putOnFancyDress(characterAppearance, MyColors.PURPLE, detailColor);
+        } else {
+            Looks.putOnLooseShirt(characterAppearance, MyColors.PURPLE);
+        }
         Looks.putOnFancyHat(characterAppearance, MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.BEIGE);
     }
 

@@ -38,9 +38,13 @@ public class SpyClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_BLUE);
+        if (characterAppearance.getGender()) {
+            Looks.putOnFancyDress(characterAppearance, MyColors.DARK_BLUE, MyColors.DARK_GRAY);
+        } else {
+            Looks.putOnTunic(characterAppearance, MyColors.DARK_BLUE);
+            putOnFakeMustache(characterAppearance, MyColors.BLACK);
+        }
         Looks.putOnBowlersHat(characterAppearance, MyColors.DARK_GRAY);
-        putOnFakeMustache(characterAppearance, MyColors.BLACK);
     }
 
     public static void putOnFakeMustache(CharacterAppearance characterAppearance, MyColors hairColor) {

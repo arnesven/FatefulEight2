@@ -39,7 +39,11 @@ public class MagicianClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_PURPLE, MyColors.DARK_RED);
+        if (characterAppearance.getGender()) {
+            Looks.putOnFancyDress(characterAppearance, MyColors.DARK_PURPLE, MyColors.DARK_RED);
+        } else {
+            Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_PURPLE, MyColors.DARK_RED);
+        }
         putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_PURPLE);
     }
 
