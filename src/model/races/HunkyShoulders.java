@@ -98,4 +98,18 @@ public class HunkyShoulders extends BroadShoulders {
         spr.setFlipHorizontal(true);
         characterAppearance.setSprite(5, 5, spr);
     }
+
+    @Override
+    public void putOnFancyDressLeft(CharacterAppearance characterAppearance, MyColors clothesColor, MyColors detailColor) {
+        super.putOnFancyDressLeft(characterAppearance, clothesColor, detailColor);
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x26C, clothesColor, detailColor));
+    }
+
+    @Override
+    public void putOnFancyDressRight(CharacterAppearance characterAppearance, MyColors clothesColor, MyColors detailColor) {
+        super.putOnFancyDressRight(characterAppearance, clothesColor, detailColor);
+        FaceAndClothesSprite spr = new FaceAndClothesSprite(0x26C, clothesColor, detailColor);
+        spr.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 5, spr);
+    }
 }

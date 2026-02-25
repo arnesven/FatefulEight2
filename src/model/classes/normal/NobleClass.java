@@ -43,7 +43,11 @@ public class NobleClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnFancyRobe(characterAppearance, CLOTHES_COLOR, DETAIL_COLOR);
+        if (characterAppearance.getGender()) {
+            Looks.putOnFancyDress(characterAppearance, CLOTHES_COLOR, DETAIL_COLOR);
+        } else {
+            Looks.putOnFancyRobe(characterAppearance, CLOTHES_COLOR, DETAIL_COLOR);
+        }
         putOnCrown(characterAppearance, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY);
     }
 

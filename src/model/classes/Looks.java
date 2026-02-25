@@ -1,6 +1,7 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.HunkyNeck;
 import model.characters.appearance.TorsoNeck;
 import model.races.Race;
 import model.races.Shoulders;
@@ -264,5 +265,21 @@ public abstract class Looks {
             characterAppearance.addSpriteOnTop(2 + i, 6, spr);
         }
         characterAppearance.getShoulders().putOnNecklaceTop(characterAppearance);
+    }
+
+    public static void putOnFancyDress(CharacterAppearance characterAppearance, MyColors clothesColor, MyColors detailColor) {
+        characterAppearance.setSprite(3, 6, new ClothesSprite(characterAppearance.isFemale() ? 0xAD : 0xAC,
+                detailColor, characterAppearance.getRace().getColor(), detailColor));
+
+        characterAppearance.getShoulders().putOnFancyDressLeft(characterAppearance, clothesColor, detailColor);
+        characterAppearance.getShoulders().putOnFancyDressRight(characterAppearance, clothesColor, detailColor);
+
+        if (characterAppearance.getNeck() instanceof HunkyNeck) {
+            characterAppearance.setSprite(2, 5, new FaceAndClothesSprite(0x26E, clothesColor, detailColor));
+            FaceAndClothesSprite neckRight = new FaceAndClothesSprite(0x26E, clothesColor, detailColor);
+            neckRight.setFlipHorizontal(true);
+            characterAppearance.setSprite(4, 5, neckRight);
+        }
+
     }
 }

@@ -139,4 +139,26 @@ public class SlenderShoulders extends Shoulders {
         characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0x173, baseColor, detailColor));
         characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0x172, baseColor, detailColor));
     }
+
+    public void putOnFancyDressLeft(CharacterAppearance characterAppearance, MyColors clothesColor, MyColors detailColor) {
+        characterAppearance.setSprite(0, 5, characterAppearance.getShoulders().makeLeftTopSprite(clothesColor));
+        characterAppearance.setSprite(0, 6, characterAppearance.getShoulders().makeLeftBottomSprite(clothesColor));
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x26B, clothesColor, detailColor));
+        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x27B, clothesColor, detailColor));
+        characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0x27C, clothesColor, detailColor));
+    }
+
+    public void putOnFancyDressRight(CharacterAppearance characterAppearance, MyColors clothesColor, MyColors detailColor) {
+        characterAppearance.setSprite(6, 5, characterAppearance.getShoulders().makeRightTopSprite(clothesColor));
+        characterAppearance.setSprite(6, 6, characterAppearance.getShoulders().makeRightBottomSprite(clothesColor));
+        FaceAndClothesSprite ur = new FaceAndClothesSprite(0x26B, clothesColor, detailColor);
+        ur.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 5, ur);
+        FaceAndClothesSprite lr = new FaceAndClothesSprite(0x27B, clothesColor, detailColor);
+        lr.setFlipHorizontal(true);
+        characterAppearance.setSprite(5, 6, lr);
+        FaceAndClothesSprite mid = new FaceAndClothesSprite(0x27C, clothesColor, detailColor);
+        mid.setFlipHorizontal(true);
+        characterAppearance.setSprite(4, 6, mid);
+    }
 }
