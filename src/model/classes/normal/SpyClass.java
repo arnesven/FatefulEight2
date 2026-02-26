@@ -65,7 +65,7 @@ public class SpyClass extends CharacterClass {
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
         }
         return new AvatarSprite(race, 0x1C0, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
 
     @Override

@@ -57,7 +57,8 @@ public class BardClass extends CharacterClass {
             return new AvatarSprite(race, 0x1A0, MyColors.PURPLE, race.getColor(), detailColor,
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
         }
-        return new AvatarSprite(race, 0x60, MyColors.PURPLE, race.getColor(), appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, 0x220, MyColors.PURPLE, race.getColor(), MyColors.BEIGE, appearance.getBackHairOnly(), appearance.getHalfBackHair(),
+                makeAvatarHat(appearance));
     }
 
     @Override

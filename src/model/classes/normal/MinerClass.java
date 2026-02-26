@@ -11,9 +11,11 @@ import model.items.clothing.RustyRingMail;
 import model.items.weapons.Hatchet;
 import model.items.weapons.Pickaxe;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+import view.sprites.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +54,8 @@ public class MinerClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x200, MyColors.DARK_GRAY, race.getColor(), MyColors.LIGHT_YELLOW,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, 0x1C0, MyColors.DARK_GRAY, race.getColor(), MyColors.LIGHT_YELLOW,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
 
     @Override
@@ -98,5 +100,10 @@ public class MinerClass extends CharacterClass {
     @Override
     public boolean coversEyebrows() {
         return true;
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "minershelmet", 0x05,
+                MyColors.BLACK, MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.LIGHT_YELLOW);
     }
 }
