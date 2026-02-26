@@ -54,7 +54,7 @@ public class SwordMasterClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x260, MyColors.DARK_GRAY, race.getColor(),
+        return new AvatarSprite(race, 0xA0, MyColors.DARK_GRAY, race.getColor(),
                 MyColors.GRAY, appearance.getNormalHair(), appearance.getFullBackHair());
     }
 

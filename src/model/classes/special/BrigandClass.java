@@ -9,11 +9,9 @@ import model.classes.normal.WeightedSkillPlus;
 import model.items.Equipment;
 import model.items.weapons.Dirk;
 import model.races.Race;
+import util.MyPair;
 import view.MyColors;
-import view.sprites.AvatarSprite;
-import view.sprites.FaceAndClothesSprite;
-import view.sprites.PortraitSprite;
-import view.sprites.Sprite8x8;
+import view.sprites.*;
 
 public class BrigandClass extends SpecialCharacterClass {
     public BrigandClass() {
@@ -64,8 +62,8 @@ public class BrigandClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x400, MyColors.DARK_RED, race.getColor(), MyColors.DARK_RED,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, 0xA0, MyColors.DARK_RED, race.getColor(), MyColors.DARK_RED,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeBrigandHat(appearance));
     }
 
     @Override
@@ -76,5 +74,10 @@ public class BrigandClass extends SpecialCharacterClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    private MyPair<Sprite, Sprite> makeBrigandHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "brigandshat", 0x03,
+                MyColors.BLACK, MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }
 }
