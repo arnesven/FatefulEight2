@@ -13,11 +13,9 @@ import model.items.weapons.ClaspedOrb;
 import model.items.weapons.OldWand;
 import model.races.Race;
 import util.MyPair;
+import util.MyTriplet;
 import view.MyColors;
-import view.sprites.AvatarSprite;
-import view.sprites.ClothesSpriteWithBack;
-import view.sprites.PortraitSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 import java.util.List;
 
@@ -123,7 +121,7 @@ public class MagicianClass extends CharacterClass {
         return true;
     }
 
-    private MyPair<Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
         return AvatarSprite.makeHat(appearance, "magicianshat", 0x02,
                 MyColors.BLACK, MyColors.DARK_PURPLE, MyColors.BEIGE, MyColors.DARK_BLUE);
     }

@@ -72,6 +72,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
     private Sprite avatarBack = null;
+    private Sprite avatarDead = null;
     private boolean canceled = false;
     private boolean isVampire = false;
     private boolean eyesClosed = false;
@@ -86,6 +87,7 @@ public class CharacterCreationView extends SelectableListMenu {
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
         avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
+        avatarDead = lastCharacter.getAvatarSprite().getDead();
         if (FatefulEight.inDebugMode()) {
             raceSet = Race.allRacesIncludingMinor;
         }
@@ -145,6 +147,7 @@ public class CharacterCreationView extends SelectableListMenu {
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
         avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
+        avatarDead = lastCharacter.getAvatarSprite().getDead();
         Sprite.resetCallCount();
     }
 
@@ -177,11 +180,16 @@ public class CharacterCreationView extends SelectableListMenu {
                     weepingAnimation.drawYourself(model.getScreenHandler());
                 }
                 model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
-                        new Point(x+COLUMN_SKIP+24, y+3),
+                        new Point(x+COLUMN_SKIP+24, y+2),
                         lastCharacter.getAvatarSprite());
                 model.getScreenHandler().register(avatarBack.getName(),
-                        new Point(x+COLUMN_SKIP+28, y+3),
+                        new Point(x+COLUMN_SKIP+28, y+2),
                         avatarBack);
+                if (FatefulEight.inDebugMode()) {
+                    model.getScreenHandler().register(avatarDead.getName(),
+                            new Point(x + COLUMN_SKIP + 26, y + 5),
+                            avatarDead);
+                }
                 y++;
                 String[] labels = new String[]{"First Name", "", "Last Name", "", "", "",
                         "Gender", "", "Race", "", "", "",

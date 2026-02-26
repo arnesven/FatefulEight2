@@ -10,6 +10,7 @@ import model.items.Equipment;
 import model.items.weapons.Dirk;
 import model.races.Race;
 import util.MyPair;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
 
@@ -76,7 +77,7 @@ public class BrigandClass extends SpecialCharacterClass {
         return false;
     }
 
-    private MyPair<Sprite, Sprite> makeBrigandHat(CharacterAppearance appearance) {
+    private MyTriplet<Sprite, Sprite, Sprite> makeBrigandHat(CharacterAppearance appearance) {
         return AvatarSprite.makeHat(appearance, "brigandshat", 0x03,
                 MyColors.BLACK, MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }

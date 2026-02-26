@@ -12,8 +12,11 @@ import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.items.weapons.LightCrossbow;
 import model.races.Race;
+import util.MyPair;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
 
 import java.util.List;
@@ -57,6 +60,10 @@ public class SpyClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        if (appearance.getGender()) {
+            return new AvatarSprite(race, 0x1A0, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
+                    appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
+        }
         return new AvatarSprite(race, 0x1C0, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
@@ -102,5 +109,10 @@ public class SpyClass extends CharacterClass {
     @Override
     public List<Item> getStartingItems() {
         return List.of(new LightCrossbow(), new PlainJerkin(), new EyeRing());
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "bowlerhat", 0x01,
+                MyColors.BLACK, MyColors.DARK_GRAY, MyColors.BEIGE, MyColors.DARK_BLUE);
     }
 }

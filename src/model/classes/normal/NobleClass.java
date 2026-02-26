@@ -13,6 +13,7 @@ import model.items.weapons.Rapier;
 import model.items.weapons.TrainingBow;
 import model.races.Race;
 import util.MyPair;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
 
@@ -113,7 +114,7 @@ public class NobleClass extends CharacterClass {
         return List.of(new Rapier(), new Crown(), new GoldDummyItem(20));
     }
 
-    private MyPair<Sprite, Sprite> makeAvatarCrown(CharacterAppearance appearance) {
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarCrown(CharacterAppearance appearance) {
         return AvatarSprite.makeHat(appearance, "crown", 0x00,
                 MyColors.BLACK, MyColors.BROWN, MyColors.RED, MyColors.PINK);
     }

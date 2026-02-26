@@ -19,6 +19,13 @@ public class Sprite32x32 extends Sprite {
         setColor1(color1);
     }
 
+    public Sprite32x32(String name, String mapPath, int num, MyColors color1, MyColors color2, MyColors color3, List<Sprite> sprites) {
+        super(name, mapPath, num % 16, num / 16, 32, 32, sprites);
+        setColor1(color1);
+        setColor2(color2);
+        setColor3(color3);
+    }
+
     public Sprite32x32(String name, String mapPath, int num, MyColors color1, MyColors color2, MyColors color3) {
         this(name, mapPath, num, color1, color2, color3, MyColors.YELLOW);
     }
