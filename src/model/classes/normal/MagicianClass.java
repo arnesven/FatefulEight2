@@ -12,10 +12,12 @@ import model.items.spells.TelekinesisSpell;
 import model.items.weapons.ClaspedOrb;
 import model.items.weapons.OldWand;
 import model.races.Race;
+import util.MyPair;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
 import view.sprites.PortraitSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -70,6 +72,10 @@ public class MagicianClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        if (appearance.getGender()) {
+            return new AvatarSprite(race, 0x440, MyColors.DARK_PURPLE, race.getColor(), MyColors.DARK_RED,
+                    appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
+        }
         return new AvatarSprite(race, 0x1A0, MyColors.DARK_PURPLE, race.getColor(), MyColors.DARK_RED,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
@@ -115,5 +121,10 @@ public class MagicianClass extends CharacterClass {
     @Override
     public boolean coversEyebrows() {
         return true;
+    }
+
+    private MyPair<Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "magicianshat", 0x02,
+                MyColors.BLACK, MyColors.DARK_PURPLE, MyColors.BEIGE, MyColors.DARK_BLUE);
     }
 }
