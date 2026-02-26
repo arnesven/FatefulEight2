@@ -68,7 +68,7 @@ public class NobleClass extends CharacterClass {
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         if (appearance.getGender()) {
             return new AvatarSprite(race, 0x440, CLOTHES_COLOR, race.getColor(), DETAIL_COLOR,
-                    appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarCrown(appearance));//race.isShort() ? makeShortAvatarCrown(appearance) : );
+                    appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarCrown(appearance));
         }
         return new AvatarSprite(race, 0xA0, CLOTHES_COLOR, race.getColor(), DETAIL_COLOR,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair());
@@ -114,12 +114,7 @@ public class NobleClass extends CharacterClass {
     }
 
     private MyPair<Sprite, Sprite> makeAvatarCrown(CharacterAppearance appearance) {
-        Sprite crown = new Sprite32x32("crown", "hats.png", 0x00, MyColors.BLACK, List.of());
-        Sprite crownBack = new Sprite32x32("crownback", "hats.png", 0x10, MyColors.BLACK, List.of());
-        if (appearance.getRace().isShort()) {
-            crown.shiftUpPx(-2);
-            crownBack.shiftUpPx(-2);
-        }
-        return new MyPair<>(crown, crownBack);
+        return AvatarSprite.makeHat(appearance, "crown", 0x00,
+                MyColors.BLACK, MyColors.BROWN, MyColors.RED, MyColors.PINK);
     }
 }

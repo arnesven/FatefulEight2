@@ -68,6 +68,16 @@ public class AvatarSprite extends LoopingSprite {
         this(race, num, color2, color3, color2, hairSprite, hairFromBack);
     }
 
+    public static MyPair<Sprite, Sprite> makeHat(CharacterAppearance appearance, String name, int num, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
+        Sprite front = new Sprite32x32(name, "hats.png", num, color1, List.of());
+        Sprite back = new Sprite32x32(name + "back", "hats.png", num + 0x10, color1, List.of());
+        if (appearance.getRace().isShort()) {
+            front.shiftUpPx(-2);
+            back.shiftUpPx(-2);
+        }
+        return new MyPair<>(front, back);
+    }
+
     public Sprite getDead() {
         return deadSprite;
     }
