@@ -4,7 +4,6 @@ import model.characters.appearance.CharacterAppearance;
 import model.races.Dwarf;
 import model.races.Halfling;
 import model.races.Race;
-import util.MyPair;
 import util.MyTriplet;
 import view.MyColors;
 
@@ -12,8 +11,13 @@ import java.util.List;
 
 public class AvatarSprite extends LoopingSprite {
 
-    public static final int STEALTHY_AVATAR_BASE = 0x00;
-    public static final int ARMORED_AVATAR_BASE = 0x20;
+    public static final int STEALTHY_BASE = 0x00;
+    public static final int ARMORED_BASE = 0x20;
+    public static final int FANCY_MALE_BASE = 0xA0;
+    public static final int ROBED_BASE = 0x160;
+    public static final int LOOSE_SHIRT_BASE = 0x220;
+    public static final int PLAIN_MALE_BASE = 0x1C0;
+    public static final int PLAIN_FEMALE_BASE = 0x1A0;
 
     private final Race race;
     private final MyColors color2;

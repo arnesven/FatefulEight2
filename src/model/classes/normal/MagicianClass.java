@@ -74,7 +74,7 @@ public class MagicianClass extends CharacterClass {
             return new AvatarSprite(race, 0x440, MyColors.DARK_PURPLE, race.getColor(), MyColors.DARK_RED,
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
         }
-        return new AvatarSprite(race, 0xA0, MyColors.DARK_PURPLE, race.getColor(), MyColors.DARK_RED,
+        return new AvatarSprite(race, AvatarSprite.FANCY_MALE_BASE, MyColors.DARK_PURPLE, race.getColor(), MyColors.DARK_RED,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
 

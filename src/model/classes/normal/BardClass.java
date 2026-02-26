@@ -11,7 +11,6 @@ import model.items.accessories.JestersHat;
 import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.Scepter;
-import model.races.HumanRace;
 import model.races.Race;
 import util.MyTriplet;
 import view.MyColors;
@@ -54,10 +53,10 @@ public class BardClass extends CharacterClass {
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         if (appearance.getGender()) {
             MyColors detailColor = appearance.getRace().getColor() == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
-            return new AvatarSprite(race, 0x1A0, MyColors.PURPLE, race.getColor(), detailColor,
+            return new AvatarSprite(race, AvatarSprite.PLAIN_FEMALE_BASE, MyColors.PURPLE, race.getColor(), detailColor,
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
         }
-        return new AvatarSprite(race, 0x220, MyColors.PURPLE, race.getColor(), MyColors.BEIGE, appearance.getBackHairOnly(), appearance.getHalfBackHair(),
+        return new AvatarSprite(race, AvatarSprite.LOOSE_SHIRT_BASE, MyColors.PURPLE, race.getColor(), MyColors.BEIGE, appearance.getBackHairOnly(), appearance.getHalfBackHair(),
                 makeAvatarHat(appearance));
     }
 

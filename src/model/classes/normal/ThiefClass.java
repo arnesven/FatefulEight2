@@ -60,7 +60,7 @@ public class ThiefClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x00, CLOTHING_COLOR, race.getColor(), appearance.getGender() ? MyColors.BLACK : CLOTHING_COLOR,
+        return new AvatarSprite(race, AvatarSprite.STEALTHY_BASE, CLOTHING_COLOR, race.getColor(), appearance.getGender() ? MyColors.BLACK : CLOTHING_COLOR,
                 appearance.getFacialOnly(), CharacterAppearance.noHair());
     }
 

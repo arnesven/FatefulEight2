@@ -53,7 +53,7 @@ public class WizardClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x160, MyColors.BLUE, race.getColor(), MyColors.LIGHT_BLUE,
+        return new AvatarSprite(race, AvatarSprite.ROBED_BASE, MyColors.BLUE, race.getColor(), MyColors.LIGHT_BLUE,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
 

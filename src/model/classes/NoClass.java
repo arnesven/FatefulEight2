@@ -30,7 +30,7 @@ public class NoClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x220, shirtColor, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
+        return new AvatarSprite(race, AvatarSprite.LOOSE_SHIRT_BASE, shirtColor, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override

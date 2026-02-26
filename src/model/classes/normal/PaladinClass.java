@@ -43,7 +43,7 @@ public class PaladinClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x20, MyColors.WHITE, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
+        return new AvatarSprite(race, AvatarSprite.ARMORED_BASE, MyColors.WHITE, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override

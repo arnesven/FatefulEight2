@@ -54,7 +54,7 @@ public class MinerClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x1C0, MyColors.DARK_GRAY, race.getColor(), MyColors.LIGHT_YELLOW,
+        return new AvatarSprite(race, AvatarSprite.PLAIN_MALE_BASE, MyColors.DARK_GRAY, race.getColor(), MyColors.LIGHT_YELLOW,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
 

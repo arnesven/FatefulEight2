@@ -61,10 +61,10 @@ public class SpyClass extends CharacterClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         if (appearance.getGender()) {
-            return new AvatarSprite(race, 0x1A0, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
+            return new AvatarSprite(race, AvatarSprite.PLAIN_FEMALE_BASE, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
         }
-        return new AvatarSprite(race, 0x1C0, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
+        return new AvatarSprite(race, AvatarSprite.PLAIN_MALE_BASE, MyColors.DARK_BLUE, race.getColor(), MyColors.DARK_GRAY,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
 
