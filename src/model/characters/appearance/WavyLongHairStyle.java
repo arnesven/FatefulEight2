@@ -5,7 +5,7 @@ import view.sprites.HairSpriteWithFrame;
 public class WavyLongHairStyle extends HairStyle5x2 {
     public WavyLongHairStyle() {
         super(0x260, true, true,
-                0x01, 0x02, 0x54, 0x55, "Wavy/Long");
+                0x62, 0x63, 0x33, 0x34, "Wavy/Long");
     }
 
 

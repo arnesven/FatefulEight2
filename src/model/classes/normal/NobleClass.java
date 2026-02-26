@@ -12,11 +12,9 @@ import model.items.accessories.Crown;
 import model.items.weapons.Rapier;
 import model.items.weapons.TrainingBow;
 import model.races.Race;
+import util.MyPair;
 import view.MyColors;
-import view.sprites.AvatarSprite;
-import view.sprites.FaceAndClothesSpriteWithBack;
-import view.sprites.PortraitSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 import java.util.List;
 
@@ -68,7 +66,11 @@ public class NobleClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race,0xA0, CLOTHES_COLOR, race.getColor(), DETAIL_COLOR,
+        if (appearance.getGender()) {
+            return new AvatarSprite(race, 0x440, CLOTHES_COLOR, race.getColor(), DETAIL_COLOR,
+                    appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarCrown(appearance));//race.isShort() ? makeShortAvatarCrown(appearance) : );
+        }
+        return new AvatarSprite(race, 0xA0, CLOTHES_COLOR, race.getColor(), DETAIL_COLOR,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 
@@ -109,5 +111,15 @@ public class NobleClass extends CharacterClass {
     @Override
     public List<Item> getStartingItems() {
         return List.of(new Rapier(), new Crown(), new GoldDummyItem(20));
+    }
+
+    private MyPair<Sprite, Sprite> makeAvatarCrown(CharacterAppearance appearance) {
+        Sprite crown = new Sprite32x32("crown", "hats.png", 0x00, MyColors.BLACK, List.of());
+        Sprite crownBack = new Sprite32x32("crownback", "hats.png", 0x10, MyColors.BLACK, List.of());
+        if (appearance.getRace().isShort()) {
+            crown.shiftUpPx(-2);
+            crownBack.shiftUpPx(-2);
+        }
+        return new MyPair<>(crown, crownBack);
     }
 }

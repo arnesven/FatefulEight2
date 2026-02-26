@@ -7,6 +7,19 @@ public class HairStyle3x2 extends HairStyle {
     private final int avatarHalfBack;
     private int[][] hair;
 
+    /**
+     *
+     * @param num
+     * @param inForehead
+     * @param onTop
+     * @param inBack
+     * @param longInBack
+     * @param avatarNormal The avatars hair from the front when fully visible
+     * @param avatarBack The avatars hair from the front, when only the back should be visible (e.g for classes with hats)
+     * @param avatarFullBack The avatar's hair from the back, when fully visible
+     * @param avatarHalfBack The avatar's hair from the back, when only half should be visible (e.g. for classes with hats)
+     * @param description
+     */
     public HairStyle3x2(int num, boolean inForehead, boolean onTop, boolean inBack, boolean longInBack,
                         int avatarNormal, int avatarBack, int avatarFullBack, int avatarHalfBack, String description) {
         super(inForehead, onTop, inBack, longInBack, description);

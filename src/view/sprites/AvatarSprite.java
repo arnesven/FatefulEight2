@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.races.Dwarf;
 import model.races.Halfling;
 import model.races.Race;
+import util.MyPair;
 import view.MyColors;
 
 import java.util.List;
@@ -17,13 +18,14 @@ public class AvatarSprite extends LoopingSprite {
     private final Sprite hairSprite;
     private final Sprite hairFromBack;
     private final int num;
+    private final MyPair<Sprite, Sprite> hat;
     private Sprite32x32 deadSprite;
     private int currentFrame = 0;
     private int count = 0;
     private int delay = 16;
 
-    public AvatarSprite(Race race, int num, MyColors color2, MyColors color3, MyColors color4, Sprite hairSprite, Sprite hairFromBack) {
-        super("avatar"+num+race.getName(), "avatars.png", adjustForRace(num, race), 32, 32, List.of(hairSprite));
+    public AvatarSprite(Race race, int num, MyColors color2, MyColors color3, MyColors color4, Sprite hairSprite, Sprite hairFromBack, MyPair<Sprite, Sprite> hat) {
+        super("avatar"+num+race.getName(), "avatars.png", adjustForRace(num, race), 32, 32, makeOverlayList(hairSprite, hat));
         this.race = race;
         this.num = num;
         this.color2 = color2;
@@ -31,6 +33,7 @@ public class AvatarSprite extends LoopingSprite {
         this.color4 = color4;
         this.hairSprite = hairSprite;
         this.hairFromBack = hairFromBack;
+        this.hat = hat;
         setFrames(4);
         setColor1(MyColors.BLACK);
         setColor2(color2);
@@ -38,6 +41,17 @@ public class AvatarSprite extends LoopingSprite {
         setColor4(color4);
         deadSprite = new Sprite32x32("deadavatar", "avatars.png", num+3, MyColors.BLACK, color2, race.getColor());
         deadSprite.setColor4(color4);
+    }
+
+    private static List<Sprite> makeOverlayList(Sprite hairSprite, MyPair<Sprite, Sprite> hat) {
+        if (hat == null) {
+            return List.of(hairSprite);
+        }
+        return List.of(hairSprite, hat.first);
+    }
+
+    public AvatarSprite(Race race, int num, MyColors color2, MyColors color3, MyColors color4, Sprite hairSprite, Sprite hairFromBack) {
+        this(race, num, color2, color3, color4, hairSprite, hairFromBack, null);
     }
 
     private static int adjustForRace(int num, Race race) {
@@ -71,6 +85,7 @@ public class AvatarSprite extends LoopingSprite {
     }
 
     public Sprite getAvatarBack() {
-        return new AvatarSprite(race, num+0x10, color2, color3, color4, hairFromBack, CharacterAppearance.noHair());
+        return new AvatarSprite(race, num+0x10, color2, color3, color4, hairFromBack, CharacterAppearance.noHair(),
+                hat == null ? null : new MyPair<>(hat.second, hat.first));
     }
 }
