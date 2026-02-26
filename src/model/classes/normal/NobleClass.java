@@ -71,7 +71,7 @@ public class NobleClass extends CharacterClass {
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarCrown(appearance));
         }
         return new AvatarSprite(race, 0xA0, CLOTHES_COLOR, race.getColor(), DETAIL_COLOR,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarCrown(appearance));
     }
 
     @Override
