@@ -14,6 +14,7 @@ import model.items.weapons.Mace;
 import model.items.weapons.Scepter;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
 
@@ -45,7 +46,13 @@ public class BlackKnightClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x80, MyColors.DARK_GRAY, race.getColor(), CharacterAppearance.noHair(), CharacterAppearance.noHair());
+        return new AvatarSprite(race, AvatarSprite.ARMORED_AVATAR_BASE, MyColors.DARK_GRAY, race.getColor(), MyColors.ORANGE, CharacterAppearance.noHair(), CharacterAppearance.noHair(),
+                makeAvatarHelm(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHelm(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "blackknighthelm", 0x08,
+                MyColors.BLACK, MyColors.DARK_GRAY, MyColors.ORANGE, MyColors.DARK_GRAY);
     }
 
     @Override

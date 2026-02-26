@@ -12,6 +12,9 @@ import java.util.List;
 
 public class AvatarSprite extends LoopingSprite {
 
+    public static final int STEALTHY_AVATAR_BASE = 0x00;
+    public static final int ARMORED_AVATAR_BASE = 0x20;
+
     private final Race race;
     private final MyColors color2;
     private final MyColors color3;
