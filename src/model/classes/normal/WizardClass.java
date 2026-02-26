@@ -12,8 +12,10 @@ import model.items.Item;
 import model.items.spells.*;
 import model.items.weapons.OldWand;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -51,11 +53,15 @@ public class WizardClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        AvatarSprite as = new AvatarSprite(race, 0x40, MyColors.BLUE, race.getColor(),
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
-        as.setColor4(MyColors.LIGHT_BLUE);
-        return as;
+        return new AvatarSprite(race, 0x160, MyColors.BLUE, race.getColor(), MyColors.LIGHT_BLUE,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
     }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "wizhat", 0x07,
+                MyColors.BLACK, MyColors.BLUE, MyColors.BEIGE, MyColors.DARK_BLUE);
+    }
+
 
     @Override
     public Equipment getDefaultEquipment() {

@@ -12,6 +12,7 @@ import model.items.spells.TransfigurationSpell;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
 
@@ -44,8 +45,13 @@ public class WitchClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x40, MyColors.DARK_GRAY, race.getColor(),
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, 0x160, MyColors.DARK_GRAY, race.getColor(), MyColors.DARK_GRAY,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "witchhat", 0x07,
+                MyColors.BLACK, MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }
 
     @Override
