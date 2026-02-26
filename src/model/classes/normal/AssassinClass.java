@@ -12,8 +12,10 @@ import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.items.weapons.ThrowingKnives;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -56,8 +58,9 @@ public class AssassinClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0xC0, clothingColor, race.getColor(),
-                appearance.getGender() ? MyColors.BLACK : clothingColor, CharacterAppearance.noHair(), CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0x00, clothingColor, race.getColor(),
+                appearance.getGender() ? MyColors.BLACK : clothingColor, CharacterAppearance.noHair(), CharacterAppearance.noHair(),
+                makeAvatarMask(appearance));
     }
 
     @Override
@@ -118,5 +121,10 @@ public class AssassinClass extends CharacterClass {
     @Override
     public List<Item> getStartingItems() {
         return List.of(new ThrowingKnives(), new PilgrimsCloak(), new LevitateSpell());
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarMask(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "assassinmask", 0x06,
+                MyColors.BLACK, clothingColor, MyColors.DARK_BLUE, MyColors.GRAY_RED);
     }
 }
