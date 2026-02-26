@@ -14,6 +14,7 @@ public class AvatarSprite extends LoopingSprite {
     public static final int STEALTHY_BASE = 0x00;
     public static final int ARMORED_BASE = 0x20;
     public static final int FANCY_MALE_BASE = 0xA0;
+    public static final int FANCY_FEMALE_BASE = 0xC0;
     public static final int ROBED_BASE = 0x160;
     public static final int LOOSE_SHIRT_BASE = 0x220;
     public static final int PLAIN_MALE_BASE = 0x1C0;

@@ -51,7 +51,7 @@ public class BarbarianClass extends CharacterClass {
         if (appearance.getRace().id() == Race.SOUTHERN_HUMAN.id()) {
             clothing = MyColors.GOLD;
         }
-        AvatarSprite aspr = new AvatarSprite(race, appearance.getGender() ? 0x420 : 0x100, clothing,
+        AvatarSprite aspr = new AvatarSprite(race, appearance.getGender() ? 0x40 : 0x100, clothing,
                 race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
         aspr.setColor4(appearance.getRace().getMouthDefaultColor());
         return aspr;
