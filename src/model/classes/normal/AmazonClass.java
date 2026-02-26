@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AmazonClass extends CharacterClass {
+    private static final MyColors CLOTHING_COLOR = MyColors.BROWN;
     private final SpearInHandDetail spear;
 
     public AmazonClass() {
@@ -57,13 +58,21 @@ public class AmazonClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnHideRight(characterAppearance, MyColors.BROWN);
-        Looks.putOnHideLeft(characterAppearance, MyColors.BROWN);
+        MyColors clothing = CLOTHING_COLOR;
+        if (characterAppearance.getRace().id() == Race.SOUTHERN_HUMAN.id()) {
+            clothing = MyColors.GOLD;
+        }
+        Looks.putOnHideRight(characterAppearance, clothing);
+        Looks.putOnHideLeft(characterAppearance, clothing);
     }
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x140, MyColors.BROWN, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
+        MyColors clothing = CLOTHING_COLOR;
+        if (appearance.getRace().id() == Race.SOUTHERN_HUMAN.id()) {
+            clothing = MyColors.GOLD;
+        }
+        return new AvatarSprite(race, appearance.getGender() ? 0x60 : 0x140, clothing, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override
