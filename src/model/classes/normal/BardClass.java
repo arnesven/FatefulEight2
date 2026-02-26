@@ -13,8 +13,10 @@ import model.items.Equipment;
 import model.items.weapons.Scepter;
 import model.races.HumanRace;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -50,6 +52,11 @@ public class BardClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        if (appearance.getGender()) {
+            MyColors detailColor = appearance.getRace().getColor() == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
+            return new AvatarSprite(race, 0x1A0, MyColors.PURPLE, race.getColor(), detailColor,
+                    appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
+        }
         return new AvatarSprite(race, 0x60, MyColors.PURPLE, race.getColor(), appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 
@@ -97,5 +104,10 @@ public class BardClass extends CharacterClass {
     @Override
     public boolean coversEyebrows() {
         return true;
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "bardshat", 0x04,
+                MyColors.BLACK, MyColors.PURPLE, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }
 }
