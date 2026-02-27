@@ -11,8 +11,10 @@ import model.items.weapons.BattleAxe;
 import model.items.weapons.Hatchet;
 import model.items.weapons.LongBow;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +45,14 @@ public class ForesterClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x2C0, MyColors.RED, race.getColor(), MyColors.DARK_GREEN,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        int index = appearance.getGender() ? 0x260 : 0x2C0;
+        return new AvatarSprite(race, index, MyColors.RED, race.getColor(), MyColors.DARK_GREEN,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeHat(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "foresterscap", 0x0B, MyColors.BLACK,
+                MyColors.DARK_GREEN, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }
 
     @Override

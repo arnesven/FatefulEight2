@@ -12,9 +12,11 @@ import model.items.clothing.RustyRingMail;
 import model.items.weapons.Broadsword;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -61,8 +63,13 @@ public class CaptainClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x120, ARMOR_COLOR, race.getColor(),
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, AvatarSprite.LIGHT_ARMOR_BASE, ARMOR_COLOR, race.getColor(), MyColors.LIGHT_BLUE,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeHelmet(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeHelmet(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "cap'shelmet", 0x09, MyColors.BLACK,
+                ARMOR_COLOR, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }
 
 

@@ -14,9 +14,11 @@ import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.MagesStaff;
 import model.races.Race;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -61,8 +63,14 @@ public class SorcererClass extends CharacterClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         return new AvatarSprite(race, 0x180, MyColors.DARK_GRAY, race.getColor(), MyColors.RED,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeCrown(appearance));
     }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeCrown(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "sorc'scrown", 0x0A, MyColors.BLACK, MyColors.RED,
+                MyColors.GRAY_RED, MyColors.DARK_GRAY);
+    }
+
 
     @Override
     public Equipment getDefaultEquipment() {
