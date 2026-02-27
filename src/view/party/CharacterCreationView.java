@@ -8,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.special.EnchantressClass;
+import model.items.ItemDeck;
 import model.items.weapons.Weapon;
 import model.races.EasternHuman;
 import model.races.Race;
@@ -18,6 +19,7 @@ import view.DrawingArea;
 import view.GameView;
 import view.MyColors;
 import view.help.TutorialClassesDialog;
+import view.sprites.AnimationManager;
 import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
 import view.widget.ArmorClassWidget;
@@ -78,6 +80,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private boolean eyesClosed = false;
     private WeepingAmount currentWeepAmount = WeepingAmount.none;
     private WeepingAnimation weepingAnimation = null;
+    private int selectedWeaponIndex = 0;
+    private List<Weapon> weapons = ItemDeck.allWeapons();
 
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
@@ -91,6 +95,7 @@ public class CharacterCreationView extends SelectableListMenu {
         if (FatefulEight.inDebugMode()) {
             raceSet = Race.allRacesIncludingMinor;
         }
+        weapons.add(0, null);
     }
 
     @Override
@@ -149,6 +154,7 @@ public class CharacterCreationView extends SelectableListMenu {
         avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
         avatarDead = lastCharacter.getAvatarSprite().getDead();
         Sprite.resetCallCount();
+        AnimationManager.synchAnimations();
     }
 
     public GameCharacter getFinishedCharacter() {
@@ -185,6 +191,13 @@ public class CharacterCreationView extends SelectableListMenu {
                 model.getScreenHandler().register(avatarBack.getName(),
                         new Point(x+COLUMN_SKIP+28, y+2),
                         avatarBack);
+                if (selectedWeaponIndex != 0) {
+                    Sprite spr = weapons.get(selectedWeaponIndex).getOnAvatarSprite(lastCharacter);
+                    if (spr != null) {
+                        model.getScreenHandler().register(spr.getName(),
+                                new Point(x + COLUMN_SKIP + 24, y + 2), spr);
+                    }
+                }
                 if (FatefulEight.inDebugMode()) {
                     model.getScreenHandler().register(avatarDead.getName(),
                             new Point(x + COLUMN_SKIP + 26, y + 5),
@@ -199,6 +212,14 @@ public class CharacterCreationView extends SelectableListMenu {
                         "Class"};
                 for (int i = 0; i < labels.length; ++i) {
                     BorderFrame.drawString(model.getScreenHandler(), labels[i], x, y++, MyColors.WHITE, MyColors.BLUE);
+                }
+
+                if (FatefulEight.inDebugMode()) {
+                    String[] extraLabels = new String[]{
+                            "", "Expression", "Vampire", "Eyes", "Weeping", "Weapon"};
+                    for (int i = 0; i < extraLabels.length; ++i) {
+                        BorderFrame.drawString(model.getScreenHandler(), extraLabels[i], x, y++, MyColors.WHITE, MyColors.BLUE);
+                    }
                 }
 
                 int midX = x + COLUMN_SKIP + 14;
@@ -265,7 +286,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        return List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 3, 0),
+        List<ListContent> result = new ArrayList<>(List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 3, 0),
                 new InputFieldContent(xStart + COLUMN_SKIP, yStart + 5, 1),
                 new SelectableListContent(xStart + 3, yStart + 7, (showSkeleton ? "Hide" : "Show") + " Skeleton") {
                     @Override
@@ -478,8 +499,9 @@ public class CharacterCreationView extends SelectableListMenu {
                     public void turnRight(Model model) {
                         selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
                     }
-                },
-                new CarouselListContent(xStart + 3, yStart + 35, "Expression: " + FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
+                }));
+        List<ListContent> extraContent = List.of(
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 35, FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedFacialExpression = FacialExpression.values()[Arithmetics.decrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
@@ -490,19 +512,19 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedFacialExpression = FacialExpression.values()[Arithmetics.incrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
                     }
                 },
-                new SelectableListContent(xStart + 3, yStart + 36, "Vampire: " + (isVampire ? "Yes" : "No")) {
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 36, (isVampire ? "Yes" : "No")) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         isVampire = !isVampire;
                     }
                 },
-                new SelectableListContent(xStart + 3, yStart + 37, "Eyes: " + (eyesClosed ? "Closed" : "Open")) {
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 37, (eyesClosed ? "Closed" : "Open")) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         eyesClosed = !eyesClosed;
                     }
                 },
-                new CarouselListContent(xStart + 3, yStart + 38, "Weeping: " + WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 38, WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
                     final Point appearancePoint = new Point(47, 7);
 
                     @Override
@@ -525,27 +547,46 @@ public class CharacterCreationView extends SelectableListMenu {
                         }
                     }
                 },
-        new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 39,
+                        selectedWeaponIndex == 0 ? "None" : weapons.get(selectedWeaponIndex).getName()) {
                     @Override
-                    public void performAction(Model model, int x, int y) {
-                        setTimeToTransition(true);
+                    public void turnLeft(Model model) {
+                        selectedWeaponIndex = Arithmetics.decrementWithWrap(selectedWeaponIndex, weapons.size());
+                        AnimationManager.synchAnimations();
                     }
 
                     @Override
-                    public boolean isEnabled(Model model) {
-                        boolean namesOk = nameOk(1) && nameOk(2);
-                        boolean classOk = selectedClassOk();
-                        return classOk && namesOk;
+                    public void turnRight(Model model) {
+                        selectedWeaponIndex = Arithmetics.incrementWithWrap(selectedWeaponIndex, weapons.size());
+                        AnimationManager.synchAnimations();
                     }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP + 10, yStart + 42, "CANCEL") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        CharacterCreationView.this.canceled = true;
-                        setTimeToTransition(true);
-                    }
+                });
+        if (FatefulEight.inDebugMode()) {
+            result.addAll(extraContent);
+        }
+        result.addAll(List.of(
+            new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setTimeToTransition(true);
                 }
-        );
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    boolean namesOk = nameOk(1) && nameOk(2);
+                    boolean classOk = selectedClassOk();
+                    return classOk && namesOk;
+                }
+            },
+            new SelectableListContent(xStart + COLUMN_SKIP + 10, yStart + 42, "CANCEL") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    CharacterCreationView.this.canceled = true;
+                    setTimeToTransition(true);
+                }
+            }
+        ));
+        return result;
     }
 
     private String getAccessoryColorLabel() {

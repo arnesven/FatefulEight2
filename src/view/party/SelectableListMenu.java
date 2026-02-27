@@ -346,11 +346,13 @@ public abstract class SelectableListMenu extends GameView {
             if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
                 carousel.turnLeft(model);
                 madeChanges();
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+                return true;
+            }
+            if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
                 carousel.turnRight(model);
                 madeChanges();
+                return true;
             }
-            return true;
         }
         return false;
     }
