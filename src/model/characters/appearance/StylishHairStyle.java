@@ -5,7 +5,7 @@ import view.sprites.FaceSpriteWithHair;
 public class StylishHairStyle extends HairStyle3x2 {
     public StylishHairStyle() {
         super(0x164, true, true, true, false,
-                0x19, 0x00, 0x32, 0x0, "Stylish");
+                0x09, 0x07, 0x60, 0x61, "Stylish");
     }
 
     @Override
