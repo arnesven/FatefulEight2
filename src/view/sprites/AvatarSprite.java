@@ -49,8 +49,17 @@ public class AvatarSprite extends LoopingSprite {
         setColor3(color3);
         setColor4(color4);
         deadSprite = new Sprite32x32("deadavatar", "avatars.png", num+3, MyColors.BLACK, color2, race.getColor(),
-                hat == null ? List.of() : List.of(hat.third));
+                makeDeadHairOrHat());
         deadSprite.setColor4(color4);
+    }
+
+    private List<Sprite> makeDeadHairOrHat() {
+        Sprite flippedHair = new Sprite(hairFromBack.getName() + "flipped", hairFromBack.getMap(), hairFromBack.getColumn(), hairFromBack.getRow(),
+                hairFromBack.getWidth(), hairFromBack.getHeight());
+        flippedHair.setColor1(hairFromBack.getColor1());
+        flippedHair.setRotation(180);
+        flippedHair.shiftUpPx(-4);
+        return hat == null ? List.of(flippedHair) : List.of(hat.third);
     }
 
     private static List<Sprite> makeOverlayList(Sprite hairSprite, MyTriplet<Sprite, Sprite, Sprite> hat) {

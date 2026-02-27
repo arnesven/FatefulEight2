@@ -348,4 +348,8 @@ public class Sprite implements Serializable {
 
         return result;
     }
+
+    protected MyColors getColor1() {
+        return color1;
+    }
 }
