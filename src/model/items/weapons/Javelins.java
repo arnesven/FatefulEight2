@@ -2,16 +2,18 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
-import view.sprites.RangedStrikeEffect;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.TwoHandedItemSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
-public class Javelins extends PolearmWeapon {
-    private static final Sprite SPRITE = new TwoHandedItemSprite(2, 4);
+public class Javelins extends OneHandedPolearmWeapon {
+    private static final Sprite SPRITE = new ItemSprite(2, 4);
 
     public Javelins() {
         super("Javelins", 16, new int[]{10,10,10});
+    }
+
+    @Override
+    public boolean isTwoHanded() {
+        return true; // Javelins still extends OneHandedPolearmWeapon to get the OnAvatarSprite right.
     }
 
     @Override

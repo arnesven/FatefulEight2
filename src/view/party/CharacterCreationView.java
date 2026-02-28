@@ -8,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.special.EnchantressClass;
+import model.items.Equipment;
 import model.items.ItemDeck;
 import model.items.weapons.Weapon;
 import model.races.EasternHuman;
@@ -144,7 +145,11 @@ public class CharacterCreationView extends SelectableListMenu {
     }
 
     private GameCharacter makeCharacter() {
-        return new GameCharacter(buffers.get(0).getText(), buffers.get(1).getText(), raceSet[selectedRace], classSet[selectedClass], makeAppearance());
+        GameCharacter chara = new GameCharacter(buffers.get(0).getText(), buffers.get(1).getText(), raceSet[selectedRace], classSet[selectedClass], makeAppearance());
+        if (selectedWeaponIndex != 0) {
+            chara.setEquipment(new Equipment(weapons.get(selectedWeaponIndex)));
+        }
+        return chara;
     }
 
 
@@ -185,19 +190,18 @@ public class CharacterCreationView extends SelectableListMenu {
                 if (weepingAnimation != null) {
                     weepingAnimation.drawYourself(model.getScreenHandler());
                 }
-                model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
-                        new Point(x+COLUMN_SKIP+24, y+2),
-                        lastCharacter.getAvatarSprite());
+
+                if (selectedWeaponIndex != 0) {
+                    lastCharacter.drawAvatar(model.getScreenHandler(), x + COLUMN_SKIP + 24, y + 2);
+                } else {
+                    model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
+                            new Point(x+COLUMN_SKIP+24, y+2),
+                            lastCharacter.getAvatarSprite());
+                }
+
                 model.getScreenHandler().register(avatarBack.getName(),
                         new Point(x+COLUMN_SKIP+28, y+2),
                         avatarBack);
-                if (selectedWeaponIndex != 0) {
-                    Sprite spr = weapons.get(selectedWeaponIndex).getOnAvatarSprite(lastCharacter);
-                    if (spr != null) {
-                        model.getScreenHandler().register(spr.getName(),
-                                new Point(x + COLUMN_SKIP + 24, y + 2), spr);
-                    }
-                }
                 if (FatefulEight.inDebugMode()) {
                     model.getScreenHandler().register(avatarDead.getName(),
                             new Point(x + COLUMN_SKIP + 26, y + 5),

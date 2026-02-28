@@ -8,7 +8,7 @@ import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class Harpoons extends PolearmWeapon implements PirateItem {
+public class Harpoons extends OneHandedPolearmWeapon implements PirateItem {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(0, 17);
 

@@ -565,7 +565,7 @@ public abstract class CharacterAppearance implements Serializable {
             }
             screenHandler.register("raisedeyebrowright", new Point(x + 1, y - 1), eyebrows.get(index).second, 0, -1, 0);
         }
-        if (drawDefaultMouth) {
+        if (drawDefaultMouth && showFacialHair) {
             MyTriplet<Sprite8x8, Sprite8x8, Sprite8x8> mouthPair = mouthExpressions.get(emphasis.ordinal());
             screenHandler.register("facialexpressionmouth", new Point(x, y + 1),
                     isVampire ? mouthPair.third

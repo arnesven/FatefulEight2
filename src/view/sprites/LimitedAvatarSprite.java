@@ -13,4 +13,14 @@ public class LimitedAvatarSprite extends AvatarSprite {
     protected int getDeadSpriteOffset() {
         return 3;
     }
+
+    @Override
+    protected int getTwoHandedOffset() {
+        return 0;
+    }
+
+    @Override
+    protected int getPolearmOffset() {
+        return 0;
+    }
 }

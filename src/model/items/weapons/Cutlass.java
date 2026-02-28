@@ -6,7 +6,7 @@ import model.items.Prevalence;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Cutlass extends BladedWeapon implements PairableWeapon, PirateItem {
+public class Cutlass extends LongBladedWeapon implements PairableWeapon, PirateItem {
     private static final Sprite SPRITE = new ItemSprite(9, 16);
 
     public Cutlass() {

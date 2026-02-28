@@ -381,7 +381,7 @@ public class GameCharacter extends Combatant {
         if (isDead()) {
             screenHandler.register("avatarfor" + getFullName() + "dead", new Point(xpos, ypos), avatarSprite.getDead());
         } else {
-            screenHandler.register("avatarfor" + getFullName(), new Point(xpos, ypos), avatarSprite);
+            screenHandler.register("avatarfor" + getFullName(), new Point(xpos, ypos), avatarSprite.getStance(equipment.getWeapon().getStance()));
             if (!(equipment.getWeapon() instanceof NaturalWeapon)) {
                 Sprite spr = equipment.getWeapon().getOnAvatarSprite(this);
                 if (spr != null) {

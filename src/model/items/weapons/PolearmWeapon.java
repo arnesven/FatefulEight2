@@ -3,11 +3,13 @@ package model.items.weapons;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.FixedAvatarItemSprite;
+import view.sprites.Sprite;
 
 public abstract class PolearmWeapon extends Weapon {
 
     private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x24, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
+            new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN));
 
     public PolearmWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Polearms, damageTable);
@@ -31,5 +33,10 @@ public abstract class PolearmWeapon extends Weapon {
     @Override
     public int getWeight() {
         return 4000;
+    }
+
+    @Override
+    public int getStance() {
+        return POLEARM_STANCE;
     }
 }

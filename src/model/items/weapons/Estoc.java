@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Estoc extends BladedWeapon {
+public class Estoc extends LongBladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(11, 1);
 
     public Estoc() {

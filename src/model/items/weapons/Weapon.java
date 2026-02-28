@@ -18,6 +18,9 @@ import java.util.List;
 
 public abstract class Weapon extends EquipableItem {
 
+    public static final int NORMAL_STANCE = 0;
+    public static final int TWO_HANDED_STANCE = 1;
+    public static final int POLEARM_STANCE = 2;
     private final Skill skill;
     private final int[] damageTable;
     private WeaponImbuement imbuement = null;
@@ -234,5 +237,9 @@ public abstract class Weapon extends EquipableItem {
             return getImbuement().getAttackBonus();
         }
         return 0;
+    }
+
+    public int getStance() {
+        return NORMAL_STANCE;
     }
 }

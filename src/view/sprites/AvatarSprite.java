@@ -1,6 +1,7 @@
 package view.sprites;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.weapons.Weapon;
 import model.races.Dwarf;
 import model.races.Halfling;
 import model.races.Race;
@@ -31,6 +32,8 @@ public class AvatarSprite extends LoopingSprite {
     private final Sprite hairFromBack;
     private final int num;
     private final MyTriplet<Sprite, Sprite, Sprite> hat;
+    private final Sprite32x32 twoHandedStance;
+    private final Sprite32x32 polearmStance;
     private Sprite32x32 deadSprite;
     private int currentFrame = 0;
     private int count = 0;
@@ -54,6 +57,23 @@ public class AvatarSprite extends LoopingSprite {
         deadSprite = new Sprite32x32("deadavatar", "avatars.png", num+getDeadSpriteOffset(), MyColors.BLACK, color2, race.getColor(),
                 makeDeadHairOrHat());
         deadSprite.setColor4(color4);
+        int spriteNum = adjustForRace(num, race) + getTwoHandedOffset();
+        twoHandedStance = new Sprite32x32("twohanded", "avatars.png",
+                spriteNum, MyColors.BLACK, color2, race.getColor(),
+                makeOverlayList(hairSprite, hat));
+        twoHandedStance.setColor4(color4);
+        polearmStance = new Sprite32x32("twohanded", "avatars.png",
+                adjustForRace(num, race) + getPolearmOffset(), MyColors.BLACK, color2, race.getColor(),
+                makeOverlayList(hairSprite, hat));
+        polearmStance.setColor4(color4);
+    }
+
+    protected int getPolearmOffset() {
+        return 0x04;
+    }
+
+    protected int getTwoHandedOffset() {
+        return 0x03;
     }
 
     protected int getDeadSpriteOffset() {
@@ -82,10 +102,10 @@ public class AvatarSprite extends LoopingSprite {
 
     private static int adjustForRace(int num, Race race) {
         if (race instanceof Halfling) {
-            return num + 7;
+            return num + 0xA;
         }
         if (race instanceof Dwarf) {
-            return num + 4;
+            return num + 0x5;
         }
         return num;
     }
@@ -124,5 +144,15 @@ public class AvatarSprite extends LoopingSprite {
     public Sprite getAvatarBack() {
         return new AvatarSprite(race, num+0x10, color2, color3, color4, hairFromBack, CharacterAppearance.noHair(),
                 hat == null ? null : new MyTriplet<>(hat.second, hat.first, hat.third));
+    }
+
+    public Sprite getStance(int stance) {
+        if (stance == Weapon.NORMAL_STANCE) {
+            return this;
+        }
+        if (stance == Weapon.TWO_HANDED_STANCE) {
+            return twoHandedStance;
+        }
+        return polearmStance;
     }
 }
