@@ -7,6 +7,7 @@ import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.LimitedAvatarSprite;
 
 public class TreeHerderClass extends SpecialCharacterClass {
     public TreeHerderClass() {
@@ -21,9 +22,8 @@ public class TreeHerderClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        AvatarSprite spr = new AvatarSprite(race, 0x364, MyColors.GRAY_RED, MyColors.BROWN, MyColors.DARK_GREEN,
-                appearance.getNormalHair(), CharacterAppearance.noHair());
-        return spr;
+        return new LimitedAvatarSprite(race, 0x364, MyColors.GRAY_RED, MyColors.BROWN, MyColors.DARK_GREEN,
+                appearance.getNormalHair());
     }
 
     @Override

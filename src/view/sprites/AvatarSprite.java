@@ -51,9 +51,13 @@ public class AvatarSprite extends LoopingSprite {
         setColor2(color2);
         setColor3(color3);
         setColor4(color4);
-        deadSprite = new Sprite32x32("deadavatar", "avatars.png", num+3, MyColors.BLACK, color2, race.getColor(),
+        deadSprite = new Sprite32x32("deadavatar", "avatars.png", num+getDeadSpriteOffset(), MyColors.BLACK, color2, race.getColor(),
                 makeDeadHairOrHat());
         deadSprite.setColor4(color4);
+    }
+
+    protected int getDeadSpriteOffset() {
+        return 0x0F;
     }
 
     private List<Sprite> makeDeadHairOrHat() {

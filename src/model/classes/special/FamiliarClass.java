@@ -7,6 +7,7 @@ import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.LimitedAvatarSprite;
 
 public class FamiliarClass extends SpecialCharacterClass {
     public FamiliarClass() {
@@ -22,8 +23,8 @@ public class FamiliarClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x360, MyColors.BROWN, MyColors.GOLD,
-                MyColors.DARK_BROWN, appearance.getNormalHair(), CharacterAppearance.noHair());
+        return new LimitedAvatarSprite(race, 0x360, MyColors.BROWN, MyColors.GOLD,
+                MyColors.DARK_BROWN, appearance.getNormalHair());
     }
 
     @Override

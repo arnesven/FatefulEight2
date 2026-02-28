@@ -7,6 +7,7 @@ import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.LimitedAvatarSprite;
 
 public class BoneWalkerClass extends SpecialCharacterClass {
     public BoneWalkerClass() {
@@ -22,8 +23,8 @@ public class BoneWalkerClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x320, MyColors.PINK, race.getColor(),
-                appearance.getNormalHair(), CharacterAppearance.noHair());
+        return new LimitedAvatarSprite(race, 0x320, MyColors.PINK, race.getColor(), MyColors.DARK_RED,
+                appearance.getNormalHair());
     }
 
     @Override

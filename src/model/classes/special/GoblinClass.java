@@ -10,6 +10,7 @@ import model.items.weapons.Glaive;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.LimitedAvatarSprite;
 
 public class GoblinClass extends SpecialCharacterClass {
     public GoblinClass() {
@@ -38,7 +39,7 @@ public class GoblinClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x300, MyColors.BEIGE, race.getColor(), appearance.getNormalHair(), CharacterAppearance.noHair());
+        return new LimitedAvatarSprite(race, 0x300, MyColors.BEIGE, race.getColor(), MyColors.BLACK, appearance.getNormalHair());
     }
 
     @Override

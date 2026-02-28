@@ -8,6 +8,7 @@ import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.LimitedAvatarSprite;
 
 public class DragonClass extends SpecialCharacterClass {
     private final DragonEnemy dragon;
@@ -24,9 +25,8 @@ public class DragonClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        AvatarSprite spr = new AvatarSprite(race, 0x370, MyColors.BEIGE, dragon.getColorSet()[1], MyColors.GRAY,
-                appearance.getNormalHair(), CharacterAppearance.noHair());
-        return spr;
+        return new LimitedAvatarSprite(race, 0x370, MyColors.BEIGE, dragon.getColorSet()[1], MyColors.GRAY,
+                appearance.getNormalHair());
     }
 
     @Override

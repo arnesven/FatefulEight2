@@ -6,6 +6,7 @@ import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.LimitedAvatarSprite;
 
 public class FrogmanClass extends SpecialCharacterClass {
     protected FrogmanClass() {
@@ -17,8 +18,7 @@ public class FrogmanClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x374, MyColors.DARK_GREEN, MyColors.BROWN, MyColors.LIGHT_YELLOW,
-                appearance.getNormalHair(), CharacterAppearance.noHair());
+        return new LimitedAvatarSprite(race, 0x374, MyColors.DARK_GREEN, MyColors.BROWN, MyColors.LIGHT_YELLOW, appearance.getNormalHair());
     }
 
     @Override
