@@ -15,10 +15,12 @@ import model.items.weapons.Katana;
 import model.items.weapons.Wakizashi;
 import model.races.Race;
 import util.MyLists;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;
 import view.sprites.PortraitSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -75,8 +77,13 @@ public class SamuraiClass extends PrestigeClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x3C0, armorColor, race.getColor(), helmetDetail,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, AvatarSprite.LIGHT_ARMOR_BASE, armorColor, race.getColor(), helmetDetail,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeHelmet(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeHelmet(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "samuraihelmet", 0x0C,
+                MyColors.BLACK, armorColor, helmetDetail, MyColors.DARK_GRAY);
     }
 
     @Override

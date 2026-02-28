@@ -11,10 +11,12 @@ import model.items.weapons.Cutlass;
 import model.items.weapons.Dirk;
 import model.races.Race;
 import util.MyLists;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;
 import view.sprites.PortraitSprite;
+import view.sprites.Sprite;
 
 import java.util.List;
 
@@ -68,8 +70,13 @@ public class PirateCaptainClass extends PrestigeClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x380, MyColors.DARK_RED, race.getColor(), MyColors.DARK_BLUE,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, AvatarSprite.FANCY_MALE_SHORT_CAPE_BASE, MyColors.DARK_RED, race.getColor(), MyColors.DARK_BLUE,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeCaptainsHat(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeCaptainsHat(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "captainshat", 0x0E,
+                MyColors.BLACK, MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.DARK_GRAY);
     }
 
     @Override

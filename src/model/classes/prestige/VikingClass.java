@@ -13,8 +13,10 @@ import model.items.accessories.LargeShield;
 import model.items.weapons.RaidersAxe;
 import model.races.Race;
 import util.MyLists;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
 
 import java.util.List;
@@ -79,8 +81,15 @@ public class VikingClass extends PrestigeClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x3E0, MyColors.DARK_RED, race.getColor(), MyColors.GOLD,
-                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, appearance.getGender() ? AvatarSprite.LOOSE_SHIRT_FEMALE_BASE : AvatarSprite.LOOSE_SHIRT_BASE,
+                MyColors.DARK_RED, race.getColor(), MyColors.DARK_RED,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair(),
+                makeVikingHelmet(appearance));
+    }
+
+    private MyTriplet<Sprite, Sprite, Sprite> makeVikingHelmet(CharacterAppearance appearance) {
+        return AvatarSprite.makeHat(appearance, "vikinghelmet", 0x0D,
+                MyColors.BLACK, MyColors.DARK_RED, MyColors.GOLD, MyColors.PINK);
     }
 
     @Override

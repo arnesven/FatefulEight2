@@ -744,11 +744,20 @@ public class CharacterCreationView extends SelectableListMenu {
         if (!FatefulEight.inDebugMode()) {
             return arr;
         }
-        CharacterClass[] arr2 = new CharacterClass[arr.length+3];
+
+        CharacterClass[] extra = new CharacterClass[]{
+                Classes.ENCHANTRESS,
+                Classes.BRIGAND,
+                Classes.SWORD_MASTER,
+                Classes.SAMURAI,
+                Classes.VIKING,
+                Classes.PIRATE_CAPTAIN,
+                Classes.PIRATE
+        };
+
+        CharacterClass[] arr2 = new CharacterClass[arr.length+extra.length];
         System.arraycopy(arr, 0, arr2, 0, arr.length);
-        arr2[arr.length] = Classes.ENCHANTRESS;
-        arr2[arr.length+1] = Classes.BRIGAND;
-        arr2[arr.length+2] = Classes.SWORD_MASTER;
+        System.arraycopy(extra, 0, arr2, arr.length, extra.length);
         return arr2;
     }
 }
