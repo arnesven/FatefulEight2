@@ -7,12 +7,18 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
 import util.MyRandom;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 import java.util.List;
 
-public class FishingPole extends OneHandedPolearmWeapon {
+public class FishingPole extends PolearmWeapon {
+
+    private static final AvatarItemSprite POLEARM_SPRITES =
+            new AvatarItemSprite(0x24, MyColors.BROWN, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.BEIGE);
+
     private static final Sprite SPRITE = new TwoHandedItemSprite(13, 4);
 
     public FishingPole() {
@@ -52,5 +58,15 @@ public class FishingPole extends OneHandedPolearmWeapon {
     @Override
     public boolean isStackable() {
         return true;
+    }
+
+    @Override
+    public int getStance() {
+        return Weapon.NORMAL_STANCE;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return POLEARM_SPRITES;
     }
 }

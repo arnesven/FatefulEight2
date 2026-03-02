@@ -3,11 +3,18 @@ package model.items.weapons;
 import model.items.Item;
 import model.items.PirateItem;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
+import view.sprites.FixedAvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 public class BoatHook extends PolearmWeapon implements PirateItem {
     private static final Sprite SPRITE = new TwoHandedItemSprite(11, 16);
+
+    private static final AvatarItemSprite AVATAR_SPRITE =
+            new FixedAvatarItemSprite( 0x93, MyColors.BROWN, MyColors.GRAY, MyColors.TRANSPARENT, MyColors.TRANSPARENT);
+
 
     public BoatHook() {
         super("Boat Hook", 18, new int[]{8, 9, 10});
@@ -30,6 +37,11 @@ public class BoatHook extends PolearmWeapon implements PirateItem {
 
     @Override
     public Prevalence getPrevalence() {
-        return Prevalence.rare;
+        return Prevalence.veryRare;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITE;
     }
 }
