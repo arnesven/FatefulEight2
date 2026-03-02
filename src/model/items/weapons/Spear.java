@@ -2,10 +2,17 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
+import view.sprites.FixedAvatarItemSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
 public class Spear extends PolearmWeapon {
+
+    private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
+            new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY));
+
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 4);
 
     public Spear() {
@@ -25,5 +32,10 @@ public class Spear extends PolearmWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.common;
+    }
+
+    @Override
+    protected AvatarItemSprite getOnAvatarSprite(int index) {
+        return POLEARM_SPRITES[index];
     }
 }

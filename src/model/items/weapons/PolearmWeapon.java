@@ -9,7 +9,7 @@ import view.sprites.Sprite;
 public abstract class PolearmWeapon extends Weapon {
 
     private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
-            new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN));
+            new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.TRANSPARENT));
 
     public PolearmWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Polearms, damageTable);
