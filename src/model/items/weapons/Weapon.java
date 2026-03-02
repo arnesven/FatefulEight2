@@ -154,11 +154,7 @@ public abstract class Weapon extends EquipableItem {
         return this.imbuement != null;
     }
 
-    public LoopingSprite getOnAvatarSprite(GameCharacter gameCharacter) {
-        return getOnAvatarSprite(gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1);
-    }
-
-    protected abstract AvatarItemSprite getOnAvatarSprite(int index);
+    public abstract AvatarItemSprite getOnAvatarSprite();
 
     @Override
     public boolean isAnalyzable() {

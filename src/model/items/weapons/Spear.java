@@ -10,8 +10,8 @@ import view.sprites.Sprite;
 
 public class Spear extends PolearmWeapon {
 
-    private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
-            new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY));
+    private static final AvatarItemSprite POLEARM_SPRITES =
+            new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.GRAY);
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 4);
 
@@ -35,7 +35,7 @@ public class Spear extends PolearmWeapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return POLEARM_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return POLEARM_SPRITES;
     }
 }

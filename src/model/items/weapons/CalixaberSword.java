@@ -8,8 +8,8 @@ import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 public class CalixaberSword extends TwoHandedSword {
-    protected static final AvatarItemSprite[] TWO_HANDED_SWORD_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE));
+    protected static final AvatarItemSprite TWO_HANDED_SWORD_SPRITES =
+            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE);
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(14, 14, MyColors.DARK_RED, MyColors.WHITE, MyColors.GOLD);
 
@@ -43,7 +43,7 @@ public class CalixaberSword extends TwoHandedSword {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return TWO_HANDED_SWORD_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return TWO_HANDED_SWORD_SPRITES;
     }
 }

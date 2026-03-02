@@ -72,8 +72,8 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return inner.getOnAvatarSprite(index);
+    public AvatarItemSprite getOnAvatarSprite() {
+        return inner.getOnAvatarSprite();
     }
 
     @Override
@@ -99,11 +99,6 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     @Override
     public RunOnceAnimationSprite getEffectSprite() {
         return inner.getEffectSprite();
-    }
-
-    @Override
-    public LoopingSprite getOnAvatarSprite(GameCharacter gameCharacter) {
-        return inner.getOnAvatarSprite(gameCharacter);
     }
 
     @Override

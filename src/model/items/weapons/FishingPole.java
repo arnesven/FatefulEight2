@@ -12,7 +12,7 @@ import view.sprites.TwoHandedItemSprite;
 
 import java.util.List;
 
-public class FishingPole extends PolearmWeapon {
+public class FishingPole extends OneHandedPolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(13, 4);
 
     public FishingPole() {

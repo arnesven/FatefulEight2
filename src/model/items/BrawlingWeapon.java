@@ -20,7 +20,7 @@ public abstract class BrawlingWeapon extends Weapon implements PairableWeapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
+    public AvatarItemSprite getOnAvatarSprite() {
         return null;
     }
 

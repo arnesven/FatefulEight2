@@ -8,8 +8,8 @@ import view.sprites.RangedStrikeEffect;
 import view.sprites.RunOnceAnimationSprite;
 
 public abstract class SlugThrower extends Weapon {
-    private static final AvatarItemSprite[] ON_AVATAR_SPRITES = makeShiftedSpriteSet(new AvatarItemSprite(0x10,
-            MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK));
+    private static final AvatarItemSprite ON_AVATAR_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK);
 
     private final boolean isTwoHanded;
 
@@ -43,8 +43,8 @@ public abstract class SlugThrower extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return ON_AVATAR_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return ON_AVATAR_SPRITES;
     }
 
     @Override

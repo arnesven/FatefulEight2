@@ -8,8 +8,8 @@ import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BluntWeapon extends Weapon {
 
-    private static final AvatarItemSprite[] BLUNT_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x20, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
+    private static final AvatarItemSprite BLUNT_SPRITES =
+            new AvatarItemSprite(0x20, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE);
     private final boolean twoHander;
     private final int speedModifier;
 
@@ -35,8 +35,8 @@ public abstract class BluntWeapon extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return BLUNT_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return BLUNT_SPRITES;
     }
 
     @Override

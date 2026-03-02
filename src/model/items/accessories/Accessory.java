@@ -11,9 +11,6 @@ import model.items.analysis.ItemAnalysis;
 import model.items.analysis.SkillBonusAnalysis;
 import model.items.spells.Spell;
 import util.MyStrings;
-import view.AnalyzeArmorDialog;
-import view.AnalyzeDialog;
-import view.AnalyzeSkillDialog;
 
 import java.util.ArrayList;
 import java.util.List;

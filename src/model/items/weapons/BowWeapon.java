@@ -8,8 +8,8 @@ import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BowWeapon extends Weapon {
 
-    private static final AvatarItemSprite[] BOW_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x14, MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE));
+    private static final AvatarItemSprite BOW_SPRITES =
+            new AvatarItemSprite(0x14, MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
 
     public BowWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Bows, damageTable);
@@ -31,8 +31,8 @@ public abstract class BowWeapon extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return BOW_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return BOW_SPRITES;
     }
 
     @Override

@@ -1,14 +1,10 @@
 package model.items.accessories;
 
-import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.enemies.Enemy;
 import model.items.Item;
 import model.items.PirateItem;
 import model.items.Prevalence;
-import model.states.CombatEvent;
 import util.MyPair;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
@@ -19,8 +15,8 @@ import java.util.List;
 public class Spyglass extends ShieldItem implements PirateItem {
     private static final Sprite SPRITE = new ItemSprite(8, 16, MyColors.BROWN, MyColors.PEACH, MyColors.CYAN);
 
-    private static final Sprite[] SHIELD_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.PEACH, MyColors.PINK, MyColors.BEIGE));
+    private static final Sprite SHIELD_SPRITES =
+            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.PEACH, MyColors.PINK, MyColors.BEIGE);
 
     public Spyglass() {
         super("Spyglass", 15, false, 1);
@@ -67,7 +63,7 @@ public class Spyglass extends ShieldItem implements PirateItem {
     }
 
     @Override
-    public Sprite getOnAvatarSprite(GameCharacter gameCharacter) {
-        return SHIELD_SPRITES[gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1];
+    public Sprite getOnAvatarSprite() {
+        return SHIELD_SPRITES;
     }
 }

@@ -1,6 +1,5 @@
 package model.items.accessories;
 
-import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
 import model.items.Prevalence;
@@ -16,8 +15,8 @@ public class HolyChalice extends ShieldItem {
     private static final Sprite SPRITE = new ItemSprite(15, 11,
             MyColors.YELLOW, MyColors.GOLD, MyColors.RED);
 
-    private static final Sprite[] SHIELD_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.YELLOW, MyColors.PINK, MyColors.BEIGE));
+    private static final Sprite SHIELD_SPRITES =
+            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.YELLOW, MyColors.PINK, MyColors.BEIGE);
 
 
     public HolyChalice() {
@@ -57,7 +56,7 @@ public class HolyChalice extends ShieldItem {
     }
 
     @Override
-    public Sprite getOnAvatarSprite(GameCharacter gameCharacter) {
-        return SHIELD_SPRITES[gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1];
+    public Sprite getOnAvatarSprite() {
+        return SHIELD_SPRITES;
     }
 }

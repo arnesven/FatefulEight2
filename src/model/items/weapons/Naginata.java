@@ -11,8 +11,8 @@ import view.sprites.TwoHandedItemSprite;
 public class Naginata extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 12);
 
-    private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
-            new FixedAvatarItemSprite( 0x91, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT));
+    private static final AvatarItemSprite POLEARM_SPRITES =
+            new FixedAvatarItemSprite( 0x91, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
 
     public Naginata() {
         super("Naginata", 36, new int[]{9,9,9,10,10});
@@ -44,7 +44,7 @@ public class Naginata extends PolearmWeapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return POLEARM_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return POLEARM_SPRITES;
     }
 }

@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeaponPair extends Weapon implements BlockingItem {
-    private static final AvatarItemSprite[] TWIN_BLADES =  makeShiftedSpriteSet(
-            new AvatarItemSprite(0x40, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
-    private static final AvatarItemSprite[] OTHER_WEAPONS =  makeShiftedSpriteSet(
-            new AvatarItemSprite(0x54, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
+    private static final AvatarItemSprite TWIN_BLADES =
+            new AvatarItemSprite(0x40, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE);
+    private static final AvatarItemSprite OTHER_WEAPONS =
+            new AvatarItemSprite(0x54, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE);
 
     private final Weapon mainHand;
     private final Weapon offHand;
@@ -109,11 +109,11 @@ public class WeaponPair extends Weapon implements BlockingItem {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
+    public AvatarItemSprite getOnAvatarSprite() {
         if (mainHand.isOfType(BladedWeapon.class) && offHand.isOfType(BladedWeapon.class)) {
-            return TWIN_BLADES[index];
+            return TWIN_BLADES;
         }
-        return OTHER_WEAPONS[index];
+        return OTHER_WEAPONS;
     }
 
     private static String makeName(Weapon w1, Weapon w2) {

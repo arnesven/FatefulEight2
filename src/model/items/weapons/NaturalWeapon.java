@@ -30,7 +30,7 @@ public abstract class NaturalWeapon extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
+    public AvatarItemSprite getOnAvatarSprite() {
         return null;
     }
 }

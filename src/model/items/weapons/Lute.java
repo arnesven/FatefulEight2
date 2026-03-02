@@ -19,8 +19,8 @@ import java.util.List;
 public class Lute extends Weapon {
     public static final Sprite SPRITE = new TwoHandedItemSprite(12, 11,
             MyColors.DARK_BROWN, MyColors.PEACH, MyColors.BROWN);
-    protected static final AvatarItemSprite[] ON_AVATAR_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x80, MyColors.DARK_BROWN, MyColors.BROWN, MyColors.PEACH, MyColors.GRAY));
+    protected static final AvatarItemSprite ON_AVATAR_SPRITES =
+            new AvatarItemSprite(0x80, MyColors.DARK_BROWN, MyColors.BROWN, MyColors.PEACH, MyColors.GRAY);
 
     public Lute() {
         super("Lute", 24, Skill.BluntWeapons, new int[]{8, 11});
@@ -61,8 +61,8 @@ public class Lute extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return ON_AVATAR_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return ON_AVATAR_SPRITES;
     }
 
     @Override

@@ -2,9 +2,7 @@ package model.items.weapons;
 
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.conditions.ClawsVampireAbility;
 import model.items.Item;
-import view.sprites.Sprite;
 import view.sprites.AvatarItemSprite;
 
 public class UnarmedCombatWeapon extends NaturalWeapon {
@@ -48,7 +46,7 @@ public class UnarmedCombatWeapon extends NaturalWeapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
+    public AvatarItemSprite getOnAvatarSprite() {
         return null;
     }
 

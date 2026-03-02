@@ -10,8 +10,8 @@ import view.sprites.TwoHandedItemSprite;
 public class Glaive extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(4, 4);
 
-    private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
-            new FixedAvatarItemSprite( 0x91, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY));
+    private static final AvatarItemSprite POLEARM_SPRITES =
+            new FixedAvatarItemSprite( 0x91, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY);
 
 
     public Glaive() {
@@ -29,7 +29,7 @@ public class Glaive extends PolearmWeapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return POLEARM_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return POLEARM_SPRITES;
     }
 }

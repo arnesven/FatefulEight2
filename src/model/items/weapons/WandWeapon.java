@@ -8,8 +8,8 @@ import view.sprites.RangedStrikeEffect;
 import view.sprites.RunOnceAnimationSprite;
 
 public abstract class WandWeapon extends Weapon {
-    private static final AvatarItemSprite WAND_SPRITES[] = makeShiftedSpriteSet(new AvatarItemSprite(0x10,
-            MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK));
+    private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK);
 
     public WandWeapon(String name, int cost, Skill skill, int[] damageTable) {
         super(name, cost, skill, damageTable);
@@ -34,8 +34,8 @@ public abstract class WandWeapon extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return WAND_SPRITES[index];
+    public AvatarItemSprite getOnAvatarSprite() {
+        return WAND_SPRITES;
     }
 
     @Override

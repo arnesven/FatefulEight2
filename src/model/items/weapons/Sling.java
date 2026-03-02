@@ -47,7 +47,7 @@ public class Sling extends Weapon {
     }
 
     @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
+    public AvatarItemSprite getOnAvatarSprite() {
         return null;
     }
 }

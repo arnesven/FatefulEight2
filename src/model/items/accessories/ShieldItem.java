@@ -1,6 +1,5 @@
 package model.items.accessories;
 
-import model.characters.GameCharacter;
 import model.items.BlockingItem;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
@@ -10,9 +9,8 @@ public abstract class ShieldItem extends Accessory implements BlockingItem {
 
     private final boolean heavyArmor;
     private final int block;
-    private Sprite[] SHIELD_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x70, MyColors.GRAY, MyColors.DARK_GRAY, MyColors.PINK, MyColors.BEIGE)
-    );
+    private final Sprite SHIELD_SPRITES =
+            new AvatarItemSprite(0x70, MyColors.GRAY, MyColors.DARK_GRAY, MyColors.PINK, MyColors.BEIGE);
 
     public ShieldItem(String name, int cost, boolean isHeavy, int blockValue) {
         super(name, cost);
@@ -30,9 +28,8 @@ public abstract class ShieldItem extends Accessory implements BlockingItem {
         return "wood";
     }
 
-    public Sprite getOnAvatarSprite(GameCharacter gameCharacter) {
-        int index = gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1;
-        return SHIELD_SPRITES[index];
+    public Sprite getOnAvatarSprite() {
+        return SHIELD_SPRITES;
     }
 
     public int getBlockChance() {
