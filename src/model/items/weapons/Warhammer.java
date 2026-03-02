@@ -10,7 +10,7 @@ public class Warhammer extends BluntWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(7, 1);
 
     protected static final AvatarItemSprite ON_AVATAR_SPRITES =
-            new AvatarItemSprite(0x84, MyColors.BROWN, MyColors.GRAY, MyColors.PEACH, MyColors.GRAY);
+            new AvatarItemSprite(0x26, MyColors.BROWN, MyColors.GRAY, MyColors.PEACH, MyColors.GRAY);
 
     public Warhammer() {
         super("Warhammer", 18, new int[]{4,7,10}, false, -1);

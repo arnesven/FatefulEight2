@@ -6,7 +6,7 @@ import view.sprites.AvatarItemSprite;
 public abstract class LongBladedWeapon extends BladedWeapon {
 
     protected static final AvatarItemSprite AVATAR_SPRITES =
-            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.BEIGE);
+            new AvatarItemSprite(0x03, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.BEIGE);
 
     public LongBladedWeapon(String name, int cost, int[] damageTable, boolean twoHander, int speedBonus) {
         super(name, cost, damageTable, twoHander, speedBonus);

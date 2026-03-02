@@ -21,9 +21,9 @@ import java.util.List;
 
 public class WeaponPair extends Weapon implements BlockingItem {
     private static final AvatarItemSprite TWIN_BLADES =
-            new AvatarItemSprite(0x40, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE);
+            new AvatarItemSprite(0x50, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.BEIGE);
     private static final AvatarItemSprite OTHER_WEAPONS =
-            new AvatarItemSprite(0x54, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE);
+            new AvatarItemSprite(0x53, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE);
 
     private final Weapon mainHand;
     private final Weapon offHand;

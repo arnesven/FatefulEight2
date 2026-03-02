@@ -25,4 +25,16 @@ public class AvatarItemSprite extends LoopingSprite {
     public AvatarItemSprite copy() {
         return new AvatarItemSprite(num, colors[0], colors[1], colors[2], colors[3]);
     }
+
+    @Override
+    protected int getCurrentFrameIndex(int currentFrame) {
+        switch (currentFrame) {
+            case 2:
+                return 0;
+            case 3:
+                return 2;
+            default:
+                return currentFrame;
+        }
+    }
 }

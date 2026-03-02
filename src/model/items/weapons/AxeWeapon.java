@@ -7,8 +7,8 @@ import view.sprites.CuttingStrikeEffectSprite;
 import view.sprites.RunOnceAnimationSprite;
 
 public abstract class AxeWeapon extends Weapon {
-    private static final AvatarItemSprite AXE_SPRITES = new AvatarItemSprite(0x04, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE);
-    private static final AvatarItemSprite TWO_HANDED_AXE_SPRITES = new AvatarItemSprite(0x44, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE);
+    private static final AvatarItemSprite AXE_SPRITES = new AvatarItemSprite(0x40, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE);
+    private static final AvatarItemSprite TWO_HANDED_AXE_SPRITES = new AvatarItemSprite(0x43, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE);
     private final boolean twoHander;
 
     public AxeWeapon(String name, int cost, int[] damageTable, boolean twoHander) {
@@ -28,7 +28,7 @@ public abstract class AxeWeapon extends Weapon {
 
     @Override
     public AvatarItemSprite getOnAvatarSprite() {
-        if (isTwoHanded()) {
+        if (isTwoHanded() && !isRangedAttack()) {
             return TWO_HANDED_AXE_SPRITES;
         }
         return AXE_SPRITES;

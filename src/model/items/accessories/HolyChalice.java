@@ -16,7 +16,7 @@ public class HolyChalice extends ShieldItem {
             MyColors.YELLOW, MyColors.GOLD, MyColors.RED);
 
     private static final Sprite SHIELD_SPRITES =
-            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.YELLOW, MyColors.PINK, MyColors.BEIGE);
+            new AvatarItemSprite(0x63, MyColors.BROWN, MyColors.YELLOW, MyColors.PINK, MyColors.BEIGE);
 
 
     public HolyChalice() {

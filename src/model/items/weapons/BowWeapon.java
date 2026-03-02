@@ -9,7 +9,7 @@ import view.sprites.RunOnceAnimationSprite;
 public abstract class BowWeapon extends Weapon {
 
     private static final AvatarItemSprite BOW_SPRITES =
-            new AvatarItemSprite(0x14, MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
+            new AvatarItemSprite(0x30, MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
 
     public BowWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Bows, damageTable);

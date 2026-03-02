@@ -17,7 +17,7 @@ import java.util.List;
 public class FishingPole extends PolearmWeapon {
 
     private static final AvatarItemSprite POLEARM_SPRITES =
-            new AvatarItemSprite(0x24, MyColors.BROWN, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.BEIGE);
+            new AvatarItemSprite(0x95, MyColors.BROWN, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.BEIGE);
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(13, 4);
 
