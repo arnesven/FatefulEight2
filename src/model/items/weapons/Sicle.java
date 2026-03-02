@@ -1,6 +1,7 @@
 package model.items.weapons;
 
 import model.items.Item;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
@@ -26,4 +27,10 @@ public class Sicle extends AxeWeapon implements PairableWeapon {
     public Sprite makePairSprite() {
         return new ItemSprite(6, 15);
     }
+
+    // TODO
+//    @Override
+//    public AvatarItemSprite getOnAvatarSprite() {
+//        return AVATAR_SPRITE;
+//    }
 }

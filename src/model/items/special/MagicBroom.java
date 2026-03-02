@@ -4,6 +4,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.weapons.BluntWeapon;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
@@ -40,4 +41,10 @@ public class MagicBroom extends BluntWeapon {
     public String getExtraText() {
         return "Enables flying for single person.";
     }
+
+    // TODO
+//    @Override
+//    public AvatarItemSprite getOnAvatarSprite() {
+//        return AVATAR_SPRITE;
+//    }
 }

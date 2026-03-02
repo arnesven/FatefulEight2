@@ -6,7 +6,7 @@ import view.sprites.AvatarItemSprite;
 public abstract class OneHandedPolearmWeapon extends PolearmWeapon {
 
     private static final AvatarItemSprite POLEARM_SPRITES =
-            new AvatarItemSprite(0x95, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.PINK, MyColors.BEIGE);
+            new AvatarItemSprite(0x95, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.TRANSPARENT);
 
     public OneHandedPolearmWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, damageTable);

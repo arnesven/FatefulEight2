@@ -6,7 +6,7 @@ import view.sprites.RunOnceAnimationSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class ThrowingAxes extends AxeWeapon {
+public class ThrowingAxes extends SmallAxeWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 5);
 
     public ThrowingAxes() {

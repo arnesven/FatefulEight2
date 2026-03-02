@@ -33,4 +33,10 @@ public abstract class BrawlingWeapon extends Weapon implements PairableWeapon {
     public String getSound() {
         return "wood";
     }
+
+    // TODO
+//    @Override
+//    public AvatarItemSprite getOnAvatarSprite() {
+//        return AVATAR_SPRITE;
+//    }
 }

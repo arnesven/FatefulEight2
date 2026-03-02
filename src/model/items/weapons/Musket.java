@@ -2,6 +2,7 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.PirateItem;
+import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
@@ -27,4 +28,15 @@ public class Musket extends SlugThrower implements PirateItem {
     public Item copy() {
         return new Musket();
     }
+
+    // TODO:
+//    @Override
+//    public int getStance() {
+//        return POLEARM_STANCE;
+//    }
+//
+//    @Override
+//    public AvatarItemSprite getOnAvatarSprite() {
+//        return AVATAR_SPRITE;
+//    }
 }
