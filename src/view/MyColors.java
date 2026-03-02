@@ -1,11 +1,14 @@
 package view;
 
+import util.MyLists;
 import view.sprites.Sprite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.List;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +42,8 @@ public enum MyColors {
     RED         (new Color(0xDD0000)),
     BEIGE       (new Color(0xFFEEAA)),
     ORANGE      (new Color(0xFF9900)),
-    ORC_GREEN   (new Color(0x77DD88));
+    ORC_GREEN   (new Color(0x77DD88)),
+    TRANSPARENT (new Color(0x00000000, true));
 
     private Color awtColor;
     
@@ -77,7 +81,9 @@ public enum MyColors {
     public static int findClosest(int rgb) {
         long minDist = Long.MAX_VALUE;
         MyColors minColor = null;
-        for (MyColors c : MyColors.values()) {
+        List<MyColors> colorsWithoutTransparent = MyLists.filter(Arrays.asList(MyColors.values()),
+                mc -> mc != TRANSPARENT);
+        for (MyColors c : colorsWithoutTransparent) {
             long dist = distance(c.toAwtColor().getRGB(), rgb);
             if (dist < minDist) {
                 minDist = dist;

@@ -52,8 +52,7 @@ public class BarbarianClass extends CharacterClass {
             clothing = MyColors.GOLD;
         }
         AvatarSprite aspr = new AvatarSprite(race, appearance.getGender() ? 0x40 : 0x100, clothing,
-                race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
-        aspr.setColor4(appearance.getRace().getMouthDefaultColor());
+                race.getColor(), appearance.getRace().getMouthDefaultColor(), appearance.getNormalHair(), appearance.getFullBackHair());
         return aspr;
     }
 
