@@ -53,7 +53,10 @@ public class PortraitSubView extends SubView {
         int mouth = CharacterCreationView.mouthSet[mouthIndex];
 
         int nose = raceToUse.getRandomNose();
-        CharacterEyes eyes = race.getRandomEyes();
+        CharacterEyes eyes;
+        do {
+            eyes = race.getRandomEyes();
+        } while (eyes.areFeminineOnly() && !gender);
         HairStyle hair = race.getRandomHairStyle(gender);
         Beard beard;
         do {
@@ -63,9 +66,9 @@ public class PortraitSubView extends SubView {
                 hairColor, mouth, nose, eyes, hair, beard);
         raceToUse.setRandomDetail(appearance);
         if (gender) { // makup
-             if (MyRandom.randInt(3) == 0) {
-                 appearance.setMascaraColor(MakeUpColors.randomMascaraColor(raceToUse));
-             }
+            if (MyRandom.randInt(3) == 0) {
+                appearance.setMascaraColor(MakeUpColors.randomMascaraColor(raceToUse));
+            }
             if (MyRandom.randInt(3) == 0) {
                 MyColors lipColor = MakeUpColors.randomLipColor(raceToUse);
                 if (lipColor != raceToUse.getColor()) {
