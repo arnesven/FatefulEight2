@@ -13,6 +13,7 @@ import model.states.dailyaction.shops.ShopSupplier;
 import model.states.events.*;
 import util.MyLists;
 import view.MyColors;
+import view.subviews.RuinsSubView;
 
 import java.io.Serializable;
 import java.util.*;
@@ -49,20 +50,34 @@ public class GameAchievements implements Serializable {
     }
 
     private void addDungeonAchievements() {
-        World w = new World(WorldBuilder.buildWorld(WorldType.original), WorldBuilder.getWorldBounds(WorldBuilder.ORIGINAL),
-                WorldType.original);
+        WorldHex[][] worldContent = WorldBuilder.buildWorld(WorldType.original);
+        List<UrbanLocation> lordLocations = new ArrayList<>();
+        List<RuinsLocation> ruins = new ArrayList<>();
+        List<TombLocation> tombs = new ArrayList<>();
 
-        for (UrbanLocation urb : w.getLordLocations()) {
+        for (WorldHex[] arr1 : worldContent) {
+            for (WorldHex wh : arr1) {
+                if (wh.hasLord()) {
+                    lordLocations.add((UrbanLocation) wh.getLocation());
+                } else if (wh.getLocation() instanceof RuinsLocation) {
+                    ruins.add((RuinsLocation) wh.getLocation());
+                } else if (wh.getLocation() instanceof TombLocation) {
+                    tombs.add((TombLocation) wh.getLocation());
+                }
+            }
+        }
+
+        for (UrbanLocation urb : lordLocations) {
             if (urb instanceof CastleLocation) {
                 registerDungeonAchievement(((CastleLocation) urb).getDungeonAchievement());
             }
         }
 
-        for (RuinsLocation loc : w.getRuinsLocations()) {
+        for (RuinsLocation loc : ruins) {
             registerDungeonAchievement(loc.getAchievementData());
         }
 
-        for (TombLocation loc : w.getTombLocations()) {
+        for (TombLocation loc : tombs) {
             registerDungeonAchievement(loc.getAchievementData());
         }
     }
