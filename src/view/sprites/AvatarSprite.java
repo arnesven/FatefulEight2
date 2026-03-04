@@ -35,9 +35,6 @@ public class AvatarSprite extends LoopingSprite {
     private final Sprite32x32 twoHandedStance;
     private final Sprite32x32 polearmStance;
     private Sprite32x32 deadSprite;
-    private int currentFrame = 0;
-    private int count = 0;
-    private int delay = 16;
 
     public AvatarSprite(Race race, int num, MyColors color2, MyColors color3, MyColors color4, Sprite hairSprite, Sprite hairFromBack, MyTriplet<Sprite, Sprite, Sprite> hat) {
         super("avatar"+num+race.getName(), "avatars.png", adjustForRace(num, race), 32, 32, makeOverlayList(hairSprite, hat));
