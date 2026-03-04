@@ -84,8 +84,11 @@ public class StartGameMenu extends GameView {
                 MyColors.WHITE, MyColors.BLACK);
         int BAR_WIDTH = 40;
         for (int i = 0; i < BAR_WIDTH * percentage; ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), (char)0xFF + "", 20 + i, 23, MyColors.WHITE, MyColors.BLACK);
+            BorderFrame.drawString(model.getScreenHandler(), (char)0xFF + "", 20 + i, 23, MyColors.CYAN, MyColors.BLACK);
         }
+
+        BorderFrame.drawString(model.getScreenHandler(), (char)0xA3 + "", 20 - 1, 23, MyColors.BLACK, MyColors.BLACK);
+        BorderFrame.drawString(model.getScreenHandler(), (char)0xA1 + "", 20 + BAR_WIDTH, 23, MyColors.BLACK, MyColors.BLACK);
     }
 
     @Override
