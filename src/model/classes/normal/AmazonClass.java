@@ -1,5 +1,6 @@
 package model.classes.normal;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SpearInHandDetail;
@@ -11,6 +12,7 @@ import model.items.Equipment;
 import model.items.Item;
 import model.items.clothing.PrimitiveArmor;
 import model.items.weapons.Javelins;
+import model.items.weapons.Weapon;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
 import view.MyColors;
@@ -82,6 +84,14 @@ public class AmazonClass extends CharacterClass {
             spear.applyYourself((AdvancedAppearance) appearance,
                     appearance.getRace());
         }
+    }
+
+    @Override
+    public int getWeaponShift(GameCharacter gameCharacter, int weaponStance) {
+        if (weaponStance == Weapon.NORMAL_STANCE) {
+            return 1 + super.getWeaponShift(gameCharacter, weaponStance);
+        }
+        return super.getWeaponShift(gameCharacter, weaponStance);
     }
 
     @Override

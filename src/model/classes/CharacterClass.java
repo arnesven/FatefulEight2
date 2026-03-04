@@ -116,7 +116,7 @@ public abstract class CharacterClass implements Serializable {
         return false;
     }
 
-    public int getWeaponShift(GameCharacter gameCharacter) {
+    public int getWeaponShift(GameCharacter gameCharacter, int weaponStance) {
         if (gameCharacter.getRace().isShort()) {
             return -1;
         }

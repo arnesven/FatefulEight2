@@ -77,7 +77,8 @@ public class BarbarianClass extends CharacterClass {
         }
     }
 
-    public int getWeaponShift(GameCharacter gameCharacter) {
+    @Override
+    public int getWeaponShift(GameCharacter gameCharacter, int weaponStance) {
         if (gameCharacter.getRace().isShort()) {
             return 0;
         }
