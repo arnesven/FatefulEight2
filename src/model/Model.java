@@ -8,7 +8,6 @@ import model.characters.*;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
-import model.classes.Classes;
 import model.classes.normal.NobleClass;
 import model.classes.npcs.RegentClass;
 import model.items.ItemDeck;
@@ -25,7 +24,6 @@ import model.races.Race;
 import model.ruins.RuinsDungeon;
 import model.states.*;
 import model.tutorial.TutorialHandler;
-import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
 import util.MyLists;
@@ -38,7 +36,6 @@ import view.subviews.PortraitSubView;
 import view.subviews.SubView;
 import view.GameView;
 import view.*;
-import view.subviews.TownishSubView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -136,18 +133,28 @@ public class Model {
     }
 
     public void startGameNoLoad() {
-        initialize();
-        subView = new EmptySubView();
-        log = new GameLog();
-        gameData = new GameData();
-        state = new ChooseStartingCharacterState(this);
-        System.out.println("Set state to ChooseStartingCharacterState");
-        caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
         if (FatefulEight.TEST_MODE) {
             //MainStoryTest.testSuit(this);
         }
         GameStatistics.setModel(this);
+    }
+
+    public void initializeSubViewAndLog() {
+        subView = new EmptySubView();
+        log = new GameLog();
+    }
+
+    public void createInitialWorld() {
+        gameData = new GameData();
+    }
+    
+    public void setInitialState() {
+        state = new ChooseStartingCharacterState(this);
+    }
+    
+    public void createCaveSystem() {
+        caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
     }
 
     public void startGameWithState(GameState state) {
@@ -646,5 +653,9 @@ public class Model {
 
     public boolean isInPastWorld() {
         return gameData.currentWorld == WorldType.thePast;
+    }
+
+    public MyPair<String, Double> prepForNewGameStep() {
+        return NewGamePrepper.prepStep(this);
     }
 }

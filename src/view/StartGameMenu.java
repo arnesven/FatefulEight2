@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import sound.SoundEffects;
+import util.MyPair;
 import view.sprites.ArrowSprites;
 
 import java.awt.event.KeyEvent;
@@ -15,6 +16,8 @@ public class StartGameMenu extends GameView {
             "New Game", "Load Game", "Hall of Fame",
             "Credits", "Sprite Previewer", "Jukebox",
             "Minigames", "Quit"};
+    private boolean loadingNewGame = false;
+    private final LoadingGameView loadGameView = new LoadingGameView();
 
     public StartGameMenu() {
         super(true);
@@ -33,6 +36,14 @@ public class StartGameMenu extends GameView {
 
     @Override
     public void internalUpdate(Model model) {
+        if (loadingNewGame) {
+            prepForNewGame(model);
+        } else {
+            drawMenu(model);
+        }
+    }
+
+    private void drawMenu(Model model) {
         model.getScreenHandler().clearAll();
         int row = Y_START;
         for (String s : options) {
@@ -57,6 +68,26 @@ public class StartGameMenu extends GameView {
                 MyColors.WHITE, MyColors.BLACK);
     }
 
+    private void prepForNewGame(Model model) {
+        MyPair<String, Double> loaded = model.prepForNewGameStep();
+        if (loaded.second < 1.0) {
+            drawProgressBar(model, loaded.first, loaded.second);
+            madeChanges();
+        } else {
+            setTimeToTransition(true);
+        }
+    }
+
+    private void drawProgressBar(Model model, String stepText, double percentage) {
+        model.getScreenHandler().clearAll();
+        BorderFrame.drawString(model.getScreenHandler(), stepText, 20, 25,
+                MyColors.WHITE, MyColors.BLACK);
+        int BAR_WIDTH = 40;
+        for (int i = 0; i < BAR_WIDTH * percentage; ++i) {
+            BorderFrame.drawString(model.getScreenHandler(), (char)0xFF + "", 20 + i, 23, MyColors.WHITE, MyColors.BLACK);
+        }
+    }
+
     @Override
     public GameView getNextView(Model model) {
         return new StoryIntroView();
@@ -64,10 +95,14 @@ public class StartGameMenu extends GameView {
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (loadingNewGame) {
+            return;
+        }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
             if (cursorPos == 0) {
-                model.startGameNoLoad();
-                setTimeToTransition(true);
+                loadingNewGame = true;
+                drawProgressBar(model, "", 0.0);
+                madeChanges();
             } else if (cursorPos == 1) {
                 model.transitionToDialog(new SelectSaveSlotMenu(this, true));
             } else if (cursorPos == 2) {

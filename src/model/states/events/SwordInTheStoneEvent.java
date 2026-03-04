@@ -44,7 +44,7 @@ public class SwordInTheStoneEvent extends PersonalityTraitEvent {
                 "if some otherworldly force had driven it down into the rock.");
         leaderSay("Hey, something is written here.");
         println("There are marks along the bottom of the slab.");
-        leaderSay("'HE WHO IS MOST PURE OF HEART, GRASP THE IT AND THE BLADE SHALL COME FREE.'");
+        leaderSay("'HE WHO IS MOST PURE OF HEART, GRASP IT AND THE BLADE SHALL COME FREE.'");
         if (model.getParty().size() > 1) {
             GameCharacter rando = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             partyMemberSay(rando, "I guess we could try...");

@@ -1,5 +1,6 @@
 package view;
 
+import util.MyPair;
 import view.sprites.Sprite;
 
 import javax.imageio.ImageIO;
@@ -9,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,5 +56,14 @@ public class SpriteMapManager {
     public static void unRegister(String mapName) {
         String key = Sprite.makePath(new String[]{"resources", "sprites"}) + mapName;
         filemap.remove(key);
+    }
+
+    public static void preLoadMap(String fileName) {
+        try {
+            getFile(Sprite.makePath(new String[]{"resources", "sprites"}) +
+                    fileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
