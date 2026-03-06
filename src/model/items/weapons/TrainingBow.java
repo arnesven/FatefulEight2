@@ -5,7 +5,7 @@ import model.items.StartingItem;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class TrainingBow extends BowWeapon implements StartingItem {
+public class TrainingBow extends SmallBow implements StartingItem {
     private static final Sprite SPRITE = new TwoHandedItemSprite(0, 7);
 
     public TrainingBow() {

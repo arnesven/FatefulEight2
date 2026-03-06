@@ -83,6 +83,8 @@ public class StartGameMenu extends GameView {
         BorderFrame.drawString(model.getScreenHandler(), stepText, 20, 25,
                 MyColors.WHITE, MyColors.BLACK);
         int BAR_WIDTH = 40;
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%d%%", (int)(percentage * 100)),
+                20 + BAR_WIDTH/2, 22, MyColors.CYAN, MyColors.BLACK);
         for (int i = 0; i < BAR_WIDTH * percentage; ++i) {
             BorderFrame.drawString(model.getScreenHandler(), (char)0xFF + "", 20 + i, 23, MyColors.CYAN, MyColors.BLACK);
         }
