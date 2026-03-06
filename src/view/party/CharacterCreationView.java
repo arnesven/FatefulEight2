@@ -71,6 +71,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedShoulders = 0;
     private int selectedNeck = 0;
     private boolean showSkeleton = false;
+    private boolean showSwimsuit = false;
     private FacialExpression selectedFacialExpression = FacialExpression.none;
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
@@ -156,6 +157,9 @@ public class CharacterCreationView extends SelectableListMenu {
     private void rebuildAppearance() {
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
+        if (showSwimsuit) {
+            lastCharacter.setSpecificClothing(new SwimAttire());
+        }
         avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
         avatarDead = lastCharacter.getAvatarSprite().getDead();
         Sprite.resetCallCount();
@@ -208,7 +212,7 @@ public class CharacterCreationView extends SelectableListMenu {
                             avatarDead);
                 }
                 y++;
-                String[] labels = new String[]{"First Name", "", "Last Name", "", "", "",
+                String[] labels = new String[]{"First Name", "", "Last Name", "",
                         "Gender", "", "Race", "", "", "",
                         "Eyes", "Eye Shadow", "Nose",
                         "Mouth", "Lipstick", "Beard", "Ears", "Shoulders", "Neck", "",
@@ -238,7 +242,7 @@ public class CharacterCreationView extends SelectableListMenu {
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 6, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
 
-        model.getScreenHandler().put(x+COLUMN_SKIP-4, 36, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP-4, 34, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
     }
 
     private boolean selectedClassOk() {
@@ -290,286 +294,307 @@ public class CharacterCreationView extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        List<ListContent> result = new ArrayList<>(List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 3, 0),
-                new InputFieldContent(xStart + COLUMN_SKIP, yStart + 5, 1),
-                new SelectableListContent(xStart + 3, yStart + 7, (showSkeleton ? "Hide" : "Show") + " Skeleton") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        showSkeleton = !showSkeleton;
-                        rebuildAppearance();
-                    }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 9, gender ? "Female" : "Male") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new SelectedGenderMenu(CharacterCreationView.this, x, y), model);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 11, raceSet[selectedRace].getQualifiedName()) {
+        int yPos = yStart+3;
+        List<ListContent> result = new ArrayList<>();
+        result.add(new InputFieldContent(xStart + COLUMN_SKIP, yPos++, 0));
+        yPos++;
+        result.add(new InputFieldContent(xStart + COLUMN_SKIP, yPos++, 1));
+        yPos++;
 
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedRace = Arithmetics.decrementWithWrap(selectedRace, raceSet.length);
-                    }
+        result.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, gender ? "Female" : "Male") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                setInnerMenu(new SelectedGenderMenu(CharacterCreationView.this, x, y), model);
+            }
+        });
+        yPos++;
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, raceSet[selectedRace].getQualifiedName()) {
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedRace = Arithmetics.incrementWithWrap(selectedRace, raceSet.length);
-                    }
-                },
-                new SelectableListContent(xStart + 3, yStart + 13, "Random Appearance") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        randomizeAppearance();
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 15, "Eyes #" + (selectedEyes + 1)) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedEyes = Arithmetics.decrementWithWrap(selectedEyes, eyeSet.length);
-                    }
+            @Override
+            public void turnLeft(Model model) {
+                selectedRace = Arithmetics.decrementWithWrap(selectedRace, raceSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedEyes = Arithmetics.incrementWithWrap(selectedEyes, eyeSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 16, selectedMascara == 0 ? "NONE" : makeupColorSet[selectedMascara].toString().replace("_", " ")) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedMascara = Arithmetics.decrementWithWrap(selectedMascara, makeupColorSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedRace = Arithmetics.incrementWithWrap(selectedRace, raceSet.length);
+            }
+        });
+        yPos++;
+        result.add(new SelectableListContent(xStart + 3, yPos++, "Random Appearance") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                randomizeAppearance();
+            }
+        });
+        yPos++;
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, "Eyes #" + (selectedEyes + 1)) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedEyes = Arithmetics.decrementWithWrap(selectedEyes, eyeSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedMascara = Arithmetics.incrementWithWrap(selectedMascara, makeupColorSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 17, "Nose #" + (selectedNose + 1)) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedNose = Arithmetics.decrementWithWrap(selectedNose, noseSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedEyes = Arithmetics.incrementWithWrap(selectedEyes, eyeSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, selectedMascara == 0 ? "NONE" : makeupColorSet[selectedMascara].toString().replace("_", " ")) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedMascara = Arithmetics.decrementWithWrap(selectedMascara, makeupColorSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedNose = Arithmetics.incrementWithWrap(selectedNose, noseSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 18, "Mouth #" + (selectedMouth + 1)) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedMouth = Arithmetics.decrementWithWrap(selectedMouth, mouthSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedMascara = Arithmetics.incrementWithWrap(selectedMascara, makeupColorSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, "Nose #" + (selectedNose + 1)) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedNose = Arithmetics.decrementWithWrap(selectedNose, noseSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedMouth = Arithmetics.incrementWithWrap(selectedMouth, mouthSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 19, selectedLipColor == 0 ? "NONE" : makeupColorSet[selectedLipColor].toString().replace("_", " ")) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedLipColor = Arithmetics.decrementWithWrap(selectedLipColor, makeupColorSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedNose = Arithmetics.incrementWithWrap(selectedNose, noseSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, "Mouth #" + (selectedMouth + 1)) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedMouth = Arithmetics.decrementWithWrap(selectedMouth, mouthSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedLipColor = Arithmetics.incrementWithWrap(selectedLipColor, makeupColorSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 20, "Beard #" + (selectedBeard + 1)) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedBeard = Arithmetics.decrementWithWrap(selectedBeard, beardSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedMouth = Arithmetics.incrementWithWrap(selectedMouth, mouthSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, selectedLipColor == 0 ? "NONE" : makeupColorSet[selectedLipColor].toString().replace("_", " ")) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedLipColor = Arithmetics.decrementWithWrap(selectedLipColor, makeupColorSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedBeard = Arithmetics.incrementWithWrap(selectedBeard, beardSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 21, earSet[selectedEars].getName()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedEars = Arithmetics.decrementWithWrap(selectedEars, earSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedLipColor = Arithmetics.incrementWithWrap(selectedLipColor, makeupColorSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, "Beard #" + (selectedBeard + 1)) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedBeard = Arithmetics.decrementWithWrap(selectedBeard, beardSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedEars = Arithmetics.incrementWithWrap(selectedEars, earSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 22, shoulderSet[selectedShoulders]) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedShoulders = Arithmetics.decrementWithWrap(selectedShoulders, shoulderSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedBeard = Arithmetics.incrementWithWrap(selectedBeard, beardSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, earSet[selectedEars].getName()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedEars = Arithmetics.decrementWithWrap(selectedEars, earSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedShoulders = Arithmetics.incrementWithWrap(selectedShoulders, shoulderSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 23, neckSet[selectedNeck]) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedNeck = Arithmetics.decrementWithWrap(selectedNeck, neckSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedEars = Arithmetics.incrementWithWrap(selectedEars, earSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, shoulderSet[selectedShoulders]) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedShoulders = Arithmetics.decrementWithWrap(selectedShoulders, shoulderSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedNeck = Arithmetics.incrementWithWrap(selectedNeck, neckSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 25,
-                        hairStyleSet[selectedHairStyle].getDescription()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedHairStyle = Arithmetics.decrementWithWrap(selectedHairStyle, hairStyleSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedShoulders = Arithmetics.incrementWithWrap(selectedShoulders, shoulderSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, neckSet[selectedNeck]) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedNeck = Arithmetics.decrementWithWrap(selectedNeck, neckSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedHairStyle = Arithmetics.incrementWithWrap(selectedHairStyle, hairStyleSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 26, hairColorSet[selectedHairColor].toString().replace("_", " ")) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedHairColor = Arithmetics.decrementWithWrap(selectedHairColor, hairColorSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedNeck = Arithmetics.incrementWithWrap(selectedNeck, neckSet.length);
+            }
+        });
+        yPos++;
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
+                hairStyleSet[selectedHairStyle].getDescription()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedHairStyle = Arithmetics.decrementWithWrap(selectedHairStyle, hairStyleSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
-                    }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 28, getAccessoryLabel()) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedHairStyle = Arithmetics.incrementWithWrap(selectedHairStyle, hairStyleSet.length);
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, hairColorSet[selectedHairColor].toString().replace("_", " ")) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedHairColor = Arithmetics.decrementWithWrap(selectedHairColor, hairColorSet.length);
+            }
 
-                    @Override
-                    public boolean isEnabled(Model model) {
-                        return accessories.size() < accessorySet.length;
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 29, getAccessoryColorLabel()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        if (!detailColors.isEmpty()) {
-                            selectedDetailColor = Arithmetics.decrementWithWrap(selectedDetailColor, detailColorSet.length);
-                            detailColors.set(detailColors.size() - 1, selectedDetailColor);
-                        }
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
+            }
+        });
+        yPos++;
+        result.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, getAccessoryLabel()) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        if (!detailColors.isEmpty()) {
-                            selectedDetailColor = Arithmetics.incrementWithWrap(selectedDetailColor, detailColorSet.length);
-                            detailColors.set(detailColors.size() - 1, selectedDetailColor);
-                        }
-                    }
-                },
-                new SelectableListContent(xStart + 3, yStart + 30, "Remove last") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        detailColors.removeLast();
-                        int removed = accessories.removeLast();
-                        rebuildAppearance();
-                    }
+            @Override
+            public boolean isEnabled(Model model) {
+                return accessories.size() < accessorySet.length;
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, getAccessoryColorLabel()) {
+            @Override
+            public void turnLeft(Model model) {
+                if (!detailColors.isEmpty()) {
+                    selectedDetailColor = Arithmetics.decrementWithWrap(selectedDetailColor, detailColorSet.length);
+                    detailColors.set(detailColors.size() - 1, selectedDetailColor);
+                }
+            }
 
-                    @Override
-                    public boolean isEnabled(Model model) {
-                        return !accessories.isEmpty();
-                    }
-                },
-                new SelectableListContent(xStart + 3, yStart + 32, "About Classes") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        model.transitionToDialog(new TutorialClassesDialog(model.getView()));
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 33,
-                        classSet[selectedClass] == Classes.None ? "Not Set" : classSet[selectedClass].getFullName()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedClass = Arithmetics.decrementWithWrap(selectedClass, classSet.length);
-                    }
+            @Override
+            public void turnRight(Model model) {
+                if (!detailColors.isEmpty()) {
+                    selectedDetailColor = Arithmetics.incrementWithWrap(selectedDetailColor, detailColorSet.length);
+                    detailColors.set(detailColors.size() - 1, selectedDetailColor);
+                }
+            }
+        });
+        result.add(new SelectableListContent(xStart + 3, yPos++, "Remove last") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                detailColors.removeLast();
+                int removed = accessories.removeLast();
+                rebuildAppearance();
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
-                    }
-                }));
-        List<ListContent> extraContent = List.of(
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 35, FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedFacialExpression = FacialExpression.values()[Arithmetics.decrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
-                    }
+            @Override
+            public boolean isEnabled(Model model) {
+                return !accessories.isEmpty();
+            }
+        });
+        yPos++;
+        result.add(new SelectableListContent(xStart + 3, yPos++, "About Classes") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.transitionToDialog(new TutorialClassesDialog(model.getView()));
+            }
+        });
+        result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
+                classSet[selectedClass] == Classes.None ? "Not Set" : classSet[selectedClass].getFullName()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedClass = Arithmetics.decrementWithWrap(selectedClass, classSet.length);
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedFacialExpression = FacialExpression.values()[Arithmetics.incrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
-                    }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 36, (isVampire ? "Yes" : "No")) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        isVampire = !isVampire;
-                    }
-                },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 37, (eyesClosed ? "Closed" : "Open")) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        eyesClosed = !eyesClosed;
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 38, WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
-                    final Point appearancePoint = new Point(47, 7);
+            @Override
+            public void turnRight(Model model) {
+                selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
+            }
+        });
+        yPos++;
 
-                    @Override
-                    public void turnLeft(Model model) {
-                        currentWeepAmount = WeepingAmount.values()[Arithmetics.decrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
-                        if (currentWeepAmount != WeepingAmount.none) {
-                            weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
-                        } else {
-                            weepingAnimation = null;
-                        }
-                    }
+        List<ListContent> extraContent = new ArrayList<>();
+        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedFacialExpression = FacialExpression.values()[Arithmetics.decrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
+            }
 
-                    @Override
-                    public void turnRight(Model model) {
-                        currentWeepAmount = WeepingAmount.values()[Arithmetics.incrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
-                        if (currentWeepAmount != WeepingAmount.none) {
-                            weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
-                        } else {
-                            weepingAnimation = null;
-                        }
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 39,
-                        selectedWeaponIndex == 0 ? "None" : weapons.get(selectedWeaponIndex).getName()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedWeaponIndex = Arithmetics.decrementWithWrap(selectedWeaponIndex, weapons.size());
-                        AnimationManager.synchAnimations();
-                    }
+            @Override
+            public void turnRight(Model model) {
+                selectedFacialExpression = FacialExpression.values()[Arithmetics.incrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
+            }
+        });
+        extraContent.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, (isVampire ? "Yes" : "No")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                isVampire = !isVampire;
+            }
+        });
+        extraContent.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, (eyesClosed ? "Closed" : "Open")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                eyesClosed = !eyesClosed;
+            }
+        });
+        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
+            final Point appearancePoint = new Point(47, 7);
 
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedWeaponIndex = Arithmetics.incrementWithWrap(selectedWeaponIndex, weapons.size());
-                        AnimationManager.synchAnimations();
-                    }
-                });
+            @Override
+            public void turnLeft(Model model) {
+                currentWeepAmount = WeepingAmount.values()[Arithmetics.decrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
+                if (currentWeepAmount != WeepingAmount.none) {
+                    weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
+                } else {
+                    weepingAnimation = null;
+                }
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                currentWeepAmount = WeepingAmount.values()[Arithmetics.incrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
+                if (currentWeepAmount != WeepingAmount.none) {
+                    weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
+                } else {
+                    weepingAnimation = null;
+                }
+            }
+        });
+        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
+                selectedWeaponIndex == 0 ? "None" : weapons.get(selectedWeaponIndex).getName()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedWeaponIndex = Arithmetics.decrementWithWrap(selectedWeaponIndex, weapons.size());
+                AnimationManager.synchAnimations();
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                selectedWeaponIndex = Arithmetics.incrementWithWrap(selectedWeaponIndex, weapons.size());
+                AnimationManager.synchAnimations();
+            }
+        });
+        extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSkeleton ? "Hide" : "Show") + " Skeleton") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                showSkeleton = !showSkeleton;
+                rebuildAppearance();
+            }
+        });
+        extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSwimsuit ? "Hide" : "Show") + " Swimsuit") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                showSwimsuit = !showSwimsuit;
+                rebuildAppearance();
+            }
+        });
         if (FatefulEight.inDebugMode()) {
             result.addAll(extraContent);
         }
-        result.addAll(List.of(
-            new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
+        yPos++;
+        yPos++;
+        result.add(new SelectableListContent(xStart + COLUMN_SKIP + 12, yPos++, "OK") {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     setTimeToTransition(true);
@@ -581,15 +606,14 @@ public class CharacterCreationView extends SelectableListMenu {
                     boolean classOk = selectedClassOk();
                     return classOk && namesOk;
                 }
-            },
-            new SelectableListContent(xStart + COLUMN_SKIP + 10, yStart + 42, "CANCEL") {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    CharacterCreationView.this.canceled = true;
-                    setTimeToTransition(true);
-                }
+        });
+       result.add(new SelectableListContent(xStart + COLUMN_SKIP + 10, yPos++, "CANCEL") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                CharacterCreationView.this.canceled = true;
+                setTimeToTransition(true);
             }
-        ));
+        });
         return result;
     }
 

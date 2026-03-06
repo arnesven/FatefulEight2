@@ -1,5 +1,6 @@
 package model.classes.special;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
 import model.classes.WeightedSkill;
@@ -39,7 +40,12 @@ public class GoblinClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new LimitedAvatarSprite(race, 0x300, MyColors.BEIGE, race.getColor(), MyColors.BLACK, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x300, MyColors.BEIGE, race.getColor(), MyColors.BLACK, appearance.getNormalHair(), CharacterAppearance.noHair());
+    }
+
+    @Override
+    public int getWeaponShift(GameCharacter gameCharacter, int weaponStance) {
+        return -2;
     }
 
     @Override
