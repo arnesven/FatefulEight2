@@ -197,6 +197,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
                 if (selectedWeaponIndex != 0) {
                     lastCharacter.drawAvatar(model.getScreenHandler(), x + COLUMN_SKIP + 24, y + 2);
+                    lastCharacter.getEquipment().getWeapon().drawYourself(model.getScreenHandler(), x + COLUMN_SKIP + 28, y + 6);
                 } else {
                     model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
                             new Point(x+COLUMN_SKIP+24, y+2),
@@ -208,7 +209,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         avatarBack);
                 if (FatefulEight.inDebugMode()) {
                     model.getScreenHandler().register(avatarDead.getName(),
-                            new Point(x + COLUMN_SKIP + 26, y + 5),
+                            new Point(x + COLUMN_SKIP + 24, y + 5),
                             avatarDead);
                 }
                 y++;
