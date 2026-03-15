@@ -179,9 +179,8 @@ public class InventoryView extends SelectableListMenu {
     private String makeItemTitleForTab(Item it) {
         String result = it.getName();
         for (String prefix : Item.TIER_PREFIXES) {
-            if (it.getName().contains(prefix)) {
+            while (result.contains(prefix)) {
                 result = result.replace(prefix, prefix.substring(0, 3).toUpperCase());
-                break;
             }
         }
         result += getExtraForStacking(it);

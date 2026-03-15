@@ -40,9 +40,8 @@ public class WeaponPair extends Weapon implements BlockingItem {
 
         int tier1 = weapon1 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon1).getTier() : 0;
         int tier2 = weapon2 instanceof HigherTierWeapon ? ((HigherTierWeapon) weapon2).getTier() : 0;
-        int thisTier = Math.max(tier1, tier2);
-        if (thisTier > 0) {
-            sprite = new HigherTierItemSprite(baseSprite, thisTier);
+        if (tier1 > 0 || tier2 > 0) {
+            sprite = new HigherTierItemSprite(baseSprite, tier1, tier2);
         } else {
             sprite = baseSprite;
         }
