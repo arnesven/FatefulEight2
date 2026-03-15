@@ -9,7 +9,7 @@ public class BastardSword extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(13, 0);
 
     protected static final AvatarItemSprite TWO_HANDED_SWORD_SPRITES =
-            new FixedAvatarItemSprite(0x0C, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.GOLD);
+            new FixedAvatarItemSprite(0x0C, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.GRAY);
 
     public BastardSword() {
         super("Bastard Sword", 24, new int[]{5,6,13,13,14}, true, 0);

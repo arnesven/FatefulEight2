@@ -8,8 +8,8 @@ import view.sprites.FixedAvatarItemSprite;
 import view.sprites.RunOnceAnimationSprite;
 
 public abstract class AxeWeapon extends Weapon {
-    private static final AvatarItemSprite TWO_HANDED_AXE_SPRITES = new FixedAvatarItemSprite(0x4C, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE);
-    private static final AvatarItemSprite AXE_SPRITES = new AvatarItemSprite(0x43, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE);
+    private static final AvatarItemSprite TWO_HANDED_AXE_SPRITES = new FixedAvatarItemSprite(0x4C, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
+    private static final AvatarItemSprite AXE_SPRITES = new AvatarItemSprite(0x43, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.BROWN);
     private final boolean twoHander;
 
     public AxeWeapon(String name, int cost, int[] damageTable, boolean twoHander) {

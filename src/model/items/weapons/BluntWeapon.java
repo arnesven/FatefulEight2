@@ -9,7 +9,7 @@ import view.sprites.RunOnceAnimationSprite;
 public abstract class BluntWeapon extends Weapon {
 
     private static final AvatarItemSprite BLUNT_SPRITES =
-            new AvatarItemSprite(0x20, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE);
+            new AvatarItemSprite(0x20, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.BROWN);
     private final boolean twoHander;
     private final int speedModifier;
 

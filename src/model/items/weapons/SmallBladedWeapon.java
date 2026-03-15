@@ -6,7 +6,7 @@ import view.sprites.AvatarItemSprite;
 public abstract class SmallBladedWeapon extends BladedWeapon {
 
     private static final AvatarItemSprite SMALL_BLADES =
-            new AvatarItemSprite(0x06, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.BEIGE);
+            new AvatarItemSprite(0x06, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.TRANSPARENT);
 
     public SmallBladedWeapon(String name, int cost, int[] damageTable, boolean twoHander, int speedBonus) {
         super(name, cost, damageTable, twoHander, speedBonus);

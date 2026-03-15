@@ -9,6 +9,7 @@ import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
+import model.items.weapons.CommonPickaxe;
 import model.items.weapons.Pickaxe;
 import model.races.Race;
 import util.MyPair;
@@ -70,7 +71,7 @@ public class MinerEvent extends GeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Miner", "", app.getRace(), Classes.MIN, app,
-                new Equipment(new Pickaxe(), new LeatherArmor(), new SkullCap()));
+                new Equipment(new CommonPickaxe(), new LeatherArmor(), new SkullCap()));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;
     }
@@ -80,7 +81,7 @@ public class MinerEvent extends GeneralInteractionEvent {
         List<Enemy> enemies = new ArrayList<>();
         for (int i = MyRandom.randInt(6); i > 0; --i) {
             enemies.add(new CompanionEnemy(PortraitSubView.makeRandomPortrait(Classes.MIN),
-                    Classes.MIN, new Pickaxe()));
+                    Classes.MIN, new CommonPickaxe()));
         }
         return enemies;
     }

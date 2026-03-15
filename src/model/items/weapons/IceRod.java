@@ -5,12 +5,16 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.imbuements.FreezeImbuement;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class IceRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
+
+    private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.CYAN, MyColors.BEIGE, MyColors.TRANSPARENT, MyColors.LIGHT_BLUE);
 
     public IceRod() {
         super("Ice Rod", 19, Skill.MagicBlue, new int[]{9, 11, 12, 14});
@@ -35,5 +39,10 @@ public class IceRod extends WandWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(0, 16, MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return WAND_SPRITES;
     }
 }

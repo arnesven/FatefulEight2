@@ -1,12 +1,14 @@
 package model.items.weapons;
 
 import model.items.Item;
-import view.sprites.RangedStrikeEffect;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.TwoHandedItemSprite;
-import view.sprites.Sprite;
+import view.MyColors;
+import view.sprites.*;
 
 public class ThrowingKnives extends SmallBladedWeapon {
+
+    private static final AvatarItemSprite SMALL_BLADES =
+            new AvatarItemSprite(0x06, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.TRANSPARENT);
+
     private static final Sprite SPRITE = new TwoHandedItemSprite(2, 0);
 
     public ThrowingKnives() {
@@ -31,5 +33,10 @@ public class ThrowingKnives extends SmallBladedWeapon {
     @Override
     public RunOnceAnimationSprite getEffectSprite() {
         return new RangedStrikeEffect();
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return SMALL_BLADES;
     }
 }

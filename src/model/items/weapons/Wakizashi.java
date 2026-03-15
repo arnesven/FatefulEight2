@@ -2,10 +2,16 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class Wakizashi extends BladedWeapon implements PairableWeapon {
+
+    protected static final AvatarItemSprite AVATAR_SPRITES =
+            new AvatarItemSprite(0x03, MyColors.DARK_BROWN, MyColors.LIGHT_GRAY, MyColors.DARK_BROWN, MyColors.TRANSPARENT);
+
     private static final Sprite SPRITE = new ItemSprite(9, 11);
 
     public Wakizashi() {
@@ -35,5 +41,10 @@ public class Wakizashi extends BladedWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(5, 15);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITES;
     }
 }

@@ -2,10 +2,16 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
+import view.sprites.FixedAvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 public class GreatAxe extends AxeWeapon {
+
+    private static final AvatarItemSprite TWO_HANDED_AXE_SPRITES = new FixedAvatarItemSprite(0x4C, MyColors.BROWN, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY);
+
     private static final Sprite SPRITE = new TwoHandedItemSprite(5, 5);
 
     public GreatAxe() {
@@ -25,5 +31,10 @@ public class GreatAxe extends AxeWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return TWO_HANDED_AXE_SPRITES;
     }
 }

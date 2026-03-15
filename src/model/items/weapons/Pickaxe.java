@@ -1,29 +1,11 @@
 package model.items.weapons;
 
-import model.items.Item;
-import model.items.Prevalence;
-import view.sprites.ItemSprite;
-import view.sprites.Sprite;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 
-public class Pickaxe extends AxeWeapon {
-    private static final Sprite SPRITE = new ItemSprite(2, 5);
+public abstract class Pickaxe extends AxeWeapon {
 
-    public Pickaxe() {
-        super("Pickaxe", 18, new int[]{5, 8, 10}, false);
-    }
-
-    @Override
-    protected Sprite getSprite() {
-        return SPRITE;
-    }
-
-    @Override
-    public Item copy() {
-        return new Pickaxe();
-    }
-
-    @Override
-    public Prevalence getPrevalence() {
-        return Prevalence.common;
+    public Pickaxe(String name, int cost, int[] damage) {
+        super(name, cost, damage, false);
     }
 }

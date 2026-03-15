@@ -4,6 +4,7 @@ import model.items.Item;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.BowAvatarItemSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
@@ -13,7 +14,7 @@ public class YewBow extends BowWeapon {
     private final TwoHandedItemSprite sprite;
 
     private static final AvatarItemSprite BOW_SPRITES =
-            new AvatarItemSprite(0x36, MyColors.BLACK, MyColors.GOLD, MyColors.GOLD, MyColors.TRANSPARENT);
+            new BowAvatarItemSprite(0x36, MyColors.BLACK, MyColors.GOLD, MyColors.GOLD, MyColors.TRANSPARENT);
 
     public YewBow() {
         super("Yew Bow", 21, new int[]{7,11,13,15});

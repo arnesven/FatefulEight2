@@ -5,12 +5,16 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.imbuements.PoisonImbuement;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class IvyRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(14, 11,
             MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
+
+    private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.PEACH, MyColors.PEACH, MyColors.DARK_GREEN, MyColors.PEACH);
 
     public IvyRod() {
         super("Ivy Rod", 11, Skill.MagicGreen, new int[]{8,10,13});
@@ -37,4 +41,8 @@ public class IvyRod extends WandWeapon implements PairableWeapon {
         return new ItemSprite(1, 16, MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
     }
 
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return WAND_SPRITES;
+    }
 }

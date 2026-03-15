@@ -7,15 +7,15 @@ import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Estoc extends LongBladedWeapon {
+public class CommonPickaxe extends Pickaxe {
 
-    protected static final AvatarItemSprite AVATAR_SPRITES =
-            new AvatarItemSprite(0x09, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
+    private static final Sprite SPRITE = new ItemSprite(2, 5);
 
-    private static final Sprite SPRITE = new ItemSprite(11, 1);
+    private static final AvatarItemSprite AXE_SPRITES = new AvatarItemSprite(0x46,
+            MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.BROWN);
 
-    public Estoc() {
-        super("Estoc", 28, new int[]{6, 8, 10, 12}, false, 1);
+    public CommonPickaxe() {
+        super("Pickaxe", 18, new int[]{5, 8, 10});
     }
 
     @Override
@@ -25,16 +25,16 @@ public class Estoc extends LongBladedWeapon {
 
     @Override
     public Item copy() {
-        return new Estoc();
+        return new CommonPickaxe();
     }
 
     @Override
     public Prevalence getPrevalence() {
-        return Prevalence.rare;
+        return Prevalence.common;
     }
 
     @Override
     public AvatarItemSprite getOnAvatarSprite() {
-        return AVATAR_SPRITES;
+        return AXE_SPRITES;
     }
 }

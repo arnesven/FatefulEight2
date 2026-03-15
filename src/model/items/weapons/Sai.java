@@ -2,10 +2,14 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class Sai extends SmallBladedWeapon implements PairableWeapon {
+    private static final AvatarItemSprite SMALL_BLADES =
+            new AvatarItemSprite(0x06, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
 
     private static final Sprite SPRITE = new ItemSprite(6, 11);
 
@@ -31,5 +35,10 @@ public class Sai extends SmallBladedWeapon implements PairableWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return SMALL_BLADES;
     }
 }

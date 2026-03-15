@@ -4,6 +4,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.BowAvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
@@ -11,7 +12,7 @@ public class CompositeBow extends BowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(2, 7);
 
     private static final AvatarItemSprite BOW_SPRITES =
-            new AvatarItemSprite(0x36, MyColors.BLACK, MyColors.BROWN, MyColors.DARK_BROWN, MyColors.TRANSPARENT);
+            new BowAvatarItemSprite(0x36, MyColors.BLACK, MyColors.BROWN, MyColors.DARK_BROWN, MyColors.TRANSPARENT);
 
 
     public CompositeBow() {

@@ -12,7 +12,7 @@ public class DaiKatana extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(10, 1);
 
     private static final AvatarItemSprite AVATAR_SPRITES =
-            new FixedAvatarItemSprite(0x0D, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.DARK_BLUE, MyColors.LIGHT_GRAY);
+            new FixedAvatarItemSprite(0x0D, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.GOLD, MyColors.LIGHT_GRAY);
 
     public DaiKatana() {
         super("Dai-Katana", 26, new int[]{10, 11, 11, 11, 12}, true, 1);

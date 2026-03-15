@@ -4,7 +4,7 @@ import model.items.Item;
 
 public class TwinNunchucks extends WeaponPair {
     public TwinNunchucks() {
-        super(new Nunchuck(), new Nunchuck());
+        super(new Nunchaku(), new Nunchaku());
     }
 
     @Override

@@ -8,6 +8,7 @@ import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.clothing.RustyRingMail;
+import model.items.weapons.CommonPickaxe;
 import model.items.weapons.Hatchet;
 import model.items.weapons.Pickaxe;
 import model.races.Race;
@@ -92,7 +93,7 @@ public class MinerClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        List<Item> list = new ArrayList<Item>(List.of(new Pickaxe(), new RustyRingMail()));
+        List<Item> list = new ArrayList<Item>(List.of(new CommonPickaxe(), new RustyRingMail()));
         list.addAll(CharacterClass.horseOrPony());
         return list;
     }

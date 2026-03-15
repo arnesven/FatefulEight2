@@ -1,6 +1,7 @@
 package model.items.weapons;
 
 import model.classes.Skill;
+import view.sprites.BowAvatarItemSprite;
 import view.sprites.RangedStrikeEffect;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
@@ -8,8 +9,7 @@ import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BowWeapon extends Weapon {
 
-    private static final AvatarItemSprite BOW_SPRITES =
-            new AvatarItemSprite(0x30, MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
+    private static final AvatarItemSprite BOW_SPRITES = new BowAvatarItemSprite(0x30, MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
 
     public BowWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Bows, damageTable);

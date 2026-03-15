@@ -215,8 +215,7 @@ public class BrrbitsReward extends Quest {
                     int multiplier = 1;
                     if (gc.getEquipment().getWeapon().isOfType(AxeWeapon.class)) {
                         multiplier = 2;
-                    } else if (gc.getEquipment().getWeapon().isOfType(Pickaxe.class) ||
-                                gc.getEquipment().getWeapon().isOfType(RustyPickaxe.class)) {
+                    } else if (gc.getEquipment().getWeapon().isOfType(Pickaxe.class)) {
                         multiplier = 4;
                     }
                     SkillCheckResult result = gc.testSkill(model, Skill.Labor);

@@ -370,7 +370,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<? extends Weapon> allAxes() {
-        return List.of(new Hatchet(), new ThrowingAxes(), new Pickaxe(), new RaidersAxe(), new BattleAxe(),
+        return List.of(new Hatchet(), new ThrowingAxes(), new CommonPickaxe(), new RustyPickaxe(), new RaidersAxe(), new BattleAxe(),
                 new Choppa(), new TwinHatchets(), new DoubleAxe(), new GreatAxe(), new Sicle());
     }
 
@@ -378,7 +378,7 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(new Club(), new LongStaff(), new OldStaff(), new MagesStaff(),
                 new Scepter(), new MorningStar(), new Flail(), new Warhammer(), new Mace(),
                 new GrandMaul(), new TripleFlail(), new IronStaff(), new GrandStaff(), new BoStaff(),
-                new Nunchuck(), new TwinNunchucks());
+                new Nunchaku(), new TwinNunchucks());
     }
 
     public static List<? extends Weapon> allBlades() {

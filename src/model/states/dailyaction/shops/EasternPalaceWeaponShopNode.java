@@ -2,7 +2,6 @@ package model.states.dailyaction.shops;
 
 import model.Model;
 import model.items.Item;
-import model.items.ItemDeck;
 import model.items.Prevalence;
 import model.items.weapons.*;
 import util.MyRandom;
@@ -22,7 +21,7 @@ public class EasternPalaceWeaponShopNode extends WeaponShopNode {
             MyColors.DARK_GRAY, MyColors.WHITE, MyColors.TAN);
 
     private static final List<Weapon> EASTERN_WEAPONS = List.of(
-            new Katana(), new DaiKatana(), new Wakizashi(), new Naginata(), new Nunchuck(), new ThrowingStars(), new ThrowingKnives()
+            new Katana(), new DaiKatana(), new Wakizashi(), new Naginata(), new Nunchaku(), new ThrowingStars(), new ThrowingKnives()
     );
 
     private static final Sprite[] SHOP_DECORATIONS = new Sprite[]{

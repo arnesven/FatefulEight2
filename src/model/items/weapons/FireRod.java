@@ -5,12 +5,16 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.imbuements.BurningImbuement;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class FireRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
+
+    private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.YELLOW, MyColors.ORANGE, MyColors.TRANSPARENT, MyColors.PEACH);
 
     public FireRod() {
         super("Fire Rod", 11, Skill.MagicRed, new int[]{9, 11, 12, 14});
@@ -35,5 +39,10 @@ public class FireRod extends WandWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(0, 16, MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return WAND_SPRITES;
     }
 }

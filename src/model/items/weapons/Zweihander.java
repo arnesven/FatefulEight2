@@ -13,7 +13,7 @@ public class Zweihander extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(12, 1);
 
     private static final AvatarItemSprite AVATAR_SPRITES =
-            new FixedAvatarItemSprite(0x0E, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.DARK_RED, MyColors.LIGHT_GRAY);
+            new FixedAvatarItemSprite(0x0E, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.GOLD, MyColors.LIGHT_GRAY);
 
     public Zweihander() {
         super("Zweihander", 30, new int[]{6, 8, 11, 14, 14}, true, 1);

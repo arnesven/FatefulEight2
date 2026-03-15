@@ -3,10 +3,16 @@ package model.items.weapons;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.StartingItem;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
 public class LongStaff extends StaffWeapon implements StartingItem {
+
+    private static final AvatarItemSprite STAFF_SPRITES =
+            new AvatarItemSprite(0x23, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.TRANSPARENT);
+
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 1);
 
     public LongStaff() {
@@ -26,5 +32,10 @@ public class LongStaff extends StaffWeapon implements StartingItem {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.common;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return STAFF_SPRITES;
     }
 }

@@ -9,9 +9,9 @@ import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BladedWeapon extends Weapon {
     private static final AvatarItemSprite SWORD_SPRITES =
-            new AvatarItemSprite(0x0, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.PINK);
+            new AvatarItemSprite(0x0, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.TRANSPARENT);
     protected static final AvatarItemSprite TWO_HANDED_SWORD_SPRITES =
-            new FixedAvatarItemSprite(0x0C, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.LIGHT_GRAY);
+            new FixedAvatarItemSprite(0x0C, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.GOLD, MyColors.LIGHT_GRAY);
 
     private final int speedBonus;
     private boolean twoHander;

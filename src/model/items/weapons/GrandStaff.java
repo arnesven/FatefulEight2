@@ -5,6 +5,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import util.MyPair;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
@@ -13,6 +14,9 @@ import java.util.List;
 public class GrandStaff extends StaffWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(5, 12,
             MyColors.PINK, MyColors.GRAY, MyColors.LIGHT_GREEN);
+
+    private static final AvatarItemSprite STAFF_SPRITES =
+            new AvatarItemSprite(0x23, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.LIGHT_GREEN, MyColors.WHITE);
 
     public GrandStaff() {
         super("Grand Staff", 34, new int[]{6, 9, 9, 11});
@@ -36,5 +40,10 @@ public class GrandStaff extends StaffWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return STAFF_SPRITES;
     }
 }

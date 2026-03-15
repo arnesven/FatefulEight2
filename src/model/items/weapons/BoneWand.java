@@ -4,20 +4,23 @@ import model.classes.Skill;
 import model.items.Item;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 import java.util.List;
 
 public class BoneWand extends WandWeapon implements PairableWeapon {
-
     private final ItemSprite sprite;
     private final MyColors color;
+    private final AvatarItemSprite onAvatar;
 
     public BoneWand() {
         super("Bone Wand", 20, Skill.MagicBlack, new int[]{9,11,14});
         color = MyRandom.sample(List.of(MyColors.LIGHT_BLUE, MyColors.PINK, MyColors.LIGHT_YELLOW));
         sprite = new ItemSprite(5, 6, MyColors.BEIGE, color);
+        onAvatar = new AvatarItemSprite(0x10,
+                MyColors.BEIGE, MyColors.BEIGE, MyColors.TRANSPARENT, color);
     }
 
     @Override
@@ -33,5 +36,10 @@ public class BoneWand extends WandWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(13, 15, MyColors.BEIGE, color);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return onAvatar;
     }
 }

@@ -2,11 +2,16 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class TripleFlail extends BluntWeapon {
     private static final Sprite SPRITE = new ItemSprite(8, 11);
+
+    protected static final AvatarItemSprite ON_AVATAR_SPRITES =
+            new AvatarItemSprite(0x2C, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.GRAY, MyColors.TRANSPARENT);
 
     public TripleFlail() {
         super("Triple Flail", 42, new int[]{9, 10, 14}, false, -2);
@@ -30,5 +35,10 @@ public class TripleFlail extends BluntWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return ON_AVATAR_SPRITES;
     }
 }

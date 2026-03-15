@@ -219,7 +219,7 @@ public class TournamentEvent extends DailyEventState {
             return new Equipment(MyRandom.sample(ItemDeck.allSpears()), new FurArmor(), new WolfHead());
         }
         if (selectedClass == Classes.MIN) {
-            return new Equipment(new Pickaxe(), randomArmor(true), new LargeShield());
+            return new Equipment(new CommonPickaxe(), randomArmor(true), new LargeShield());
         }
         if (selectedClass == Classes.ASN) {
             Weapon blade = MyRandom.sample(ItemDeck.allBlades());

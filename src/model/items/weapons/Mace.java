@@ -2,10 +2,14 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class Mace extends BluntWeapon implements PairableWeapon {
+    private static final AvatarItemSprite BLUNT_SPRITES =
+            new AvatarItemSprite(0x20, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
     private static final Sprite SPRITE = new ItemSprite(8, 1);
 
     public Mace() {
@@ -30,5 +34,10 @@ public class Mace extends BluntWeapon implements PairableWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.common;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return BLUNT_SPRITES;
     }
 }

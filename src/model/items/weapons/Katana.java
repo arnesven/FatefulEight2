@@ -10,7 +10,7 @@ import view.sprites.Sprite;
 public class Katana extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(10, 0);
     private static final AvatarItemSprite AVATAR_SPRITES =
-            new FixedAvatarItemSprite(0x0D, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.DARK_BLUE, MyColors.TRANSPARENT);
+            new FixedAvatarItemSprite(0x0D, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.TRANSPARENT);
 
     public Katana() {
         super("Katana", 20, new int[]{9, 10, 11, 12, 13}, true, 1);

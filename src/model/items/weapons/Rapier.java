@@ -1,10 +1,15 @@
 package model.items.weapons;
 
 import model.items.Item;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class Rapier extends LongBladedWeapon implements PairableWeapon {
+
+    protected static final AvatarItemSprite AVATAR_SPRITES =
+            new AvatarItemSprite(0x09, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.GOLD);
 
     private static final Sprite SPRITE = new ItemSprite(6, 12);
 
@@ -25,5 +30,10 @@ public class Rapier extends LongBladedWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(4, 15);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITES;
     }
 }

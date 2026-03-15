@@ -29,6 +29,7 @@ public class WeaponPair extends Weapon implements BlockingItem {
     private final Weapon offHand;
     private final Sprite sprite;
     private int attackCounter = 0;
+    private WeaponPairOnAvatarSprite combinedOnAvatarSprite;
 
     public WeaponPair(Weapon weapon1, Weapon weapon2) {
         super(makeName(weapon1, weapon2), weapon1.getCost() + weapon2.getCost(),
@@ -45,6 +46,7 @@ public class WeaponPair extends Weapon implements BlockingItem {
         } else {
             sprite = baseSprite;
         }
+        combinedOnAvatarSprite = new WeaponPairOnAvatarSprite(weapon1.getOnAvatarSprite(), weapon2.getOnAvatarSprite());
     }
 
     private static int[] makeDamageTable(Weapon weapon1, Weapon weapon2) {
@@ -110,10 +112,11 @@ public class WeaponPair extends Weapon implements BlockingItem {
 
     @Override
     public AvatarItemSprite getOnAvatarSprite() {
-        if (mainHand.isOfType(BladedWeapon.class) && offHand.isOfType(BladedWeapon.class)) {
-            return TWIN_BLADES;
-        }
-        return OTHER_WEAPONS;
+        return combinedOnAvatarSprite;
+//        if (mainHand.isOfType(BladedWeapon.class) && offHand.isOfType(BladedWeapon.class)) {
+//            return TWIN_BLADES;
+//        }
+//        return OTHER_WEAPONS;
     }
 
     private static String makeName(Weapon w1, Weapon w2) {

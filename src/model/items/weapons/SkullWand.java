@@ -5,11 +5,14 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.imbuements.AbsorptionImbuement;
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class SkullWand extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(6, 6, MyColors.BROWN, MyColors.BEIGE);
+    private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.BROWN, MyColors.BEIGE, MyColors.BEIGE, MyColors.BROWN);
 
     public SkullWand() {
         super("Skull Wand", 3, Skill.MagicBlack, new int[]{8,11,13,14});
@@ -34,5 +37,10 @@ public class SkullWand extends WandWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(14, 15, MyColors.BROWN, MyColors.BEIGE);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return WAND_SPRITES;
     }
 }

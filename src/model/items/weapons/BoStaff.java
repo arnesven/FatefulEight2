@@ -38,4 +38,9 @@ public class BoStaff extends BluntWeapon {
     public AvatarItemSprite getOnAvatarSprite() {
         return AVATAR_SPRITE;
     }
+
+    @Override
+    public int getStance() {
+        return Weapon.POLEARM_STANCE;
+    }
 }

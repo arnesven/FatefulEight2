@@ -3,10 +3,15 @@ package model.items.weapons;
 import model.items.Item;
 import model.items.PirateItem;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class Cutlass extends LongBladedWeapon implements PairableWeapon, PirateItem {
+    protected static final AvatarItemSprite AVATAR_SPRITES =
+            new AvatarItemSprite(0x09, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.GOLD);
+
     private static final Sprite SPRITE = new ItemSprite(9, 16);
 
     public Cutlass() {
@@ -31,5 +36,10 @@ public class Cutlass extends LongBladedWeapon implements PairableWeapon, PirateI
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITES;
     }
 }

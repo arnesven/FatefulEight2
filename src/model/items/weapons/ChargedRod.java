@@ -9,14 +9,14 @@ import model.items.Prevalence;
 import model.items.imbuements.WeaponImbuement;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.DamageValueEffect;
-import view.sprites.ItemSprite;
-import view.sprites.SmokeBallAnimation;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 public class ChargedRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.GOLD);
+
+    private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
+            MyColors.GOLD, MyColors.YELLOW, MyColors.TRANSPARENT, MyColors.LIGHT_YELLOW);
 
     public ChargedRod() {
         super("Charged Rod", 21, Skill.MagicWhite, new int[]{9, 11, 12, 14});
@@ -67,5 +67,10 @@ public class ChargedRod extends WandWeapon implements PairableWeapon {
         public String getText() {
             return "Every 5th shot does double damage.";
         }
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return WAND_SPRITES;
     }
 }

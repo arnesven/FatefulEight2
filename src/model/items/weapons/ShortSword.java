@@ -2,10 +2,16 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class ShortSword extends BladedWeapon implements PairableWeapon {
+
+    protected static final AvatarItemSprite AVATAR_SPRITES =
+            new AvatarItemSprite(0x09, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.TRANSPARENT);
+
     private static final Sprite SPRITE = new ItemSprite(3, 0);
 
     public ShortSword() {
@@ -30,5 +36,10 @@ public class ShortSword extends BladedWeapon implements PairableWeapon {
     @Override
     public Sprite makePairSprite() {
         return new ItemSprite(4, 14);
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITES;
     }
 }

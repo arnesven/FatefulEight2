@@ -9,7 +9,7 @@ import view.sprites.RunOnceAnimationSprite;
 
 public abstract class WandWeapon extends Weapon {
     private static final AvatarItemSprite WAND_SPRITES = new AvatarItemSprite(0x10,
-            MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK);
+            MyColors.BROWN, MyColors.BROWN, MyColors.TRANSPARENT, MyColors.BROWN);
 
     public WandWeapon(String name, int cost, Skill skill, int[] damageTable) {
         super(name, cost, skill, damageTable);
