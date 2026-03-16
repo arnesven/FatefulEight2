@@ -14,6 +14,7 @@ public class ZhandraMerkatysCharacter extends PresetCharacter {
     public ZhandraMerkatysCharacter() {
         super("Zhandra", "Merkatys", SOUTHERN_HUMAN, WIT,
                 new ZhandraMerkatys(), new CharacterClass[]{WIT, BBN, MAR, MIN},
-                LowerThelnTown.NAME, List.of(PersonalityTrait.rude, PersonalityTrait.romantic, PersonalityTrait.critical));
+                LowerThelnTown.NAME, List.of(PersonalityTrait.rude, PersonalityTrait.romantic, PersonalityTrait.critical),
+                "A dusky and profound woman who comes from");
     }
 }

@@ -14,6 +14,8 @@ public class SebastianSmithCharacter extends PresetCharacter {
     public SebastianSmithCharacter() {
         super("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
                 new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU},
-                SheffieldTown.NAME, List.of(PersonalityTrait.aggressive, PersonalityTrait.mischievous, PersonalityTrait.intellectual));
+                SheffieldTown.NAME,
+                List.of(PersonalityTrait.aggressive, PersonalityTrait.mischievous, PersonalityTrait.intellectual),
+                "A brazen and mischievous young man from the town of");
     }
 }

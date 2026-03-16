@@ -14,6 +14,7 @@ public class VendelaGawainsCharacter extends PresetCharacter {
     public VendelaGawainsCharacter() {
         super("Vendela", "Gawains", HALF_ORC, ASN,
                 new VendelaGawains(), new CharacterClass[]{ASN, NOB, WIT, MAG},
-                UpperThelnTown.NAME, List.of(PersonalityTrait.greedy, PersonalityTrait.anxious, PersonalityTrait.friendly));
+                UpperThelnTown.NAME, List.of(PersonalityTrait.greedy, PersonalityTrait.anxious, PersonalityTrait.friendly),
+                "A thin half-orc, often perceived as covetous and nervous, from");
     }
 }

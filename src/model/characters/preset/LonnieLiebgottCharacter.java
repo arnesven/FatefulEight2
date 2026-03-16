@@ -14,6 +14,7 @@ public class LonnieLiebgottCharacter extends PresetCharacter {
     public LonnieLiebgottCharacter() {
         super("Lonnie", "Liebgott", NORTHERN_HUMAN, MIN,
                 new LonnieLiebgott(), new CharacterClass[]{NOB, MIN, MAG, THF},
-                UrnTownTown.NAME, List.of(PersonalityTrait.greedy, PersonalityTrait.playful, PersonalityTrait.mischievous));
+                UrnTownTown.NAME, List.of(PersonalityTrait.greedy, PersonalityTrait.playful, PersonalityTrait.mischievous),
+                "A short and neat aristocrat and con man, Lonnie is well known by the people of");
     }
 }

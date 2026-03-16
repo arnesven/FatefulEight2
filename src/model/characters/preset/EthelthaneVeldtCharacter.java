@@ -14,6 +14,7 @@ public class EthelthaneVeldtCharacter extends PresetCharacter {
     public EthelthaneVeldtCharacter() {
         super("Ethelthane", "Veldt", DWARF, DRU,
                 new EthelthaneVeldt(), new CharacterClass[]{DRU, NOB, BRD, WIZ},
-                AckervilleTown.NAME, List.of(PersonalityTrait.cowardly, PersonalityTrait.forgiving, PersonalityTrait.calm));
+                AckervilleTown.NAME, List.of(PersonalityTrait.cowardly, PersonalityTrait.forgiving, PersonalityTrait.calm),
+                "A reserved and cautious dwarven woman from the town of");
     }
 }

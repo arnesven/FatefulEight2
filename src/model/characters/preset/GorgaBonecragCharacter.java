@@ -14,6 +14,7 @@ public class GorgaBonecragCharacter extends PresetCharacter {
     public GorgaBonecragCharacter() {
         super("Gorga", "Bonecrag", HALF_ORC, BKN,
                 new GorgaBonecrag(), new CharacterClass[]{BKN, AMZ, SPY, WIZ},
-                SaintQuellinTown.NAME, List.of(PersonalityTrait.rude, PersonalityTrait.cold, PersonalityTrait.irritable));
+                SaintQuellinTown.NAME, List.of(PersonalityTrait.rude, PersonalityTrait.cold, PersonalityTrait.irritable),
+                "A primitive half-orc woman, rumoured to be raised by bandits near");
     }
 }

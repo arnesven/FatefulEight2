@@ -15,6 +15,7 @@ public class AlewynSolethalCharacter extends PresetCharacter {
         super("Alewyn", "Solethal", HIGH_ELF, ART,
                 new AlewynSolethal(), new CharacterClass[]{ART, WIT, AMZ, MAG},
                 BogdownCastle.CASTLE_NAME,
-                List.of(PersonalityTrait.jovial, PersonalityTrait.diplomatic, PersonalityTrait.greedy));
+                List.of(PersonalityTrait.jovial, PersonalityTrait.diplomatic, PersonalityTrait.greedy),
+                "A merry and attractive high-elf. Alewyn is known as a good negotiator in");
     }
 }

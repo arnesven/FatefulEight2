@@ -14,6 +14,7 @@ public class PaddyWillowbrushCharacter extends PresetCharacter {
     public PaddyWillowbrushCharacter() {
         super("Paddy", "Willowbrush", HALFLING, MIN,
                 new PaddyWillowbrush(), new CharacterClass[]{MIN, DRU, FOR, MAR},
-                UpperThelnTown.NAME, List.of(PersonalityTrait.jovial, PersonalityTrait.anxious, PersonalityTrait.naive));
+                UpperThelnTown.NAME, List.of(PersonalityTrait.jovial, PersonalityTrait.anxious, PersonalityTrait.naive),
+                "A young and frivolous halfling from the forests near");
     }
 }

@@ -15,6 +15,7 @@ public class IvanMcIntoshCharacter extends PresetCharacter {
     public IvanMcIntoshCharacter() {
         super("Ivan", "McIntosh", NORTHERN_HUMAN, PRI,
                 new IvanMcIntosh(), new CharacterClass[]{PRI, BKN, FOR, MIN},
-                SheffieldTown.NAME, List.of(PersonalityTrait.generous, PersonalityTrait.forgiving, PersonalityTrait.calm));
+                SheffieldTown.NAME, List.of(PersonalityTrait.generous, PersonalityTrait.forgiving, PersonalityTrait.calm),
+                "A calm and comforting man, respected by many in");
     }
 }

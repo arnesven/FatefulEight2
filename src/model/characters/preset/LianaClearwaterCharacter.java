@@ -14,6 +14,7 @@ public class LianaClearwaterCharacter extends PresetCharacter {
     public LianaClearwaterCharacter() {
         super("Liana", "Clearwater", WOOD_ELF, PAL,
                 new LianaClearwater(), new CharacterClass[]{PAL, CAP, WIZ, SPY},
-                CapePaxtonTown.NAME, List.of(PersonalityTrait.encouraging, PersonalityTrait.diplomatic, PersonalityTrait.prudish));
+                CapePaxtonTown.NAME, List.of(PersonalityTrait.encouraging, PersonalityTrait.diplomatic, PersonalityTrait.prudish),
+                "A talkative, yet somewhat inexperienced wood elf from");
     }
 }

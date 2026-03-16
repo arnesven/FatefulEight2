@@ -14,6 +14,7 @@ public class MordKroftCharacter extends PresetCharacter {
     public MordKroftCharacter() {
         super("Mord", "Kroft", HALF_ORC, PAL,
                 new MordKroft(), new CharacterClass[]{PAL, BBN, CAP, MAR},
-                LittleErindeTown.NAME, List.of(PersonalityTrait.jovial, PersonalityTrait.romantic, PersonalityTrait.gluttonous));
+                LittleErindeTown.NAME, List.of(PersonalityTrait.jovial, PersonalityTrait.romantic, PersonalityTrait.gluttonous),
+                "A jolly half-orc man, who seeks good fortune, food and partnership. Mord is from");
     }
 }

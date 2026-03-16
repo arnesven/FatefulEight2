@@ -15,6 +15,7 @@ public class JennaWildflowerCharacter extends PresetCharacter {
     public JennaWildflowerCharacter() {
         super("Jenna", "Wildflower", SOUTHERN_HUMAN, THF,
                 new JennaWildflower(), new CharacterClass[]{THF, WIZ, SPY, ART},
-                ArdhCastle.CASTLE_NAME, List.of(PersonalityTrait.generous, PersonalityTrait.brave, PersonalityTrait.mischievous));
+                ArdhCastle.CASTLE_NAME, List.of(PersonalityTrait.generous, PersonalityTrait.brave, PersonalityTrait.mischievous),
+                "A short, brave rogue with a heart of gold. Jenna is well known in");
     }
 }

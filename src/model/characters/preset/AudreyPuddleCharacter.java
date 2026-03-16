@@ -14,6 +14,7 @@ public class AudreyPuddleCharacter extends PresetCharacter {
     public AudreyPuddleCharacter() {
         super("Audrey", "Puddle", HALFLING, SPY,
                 new AudreyPuddle(), new CharacterClass[]{BRD, SPY, AMZ, ART},
-                UrnTownTown.NAME, List.of(PersonalityTrait.cowardly, PersonalityTrait.playful, PersonalityTrait.encouraging));
+                UrnTownTown.NAME, List.of(PersonalityTrait.cowardly, PersonalityTrait.playful, PersonalityTrait.encouraging),
+                "A good-humored, charismatic and fit halfling woman from");
     }
 }

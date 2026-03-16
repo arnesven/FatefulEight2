@@ -14,6 +14,8 @@ public class RolfFrytCharacter extends PresetCharacter {
     public RolfFrytCharacter() {
         super("Rolf", "Fryt", NORTHERN_HUMAN, PRI,
                 new RolfFryt(), new CharacterClass[]{PRI, MIN, SPY, WIT},
-                SouthMeadhomeTown.NAME, List.of(PersonalityTrait.unkind, PersonalityTrait.gluttonous, PersonalityTrait.snobby));
+                SouthMeadhomeTown.NAME,
+                List.of(PersonalityTrait.unkind, PersonalityTrait.gluttonous, PersonalityTrait.snobby),
+                "A slightly overweight, rather spoiled and unpleasant man from");
     }
 }

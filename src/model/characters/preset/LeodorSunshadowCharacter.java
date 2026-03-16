@@ -14,6 +14,7 @@ public class LeodorSunshadowCharacter extends PresetCharacter {
     public LeodorSunshadowCharacter() {
         super("Leodor", "Sunshadow", DARK_ELF, NOB,
                 new LeodorSunshadow(), new CharacterClass[]{NOB, BKN, BRD, WIZ},
-                EastDurhamTown.NAME, List.of(PersonalityTrait.unkind, PersonalityTrait.cold, PersonalityTrait.intellectual));
+                EastDurhamTown.NAME, List.of(PersonalityTrait.unkind, PersonalityTrait.cold, PersonalityTrait.intellectual),
+                "A cold-hearted, calculating dark elf from the town of");
     }
 }

@@ -14,6 +14,7 @@ public class ArielleStormchapelCharacter extends PresetCharacter {
     public ArielleStormchapelCharacter() {
         super("Arielle", "Stormchapel", NORTHERN_HUMAN, THF,
                 new ArielleStormchapel(), new CharacterClass[]{THF, ASN, BBN, PAL},
-                EastDurhamTown.NAME, List.of(PersonalityTrait.snobby, PersonalityTrait.jovial, PersonalityTrait.romantic));
+                EastDurhamTown.NAME, List.of(PersonalityTrait.snobby, PersonalityTrait.jovial, PersonalityTrait.romantic),
+                "A hopeless romantic, Arielle was raised in a convent near the town of");
     }
 }

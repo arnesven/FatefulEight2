@@ -14,6 +14,7 @@ public class JordynStrongCharacter extends PresetCharacter {
     public JordynStrongCharacter() {
         super("Jordyn", "Strong", SOUTHERN_HUMAN, AMZ,
                 new JordynStrong(), new CharacterClass[]{AMZ, BRD, FOR, PRI},
-                BullsVilleTown.NAME, List.of(PersonalityTrait.benevolent, PersonalityTrait.forgiving, PersonalityTrait.lawful));
+                BullsVilleTown.NAME, List.of(PersonalityTrait.benevolent, PersonalityTrait.forgiving, PersonalityTrait.lawful),
+                "A lawful and kind-hearted man from");
     }
 }

@@ -14,6 +14,7 @@ public class HazelVanDevriesCharacter extends PresetCharacter {
     public HazelVanDevriesCharacter() {
         super("Hazel", "Van Devries", SOUTHERN_HUMAN, NOB,
                 new HazelVanDevries(), new CharacterClass[]{NOB, ASN, MAG, THF},
-                SunblazeCastle.CASTLE_NAME, List.of(PersonalityTrait.rude, PersonalityTrait.brave, PersonalityTrait.romantic));
+                SunblazeCastle.CASTLE_NAME, List.of(PersonalityTrait.rude, PersonalityTrait.brave, PersonalityTrait.romantic),
+                "A capable and daring, but emotional girl from");
     }
 }

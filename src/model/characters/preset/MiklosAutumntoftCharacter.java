@@ -13,6 +13,7 @@ public class MiklosAutumntoftCharacter extends PresetCharacter {
     public MiklosAutumntoftCharacter() {
         super("Miklos", "Autumntoft", HIGH_ELF, NOB,
                 new MiklosAutumntoft(), new CharacterClass[]{CAP, NOB, PAL, PRI},
-                AshtonshireTown.NAME, List.of(PersonalityTrait.narcissistic, PersonalityTrait.playful, PersonalityTrait.mischievous));
+                AshtonshireTown.NAME, List.of(PersonalityTrait.narcissistic, PersonalityTrait.playful, PersonalityTrait.mischievous),
+                "Of serious appearance, but personality perhaps less so, Miklos is a veteran with roots in");
     }
 }

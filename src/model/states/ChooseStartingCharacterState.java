@@ -5,7 +5,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.*;
 import model.items.accessories.Accessory;
-import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
 import model.items.special.MagicMirror;
@@ -40,39 +39,32 @@ public class ChooseStartingCharacterState extends GameState {
         GameCharacter gc;
         Item selectedStartingItem = null;
         while (true) {
-            List<String> options = new ArrayList<>(List.of("Choose Preset",
-                    "Random Preset",
+            List<String> options = new ArrayList<>(List.of("Preset",
                     "Generate",
-                    "Create Custom"));
+                    "Custom"));
             if (FatefulEight.inDebugMode()) {
                 options.add("Full Party");
                 options.add("Random Full");
             }
             int choice = multipleOptionArrowMenu(model, 30, 16, options);
 
-            if (choice == 3) {
+            if (choice == 2) {
                 gc = characterCreation(model);
                 if (gc != null) {
                     break;
                 }
             } else if (choice == 0) {
-                gc = selectPreset(model);
-                if (gc != null) {
-                    model.getAllCharacters().remove(gc);
-                    break;
-                }
-            } else if (choice == 1) {
                 gc = randomPreset(model);
                 if (gc != null) {
                     model.getAllCharacters().remove(gc);
                     break;
                 }
-            } else if (choice == 2) {
+            } else if (choice == 1) {
                 gc = generateCharacter(model);
                 if (gc != null) {
                     break;
                 }
-            } else if (choice == 4){
+            } else if (choice == 3){
                 gc = fullPartySelect(model);
                 if (gc != null) {
                     break;
@@ -173,11 +165,7 @@ public class ChooseStartingCharacterState extends GameState {
     }
 
     private GameCharacter randomPreset(Model model) {
-        return nonCustomStartingCharacter(model, new RandomPresetStartingCharacterView(model));
-    }
-
-    private GameCharacter selectPreset(Model model) {
-        return nonCustomStartingCharacter(model, new SelectStaringCharacterView(model));
+        return nonCustomStartingCharacter(model, new PresetStartingCharacterView(model));
     }
 
     private GameCharacter nonCustomStartingCharacter(Model model, StartingCharacterView view) {

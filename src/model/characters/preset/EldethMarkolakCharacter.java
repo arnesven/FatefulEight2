@@ -14,6 +14,7 @@ public class EldethMarkolakCharacter extends PresetCharacter {
     public EldethMarkolakCharacter() {
         super("Eldeth", "Markolak", DWARF, PRI,
                 new EldethMarkolak(), new CharacterClass[]{PRI, BBN, FOR, SOR},
-                AshtonshireTown.NAME, List.of(PersonalityTrait.prudish, PersonalityTrait.gluttonous, PersonalityTrait.naive));
+                AshtonshireTown.NAME, List.of(PersonalityTrait.prudish, PersonalityTrait.gluttonous, PersonalityTrait.naive),
+                "A plump young dwarf woman from the outskirts of");
     }
 }

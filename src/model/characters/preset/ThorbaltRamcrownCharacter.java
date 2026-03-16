@@ -15,6 +15,7 @@ public class ThorbaltRamcrownCharacter extends PresetCharacter {
     public ThorbaltRamcrownCharacter() {
         super("Thorbalt", "Ramcrown", DWARF, CAP,
                 new ThorbaltRamcrown(), new CharacterClass[]{ASN, CAP, MAG, BRD},
-                BullsVilleTown.NAME, List.of(PersonalityTrait.narcissistic, PersonalityTrait.critical, PersonalityTrait.friendly));
+                BullsVilleTown.NAME, List.of(PersonalityTrait.narcissistic, PersonalityTrait.critical, PersonalityTrait.friendly),
+                "A young dwarf with strong opinions. Thorbalt comes from");
     }
 }

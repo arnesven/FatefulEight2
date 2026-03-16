@@ -14,7 +14,8 @@ public class TorhildAmbershardCharacter extends PresetCharacter {
     public TorhildAmbershardCharacter() {
         super("Torhild", "Ambershard", DWARF, WIT,
                 new TorhildAmbershard(), new CharacterClass[]{WIT, AMZ, MAR, SPY},
-                CapePaxtonTown.NAME, List.of(PersonalityTrait.benevolent, PersonalityTrait.intellectual, PersonalityTrait.mischievous));
+                CapePaxtonTown.NAME, List.of(PersonalityTrait.benevolent, PersonalityTrait.intellectual, PersonalityTrait.mischievous),
+                "A smart and cunning dwarf from");
     }
 
 }

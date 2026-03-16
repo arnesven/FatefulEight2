@@ -14,6 +14,7 @@ public class DaraStormcloudCharacter extends PresetCharacter {
     public DaraStormcloudCharacter() {
         super("Dara", "Stormcloud", WOOD_ELF, ASN,
                 new DaraStormcloud(), new CharacterClass[]{FOR, ASN, BRD, MAR},
-                EbonshireTown.NAME, List.of(PersonalityTrait.greedy, PersonalityTrait.critical, PersonalityTrait.lawful));
+                EbonshireTown.NAME, List.of(PersonalityTrait.greedy, PersonalityTrait.critical, PersonalityTrait.lawful),
+                "A fair, sharp-witted and somewhat egocentric elf from the town of");
     }
 }

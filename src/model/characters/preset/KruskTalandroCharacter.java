@@ -15,6 +15,7 @@ public class KruskTalandroCharacter extends PresetCharacter {
     public KruskTalandroCharacter() {
         super("Krusk", "Talandro", HALF_ORC, WIT,
                 new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR},
-                BogdownCastle.CASTLE_NAME, List.of(PersonalityTrait.generous, PersonalityTrait.lawful, PersonalityTrait.intellectual));
+                BogdownCastle.CASTLE_NAME, List.of(PersonalityTrait.generous, PersonalityTrait.lawful, PersonalityTrait.intellectual),
+                "A wise half-orc scholar, employed for many years at");
     }
 }

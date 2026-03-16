@@ -14,6 +14,7 @@ public class DeniseBoydCharacter extends PresetCharacter {
     public DeniseBoydCharacter() {
         super("Denise", "Boyd", NORTHERN_HUMAN, ART,
                 new DeniseBoyd(), new CharacterClass[]{ART, BKN, CAP, NOB},
-                LowerThelnTown.NAME, List.of(PersonalityTrait.prudish, PersonalityTrait.playful, PersonalityTrait.friendly));
+                LowerThelnTown.NAME, List.of(PersonalityTrait.prudish, PersonalityTrait.playful, PersonalityTrait.friendly),
+                "A cheerful, timid and skillful girl from the community of");
     }
 }

@@ -14,6 +14,7 @@ public class PuyetGranthamCharacter extends PresetCharacter {
     public PuyetGranthamCharacter() {
         super("Puyet", "Grantham", HALF_ORC, ART,
                 new PuyetGrantham(), new CharacterClass[]{ART, ASN, FOR, MIN},
-                SaintQuellinTown.NAME, List.of(PersonalityTrait.stingy, PersonalityTrait.greedy, PersonalityTrait.friendly));
+                SaintQuellinTown.NAME, List.of(PersonalityTrait.stingy, PersonalityTrait.greedy, PersonalityTrait.friendly),
+                "An experienced tradeswoman of orcish descent. Her home town is");
     }
 }

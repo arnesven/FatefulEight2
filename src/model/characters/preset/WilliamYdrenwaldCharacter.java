@@ -15,6 +15,8 @@ public class WilliamYdrenwaldCharacter extends PresetCharacter {
     public WilliamYdrenwaldCharacter() {
         super("William", "Ydrenwald", NORTHERN_HUMAN, WIZ,
                 new WilliamYdrenwald(), new CharacterClass[]{WIZ, DRU, MAG, SOR},
-                SaintQuellinTown.NAME, List.of(PersonalityTrait.encouraging, PersonalityTrait.intellectual, PersonalityTrait.benevolent));
+                SaintQuellinTown.NAME,
+                List.of(PersonalityTrait.encouraging, PersonalityTrait.intellectual, PersonalityTrait.benevolent),
+                "A seasoned and intellectual magic user from");
     }
 }

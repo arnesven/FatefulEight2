@@ -14,6 +14,7 @@ public class LorfirBriarfellCharacter extends PresetCharacter {
     public LorfirBriarfellCharacter() {
         super("Lorfir", "Briarfell", WOOD_ELF, ART,
                 new LorfirBriarfell(), new CharacterClass[]{ART, AMZ, DRU, THF},
-                ArkvaleCastle.CASTLE_NAME, List.of(PersonalityTrait.snobby, PersonalityTrait.cold, PersonalityTrait.calm));
+                ArkvaleCastle.CASTLE_NAME, List.of(PersonalityTrait.snobby, PersonalityTrait.cold, PersonalityTrait.calm),
+                "A standoffish, tall wood elf, known by some from the region around");
     }
 }

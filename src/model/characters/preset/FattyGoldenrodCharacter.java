@@ -14,6 +14,7 @@ public class FattyGoldenrodCharacter extends PresetCharacter {
     public FattyGoldenrodCharacter() {
         super("Fatty", "Goldenrod", HALFLING, MIN,
                 new FattyGoldenrod(), new CharacterClass[]{MIN, BBN, WIT, SOR},
-                UpperThelnTown.NAME, List.of(PersonalityTrait.unkind, PersonalityTrait.rude, PersonalityTrait.cold));
+                UpperThelnTown.NAME, List.of(PersonalityTrait.unkind, PersonalityTrait.rude, PersonalityTrait.cold),
+                "An off-putting, crude halfling with unkempt hair, from the outskirts of");
     }
 }

@@ -15,6 +15,7 @@ public class BazUrGhanCharacter extends PresetCharacter {
         super("Baz", "Ur-Ghan", HALF_ORC, AMZ,
                 new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR},
                 ArkvaleCastle.CASTLE_NAME,
-                List.of(PersonalityTrait.narcissistic, PersonalityTrait.gluttonous, PersonalityTrait.cowardly));
+                List.of(PersonalityTrait.narcissistic, PersonalityTrait.gluttonous, PersonalityTrait.cowardly),
+                "A self-absorbed half-orc, employed for many years by the lord of");
     }
 }

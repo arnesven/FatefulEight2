@@ -16,10 +16,12 @@ public class PresetCharacter extends GameCharacter {
     private final String lastName;
     private final String homeTown;
     private final List<PersonalityTrait> traits;
+    private final String description;
     private CharacterClass[] classes;
     public PresetCharacter(String firstName, String lastName, Race race, CharacterClass charClass,
                            CharacterAppearance appearance, CharacterClass[] classes,
-                           String homeTown, List<PersonalityTrait> traits) {
+                           String homeTown, List<PersonalityTrait> traits,
+                           String description) {
         super(firstName, lastName, race, charClass, appearance);
         this.lastName = lastName;
         this.homeTown = homeTown;
@@ -29,6 +31,7 @@ public class PresetCharacter extends GameCharacter {
         for (PersonalityTrait trait : traits) {
             addToPersonality(trait);
         }
+        this.description = description;
     }
 
     public CharacterClass[] getClasses() {
@@ -42,7 +45,7 @@ public class PresetCharacter extends GameCharacter {
     @Override
     public GameCharacter copy() {
         PresetCharacter pc = new PresetCharacter(getFirstName(), lastName, getRace(), getCharClass(), getAppearance().copy(),
-                classes, homeTown, traits);
+                classes, homeTown, traits, description);
         pc.setLevel(getLevel());
         for (Condition cond : getConditions()) {
             pc.addCondition(cond);
@@ -54,5 +57,9 @@ public class PresetCharacter extends GameCharacter {
         setClass(MyRandom.sample(Arrays.asList(classes)));
         setEquipment(getCharClass().getDefaultEquipment());
         super.setCurrentHp(getMaxHP());
+    }
+
+    public String getDescription() {
+        return description + " " + homeTown + ".";
     }
 }

@@ -15,6 +15,7 @@ public class BungoDarkwoodCharacter extends PresetCharacter {
     public BungoDarkwoodCharacter() {
         super("Bungo", "Darkwood", HALFLING, BBN,
                 new BungoDarkwood(), new CharacterClass[]{BBN, CAP, NOB, PAL},
-                RoukonTown.NAME, List.of(PersonalityTrait.snobby, PersonalityTrait.diplomatic, PersonalityTrait.critical));
+                RoukonTown.NAME, List.of(PersonalityTrait.snobby, PersonalityTrait.diplomatic, PersonalityTrait.critical),
+                "A haughty halfling who served many years in the army before becoming an adventurer. Bungo is from");
     }
 }

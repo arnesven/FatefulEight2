@@ -14,6 +14,7 @@ public class MegarEvermeadCharacter extends PresetCharacter {
     public MegarEvermeadCharacter() {
         super("Megar", "Evermead", DWARF, ART,
                 new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN},
-                RoukonTown.NAME, List.of(PersonalityTrait.benevolent, PersonalityTrait.brave, PersonalityTrait.irritable));
+                RoukonTown.NAME, List.of(PersonalityTrait.benevolent, PersonalityTrait.brave, PersonalityTrait.irritable),
+                "An aged and sometimes grumpy dwarf warrior from the town of");
     }
 }

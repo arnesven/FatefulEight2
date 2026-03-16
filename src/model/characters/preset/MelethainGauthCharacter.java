@@ -14,6 +14,7 @@ public class MelethainGauthCharacter extends PresetCharacter {
     public MelethainGauthCharacter() {
         super("Melethain", "Gauth", HIGH_ELF, BBN,
                 new MelethainGauth(), new CharacterClass[]{BBN, THF, ASN, MAR},
-                EbonshireTown.NAME, List.of(PersonalityTrait.aggressive, PersonalityTrait.mischievous, PersonalityTrait.romantic));
+                EbonshireTown.NAME, List.of(PersonalityTrait.aggressive, PersonalityTrait.mischievous, PersonalityTrait.romantic),
+                "A wizened, zany odd-ball, Melathain comes from the town of");
     }
 }

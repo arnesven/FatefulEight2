@@ -94,7 +94,8 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
             friendHomeTown = mainHomeTown.getPlaceName();
         }
         PresetCharacter friendCharacter = new PresetCharacter(friendName, randomLastName(), main.getRace(), Classes.None,
-                friend, new CharacterClass[]{Classes.CAP, Classes.ART, Classes.FOR, Classes.MAG}, friendHomeTown, List.of(PersonalityTrait.friendly));
+                friend, new CharacterClass[]{Classes.CAP, Classes.ART, Classes.FOR, Classes.MAG}, friendHomeTown,
+                List.of(PersonalityTrait.friendly), "");
         int topic = topicChoice(model, main, friendCharacter);
         println("The two keep talking but evening is soon approaching.");
         portraitSay("I'm afraid I need to run along now. It's a been a pleasure seeing you again " + main.getFirstName() +

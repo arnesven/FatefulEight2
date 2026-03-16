@@ -14,6 +14,7 @@ public class MialeeSeverinCharacter extends PresetCharacter {
     public MialeeSeverinCharacter() {
         super("Mialee", "Severin", DARK_ELF, WIT,
                 new MialeeSeverin(), new CharacterClass[]{WIT, SOR, SPY, THF},
-                LowerThelnTown.NAME, List.of(PersonalityTrait.irritable, PersonalityTrait.anxious, PersonalityTrait.unkind));
+                LowerThelnTown.NAME, List.of(PersonalityTrait.irritable, PersonalityTrait.anxious, PersonalityTrait.unkind),
+                "A nervous and condescending dark elf woman from");
     }
 }

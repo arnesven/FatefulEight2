@@ -14,6 +14,7 @@ public class MuldanEbonclawCharacter extends PresetCharacter {
     public MuldanEbonclawCharacter() {
         super("Muldan", "Ebonclaw", DARK_ELF, PRI,
                 new MuldanEbonclaw(), new CharacterClass[]{PRI, NOB, BBN, SOR},
-                AckervilleTown.NAME, List.of(PersonalityTrait.stingy, PersonalityTrait.diplomatic, PersonalityTrait.forgiving));
+                AckervilleTown.NAME, List.of(PersonalityTrait.stingy, PersonalityTrait.diplomatic, PersonalityTrait.forgiving),
+                "A mysterious and perplexing dark elf from");
     }
 }

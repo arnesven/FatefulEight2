@@ -13,6 +13,7 @@ public class VzaniAnglerCharacter extends PresetCharacter {
     public VzaniAnglerCharacter() {
         super("Vzani", "Angler", HALFLING, PRI,
                 new VzaniAngler(), new CharacterClass[]{WIZ, MAG, PRI, THF},
-                SheffieldTown.NAME, List.of(PersonalityTrait.stingy, PersonalityTrait.calm, PersonalityTrait.critical));
+                SheffieldTown.NAME, List.of(PersonalityTrait.stingy, PersonalityTrait.calm, PersonalityTrait.critical),
+                "An elderly halfling, whose skills have been honed by time. Vzani is from");
     }
 }

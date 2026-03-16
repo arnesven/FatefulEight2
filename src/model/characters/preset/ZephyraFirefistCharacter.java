@@ -14,6 +14,7 @@ public class ZephyraFirefistCharacter extends PresetCharacter {
     public ZephyraFirefistCharacter() {
         super("Zephyra", "Firefist", DARK_ELF, FOR,
                 new ZephyraFirefist(), new CharacterClass[]{FOR, AMZ, DRU, MAG},
-                RoukonTown.NAME, List.of(PersonalityTrait.prudish, PersonalityTrait.diplomatic, PersonalityTrait.generous));
+                RoukonTown.NAME, List.of(PersonalityTrait.prudish, PersonalityTrait.diplomatic, PersonalityTrait.generous),
+                "A generous and lovely dark elf girl, skilled in both magic and martial arts. Zephyra is from");
     }
 }

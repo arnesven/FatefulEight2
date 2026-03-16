@@ -14,6 +14,7 @@ public class AtalyaBalefrostCharacter extends PresetCharacter {
     public AtalyaBalefrostCharacter() {
         super("Atalya", "Balefrost", HIGH_ELF, WIZ,
                 new AtalyaBalefrost(), new CharacterClass[]{WIZ, BKN, DRU, SOR},
-                CapePaxtonTown.NAME, List.of(PersonalityTrait.cowardly, PersonalityTrait.naive, PersonalityTrait.stingy));
+                CapePaxtonTown.NAME, List.of(PersonalityTrait.cowardly, PersonalityTrait.naive, PersonalityTrait.stingy),
+                "A conflicted high elf woman, scarred by her experiences in");
     }
 }

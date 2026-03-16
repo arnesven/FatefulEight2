@@ -14,6 +14,7 @@ public class HurinHammerfallCharacter extends PresetCharacter {
     public HurinHammerfallCharacter() {
         super("Hurin", "Hammerfall", DWARF, ART,
                 new HurinHammerfall(), new CharacterClass[]{ART, PAL, THF, CAP},
-                SouthMeadhomeTown.NAME, List.of(PersonalityTrait.encouraging, PersonalityTrait.friendly, PersonalityTrait.calm));
+                SouthMeadhomeTown.NAME, List.of(PersonalityTrait.encouraging, PersonalityTrait.friendly, PersonalityTrait.calm),
+                "A stout, friendly and good-natured dwarf from the community of");
     }
 }

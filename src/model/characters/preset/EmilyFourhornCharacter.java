@@ -14,6 +14,7 @@ public class EmilyFourhornCharacter extends PresetCharacter {
     public EmilyFourhornCharacter() {
         super("Emily", "Fourhorn", NORTHERN_HUMAN, AMZ,
                 new EmilyFourhorn(), new CharacterClass[]{AMZ, BRD, SOR, MAR},
-                LittleErindeTown.NAME, List.of(PersonalityTrait.irritable, PersonalityTrait.intellectual, PersonalityTrait.playful));
+                LittleErindeTown.NAME, List.of(PersonalityTrait.irritable, PersonalityTrait.intellectual, PersonalityTrait.playful),
+                "A versatile and skilled adventurer from the vicinity of");
     }
 }

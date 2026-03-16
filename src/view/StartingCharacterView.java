@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import util.Arithmetics;
+import util.MyRandom;
+import util.MyStrings;
 import view.party.CharacterCreationView;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -15,15 +17,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class StartingCharacterView extends SelectableListMenu {
+    private static final int BASE_WIDTH = DrawingArea.WINDOW_COLUMNS - 57;
+    private static final int EXTRA_WIDTH = 17;
     private GameCharacter[] currentSet;
     private CharacterClass[] classSet;
     private int selectedIndex = 0;
     private int selectedClass = 0;
     private boolean canceled = false;
 
-    public StartingCharacterView(Model model, GameCharacter[] charSet) {
-        super(model.getView(), DrawingArea.WINDOW_COLUMNS-57, DrawingArea.WINDOW_ROWS-8);
+    public StartingCharacterView(Model model, GameCharacter[] charSet, boolean wide) {
+        super(model.getView(), BASE_WIDTH + (wide ? EXTRA_WIDTH : 0), DrawingArea.WINDOW_ROWS-8);
         this.currentSet = charSet;
+        selectedIndex = MyRandom.randInt(currentSet.length);
+        if (currentSet[selectedIndex] instanceof PresetCharacter) {
+            selectedClass = MyRandom.randInt(((PresetCharacter) currentSet[selectedIndex]).getClasses().length);
+        }
     }
 
     @Override
@@ -63,13 +71,23 @@ public abstract class StartingCharacterView extends SelectableListMenu {
                 GameCharacter gc = getSelectedCharacter();
                 if (gc != null) {
                     gc.drawAppearance(model.getScreenHandler(), x + 6, y + 3);
-                    BorderFrame.drawCentered(model.getScreenHandler(), gc.getRace().getQualifiedName(),
-                            y+10, MyColors.WHITE, MyColors.BLUE);
+                    String raceName = gc.getRace().getQualifiedName();
+                    BorderFrame.drawString(model.getScreenHandler(), raceName,
+                            x + (BASE_WIDTH - (raceName.length() + 1)) / 2 - 1, y+10, MyColors.WHITE, MyColors.BLUE);
                     if (classSet.length == 1) {
                         BorderFrame.drawString(model.getScreenHandler(), gc.getCharClass().getFullName() + " (" + gc.getCharClass().getShortName() + ")",
                                 x + 1, y+12, MyColors.WHITE, MyColors.BLUE);
                     }
                     CharacterCreationView.drawClassDetails(model, gc, x+1, y+14);
+
+                    if (gc instanceof PresetCharacter) {
+                        String description = ((PresetCharacter)gc).getDescription();
+                        String[] parts = MyStrings.partition(description, EXTRA_WIDTH+1);
+                        for (int i = 0; i < parts.length; ++i) {
+                            BorderFrame.drawString(model.getScreenHandler(), parts[i],
+                                    x + EXTRA_WIDTH + 2, y + 3 + i, MyColors.WHITE, MyColors.BLUE);
+                        }
+                    }
                 }
             }
         });
@@ -81,7 +99,8 @@ public abstract class StartingCharacterView extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> content = new ArrayList<>();
         if (currentSet.length > 1) {
-            content.add(new CarouselListContent(xStart+3, yStart+3, getSelectedCharacter().getFullName()) {
+            String name = getSelectedCharacter().getFullName();
+            content.add(new CarouselListContent(xStart+(getWidth()-name.length()+1)/2, yStart+3, name) {
                 @Override
                 public void turnLeft(Model model) {
                     selectedIndex = Arithmetics.decrementWithWrap(selectedIndex, currentSet.length);
@@ -111,13 +130,13 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             });
         }
 
-        content.add(new SelectableListContent(xStart + 11, yStart+39, "OK") {
+        content.add(new SelectableListContent(xStart + getWidth()/2, yStart+39, "OK") {
             @Override
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);
             }
         });
-        content.add(new SelectableListContent(xStart + 9, yStart+40, "CANCEL") {
+        content.add(new SelectableListContent(xStart + getWidth()/2 - 2, yStart+40, "CANCEL") {
             @Override
             public void performAction(Model model, int x, int y) {
                 StartingCharacterView.this.canceled = true;
