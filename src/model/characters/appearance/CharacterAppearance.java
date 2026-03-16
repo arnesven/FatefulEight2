@@ -119,7 +119,7 @@ public abstract class CharacterAppearance implements Serializable {
         return lipColor;
     }
 
-    protected MyColors getMascaraColor() {
+    public MyColors getMascaraColor() {
         return mascaraColor;
     }
 

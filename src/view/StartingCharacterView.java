@@ -2,8 +2,12 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
+import model.classes.Classes;
+import model.races.Race;
 import util.Arithmetics;
 import util.MyRandom;
 import util.MyStrings;
@@ -19,11 +23,14 @@ import java.util.List;
 public abstract class StartingCharacterView extends SelectableListMenu {
     private static final int BASE_WIDTH = DrawingArea.WINDOW_COLUMNS - 57;
     private static final int EXTRA_WIDTH = 17;
+    private final Race[] raceSet;
     private GameCharacter[] currentSet;
     private CharacterClass[] classSet;
     private int selectedIndex = 0;
     private int selectedClass = 0;
+    private int selectedRace = 0;
     private boolean canceled = false;
+    private static final CharacterClass[] allClassesWithoutNone = makeAllClasses();
 
     public StartingCharacterView(Model model, GameCharacter[] charSet, boolean wide) {
         super(model.getView(), BASE_WIDTH + (wide ? EXTRA_WIDTH : 0), DrawingArea.WINDOW_ROWS-8);
@@ -31,6 +38,17 @@ public abstract class StartingCharacterView extends SelectableListMenu {
         selectedIndex = MyRandom.randInt(currentSet.length);
         if (currentSet[selectedIndex] instanceof PresetCharacter) {
             selectedClass = MyRandom.randInt(((PresetCharacter) currentSet[selectedIndex]).getClasses().length);
+            raceSet = new Race[]{currentSet[selectedIndex].getRace()};
+        } else {
+            selectedClass = MyRandom.randInt(allClassesWithoutNone.length);
+            raceSet = Race.allRaces;
+            for (int i = 0; i < raceSet.length; ++i) {
+                Race r = raceSet[i];
+                if (r.id() == currentSet[selectedIndex].getRace().id()) {
+                    selectedRace = i;
+                    break;
+                }
+            }
         }
     }
 
@@ -47,7 +65,7 @@ public abstract class StartingCharacterView extends SelectableListMenu {
         if (gc instanceof PresetCharacter) {
             classSet = ((PresetCharacter)gc).getClasses();
         } else {
-            classSet = new CharacterClass[]{currentSet[selectedIndex].getCharClass()};
+            classSet = allClassesWithoutNone;
         }
         gc.setClass(classSet[selectedClass]);
         gc.addToHP(1000); // Start with max hp for class.
@@ -71,9 +89,11 @@ public abstract class StartingCharacterView extends SelectableListMenu {
                 GameCharacter gc = getSelectedCharacter();
                 if (gc != null) {
                     gc.drawAppearance(model.getScreenHandler(), x + 6, y + 3);
-                    String raceName = gc.getRace().getQualifiedName();
-                    BorderFrame.drawString(model.getScreenHandler(), raceName,
-                            x + (BASE_WIDTH - (raceName.length() + 1)) / 2 - 1, y+10, MyColors.WHITE, MyColors.BLUE);
+                    if (raceSet.length == 1) {
+                        String raceName = gc.getRace().getQualifiedName();
+                        BorderFrame.drawString(model.getScreenHandler(), raceName,
+                                x + (BASE_WIDTH - (raceName.length() + 1)) / 2 - 1, y + 10, MyColors.WHITE, MyColors.BLUE);
+                    }
                     if (classSet.length == 1) {
                         BorderFrame.drawString(model.getScreenHandler(), gc.getCharClass().getFullName() + " (" + gc.getCharClass().getShortName() + ")",
                                 x + 1, y+12, MyColors.WHITE, MyColors.BLUE);
@@ -115,6 +135,22 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             content.add(new ListContent(xStart+3, yStart+3, getSelectedCharacter().getFullName()));
         }
 
+        if (raceSet.length > 1) {
+            content.add(new CarouselListContent(xStart + 3, yStart + 12, raceSet[selectedRace].getQualifiedName()) {
+                @Override
+                public void turnLeft(Model model) {
+                    selectedRace = Arithmetics.decrementWithWrap(selectedRace, raceSet.length);
+                    currentSet[selectedIndex] = replaceRace(currentSet[selectedIndex], raceSet[selectedRace]);
+                }
+
+                @Override
+                public void turnRight(Model model) {
+                    selectedRace = Arithmetics.incrementWithWrap(selectedRace, raceSet.length);
+                    currentSet[selectedIndex] = replaceRace(currentSet[selectedIndex], raceSet[selectedRace]);
+                }
+            });
+        }
+
         if (classSet.length > 1) {
             content.add(new CarouselListContent(xStart + 3, yStart + 14, getSelectedCharacter().getCharClass().getFullName() +
                     " (" + getSelectedCharacter().getCharClass().getShortName() + ")") {
@@ -146,6 +182,19 @@ public abstract class StartingCharacterView extends SelectableListMenu {
         return content;
     }
 
+    private GameCharacter replaceRace(GameCharacter gc, Race race) {
+        CharacterAppearance app = gc.getAppearance().copy();
+        app.setRace(race);
+        app.setShoulders(race.makeShoulders(app.getGender()));
+        app.setNeck(race.makeNeck(app.getGender()));
+        if (gc.getAppearance().getMascaraColor() == gc.getRace().getColor()) {
+            app.setMascaraColor(race.getColor());
+        }
+        app.reset();
+        return new GameCharacter(gc.getFirstName(), gc.getFullName().replace(gc.getFirstName() + " ", ""),
+                race, gc.getCharClass(), app);
+    }
+
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
         super.handleCarousels(keyEvent, model);
@@ -156,5 +205,15 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             return null;
         }
         return getSelectedCharacter();
+    }
+
+    private static CharacterClass[] makeAllClasses() {
+        List<CharacterClass> result = new ArrayList<>();
+        for (int i = 0; i < Classes.allClasses.length; ++i) {
+            if (Classes.allClasses[i].id() != Classes.None.id()) {
+                result.add(Classes.allClasses[i]);
+            }
+        }
+        return result.toArray(new CharacterClass[0]);
     }
 }
