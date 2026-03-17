@@ -6,7 +6,7 @@ import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 
 public abstract class ShieldItem extends Accessory implements BlockingItem {
-
+    // TODO: Separate shields from off-hand items
     private final boolean heavyArmor;
     private final int block;
     private final Sprite SHIELD_SPRITES =

@@ -166,7 +166,7 @@ public class RecruitState extends GameState {
             if (rgc != current && rgc.isGettingImpatient()) {
                 candidateSay(rgc, MyRandom.sample(List.of("This is taking forever...",
                         "Bla bla bla...", "Come on, just hire me already.",
-                        "Hey. What about me?.", "Too much talk, when can we go?.")));
+                        "Hey. What about me?.", "Too much talk, when can we go?")));
                 return;
             }
         }

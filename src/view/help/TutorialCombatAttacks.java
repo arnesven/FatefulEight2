@@ -12,7 +12,9 @@ public class TutorialCombatAttacks extends SubChapterHelpDialog {
             "E.g. a modified roll of " +
             "8 on the table [5/7/10] would result in 2 damage. A modified roll of 4 on the same " +
             "table would result in 0 damage. A modified roll of 9 on [8/8] would result in 2 damage.\n\n" +
-            "A natural roll of 10 is a critical hit and deals double damage.";
+            "Normally, a natural roll of 10 is a critical hit and deals double damage. However, some weapons have " +
+            "a higher chance of scoring critical hits, while others (like unarmed attacks) cannot score critical hits " +
+            "at all.";
 
     public TutorialCombatAttacks(GameView view) {
         super(view, "Attacks", TEXT);

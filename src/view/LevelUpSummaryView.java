@@ -100,7 +100,7 @@ public class LevelUpSummaryView extends SelectableListMenu {
         boolean newAbilitiesPrinted = false;
         for (BeforeAndAfterLine<Integer> line : content) {
             if (!line.isEmpty()) {
-                if (line.getBefore() == -1) {
+                if (line.getBefore() == -1 && line.getAfter() == -1) {
                     if (!newAbilitiesPrinted) {
                         objs.add(new TextDecoration("New Abilities:", xStart+2, yStart++, MyColors.WHITE, MyColors.BLUE, true));
                         newAbilitiesPrinted = true;

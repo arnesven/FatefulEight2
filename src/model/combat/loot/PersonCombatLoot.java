@@ -1,7 +1,13 @@
 package model.combat.loot;
 
 import model.Model;
+import model.items.Item;
+import model.items.Prevalence;
+import model.items.spells.Spell;
+import model.items.weapons.Weapon;
 import util.MyRandom;
+
+import java.util.List;
 
 public class PersonCombatLoot extends StandardCombatLoot {
     private final int materials;
@@ -18,6 +24,10 @@ public class PersonCombatLoot extends StandardCombatLoot {
             obols += MyRandom.randInt(0, 10);
         }
         obols = (int)Math.round(getGoldFactor(model) * obols);
+        if (obols == 0 || getItems().isEmpty()) {
+            List<Item> items = model.getItemDeck().draw(1, Prevalence.common, 0.0);
+            getItems().add(items.getFirst());
+        }
     }
 
     @Override

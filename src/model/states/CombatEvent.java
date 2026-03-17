@@ -2,6 +2,7 @@ package model.states;
 
 import model.GameStatistics;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.combat.abilities.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.combat.abilities.AutomaticCombatAction;
@@ -489,13 +490,12 @@ public class CombatEvent extends DailyEventState {
             }
             destroyEnemy(getModel(), (Enemy)target, damager);
             if (!autoCombat && MyRandom.rollD10() > 5 && getModel().getParty().getPartyMembers().contains(damager)) {
-                getModel().getParty().partyMemberSay(getModel(), damager,
-                        List.of("Vanquished!", "Destroyed!", "Don't mess with me.",
+                partyMemberSay(damager, MyRandom.sample(List.of("Vanquished!", "Destroyed!", "Don't mess with me.",
                                 "That one won't be bothering us any more.",
                                 "One less to worry about.", "Huzzah!",
                                 "Another one bites the dust.", "Go back whence you come!",
                                 "I'm on a roll!", "Bye bye!", "Don't come back!",
-                                "Slain."));
+                                "Slain.")), MyRandom.flipCoin() ? FacialExpression.excited : FacialExpression.none);
             }
         }
     }
@@ -635,12 +635,13 @@ public class CombatEvent extends DailyEventState {
         }
         if (damage > 0 && gameCharacter.getHP() < 3) {
             partyMemberSay(gameCharacter, MyRandom.sample(List.of("I'm dying!",
-                    "I need healing!", "I don't feel so good...", "I need aid!")));
+                    "I need healing!", "I don't feel so good...", "I need aid!")),
+                    FacialExpression.afraid);
         } else if (MyRandom.randInt(5) < (damage-1)) {
             partyMemberSay(gameCharacter, MyRandom.sample(List.of("Ouch!", "That hurt!",
                     "The pain!", "Ugh, that's gonna leave a scar...", "I'm taking some damage here!",
                     "Get away from me!#", "Yeeouch!", "Argh!#", "Right in the...", "Ouchy!",
-                    "Ugh!#", "That was painful!", "I'm hit!")));
+                    "Ugh!#", "That was painful!", "I'm hit!")), FacialExpression.surprised);
             addSpecialEffect(gameCharacter, new CombatSpeechBubble());
         }
     }
