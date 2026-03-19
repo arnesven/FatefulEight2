@@ -14,7 +14,6 @@ public class TownDailyActionState extends TownishDailyActionState {
                                 boolean freeLodging, boolean freeRations) {
         super(model, hasWaterAccess, urbanLocation, freeLodging, freeRations);
         addNode(7, 1, new FlagPoleNode());
-        model.getMainStory().handleTownSetup(this);
         if (urbanLocation instanceof TownLocation && ((TownLocation) urbanLocation).getDecorativeHousePositions() != null) {
             for (Point p : ((TownLocation) urbanLocation).getDecorativeHousePositions()) {
                 if (isPositionFilled(p.x, p.y)) {
@@ -24,6 +23,7 @@ public class TownDailyActionState extends TownishDailyActionState {
                 }
             }
         }
+        model.getMainStory().handleTownSetup(this);
     }
 
     public TownDailyActionState(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {
