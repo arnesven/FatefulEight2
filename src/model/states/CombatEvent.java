@@ -1,6 +1,8 @@
 package model.states;
 
 import model.GameStatistics;
+import model.achievements.HighDamageAchievement;
+import model.achievements.MultiSlayerAchievement;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
 import model.combat.abilities.AbilityCombatAction;
@@ -432,6 +434,9 @@ public class CombatEvent extends DailyEventState {
             System.out.println("Killer is " + killer.getName());
             combatStats.registerCharacterKill(killer, enemy);
             GameStatistics.incrementKills(1);
+            if (MultiSlayerAchievement.qualifyForCompletion(combatStats.getKillsFor(killer))) {
+                completeAchievement(MultiSlayerAchievement.KEY);
+            }
         }
         enemy.doUponDeath(model, this, killer);
         for (GameCharacter gc : participants) {
@@ -476,6 +481,9 @@ public class CombatEvent extends DailyEventState {
         target.takeCombatDamage(this, damage, damager);
         GameStatistics.incrementTotalDamage(damage);
         GameStatistics.recordMaximumDamage(damage);
+        if (HighDamageAchievement.qualifyForCompletion(damage)) {
+            completeAchievement(HighDamageAchievement.KEY);
+        }
         combatStats.damageDealt(damage, damager);
         for (Condition cond : new ArrayList<>(target.getConditions())) {
             cond.wasAttackedBy(damager, this, (Enemy)target, damage);

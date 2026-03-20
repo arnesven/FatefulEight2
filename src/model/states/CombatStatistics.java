@@ -1,6 +1,8 @@
 package model.states;
 
+import model.GameStatistics;
 import model.Model;
+import model.achievements.OrcSlayerAchievement;
 import model.characters.GameCharacter;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
