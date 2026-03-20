@@ -120,6 +120,10 @@ public class StoryIntroView extends GameView implements Animation {
     protected void internalUpdate(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), "ESC = SKIP", 8, DrawingArea.WINDOW_ROWS-4, MyColors.GRAY, MyColors.BLACK);
 
+        if (colorIndex > 10) {
+            BorderFrame.drawString(model.getScreenHandler(), "RETURN = NEXT", 58, DrawingArea.WINDOW_ROWS-4, MyColors.GRAY, MyColors.BLACK);
+        }
+
         drawPicture(model);
 
         for (int i = 0; i < textParts.length; ++i) {
