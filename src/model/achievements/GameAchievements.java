@@ -49,6 +49,13 @@ public class GameAchievements implements Serializable {
         new ApprenticeBrewerAchievement().registerYourself(partyAchievements);
         new JourneymanBrewerAchievement().registerYourself(partyAchievements);
         new MasterBrewerAchievement().registerYourself(partyAchievements);
+        new PettyThiefAchievement().registerYourself(partyAchievements);
+        new MasterThiefAchievement().registerYourself(partyAchievements);
+        new HorsemanAchievement().registerYourself(partyAchievements);
+        new DuelistAchievement().registerYourself(partyAchievements);
+        new DiligentStudentAchievement().registerYourself(partyAchievements);
+        new CardSharkAchievement().registerYourself(partyAchievements);
+        new RitualistAchievement().registerYourself(partyAchievements);
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
         registerAchievement(ShopCustomer.getAchievementData());
         registerAchievement(ShopSupplier.getAchievementData());
