@@ -33,7 +33,7 @@ public class ShopCustomer {
                 randClass, randApp);
     }
 
-    public static Achievement.Data getAchievemetnData() {
+    public static Achievement.Data getAchievementData() {
         return new Achievement.Data(ACHIEVEMENT_KEY, "Shop Customer",
                 "A customer in a shop requested an out-of-stock item. You sold it to the customer.");
     }

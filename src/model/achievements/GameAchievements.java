@@ -2,7 +2,6 @@ package model.achievements;
 
 import model.Model;
 import model.QuestDeck;
-import model.enemies.VampireEnemy;
 import model.items.spells.Spell;
 import model.items.spells.SummonShipSpell;
 import model.mainstory.MainStory;
@@ -13,7 +12,6 @@ import model.states.dailyaction.shops.ShopSupplier;
 import model.states.events.*;
 import util.MyLists;
 import view.MyColors;
-import view.subviews.RuinsSubView;
 
 import java.io.Serializable;
 import java.util.*;
@@ -42,10 +40,17 @@ public class GameAchievements implements Serializable {
         new BigSpenderAchievement().registerYourself(partyAchievements);
         new LittleEarnerAchievement().registerYourself(partyAchievements);
         new BigEarnerAchievement().registerYourself(partyAchievements);
-        new FishermanAchievement().registerYourself(partyAchievements);
+        new BeginnerFishermanAchievement().registerYourself(partyAchievements);
+        new ExpertFishermanAchievement().registerYourself(partyAchievements);
         new OrcSlayerAchievement().registerYourself(partyAchievements);
+        new ApprenticeCrafterAchievement().registerYourself(partyAchievements);
+        new JourneymanCrafterAchievement().registerYourself(partyAchievements);
+        new MasterCrafterAchievement().registerYourself(partyAchievements);
+        new ApprenticeBrewerAchievement().registerYourself(partyAchievements);
+        new JourneymanBrewerAchievement().registerYourself(partyAchievements);
+        new MasterBrewerAchievement().registerYourself(partyAchievements);
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
-        registerAchievement(ShopCustomer.getAchievemetnData());
+        registerAchievement(ShopCustomer.getAchievementData());
         registerAchievement(ShopSupplier.getAchievementData());
     }
 

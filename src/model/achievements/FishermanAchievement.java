@@ -3,13 +3,16 @@ package model.achievements;
 import model.GameStatistics;
 import model.Model;
 
-public class FishermanAchievement extends PassiveAchievement {
-    public FishermanAchievement() {
-        super("Fisherman", "You caught 100 fish.");
+public abstract class FishermanAchievement extends PassiveAchievement {
+    private final int limit;
+
+    public FishermanAchievement(String name, int limit) {
+        super("Fisherman", "You caught " + limit + " fish.");
+        this.limit = limit;
     }
 
     @Override
     public boolean condition(Model model) {
-        return GameStatistics.getFishCaught() >= 100;
+        return GameStatistics.getFishCaught() >= limit;
     }
 }
