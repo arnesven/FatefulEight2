@@ -210,6 +210,14 @@ public class StatisticsView extends SelectableListMenu {
         }
 
         row++;
+        result.add(makeTitleLine(leftColumn, row++, "TRAVEL"));
+        result.add(makeIntLine(leftColumn, row++, "Boat voyages taken", GameStatistics.getBoatVoyages()));
+        result.add(makeIntLine(leftColumn, row++, "Boats chartered", GameStatistics.boatsChartered()));
+        result.add(makeIntLine(leftColumn, row++, "Carriage trips taken", GameStatistics.getCarriageTrips()));
+        result.add(makeIntLine(leftColumn, row++, "Times teleported", GameStatistics.getTeleportations()));
+        result.add(makeIntLine(leftColumn, row++, "Free rides", GameStatistics.getFreeRides()));
+
+        row++;
         result.add(makeTitleLine(leftColumn, row++, "CRIME"));
         result.add(makeIntLine(leftColumn, row++, "Gold stolen", GameStatistics.getGoldStolen()));
         result.add(makeIntLine(leftColumn, row++, "Items stolen", GameStatistics.getItemsStolen()));

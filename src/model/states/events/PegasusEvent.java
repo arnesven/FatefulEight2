@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.PersonalityTrait;
 import view.MyColors;
@@ -44,6 +45,7 @@ public class PegasusEvent extends AlternativeTravelEvent {
             model.getParty().getHorseHandler().abandonHorses(model);
             return true;
         }
+        GameStatistics.incrementFreeRides();
         return false;
     }
 

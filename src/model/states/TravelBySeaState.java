@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameStatistics;
 import model.Model;
 import model.combat.conditions.PoisonCondition;
 import model.map.*;
@@ -41,6 +42,7 @@ public class TravelBySeaState extends GameState {
                     " The captain will take your party for " + cost + " gold. The voyage takes " + TRIP_TIME_DAYS + " days.");
             if (finalCheck(model, cost)) {
                 model.getParty().spendGold(cost);
+                GameStatistics.incrementBoatVoyages();
                 travelTo(model, ship.first);
             } else {
                 println("Ok. But come back soon if you change your mind. The ship will not wait for you.");

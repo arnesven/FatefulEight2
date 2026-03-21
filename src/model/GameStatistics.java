@@ -404,4 +404,44 @@ public class GameStatistics {
     public static int getIntoxicatingBeverages() {
         return get("intoxicatingBeverages");
     }
+
+    public static int getBoatVoyages() {
+        return get("boatVoyages");
+    }
+
+    public static void incrementBoatVoyages() {
+        increment("boatVoyages", 1);
+    }
+
+    public static int boatsChartered() {
+        return get("boatsChartered");
+    }
+
+    public static void incrementBoatsChartered() {
+        increment("boatsChartered", 1);
+    }
+
+    public static void incrementCarriageTrips() {
+        increment("carriageTrips", 1);
+    }
+
+    public static int getCarriageTrips() {
+        return get("carriageTrips");
+    }
+
+    public static int getTeleportations() {
+        return get("teleportations");
+    }
+
+    public static void incrementTeleportations() {
+        increment("teleportations", 1);
+    }
+
+    public static void incrementFreeRides() {
+        increment("freeRides", 1);
+    }
+
+    public static int getFreeRides() {
+        return get("freeRides");
+    }
 }

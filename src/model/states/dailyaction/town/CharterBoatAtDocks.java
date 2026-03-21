@@ -1,5 +1,6 @@
 package model.states.dailyaction.town;
 
+import model.GameStatistics;
 import model.Model;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
@@ -44,6 +45,7 @@ public class CharterBoatAtDocks extends GoTheDocksNode {
                 println("You pay the captain " + CHARTER_COST + " gold to charter the boat.");
                 printQuote("Captain", "My ship is yours to command. Where do you want to go?");
                 model.getParty().spendGold(CHARTER_COST);
+                GameStatistics.incrementBoatsChartered();
                 travelled = true;
                 return new TravelByCharteredBoat(model).run(model);
             }

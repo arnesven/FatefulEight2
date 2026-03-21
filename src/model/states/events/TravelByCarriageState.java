@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.combat.conditions.PoisonCondition;
 import model.map.DiscoveredRoute;
@@ -48,6 +49,7 @@ public class TravelByCarriageState extends GameState {
                         " The driver will take your party for " + cost + " gold. The trip takes " + TRIP_TIME_DAYS + " days.");
                 if (finalCheck(model, cost)) {
                     model.getParty().spendGold(cost);
+                    GameStatistics.incrementCarriageTrips();
                     travelTo(model, carriage);
                 } else {
                     println("Ok. But come back soon if you change your mind. The carriage will not wait for you.");

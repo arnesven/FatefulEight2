@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.classes.Skill;
 import model.map.Direction;
@@ -48,6 +49,7 @@ class RaftEvent extends AlternativeTravelEvent {
             return false;
         }
         model.getParty().getHorseHandler().abandonHorses(model);
+        GameStatistics.incrementFreeRides();
         return true;
     }
 

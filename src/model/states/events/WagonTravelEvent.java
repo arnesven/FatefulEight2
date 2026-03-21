@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
@@ -40,6 +41,7 @@ public class WagonTravelEvent extends DailyEventState {
             portraitSay("Howdy. If you folks are heading to " + townOrCastle.getPlaceName() + ", why don't you hop on?");
             print("Do you accept the ride? (Y/N) ");
             if (yesNoInput()) {
+                GameStatistics.incrementFreeRides();
                 rideAndThanks(model, path);
             } else {
                 leaderSay("Thanks, but " + myOrOur() + " path leads somewhere else.");
@@ -73,6 +75,7 @@ public class WagonTravelEvent extends DailyEventState {
                     } else {
                         leaderSay("If only we had some coin...");
                         portraitSay("I know what it's like to be without. Okay, hop on anyway I guess.");
+                        GameStatistics.incrementFreeRides();
                         rideAndThanks(model, path);
                     }
                 }

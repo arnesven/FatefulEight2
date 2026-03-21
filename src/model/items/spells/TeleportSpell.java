@@ -1,5 +1,6 @@
 package model.items.spells;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
@@ -101,6 +102,7 @@ public class TeleportSpell extends ImmediateSpell {
         state.println("Press enter to continue.");
         state.waitForReturn();
         CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView(model));
+        GameStatistics.incrementTeleportations();
     }
 
     private void markLocation(Model model, GameState state, GameCharacter caster) {
