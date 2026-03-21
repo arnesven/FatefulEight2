@@ -7,6 +7,7 @@ import model.items.spells.SummonShipSpell;
 import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
+import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.shops.ShopCustomer;
 import model.states.dailyaction.shops.ShopSupplier;
 import model.states.events.*;
@@ -128,6 +129,7 @@ public class GameAchievements implements Serializable {
         registerAchievement(DoppelgangerEvent.getAchievementData());
         registerAchievement(DigForTreasureEvent.getAchievementData());
         registerAchievement(RevisitBoyfriendGirlfriendEvent.getAchievementData());
+        registerAchievement(BeanGameEvent.getAchievementData());
         for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
             registerAchievement(data);
         }

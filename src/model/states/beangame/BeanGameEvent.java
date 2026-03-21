@@ -1,6 +1,7 @@
 package model.states.beangame;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
@@ -44,6 +45,11 @@ public class BeanGameEvent extends DailyEventState {
 
     public BeanGameEvent(Model model) {
         this(model, Race.randomRace());
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(BeanGameEvent.class.getCanonicalName(),
+                "Jackpot!!!", "You played the bean game and won the jackpot.");
     }
 
     @Override
@@ -249,6 +255,7 @@ public class BeanGameEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, gamblerAppearance, "Gambler");
+        completeAchievement(BeanGameEvent.class.getCanonicalName());
         println("The gambler's enthusiasm is quickly replaced by obvious disappointment.");
         portraitSay("Jackpot indeed.", FacialExpression.disappointed);
         leaderSay("I guess this is my lucky day.");
