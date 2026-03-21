@@ -241,7 +241,7 @@ public class BathHouseEvent extends DailyEventState {
                     personDescription = "I'm the person in charge here.";
                 }
             }
-            portraitSay(personDescription + " I like to come to this bath house sometimes, when it's quite.");
+            portraitSay(personDescription + " I like to come to this bath house sometimes, when it's quiet.");
             leaderSay("Quiet? What do you mean?");
             portraitSay("Well sometimes there are adolescents here, playing around in the pool. They're such " +
                     "a rowdy bunch.");
