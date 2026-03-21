@@ -56,6 +56,7 @@ public class GameAchievements implements Serializable {
         new DiligentStudentAchievement().registerYourself(partyAchievements);
         new CardSharkAchievement().registerYourself(partyAchievements);
         new RitualistAchievement().registerYourself(partyAchievements);
+        new DrunkardAchievement().registerYourself(partyAchievements);
         partyAchievements.put(HighDamageAchievement.KEY, new HighDamageAchievement());
         partyAchievements.put(MultiSlayerAchievement.KEY, new MultiSlayerAchievement());
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());

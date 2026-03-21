@@ -396,4 +396,12 @@ public class GameStatistics {
     public static int getFishCaught() {
         return get("fishCaught");
     }
+
+    public static void incrementIntoxicatingBeverages() {
+        increment("intoxicatingBeverages", 1);
+    }
+
+    public static int getIntoxicatingBeverages() {
+        return get("intoxicatingBeverages");
+    }
 }

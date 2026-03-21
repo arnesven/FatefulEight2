@@ -1,5 +1,6 @@
 package model.items.potions;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -31,6 +32,7 @@ public abstract class IntoxicatingPotion extends Potion {
         if (doesReject(model, gc.getRace())) {
             return gc.getName() + " rejected the " + getName().toLowerCase() + "!";
         }
+        GameStatistics.incrementIntoxicatingBeverages();
 
         String extra = "";
         if (!gc.testSkillHidden(Skill.Endurance, getStrength() + 2 - gc.getSP(), 0).isSuccessful()) {
