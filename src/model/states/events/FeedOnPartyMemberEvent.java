@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
@@ -104,6 +105,7 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         model.getParty().disableVampireLookFor(vampire);
+        GameStatistics.incrementVampireFeedings();
     }
 
     private void biteThrall(Model model, GameCharacter vampire, GameCharacter victim) {
@@ -117,6 +119,7 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         model.getParty().disableVampireLookFor(vampire);
+        GameStatistics.incrementVampireFeedings();
     }
 
     private boolean remainsUndetected(Model model, GameCharacter vampire, GameCharacter victim, List<GameCharacter> sleepers) {

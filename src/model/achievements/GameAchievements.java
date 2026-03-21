@@ -63,6 +63,7 @@ public class GameAchievements implements Serializable {
         new HorseTraderAchievement().registerYourself(partyAchievements);
         new SalvagerAchievement().registerYourself(partyAchievements);
         new TinkererAchievement().registerYourself(partyAchievements);
+        new BloodLustAchievement().registerYourself(partyAchievements);
         partyAchievements.put(HighDamageAchievement.KEY, new HighDamageAchievement());
         partyAchievements.put(MultiSlayerAchievement.KEY, new MultiSlayerAchievement());
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());

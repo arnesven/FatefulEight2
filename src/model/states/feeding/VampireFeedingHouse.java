@@ -1,5 +1,6 @@
 package model.states.feeding;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
@@ -281,6 +282,7 @@ public class VampireFeedingHouse {
             applyRaceSpecificEffect(model, state, vampire, victim);
             model.getLog().waitForAnimationToFinish();
             model.getParty().disableVampireLookFor(vampire);
+            GameStatistics.incrementVampireFeedings();
             // FEATURE: Progress vampires vampire condition extra
             return true;
         }

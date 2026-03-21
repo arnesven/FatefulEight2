@@ -468,4 +468,12 @@ public class GameStatistics {
     public static int getItemsSalvaged() {
         return get("itemsSalvaged");
     }
+
+    public static void incrementVampireFeedings() {
+        increment("vampireFeedings", 1);
+    }
+
+    public static int getVampireFeedings() {
+        return get("vampireFeedings");
+    }
 }
