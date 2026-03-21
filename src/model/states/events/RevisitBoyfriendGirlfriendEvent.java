@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.RecruitInfo;
 import model.RecruitableCharacter;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
@@ -30,6 +31,12 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         this.friend = friend;
         this.prevEventChoice = previousEventChoice;
         this.step = step;
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(RevisitBoyfriendGirlfriendEvent.class.getCanonicalName(),
+                "Boyfriend/Girlfriend",
+                "A boyfriend or girlfriend of one of your party members was convinced to join the party.");
     }
 
     @Override
@@ -251,6 +258,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
             findTask(model).setCompleted(true);
             friend.addToAttitude(main, 10);
             main.addToAttitude(friend, 10);
+            completeAchievement(RevisitBoyfriendGirlfriendEvent.class.getCanonicalName());
         } else {
             leaderSay("Sorry " + friend.getFirstName() + " we can't take you on at the moment.");
             println(friend.getFirstName() + " leaves, visibly annoyed.");
