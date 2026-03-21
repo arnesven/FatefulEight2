@@ -15,7 +15,7 @@ public abstract class HairStyle implements Serializable {
 
     private String description;
 
-    public static MyColors[] allHairColors = MyColors.values();
+    public static MyColors[] allHairColors = MyColors.ALL_BUT_TRANSPARENT;
 
     public static MyColors[] npcHairColors = new MyColors[]{
             MyColors.DARK_GRAY, MyColors.GRAY,

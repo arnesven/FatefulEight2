@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.*;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.combat.conditions.VampirismCondition;
 import model.states.RecruitState;
 import view.sprites.CombatCursorSprite;
@@ -85,6 +86,7 @@ public class RecruitSubView extends TopMenuSubView {
         GameCharacter gc = rgc.getCharacter();
         gc.drawAppearance(model.getScreenHandler(), xPos, yPos);
         int info = rgc.getInfo().ordinal();
+        // TODO: Handle Black Knight/Red Knight separately
         BorderFrame.drawString(model.getScreenHandler(), gc.getRace().getName(), xPos, yPos+8, MyColors.WHITE, MyColors.BLUE);
         if (info >= 1) {
             BorderFrame.drawString(model.getScreenHandler(), gc.getFirstName(), xPos, yPos + 7, MyColors.WHITE, MyColors.BLUE);

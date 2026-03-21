@@ -43,10 +43,6 @@ public class MyRandom {
         return "she";
     }
 
-    public static MyColors nextColor() {
-        return sample(Arrays.asList(MyColors.values()));
-    }
-
     public static boolean flipCoin() {
         return random.nextBoolean();
     }

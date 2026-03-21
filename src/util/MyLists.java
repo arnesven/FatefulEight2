@@ -125,11 +125,12 @@ public class MyLists {
         return new ArrayList<E>(map.values());
     }
 
-    public static <E> List<E> take(List<E> lines, int amount) {
+    public static <E> List<E> take(List<E> linesIn, int amount) {
+        List<E> lines = new ArrayList<>(linesIn);
         List<E> result = new ArrayList<>();
         for (int i = 0; i < amount && !lines.isEmpty(); ++i) {
-            result.add(lines.get(0));
-            lines.remove(0);
+            result.add(lines.getFirst());
+            lines.removeFirst();
         }
         return result;
     }

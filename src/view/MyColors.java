@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -46,7 +47,6 @@ public enum MyColors {
     TRANSPARENT (new Color(0x00000000, true));
 
     private Color awtColor;
-    
     MyColors(Color color) {
 	    this.awtColor = color;
     }
@@ -55,8 +55,8 @@ public enum MyColors {
 	    return this.awtColor;
     }
 
-    private static Map<Integer, Integer> closestMap = new HashMap<>();
 
+    private static Map<Integer, Integer> closestMap = new HashMap<>();
     public static void transformImage(Sprite imgsprite) {
         try {
             BufferedImage img = imgsprite.getImage();
@@ -110,5 +110,13 @@ public enum MyColors {
 
     private static int getRed(int rgb) {
         return (rgb - 0xFF000000) / 0x10000;
+    }
+
+    public static final MyColors[] ALL_BUT_TRANSPARENT = makeAllButTransparent();
+
+    private static MyColors[] makeAllButTransparent() {
+        MyColors[] result = new MyColors[values().length-1];
+        System.arraycopy(values(), 0, result, 0, result.length);
+        return result;
     }
 }

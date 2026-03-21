@@ -291,7 +291,6 @@ public class Model {
     public void runGameScript() {
         while (!gameExited()) {
             GameState nextState = state.run(this);
-            gameData.achievements.checkCompletedPassiveAchievements(this);
             handleCastSpells();
             if (nextState != null) {
                 System.out.println("GameScript: next state is " + nextState);
@@ -304,6 +303,7 @@ public class Model {
             if (gameStartFileName != null) {
                 startGameFromSave(gameStartFileName);
             }
+            gameData.achievements.checkCompletedPassiveAchievements(this);
             if (FatefulEight.inDebugMode()) {
                 AnimationManager.printAnimations();
             }

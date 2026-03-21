@@ -8,6 +8,7 @@ import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
 import model.states.GameState;
+import model.states.ShootBallsState;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.shops.ShopCustomer;
 import model.states.dailyaction.shops.ShopSupplier;
@@ -131,6 +132,7 @@ public class GameAchievements implements Serializable {
         registerAchievement(DigForTreasureEvent.getAchievementData());
         registerAchievement(RevisitBoyfriendGirlfriendEvent.getAchievementData());
         registerAchievement(BeanGameEvent.getAchievementData());
+        registerAchievement(ShootBallsState.getAchievementData());
         for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
             registerAchievement(data);
         }

@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -33,6 +34,11 @@ public class ShootBallsState extends GameState {
         this.shooter = shooter;
         this.bowToUse = bowToUse;
         this.titleText = titleText;
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(ShootBallsState.class.getCanonicalName(),
+                "Crack Shot", "Shoot every ball during a ball shooting game.");
     }
 
     @Override
@@ -74,6 +80,9 @@ public class ShootBallsState extends GameState {
         disableTelekinesis(model);
         AnimationManager.unregister(this.subView);
         println("Game over. You got " + subView.getScore() + " out of " + ShootBallsSubView.MAX_BALLS + " balls.");
+        if (subView.getScore() == ShootBallsSubView.MAX_BALLS) {
+            completeAchievement(ShootBallsState.class.getCanonicalName());
+        }
         ClientSoundManager.playBackgroundMusic(previous);
         return model.getCurrentHex().getDailyActionState(model);
     }

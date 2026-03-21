@@ -109,8 +109,11 @@ public class MarketEvent extends DailyEventState {
         print("Do you want to play? (Y/N) ");
         if (yesNoInput()) {
             model.getParty().spendGold(2);
-            print("Who will play the ball shooting game?");
-            GameCharacter shooter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            GameCharacter shooter = model.getParty().getPartyMember(0);
+            if (model.getParty().size() > 1) {
+                print("Who will play the ball shooting game?");
+                shooter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            }
             ShootBallsState ballsState = new ShootBallsState(model, shooter, ShootBallsState.getCharactersBowOrDefault(shooter),
                     "EVENT - SHOOT BALLS");
             ballsState.run(model);
