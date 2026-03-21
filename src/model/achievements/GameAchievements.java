@@ -126,6 +126,7 @@ public class GameAchievements implements Serializable {
         registerAchievement(TallSpireEvent.getAchievementData());
         registerAchievement(VisitMonasteryEvent.getAchievmentData());
         registerAchievement(DoppelgangerEvent.getAchievementData());
+        registerAchievement(DigForTreasureEvent.getAchievementData());
         for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
             registerAchievement(data);
         }

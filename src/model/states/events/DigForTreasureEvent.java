@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
@@ -30,6 +31,11 @@ public class DigForTreasureEvent extends DailyEventState {
         }
     }
 
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(DigForTreasureEvent.class.getCanonicalName(),
+                "Treasure Hunter", "You dug for buried treasure, and found it!");
+    }
+
     @Override
     protected void doEvent(Model model) {
         println("You spend the whole day searching and digging for buried treasure.");
@@ -52,6 +58,7 @@ public class DigForTreasureEvent extends DailyEventState {
                 println("The party finds " + gold + " gold.");
                 model.getParty().earnGold(gold);
                 task.complete(model);
+                completeAchievement(DigForTreasureEvent.class.getCanonicalName());
             } else {
                 println("You can confidently say that if there were any treasure here, you would have found it.");
                 leaderSay("The treasure must be somewhere else then.");
