@@ -37,6 +37,7 @@ public class MainGameViewHotKeyHandler {
                 "Ctrl-E : Inventory View\n" +
                 "Ctrl-P : Potions View\n" +
                 "Ctrl-Q : Journal View\n" +
+                "Ctrl-A : Achievements View\n" +
                 "Ctrl-X : Quit Game\n";
     }
 }

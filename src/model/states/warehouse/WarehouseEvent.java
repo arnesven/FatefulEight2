@@ -30,7 +30,7 @@ public class WarehouseEvent extends DailyEventState {
     @Override
     public GuideData getGuideData() {
         return new GuideData("Go to warehouse",
-                "I know a person who has some trouble find something in a warehouse");
+                "I know a person who has some trouble finding something in a warehouse");
     }
 
     @Override

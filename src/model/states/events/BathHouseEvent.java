@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.characters.appearance.SwimAttire;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -117,7 +118,7 @@ public class BathHouseEvent extends DailyEventState {
         portraitSay("The changing rooms are this way. You will find swimming attire inside.");
         leaderSay("... thank you.");
         randomSayIfPersonality(PersonalityTrait.prudish, List.of(model.getParty().getLeader()), "Eek! I don't want anybody " +
-                "ogling me!");
+                "ogling me!", FacialExpression.afraid);
         println("You change into your swimming attire and leave your gear in the lockers.");
         for (GameCharacter gc : bathers) {
             gc.setSpecificClothing(new SwimAttire());
@@ -208,7 +209,7 @@ public class BathHouseEvent extends DailyEventState {
             }
         }
         if (alone) {
-            println("Since you are alone in the pool you can also mediate in silence and reflect on your recent deeds.");
+            println("Since you are alone in the pool you can also meditate in silence and reflect on your recent deeds.");
             for (GameCharacter gc : groupB) {
                 println(gc.getName() + " gains 20 experience points.");
                 model.getParty().giveXP(model, gc, 20);
