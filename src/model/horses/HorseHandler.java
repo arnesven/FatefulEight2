@@ -190,9 +190,9 @@ public class HorseHandler extends ArrayList<Horse> {
         if (missingPonies > 0) {
             bldr.append(missingPonies);
             if (missingPonies > 1) {
-                bldr.append("ponies");
+                bldr.append(" ponies");
             } else {
-                bldr.append("pony");
+                bldr.append(" pony");
             }
         }
         return bldr.toString();

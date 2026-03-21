@@ -444,4 +444,20 @@ public class GameStatistics {
     public static int getFreeRides() {
         return get("freeRides");
     }
+
+    public static void incrementHorsesBought() {
+        increment("horsesBought", 1);
+    }
+
+    public static int getHorsesBought() {
+        return get("horsesBought");
+    }
+
+    public static void incrementHorsesSold() {
+        increment("horsesSold", 1);
+    }
+
+    public static int getHorsesSold() {
+        return get("horsesSold");
+    }
 }

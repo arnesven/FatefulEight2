@@ -60,6 +60,7 @@ public class GameAchievements implements Serializable {
         new SailorAchievement().registerYourself(partyAchievements);
         new PassengerAchievement().registerYourself(partyAchievements);
         new HitchhikerAchievement().registerYourself(partyAchievements);
+        new HorseTraderAchievement().registerYourself(partyAchievements);
         partyAchievements.put(HighDamageAchievement.KEY, new HighDamageAchievement());
         partyAchievements.put(MultiSlayerAchievement.KEY, new MultiSlayerAchievement());
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());

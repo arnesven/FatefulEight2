@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import model.GameStatistics;
 import model.Model;
 import model.horses.Horse;
 import model.horses.HorseHandler;
@@ -81,6 +82,7 @@ public class TradeHorsesState extends GameState {
         if (yesNoInput()) {
             model.getParty().getHorseHandler().sellHorse(model, horse);
             subView.removeHoses(horse);
+            GameStatistics.incrementHorsesSold();
         }
     }
 
@@ -109,6 +111,7 @@ public class TradeHorsesState extends GameState {
             subView.removeHoses(horse);
             model.getParty().spendGold(horse.getCost());
             model.getParty().getHorseHandler().addHorse(horse);
+            GameStatistics.incrementHorsesBought();
         } else {
             printQuote(STABLE_MASTER_NAME,
                     MyRandom.sample(List.of("Well, I don't mind keeping this " + horse.getName() + ".",

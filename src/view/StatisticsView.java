@@ -154,6 +154,8 @@ public class StatisticsView extends SelectableListMenu {
                 setInnerMenu(new SimpleMessageView(model.getView(), getHorsesNeededText(model)), model);
             }
         });
+        result.add(makeIntLine(leftColumn, row++, "Horses bought", GameStatistics.getHorsesBought()));
+        result.add(makeIntLine(leftColumn, row++, "Horses sold", GameStatistics.getHorsesSold()));
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "COMBAT"));

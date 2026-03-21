@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import model.GameStatistics;
 import model.Model;
 import model.horses.Horse;
 import model.states.DailyActionState;
@@ -33,6 +34,7 @@ public class SellHorseState extends GameState {
                 model.getParty().getHorseHandler().sellHorse(model, horse);
                 printQuote("Bartender", "We'll take care of " + himOrHer(horse.getGender()) +
                         " from now on then.");
+                GameStatistics.incrementHorsesSold();
             }
         }
         return new DailyActionState(model);

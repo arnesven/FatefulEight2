@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import model.GameStatistics;
 import model.Model;
 import model.horses.*;
 import model.states.DailyActionState;
@@ -40,6 +41,7 @@ public class BuyHorseState extends GameState {
             if (subView.didAccept()) {
                 println("You bought the " + horse.getName() + ".");
                 model.getParty().getHorseHandler().buyAvailableHorse(model, price);
+                GameStatistics.incrementHorsesBought();
             } else {
                 leaderSay("A fine creature, but unfortunately I have to decline.");
             }
