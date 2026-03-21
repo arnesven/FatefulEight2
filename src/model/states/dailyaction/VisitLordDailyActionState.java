@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
+import model.achievements.HomeOwnerAchievement;
 import model.headquarters.Headquarters;
 import model.items.puzzletube.FindPuzzleDestinationTask;
 import model.journal.RescueMissionStoryPart;
@@ -222,6 +223,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 println("You paid " + hq.getCost() + " gold to the " + location.getLordTitle() + ".");
                 model.getParty().spendGold(hq.getCost());
                 model.getParty().setHeadquarters(model, hq);
+                completeAchievement(HomeOwnerAchievement.KEY);
             }
         }
     }

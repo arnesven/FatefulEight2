@@ -59,6 +59,7 @@ public class GameAchievements implements Serializable {
         partyAchievements.put(HighDamageAchievement.KEY, new HighDamageAchievement());
         partyAchievements.put(MultiSlayerAchievement.KEY, new MultiSlayerAchievement());
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());
+        partyAchievements.put(HomeOwnerAchievement.KEY, new HomeOwnerAchievement());
         registerAchievement(ShopCustomer.getAchievementData());
         registerAchievement(ShopSupplier.getAchievementData());
     }
