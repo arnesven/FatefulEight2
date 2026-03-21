@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
@@ -21,6 +22,11 @@ import java.util.List;
 public class DoppelgangerEvent extends PersonalityTraitEvent {
     public DoppelgangerEvent(Model model, GameCharacter mainCharacter) {
         super(model, PersonalityTrait.narcissistic, mainCharacter);
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(DoppelgangerEvent.class.getCanonicalName(), "Doppelganger",
+                "You successfully identified a party member from his or her doppelganger.");
     }
 
     @Override
@@ -160,6 +166,7 @@ public class DoppelgangerEvent extends PersonalityTraitEvent {
             leaderSay("I still think you are very similar though.");
             partyMemberSay(getMainCharacter(), "I am unique, end of story.");
             leaderSay("Whatever...");
+            completeAchievement(DoppelgangerEvent.class.getCanonicalName());
         }
     }
 
