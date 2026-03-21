@@ -132,6 +132,7 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Items sold", GameStatistics.getItemsSold()));
         result.add(makeIntLine(leftColumn, row++, "Items crafted", GameStatistics.getItemsCrafted()));
         result.add(makeIntLine(leftColumn, row++, "Items upgraded", GameStatistics.getItemsUpgraded()));
+        result.add(makeIntLine(leftColumn, row++, "Items salvaged", GameStatistics.getItemsSalvaged()));
         List<String> craftingDesigns = MyLists.transform(model.getParty().getLearnedCraftingDesigns(),
                 cd -> cd.getCraftable().getName());
         if (craftingDesigns.size() > 0) {

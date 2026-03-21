@@ -460,4 +460,12 @@ public class GameStatistics {
     public static int getHorsesSold() {
         return get("horsesSold");
     }
+
+    public static void incrementItemsSalvaged() {
+        increment("itemsSalvaged", 1);
+    }
+
+    public static int getItemsSalvaged() {
+        return get("itemsSalvaged");
+    }
 }
