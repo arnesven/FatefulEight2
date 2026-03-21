@@ -1,6 +1,7 @@
 package model.headquarters;
 
 import model.Model;
+import model.achievements.RenovatorAchievement;
 import model.states.GameState;
 
 public class ExpandHeadquartersAction extends HeadquartersAction {
@@ -45,5 +46,6 @@ public class ExpandHeadquartersAction extends HeadquartersAction {
 
         model.getParty().getHeadquarters().incrementSize();
         println("You have expanded your headquarters! " + model.getParty().getHeadquarters().presentYourself());
+        completeAchievement(RenovatorAchievement.KEY);
     }
 }
