@@ -2,6 +2,7 @@ package model.states;
 
 import control.GameExitedException;
 import model.Model;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
@@ -388,9 +389,12 @@ public abstract class GameState implements GameStateConstants {
     public void completeAchievement(String key) {
         if (!model.getAchievements().isCompleted(key, getModel())) {
             model.getAchievements().setCompleted(key);
-            String name = model.getAchievements().getAchievement(key).getName();
-            model.getLog().addAnimated(LogView.GOLD_COLOR + "You have unlocked an achievement '" +
-                    name + "'!\n" + LogView.DEFAULT_COLOR);
+            announceAchievementCompleted(model, model.getAchievements().getAchievement(key));
         }
+    }
+
+    public static void announceAchievementCompleted(Model model, Achievement a) {
+        model.getLog().addAnimated(LogView.GOLD_COLOR + "You have unlocked an achievement '" +
+                a.getName() + "'!\n" + LogView.DEFAULT_COLOR);
     }
 }

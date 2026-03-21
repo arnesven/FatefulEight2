@@ -55,4 +55,8 @@ public class Achievement implements Serializable {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    public boolean isCompletionAnnounced() {
+        return completed;
+    }
 }

@@ -7,6 +7,7 @@ import model.items.spells.SummonShipSpell;
 import model.mainstory.MainStory;
 import model.map.*;
 import model.quests.Quest;
+import model.states.GameState;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.shops.ShopCustomer;
 import model.states.dailyaction.shops.ShopSupplier;
@@ -180,5 +181,16 @@ public class GameAchievements implements Serializable {
 
     public Achievement getAchievement(String key) {
         return partyAchievements.get(key);
+    }
+
+    public void checkCompletedPassiveAchievements(Model model) {
+        for (Achievement a : partyAchievements.values()) {
+            if (a.isCompleted(model) && !a.isCompletionAnnounced()) {
+                GameState.announceAchievementCompleted(model, a);
+                if (a instanceof PassiveAchievement) {
+                    ((PassiveAchievement) a).setAnnounced(true);
+                }
+            }
+        }
     }
 }

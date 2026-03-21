@@ -7,7 +7,7 @@ public abstract class FishermanAchievement extends PassiveAchievement {
     private final int limit;
 
     public FishermanAchievement(String name, int limit) {
-        super("Fisherman", "You caught " + limit + " fish.");
+        super(name + " Fisherman", "You caught " + limit + " fish.");
         this.limit = limit;
     }
 

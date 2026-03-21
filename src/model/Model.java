@@ -1,6 +1,7 @@
 package model;
 
 import control.FatefulEight;
+import model.achievements.Achievement;
 import model.achievements.GameAchievements;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
@@ -290,6 +291,7 @@ public class Model {
     public void runGameScript() {
         while (!gameExited()) {
             GameState nextState = state.run(this);
+            gameData.achievements.checkCompletedPassiveAchievements(this);
             handleCastSpells();
             if (nextState != null) {
                 System.out.println("GameScript: next state is " + nextState);
