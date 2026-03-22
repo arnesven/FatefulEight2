@@ -4,6 +4,7 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import sound.BackgroundMusic;
@@ -397,7 +398,7 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("Me, a Vermin? Hah! We wiped those losers out weeks ago.");
             leaderSay("So you are a bandit?");
             println("The bandit girl seems embarrassed.");
-            portraitSay("Uhm yes...");
+            portraitSay("Uhm yes...", FacialExpression.sad);
             leaderSay("But not a Vermin. You wiped them out, you said. Did you happen to see a tall handsome fellow " +
                     "with a headband and a sword on his back?");
             portraitSay("Hmm, there was a tall handsome guy in one of the dungeon cells when we took over the fort. " +
@@ -408,7 +409,7 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("What!? My gang will slaughter you, there's forty of us. You'll die and I'll lie here and " +
                     "starve to death.");
             leaderSay("Don't worry, we'll come up with a plan. Now turn around.");
-            portraitSay("Ahh, rats!");
+            portraitSay("Ahh, rats!", FacialExpression.disappointed);
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
         }
@@ -424,16 +425,16 @@ public class RescueMissionQuest extends MainQuest {
             showExplicitPortrait(model, model.getMainStory().getCaidCharacter().getAppearance(), "Caid");
             portraitSay("Thanks for getting me out of there. Who are you by the way?");
             leaderSay("We've were hired by your lord to find you.");
-            portraitSay("I'm glad somebody noticed I was missing. Even if it was just my employer.");
+            portraitSay("I'm glad somebody noticed I was missing. Even if it was just my employer.", FacialExpression.relief);
             leaderSay("What happened to you?");
             portraitSay("Well, I've been trying to track down my lord's sister, and...");
             leaderSay("You went undercover with a gang called 'the Vermin'?");
-            portraitSay("Yes, exactly! How did you know that?");
-            leaderSay("Uhm... lucky guess... please go on.");
+            portraitSay("Yes, exactly! How did you know that?", FacialExpression.questioning);
+            leaderSay("Uhm... lucky guess... please go on.", FacialExpression.relief);
             portraitSay("Well, the gang had a connection to the person I was trying to find, who seem to be very elusive by the way. " +
                     "I had just about earned the gang's trust when, when an old exiled member of the court shows up and exposes me. " +
                     "Then they threw me into their dungeon.");
-            leaderSay("You couldn't handle a few gangsters?");
+            leaderSay("You couldn't handle a few gangsters?", FacialExpression.questioning);
             portraitSay("Maybe, but they were my only good lead. I thought maybe I could turn the situation around again.");
             leaderSay("I guess you couldn't.");
             portraitSay("Well, they were probably talking about how to best ransom me back to my employer when the fort was " +

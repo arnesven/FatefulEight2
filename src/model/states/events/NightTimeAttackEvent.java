@@ -2,12 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.DogAppearance;
 import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
 import model.states.DailyEventState;
+import util.MyRandom;
 import view.combat.CombatTheme;
 import java.util.List;
 
@@ -52,7 +54,21 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
         }
         List<Enemy> enemies = getEnemies(model);
         if (spotted) {
-            leaderSay("Everybody wake up! We are under attack!", FacialExpression.surprised);
+            partyMemberSay(rando, "Everybody wake up! We are under attack!", FacialExpression.surprised);
+            int dieRoll = MyRandom.rollD6();
+            if (dieRoll == 1) {
+                randomSayIfPersonality(PersonalityTrait.anxious, List.of(rando), "Oh dear me.");
+            } else if (dieRoll == 2) {
+                randomSayIfPersonality(PersonalityTrait.aggressive, List.of(rando), "They'll regret disturbing my sleep!");
+            } else if (dieRoll == 3) {
+                randomSayIfPersonality(PersonalityTrait.cowardly, List.of(rando), "Can't we just give up?");
+            } else if (dieRoll == 4) {
+                randomSayIfPersonality(PersonalityTrait.brave, List.of(rando), "Everybody, draw your weapons. Find your courage! Defend yourselves!");
+            } else if (dieRoll == 5) {
+                randomSayIfPersonality(PersonalityTrait.calm, List.of(rando), "Let's just keep our wits about us.");
+            } else {
+                randomSayIfPersonality(PersonalityTrait.diplomatic, List.of(rando), "More fighting? Isn't there a peaceful solution?");
+            }
             model.getLog().waitForAnimationToFinish();
             runCombat(enemies, combatTheme, true);
         } else {

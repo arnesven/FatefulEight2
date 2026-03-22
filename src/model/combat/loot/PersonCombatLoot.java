@@ -24,7 +24,7 @@ public class PersonCombatLoot extends StandardCombatLoot {
             obols += MyRandom.randInt(0, 10);
         }
         obols = (int)Math.round(getGoldFactor(model) * obols);
-        if (obols == 0 || getItems().isEmpty()) {
+        if ((obols == 0 || getItems().isEmpty()) && MyRandom.flipCoin()) {
             List<Item> items = model.getItemDeck().draw(1, Prevalence.common, 0.0);
             getItems().add(items.getFirst());
         }
