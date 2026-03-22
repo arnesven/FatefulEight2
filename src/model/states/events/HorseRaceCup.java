@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.RecruitInfo;
 import model.RecruitableCharacter;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
@@ -34,6 +35,11 @@ public class HorseRaceCup extends TournamentEvent {
         this.castle = castle;
     }
 
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(HorseRaceCup.class.getCanonicalName(),
+                "Cup Champion", "You came in first place in the Horse Race Cup.");
+    }
+
     @Override
     protected void doEvent(Model model) {
         print("The " + castle.getLordTitle() + " is hosting a horse racing cup today. " +
@@ -57,8 +63,8 @@ public class HorseRaceCup extends TournamentEvent {
             leaderSay("Perhaps. What's there to know about the cup?");
         }
         portraitSay("The Grand Horse Racing Cup is truly the event of the year. Seven riders will compete in three " +
-                "rounds of racing, with two laps each. The riders score points according to their placement in each race. " +
-                "Finishing first gives 10 points, second 8 points, third 6. Then 5, 4 and 3 for fourth fifth and sixth place. " +
+                "rounds of racing, with two laps each. The riders score points according to their placement in each race.");
+        portraitSay("Finishing first gives 10 points, second 8 points, third 6. Then 5, 4 and 3 for fourth fifth and sixth place. " +
                 "Whoever has most points at the end of the last race is the winner. The prize pot is 100 gold.");
         leaderSay("What's the entry fee?");
         portraitSay("It's " + ENTRY_FEE + " gold. Are you still interested?");
@@ -180,6 +186,7 @@ public class HorseRaceCup extends TournamentEvent {
             portraitSay("Here's your prize money! Spend it well.");
             model.getParty().earnGold(100);
             println("The party receives 100 gold!");
+            completeAchievement(HorseRaceCup.class.getCanonicalName());
             if (sponsored) {
                 println("You are about to leave the racing grounds when the mysterious sponsor shows up out of nowhere.");
                 showSponsor();

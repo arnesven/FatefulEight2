@@ -133,6 +133,10 @@ public class GameAchievements implements Serializable {
         registerAchievement(RevisitBoyfriendGirlfriendEvent.getAchievementData());
         registerAchievement(BeanGameEvent.getAchievementData());
         registerAchievement(ShootBallsState.getAchievementData());
+        registerAchievement(HorseRaceCup.getAchievementData());
+        registerAchievement(MagicDuelContestEvent.getAchievementData());
+        registerAchievement(ArcheryContestEvent.getAchievementData());
+        registerAchievement(ParticipateInTournamentEvent.getAchievementData());
         for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
             registerAchievement(data);
         }

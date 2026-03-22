@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.achievements.Achievement;
 import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -155,6 +156,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         if (winner == chosen) {
             println(chosen.getName() + " accepts the prize money of 100 gold!");
             model.getParty().earnGold(100);
+            completeAchievement(ParticipateInTournamentEvent.class.getCanonicalName());
             if (sponsored) {
                 handleSponsorWhenWon(model);
             }
@@ -294,4 +296,9 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
     }
 
 
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(ParticipateInTournamentEvent.class.getCanonicalName(),
+                "Tournament Champion", "You came in first place in a Melee Tournament.");
+    }
 }

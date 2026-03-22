@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.Party;
+import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
@@ -179,6 +180,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
         if (winner == chosen) {
             println(chosen.getName() + " accepts the prize, the Crystal Wand!");
             new CrystalWand().addYourself(model.getParty().getInventory());
+            completeAchievement(MagicDuelContestEvent.class.getCanonicalName());
             if (sponsored) {
                 handleSponsorWhenWon(model);
             }
@@ -536,5 +538,10 @@ public class MagicDuelContestEvent extends TournamentEvent {
             result.add(duelist);
         }
         return result;
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(MagicDuelContestEvent.class.getCanonicalName(),
+                "Magic Duel Champion", "You came in first place in the Magic Dueling Contest.");
     }
 }

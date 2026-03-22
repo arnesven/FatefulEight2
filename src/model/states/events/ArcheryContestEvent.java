@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.achievements.Achievement;
 import model.items.ItemDeck;
 import model.Model;
 import model.characters.GameCharacter;
@@ -348,6 +349,7 @@ public class ArcheryContestEvent extends TournamentEvent {
         Weapon prize = new GoldenBow();
         model.getParty().getInventory().add(prize);
         println("The party receives " + prize.getName() + ".");
+        completeAchievement(ArcheryContestEvent.class.getCanonicalName());
         if (sponsored) {
             println("As out of nowhere, the mysterious sponsor shows up behind the party.");
             showSponsor();
@@ -457,5 +459,10 @@ public class ArcheryContestEvent extends TournamentEvent {
         MyLists.forEach(contestants, (GameCharacter gc) ->
             fletchings.put(gc, AimingSubView.makeArrowSprite()));
         return fletchings;
+    }
+
+    public static Achievement.Data getAchievementData() {
+        return new Achievement.Data(ArcheryContestEvent.class.getCanonicalName(),
+                "Archery Contest Champion", "You came in first place in the Archery Competition.");
     }
 }
