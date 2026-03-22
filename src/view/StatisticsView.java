@@ -244,9 +244,9 @@ public class StatisticsView extends SelectableListMenu {
                     } else {
                         text += " You are expected to repay an amount of " + model.getParty().getLoan().repayCost() + " gold ";
                         if (daysLeft > 0) {
-                            text += " within " + daysLeft + " days.";
+                            text += "within " + daysLeft + " days.";
                         } else {
-                            text += " today.";
+                            text += "today.";
                         }
                     }
                     setInnerMenu(new SimpleMessageView(model.getView(), text), model);
