@@ -2,6 +2,7 @@ package model.quests.scenes;
 
 import model.Model;
 import model.classes.Skill;
+import model.classes.SkillChecks;
 import model.items.Lockpick;
 import model.states.QuestState;
 import sound.SoundEffects;
@@ -25,7 +26,8 @@ public class SoloLockpickingSubScene extends SoloSkillCheckSubScene{
     }
 
     @Override
-    public String getDescription() {
-        return super.getDescription() + "/" + (getDifficulty()+Lockpick.SECURITY_DIFFICULTY_REDUCTION);
+    public String getDescription(Model model) {
+        return super.getDescription(model) + "/" +
+                SkillChecks.adjustDifficulty(model, (getDifficulty()+Lockpick.SECURITY_DIFFICULTY_REDUCTION));
     }
 }

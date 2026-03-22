@@ -33,7 +33,7 @@ abstract class FeedingSubScene extends QuestSubScene {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Unused";
     }
 

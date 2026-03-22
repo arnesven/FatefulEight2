@@ -232,7 +232,7 @@ public class WarlocksDungeonQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "";
         }
 

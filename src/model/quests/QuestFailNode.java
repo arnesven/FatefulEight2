@@ -1,8 +1,6 @@
 package model.quests;
 
 import model.Model;
-import model.map.HexLocation;
-import model.states.GameState;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -31,7 +29,7 @@ public class QuestFailNode extends QuestNode {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Quest Failed";
     }
 

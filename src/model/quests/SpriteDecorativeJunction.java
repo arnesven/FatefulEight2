@@ -21,7 +21,7 @@ class SpriteDecorativeJunction extends DecorativeJunction {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return description;
     }
 }

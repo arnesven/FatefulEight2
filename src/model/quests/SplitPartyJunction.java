@@ -46,7 +46,7 @@ public class SplitPartyJunction extends QuestJunction {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Party splits up";
     }
 

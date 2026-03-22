@@ -260,7 +260,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Talk to crew";
         }
 
@@ -271,7 +271,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
             super(col, row);
         }
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Make a decision.";
         }
 
@@ -348,7 +348,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Question first mate";
         }
 
@@ -471,7 +471,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Nightly secret meeting with mutineer";
         }
 

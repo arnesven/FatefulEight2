@@ -88,7 +88,7 @@ public class HungryTrollQuest extends Quest {
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
         StoryJunction sj1 = new StoryJunction(6, 1, new QuestEdge(scenes.get(1).get(0), QuestEdge.VERTICAL)) {
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 return "Try to reason with troll";
             }
 

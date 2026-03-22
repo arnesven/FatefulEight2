@@ -187,7 +187,7 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "???";
         }
 

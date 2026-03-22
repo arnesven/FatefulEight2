@@ -45,7 +45,7 @@ public class ChooseNode extends QuestJunction {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         if (hasEnemies()) {
             return "Combat " + enemyGroups.get(0).getName();
         }

@@ -25,8 +25,6 @@ import model.states.events.CheckForVampireEvent;
 import model.states.events.VampireProwlNightEvent;
 import sound.BackgroundMusic;
 import util.MyLists;
-import util.MyStrings;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -475,7 +473,7 @@ public class VampiresLairQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Persuade Caid (and other) to leave. Only if leader is Vampire. " + (alreadyTried ? "(already tried)" : "");
         }
 

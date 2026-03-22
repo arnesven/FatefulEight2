@@ -184,7 +184,7 @@ public class AncientStrongholdQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return floorNumberText(floorNumber) + " Floor";
         }
 
@@ -305,7 +305,7 @@ public class AncientStrongholdQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Strange Machinery";
         }
 

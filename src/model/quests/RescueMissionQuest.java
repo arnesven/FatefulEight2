@@ -295,7 +295,7 @@ public class RescueMissionQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return inner.getDescription();
         }
 

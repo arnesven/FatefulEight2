@@ -14,7 +14,6 @@ import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.items.weapons.AxeWeapon;
 import model.items.weapons.Pickaxe;
-import model.items.weapons.RustyPickaxe;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.DecisionJunctionWithEvent;
 import model.quests.scenes.SoloSkillCheckSubScene;
@@ -25,7 +24,6 @@ import model.states.DailyEventState;
 import model.states.QuestState;
 import model.states.events.GelatinousBlobEvent;
 import sound.BackgroundMusic;
-import view.BorderFrame;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.combat.GrassCombatTheme;
@@ -97,7 +95,7 @@ public class BrrbitsReward extends Quest {
         StoryJunction lootCaravan = new StoryJunction(3, 1, new QuestEdge(getFailEndingNode())) {
 
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 return "Loot caravan";
             }
 
@@ -124,7 +122,7 @@ public class BrrbitsReward extends Quest {
 
         StoryJunction followFrogman1 = new StoryJunction(5, 0, new QuestEdge(scenes.get(1).get(0))) {
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 return "Follow " + FROGMAN_NAME;
             }
 
@@ -154,7 +152,7 @@ public class BrrbitsReward extends Quest {
         StoryJunction tameHorses = new StoryJunction(3, 2, new QuestEdge(getFailEndingNode())) {
 
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 return hasSeenHorses ? "Tame horses" : "???";
             }
 
@@ -177,7 +175,7 @@ public class BrrbitsReward extends Quest {
 
         StoryJunction followFrogman2 = new StoryJunction(6, 2, new QuestEdge(scenes.get(2).get(0), QuestEdge.VERTICAL)) {
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 return "Follow " + FROGMAN_NAME;
             }
 
@@ -198,7 +196,7 @@ public class BrrbitsReward extends Quest {
 
         StoryJunction mineSilver = new StoryJunction(3, 4, new QuestEdge(getFailEndingNode())) {
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 if (foundOreVein) {
                     return "Mine silver ore vein";
                 }
@@ -231,7 +229,7 @@ public class BrrbitsReward extends Quest {
         StoryJunction followFrogman3 = new StoryJunction(4, 5, new QuestEdge(scenes.get(3).get(0))) {
 
             @Override
-            public String getDescription() {
+            public String getDescription(Model model) {
                 return "Follow " + FROGMAN_NAME;
             }
 
@@ -533,7 +531,7 @@ public class BrrbitsReward extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "";
         }
 

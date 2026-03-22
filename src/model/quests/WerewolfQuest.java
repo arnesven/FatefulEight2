@@ -19,13 +19,11 @@ import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import util.MyLists;
-import view.BorderFrame;
 import view.MyColors;
 import view.combat.NightGrassCombatTheme;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
-import view.combat.GrassCombatTheme;
 import view.subviews.PortraitSubView;
 import view.subviews.TownSubView;
 import view.widget.QuestBackground;
@@ -208,7 +206,7 @@ public class WerewolfQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Use a sleeping potion";
         }
 

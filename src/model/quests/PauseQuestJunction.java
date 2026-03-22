@@ -12,7 +12,7 @@ public class PauseQuestJunction extends SimpleJunction {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "";
     }
 

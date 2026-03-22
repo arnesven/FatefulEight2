@@ -39,7 +39,7 @@ public class TrapSubScene extends QuestSubScene {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Trap of 1D10-" + damage + " damage.";
     }
 

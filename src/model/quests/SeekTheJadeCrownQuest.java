@@ -5,8 +5,6 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.*;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
-import model.mainstory.jungletribe.RubiqBall;
-import model.mainstory.jungletribe.RubiqPuzzleEvent;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
@@ -195,7 +193,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "???";
         }
 

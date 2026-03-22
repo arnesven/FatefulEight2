@@ -44,7 +44,7 @@ public class HelpWillisQuest extends MainQuest {
                 new PayGoldSubScene(2, 4, 3, "Let's just pay her up front for the job."),
                 new ConditionSubScene(4, 6) {
                     @Override
-                    public String getDescription() {
+                    public String getDescription(Model model) {
                         return recruited + "/" + RECRUITS_NEEDED + " hired.";
                     }
 

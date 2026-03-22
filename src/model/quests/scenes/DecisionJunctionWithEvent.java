@@ -14,7 +14,7 @@ public abstract class DecisionJunctionWithEvent extends QuestDecisionPoint {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Leader decision point";
     }
 

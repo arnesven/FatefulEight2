@@ -1,17 +1,14 @@
 package model.quests;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.items.spells.Spell;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
 
 public class QuestDecisionPoint extends QuestJunction {
@@ -36,7 +33,7 @@ public class QuestDecisionPoint extends QuestJunction {
 
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Leader decision point: Solo Leadership 6";
     }
 

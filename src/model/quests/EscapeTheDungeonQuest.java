@@ -3,14 +3,11 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
-import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
-import model.characters.special.AllyFromEnemyCharacter;
 import model.characters.special.PrisonerAlly;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.CombatAdvantage;
-import model.combat.Combatant;
 import model.enemies.*;
 import model.items.Item;
 import model.journal.InitialStoryPart;
@@ -513,7 +510,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Your belongings";
         }
 

@@ -7,15 +7,13 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
 import model.quests.scenes.*;
 import model.races.Race;
-import model.states.GameState;
 import model.states.QuestState;
-import model.states.events.MoveAwayFromCurrentPositionEvent;
 import sound.BackgroundMusic;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -245,8 +243,9 @@ public class SurveillanceQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
-            return "Skill Check Sneak 10 (same character as Acrobatics check)";
+        public String getDescription(Model model) {
+            return "Skill Check Sneak " +  SkillChecks.adjustDifficulty(model, 10) +
+                    " (same character as Acrobatics check)";
         }
 
         @Override

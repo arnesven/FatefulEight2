@@ -21,7 +21,7 @@ public abstract class CountCheckSubScene extends ConditionSubScene {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return descrString;
     }
 

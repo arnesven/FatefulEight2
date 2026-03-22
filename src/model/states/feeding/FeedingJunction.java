@@ -30,7 +30,7 @@ abstract class FeedingJunction extends QuestJunction {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Unused";
     }
 

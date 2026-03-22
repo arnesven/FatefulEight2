@@ -19,14 +19,12 @@ import model.states.ArcheryState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import util.MyLists;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.CollapsingTransition;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
-import view.widget.TopText;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -253,7 +251,7 @@ public class TownFairQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Compete in archery contest.";
         }
 

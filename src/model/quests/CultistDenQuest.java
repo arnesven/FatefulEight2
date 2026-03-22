@@ -238,7 +238,7 @@ public class CultistDenQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Room with loot";
         }
 
@@ -281,7 +281,7 @@ public class CultistDenQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Less than " + TIME_MINUTES + " minutes passed?";
         }
 

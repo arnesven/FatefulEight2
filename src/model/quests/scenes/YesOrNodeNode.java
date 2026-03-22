@@ -18,7 +18,7 @@ public abstract class YesOrNodeNode extends ConditionSubScene {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Make a decision.";
     }
 

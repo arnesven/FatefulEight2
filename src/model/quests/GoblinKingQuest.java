@@ -131,7 +131,7 @@ public class GoblinKingQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Aboz Defeated?";
         }
 

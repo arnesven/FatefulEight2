@@ -179,7 +179,7 @@ public class OrcWarCampQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return descr;
         }
         @Override

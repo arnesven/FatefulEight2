@@ -14,7 +14,6 @@ import model.quests.scenes.CombatSubScene;
 import model.races.AllRaces;
 import model.states.GameState;
 import model.states.QuestState;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -236,7 +235,7 @@ public class GoblinTunnelsQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Wait for Riddle";
         }
 
@@ -306,7 +305,7 @@ public class GoblinTunnelsQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Logic 6, Logic 7, Logic 8";
         }
 
@@ -358,7 +357,7 @@ public class GoblinTunnelsQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "";
         }
     }

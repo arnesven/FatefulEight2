@@ -1,7 +1,6 @@
 package model.quests;
 
 import model.Model;
-import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.states.QuestState;
@@ -41,7 +40,7 @@ public class QuestSuccessfulNode extends QuestNode {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Quest Successful";
     }
 

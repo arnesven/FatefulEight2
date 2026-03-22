@@ -29,7 +29,7 @@ public class DummyQuestNode extends QuestNode {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return null;
     }
 

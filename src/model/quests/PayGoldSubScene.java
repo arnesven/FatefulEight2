@@ -26,7 +26,7 @@ public class PayGoldSubScene extends QuestSubScene {
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription(Model model) {
         return "Pay " + gold + " gold per party member";
     }
 

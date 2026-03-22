@@ -2,6 +2,7 @@ package model.quests.scenes;
 
 import model.Model;
 import model.classes.Skill;
+import model.classes.SkillChecks;
 import model.quests.QuestEdge;
 import model.quests.QuestSubScene;
 import model.states.QuestState;
@@ -27,8 +28,9 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
     }
 
     @Override
-    public String getDescription() {
-        return getDescriptionType() + " Skill Check " + skill.getName() + " " + difficulty;
+    public String getDescription(Model model) {
+        return getDescriptionType() + " Skill Check " + skill.getName() + " " +
+                SkillChecks.adjustDifficulty(model, difficulty);
     }
 
     protected abstract String getDescriptionType();

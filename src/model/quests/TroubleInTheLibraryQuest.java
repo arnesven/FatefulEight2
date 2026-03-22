@@ -3,10 +3,8 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.classes.Skill;
-import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
 import model.enemies.LibraryAutomatonEnemy;
-import model.journal.StoryPart;
 import model.quests.scenes.ArrowlessEdge;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.QuestState;
@@ -67,7 +65,7 @@ public class TroubleInTheLibraryQuest extends MainQuest {
                 new QuestScene("Check Dead Automatons", List.of(
                         new ConditionSubScene(7, 8) {
                             @Override
-                            public String getDescription() {
+                            public String getDescription(Model model) {
                                 return "Exit library.";
                             }
 

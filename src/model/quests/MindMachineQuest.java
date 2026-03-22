@@ -5,14 +5,11 @@ import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
-import model.classes.Classes;
 import model.classes.Skill;
-import model.classes.SkillChecks;
 import model.classes.npcs.RegentClass;
 import model.combat.conditions.PossessedCondition;
 import model.enemies.*;
 import model.items.special.CommunicatorDevice;
-import model.items.spells.Spell;
 import model.items.spells.TelekinesisSpell;
 import model.journal.PartFourStoryPart;
 import model.journal.StoryPart;
@@ -278,7 +275,7 @@ public class MindMachineQuest extends MainQuest {
         }
 
         @Override
-        public String getDescription() {
+        public String getDescription(Model model) {
             return "Evidence Chest";
         }
 

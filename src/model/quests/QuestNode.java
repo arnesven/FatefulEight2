@@ -2,21 +2,17 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.items.spells.Spell;
 import model.states.GameState;
 import model.states.QuestState;
 import model.states.SpellCastException;
-import sound.SoundEffects;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class QuestNode {
@@ -25,7 +21,7 @@ public abstract class QuestNode {
     public abstract int getColumn();
     public abstract int getRow();
     public abstract void drawYourself(Model model, int xPos, int yPos);
-    public abstract String getDescription();
+    public abstract String getDescription(Model model);
     public abstract QuestEdge run(Model model, QuestState state); // Used by Quests States
     public QuestEdge doAction(Model model, GameState state) { // Used by other states
         return new QuestEdge(this);

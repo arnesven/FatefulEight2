@@ -2,8 +2,6 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.combat.Combatant;
-import model.enemies.Enemy;
 import model.map.WorldHex;
 import model.quests.*;
 import model.states.QuestState;

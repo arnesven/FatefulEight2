@@ -10,8 +10,6 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import model.states.QuestState;
 import model.states.SpellCastException;
-import sound.BackgroundMusic;
-import sound.ClientSoundManager;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -61,7 +59,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     }
 
     @Override
-    public final String getDescription() {
+    public final String getDescription(Model model) {
         return "Combat " + getCombatDetails();
     }
 
