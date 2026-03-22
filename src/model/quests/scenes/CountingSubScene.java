@@ -25,7 +25,7 @@ public class CountingSubScene extends QuestSubScene {
 
     @Override
     public String getDescription(Model model) {
-        return "*" + inner.getDescription();
+        return "*" + inner.getDescription(model);
     }
 
     @Override

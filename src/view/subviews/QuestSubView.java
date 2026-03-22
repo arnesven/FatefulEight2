@@ -141,7 +141,7 @@ public class QuestSubView extends AvatarSubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return matrix.getSelectedElement().getDescription();
+        return matrix.getSelectedElement().getDescription(model);
     }
 
     @Override
