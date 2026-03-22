@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -36,13 +37,15 @@ public class PartySalaryEvent extends DailyEventState {
         print("Let " + other.getFirstName() + " have " + amount + " gold? (Y/N) ");
         if (yesNoInput()) {
             leaderSay("Okay. You can have it. But don't talk about it too much. We don't have enough for everybody to get an advance right now.");
-            partyMemberSay(other, "Sure thing. Thanks " + model.getParty().getLeader().getFirstName() + ".");
+            partyMemberSay(other, "Sure thing. Thanks " + model.getParty().getLeader().getFirstName() + ".",
+                    FacialExpression.relief);
             other.addToAttitude(model.getParty().getLeader(), +amount/2);
             model.getParty().loseGold(amount);
             GameStatistics.incrementWagesPaid(amount);
         } else {
             leaderSay("I'm sorry " + other.getFirstName() + " I can't agree to that.");
-            partyMemberSay(other, "Why not? I know we have the money. Don't think I haven't been paying attention.");
+            partyMemberSay(other, "Why not? I know we have the money. Don't think I haven't been paying attention.",
+                    FacialExpression.disappointed);
             leaderSay("The party needs the money. You know, for equipment, lodging and food.");
             partyMemberSay(other, "Fine...#");
             other.addToAttitude(model.getParty().getLeader(), -amount/3);

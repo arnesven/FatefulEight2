@@ -7,6 +7,7 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.combat.conditions.CowardlyCondition;
 import model.enemies.BrotherhoodCronyEnemy;
 import model.enemies.Enemy;
 import model.states.DailyEventState;
@@ -100,7 +101,9 @@ public class BrotherhoodCroniesEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>();
         int num = getPersuadeDifficulty(days) - 3;
         for (int i = 0; i < num; ++i) {
-            enemies.add(new BrotherhoodCronyEnemy('A'));
+            Enemy e = new BrotherhoodCronyEnemy('A');
+            e.addCondition(new CowardlyCondition(enemies));
+            enemies.add(e);
         }
         runCombat(enemies);
     }

@@ -95,11 +95,13 @@ public class FatefulEight extends JFrame {
             }
         }
         frame.dispose();
+        System.out.println("Terminating Logic Thread");
         System.exit(0);
     }
 
     private void tearDown() {
         this.timer.stop();
+        System.out.println("Terminating Timer");
         removeKeyListener(keyListener);
         drawingArea.clear();
         repaint();

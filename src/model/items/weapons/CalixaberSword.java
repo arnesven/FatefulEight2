@@ -4,12 +4,13 @@ import model.items.Prevalence;
 import model.items.imbuements.StunImbuement;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.FixedAvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 public class CalixaberSword extends TwoHandedSword {
     protected static final AvatarItemSprite TWO_HANDED_SWORD_SPRITES =
-            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE);
+            new FixedAvatarItemSprite(0x0C, MyColors.GOLD, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE);
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(14, 14, MyColors.DARK_RED, MyColors.WHITE, MyColors.GOLD);
 

@@ -3,6 +3,7 @@ package model.journal;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.mainstory.VisitLordEvent;
 import model.map.*;
@@ -149,9 +150,10 @@ public class RescueMissionStoryPart extends StoryPart {
                 if (witchPartCompleted()) {
                     leaderSay("There's an important issue which " + iOrWe() + " must urgently discuss with you.");
                     portraitSay("I understand, but I'm afraid I'm completely occupied in another matter.");
-                    leaderSay("But this is important!");
-                    portraitSay("One thing at a time. And perhaps you could help me with my problem. Then we can deal with your important issue.");
-                    leaderSay("Fine... what seems to be the problem?");
+                    leaderSay("But this is important!", FacialExpression.angry);
+                    portraitSay("One thing at a time. And perhaps you could help me with my problem. " +
+                            "Then we can deal with your important issue.", FacialExpression.disappointed);
+                    leaderSay("Fine... what seems to be the problem?", FacialExpression.disappointed);
                 } else {
                     leaderSay("Thank you. Now we'll just be on our way...");
                     portraitSay("Just a moment please.");
@@ -162,7 +164,7 @@ public class RescueMissionStoryPart extends StoryPart {
                         "I have a task that needs doing.");
                 leaderSay("I'm listening.");
                 portraitSay("Well. It's my most trusted advisor and top agent, Caid. He's been kidnapped. " +
-                        "I need somebody to rescue him.");
+                        "I need somebody to rescue him.", FacialExpression.sad);
                 leaderSay("Kidnapped? By whom?");
                 portraitSay("I'm not sure. They haven't made themselves known.");
                 leaderSay("Then how do you know he's been kidnapped?");
@@ -171,7 +173,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 leaderSay("Maybe he's just taken a vacation?");
                 if (model.getParty().size() > 1) {
                     GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
-                    partyMemberSay(gc, "Maybe he just got knocked off?");
+                    partyMemberSay(gc, "Maybe he just got knocked off?", FacialExpression.wicked);
                 }
                 portraitSay("Not likely, he's also my master-at-arms and my personal fencing instructor. " +
                         "He can handle himself. Will you look for him? I'll pay you. I'll pay you handsomely.");

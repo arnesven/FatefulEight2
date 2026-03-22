@@ -4,6 +4,8 @@ import model.GameStatistics;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
@@ -93,9 +95,18 @@ public class FishingState extends GameState {
             GameStatistics.incrementFishCaught();
             GameStatistics.recordMaximumFish(fish.getWeight());
             partyMemberSay(fisher, "Oh, it's a " + fish.getName().toLowerCase() + ".");
-            if (model.getParty().size() > 1 && fish.getWeight() > 1500) {
-                partyMemberSay(model.getParty().getRandomPartyMember(fisher),
-                        MyRandom.sample(List.of("Nice catch!", "That's a big one.", "Wow! Big!")));
+            if (model.getParty().size() > 1) {
+                if (fish.getWeight() > 1500) {
+                    partyMemberSay(model.getParty().getRandomPartyMember(fisher),
+                            MyRandom.sample(List.of("Nice catch!", "That's a big one.", "Wow! Big!")));
+                } else {
+                    if (MyRandom.flipCoin()) {
+                        randomSayIfPersonality(PersonalityTrait.critical, List.of(),
+                                MyRandom.sample(List.of("Not very impressive.",
+                                        "Quite small.", "Not worth the work, just toss it back.", "Tiny.",
+                                        "You're technique is wrong.")), FacialExpression.disappointed);
+                    }
+                }
             }
             print("Do you want to convert the " + fish.getName().toLowerCase() + " into " +
                     fish.getRations() + " rations? (Y/N) ");
