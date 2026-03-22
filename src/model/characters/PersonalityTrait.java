@@ -60,34 +60,45 @@ public enum PersonalityTrait {
             case naive:
                 return new DeadlyLoverEvent(model, this, mainCharacter);
             case diplomatic:
+                break;
                 // return new FeudingFamiliesEvent(model, this, mainCharacter);
             case cold:
+                break;
                 // return new GraveyardEvent(model, this, mainCharacter); // Robbing the dead...
             case calm:
+                break;
                 // return new TidalWaterEvent(model, this, mainCharacter); // Water rising in a cave, keep calm?
             case benevolent:
                 return new SwordInTheStoneEvent(model, this, mainCharacter);
             case playful:
+                break;
                 // return new BallGameEvent(model, this, mainCharacter);
             case gluttonous:
+                break;
                 // return new OuthouseEvent(model, this, mainCharacter);
             case jovial:
+                break;
                 // return new OffendedWomanEvent(model, this, mainCharacter);
             case anxious:
                 return new BurySomeGoldEvent(model, this, mainCharacter);
             case irritable:
                 return new AuctionEvent(model, this, mainCharacter);
             case snobby:
+                break;
                 // return new DontWantToGetDirtyEvent(model, this, mainCharacter);
             case rude:
+                break;
                 // return new SlapInTheFaceEvent(model, this, mainCharacter);
             case greedy:
+                break;
                 // return new TreasureTroveEvent(model, this, mainCharacter); // push-your-luck infiltration style
             case encouraging:
                 return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
             case intellectual:
+                break;
                 // return new BookWithMissingPagesEvent(model, this, mainCharacter);
             case cowardly:
+                break;
                 // return new NightmareEvent(model, this, mainCharacter);
             case narcissistic:
                 return new DoppelgangerEvent(model, mainCharacter);

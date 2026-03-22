@@ -53,13 +53,13 @@ public class BrotherhoodCroniesEvent extends DailyEventState {
                 portraitSay("Fine! But you'd better pay up soon. We've got agents everywhere, don't think you can get away.");
                 randomSayIfPersonality(PersonalityTrait.anxious, List.of(), "That sounds serious.");
             }
-        } else if (options.get(selected).contains("bribe")) {
+        } else if (options.get(selected).contains("Bribe")) {
             leaderSay("Hey fellas, can't we come to some agreement. Why don't we give you a little gold, " +
                     "and you tell the Brotherhood you couldn't find us.", FacialExpression.relief);
             int bribeCost = getBribeCost(days);
             portraitSay("Hmm... give us " + bribeCost + " gold and we'll leave you alone...", FacialExpression.disappointed);
             if (bribeCost <= model.getParty().getGold()) {
-                print("Pay " + bribeCost + " gold? (Y/N)");
+                print("Pay " + bribeCost + " gold? (Y/N) ");
                 if (yesNoInput()) {
                     model.getParty().loseGold(bribeCost);
                     println("The party lost " + bribeCost + " gold.");
@@ -82,14 +82,14 @@ public class BrotherhoodCroniesEvent extends DailyEventState {
             portraitSay("Huh? What?", FacialExpression.surprised);
             leaderSay("Quick run!");
             int minSpeed = MyLists.minimum(model.getParty().getPartyMembers(), GameCharacter::getSpeed);
-            if (MyRandom.rollD10() <= minSpeed) {
-                println("You try to get away but the thugs quickly surround you.");
-                portraitSay("Not so fast deadbeat. We better teach you a lesson.", FacialExpression.wicked);
-                doCombat(model, days);
-            } else {
+            if (MyRandom.rollD10() <= minSpeed + 1) {
                 println("You manage to run away from the thugs.");
                 portraitSay("Agh! Gosh darn it!");
                 setFledCombat(true);
+            } else {
+                println("You try to get away but the thugs quickly surround you.");
+                portraitSay("Not so fast deadbeat. We'd better teach you a lesson.", FacialExpression.wicked);
+                doCombat(model, days);
             }
         }
 
