@@ -2,6 +2,7 @@ package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.actions.Loan;
+import model.characters.appearance.FacialExpression;
 import model.journal.JournalEntry;
 import model.map.UrbanLocation;
 import model.states.DailyActionState;
@@ -43,7 +44,7 @@ public class TakeLoanAction extends GameState {
             if (model.getParty().getLoan() == null) {
                 offerLoan(model);
             } else {
-                repayLoan(model);
+                repayLoan(model, true);
             }
         } else {
             agentSay(model, "What can I do for you brother?");
@@ -53,7 +54,7 @@ public class TakeLoanAction extends GameState {
             } else if (options.get(choice).equals("Take loan")) {
                 offerLoan(model);
             } else if (options.get(choice).equals("Repay loan")) {
-                repayLoan(model);
+                repayLoan(model, false);
             } else {
                 offerWrit(model);
             }
@@ -61,14 +62,35 @@ public class TakeLoanAction extends GameState {
         return new DailyActionState(model);
     }
 
-    private void repayLoan(Model model) {
-        agentSay(model,  "You still owe us money brother.");
+    private void repayLoan(Model model, boolean withIntro) {
+        if (withIntro) {
+            if (model.getParty().getLoan().getDay() == model.getDay()) {
+                agentSay(model, "You again?");
+            } else {
+                agentSay(model, "You still owe us money brother.");
+            }
+        }
+
         int cost = model.getParty().getLoan().repayCost();
         if (cost > model.getParty().getGold()) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Don't worry, I'll get the money.");
+            println("You don't have enough money to repay your loan (" + model.getParty().getLoan().repayCost() + ")");
         } else {
             print("Do you wish to repay your loan (" + cost + " gold)? (Y/N) ");
             if (yesNoInput()) {
+
+                if (model.getParty().getLoan().getDay() == model.getDay()) {
+                    leaderSay("I'd like to repay my loan.");
+                    agentSay(model, "Sorry, not today.");
+                    leaderSay("What? Why not?", FacialExpression.disappointed);
+                    agentSay(model, "You can't repay a loan on the same day as you take it. It's the Brotherhoods policy.");
+                    leaderSay("Okay. But I can pay you back tomorrow?", FacialExpression.questioning);
+                    agentSay(model, "Technically yes, but I'm not here tomorrow. I'm available every third day.");
+                    leaderSay("Hey... feels kind of fishy.");
+                    agentSay(model, "Hehe, really? Are you trying to say the Brotherhood isn't a respectable organization?");
+                    leaderSay("Yeah yeah... whatever.", FacialExpression.disappointed);
+                    return;
+                }
+
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "Fine, take it. Now go tell your cronies to back off.");
                 model.getParty().loseGold(cost);
