@@ -184,11 +184,15 @@ public abstract class GameState implements GameStateConstants {
         getModel().getParty().setFacialExpression(gc, expression, FacialExpression.END_OF_CALLOUT);
     }
 
-    public void notLeaderSay(String line) {
+    public void notLeaderSay(String line, FacialExpression fe) {
         if (model.getParty().size() > 1) {
             GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
-            partyMemberSay(gc, line);
+            partyMemberSay(gc, line, fe);
         }
+    }
+
+    public void notLeaderSay(String line) {
+        notLeaderSay(line, FacialExpression.none);
     }
 
     public static String heOrSheCap(boolean gender) {

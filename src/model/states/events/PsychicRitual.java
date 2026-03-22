@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.races.Race;
 import util.MyStrings;
@@ -45,7 +46,8 @@ public class PsychicRitual extends RitualEvent {
         showExplicitPortrait(model, ritualists.get(0).getAppearance(), "Magician");
         portraitSay("This girl has been sleeping for many months now. Her parents have tried everything from doctors to priests. " +
                 "They're desperate. We've offered to perform a ritual in which we will enter her dreams and try to wake her " +
-                "up from within. We're a little short on mages at the moment. Do you think you could help?");
+                "up from within. We're a little short on mages at the moment. Do you think you could help?",
+                FacialExpression.sad);
         return true;
     }
 

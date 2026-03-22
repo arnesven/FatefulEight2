@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
@@ -157,11 +158,11 @@ public class WitchStoryPart extends StoryPart {
                         "the window. Inside a witch is stirring a cauldron and " +
                         "mumbling strange rhymes.");
                 portraitSay("Arr-arrahum, Arr-arrahum... pluck the strings, and bang the drum...");
-                leaderSay("Excuse " + meOrUs() + "...");
+                leaderSay("Excuse " + meOrUs() + "...", FacialExpression.questioning);
                 portraitSay("My hat is old, my teeth are gold... I have a bird I like to hold.");
-                leaderSay("EXCUSE " + meOrUs().toUpperCase() + "!");
-                portraitSay("Yes, my goodness. Some people are just noisy aren't they!");
-                notLeaderSay("Is she talking to us?");
+                leaderSay("EXCUSE " + meOrUs().toUpperCase() + "!", FacialExpression.angry);
+                portraitSay("Yes, my goodness. Some people are just noisy aren't they!", FacialExpression.disappointed);
+                notLeaderSay("Is she talking to us?", FacialExpression.questioning);
                 leaderSay("We've been told we could find a wise person here.");
                 portraitSay("Who told you that?");
                 leaderSay("Everix the Druid sent us.");
@@ -172,7 +173,7 @@ public class WitchStoryPart extends StoryPart {
                 portraitSay("How intriguing.");
                 leaderSay("It must be magical. And potentially dangerous or valuable, could you tell " + meOrUs() + " more?");
                 portraitSay("Of course I can my dear. It is both dangerous AND valuable...");
-                leaderSay("Splendid. Please continue.");
+                leaderSay("Splendid. Please continue.", FacialExpression.relief);
                 portraitSay("I will. But before I do. You must do something for me.");
                 leaderSay("Yes, Everix mentioned you may have a task for " + meOrUs() + ".");
                 portraitSay("Of course. Witches can't survive on charity work. We have to make a living too you know.");
@@ -187,18 +188,18 @@ public class WitchStoryPart extends StoryPart {
                 leaderSay("Fair enough. When do " + iOrWe() + " start?");
                 portraitSay("As soon as you are ready. The client lives in a town nearby. And don't worry about collecting " +
                         "any payment. The potion has already been paid for in advance.");
-                leaderSay("May " + iOrWe() + " ask what kind of potion it is?");
+                leaderSay("May " + iOrWe() + " ask what kind of potion it is?", FacialExpression.questioning);
                 portraitSay("You may ask, but I shall not answer. My clients require that business is carried out discretely. " +
                         "Although in this case, it seems somebody has been blabbing.");
                 portraitSay("Do this and I'll tell you the story about your crimson orb. If your wondering if it will be worth " +
                         "it, you can stop. It will be. Now off you go.");
                 increaseStep(model);
             } else if (internalStep == DO_QUEST) {
-                portraitSay("You better deliver that potion soon. My Client is waiting!");
-                leaderSay(iOrWeCap() + " are getting around to it.");
+                portraitSay("You better deliver that potion soon. My Client is waiting!", FacialExpression.disappointed);
+                leaderSay(iOrWeCap() + " are getting around to it.", FacialExpression.relief);
 
             } else if (internalStep == QUEST_DONE) {
-                leaderSay("We've done your little task, at some great personal expense. Now please tell us about this pearl");
+                leaderSay("We've done your little task, at some great personal expense. Now please tell us about this pearl.");
                 portraitSay("Then sit down, and I'll tell you the story.");
                 portraitSay("A long time ago there was an evil king who ruled the kingdom of Recca. He was hated by all his subjects, " +
                         "except for his vassals which were loyal to him");
@@ -208,22 +209,22 @@ public class WitchStoryPart extends StoryPart {
                         "who started to call themselves 'the Quad'. There were four of them, you see. And they all became very powerful.");
                 portraitSay("They came up with a plan to overthrow the evil king. They had discovered how to control a mind from afar. All " +
                         "that was needed was for the victim to swallow a pearl.");
-                leaderSay("A crimson one?");
+                leaderSay("A crimson one?", FacialExpression.questioning);
                 portraitSay("A crimson one. Now the king himself had many tasters, and it would be impossible to get him to ingest anything " +
                         "without noticing an object, such as a pearl, in his food. But his vassals were less careful.");
                 portraitSay("The sorcerers manage to take control of several of the vassals, and then, using their new puppets and staged a coup.");
                 portraitSay("Afterward, the Quad stepped forward as the liberators of the land. But when it was time for them to give up their power...");
-                leaderSay("They didn't. Big shocker there.");
+                leaderSay("They didn't. Big shocker there.", FacialExpression.relief);
                 portraitSay("Well, they didn't without a fight. There was much internal turmoil in the land. But finally the Quad were chased off and they " +
                         "retreated to a faraway land, never to be seen again.");
-                leaderSay("So this pearl... could it be a remnant of that time?");
+                leaderSay("So this pearl... could it be a remnant of that time?", FacialExpression.questioning);
                 portraitSay("Perhaps. But I find it unlikely. The history books say all the crimson pearls were accounted for and properly disposed of.");
                 leaderSay("Could it be that the Quad has returned then?");
                 portraitSay("Also unlikely, they existed many hundred years ago. And I surely hope not, for they were some of the most powerful magic users " +
                         "to ever exist in this world. But anything is possible I guess.");
                 portraitSay("It's more likely somebody else learned how to make such pearls. But why it found itself into " +
                         "the stomach of a frogman, I can't say. Either way, this is a threat to the kingdom.");
-                leaderSay("What do we do now?");
+                leaderSay("What do we do now?", FacialExpression.questioning);
                 UrbanLocation castle = model.getWorld().getCastleByName(castleName);
                 portraitSay("You should talk to the " + castle.getLordTitle() + " of " + castle.getPlaceName() +
                                  ". The proper authorities must be warned of this. " +

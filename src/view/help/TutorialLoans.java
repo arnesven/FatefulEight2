@@ -12,7 +12,7 @@ public class TutorialLoans extends HelpDialog {
             "or a big loan (100 gold). You can only have one loan at a time.\n\n" +
             "Loans are repaid to any Brotherhood Agent, at an interest of 50%. The loan is expected to " +
             "be repaid within " + Loan.REPAY_WITHIN_DAYS + " days. After which the Brotherhood will " +
-            "send cronies after you to remind you of your debt. You can not take loans toward the end of your career.";
+            "send cronies after you to remind you of your debt.";
 
     public TutorialLoans(GameView view) {
         super(view, "Loans", TEXT);

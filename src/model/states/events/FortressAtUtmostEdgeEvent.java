@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.map.locations.FortressAtUtmostEdgeLocation;
 import model.ruins.DungeonMaker;
 import model.ruins.FinalDungeonLevel;

@@ -3,6 +3,7 @@ package view;
 import model.GameStatistics;
 import model.Model;
 import model.Summon;
+import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.headquarters.Headquarters;
 import model.items.Item;
@@ -225,7 +226,33 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Gold stolen", GameStatistics.getGoldStolen()));
         result.add(makeIntLine(leftColumn, row++, "Items stolen", GameStatistics.getItemsStolen()));
         result.add(makeIntLine(leftColumn, row++, "Maximum notoriety", GameStatistics.getMaximumNotoriety()));
-        result.add(makeIntLine(leftColumn, row++, "Current Brotherhood loan", getLoanAmount(model)));
+        int loanAmount = getLoanAmount(model);
+        if (loanAmount == 0) {
+            result.add(makeIntLine(leftColumn, row++, "Current Brotherhood loan", getLoanAmount(model)));
+        } else {
+            result.add(new PermanentlyEnabledListContent(leftColumn, row++,
+                    format(46, 10, "Current Brotherhood loan", "" + loanAmount)) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    int days = model.getDay() - model.getParty().getLoan().getDay();
+                    int daysLeft = Loan.REPAY_WITHIN_DAYS - days;
+                    String text = "You took a loan of " + model.getParty().getLoan().getAmount() + " gold "
+                            + " from the Brotherhood on day " + model.getParty().getLoan().getDay() + ".";
+                    if (daysLeft < 0) {
+                        text += " The repayment of " + model.getParty().getLoan().repayCost() + " gold " +
+                                " is overdue with " + (-daysLeft) + " days.";
+                    } else {
+                        text += " You are expected to repay an amount of " + model.getParty().getLoan().repayCost() + " gold ";
+                        if (daysLeft > 0) {
+                            text += " within " + daysLeft + " days.";
+                        } else {
+                            text += " today.";
+                        }
+                    }
+                    setInnerMenu(new SimpleMessageView(model.getView(), text), model);
+                }
+            });
+        }
         result.add(makeIntLine(leftColumn, row++, "Murders", GameStatistics.getMurders()));
 
         row++;

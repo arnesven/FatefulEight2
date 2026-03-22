@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.DogAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
@@ -30,13 +31,15 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
     @Override
     protected final void doEvent(Model model) {
         GameCharacter rando = model.getParty().getRandomPartyMember();
-        showEventCard("It is night and " + rando.getName() + " is keeping watch.");
+        showEventCard("It is night and " + rando.getName() + " is keeping watch. It's dark " +
+                heOrShe(rando.getGender()) + " is tired and is almost falling asleep.");
         boolean spotted = false;
         if (model.getParty().hasDog()) {
             DogAppearance app = new DogAppearance();
             showExplicitPortrait(model, app, "Dog");
             portraitSay("Ruff ruff ruff!");
-            partyMemberSay(rando, "What is it " + boyOrGirl(app.getGender()) + "? You sense something?");
+            partyMemberSay(rando, "What is it " + boyOrGirl(app.getGender()) + "? You sense something?",
+                    FacialExpression.surprised);
             println(rando.getName() + " looks around worriedly. Then suddenly " +
                     heOrShe(rando.getGender()) + " " + perceptionSuccessString + "!");
             spotted = true;
@@ -49,7 +52,7 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
         }
         List<Enemy> enemies = getEnemies(model);
         if (spotted) {
-            leaderSay("Everybody wake up! We are under attack!");
+            leaderSay("Everybody wake up! We are under attack!", FacialExpression.surprised);
             model.getLog().waitForAnimationToFinish();
             runCombat(enemies, combatTheme, true);
         } else {
