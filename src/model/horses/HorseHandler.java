@@ -147,6 +147,7 @@ public class HorseHandler extends ArrayList<Horse> {
             if (dieRoll == 6) {
                 model.getLog().addAnimated("A horse has found its way back to you.\n");
                 addHorse(horse);
+                lostHorses.remove(horse);
             } else if (dieRoll == 1) {
                 lostHorses.remove(horse); // Horse permanently lost.
             }
