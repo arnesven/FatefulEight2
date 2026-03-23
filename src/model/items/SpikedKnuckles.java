@@ -1,11 +1,14 @@
 package model.items;
 
 import view.MyColors;
+import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class SpikedKnuckles extends BrawlingWeapon {
     private static final Sprite SPRITE = new ItemSprite(1, 8, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.BLACK);
+    private static final AvatarItemSprite AVATAR_SPRITE =
+            new AvatarItemSprite(0x50, MyColors.GRAY, MyColors.GRAY, MyColors.TRANSPARENT, MyColors.BEIGE);
 
     public SpikedKnuckles() {
         super("Spiked Knuckles", 10, new int[]{5, 9}, false);
@@ -19,6 +22,11 @@ public class SpikedKnuckles extends BrawlingWeapon {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITE;
     }
 
     @Override

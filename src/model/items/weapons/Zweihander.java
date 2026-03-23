@@ -21,7 +21,7 @@ public class Zweihander extends BladedWeapon {
 
     @Override
     public int getWeight() {
-        return 5000; // TODO:
+        return 5000;
     }
 
     @Override

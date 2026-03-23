@@ -23,7 +23,8 @@ public class PlateGauntlets extends GlovesItem {
 
     @Override
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        return List.of(new MyPair<>(Skill.Security, -1));
+        return List.of(new MyPair<>(Skill.Security, -1),
+                       new MyPair<>(Skill.UnarmedCombat, 1));
     }
 
     @Override
@@ -35,16 +36,6 @@ public class PlateGauntlets extends GlovesItem {
     public int getAP() {
         return 2;
     }
-
-    @Override
-    public int[] getDamageTable() {
-        return new int[]{6, 7, 9};
-    }
-
-    @Override
-    public String getExtraText() {
-        return "Unarmed Attack [6/7/9]";
-    } // TODO: Remove this? It doesn't really make sense with unarmed combat weapons.
 
     @Override
     public boolean isHeavy() {

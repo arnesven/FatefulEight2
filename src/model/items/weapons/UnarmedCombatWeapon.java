@@ -1,6 +1,5 @@
 package model.items.weapons;
 
-import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
 import view.sprites.AvatarItemSprite;
@@ -8,15 +7,6 @@ import view.sprites.AvatarItemSprite;
 public class UnarmedCombatWeapon extends NaturalWeapon {
     public UnarmedCombatWeapon() {
         super("Unarmed", 0, Skill.UnarmedCombat, new int[]{7,10});
-    }
-
-    @Override
-    public int getDamage(int modifiedRoll, GameCharacter damager) {
-        if (damager.getEquipment().getAccessory() != null &&
-                damager.getEquipment().getAccessory().getDamageTable() != null) {
-            return useOtherDamageTable(damager.getEquipment().getAccessory().getDamageTable(), modifiedRoll);
-        }
-        return super.getDamage(modifiedRoll, damager);
     }
 
     protected static int useOtherDamageTable(int[] damageTable, int modifiedRoll) {

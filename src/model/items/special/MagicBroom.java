@@ -12,6 +12,8 @@ public class MagicBroom extends BluntWeapon {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(3, 17,
             MyColors.BROWN, MyColors.BEIGE, MyColors.BLACK);
+    private static final AvatarItemSprite AVATAR_SPRITE = new AvatarItemSprite(
+            0x16, MyColors.BROWN, MyColors.BEIGE, MyColors.BLACK, MyColors.PINK);
 
     public MagicBroom() {
         super("Magic Broom", 20, new int[]{7, 10}, true, 0);
@@ -42,9 +44,8 @@ public class MagicBroom extends BluntWeapon {
         return "Enables flying for single person.";
     }
 
-    // TODO
-//    @Override
-//    public AvatarItemSprite getOnAvatarSprite() {
-//        return AVATAR_SPRITE;
-//    }
+    @Override
+    public AvatarItemSprite getOnAvatarSprite() {
+        return AVATAR_SPRITE;
+    }
 }

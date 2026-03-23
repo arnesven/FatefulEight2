@@ -67,8 +67,6 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
         return "";
     }
 
-    public int[] getDamageTable() { return null; }
-
     public int getHealthBonus() { return 0; }
 
     public int getSPBonus() { return 0; }

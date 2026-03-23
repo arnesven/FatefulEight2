@@ -4,6 +4,8 @@ import model.Model;
 import model.RecruitInfo;
 import model.RecruitableCharacter;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
+import model.characters.appearance.WeepingAmount;
 import model.characters.special.GoblinAppearance;
 import model.characters.special.GoblinCharacter;
 import model.classes.CharacterClass;
@@ -42,8 +44,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
             new NoEventState(model).doEvent(model);
             return;
         }
-        showEventCard("Goblin Fugetive",
-                "You come around a bend in the road and suddenly you see half a dozen goblins rushing toward you.");
+        showEventCard("You come around a bend in the road and suddenly you see half a dozen goblins rushing toward you.");
         print("Do you turn and flee? (Y/N) ");
         if (yesNoInput()) {
             didFlee = true;

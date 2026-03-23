@@ -3,10 +3,10 @@ package model.items;
 import model.classes.Skill;
 import model.items.weapons.PairableWeapon;
 import model.items.weapons.Weapon;
+import view.MyColors;
 import view.sprites.AvatarItemSprite;
 
 public abstract class BrawlingWeapon extends Weapon implements PairableWeapon {
-
     private final boolean isTwoHanded;
 
     public BrawlingWeapon(String name, int cost, int[] damageTable, boolean isTwoHanded) {
@@ -20,11 +20,6 @@ public abstract class BrawlingWeapon extends Weapon implements PairableWeapon {
     }
 
     @Override
-    public AvatarItemSprite getOnAvatarSprite() {
-        return null;
-    }
-
-    @Override
     public int getWeight() {
         return 500;
     }
@@ -34,9 +29,4 @@ public abstract class BrawlingWeapon extends Weapon implements PairableWeapon {
         return "wood";
     }
 
-    // TODO
-//    @Override
-//    public AvatarItemSprite getOnAvatarSprite() {
-//        return AVATAR_SPRITE;
-//    }
 }

@@ -72,8 +72,6 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
         return inner.getExtraText();
     }
 
-    public int[] getDamageTable() { return inner.getDamageTable(); }
-
     public int getHealthBonus() {
         if (inner.getHealthBonus() > 0) {
             return inner.getHealthBonus() + 2*tier;
