@@ -23,7 +23,7 @@ public class StoryIntroView extends GameView implements Animation {
             "Far out in the wilderness, a woman travels alone. " +
             "She has been trekking for weeks, searching for something.\n\n" +
             "The rain comes down in torrents, " +
-            "and the muddy terrain is difficult to traverse. Still, the woman trudges on, determined to " +
+            "and the muddy terrain is difficult to traverse. Still, the woman trudges on, determined to push forward, " +
             "driven by her purpose.\n\n" +
             "As she reaches the top of a hill, she spots a tremendous structure in the distance. " +
             "With a sigh of relief, she makes her way down the slope and continues towards the menacing tower.",
