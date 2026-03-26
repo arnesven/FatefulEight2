@@ -14,11 +14,12 @@ import java.awt.event.KeyEvent;
 public class IntroGameView extends GameView implements Animation {
 
     private static final long ANIMATION_START_MS = 12000;
-    private static final long THUNDER_START_MS = 3700;
+    private static final long THUNDER_START_MS = 3600;
     private static final long FANFARE_START_MS = 3000;
     private static final String START_SOUND = "Rise03";
     private static final String JINGLE_SOUND = "Rise06";
     private static final Sprite BLACK_SPRITE = new CharClassIconSprite(0x1F, MyColors.RED);
+    private static final long TIME_OUT_TIME_MS = 45_000;
     private static Sprite splashSprite = makeSprite();
     private static Sprite[] titleSprites = makeTitle();
     private int aniIndex = 0;
@@ -73,6 +74,9 @@ public class IntroGameView extends GameView implements Animation {
 
     @Override
     public GameView getNextView(Model model) {
+        if (totalTime >= TIME_OUT_TIME_MS) {
+            return new ThematicIntroView();
+        }
         return new StartGameMenu();
     }
 
@@ -91,6 +95,10 @@ public class IntroGameView extends GameView implements Animation {
 
     @Override
     public void stepAnimation(long elapsedTimeMs, Model model) {
+        if (totalTime >= TIME_OUT_TIME_MS) {
+            super.setTimeToTransition(true);
+            return;
+        }
         totalTime += elapsedTimeMs;
         if (fading && totalTime > 1000) {
             double newFade = fadeLevel - (double) elapsedTimeMs / 3000.0;
