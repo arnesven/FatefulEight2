@@ -3,6 +3,8 @@ package view.sprites;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.horses.Horse;
+import model.horses.Pony;
+import model.items.weapons.Weapon;
 import view.MyColors;
 
 import java.awt.*;
@@ -11,19 +13,22 @@ import java.io.IOException;
 import java.util.List;
 
 public class RidingSprite extends LoopingSprite {
-    private final LoopingSprite avatar;
+    private final Sprite avatar;
+    private final boolean isPony;
     private boolean isShort = false;
 
     public RidingSprite(GameCharacter leader, Horse horse, int version) {
-        super("riding", "riding.png", 0x10*version, 32, 48);
+        super("riding", "riding.png", 0x10 * version + (horse instanceof Pony ? 4 : 0), 32, 48);
         setFrames(4);
+        this.isPony = horse instanceof Pony;
         setColor1(MyColors.BLACK);
-        setColor2(MyColors.WHITE);
+        setColor2(horse.getFaceColor());
         setColor3(horse.getAvatarColor());
+        setColor4(horse.getPatchColor());
         if (leader.getRace().isShort()) {
             this.isShort = true;
         }
-        this.avatar = leader.getAvatarSprite();
+        this.avatar = leader.getAvatarSprite().getStance(Weapon.TWO_HANDED_STANCE);
     }
 
     public RidingSprite(GameCharacter leader, Horse horse) {
@@ -31,17 +36,15 @@ public class RidingSprite extends LoopingSprite {
     }
 
     public RidingSprite(Enemy enemy, Horse horse) {
-        super("riding", "riding.png", 0x0, 32, 48);
+        super("riding", "riding.png",  (horse instanceof Pony ? 4 : 0), 32, 48);
         setFrames(4);
         setColor1(MyColors.BLACK);
-        setColor2(MyColors.WHITE);
+        this.isPony = horse instanceof Pony;
+        setColor2(horse.getFaceColor());
         setColor3(horse.getAvatarColor());
+        setColor4(horse.getPatchColor());
         this.isShort = false;
-        if (enemy.getAvatar() instanceof LoopingSprite) {
-            this.avatar = (LoopingSprite) enemy.getAvatar();
-        } else {
-            throw new IllegalStateException("RidingSprite only supports enemies with LoopingSprite avatars!");
-        }
+        this.avatar = enemy.getAvatar();
     }
 
     @Override
@@ -50,11 +53,13 @@ public class RidingSprite extends LoopingSprite {
         BufferedImage toReturn = new BufferedImage(getWidth(), getHeight(), img.getType());
         Graphics g = toReturn.getGraphics();
         if (avatar != null) {
-            avatar.synch();
             BufferedImage avatarImg = avatar.internalGetImage();
             int yOffset = 0;
             if (isShort) {
                 yOffset = -2;
+            }
+            if (isPony) {
+                yOffset += 2;
             }
             g.drawImage(avatarImg, 0, yOffset, avatarImg.getWidth(), avatarImg.getHeight(), null);
         }

@@ -8,6 +8,10 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.special.EnchantressClass;
+import model.horses.Horse;
+import model.horses.HorseHandler;
+import model.horses.HorseItemAdapter;
+import model.horses.Sphinx;
 import model.items.Equipment;
 import model.items.ItemDeck;
 import model.items.weapons.Weapon;
@@ -21,6 +25,7 @@ import view.GameView;
 import view.MyColors;
 import view.help.TutorialClassesDialog;
 import view.sprites.AnimationManager;
+import view.sprites.RidingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
 import view.widget.ArmorClassWidget;
@@ -84,6 +89,10 @@ public class CharacterCreationView extends SelectableListMenu {
     private WeepingAnimation weepingAnimation = null;
     private int selectedWeaponIndex = 0;
     private List<Weapon> weapons = ItemDeck.allWeapons();
+    private RidingSprite ridingSprite = null;
+    private HorseItemAdapter horseItem;
+    private final List<Horse> horses = new ArrayList<>(HorseHandler.getAllHorses());
+    private int selectedHorseIndex = 0;
 
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
@@ -162,6 +171,13 @@ public class CharacterCreationView extends SelectableListMenu {
         }
         avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
         avatarDead = lastCharacter.getAvatarSprite().getDead();
+        if (selectedHorseIndex == 0) {
+            ridingSprite = null;
+            horseItem = null;
+        } else {
+            ridingSprite = new RidingSprite(lastCharacter, horses.get(selectedHorseIndex));
+            horseItem = new HorseItemAdapter(horses.get(selectedHorseIndex));
+        }
         Sprite.resetCallCount();
         AnimationManager.synchAnimations();
     }
@@ -211,10 +227,20 @@ public class CharacterCreationView extends SelectableListMenu {
                     model.getScreenHandler().register(avatarDead.getName(),
                             new Point(x + COLUMN_SKIP + 24, y + 5),
                             avatarDead);
+
+
                 }
                 y++;
+                if (ridingSprite != null) {
+                    model.getScreenHandler().register(ridingSprite.getName(),
+                            new Point(x + COLUMN_SKIP + 28, y + 5),
+                            ridingSprite);
+                }
+                if (horseItem != null) {
+                    horseItem.drawYourself(model.getScreenHandler(), x + COLUMN_SKIP + 35, y + 5);
+                }
                 String[] labels = new String[]{"First Name", "", "Last Name", "",
-                        "Gender", "", "Race", "", "", "",
+                        "Gender", "Race", "", "", "",
                         "Eyes", "Eye Shadow", "Nose",
                         "Mouth", "Lipstick", "Beard", "Ears", "Shoulders", "Neck", "",
                         "Hair", "  Color", "", "Details", "  Color", "", "", "",
@@ -225,7 +251,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
                 if (FatefulEight.inDebugMode()) {
                     String[] extraLabels = new String[]{
-                            "", "Expression", "Vampire", "Eyes", "Weeping", "Weapon"};
+                            "", "Expression", "Vampire", "Eyes", "Weeping", "Weapon", "Horse"};
                     for (int i = 0; i < extraLabels.length; ++i) {
                         BorderFrame.drawString(model.getScreenHandler(), extraLabels[i], x, y++, MyColors.WHITE, MyColors.BLUE);
                     }
@@ -243,7 +269,7 @@ public class CharacterCreationView extends SelectableListMenu {
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 6, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
 
-        model.getScreenHandler().put(x+COLUMN_SKIP-4, 34, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP-4, 33, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
     }
 
     private boolean selectedClassOk() {
@@ -308,7 +334,6 @@ public class CharacterCreationView extends SelectableListMenu {
                 setInnerMenu(new SelectedGenderMenu(CharacterCreationView.this, x, y), model);
             }
         });
-        yPos++;
         result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, raceSet[selectedRace].getQualifiedName()) {
 
             @Override
@@ -574,6 +599,18 @@ public class CharacterCreationView extends SelectableListMenu {
             public void turnRight(Model model) {
                 selectedWeaponIndex = Arithmetics.incrementWithWrap(selectedWeaponIndex, weapons.size());
                 AnimationManager.synchAnimations();
+            }
+        });
+        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
+                selectedHorseIndex == 0 ? "None" : horses.get(selectedHorseIndex).getName()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedHorseIndex = Arithmetics.decrementWithWrap(selectedHorseIndex, horses.size());
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                selectedHorseIndex = Arithmetics.incrementWithWrap(selectedHorseIndex, horses.size());
             }
         });
         extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSkeleton ? "Hide" : "Show") + " Skeleton") {

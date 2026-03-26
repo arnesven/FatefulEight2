@@ -21,4 +21,14 @@ public class Merrygold extends Steed {
     public Horse copy() {
         return new Merrygold();
     }
+
+    @Override
+    public MyColors getFaceColor() {
+        return MyColors.BEIGE;
+    }
+
+    @Override
+    public MyColors getPatchColor() {
+        return MyColors.BEIGE;
+    }
 }

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.map.CaveHex;
 import model.races.AllRaces;
+import model.races.Race;
 import util.MyLists;
 import util.MyRandom;
 import view.LogView;
@@ -31,6 +32,10 @@ public class HorseHandler extends ArrayList<Horse> {
         } else {
             horsesFullBlood++;
         }
+    }
+
+    public static List<Horse> getAllHorses() {
+        return HORSES;
     }
 
     public boolean canRide(List<GameCharacter> partyMembers) {
@@ -197,5 +202,22 @@ public class HorseHandler extends ArrayList<Horse> {
             }
         }
         return bldr.toString();
+    }
+
+    public Horse getSuitableHorseFor(GameCharacter chosen) {
+        Horse horseToUse = getFirst();
+        if (chosen.getRace().id() == Race.HALFLING.id() ||
+                chosen.getRace().id() == Race.DWARF.id()) {
+            Horse pony = MyLists.find(this, h -> h instanceof Pony);
+            if (pony != null) {
+                horseToUse = pony;
+            }
+        } else {
+            Horse steed = MyLists.find(this, h -> h instanceof Steed);
+            if (steed != null) {
+                horseToUse = steed;
+            }
+        }
+        return horseToUse;
     }
 }

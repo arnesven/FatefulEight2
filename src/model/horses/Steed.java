@@ -10,6 +10,6 @@ public abstract class Steed extends Horse {
 
     @Override
     public String getInfo() {
-        return "Halflings and dwarves must ride together with non-halfing, non-dwarf rider.";
+        return "Halflings and dwarves must ride together with non-halfling, non-dwarf rider.";
     }
 }

@@ -55,7 +55,7 @@ public class FarmersHorseRaceEvent extends DailyEventState {
             portraitSay("Swell! Let's ride like the wind.");
             println("The " + boyOrGirl.toLowerCase() + " throws off " + hisOrHer(gender) + " hat and jumps up on a horse.");
             model.getLog().waitForAnimationToFinish();
-            Horse horse = borrowHorse ? HorseHandler.generateHorse() : model.getParty().getHorseHandler().get(0);
+            Horse horse = borrowHorse ? HorseHandler.generateHorse() : model.getParty().getHorseHandler().getSuitableHorseFor(chosen);
             HorseRacingEvent raceEvent = new HorseRacingEvent(model, chosen, horse);
             GameCharacter farmerCharacter = new GameCharacter("Farmer " + boyOrGirl, "", race, Classes.None, farmer);
             raceEvent.addNPC(farmerCharacter);

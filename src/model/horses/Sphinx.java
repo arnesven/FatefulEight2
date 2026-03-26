@@ -20,4 +20,9 @@ public class Sphinx extends Steed {
     public Horse copy() {
         return new Sphinx();
     }
+
+    @Override
+    public MyColors getFaceColor() {
+        return MyColors.LIGHT_GRAY;
+    }
 }

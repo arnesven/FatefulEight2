@@ -20,4 +20,9 @@ public class Regal extends Steed {
     public Horse copy() {
         return new Regal();
     }
+
+    @Override
+    public MyColors getPatchColor() {
+        return MyColors.WHITE;
+    }
 }

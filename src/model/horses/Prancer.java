@@ -20,4 +20,9 @@ public class Prancer extends Steed {
     public Horse copy() {
         return new Prancer();
     }
+
+    @Override
+    public MyColors getFaceColor() {
+        return MyColors.DARK_BROWN;
+    }
 }

@@ -1,12 +1,15 @@
 package model.states;
 
 import model.Model;
+import model.horses.Horse;
+import model.horses.Pony;
 import model.items.Inventory;
 import model.items.Item;
 import model.items.special.MagicBroom;
 import model.items.special.StoryItem;
 import model.map.Direction;
 import model.map.UrbanLocation;
+import model.races.Race;
 import model.states.events.RiverEvent;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -53,7 +56,7 @@ public class TravelState extends GameState {
             model.getWorld().setAlternativeAvatar(spriteToUse);
         } else if (riding) {
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.ridingSong);
-            spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().get(0));
+            spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().getSuitableHorseFor(model.getParty().getLeader()));
             model.getWorld().setAlternativeAvatar(spriteToUse);
         } else {
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);

@@ -20,4 +20,14 @@ public class Faxe extends Steed {
     public Horse copy() {
         return new Faxe();
     }
+
+    @Override
+    public MyColors getFaceColor() {
+        return MyColors.DARK_GRAY;
+    }
+
+    @Override
+    public MyColors getPatchColor() {
+        return MyColors.DARK_GRAY;
+    }
 }

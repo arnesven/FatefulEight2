@@ -61,4 +61,12 @@ public abstract class Horse implements Serializable {
         }
         return miniSprite;
     }
+
+    public MyColors getPatchColor() {
+        return getAvatarColor();
+    }
+
+    public MyColors getFaceColor() {
+        return MyColors.WHITE;
+    }
 }
