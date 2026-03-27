@@ -7,7 +7,9 @@ import view.sprites.PortraitSprite;
 public class GoblinRace extends Race {
     protected GoblinRace() {
         super("Goblin", MyColors.ORC_GREEN, 0, 0, 10, new Skill[0],
-                "Goblins are a smaller form of Orc which are common to hills, mountains and caves.");
+                "Goblins are a smaller form of Orc which are common to hills, mountains and caves. " +
+                        "Goblins often band together in large groups and are then quite proficient at " +
+                        "collaborating to perform more complex tasks.");
     }
 
     @Override

@@ -1,6 +1,9 @@
 package view.help;
 
+import model.characters.appearance.GiantAppearance;
 import model.characters.appearance.LizardmanAppearance;
+import model.characters.appearance.OgreAppearance;
+import model.characters.appearance.TrollAppearance;
 import model.characters.special.GoblinAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -20,7 +23,8 @@ public class TutorialRaces extends ExpandableHelpDialog {
             "The world has eight known races; Humans (which come in two varieties, Northern and Southern), Dwarves, " +
             "Half-Orcs, Halflings and three kinds of elves, Wood Elves, High Elves and Dark Elves.\n\n" +
             "Each race gives modifies a character's health, speed, and carrying capacity attributes and gives a small bonus to a handful of " +
-            "skills.";
+            "skills.\n\n" +
+            "There are also several 'minor' races such as Frogmen, Lizardmen, Orcs and Goblins, and various Gigantoids such as Trolls, Ogres and Giants.";
 
     public TutorialRaces(GameView view) {
         super(view, "Races", text, false);
@@ -34,9 +38,12 @@ public class TutorialRaces extends ExpandableHelpDialog {
             subsections.add(new SpecificRaceHelpDialog(view, race, PortraitSubView.makeRandomPortrait(Classes.None, race)));
         }
         subsections.add(new SpecificRaceHelpDialog(view, Race.FROGMAN, new FrogmanAppearance()));
-        subsections.add(new SpecificRaceHelpDialog(view, Race.ORC, new OrcAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.GIANT, new GiantAppearance()));
         subsections.add(new SpecificRaceHelpDialog(view, Race.GOBLIN, new GoblinAppearance()));
         subsections.add(new SpecificRaceHelpDialog(view, Race.LIZARDMAN, new LizardmanAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.OGRE, new OgreAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.ORC, new OrcAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.TROLL, new TrollAppearance()));
         // FEATURE: Trolls, Ogres, Lizardmen
         return subsections;
     }
