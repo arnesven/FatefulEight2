@@ -46,13 +46,14 @@ public class BlackKnightClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, AvatarSprite.ARMORED_BASE, MyColors.DARK_GRAY, race.getColor(), MyColors.ORANGE, CharacterAppearance.noHair(), CharacterAppearance.noHair(),
-                makeAvatarHelm(appearance));
+        return new AvatarSprite(race, AvatarSprite.ARMORED_BASE, MyColors.DARK_GRAY, race.getColor(), MyColors.ORANGE,
+                CharacterAppearance.noHair(), CharacterAppearance.noHair(),
+                makeAvatarHelm(appearance, MyColors.DARK_GRAY));
     }
 
-    private MyTriplet<Sprite, Sprite, Sprite> makeAvatarHelm(CharacterAppearance appearance) {
+    public static MyTriplet<Sprite, Sprite, Sprite> makeAvatarHelm(CharacterAppearance appearance, MyColors color) {
         return AvatarSprite.makeHat(appearance, "blackknighthelm", 0x08,
-                MyColors.BLACK, MyColors.DARK_GRAY, MyColors.ORANGE, MyColors.DARK_GRAY);
+                MyColors.BLACK, color, MyColors.ORANGE, MyColors.DARK_GRAY);
     }
 
     @Override

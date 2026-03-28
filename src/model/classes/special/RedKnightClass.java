@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
 import model.classes.Skill;
 import model.classes.WeightedSkill;
+import model.classes.normal.BlackKnightClass;
 import model.classes.normal.WeightedSkillPlus;
 import model.items.Equipment;
 import model.items.RedKnightsHelm;
@@ -45,7 +46,9 @@ public class RedKnightClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x80, MyColors.DARK_RED, race.getColor(), CharacterAppearance.noHair(), CharacterAppearance.noHair());
+        return new AvatarSprite(race, AvatarSprite.ARMORED_BASE, MyColors.DARK_RED,
+                race.getColor(), MyColors.ORANGE, CharacterAppearance.noHair(), CharacterAppearance.noHair(),
+                BlackKnightClass.makeAvatarHelm(appearance, MyColors.DARK_RED));
     }
 
     @Override

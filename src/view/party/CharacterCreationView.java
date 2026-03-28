@@ -812,6 +812,7 @@ public class CharacterCreationView extends SelectableListMenu {
         }
 
         CharacterClass[] extra = new CharacterClass[]{
+                Classes.RED_KNIGHT,
                 Classes.ENCHANTRESS,
                 Classes.BRIGAND,
                 Classes.SWORD_MASTER,
