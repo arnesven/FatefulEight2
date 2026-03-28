@@ -8,6 +8,7 @@ public class DamageValueEffect extends RunOnceAnimationSprite {
     public static final MyColors CRITICAL_DAMAGE = MyColors.RED;
     public static final MyColors MAGICAL_DAMAGE = MyColors.PURPLE;
     public static final MyColors HEALING = MyColors.GREEN;
+    public static final MyColors RAW_DAMAGE = MyColors.GRAY;
 
     private int count;
     private int shift;

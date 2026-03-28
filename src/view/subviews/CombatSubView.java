@@ -59,6 +59,12 @@ public class CombatSubView extends SubView {
             status = ", " + status;
         }
         if (selected instanceof Enemy) {
+            if (((Enemy) selected).getPhysicalDamageReduction() > 0) {
+                status += ", " + ((Enemy) selected).getPhysicalDamageReduction() + " PDR";
+            }
+            if (((Enemy) selected).getMagicalDamageReduction() > 0) {
+                status += ", " + ((Enemy) selected).getMagicalDamageReduction() + " MDR";
+            }
             if (!((Enemy) selected).getAttackBehavior().getUnderText().equals("")) {
                 status += ", " + ((Enemy) selected).getAttackBehavior().getUnderText() + " Attack";
             }

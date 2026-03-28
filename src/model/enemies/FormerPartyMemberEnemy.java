@@ -79,7 +79,7 @@ public class FormerPartyMemberEnemy extends HumanoidEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         int ap = basedOn.getAP();
         return (int)Math.ceil(ap / 4.0);
     }

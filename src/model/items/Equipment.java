@@ -118,6 +118,13 @@ public class Equipment implements Serializable {
         return clothing.getAP();
     }
 
+    public int getTotalMP() {
+        if (accessory != null) {
+            return clothing.getMP() + accessory.getMP();
+        }
+        return clothing.getMP();
+    }
+
     public int getSpeedModifiers() {
         int modifier = clothing.getSpeedModifier();
         modifier += weapon.getSpeedModifier();

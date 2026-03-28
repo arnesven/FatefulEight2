@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.items.Prevalence;
 import model.states.CombatEvent;
 import util.MyRandom;
@@ -31,7 +32,7 @@ public class ImprovisedWand extends OldWand {
                 combatEvent.println("But " + gameCharacter.getName() + " managed to contain the effect (" + result.asString() + ").");
             } else {
                 combatEvent.println("It exploded!");
-                gameCharacter.takeCombatDamage(combatEvent, 4, gameCharacter);
+                gameCharacter.takeCombatDamage(combatEvent, new MagicDamage(4), gameCharacter);
                 combatEvent.addFloatyDamage(gameCharacter, 4, DamageValueEffect.MAGICAL_DAMAGE);
                 if (gameCharacter.getEquipment().getWeapon() instanceof WeaponPair) {
                     WeaponPair pair = (WeaponPair) gameCharacter.getEquipment().getWeapon();

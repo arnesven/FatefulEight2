@@ -13,6 +13,7 @@ import view.sprites.WhiteSpellSprite;
 
 public class WardSpell extends CombatSpell {
     private static final Sprite SPRITE = new WhiteSpellSprite(2, true);
+    private static final int MP_BONUS = 4;
 
     public WardSpell() {
         super("Ward", 12, MyColors.WHITE, 8, 0, false);
@@ -36,7 +37,7 @@ public class WardSpell extends CombatSpell {
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         if (!target.hasCondition(WardCondition.class)) {
-            target.addCondition(new WardCondition());
+            target.addCondition(new WardCondition(MP_BONUS));
             combat.addSpecialEffect(target, new UpArrowAnimation());
         } else {
             combat.println(getName() + " had no effect on " + target.getName() + ".");
@@ -50,6 +51,6 @@ public class WardSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "Protection which makes the target immune to magic attacks for 2 rounds.";
+        return "Protection which gives the target " + MP_BONUS + " Magic Armor for 2 rounds.";
     }
 }

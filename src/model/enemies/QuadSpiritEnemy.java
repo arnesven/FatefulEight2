@@ -24,7 +24,7 @@ public class QuadSpiritEnemy extends Enemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 2;
     }
 

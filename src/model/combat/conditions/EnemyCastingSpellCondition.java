@@ -3,6 +3,8 @@ package model.combat.conditions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.Damage;
+import model.combat.MagicDamage;
 import model.enemies.Enemy;
 import model.enemies.behaviors.SpellAttackBehavior;
 import model.items.spells.FullRoundSpell;
@@ -26,8 +28,8 @@ public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
     }
 
     @Override
-    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, int damage) {
-        if (damage > 0) {
+    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, Damage damage) {
+        if (damage.getAmount() > 0) {
             if (MyRandom.rollD6() > 4) {
                 enemy.removeCondition(EnemyCastingSpellCondition.class);
                 combat.println(enemy.getName() + "'s concentration was broken and " +
@@ -36,7 +38,7 @@ public class EnemyCastingSpellCondition extends CastingFullRoundSpellCondition {
                     combat.println(enemy.getName() + " takes " + behavior.getFeedbackDamage() + " damage from spell feedback!");
                     SoundEffects.playSpellFail();
                     enemy.addCondition(new ErodeCondition());
-                    combat.doDamageToEnemy(enemy, behavior.getFeedbackDamage(), subject);
+                    combat.doDamageToEnemy(enemy, new MagicDamage(behavior.getFeedbackDamage()), subject);
                     combat.addFloatyDamage(enemy, behavior.getFeedbackDamage(), DamageValueEffect.MAGICAL_DAMAGE);
                     enemy.removeCondition(ErodeCondition.class);
                 }

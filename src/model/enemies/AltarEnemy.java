@@ -32,6 +32,11 @@ public abstract class AltarEnemy extends Enemy {
     }
 
     @Override
+    public int getMagicalDamageReduction() {
+        return 1;
+    }
+
+    @Override
     public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
         super.doUponDeath(model, combatEvent, killer);
         GameStatistics.incrementDemonsKilled();

@@ -19,7 +19,7 @@ public class ElderDragonEnemy extends DragonEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 

@@ -1,6 +1,7 @@
 package model.items.clothing;
 
 import model.items.Item;
+import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -15,11 +16,6 @@ public class MytheriumArmor extends Clothing {
     }
 
     @Override
-    public String getShoppingDetails() {
-        return super.getShoppingDetails() + ", AP is also applied to magic damage.";
-    }
-
-    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }
@@ -30,7 +26,17 @@ public class MytheriumArmor extends Clothing {
     }
 
     @Override
+    public int getMP() {
+        return 3;
+    }
+
+    @Override
     public Item copy() {
         return new MytheriumArmor();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.unique;
     }
 }

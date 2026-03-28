@@ -1,4 +1,4 @@
-package model.items.clothing;
+package model.items.accessories;
 
 import model.items.Item;
 import model.items.Prevalence;
@@ -6,16 +6,23 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class DragonArmor extends HeavyArmorClothing {
-    private static final Sprite SPRITE = new ItemSprite(6, 2, MyColors.GRAY_RED, MyColors.BEIGE);
+public class CircleOfProtection extends JewelryItem {
 
-    public DragonArmor() {
-        super("Dragon Armor", 34, 4);
+    private static final Sprite SPRITE = new ItemSprite(1, 9,
+            MyColors.DARK_GREEN, MyColors.LIGHT_GREEN, MyColors.LIGHT_PINK);
+
+    public CircleOfProtection() {
+        super("Circle of Protection", 22);
     }
 
     @Override
     public int getMP() {
         return 2;
+    }
+
+    @Override
+    public int getAP() {
+        return 0;
     }
 
     @Override
@@ -25,7 +32,7 @@ public class DragonArmor extends HeavyArmorClothing {
 
     @Override
     public Item copy() {
-        return new DragonArmor();
+        return new CircleOfProtection();
     }
 
     @Override

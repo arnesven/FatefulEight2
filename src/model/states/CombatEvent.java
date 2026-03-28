@@ -5,6 +5,8 @@ import model.achievements.HighDamageAchievement;
 import model.achievements.MultiSlayerAchievement;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
+import model.combat.Damage;
+import model.combat.MagicDamage;
 import model.combat.abilities.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.combat.abilities.AutomaticCombatAction;
@@ -477,14 +479,19 @@ public class CombatEvent extends DailyEventState {
         partyFled = b;
     }
 
-    public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
+    public void doDamageToEnemyWithAnimation(Combatant target, Damage damage, GameCharacter damager) {
+        doDamageToEnemy(target, damage, damager);
+        addFloatyDamage(target, damage.getAmount(), damage.getColor());
+    }
+
+    public void doDamageToEnemy(Combatant target, Damage damage, GameCharacter damager) {
         target.takeCombatDamage(this, damage, damager);
-        GameStatistics.incrementTotalDamage(damage);
-        GameStatistics.recordMaximumDamage(damage);
-        if (HighDamageAchievement.qualifyForCompletion(damage)) {
+        GameStatistics.incrementTotalDamage(damage.getAmount());
+        GameStatistics.recordMaximumDamage(damage.getAmount());
+        if (HighDamageAchievement.qualifyForCompletion(damage.getAmount())) {
             completeAchievement(HighDamageAchievement.KEY);
         }
-        combatStats.damageDealt(damage, damager);
+        combatStats.damageDealt(damage.getAmount(), damager);
         for (Condition cond : new ArrayList<>(target.getConditions())) {
             cond.wasAttackedBy(damager, this, (Enemy)target, damage);
         }
@@ -698,7 +705,7 @@ public class CombatEvent extends DailyEventState {
             int damage = flameWall.second;
             println(target.getName() + " takes " + damage + " damage from the fire wall!");
             if (target instanceof Enemy) {
-                doDamageToEnemy(target, damage, flameWall.first);
+                doDamageToEnemy(target, new MagicDamage(damage), flameWall.first);
             } else {
                 target.addToHP(-1 * damage);
                 checkForDead(model, (GameCharacter) target);
@@ -851,5 +858,9 @@ public class CombatEvent extends DailyEventState {
         if (!autoCombat) {
             subView.displaySplashMessage(s);
         }
+    }
+
+    public void triggerDamageReductionTutorial() {
+        getModel().getTutorial().damageReduction(getModel());
     }
 }

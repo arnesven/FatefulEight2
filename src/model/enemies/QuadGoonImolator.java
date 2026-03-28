@@ -34,6 +34,11 @@ public class QuadGoonImolator extends QuadGoonEnemy {
         return 6;
     }
 
+    @Override
+    public int getMagicalDamageReduction() {
+        return 1;
+    }
+
     private static class ImolatorSprite extends LoopingSprite {
         public ImolatorSprite(Race r) {
             super("imolator", "enemies.png", 0x8C, 32);

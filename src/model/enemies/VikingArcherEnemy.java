@@ -19,7 +19,7 @@ public class VikingArcherEnemy extends VikingEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 0;
     }
 

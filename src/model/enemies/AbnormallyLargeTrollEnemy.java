@@ -20,7 +20,7 @@ public class AbnormallyLargeTrollEnemy extends TrollEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 

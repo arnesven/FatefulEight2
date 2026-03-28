@@ -127,7 +127,16 @@ public class GameCharacter extends Combatant {
             xPString = String.format("%5d*XP", this.getXP());
         }
         BorderFrame.drawString(screenHandler, xPString, col+8, row+2, xpColor);
-        BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getAP()), col+17, row+2, DEFAULT_TEXT_COLOR);
+        int ap = this.getAP();
+        int mp = this.getMP();
+        if (ap > 0 && mp > 0) {
+            BorderFrame.drawString(screenHandler, String.format("%2d/", ap), col+17, row+2, DEFAULT_TEXT_COLOR);
+            BorderFrame.drawString(screenHandler, String.format("%2d", mp), col+20, row+2, MyColors.PURPLE);
+        } else if (ap > 0) {
+            BorderFrame.drawString(screenHandler, String.format("%2d AP", ap), col+17, row+2, DEFAULT_TEXT_COLOR);
+        } else if (mp > 0) {
+            BorderFrame.drawString(screenHandler, String.format("%2d MP", mp), col+17, row+2, MyColors.PURPLE);
+        }
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, HealthBar.getHealthColor(this.getHP(), this.getMaxHP()));
         BorderFrame.drawString(screenHandler, String.format("%2d SP", this.getSP()), col+17, row+3, getStaminaColor());
         BorderFrame.drawString(screenHandler, String.format("SPEED %2d", this.getSpeed()), col+8, row+4, DEFAULT_TEXT_COLOR);
@@ -271,19 +280,23 @@ public class GameCharacter extends Combatant {
             effectSprite.reset();
             combatEvent.addSpecialEffect(target, effectSprite);
         }
-        if (damage > 0) {
+
+        Damage dmg = equipment.getWeapon().isPhysicalDamage() ? new PhysicalDamage(damage) : new MagicDamage(damage);
+        dmg = target.reduceDamage(combatEvent, dmg, this);
+
+        if (damage == 0) {
+            combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
+        } else {
             SoundEffects.playSound(equipment.getWeapon().getAttackSound());
-            MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
-                    DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;
+            MyColors damageColor = dmg.getColor();
             if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
                 damageColor = DamageValueEffect.CRITICAL_DAMAGE;
             }
             combatEvent.addFloatyDamage(target, damage, damageColor);
-        } else {
-            combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
         }
+
         combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);
-        combatEvent.doDamageToEnemy(target, damage, this);
+        combatEvent.doDamageToEnemy(target, dmg, this);
         equipment.getWeapon().didOneAttackWith(model, combatEvent, this, target, damage, crit);
         combatEvent.blockSneakAttackFor(this);
     }
@@ -335,6 +348,14 @@ public class GameCharacter extends Combatant {
             bonus += cond.getArmorBonus();
         }
         return equipment.getTotalAP() + bonus;
+    }
+
+    public int getMP() {
+        int bonus = 0;
+        for (Condition cond : getConditions()) {
+            bonus += cond.getMagicArmorBonus();
+        }
+        return equipment.getTotalMP() + bonus;
     }
 
     public int getXP() {
@@ -658,6 +679,7 @@ public class GameCharacter extends Combatant {
         combatEvent.addSpecialEffect(this, enemy.getStrikeEffect());
         MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
         int damage = Math.max(0, pair.first + model.getSettings().getGameDifficulty() - 1);
+        Damage dmg = isPhysicalAttack ? new PhysicalDamage(damage) : new MagicDamage(damage);
         boolean critical = pair.second;
         if (checkForEvade(enemy)) {
             combatEvent.addFloatyText(this, CombatSubView.EVADE_TEXT);
@@ -670,8 +692,7 @@ public class GameCharacter extends Combatant {
             return;
         }
         SoundEffects.playSound(enemy.getAttackBehavior().getSound());
-        if ((checkForBlock(enemy) && isPhysicalAttack) ||
-                (!isPhysicalAttack && hasCondition(WardCondition.class))) {
+        if ((checkForBlock(enemy) && isPhysicalAttack)) {
             combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
@@ -681,20 +702,13 @@ public class GameCharacter extends Combatant {
             combatEvent.getStatistics().addToAvoidedDamage(damage);
             combatEvent.addFloatyText(this, CombatSubView.PARRY_TEXT);
         } else {
-            String reductionString = "";
-            if (isPhysicalAttack || equipment.applyArmorToMagicAttacks()) {
-                int reduction = Math.min(damage, calculateDamageReduction());
-                if (getAP() > 0 && reduction > 0) {
-                    reductionString = " (reduced by " + reduction + ")";
-                }
-                damage = damage - reduction;
-                combatEvent.getStatistics().addToReduced(reduction);
-            }
-            addToHP(-1 * damage);
+            dmg = reduceDamage(combatEvent, dmg, this);
+            takeCombatDamage(combatEvent, dmg, enemy);
+            String critString = "";
             if (pair.second) {
-                reductionString = ", " + LogView.YELLOW_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
+                critString = ", " + LogView.YELLOW_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR;
             }
-            combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
+            combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + critString + ".");
             combatEvent.addFloatyDamage(this, damage,
                     critical ? DamageValueEffect.CRITICAL_DAMAGE
                             : (isPhysicalAttack ? DamageValueEffect.STANDARD_DAMAGE
@@ -705,10 +719,24 @@ public class GameCharacter extends Combatant {
             combatEvent.getStatistics().addEnemyDamage(damage);
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
-        int finalDamage = damage;
         for (Condition cond : new ArrayList<>(getConditions())) {
-            cond.wasAttackedBy(this, combatEvent, enemy, finalDamage);
+            cond.wasAttackedBy(this, combatEvent, enemy, dmg);
         }
+    }
+
+    @Override
+    public Damage reduceDamage(CombatEvent combatEvent, Damage dmg, GameCharacter gameCharacter) {
+        if (dmg instanceof PhysicalDamage && getMP() > 0 || equipment.applyArmorToMagicAttacks()) {
+            int reduction = Math.min(dmg.getAmount(), calculateDamageReduction(getAP()));
+            dmg.reduceBy(reduction);
+            combatEvent.getStatistics().addToReduced(reduction);
+        }
+        if (dmg instanceof MagicDamage && getMP() > 0) {
+            int reduction = Math.min(dmg.getAmount(), calculateDamageReduction(getMP()));
+            dmg.reduceBy(reduction);
+            combatEvent.getStatistics().addToReduced(reduction);
+        }
+        return dmg;
     }
 
     private boolean checkForBlock(Enemy enemy) {
@@ -728,11 +756,11 @@ public class GameCharacter extends Combatant {
         return roll <= speedDiff && roll != 10;
     }
 
-    private int calculateDamageReduction() {
+    private static int calculateDamageReduction(int armorAmount) {
         //                       1  2  3  4  5  6  7   8   9  10
         int[] levels = new int[]{4, 4, 5, 6, 7, 8, 9, 10, 10, 10,
                 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}; // assuming 20 AP is absolute maximum.
-        int ap = getAP();
+        int ap = armorAmount;
         while (ap > 0) {
             int roll = MyRandom.rollD10();
             if (roll >= levels[ap-1]) {

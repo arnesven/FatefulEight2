@@ -7,7 +7,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class Pentagram extends JewelryItem {
-    private static final Sprite SPRITE = new ItemSprite(1, 9, MyColors.TAN, MyColors.DARK_RED);
+    private static final Sprite SPRITE = new ItemSprite(1, 9, MyColors.TAN, MyColors.DARK_RED, MyColors.TRANSPARENT);
 
     public Pentagram() {
         super("Pentagram", 14);

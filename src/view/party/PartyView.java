@@ -233,8 +233,15 @@ public class PartyView extends SelectableListMenu {
     }
 
     private String getArmorString(ArmorItem armor, boolean showZeroArmor) {
+        String extra = "";
+        if (armor.getMP() != 0) {
+            extra = "Mag. Armor " + armor.getMP() + " ";
+            if (armor.getAP() == 0) {
+                return extra;
+            }
+        }
         if (armor.getAP() != 0 || showZeroArmor) {
-            return "Armor " + armor.getAP() + " " + (armor.isHeavy() ? "Heavy" : "Light");
+            return "Phys. Armor " + armor.getAP() + " " + extra + (armor.isHeavy() ? "Heavy" : "Light");
         }
         return "";
     }

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.combat.Damage;
 import model.combat.abilities.CombatAction;
 import model.characters.GameCharacter;
 import model.combat.loot.CombatLoot;
@@ -81,11 +82,12 @@ public class NPCCombatEvent extends CombatEvent {
         subView.addFloatyText(target, strikeTextEffect);
     }
 
-    public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
+    @Override
+    public void doDamageToEnemy(Combatant target, Damage damage, GameCharacter damager) {
         if (damager == null) {
-            target.takeCombatDamage(this, damage, damager);
-        } else if (damage > 0) {
-            CharacterWrappedEnemy enemy = new CharacterWrappedEnemy(damager, damage);
+            target.takeCombatDamage(this, damage, null);
+        } else if (damage.getAmount() > 0) {
+            CharacterWrappedEnemy enemy = new CharacterWrappedEnemy(damager, damage.getAmount());
             int hpBefore = enemy.getHP();
             ((GameCharacter)target).getAttackedBy(enemy, getModel(), this);
             target.addToHP(enemy.getHP() - hpBefore);

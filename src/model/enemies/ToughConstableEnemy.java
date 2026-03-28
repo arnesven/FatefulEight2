@@ -6,7 +6,7 @@ public class ToughConstableEnemy extends ConstableEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 }

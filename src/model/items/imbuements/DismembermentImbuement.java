@@ -3,6 +3,7 @@ package model.items.imbuements;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.PhysicalDamage;
 import model.combat.conditions.BleedingCondition;
 import model.enemies.HumanoidEnemy;
 import model.states.CombatEvent;
@@ -16,8 +17,7 @@ public class DismembermentImbuement extends WeaponImbuement {
         if (!target.isDead() && target instanceof HumanoidEnemy && MyRandom.rollD10() <= 3) {
             combatEvent.println(gameCharacter.getName() + " chopped a limb off of " + target.getName() + "!");
             int extraDamage = MyRandom.randInt(1, 4);
-            combatEvent.doDamageToEnemy(target, extraDamage, gameCharacter);
-            combatEvent.addFloatyDamage(target, extraDamage, DamageValueEffect.CRITICAL_DAMAGE);
+            combatEvent.doDamageToEnemyWithAnimation(target, new PhysicalDamage(extraDamage), gameCharacter);
             target.addCondition(new BleedingCondition());
         }
     }

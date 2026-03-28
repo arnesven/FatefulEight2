@@ -42,7 +42,12 @@ public class KokodrillionEnemy extends BeastEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
+        return 1;
+    }
+
+    @Override
+    public int getMagicalDamageReduction() {
         return 1;
     }
 

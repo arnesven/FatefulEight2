@@ -3,6 +3,9 @@ package model.enemies;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.Damage;
+import model.combat.PhysicalDamage;
+import model.combat.RawDamage;
 import model.states.CombatEvent;
 import model.states.GameState;
 import sound.SoundEffects;
@@ -39,7 +42,7 @@ public class BlackGelatinousBlobEnemy extends GelatinousBlobEnemy {
     }
 
     @Override
-    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
+    public void takeCombatDamage(CombatEvent combatEvent, Damage damage, Combatant damager) {
         super.takeCombatDamage(combatEvent, damage, damager);
         if (this.isDead() && damager != null) {
             shakeAnimation(combatEvent);
@@ -49,7 +52,7 @@ public class BlackGelatinousBlobEnemy extends GelatinousBlobEnemy {
             for (Combatant comb : combatEvent.getAllCombatants()) {
                 if (comb instanceof GameCharacter) {
                     int exploDamage = MyRandom.randInt(13, 17);
-                    comb.takeCombatDamage(combatEvent, exploDamage, null);
+                    comb.takeCombatDamage(combatEvent, new PhysicalDamage(exploDamage), null);
                     combatEvent.addFloatyDamage(comb, exploDamage, DamageValueEffect.STANDARD_DAMAGE);
                 }
             }
@@ -76,8 +79,7 @@ public class BlackGelatinousBlobEnemy extends GelatinousBlobEnemy {
             if (MyRandom.rollD6() == 1) {
                 shakeAnimation(combatEvent);
                 combatEvent.println(getName() + " seems to be decomposing.");
-                combatEvent.doDamageToEnemy(enemy, 1, null);
-                combatEvent.addFloatyDamage(enemy, 1, DamageValueEffect.STANDARD_DAMAGE);
+                combatEvent.doDamageToEnemyWithAnimation(enemy, new RawDamage(1), null);
             } else {
                 super.performAttack(model, enemy, target, combatEvent);
             }

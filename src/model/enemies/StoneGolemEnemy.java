@@ -2,6 +2,8 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.Combatant;
+import model.combat.Damage;
 import model.combat.conditions.Condition;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.NoCombatLoot;
@@ -32,7 +34,7 @@ public class StoneGolemEnemy extends Enemy {
     }
 
     @Override
-    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
+    public void takeCombatDamage(CombatEvent combatEvent, Damage damage, Combatant damager) {
         super.takeCombatDamage(combatEvent, damage, damager);
         setAttackBehavior(makeRandomAttackBehavior());
     }
@@ -58,7 +60,7 @@ public class StoneGolemEnemy extends Enemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 

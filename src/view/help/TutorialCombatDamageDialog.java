@@ -9,7 +9,8 @@ public class TutorialCombatDamageDialog extends SubChapterHelpDialog {
             "the back row. Damage dealt is subtracted from the characters Health Points (HP). If a character " +
             "ever reaches 0 HP, they are dead.\n\n" +
             "A character with armor has a chance to reduce incoming damage. Damage reduction is based on a " +
-            "characters Armor Points (AP). Damage can never be reduced to less than 0.";
+            "characters Physical Armor Points (AP) or Magical Armor Points (MP) depending on the type of damage. " +
+            "Damage can never be reduced to less than 0.";
 
     public TutorialCombatDamageDialog(GameView view) {
         super(view, "Damage and Armor", text);

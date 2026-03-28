@@ -26,7 +26,7 @@ public class TournamentEnemy extends HumanoidEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         if (innerChar.getAP() < 3) {
             return 0;
         }

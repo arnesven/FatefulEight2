@@ -30,7 +30,7 @@ public class QuadGoonJuggernaught extends QuadGoonEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 3;
     }
 

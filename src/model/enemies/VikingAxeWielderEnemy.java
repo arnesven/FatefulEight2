@@ -22,8 +22,8 @@ public class VikingAxeWielderEnemy extends VikingEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
-        return super.getDamage() + 1;
+    public int getPhysicalDamageReduction() {
+        return 2;
     }
 
     private static class AxemanSprite extends LoopingSprite {

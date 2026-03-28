@@ -11,7 +11,7 @@ public class GiantScorpion extends ScorpionEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 
@@ -22,7 +22,7 @@ public class GiantScorpion extends ScorpionEnemy {
 
     @Override
     public int getSpeed() {
-        return 6;
+        return 5;
     }
 
     @Override

@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
@@ -46,9 +47,8 @@ public class MagmaBlastSpell extends CombatSpell {
         for (Enemy e : targets) { // FEATURE: Get targets adjacent/close to original target. Make animation blast bigger.
             int damage = MyRandom.randInt(7) + 1 + getMasteryLevel(performer);
             combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
-            combat.addFloatyDamage(e, damage, DamageValueEffect.MAGICAL_DAMAGE);
             combat.addSpecialEffect(e, new MagmaBlastEffectSprite());
-            combat.doDamageToEnemy(e, damage, performer);
+            combat.doDamageToEnemyWithAnimation(e, new MagicDamage(damage), performer);
         }
     }
 

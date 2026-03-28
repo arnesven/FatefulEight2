@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.items.Prevalence;
@@ -51,9 +52,8 @@ public class EntropicBoltSpell extends CombatSpell {
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         int damage = 4 + performer.getLevel() / 2 + getMasteryLevel(performer)*2;
         combat.println(target.getName() + " was hit by entropic bolt, took " + damage + " damage.");
-        combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
         combat.addSpecialEffect(target, new EntropicBoltEffect(MyColors.LIGHT_BLUE));
-        combat.doDamageToEnemy(target, damage, performer);
+        combat.doDamageToEnemyWithAnimation(target, new MagicDamage(damage), performer);
     }
 
     @Override

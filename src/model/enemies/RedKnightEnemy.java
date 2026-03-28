@@ -20,7 +20,7 @@ public class RedKnightEnemy extends HumanoidEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 3;
     }
 

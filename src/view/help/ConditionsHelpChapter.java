@@ -84,7 +84,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new TamedCondition(),
                 new ThrallCondition(null),
                 new VampirismCondition(VampirismCondition.NO_STAGE, 0),
-                new WardCondition(),
+                new WardCondition(4),
                 new WeakenCondition(),
                 new WerewolfFormCondition(null, 0),
                 new WitsPotion().getCondition()

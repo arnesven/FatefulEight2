@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.items.Prevalence;
@@ -95,8 +96,7 @@ public class ChainLightningSpell extends CombatSpell {
         model.getLog().waitForAnimationToFinish();
         for (Combatant c : victims) {
             if (!c.isDead()) {
-                combat.addFloatyDamage(c, damage, DamageValueEffect.MAGICAL_DAMAGE);
-                combat.doDamageToEnemy(c, damage, performer);
+                combat.doDamageToEnemyWithAnimation(c, new MagicDamage(damage), performer);
             }
         }
     }

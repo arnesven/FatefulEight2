@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.imbuements.WeaponImbuement;
@@ -57,8 +58,7 @@ public class ChargedRod extends WandWeapon implements PairableWeapon {
                     }
                     combatEvent.println(target.getName() + " takes an additional " + damage + " damage!");
                     combatEvent.addSpecialEffect(target, new SmokeBallAnimation());
-                    combatEvent.doDamageToEnemy(target, damage, gameCharacter);
-                    combatEvent.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
+                    combatEvent.doDamageToEnemyWithAnimation(target, new MagicDamage(damage), gameCharacter);
                 }
             }
         }

@@ -10,7 +10,7 @@ public class BanditLeaderEnemy extends BanditEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 }

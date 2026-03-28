@@ -5,17 +5,17 @@ import view.GameView;
 import java.util.List;
 
 public class AttributesHelpChapter extends ExpandableHelpDialog {
-    private static final String TEXT = "Each character has five attributes; Health Points (HP), Stamina Points (SP), " +
-            "Armor Points (AP), Experience Points (XP) and Speed.\n\nThese attributes are always displayed by the " +
+    private static final String TEXT = "Each character has six attributes; Health Points (HP), Stamina Points (SP), " +
+            "Physical Armor Points (AP), Magical Armor Points (MP), Experience Points (XP) and Speed.\n\nThese attributes are always displayed by the " +
             "character's name and portrait in the main game view, but also in the Party menu.";
-    private static final String ARMOR_TEXT = "A character's Armor Points (AP) are based on what equipment the character " +
-            "currently has equipped. High levels of AP will protect the character more often and from higher levels of incoming damage." +
-            "\n\nSome spells and conditions affect a players current AP.";
+    private static final String ARMOR_TEXT = "A character's Physical and Magical Armor Points (AP/MP) are based on what equipment the character " +
+            "currently has equipped. Physical Armor protects a character from physical harm, whereas Magical Armor protects her from magical harm, like spells." +
+            "\n\nSome spells and conditions affect a player's current AP or MP.";
     private static final String HP_TEXT = "A character's Health Points (HP) are based on a character's class and receives " +
             "a bonus from that character's race. Each gained level also adds 1 to a character's HP.\n\n" +
             "When a character reaches 0 HP, they die, and unless a friendly party member has a resurrection potion handy, they " +
             "will be removed from the party for good.\n\n" +
-            "Some spells and conditions affect a players current HP.";
+            "Some spells and conditions affect a player's current HP.";
     private static final String SP_TEXT = "A character's Stamina Points (SP) represents how rested and concentrated a character is. " +
             "Normally a character's maximum SP is 2, but some game effects can modify this. SP can be expended during skill checks " +
             "to re-roll the die. Resting at taverns and inns replenishes a character's SP.";

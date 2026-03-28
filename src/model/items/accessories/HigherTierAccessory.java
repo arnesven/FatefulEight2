@@ -1,11 +1,13 @@
 package model.items.accessories;
 
 import model.classes.Skill;
+import model.enemies.Enemy;
 import model.items.BlockingItem;
 import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.spells.Spell;
+import model.states.CombatEvent;
 import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.HigherTierItemSprite;
@@ -60,6 +62,14 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem, Bl
     public int getAP() {
         if (inner.getAP() > 0) {
             return inner.getAP() + tier;
+        }
+        return 0;
+    }
+
+    @Override
+    public int getMP() {
+        if (inner.getMP() > 0) {
+            return inner.getMP() + tier;
         }
         return 0;
     }
@@ -149,5 +159,10 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem, Bl
 
     public Sprite getOnAvatarSprite() {
         return inner instanceof OffhandItem ? ((OffhandItem) inner).getOnAvatarSprite() : null;
+    }
+
+    @Override
+    public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
+        inner.wielderWasAttackedBy(enemy, combatEvent);
     }
 }

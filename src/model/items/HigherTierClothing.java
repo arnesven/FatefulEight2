@@ -1,8 +1,10 @@
 package model.items;
 
 import model.classes.Skill;
+import model.enemies.Enemy;
 import model.items.clothing.Clothing;
 import model.items.spells.Spell;
+import model.states.CombatEvent;
 import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.HigherTierItemSprite;
@@ -16,7 +18,9 @@ public class HigherTierClothing extends Clothing implements HigherTierItem {
 
     public HigherTierClothing(Clothing innerItem, int tier) {
         super(Item.getHigherTierPrefix(tier) + " " + innerItem.getName(),
-                innerItem.getCost()*(tier*2+1), innerItem.getAP() + tier, innerItem.isHeavy());
+                innerItem.getCost()*(tier*2+1),
+                innerItem.getAP() > innerItem.getMP() ? innerItem.getAP() + tier : innerItem.getAP(),
+                innerItem.isHeavy());
         this.innerItem = innerItem;
         this.sprite = new HigherTierItemSprite(innerItem.getSpriteForHigherTier(tier), tier);
         this.tier = tier;
@@ -30,6 +34,11 @@ public class HigherTierClothing extends Clothing implements HigherTierItem {
     @Override
     public boolean supportsHigherTier() {
         return tier < MAX_TIER;
+    }
+
+    @Override
+    public int getMP() {
+        return innerItem.getMP() > 0 ? tier + innerItem.getMP() : 0;
     }
 
     @Override
@@ -84,5 +93,10 @@ public class HigherTierClothing extends Clothing implements HigherTierItem {
     @Override
     public Item getInnerItem() {
         return innerItem;
+    }
+
+    @Override
+    public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
+        innerItem.wielderWasAttackedBy(enemy, combatEvent);
     }
 }

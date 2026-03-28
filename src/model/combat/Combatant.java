@@ -170,8 +170,12 @@ public abstract class Combatant implements Serializable {
         }
     }
 
-    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
-        addToHP(-damage);
+    public void takeCombatDamage(CombatEvent combatEvent, Damage damage, Combatant damager) {
+        addToHP(-damage.getAmount());
+    }
+
+    public Damage reduceDamage(CombatEvent combatEvent, Damage dmg, GameCharacter gameCharacter) {
+        return dmg;
     }
 
     public void conditionsEndOfCombatRoundTrigger(Model model, GameState state) {
@@ -197,5 +201,4 @@ public abstract class Combatant implements Serializable {
     public List<Condition> getConditions() {
         return conditions;
     }
-
 }

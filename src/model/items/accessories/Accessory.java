@@ -22,6 +22,10 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
 
     public abstract int getAP();
 
+    public int getMP() {
+        return 0;
+    }
+
     @Override
     public boolean isHeavy() { return false; }
 
@@ -34,7 +38,10 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public final String getShoppingDetails() {
         StringBuilder result = new StringBuilder();
         if (getAP() != 0) {
-            result.append(", Armor ").append(getAP()).append(" ").append(isHeavy() ? "HEAVY" : "LIGHT");
+            result.append(", Phys. Armor ").append(getAP()).append(" ").append(isHeavy() ? "HEAVY" : "LIGHT");
+        }
+        if (getMP() != 0) {
+            result.append(", Mag. Armor ").append(getMP()).append(" ");
         }
         if (getSpeedModifier() != 0) {
             result.append(", Speed ").append(MyStrings.withPlus(getSpeedModifier()));

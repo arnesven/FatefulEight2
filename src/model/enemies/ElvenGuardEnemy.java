@@ -36,7 +36,7 @@ public class ElvenGuardEnemy extends HumanoidEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 

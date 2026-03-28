@@ -20,7 +20,7 @@ public class WhiteGelatinousBlobEnemy extends GelatinousBlobEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 1;
     }
 

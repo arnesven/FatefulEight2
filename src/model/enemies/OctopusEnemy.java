@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.RawDamage;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.MixedAttackBehavior;
@@ -26,7 +27,7 @@ public class OctopusEnemy extends BeastEnemy {
     public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
         List<Enemy> others = new ArrayList<>(combatEvent.getEnemies());
         for (Enemy e : others) {
-            combatEvent.doDamageToEnemy(e, 99, killer);
+            combatEvent.doDamageToEnemy(e, new RawDamage(99), killer);
         }
     }
 

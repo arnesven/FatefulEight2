@@ -3,6 +3,7 @@ package model.combat.conditions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.Damage;
 import model.enemies.Enemy;
 import model.items.spells.FullRoundSpell;
 import model.states.CombatEvent;
@@ -46,7 +47,7 @@ public class CastingFullRoundSpellCondition extends Condition {
     }
 
     @Override
-    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, int damage) {
+    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, Damage damage) {
         subject.removeCondition(CastingFullRoundSpellCondition.class);
         combat.println(subject.getName() + "'s concentration was broken, " +
                 GameState.heOrShe(subject.getGender()) + " is no longer casting the spell.");

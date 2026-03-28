@@ -11,11 +11,13 @@ import view.sprites.Sprite;
 
 public class WardCondition extends Condition {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD1), MyColors.WHITE, MyColors.PURPLE, MyColors.CYAN);
+    private final int mpBonus;
     private int turnsLeft;
 
-    public WardCondition() {
+    public WardCondition(int mpBonus) {
         super("Ward", "WRD");
         this.turnsLeft = 2;
+        this.mpBonus = mpBonus;
     }
 
     @Override
@@ -34,6 +36,11 @@ public class WardCondition extends Condition {
         if (turnsLeft == 0) {
             comb.removeCondition(WardCondition.class);
         }
+    }
+
+    @Override
+    public int getMagicArmorBonus() {
+        return mpBonus;
     }
 
     @Override

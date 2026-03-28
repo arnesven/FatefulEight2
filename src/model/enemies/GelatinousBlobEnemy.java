@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.RawDamage;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
@@ -91,8 +92,7 @@ public abstract class GelatinousBlobEnemy extends Enemy {
         splitGuy.hidden = false;
         splitGuy.addToHP(-(getMaxHP() - (getHP() + 1) / 2));
         combatEvent.addEnemy(splitGuy);
-        combatEvent.doDamageToEnemy(this, 1, null);
-        combatEvent.addFloatyDamage(this, 1, DamageValueEffect.STANDARD_DAMAGE);
+        combatEvent.doDamageToEnemy(this, new RawDamage(1), null);
     }
 
     protected GelatinousBlobEnemy getMitosisCopy() {

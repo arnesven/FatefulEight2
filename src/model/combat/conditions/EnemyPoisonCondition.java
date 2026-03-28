@@ -3,6 +3,8 @@ package model.combat.conditions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
+import model.combat.RawDamage;
 import model.items.spells.PoisonGasSpell;
 import model.states.CombatEvent;
 import model.states.GameState;
@@ -31,9 +33,8 @@ public class EnemyPoisonCondition extends Condition {
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         state.println(comb.getName() + " takes suffers 1 damage from the effects of the poison.");
-        if (state instanceof CombatEvent) { // TODO: This damage should not be reduced by enemy DR.
-            ((CombatEvent) state).doDamageToEnemy(comb, 1, caster);
-            ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.MAGICAL_DAMAGE);
+        if (state instanceof CombatEvent) {
+            ((CombatEvent) state).doDamageToEnemyWithAnimation(comb, new RawDamage(1), caster);
         } else {
             throw new IllegalStateException("EndOfCombatRoundTrigger was called with something other than combat event!");
         }

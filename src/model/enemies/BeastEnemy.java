@@ -3,6 +3,8 @@ package model.enemies;
 import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.Combatant;
+import model.combat.Damage;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.states.CombatEvent;
 
@@ -23,7 +25,7 @@ public abstract class BeastEnemy extends Enemy {
     }
 
     @Override
-    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
+    public void takeCombatDamage(CombatEvent combatEvent, Damage damage, Combatant damager) {
         super.takeCombatDamage(combatEvent, damage, damager);
         if (aggro < RAMPAGING && !isDead()) {
             increaseAggressiveness();

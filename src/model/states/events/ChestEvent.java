@@ -44,7 +44,7 @@ public class ChestEvent extends DailyEventState {
         if (success) {
             chestOpens(model, this, 5);
         } else {
-            model.getParty().randomPartyMemberSay(model, List.of("Well, we're not getting into that thing. We had better just forget about it."));
+            model.getParty().randomPartyMemberSay(model, List.of("Well, " + imOrWere() +" not getting into that thing. " + iOrWeCap() +" had better just forget about it."));
             model.getParty().randomPartyMemberSay(model, List.of("What a shame!", "But I really wanted to know what was inside!"));
         }
     }

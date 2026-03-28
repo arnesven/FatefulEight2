@@ -16,7 +16,7 @@ public class QuadGoonFencer extends QuadGoonEnemy {
     }
 
     @Override
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
         return 2;
     }
 

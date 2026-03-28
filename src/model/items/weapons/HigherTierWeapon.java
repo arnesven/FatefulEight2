@@ -2,11 +2,13 @@ package model.items.weapons;
 
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.enemies.Enemy;
 import model.items.BlockingItem;
 import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.imbuements.WeaponImbuement;
+import model.states.CombatEvent;
 import util.MyPair;
 import view.sprites.*;
 
@@ -190,5 +192,10 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     @Override
     public int getBlockChance() {
         return inner instanceof BlockingItem ? tier / 2 + ((BlockingItem) inner).getBlockChance() : 0;
+    }
+
+    @Override
+    public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
+        inner.wielderWasAttackedBy(enemy, combatEvent);
     }
 }

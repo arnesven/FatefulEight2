@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.combat.abilities.SpecialAbilityCombatAction;
 import model.enemies.Enemy;
 import model.items.weapons.StaffWeapon;
@@ -45,8 +46,7 @@ public class MagicMissileCombatAction extends SpecialAbilityCombatAction impleme
             damage *= damage;
             combat.println(target.getName() + " was hit by the magic missile, took " + damage + " damage.");
             combat.addSpecialEffect(target, new EntropicBoltEffect(MyColors.LIGHT_RED));
-            combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
-            combat.doDamageToEnemy(target, damage, performer);
+            combat.doDamageToEnemyWithAnimation(target, new MagicDamage(damage), performer);
         }
     }
 

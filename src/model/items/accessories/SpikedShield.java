@@ -1,5 +1,6 @@
 package model.items.accessories;
 
+import model.combat.PhysicalDamage;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.items.Prevalence;
@@ -38,8 +39,7 @@ public class SpikedShield extends ShieldItem {
     @Override
     public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
         combatEvent.println(this.getName() + " deals 1 damage to " + enemy.getName() + ".");
-        combatEvent.addFloatyDamage(enemy, 1, DamageValueEffect.STANDARD_DAMAGE);
-        combatEvent.doDamageToEnemy(enemy, 1, null);
+        combatEvent.doDamageToEnemyWithAnimation(enemy, new PhysicalDamage(1), null);
     }
 
     @Override

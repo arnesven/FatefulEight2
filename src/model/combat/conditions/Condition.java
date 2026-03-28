@@ -1,6 +1,7 @@
 package model.combat.conditions;
 
 import model.Model;
+import model.combat.Damage;
 import model.combat.abilities.CombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -88,6 +89,8 @@ public abstract class Condition implements Serializable {
 
     public int getArmorBonus() { return 0; }
 
+    public int getMagicArmorBonus() { return 0; }
+
     public int getHealthBonus() { return 0; }
 
     public int getStaminaBonus() { return 0; }
@@ -106,5 +109,5 @@ public abstract class Condition implements Serializable {
 
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) { }
 
-    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, int damage) { }
+    public void wasAttackedBy(GameCharacter subject, CombatEvent combat, Enemy enemy, Damage damage) { }
 }

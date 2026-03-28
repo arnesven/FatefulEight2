@@ -151,7 +151,8 @@ public abstract class Enemy extends Combatant {
         if (!(getAttackBehavior() instanceof MeleeAttackBehavior)) {
             damageMultiplier = 2;
         }
-        return 5 + getMaxHP() + (damageMultiplier * getDamage()) + getSpeed() / 3 + getDamageReduction() * 3;
+        int totalDR = getPhysicalDamageReduction() + getMagicalDamageReduction();
+        return 5 + getMaxHP() + (damageMultiplier * getDamage()) + getSpeed() / 3 + totalDR * 3;
     }
 
     public abstract CombatLoot getLoot(Model model);
@@ -247,19 +248,27 @@ public abstract class Enemy extends Combatant {
     }
 
     @Override
-    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
-        if (damage > 0 && getDamageReduction() > 0 && !hasCondition(ErodeCondition.class)) {
-            int hpBefore = getHP();
-            super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()), damager);
-
-            int damageReduction = Math.max(getDamageReduction(), (damage - (hpBefore - getHP())));
-            combatEvent.printAlert("Damage was reduced by " + damageReduction + "!");
-        } else {
-            super.takeCombatDamage(combatEvent, damage, damager);
+    public Damage reduceDamage(CombatEvent combatEvent, Damage dmg, GameCharacter gameCharacter) {
+        if (dmg.getAmount() == 0 || hasCondition(ErodeCondition.class)) {
+            return dmg;
         }
+        if (dmg instanceof PhysicalDamage && getPhysicalDamageReduction() > 0) {
+            dmg.reduceBy(getPhysicalDamageReduction());
+            combatEvent.printAlert("Damage was reduced by " + getPhysicalDamageReduction() + "!");
+            combatEvent.triggerDamageReductionTutorial();
+        } else if (dmg instanceof MagicDamage && getMagicalDamageReduction() > 0) {
+            dmg.reduceBy(getMagicalDamageReduction());
+            combatEvent.printAlert("Damage was reduced by " + getMagicalDamageReduction() + "!");
+            combatEvent.triggerDamageReductionTutorial();
+        }
+        return dmg;
     }
 
-    public int getDamageReduction() {
+    public int getPhysicalDamageReduction() {
+        return 0;
+    }
+
+    public int getMagicalDamageReduction() {
         return 0;
     }
 

@@ -3,6 +3,7 @@ package model.items.potions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.RawDamage;
 import model.combat.conditions.PoisonCondition;
 import model.items.Item;
 import model.items.Prevalence;
@@ -60,7 +61,6 @@ public class LethalPoison extends PoisonPotion {
     @Override
     public void throwYourself(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         combat.println(target.getName() + " was hit by the " + getName() + ", took " + damage + " damage.");
-        combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
-        combat.doDamageToEnemy(target, damage, performer);
+        combat.doDamageToEnemyWithAnimation(target, new RawDamage(damage), performer);
     }
 }

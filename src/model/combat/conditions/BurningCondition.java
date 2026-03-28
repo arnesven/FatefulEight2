@@ -3,6 +3,7 @@ package model.combat.conditions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
@@ -37,8 +38,7 @@ public class BurningCondition extends Condition {
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         if (state instanceof CombatEvent) {
             state.println(comb.getName() + " takes 1 damage from burning.");
-            ((CombatEvent) state).doDamageToEnemy(comb, 1, applier);
-            ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.MAGICAL_DAMAGE);
+            ((CombatEvent) state).doDamageToEnemyWithAnimation(comb, new MagicDamage(1), applier);
         }
         if (MyRandom.flipCoin()) {
             setDuration(0);

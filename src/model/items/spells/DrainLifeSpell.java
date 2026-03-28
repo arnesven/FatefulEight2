@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
 import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
 import model.enemies.UndeadEnemy;
@@ -52,8 +53,7 @@ public class DrainLifeSpell extends CombatSpell {
             return;
         }
         int damage = 4 + getMasteryLevel(performer) * 3;
-        combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
-        combat.doDamageToEnemy(target, damage, performer);
+        combat.doDamageToEnemyWithAnimation(target, new MagicDamage(damage), performer);
         SkillCheckResult result = performer.testSkill(model, Skill.MagicBlack);
         combat.println(performer.getName() + " tests " + Skill.MagicBlack.getName() + " to determine how much " +
                 "health points can be absorbed, " + result.asString() + " (of 12).");

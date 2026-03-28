@@ -71,7 +71,7 @@ public class KnightsUnit extends BattleUnit implements MountedBattleUnit {
         }
 
         @Override
-        public int getDamageReduction() {
+        public int getPhysicalDamageReduction() {
             return 1;
         }
     }

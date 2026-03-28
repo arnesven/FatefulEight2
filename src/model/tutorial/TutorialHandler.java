@@ -686,6 +686,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void damageReduction(Model model) {
+        runOnce("damagereduction", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialDamageReduction(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

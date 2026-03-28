@@ -36,6 +36,11 @@ public class QuadGoonMesmer extends QuadGoonEnemy {
         return 8;
     }
 
+    @Override
+    public int getMagicalDamageReduction() {
+        return 2;
+    }
+
     private class MesmerSprite extends LoopingSprite {
         public MesmerSprite(MyColors skinColor, MyColors hairColor) {
             super("mesmer", "enemies.png", 0x146, 32);

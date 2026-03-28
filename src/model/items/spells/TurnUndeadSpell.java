@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.RawDamage;
 import model.enemies.Enemy;
 import model.enemies.UndeadEnemy;
 import model.items.Item;
@@ -47,7 +48,7 @@ public class TurnUndeadSpell extends CombatSpell {
                 combat.println(target.getName() + " resisted the spell!");
             } else {
                 combat.println(target.getName() + " took " + target.getHP() + " damage and was disintegrated into dust!");
-                combat.doDamageToEnemy(target, target.getHP(), performer);
+                combat.doDamageToEnemyWithAnimation(target, new RawDamage(target.getHP()), performer);
             }
         } else {
             combat.println(getName() + " has no effect on " + target.getName() + ".");

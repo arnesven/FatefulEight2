@@ -24,6 +24,11 @@ public abstract class RobesClothing extends Clothing {
     }
 
     @Override
+    public int getMP() {
+        return 1;
+    }
+
+    @Override
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
         return List.of(new MyPair<>(magicSkill, 1));
     }

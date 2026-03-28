@@ -44,11 +44,11 @@ public class AllyFromEnemyCharacter extends GameCharacter {
 
     private static Equipment makeEquipmentFrom(Enemy enemy) {
         Equipment eq = new Equipment();
-        if (enemy.getDamageReduction() > 2) {
+        if (enemy.getPhysicalDamageReduction() > 2) {
             eq.setClothing(new FullPlateArmor()); // 7
-        } else if (enemy.getDamageReduction() > 1) {
+        } else if (enemy.getPhysicalDamageReduction() > 1) {
             eq.setClothing(new ScaleArmor()); // 5
-        } else if (enemy.getDamageReduction() > 0) {
+        } else if (enemy.getPhysicalDamageReduction() > 0) {
             eq.setClothing(new LeatherArmor()); // 3
         }
         if (enemy.getDamage() > 3) {

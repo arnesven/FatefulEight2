@@ -38,6 +38,11 @@ public class ManticoreEnemy extends BeastEnemy {
     }
 
     @Override
+    public int getMagicalDamageReduction() {
+        return 1;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
     }

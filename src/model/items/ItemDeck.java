@@ -229,7 +229,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new EmeraldRing(), new OrnateRing(), new GoldRing(), new MasterRing(),
                 new ApprenticeRing(), new GreedyRing(), new OnyxRing(), new LuckyTalisman(),
                 new Pentagram(), new PlateNecklace(), new AnkhPendant(), new ShinyAmulet(),
-                new SilverPendant());
+                new SilverPendant(), new CircleOfProtection());
     }
 
     public static List<Clothing> allApparel() {
@@ -239,7 +239,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new MagesRobes(), new ShamansRobes(), new CultistsRobes(), new WarlocksRobes(),
                 new MesmersRobes(), new LeatherTunic(), new QuiltedArmor(), new FurArmor(), new Brigandine(),
                 new TemplarArmor(), new GlassArmor(), new PirateVest(), new TradersDoublet(),
-                new FormalUniform());
+                new FormalUniform(), new InitiatesRobes());
     }
 
     public static List<Spell> allSpells() {

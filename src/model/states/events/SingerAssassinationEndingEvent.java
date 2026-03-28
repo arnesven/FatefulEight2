@@ -232,7 +232,7 @@ public class SingerAssassinationEndingEvent extends AssassinationEndingEvent {
         }
 
         @Override
-        public int getDamageReduction() {
+        public int getPhysicalDamageReduction() {
             return 1;
         }
 

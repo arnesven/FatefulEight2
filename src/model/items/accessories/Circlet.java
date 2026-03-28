@@ -35,4 +35,9 @@ public class Circlet extends HeadGearItem {
     public int getAP() {
         return 0;
     }
+
+    @Override
+    public int getMP() {
+        return 1;
+    }
 }

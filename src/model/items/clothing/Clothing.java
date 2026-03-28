@@ -48,7 +48,11 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     public String getShoppingDetails() {
         StringBuilder result = new StringBuilder();
         result.append(getSkillBonusesAsString());
-        return ", Armor " + getAP() + " " + (isHeavy()?"HEAVY":"LIGHT") + result.toString();
+        String magicArmor = " ";
+        if (getMP() > 0) {
+            magicArmor = ", Mag. Armor " + getMP() + " ";
+        }
+        return ", Phys. Armor " + getAP() + magicArmor + (isHeavy()?"HEAVY":"LIGHT") + result.toString();
     }
 
     @Override
@@ -87,5 +91,10 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     @Override
     public Item makeHigherTierCopy(int tier) {
         return new HigherTierClothing((Clothing)copy(), tier);
+    }
+
+    @Override
+    public int getMP() {
+        return 0;
     }
 }

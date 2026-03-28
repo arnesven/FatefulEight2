@@ -5,6 +5,7 @@ import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.PhysicalDamage;
 import model.enemies.Enemy;
 import model.items.weapons.AxeWeapon;
 import model.states.CombatEvent;
@@ -41,8 +42,7 @@ public class CleaveAbility extends StaminaCombatAbility implements SkillAbilityC
         for (int i = 0; damage > 0 && i < 2 && !enemies.isEmpty(); ++i) {
             target = enemies.remove(0);
             combat.println(target.getName() + " takes " + damage + " damage from Cleave.");
-            combat.addFloatyDamage(target, damage, DamageValueEffect.STANDARD_DAMAGE);
-            combat.doDamageToEnemy(target, damage, performer);
+            combat.doDamageToEnemyWithAnimation(target, new PhysicalDamage(damage), performer);
         }
     }
 

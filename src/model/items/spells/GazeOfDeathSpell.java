@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.MagicDamage;
+import model.combat.RawDamage;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
@@ -49,8 +51,7 @@ public class GazeOfDeathSpell extends CombatSpell {
         }
         if (success) {
             combat.println("Gaze of Death kills " + target.getName() + "!");
-            combat.addFloatyDamage(target, target.getHP(), DamageValueEffect.MAGICAL_DAMAGE);
-            combat.doDamageToEnemy(target, target.getHP(), performer);
+            combat.doDamageToEnemyWithAnimation(target, new RawDamage(target.getHP()), performer);
         } else {
             combat.println("Gaze of Death did not affect " + target.getName() + ".");
         }

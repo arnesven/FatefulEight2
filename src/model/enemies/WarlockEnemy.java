@@ -38,6 +38,11 @@ public class WarlockEnemy extends HumanoidEnemy {
     }
 
     @Override
+    public int getMagicalDamageReduction() {
+        return 1;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new BossCombatLoot(model);
     }

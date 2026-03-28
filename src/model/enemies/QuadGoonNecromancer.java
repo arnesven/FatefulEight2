@@ -35,6 +35,11 @@ public class QuadGoonNecromancer extends QuadGoonEnemy {
         return 4;
     }
 
+    @Override
+    public int getMagicalDamageReduction() {
+        return 1;
+    }
+
     private static class NecromancerSprite extends LoopingSprite {
         public NecromancerSprite(MyColors skinColor) {
             super("soldier", "enemies.png", 0x1C, 32, 32);
