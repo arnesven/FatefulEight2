@@ -268,7 +268,17 @@ public class PartyView extends SelectableListMenu {
                 int rightOfPortraitX = xStart + 9;
                 print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Health %9s", gc.getHP() + "/" + gc.getMaxHP()));
                 print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Stamina %8s", gc.getSP() + "/" + gc.getMaxSP()));
-                print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %10d", gc.getAP()));
+                int ap = gc.getAP();
+                int mp = gc.getMP();
+                if (ap > 0 && mp > 0) {
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %3dAP %2dMP", ap, mp));
+                } else if (ap > 0) {
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %7d AP", ap));
+                } else if (mp > 0) {
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %7d MP", mp));
+                } else {
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %10s", "None"));
+                }
                 print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Speed %10d", gc.getSpeed()));
 
                 newY += 3;
