@@ -85,6 +85,12 @@ public class FormerPartyMemberEnemy extends HumanoidEnemy {
     }
 
     @Override
+    public int getMagicalDamageReduction() {
+        int mp = basedOn.getMP();
+        return (int)Math.ceil(mp / 4.0);
+    }
+
+    @Override
     protected Sprite getSprite() {
         return basedOn.getAvatarSprite();
     }
