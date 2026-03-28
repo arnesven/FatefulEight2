@@ -6,14 +6,15 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.SoldierEnemy;
 import model.enemies.SoldierLeaderEnemy;
+import model.items.BlockingItem;
+import model.items.accessories.OffhandItem;
 import model.items.accessories.ShieldItem;
 import model.items.special.TentUpgradeItem;
-import model.states.CombatEvent;
 import model.states.DailyEventState;
+import sound.SoundEffects;
 import util.MyLists;
 import util.MyRandom;
 
@@ -119,8 +120,11 @@ public class CompanyEvent extends DailyEventState {
                         println("But " + heOrShe(gc.getGender()) + " quickly " +
                                 MyRandom.sample(List.of("dodges it.", "evades it.",
                                         "moves out of the way.", "ducks.")));
-                    } else if (gc.getEquipment().getAccessory() instanceof ShieldItem &&
-                            MyRandom.rollD10() <= ((ShieldItem)gc.getEquipment().getAccessory()).getBlockChance()) {
+                    } else if (gc.getEquipment().getAccessory() != null &&
+                            gc.getEquipment().getAccessory().isOfType(BlockingItem.class) &&
+                            MyRandom.rollD10() <= 2 * ((BlockingItem)gc.getEquipment().getAccessory()).getBlockChance()) {
+                        model.getLog().waitForAnimationToFinish();
+                        SoundEffects.playHitWood();
                         println("Clonk! The " + thing + " bounces off of " + gc.getFirstName() + "'s shield.");
                     } else {
                         println("It strikes " + himOrHer(gc.getGender()) + " right in the face.");

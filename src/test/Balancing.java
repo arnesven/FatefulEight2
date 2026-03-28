@@ -2,7 +2,6 @@ package test;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.SkillBonus;
 import model.characters.preset.LonnieLiebgott;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -12,7 +11,7 @@ import model.items.Item;
 import model.items.ItemDeck;
 import model.items.Prevalence;
 import model.items.accessories.Accessory;
-import model.items.accessories.ShieldItem;
+import model.items.accessories.OffhandItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.Longsword;
@@ -207,10 +206,10 @@ public class Balancing {
     }
 
     private static double modifyForBlockValue(Item it) {
-        if (!(it instanceof ShieldItem)) {
+        if (!(it instanceof OffhandItem)) {
             return 0;
         }
-        return -6 + ((ShieldItem) it).getBlockChance() * 6;
+        return -6 + ((OffhandItem) it).getBlockChance() * 6;
     }
 
     private static double modifyForSPBonus(Item it) {

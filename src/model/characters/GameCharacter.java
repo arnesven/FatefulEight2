@@ -13,6 +13,8 @@ import model.combat.conditions.*;
 import model.enemies.Enemy;
 import model.items.*;
 import model.items.accessories.Accessory;
+import model.items.accessories.HigherTierAccessory;
+import model.items.accessories.OffhandItem;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
@@ -38,8 +40,6 @@ import view.widget.HealthBar;
 
 import java.awt.Point;
 import java.util.*;
-
-import static util.MyRandom.rollD10;
 
 public class GameCharacter extends Combatant {
     private static final MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
@@ -390,8 +390,14 @@ public class GameCharacter extends Combatant {
                     screenHandler.register("avatarweapon" + getFullName(), new Point(xpos, ypos), spr, 0, 0, -yShift);
                 }
             }
-            if (equipment.getAccessory() instanceof ShieldItem) {
-                Sprite spr = ((ShieldItem)equipment.getAccessory()).getOnAvatarSprite();
+            if (equipment.getAccessory() != null && equipment.getAccessory().isOfType(ShieldItem.class)) {
+                Sprite spr = null;
+                if (equipment.getAccessory() instanceof ShieldItem) {
+                    spr = ((OffhandItem) equipment.getAccessory()).getOnAvatarSprite();
+                }
+                if (equipment.getAccessory() instanceof HigherTierAccessory) {
+                    spr = ((HigherTierAccessory) equipment.getAccessory()).getOnAvatarSprite();
+                }
                 if (spr != null) {
                     screenHandler.register("avatarshield" + getFullName(), new Point(xpos, ypos), spr, 0, 0, -yShift);
                 }
@@ -718,7 +724,7 @@ public class GameCharacter extends Combatant {
     private boolean checkForEvade(Enemy enemy) {
         int speedDiff = Math.max(getSpeed() - enemy.getSpeed(), 0) / 2;
         speedDiff += RiposteCombatAction.getEvadeBonus(this);
-        int roll = rollD10();
+        int roll = MyRandom.rollD10();
         return roll <= speedDiff && roll != 10;
     }
 
@@ -728,7 +734,7 @@ public class GameCharacter extends Combatant {
                 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}; // assuming 20 AP is absolute maximum.
         int ap = getAP();
         while (ap > 0) {
-            int roll = rollD10();
+            int roll = MyRandom.rollD10();
             if (roll >= levels[ap-1]) {
                 return ap;
             }

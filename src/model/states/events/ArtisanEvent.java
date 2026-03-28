@@ -298,7 +298,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getClothing() instanceof JustClothes) {
+            if (equipment.getClothing().getAP() > 2) {
                 return null;
             }
             return equipment.getClothing();
@@ -337,9 +337,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof JewelryItem ||
-                    (equipment.getAccessory() instanceof HigherTierAccessory &&
-                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof JewelryItem)) {
+            if (equipment.getAccessory() != null && equipment.getAccessory().isOfType(JewelryItem.class)) {
                 return equipment.getAccessory();
             }
             return null;
@@ -358,9 +356,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof ShoesItem ||
-                    (equipment.getAccessory() instanceof HigherTierAccessory &&
-                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof ShoesItem)) {
+            if (equipment.getAccessory() != null && equipment.getAccessory().isOfType(ShoesItem.class)) {
                 return equipment.getAccessory();
             }
             return null;
@@ -447,9 +443,8 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof HeadGearItem ||
-                    (equipment.getAccessory() instanceof HigherTierAccessory &&
-                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof HeadGearItem)) {
+            if (equipment.getAccessory() != null &&
+                    equipment.getAccessory().isOfType(HeadGearItem.class)) {
                 return equipment.getAccessory();
             }
             return equipment.getAccessory();
@@ -468,9 +463,8 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getAccessory() instanceof ShieldItem ||
-                    (equipment.getAccessory() instanceof HigherTierAccessory &&
-                    ((HigherTierAccessory) equipment.getAccessory()).getInnerItem() instanceof ShieldItem)) {
+            if (equipment.getAccessory() != null &&
+                    equipment.getAccessory().isOfType(ShieldItem.class)) {
                 return equipment.getAccessory();
             }
             return null;

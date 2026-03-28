@@ -5,7 +5,6 @@ import model.classes.Skill;
 import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.accessories.Accessory;
-import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
 import model.items.clothing.MytheriumArmor;

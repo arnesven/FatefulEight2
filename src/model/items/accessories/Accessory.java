@@ -134,4 +134,8 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public double getGoldFromLootFactor() {
         return 1.0;
     }
+
+    public <E> boolean isOfType(Class<E> accessoryClass) {
+        return accessoryClass.isAssignableFrom(this.getClass());
+    }
 }

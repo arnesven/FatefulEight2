@@ -5,6 +5,7 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.items.Item;
+import model.items.accessories.OffhandItem;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;

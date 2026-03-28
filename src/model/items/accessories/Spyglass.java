@@ -12,7 +12,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class Spyglass extends ShieldItem implements PirateItem {
+public class Spyglass extends OffhandItem implements PirateItem {
     private static final Sprite SPRITE = new ItemSprite(8, 16, MyColors.BROWN, MyColors.PEACH, MyColors.CYAN);
 
     private static final Sprite SHIELD_SPRITES =

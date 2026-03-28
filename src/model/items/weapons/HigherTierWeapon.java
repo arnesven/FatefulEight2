@@ -2,6 +2,7 @@ package model.items.weapons;
 
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.items.BlockingItem;
 import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HigherTierWeapon extends Weapon implements HigherTierItem, PairableWeapon {
+public class HigherTierWeapon extends Weapon implements HigherTierItem, PairableWeapon, BlockingItem {
     private final Weapon inner;
     private final int tier;
     private Sprite sprite;
@@ -184,5 +185,10 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     @Override
     public boolean isCraftable() {
         return false;
+    }
+
+    @Override
+    public int getBlockChance() {
+        return inner instanceof BlockingItem ? tier / 2 + ((BlockingItem) inner).getBlockChance() : 0;
     }
 }

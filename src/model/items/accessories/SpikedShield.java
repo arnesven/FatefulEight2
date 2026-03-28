@@ -4,7 +4,6 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
-import view.MyColors;
 import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;

@@ -5,7 +5,6 @@ import model.characters.GameCharacter;
 import model.items.ArmorItem;
 import model.items.Item;
 import model.items.accessories.Accessory;
-import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import util.BeforeAndAfterLine;
 import view.party.DrawableObject;

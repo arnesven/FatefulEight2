@@ -11,7 +11,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class HolyChalice extends ShieldItem {
+public class HolyChalice extends OffhandItem {
     private static final Sprite SPRITE = new ItemSprite(15, 11,
             MyColors.YELLOW, MyColors.GOLD, MyColors.RED);
 
@@ -26,6 +26,11 @@ public class HolyChalice extends ShieldItem {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public int getWeight() {
+        return 1000;
     }
 
     @Override
@@ -53,6 +58,11 @@ public class HolyChalice extends ShieldItem {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public String getSound() {
+        return "wood";
     }
 
     @Override

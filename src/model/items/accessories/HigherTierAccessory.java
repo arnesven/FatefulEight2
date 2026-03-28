@@ -1,6 +1,7 @@
 package model.items.accessories;
 
 import model.classes.Skill;
+import model.items.BlockingItem;
 import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
@@ -12,7 +13,7 @@ import view.sprites.HigherTierItemSprite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HigherTierAccessory extends Accessory implements HigherTierItem {
+public class HigherTierAccessory extends Accessory implements HigherTierItem, BlockingItem {
     private final Accessory inner;
     private final HigherTierItemSprite sprite;
     private final int tier;
@@ -139,5 +140,14 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
     @Override
     public double getGoldFromLootFactor() {
         return inner.getGoldFromLootFactor();
+    }
+
+    @Override
+    public int getBlockChance() {
+        return inner instanceof BlockingItem ? (tier / 2) + ((BlockingItem) inner).getBlockChance() : 0;
+    }
+
+    public Sprite getOnAvatarSprite() {
+        return inner instanceof OffhandItem ? ((OffhandItem) inner).getOnAvatarSprite() : null;
     }
 }

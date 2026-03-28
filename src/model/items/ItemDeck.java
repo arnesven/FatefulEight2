@@ -135,6 +135,7 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allGloves());
         allItems.addAll(allHeadGear());
         allItems.addAll(allShields());
+        allItems.addAll(allOtherOffhandItems());
         allItems.addAll(allSpells());
         allItems.addAll(allPotions());
         allItems.addAll(allCraftingDesigns());
@@ -143,6 +144,10 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.add(new Lockpick());
         allItems.addAll(allBooks());
         return allItems;
+    }
+
+    private static List<OffhandItem> allOtherOffhandItems() {
+        return List.of(new Spyglass(), new HolyChalice()); // FEATURE: new StrangeTotem() (Black/Red Magic, new ArcaneManuscript() (BlueMagic/Acadmeics)
     }
 
     public static List<CraftingDesign> allCraftingDesigns() {
@@ -204,9 +209,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new KiteShield(),
                 new HeraldicShield(),
                 new SpikedShield(),
-                new TowerShield(),
-                new HolyChalice(),
-                new Spyglass());
+                new TowerShield());
     }
 
     public static List<ShoesItem> allShoes() {
