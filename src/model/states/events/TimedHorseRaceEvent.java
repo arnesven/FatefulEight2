@@ -65,7 +65,7 @@ public class TimedHorseRaceEvent extends DailyEventState {
                 horseToUse = HorseHandler.generateHorse();
             } while (!horseToUse.canBeRiddenBy(chosen));
         } else {
-            horseToUse = model.getParty().getHorseHandler().get(0);
+            horseToUse = model.getParty().getHorseHandler().getSuitableHorseFor(chosen);
         }
         HorseRacingEvent horseRace = new HorseRacingEvent(model, chosen, horseToUse);
         horseRace.setTrack(HorseRaceTrack.TIME_TRACK);
