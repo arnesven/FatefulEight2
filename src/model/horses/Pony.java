@@ -1,5 +1,6 @@
 package model.horses;
 
+import model.characters.GameCharacter;
 import view.MyColors;
 import view.sprites.HorseSprite;
 import view.sprites.Sprite;
@@ -33,5 +34,10 @@ public class Pony extends Horse {
     @Override
     public MyColors getFaceColor() {
         return MyColors.YELLOW;
+    }
+
+    @Override
+    public boolean canBeRiddenBy(GameCharacter chosen) {
+        return chosen.getRace().isShort();
     }
 }

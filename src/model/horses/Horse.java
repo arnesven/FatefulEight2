@@ -1,5 +1,6 @@
 package model.horses;
 
+import model.characters.GameCharacter;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.HorseSprite;
@@ -69,4 +70,6 @@ public abstract class Horse implements Serializable {
     public MyColors getFaceColor() {
         return MyColors.WHITE;
     }
+
+    public abstract boolean canBeRiddenBy(GameCharacter chosen);
 }

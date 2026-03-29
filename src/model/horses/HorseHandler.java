@@ -206,17 +206,9 @@ public class HorseHandler extends ArrayList<Horse> {
 
     public Horse getSuitableHorseFor(GameCharacter chosen) {
         Horse horseToUse = getFirst();
-        if (chosen.getRace().id() == Race.HALFLING.id() ||
-                chosen.getRace().id() == Race.DWARF.id()) {
-            Horse pony = MyLists.find(this, h -> h instanceof Pony);
-            if (pony != null) {
-                horseToUse = pony;
-            }
-        } else {
-            Horse steed = MyLists.find(this, h -> h instanceof Steed);
-            if (steed != null) {
-                horseToUse = steed;
-            }
+        Horse otherHorse = MyLists.find(this, h -> h.canBeRiddenBy(chosen));
+        if (otherHorse != null) {
+            return otherHorse;
         }
         return horseToUse;
     }
