@@ -41,14 +41,14 @@ public class ThiefEvent extends DailyEventState {
             print("Do you treat the thief to some rations and a drink? (Y/N) ");
             if (yesNoInput()) {
                 leaderSay("Well, why didn't you say so. You're welcome to " +
-                                "spend the evening with us, we've got plenty of food and drink.");
+                                "spend the evening with us, we've got plenty of food and drink.", FacialExpression.relief);
                 randomSayIfPersonality(PersonalityTrait.generous, new ArrayList<>(),
                         "You're probably very hungry. Eat as much as you like.");
                 model.getParty().addToFood(-1);
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.THF);
                 println("The thief is surprised by your sudden generosity and gladly joins you for the evening.");
                 println("The thief offers to sell you some lockpicks.");
-                new ShopState(model, "Thief", makeLockpicks(), new boolean[]{false});
+                new ShopState(model, "Thief", makeLockpicks(), new boolean[]{false}).run(model);
                 print("The thief is also willing to show you some tricks, ");
                 change.areYouInterested(model);
             } else {

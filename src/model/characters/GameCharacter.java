@@ -292,7 +292,7 @@ public class GameCharacter extends Combatant {
             if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
                 damageColor = DamageValueEffect.CRITICAL_DAMAGE;
             }
-            combatEvent.addFloatyDamage(target, damage, damageColor);
+            combatEvent.addFloatyDamage(target, dmg.getAmount(), damageColor);
         }
 
         combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);

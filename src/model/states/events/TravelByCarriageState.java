@@ -6,6 +6,7 @@ import model.combat.conditions.PoisonCondition;
 import model.map.DiscoveredRoute;
 import model.map.TownLocation;
 import model.states.EveningDuringLineTravelState;
+import model.states.EveningState;
 import model.states.GameState;
 import model.states.TravelTable;
 import util.MyLists;
@@ -124,6 +125,7 @@ public class TravelByCarriageState extends GameState {
 
 
         model.getCurrentHex().travelFrom(model);
+        new EveningState(model).setSubView(model);
         new EveningDuringLineTravelState(model).noLodging(model); // TODO: Perhaps put this in the middle of the loop above
         state.stepToNextDay(model);
         state.println("The party spends the day on the carriage traveling to the " + carriage.first.getName());
