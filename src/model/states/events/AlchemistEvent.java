@@ -48,16 +48,18 @@ public class AlchemistEvent extends DailyEventState {
             removePortraitSubView(model);
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Entertain, 8);
             if (success) {
-                println("You go to the town square and start chanting about Durok's new business. You even manage to " +
+               println("You go to the town square and start chanting about Durok's new business. You even manage to " +
                         "make up a little song. Before long, a few townsfolk gather around, amused and intrigued. " +
                         "You keep it up for a few hours. Afterwards, you return to Durok's shop.");
-                model.getLog().waitForAnimationToFinish();
-                showExplicitPortrait(model, durok, "Durok");
-                portraitSay("There you are! I've had many customers since you left. Whatever you did, it worked. " +
+               model.getLog().waitForAnimationToFinish();
+               showExplicitPortrait(model, durok, "Durok");
+               portraitSay("There you are! I've had many customers since you left. Whatever you did, it worked. " +
                         "Please permit me to reward you!");
-               Potion potion = model.getItemDeck().getRandomPotion();
-               println("The party gains a " + potion.getName() + ".");
-               model.getParty().getInventory().add(potion);
+               for (int i = 0; i < 3; ++i) {
+                   Potion potion = model.getItemDeck().getRandomPotion();
+                   println("The party gains a " + potion.getName() + ".");
+                   model.getParty().getInventory().add(potion);
+               }
                portraitSay("I have lots of other potions, if you're interested. I'll give you a discount!");
                waitForReturn();
                alchemistShop(model, true);

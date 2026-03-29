@@ -55,7 +55,7 @@ public class LetterFromMotherEvent extends DailyEventState {
         leaderSay("'Dear " + model.getParty().getLeader().getFirstName() + ". Since you have not been home for " +
                 "quite some time I've been cleaning out your room. I'm turning it into " +
                 MyRandom.sample(List.of("an art studio", "a gym", "a home spa", "a guest room")) + ". I took the liberty of " +
-                "selling some of your things. In particular, I sold your " + sellWhat + ". I hope you don't mind.");
+                "selling some of your things. In particular, I sold your " + sellWhat + ". I hope you don't mind.'");
         leaderSay("Drat.", FacialExpression.disappointed);
         randomSayIfPersonality(PersonalityTrait.jovial, List.of(model.getParty().getLeader()), "And you were saving that for your own kids one day!");
         leaderSay("'Inside this package are some of the proceeds from the sale. Make good use of them and good luck " +

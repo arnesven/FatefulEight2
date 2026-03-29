@@ -65,7 +65,7 @@ public class GardenMazeEvent extends DailyEventState {
         leaderSay("A maze?", FacialExpression.questioning);
         portraitSay("Yessir. You see those tall hedges over there? They're quite the labyrinth. I've been working on it for years. " +
                 "The master even got lost in there once!");
-        leaderSay("Can't be that tricky...");
+        leaderSay("Can't be that tricky...", FacialExpression.relief);
         portraitSay("Oh it is! Let's have a proper look at it from the porch.");
         println("The gardener leads you up on a large porch next to the house. From there you can see the garden maze. " +
                 "It's actually more impressive than you had anticipated.");
@@ -96,7 +96,7 @@ public class GardenMazeEvent extends DailyEventState {
         portraitSay("Take all the time you want here on the porch. " +
                 "You can even come back up here if you need to take another look.");
         leaderSay("I don't think I'll need to.");
-        portraitSay("Sure you won't.");
+        portraitSay("Sure you won't.", FacialExpression.wicked);
         model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);
 

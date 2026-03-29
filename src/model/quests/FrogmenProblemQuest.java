@@ -390,17 +390,17 @@ public class FrogmenProblemQuest extends MainQuest {
                     leaderSay("We... come... in... peace.");
                     println(model.getParty().getLeader().getFirstName() + " gestures carefully while speaking to the frogman.");
                     portraitSay("Shlurrpirurrrp.");
-                    leaderSay("Stop... attacking... village?");
+                    leaderSay("Stop... attacking... village?", FacialExpression.questioning);
                     portraitSay("Churri churr shlurrp.");
-                    leaderSay("I think... maybe he understands?");
+                    leaderSay("I think... maybe he understands?", FacialExpression.questioning);
                 } else {
-                    leaderSay("Okay... here it goes. SHLURP, SHLURP, RIBBIT-SHLURP, get it?");
+                    leaderSay("Okay... here it goes. SHLURP, SHLURP, RIBBIT-SHLURP,§ get it?");
                     portraitSay("Shlurri! Shlurri! Shlurriiii!");
                     if (model.getParty().size() > 1) {
                         GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
-                        partyMemberSay(other, "I don't think you said that right.");
-                        leaderSay("How can you tell?");
-                        partyMemberSay(other, "Oh you know, from the way they're coming at us with their weapons drawn!");
+                        partyMemberSay(other, "I don't think you said that right.", FacialExpression.disappointed);
+                        leaderSay("How can you tell?", FacialExpression.questioning);
+                        partyMemberSay(other, "Oh you know, from the way they're coming at us with their weapons drawn!", FacialExpression.afraid);
                     }
                     println("The frogmen attack you!");
                 }

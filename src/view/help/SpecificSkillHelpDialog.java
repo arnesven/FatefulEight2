@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
     public SpecificSkillHelpDialog(GameView view, Skill s) {
-        super(view, 20, s.getName(), makeText(s));
+        super(view, 24, s.getName(), makeText(s));
     }
 
     private static String makeText(Skill s) {

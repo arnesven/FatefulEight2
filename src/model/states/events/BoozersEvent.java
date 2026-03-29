@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -50,15 +51,15 @@ public class BoozersEvent extends DailyEventState {
                 "They're a bit rowdy and it's clear they've been drinking. Rather than go back, you attempt to push " +
                 "past them in the narrow alley but end up accidentally bumping into one of them.");
         leaderSay("Excuse " + meOrUs() + ".");
-        boozer1Say("Hey. Whadda youz think youz doin, ehh?");
-        leaderSay("Uhm... pardon?");
-        boozer1Say("Can ya believe theez eh? They's all walkin' around likez they ownz da place.");
-        boozer2Say("No manners at... hic... all. No manners.");
-        boozer1Say("Darn outsiders! hic... shlummin up our town!");
-        boozer2Say("Ought to be... hic... ought to be... hic... taught a lessshon.");
-        leaderSay("Look. " + iOrWeCap() + " really don't want any trouble. Just going about " + myOrOur() + " business friend.");
-        boozer1Say("Who ya callin' friend, shlummy!");
-        leaderSay("Oh boy...");
+        boozer1Say("Hey. Whadda youz think youz doin, ehh?", FacialExpression.disappointed);
+        leaderSay("Uhm... pardon?", FacialExpression.questioning);
+        boozer1Say("Can ya believe theez eh? They's all walkin' around likez they ownz da place.", FacialExpression.disappointed);
+        boozer2Say("No manners at... hic... all. No manners.", FacialExpression.disappointed);
+        boozer1Say("Darn outsiders! hic... shlummin up our town!", FacialExpression.disappointed);
+        boozer2Say("Ought to be... hic... ought to be... hic... taught a lessshon.", FacialExpression.wicked);
+        leaderSay("Look. " + iOrWeCap() + " really don't want any trouble. Just going about " + myOrOur() + " business friend.", FacialExpression.relief);
+        boozer1Say("Who ya callin' friend, shlummy!", FacialExpression.disappointed);
+        leaderSay("Oh boy...", FacialExpression.disappointed);
         List<String> options = new ArrayList<>(List.of("Attempt persuade", "Attempt intimidate", "Attack", "Run away"));
         if (hasDrink(model)) {
             options.add("Offer drink");
@@ -83,11 +84,11 @@ public class BoozersEvent extends DailyEventState {
                 8, 10, 0);
         if (result.isSuccessful()) {
             leaderSay("Look, we're actually on our way out of here. Don't worry we'll be gone from your town in no time.");
-            boozer1Say("Darn straight! Don't want shlummies around here anyway...");
+            boozer1Say("Darn straight! Don't want shlummies around here anyway...", FacialExpression.angry);
             println("The boozers go back to their bottles, and you move on.");
         } else {
             leaderSay("Get your stinking mug out of my face...");
-            boozer1Say("Huh, got some cheek to ya? Youz will regrett messhin with ush...");
+            boozer1Say("Huh, got some cheek to ya? Youz will regrett messhin with ush...", FacialExpression.disappointed);
             attack(model);
         }
     }
@@ -97,14 +98,15 @@ public class BoozersEvent extends DailyEventState {
         SkillCheckResult result = model.getParty().doIntimidationSkillCheck(model, this, model.getParty().getLeader(), 9, 10);
         if (result.isSuccessful()) {
             leaderSay("You see these weapons on our belts? They're not just for show. See the blood stains on them? " +
-                    "Now get out of my way. " + iOrWeCap() + " mean business.");
+                    "Now get out of my way. " + iOrWeCap() + " mean business.", FacialExpression.relief);
             println("The boozer appears to sober up a little and backs away.");
-            boozer1Say("Hic... huh? Hey... I wassh jussht jokin with yer.");
+            boozer1Say("Hic... huh? Hey... I wassh jussht jokin with yer.", FacialExpression.relief);
             leaderSay("...");
             println("The boozers go back to their bottles, and you move on.");
         } else {
-            leaderSay("Look at my muscles... roar... I'm a tough " + (model.getParty().getLeader().getGender() ? "gal":"guy") + "!");
-            portraitSay("Dat shposed to shcare us? Youz will regrett messhin with ush...");
+            leaderSay("Look at my muscles... roar... I'm a tough " +
+                    (model.getParty().getLeader().getGender() ? "gal":"guy") + "!", FacialExpression.disappointed);
+            portraitSay("Dat shposed to shcare us? Youz will regrett messhin with ush...", FacialExpression.disappointed);
             attack(model);
         }
     }
@@ -120,7 +122,7 @@ public class BoozersEvent extends DailyEventState {
 
     private void runAway(Model model) {
         println("You start to turn away from the boozers.");
-        boozer2Say("Hey... theyz trying to get away!");
+        boozer2Say("Hey... theyz trying to get away!", FacialExpression.angry);
         int minSpeed = MyLists.minimum(model.getParty().getPartyMembers(), GameCharacter::getSpeed);
         if (MyRandom.rollD10() <= minSpeed) {
             println("The drunken duo is no match for your speed and you quickly manage to get away.");
@@ -153,22 +155,22 @@ public class BoozersEvent extends DailyEventState {
     }
 
     private void offerBeerOrWine(Model model, IntoxicatingPotion drink) {
-        leaderSay("Relax... we mean no harm. Why don't you have this.");
+        leaderSay("Relax... we mean no harm. Why don't you have this.", FacialExpression.relief);
         String drinkName = drink.getName().toLowerCase();
         println("You offer the " + drinkName + " to the boozer.");
         model.getParty().removeFromInventory(drink);
-        boozer1Say("Uh... hic... a drink? Gimme!");
+        boozer1Say("Uh... hic... a drink? Gimme!", FacialExpression.questioning);
         if (drink.doesReject(model, boozer1.getRace())) {
             println("The boozer is about to have a sip of the " + drinkName + ", but then recoils with a jerk.");
-            boozer1Say("Whaaa... what kind of swill is thish?#");
+            boozer1Say("Whaaa... what kind of swill is thish?#", FacialExpression.disappointed);
             boozer2Say("Everybody, hic, knowsh your kind hatesh " + drinkName + "!" +
-                            "I think " + heOrShe(model.getParty().getLeader().getGender()) + "'s tryin' to inshult ya!");
+                            "I think " + heOrShe(model.getParty().getLeader().getGender()) + "'s tryin' to inshult ya!", FacialExpression.disappointed);
             println("The drunk throws the drink at you, then attacks!");
             attack(model);
         } else {
             println("The boozer takes a sip of the " + drinkName + ".");
-            boozer1Say("Eeeh he he... Maybe thish feller might be alright, eh?");
-            boozer2Say("Hic! Yeash, seems like a good egg... hic...");
+            boozer1Say("Eeeh he he... Maybe thish feller might be alright, eh?", FacialExpression.relief);
+            boozer2Say("Hic! Yeash, seems like a good egg... hic...", FacialExpression.relief);
             boozer1Say("Stay and drink with ussh for a bit eh?");
             model.getLog().waitForAnimationToFinish();
             getPortraitSubView().forceEyesClosed(true);
@@ -201,15 +203,23 @@ public class BoozersEvent extends DailyEventState {
                 (Item it) -> it instanceof IntoxicatingPotion);
     }
 
+    private void boozer1Say(String line, FacialExpression facialExpression) {
+        boozerSay(boozer1, "Boozer 1", line, facialExpression);
+    }
+
     private void boozer1Say(String line) {
-        boozerSay(boozer1, "Boozer 1", line);
+        boozer1Say(line, FacialExpression.none);
+    }
+
+    private void boozer2Say(String line, FacialExpression facialExpression) {
+        boozerSay(boozer2, "Boozer 2", line, facialExpression);
     }
 
     private void boozer2Say(String line) {
-        boozerSay(boozer2, "Boozer 2", line);
+        boozer2Say(line, FacialExpression.none);
     }
 
-    private void boozerSay(AdvancedAppearance boozer, String name, String line) {
+    private void boozerSay(AdvancedAppearance boozer, String name, String line, FacialExpression facialExpression) {
         if (currentPortrait != boozer) {
             if (currentPortrait != null) {
                 removePortraitSubView(getModel());
@@ -217,7 +227,7 @@ public class BoozersEvent extends DailyEventState {
             showExplicitPortrait(getModel(), boozer, name);
             currentPortrait = boozer;
         }
-        portraitSay(line);
+        portraitSay(line, facialExpression);
         getModel().getLog().waitForAnimationToFinish();
     }
 }
