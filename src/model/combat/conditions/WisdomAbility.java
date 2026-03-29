@@ -8,7 +8,7 @@ import view.help.SubChapterHelpDialog;
 public class WisdomAbility extends VampireAbility {
     private static final int BONUS = 3;
     private static final String NAME = "Wisdom";
-    private static final String DESCRIPTION = "Grants a permanent +" + BONUS + " to the Logic and Perception skills.";
+    private static final String DESCRIPTION = "Grants a permanent +" + BONUS + " to the Academics, Logic and Perception skills.";
 
     public WisdomAbility() {
         super(NAME, 0x93, DESCRIPTION);
@@ -16,7 +16,7 @@ public class WisdomAbility extends VampireAbility {
 
     @Override
     public int getBonusForSkill(Skill skill) {
-        if (skill == Skill.Logic || skill == Skill.Perception) {
+        if (skill == Skill.Academics || skill == Skill.Logic || skill == Skill.Perception) {
             return BONUS;
         }
         return 0;

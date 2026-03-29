@@ -32,4 +32,9 @@ public class ColoredRace extends Race {
     public boolean isShort() {
         return innerRace.isShort();
     }
+
+    @Override
+    public int id() {
+        return innerRace.id();
+    }
 }

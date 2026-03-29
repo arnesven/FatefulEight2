@@ -98,10 +98,10 @@ public class AvatarSprite extends LoopingSprite {
     }
 
     private static int adjustForRace(int num, Race race) {
-        if (race instanceof Halfling) {
+        if (race.id() == Race.HALFLING.id()) {
             return num + 0xA;
         }
-        if (race instanceof Dwarf) {
+        if (race.id() == Race.DWARF.id()) {
             return num + 0x5;
         }
         return num;
