@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.items.books.SpelunkersNotesBook;
 import model.journal.JournalEntry;
@@ -74,25 +75,25 @@ public class CaveSpelunkerEvent extends DailyEventState {
         }
         showEventCard("You're taking a short break at the side of the path when a " +
                 "sudden rustling of bushes startles you. Suddenly a " + who + " crawls out of the underbrush.");
-        leaderSay("Who... don't sneak up on us like that!");
+        leaderSay("Who... don't sneak up on us like that!", FacialExpression.angry);
         println(heOrSheCap(gender) + " looks completely emaciated. " + heOrSheCap(gender) + " tries to stand but is struggling to even get up.");
         CharacterAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER, race, gender);
         showExplicitPortrait(model, appearance, "Spelunker");
-        portraitSay("Water... food... please help me...");
+        portraitSay("Water... food... please help me...", FacialExpression.afraid);
         if (model.getParty().getFood() > 0) {
             print("Do you give the " + who + " some of your rations? (Y/N) ");
             if (yesNoInput()) {
                 println("You quickly pull out some bread and water and help the " + who + " sit up.");
                 model.getParty().addToFood(-1);
             } else {
-                leaderSay("Uhm... sorry, we're all out...");
+                leaderSay("Uhm... sorry, we're all out...", FacialExpression.disappointed);
                 randomSayIfPersonality(PersonalityTrait.generous, List.of(model.getParty().getLeader()),
                         "What's wrong with you " + model.getParty().getLeader().getFirstName() + "?");
             }
         } else if (model.getParty().getLeader().hasPersonality(PersonalityTrait.stingy)) {
-            leaderSay("I wouldn't give you any even if I had some!");
+            leaderSay("I wouldn't give you any even if I had some!", FacialExpression.disappointed);
         } else {
-            leaderSay("I'm sorry, we have nothing ourselves.");
+            leaderSay("I'm sorry, we have nothing ourselves.", FacialExpression.sad);
         }
         println("After a little while the " + who + " seems to have regained enough strength to talk a little.");
         portraitSay("There were six of us... exploring a cave near " + townOrCity.getPlaceName() + ". I'm the only one " +
@@ -101,10 +102,10 @@ public class CaveSpelunkerEvent extends DailyEventState {
         portraitSay("No, no... we were not exploring some ordinary goblins' nest. We had been looking for it for a long time.");
         leaderSay("What were you looking for?");
         portraitSay("The fortress... the Fortress at the Utmost edge.");
-        leaderSay("Perhaps you should rest a little...");
+        leaderSay("Perhaps you should rest a little...", FacialExpression.questioning);
         println("As you attempt to cover the spelunker with a blanket you realize " + hisOrHer(gender) + 
                 " breaches are wet, soaked in fact, with blood.");
-        leaderSay("You are wounded... we must dress your wounds.");
+        leaderSay("You are wounded... we must dress your wounds.", FacialExpression.surprised);
         portraitSay("I fear it is too late, I'm done for.");
         leaderSay("Nonsense, we've seen worse wounds in our adventures.");
         portraitSay("Listen to me... I'm a dead " + manOrWoman(gender) + " talking. But with my final breath I'll " +

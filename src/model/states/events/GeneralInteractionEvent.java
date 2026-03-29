@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -185,10 +186,16 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(MyRandom.sample(List.of("Oh... alright.", "I see, goodbye.",
                         "Safe travels.", "I understand, farewell")));
                 println("You take leave of the " + victim + ".");
-                partyMemberSay(decoy, "Nice work " + thief.getName() + ".");
+                if (decoy.hasPersonality(PersonalityTrait.lawful) || decoy.hasPersonality(PersonalityTrait.benevolent)) {
+                    partyMemberSay(decoy, "That was just plain wrong.", FacialExpression.disappointed);
+                } else if (decoy.hasPersonality(PersonalityTrait.greedy)) {
+                    partyMemberSay(decoy, "Hey, don't I get a cut of that?");
+                } else {
+                    partyMemberSay(decoy, "Nice work " + thief.getFirstName() + ".");
+                }
                 partyMemberSay(thief, MyRandom.sample(List.of("Child's play", "Easy when you know how.",
                         "Like taking candy from a baby.", heOrSheCap(victimChar.getGender()) + " never suspected a thing.",
-                        "What can I say? I'm good.", "Easy money")));
+                        "What can I say? I'm good.", "Easy money.")), FacialExpression.wicked);
                 randomSayIfPersonality(PersonalityTrait.lawful, List.of(getModel().getParty().getLeader()),
                         "I feel dirty.");
                 return;
