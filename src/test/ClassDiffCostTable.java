@@ -5,8 +5,6 @@ import model.classes.Classes;
 import model.classes.Skill;
 import util.MyLists;
 import util.MyPair;
-import util.MyStringFunction;
-import util.MyStrings;
 
 import java.util.*;
 
@@ -73,7 +71,7 @@ public class ClassDiffCostTable extends HashMap<CharacterClass, HashMap<Characte
         for (CharacterClass cls : classes) {
             List<MyPair<CharacterClass, Integer>> costList = new ArrayList<>(diffTable.get(cls));
             costList.sort(Comparator.comparingInt(o -> o.second));
-            costList = MyLists.take(costList, 5).subList(1, 5);
+            costList = MyLists.takeAndRemove(costList, 5).subList(1, 5);
             int total = MyLists.intAccumulate(costList, p -> p.second);
             System.out.printf("%3s: %s, total: %d\n", cls.getShortName(), MyLists.commaAndJoin(costList,
                     p -> "(" + p.first.getShortName() + " " + p.second + ")"),

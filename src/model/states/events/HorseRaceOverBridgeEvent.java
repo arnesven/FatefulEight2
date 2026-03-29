@@ -55,7 +55,7 @@ public class HorseRaceOverBridgeEvent extends RiverEvent {
         SubView oldSubView = model.getSubView();
         horseRace.run(model);
         CollapsingTransition.transition(model, oldSubView);
-        if (MyLists.any(MyLists.take(horseRace.getPlacements(), 3), hr -> hr.getCharacter() == gc)) {
+        if (MyLists.any(MyLists.takeAndRemove(horseRace.getPlacements(), 3), hr -> hr.getCharacter() == gc)) {
             portraitSay("That was some great riding!");
             if (gc.hasPersonality(PersonalityTrait.narcissistic) || gc.hasPersonality(PersonalityTrait.rude)) {
                 partyMemberSay(gc, "Bah, it was nothing.");

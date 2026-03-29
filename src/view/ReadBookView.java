@@ -4,7 +4,6 @@ import model.Model;
 import model.items.books.BookItem;
 import sound.SoundEffects;
 import util.MyLists;
-import util.MyPair;
 import util.MyStrings;
 import util.MyUnaryIntFunction;
 import view.sprites.Sprite;
@@ -74,7 +73,7 @@ public class ReadBookView extends GameView {
         String[] rest = MyStrings.partitionWithLineBreaks(book.getTextContent(), PARTITION_WIDTH);
         List<String> lines = new ArrayList<>(Arrays.asList(rest));
         while (!lines.isEmpty()) {
-            List<String> page = MyLists.take(lines, LINES_PER_PAGE);
+            List<String> page = MyLists.takeAndRemove(lines, LINES_PER_PAGE);
             result.add(page);
         }
 

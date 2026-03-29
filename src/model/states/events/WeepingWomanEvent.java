@@ -2,16 +2,13 @@ package model.states.events;
 
 import model.GameStatistics;
 import model.Model;
-import model.Party;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.FacialExpression;
 import model.characters.appearance.WeepingAmount;
 import model.classes.*;
-import model.classes.normal.NobleClass;
 import model.items.Item;
-import model.items.ItemDeck;
 import model.items.Prevalence;
 import model.items.potions.HealthPotion;
 import model.items.potions.Potion;
@@ -22,7 +19,6 @@ import model.races.Race;
 import model.states.DailyEventState;
 import util.MyLists;
 import view.MyColors;
-import view.StatisticsView;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
@@ -314,7 +310,8 @@ public class WeepingWomanEvent extends DailyEventState {
             portraitSay("Thank you for trying to cheer up my mother. We've had a tough time since my father passed away.");
             leaderSay("I understand. A death in the family is always upsetting.");
             portraitSay("Won't you accept this small gift, as a thank you?");
-            List<Potion> potions = MyLists.take(List.of(new RejuvenationPotion(), new StaminaPotion(), new HealthPotion()), 2);
+            List<Potion> potionsList = new ArrayList<>(List.of(new RejuvenationPotion(), new StaminaPotion(), new HealthPotion()));
+            List<Potion> potions = MyLists.takeAndRemove(potionsList, 2);
             println("You got " + MyLists.commaAndJoin(potions, Item::getName) + ".");
             for (Potion p : potions) {
                 p.addYourself(model.getParty().getInventory());

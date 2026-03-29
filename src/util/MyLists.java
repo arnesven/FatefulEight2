@@ -1,9 +1,5 @@
 package util;
 
-import model.characters.GameCharacter;
-import model.journal.StoryPart;
-import model.states.DailyEventState;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,8 +121,7 @@ public class MyLists {
         return new ArrayList<E>(map.values());
     }
 
-    public static <E> List<E> take(List<E> linesIn, int amount) {
-        List<E> lines = new ArrayList<>(linesIn);
+    public static <E> List<E> takeAndRemove(List<E> lines, int amount) {
         List<E> result = new ArrayList<>();
         for (int i = 0; i < amount && !lines.isEmpty(); ++i) {
             result.add(lines.getFirst());
