@@ -270,7 +270,7 @@ class TalkToCrewEvent extends DailyEventState {
                     portraitSay("Yes! My ears were clipped by a sadistic prison guard.");
                 } else if (person.getRace().isShort()) {
                     portraitSay("Yes! I never ate my greens as a child, and my growth was stunted in puberty.");
-                } else if (person.getRace() instanceof HalfOrc) {
+                } else if (person.getRace().id() == HumanRace.HALF_ORC.id()) {
                     portraitSay("Yes! I was very hungry as a child, and I ate so many green vegetables that my skin turned green.");
                 } else {
                     portraitSay("Yes! Don't I look it?");

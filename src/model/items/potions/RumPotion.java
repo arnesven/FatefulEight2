@@ -39,6 +39,6 @@ public class RumPotion extends IntoxicatingPotion {
 
     @Override
     public boolean doesReject(Model model, Race race) {
-        return race instanceof Halfling;
+        return race.id() == Race.HALFLING.id();
     }
 }

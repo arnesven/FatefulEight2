@@ -11,6 +11,7 @@ import model.map.UrbanLocation;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
+import model.races.Race;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -384,12 +385,12 @@ public class RecruitState extends GameState {
 
     private boolean partyHasAHalfOrc(Party party) {
         return party.getPartyMembers().stream().anyMatch(
-                gameCharacter -> gameCharacter.getRace() instanceof HalfOrc);
+                gameCharacter -> gameCharacter.getRace().id() == Race.HALF_ORC.id());
     }
 
     private boolean partyHasADwarf(Party party) {
         return party.getPartyMembers().stream().anyMatch(
-                gameCharacter -> gameCharacter.getRace() instanceof Dwarf);
+                gameCharacter -> gameCharacter.getRace().id() == Race.DWARF.id());
     }
 
     private boolean partyHasAnElf(Party party) {
