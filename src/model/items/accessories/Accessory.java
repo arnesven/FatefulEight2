@@ -41,7 +41,7 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
             result.append(", Phys. Armor ").append(getAP()).append(" ").append(isHeavy() ? "HEAVY" : "LIGHT");
         }
         if (getMP() != 0) {
-            result.append(", Mag. Armor ").append(getMP()).append(" ");
+            result.append(", Mag. Armor ").append(getMP());
         }
         if (getSpeedModifier() != 0) {
             result.append(", Speed ").append(MyStrings.withPlus(getSpeedModifier()));

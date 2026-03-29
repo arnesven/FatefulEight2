@@ -11,18 +11,14 @@ import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.quests.scenes.*;
 import model.races.Race;
-import model.states.GameState;
 import model.states.QuestState;
-import model.states.events.GeneralInteractionEvent;
 import sound.BackgroundMusic;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
 import view.combat.MansionTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
-import view.widget.TopText;
 
 import java.awt.*;
 import java.util.ArrayList;
