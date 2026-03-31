@@ -1,5 +1,6 @@
 package model.characters.appearance;
 
+import model.classes.Looks;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.ClothesSprite;
@@ -14,16 +15,17 @@ public class SpearInHandDetail extends StaffHandDetail {
 
     @Override
     public void applyYourself(AdvancedAppearance appearance, Race race) {
+        MyColors skinColor = Looks.getSkinColorToUse(appearance);
         for (int y = 0; y < 2; ++y) {
             for (int x = 0; x < 2; ++x) {
-                addSpriteOnTop(appearance, 0x164 + y * 0x10 + x, x, 5 + y, race.getColor());
+                addSpriteOnTop(appearance, 0x164 + y * 0x10 + x, x, 5 + y, skinColor);
             }
         }
         for (int x = 0; x < 2; ++x) {
-            addSpriteOnTop(appearance, 0x176 + x, x, 4, race.getColor());
+            addSpriteOnTop(appearance, 0x176 + x, x, 4, skinColor);
         }
         for (int x = 0; x < 2; ++x) {
-            addSpriteOnTop(appearance, 0x19A + + x, x, 3, race.getColor());
+            addSpriteOnTop(appearance, 0x19A + + x, x, 3, skinColor);
         }
         for (int x = 0; x < 2; ++x) {
             addNonSkinColorSpriteOnTop(appearance, 0x18A + x, x, 2,

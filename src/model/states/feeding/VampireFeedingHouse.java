@@ -5,6 +5,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.classes.Looks;
 import model.combat.conditions.PoisonCondition;
 import model.combat.conditions.SlowedCondition;
 import model.combat.conditions.StrangenessCondition;
@@ -256,7 +257,7 @@ public class VampireFeedingHouse {
 
     public boolean feedOnVictim(Model model, GameState state, boolean isSleeping) {
         AdvancedAppearance victim = PortraitSubView.makeRandomPortrait(Classes.None);
-        victim.setMascaraColor(victim.getRace().getColor());
+        victim.setMascaraColor(Looks.getSkinColorToUse(victim));
         VampireFeedingHouse.this.setPortrait(victim);
         if (isSleeping) {
             state.println(vampire.getFirstName() + " approaches the bed of a " + victim.getRace().getName() + ".");

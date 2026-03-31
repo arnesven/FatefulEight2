@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.RegenerationCondition;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.Looks;
 import model.combat.Combatant;
 import model.items.spells.WerewolfFormSpell;
 import model.states.GameState;
@@ -31,7 +32,7 @@ public class WerewolfFormCondition extends Condition {
         this.attackBonus = magnitude;
         if (basedOn != null) {
             this.avatar = new AvatarSprite(basedOn.getRace(), 0x2E0,
-                    MyColors.DARK_GRAY, basedOn.getRace().getColor(), MyColors.LIGHT_GRAY,
+                    MyColors.DARK_GRAY, Looks.getSkinColorToUse(basedOn.getAppearance()), MyColors.LIGHT_GRAY,
                     CharacterAppearance.noHair(), CharacterAppearance.noHair());
         }
     }

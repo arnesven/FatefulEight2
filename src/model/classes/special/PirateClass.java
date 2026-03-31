@@ -33,9 +33,10 @@ public class PirateClass extends SpecialCharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         putOnScarfHat(characterAppearance, shirtAndHatColor);
-        Looks.putOnLightArmor(characterAppearance, shirtAndHatColor, characterAppearance.getRace().getColor());
+        MyColors skinColor = Looks.getSkinColorToUse(characterAppearance);
+        Looks.putOnLightArmor(characterAppearance, shirtAndHatColor, skinColor);
         characterAppearance.setSprite(3, 6, new ClothesSprite(characterAppearance.isFemale() ? 0xAD : 0xAC,
-                shirtAndHatColor, characterAppearance.getRace().getColor()));
+                shirtAndHatColor, skinColor));
     }
 
     private void putOnScarfHat(CharacterAppearance appearance, MyColors fillColor) {

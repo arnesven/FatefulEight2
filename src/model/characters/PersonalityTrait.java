@@ -74,8 +74,7 @@ public enum PersonalityTrait {
                 break;
                 // return new BallGameEvent(model, this, mainCharacter);
             case gluttonous:
-                break;
-                // return new OuthouseEvent(model, this, mainCharacter);
+                return new InvisibleEvent(model, this, mainCharacter);
             case jovial:
                 break;
                 // return new OffendedWomanEvent(model, this, mainCharacter);
@@ -96,7 +95,6 @@ public enum PersonalityTrait {
                 return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
             case intellectual:
                 break;
-                // return new BookWithMissingPagesEvent(model, this, mainCharacter);
             case cowardly:
                 break;
                 // return new NightmareEvent(model, this, mainCharacter);

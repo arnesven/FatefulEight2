@@ -41,7 +41,8 @@ public class BardClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         if (characterAppearance.getGender()) {
-            MyColors detailColor = characterAppearance.getRace().getColor() == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
+            MyColors skinColor = Looks.getSkinColorToUse(characterAppearance);
+            MyColors detailColor = skinColor == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
             Looks.putOnFancyDress(characterAppearance, MyColors.PURPLE, detailColor);
         } else {
             Looks.putOnLooseShirt(characterAppearance, MyColors.PURPLE);
@@ -52,7 +53,8 @@ public class BardClass extends CharacterClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         if (appearance.getGender()) {
-            MyColors detailColor = appearance.getRace().getColor() == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
+            MyColors skinColor = Looks.getSkinColorToUse(appearance);
+            MyColors detailColor = skinColor == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
             return new AvatarSprite(race, AvatarSprite.PLAIN_FEMALE_BASE, MyColors.PURPLE, race.getColor(), detailColor,
                     appearance.getBackHairOnly(), appearance.getHalfBackHair(), makeAvatarHat(appearance));
         }

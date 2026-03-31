@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.classes.Looks;
 import model.horses.Horse;
 import model.horses.Pony;
 import model.items.Inventory;
@@ -52,7 +53,7 @@ public class TravelState extends GameState {
         }
         if (flying) {
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.happyMandolin);
-            spriteToUse = new FlyingWitchSprite(model.getParty().getLeader().getRace().getColor());
+            spriteToUse = new FlyingWitchSprite(Looks.getSkinColorToUse(model.getParty().getLeader().getAppearance()));
             model.getWorld().setAlternativeAvatar(spriteToUse);
         } else if (riding) {
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.ridingSong);

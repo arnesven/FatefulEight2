@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Looks;
 import model.states.beangame.BeanGameBoard;
 import model.states.beangame.BeanGameBoardMaker;
 import sound.SoundEffects;
@@ -57,7 +58,7 @@ public class BeanGameSubView extends SubView implements Animation {
         this.gameBoard = beanGameBoard;
         this.numberOfScreens = 2 + (gameBoard.boardLength() - (ROWS_PER_SCREEN - 4)) / ROWS_PER_SCREEN;
         this.beanInHand = new Sprite32x16("beaninhand", "bean.png", 0x10,
-                MyColors.DARK_GRAY, player.getRace().getColor(), MyColors.GREEN, MyColors.ORC_GREEN);
+                MyColors.DARK_GRAY, Looks.getSkinColorToUse(player.getAppearance()), MyColors.GREEN, MyColors.ORC_GREEN);
     }
 
     @Override

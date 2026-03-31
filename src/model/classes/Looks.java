@@ -175,8 +175,15 @@ public abstract class Looks {
         characterAppearance.getShoulders().putOnHideRight(characterAppearance, clothingColor);
         characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0xF7, clothingColor));
         if (!characterAppearance.getGender()) {
-            characterAppearance.getSprite(5, 6).setColor4(characterAppearance.getRace().getColor());
+            characterAppearance.getSprite(5, 6).setColor4(Looks.getSkinColorToUse(characterAppearance));
         }
+    }
+
+    public static MyColors getSkinColorToUse(CharacterAppearance characterAppearance) {
+        if (characterAppearance.hasAlternateSkinColor()) {
+            return characterAppearance.getAlternateSkinColor();
+        }
+        return characterAppearance.getRace().getColor();
     }
 
     public static void putOnHideLeft(CharacterAppearance characterAppearance, MyColors clothingColor) {
@@ -186,7 +193,7 @@ public abstract class Looks {
         characterAppearance.getShoulders().putOnHideLeft(characterAppearance, clothingColor);
         characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0xD9, clothingColor));
         if (!characterAppearance.getGender()) {
-            characterAppearance.getSprite(1, 6).setColor4(characterAppearance.getRace().getColor());
+            characterAppearance.getSprite(1, 6).setColor4(getSkinColorToUse(characterAppearance));
         }
     }
 
@@ -269,7 +276,7 @@ public abstract class Looks {
 
     public static void putOnFancyDress(CharacterAppearance characterAppearance, MyColors clothesColor, MyColors detailColor) {
         characterAppearance.setSprite(3, 6, new ClothesSprite(characterAppearance.isFemale() ? 0xAD : 0xAC,
-                detailColor, characterAppearance.getRace().getColor(), detailColor));
+                detailColor, getSkinColorToUse(characterAppearance), detailColor));
 
         characterAppearance.getShoulders().putOnFancyDressLeft(characterAppearance, clothesColor, detailColor);
         characterAppearance.getShoulders().putOnFancyDressRight(characterAppearance, clothesColor, detailColor);
