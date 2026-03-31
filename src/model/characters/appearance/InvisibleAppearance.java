@@ -30,6 +30,11 @@ public class InvisibleAppearance extends AdvancedAppearance {
     }
 
     @Override
+    public boolean supportsSpeakingAnimation() {
+        return false;
+    }
+
+    @Override
     public void drawBlink(ScreenHandler screenHandler, int x, int y) {}
 
     @Override

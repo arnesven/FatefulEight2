@@ -4,6 +4,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
 import model.items.Item;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -51,7 +52,7 @@ public class CharismaPotion extends SkillBoostingPotion {
         @Override
         public ConditionHelpDialog getHelpView(GameView view) {
             return new ConditionHelpDialog(view, this, "A condition indicating that the character is currently " +
-                    "receiving a bonus to Charisma-based skills, i.e. Entertain, Leadership, Persuade, and Seek Info.");
+                    "receiving a bonus to Charisma-based skills, i.e. " + MyLists.commaAndJoin(Skill.getCharismaSkills(), Skill::getName) + ".");
         }
 
         @Override

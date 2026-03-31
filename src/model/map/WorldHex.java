@@ -63,7 +63,7 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
-        return new InvisibleEvent(model, PersonalityTrait.gluttonous, model.getParty().getLeader()); /*
+        return new InvisibleEvent(model, PersonalityTrait.gluttonous, model.getParty().getPartyMembers().getLast()); /*
         if (isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
