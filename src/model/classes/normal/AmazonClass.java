@@ -80,6 +80,10 @@ public class AmazonClass extends CharacterClass {
     @Override
     public void finalizeLook(CharacterAppearance appearance) {
         Looks.putOnNecklace(appearance);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance appearance) {
         if (appearance instanceof AdvancedAppearance) {
             spear.applyYourself((AdvancedAppearance) appearance,
                     appearance.getRace());

@@ -45,6 +45,10 @@ public class DruidClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, ROBE_COLOR, MyColors.GREEN);
         Looks.putOnHood(characterAppearance, ROBE_COLOR);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance characterAppearance) {
         if (characterAppearance instanceof AdvancedAppearance) {
             staff.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());

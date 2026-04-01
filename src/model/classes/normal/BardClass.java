@@ -73,9 +73,6 @@ public class BardClass extends CharacterClass {
     }
 
     @Override
-    public void finalizeLook(CharacterAppearance appearance) { }
-
-    @Override
     protected MyColors getIconColor() {
         return MyColors.PURPLE;
     }

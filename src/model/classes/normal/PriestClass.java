@@ -43,6 +43,10 @@ public class PriestClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, MyColors.LIGHT_YELLOW, MyColors.YELLOW);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance characterAppearance) {
         if (characterAppearance instanceof AdvancedAppearance) {
             cross.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());

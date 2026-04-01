@@ -48,6 +48,10 @@ public class MarksmanClass extends CharacterClass {
         Looks.putOnTunic(characterAppearance, MyColors.DARK_GRAY);
         Looks.putOnLightArmor(characterAppearance, ARMOR_COLOR, MyColors.DARK_GRAY);
         putOnLeatherCap(characterAppearance, ARMOR_COLOR);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance characterAppearance) {
         if (characterAppearance instanceof AdvancedAppearance) {
             bow.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());

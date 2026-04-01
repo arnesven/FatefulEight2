@@ -10,7 +10,7 @@ public abstract class FaceDetail implements Serializable, Comparable<FaceDetail>
             new GlassesDetail(), new RoundEarringsDetail(),
             new TriangularEarringsDetail(),
             new EyePatchDetail(), new HeadBandDetail(), new RougeDetail(),
-            new FrecklesDetail()};
+            new FrecklesDetail(), new SnakeDetail()};
 
     public MyColors color = MyColors.WHITE;
     public String name;

@@ -32,7 +32,8 @@ public class InvisibleEvent extends PersonalityTraitEvent {
 
     @Override
     public boolean isApplicable(Model model) {
-        return model.getCurrentHex().getLocation() instanceof UrbanLocation;
+        return model.getCurrentHex().getLocation() instanceof UrbanLocation &&
+                getMainCharacter().getCharClass().id() != Classes.BKN.id();
     }
 
     @Override

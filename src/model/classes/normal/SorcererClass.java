@@ -44,6 +44,10 @@ public class SorcererClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, MyColors.DARK_GRAY, MyColors.RED);
         putOnHelm(characterAppearance);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance characterAppearance) {
         if (characterAppearance instanceof AdvancedAppearance) {
             staff.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());

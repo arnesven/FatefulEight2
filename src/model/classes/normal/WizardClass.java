@@ -45,6 +45,10 @@ public class WizardClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnPointyHat(characterAppearance, MyColors.BLUE, MyColors.DARK_BLUE, MyColors.DARK_BLUE);
         Looks.putOnRobe(characterAppearance, MyColors.BLUE, MyColors.LIGHT_BLUE);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance characterAppearance) {
         if (characterAppearance instanceof AdvancedAppearance) {
             staff.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());

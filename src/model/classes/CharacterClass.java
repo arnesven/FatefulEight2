@@ -59,6 +59,8 @@ public abstract class CharacterClass implements Serializable {
 
     public abstract void putClothesOn(CharacterAppearance characterAppearance);
 
+    public void addForegroundObject(CharacterAppearance characterAppearance) {}
+
     public void takeClothesOff(CharacterAppearance characterAppearance) { };
 
     public WeightedSkill getWeightForSkill(Skill skill) {

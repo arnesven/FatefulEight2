@@ -68,6 +68,11 @@ public class RedKnightClass extends SpecialCharacterClass {
     }
 
     @Override
+    public boolean showDetail() {
+        return false;
+    }
+
+    @Override
     public boolean coversEars() {
         return true;
     }

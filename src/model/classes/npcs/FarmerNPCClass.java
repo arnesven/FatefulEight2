@@ -21,6 +21,10 @@ public class FarmerNPCClass extends NPCClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnLooseShirt(characterAppearance, MyColors.BEIGE);
         Looks.putOnFarmersHat(characterAppearance, MyColors.BROWN);
+    }
+
+    @Override
+    public void addForegroundObject(CharacterAppearance characterAppearance) {
         if (characterAppearance instanceof AdvancedAppearance) {
             pitchFork.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());
