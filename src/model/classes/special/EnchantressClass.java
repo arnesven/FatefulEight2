@@ -35,7 +35,11 @@ public class EnchantressClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnSkimpyDress(characterAppearance, MyColors.GREEN, MyColors.GOLD);
+        if (characterAppearance.getGender()) {
+            Looks.putOnSkimpyDress(characterAppearance, MyColors.GREEN, MyColors.GOLD);
+        } else {
+            Looks.putOnRobe(characterAppearance, MyColors.DARK_GREEN, MyColors.GREEN);
+        }
     }
 
     @Override

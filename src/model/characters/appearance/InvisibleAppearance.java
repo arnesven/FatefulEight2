@@ -5,6 +5,8 @@ import view.MyColors;
 import view.ScreenHandler;
 
 public class InvisibleAppearance extends AdvancedAppearance {
+    private final CharacterAppearance inner;
+
     public InvisibleAppearance(GameCharacter basedOn) {
         super(basedOn.getRace(),
                 basedOn.getGender(), MyColors.TRANSPARENT,
@@ -12,6 +14,11 @@ public class InvisibleAppearance extends AdvancedAppearance {
                 new CharacterEyes(-0x20 + 0x0F, "", 0, 0),
                 HairStyle.allHairStyles[0], new NoBeard());
         setAlternateSkinColor(MyColors.TRANSPARENT);
+        inner = basedOn.getAppearance();
+    }
+
+    public CharacterAppearance getOriginalAppearance() {
+        return inner;
     }
 
     @Override

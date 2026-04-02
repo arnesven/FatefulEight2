@@ -137,6 +137,7 @@ public class GameAchievements implements Serializable {
         registerAchievement(MagicDuelContestEvent.getAchievementData());
         registerAchievement(ArcheryContestEvent.getAchievementData());
         registerAchievement(ParticipateInTournamentEvent.getAchievementData());
+        registerAchievement(MeetGrumbledookEvent.getAchievementData());
         for (Achievement.Data data : CommandOutpostDailyEventState.getAchievementDatas()) {
             registerAchievement(data);
         }

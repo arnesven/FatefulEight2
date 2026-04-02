@@ -281,6 +281,11 @@ public class AdvancedAppearance extends CharacterAppearance {
         setFaceOverlaySprites();
     }
 
+    public void removeDetail(FaceDetail detail) {
+        this.faceDetails.remove(detail);
+        setFaceOverlaySprites();
+    }
+
     @Override
     protected boolean classSpecificEars() {
         return raceSpecificEars;
