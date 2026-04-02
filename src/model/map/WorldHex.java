@@ -5,6 +5,7 @@ import model.TimeOfDay;
 import model.actions.*;
 import model.characters.PersonalityTrait;
 import model.items.puzzletube.DwarvenPuzzleTube;
+import model.mainstory.FugitiveTownEvent;
 import model.states.dailyaction.WildernessDailyAction;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
