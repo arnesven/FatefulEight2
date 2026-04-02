@@ -44,7 +44,7 @@ public class AshtonshireTown extends TownLocation {
                 "X......." +
                 "X....X.X" +
                 "..XXXXX." +
-                "......X");
+                "......X.");
     }
 
     @Override
