@@ -12,10 +12,7 @@ import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
 import model.races.Race;
-import util.MyLists;
-import util.MyPair;
-import util.MyRandom;
-import util.MyStrings;
+import util.*;
 import view.subviews.RecruitSubView;
 
 import java.awt.*;
@@ -280,31 +277,44 @@ public class RecruitState extends GameState {
     }
 
     private void newPartyMemberComment(RecruitableCharacter rgc) {
-        GameCharacter gc = rgc.getCharacter();
-        List<MyPair<String, List<PersonalityTrait>>> comments = new ArrayList<>();
-        comments.add(new MyPair<>("You should be honored to have me. Okay.", List.of(
-                PersonalityTrait.narcissistic, PersonalityTrait.snobby)));
-        comments.add(new MyPair<>("Of course. It will be a good learning experience for me.", List.of(
-                PersonalityTrait.intellectual)));
-        comments.add(new MyPair<>("Hmm... Yes, for now.", List.of(
-                PersonalityTrait.critical)));
-        comments.add(new MyPair<>("Yes, this is so exciting!",
-                List.of(PersonalityTrait.encouraging, PersonalityTrait.brave)));
-        comments.add(new MyPair<>("Yes, it is a good deal for both of us.", List.of(
-                PersonalityTrait.diplomatic, PersonalityTrait.calm)));
-        comments.add(new MyPair<>("Absolutely. It's good to meet you.",
-                List.of(PersonalityTrait.friendly, PersonalityTrait.benevolent)));
-        comments.add(new MyPair<>("Okay. When do I get my wages?",
-                List.of(PersonalityTrait.greedy, PersonalityTrait.stingy)));
-        comments.add(new MyPair<>("Reluctantly, yes.", List.of(
-                PersonalityTrait.unkind, PersonalityTrait.rude)));
-        comments.add(new MyPair<>("Hooray, I finally get to go into the wilderness!",
-                List.of(PersonalityTrait.playful, PersonalityTrait.jovial)));
+        List<MyTriplet<String, List<PersonalityTrait>, String>> comments = new ArrayList<>();
+        comments.add(new MyTriplet<>("Great. What do we call our group?", List.of(),
+                getModel().getParty().getLeader().getName() + "'s Company."));
+        comments.add(new MyTriplet<>("Wonderful. What's your name?", List.of(),
+                getModel().getParty().getLeader().getName() + ". Good to meet you."));
+        comments.add(new MyTriplet<>("Yes. I was getting pretty bored around here.", List.of(),
+                ""));
+        comments.add(new MyTriplet<>("You should be honored to have me. Okay.", List.of(
+                PersonalityTrait.narcissistic, PersonalityTrait.snobby), ""));
+        comments.add(new MyTriplet<>("When do we eat dinner?.", List.of(
+                PersonalityTrait.gluttonous), "You just had lunch!"));
+        comments.add(new MyTriplet<>("This is great. I was born to do this.", List.of(
+                PersonalityTrait.romantic, PersonalityTrait.brave), "I love your enthusiasm!"));
+        comments.add(new MyTriplet<>("Of course. It will be a good learning experience for me.", List.of(
+                PersonalityTrait.intellectual), ""));
+        comments.add(new MyTriplet<>("Hmm... Yes, for now.", List.of(
+                PersonalityTrait.critical), ""));
+        comments.add(new MyTriplet<>("Yes, this is so exciting!",
+                List.of(PersonalityTrait.encouraging, PersonalityTrait.aggressive), ""));
+        comments.add(new MyTriplet<>("Yes, it is a good deal for both of us.", List.of(
+                PersonalityTrait.diplomatic, PersonalityTrait.calm), ""));
+        comments.add(new MyTriplet<>("Absolutely. It's good to meet you.",
+                List.of(PersonalityTrait.friendly, PersonalityTrait.benevolent), ""));
+        comments.add(new MyTriplet<>("Okay. When do I get my wages?",
+                List.of(PersonalityTrait.greedy, PersonalityTrait.stingy), "Later."));
+        comments.add(new MyTriplet<>("Reluctantly, yes.", List.of(
+                PersonalityTrait.unkind, PersonalityTrait.rude), ""));
+        comments.add(new MyTriplet<>("Hooray, I finally get to go into the wilderness!",
+                List.of(PersonalityTrait.playful, PersonalityTrait.jovial), "Be serious. This is no joke."));
         Collections.shuffle(comments);
 
-        for (MyPair<String, List<PersonalityTrait>> pair : comments) {
-            if (MyLists.any(pair.second, pt -> rgc.getCharacter().hasPersonality(pt))) {
-                candidateSay(rgc, pair.first);
+        for (MyTriplet<String, List<PersonalityTrait>, String> triplet : comments) {
+            if (triplet.second.isEmpty() ||
+                    MyLists.any(triplet.second, pt -> rgc.getCharacter().hasPersonality(pt))) {
+                candidateSay(rgc, triplet.first);
+                if (!triplet.third.isEmpty()) {
+                    leaderSay(triplet.third);
+                }
                 return;
             }
         }
