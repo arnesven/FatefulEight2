@@ -81,7 +81,10 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
             @Override
             public void drawYourself(Model model, int x, int y) {
                 print(model.getScreenHandler(), x, y, "Related classes:");
-                print(model.getScreenHandler(), x, y+1, related);
+                String[] parts = MyStrings.partition(related, 24);
+                for (int j = 0; j < parts.length; ++j){
+                    print(model.getScreenHandler(), x, y+1+j, parts[j]);
+                }
             }
         });
 

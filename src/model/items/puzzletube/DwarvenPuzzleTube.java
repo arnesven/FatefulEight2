@@ -23,13 +23,12 @@ import java.awt.*;
 
 public class DwarvenPuzzleTube extends ReadableItem implements DwarvenPuzzleConstants {
 
-    private static int counter = 0;
     private static final Sprite SPRITE = new ItemSprite(6, 16, MyColors.WHITE, MyColors.RED);
     private final WordPuzzle puzzle;
     private final Destination nextDestination;
 
     private DwarvenPuzzleTube(Model model, WordPuzzle puzzle, Point thisLocation) {
-        super("Puzzle Tube #" + (++counter), 0);
+        super("Puzzle Tube #" + getAndIncrementCounter(model), 0);
         this.puzzle = puzzle;
         Point nextLocation = LOCATION_MAP.get(thisLocation);
         HexLocation loc = model.getWorld().getHex(nextLocation).getLocation();
@@ -38,6 +37,16 @@ public class DwarvenPuzzleTube extends ReadableItem implements DwarvenPuzzleCons
         } else {
             this.nextDestination = Destination.generateNaturalLandmarkDestinationAtPosition(model, nextLocation);
         }
+    }
+
+    private static int getAndIncrementCounter(Model model) {
+        String key = "PUZZLE_TUBES_FOUND";
+        if (!model.getSettings().getMiscCounters().containsKey(key)) {
+            model.getSettings().getMiscCounters().put(key, 0);
+        }
+        int newVal = 1 + model.getSettings().getMiscCounters().get(key);
+        model.getSettings().getMiscCounters().put(key, newVal);
+        return newVal;
     }
 
     public static DailyEventState generateEvent(Model model) {
