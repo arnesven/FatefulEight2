@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WarehouseEvent extends DailyEventState {
-    private int otherBoxCount = 0;
+
     public WarehouseEvent(Model m) {
         super(m);
     }

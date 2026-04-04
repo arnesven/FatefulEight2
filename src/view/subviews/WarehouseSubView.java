@@ -20,45 +20,36 @@ import java.util.Map;
 
 import static view.subviews.TavernSubView.FLOOR;
 
-public class WarehouseSubView extends AvatarSubView {
-
-    private static final Map<Integer, Point> DXDYS_FOR_KEYS = Map.of(
-                KeyEvent.VK_LEFT,  new Point(-1, 0),
-                KeyEvent.VK_RIGHT, new Point(1, 0),
-                KeyEvent.VK_UP,    new Point(0, -1),
-                KeyEvent.VK_DOWN,  new Point(0, 1));
+public class WarehouseSubView extends FreeMoveAvatarSubView {
 
     private final Map<MyColors, Map<Integer, CrateAndAvatarSprite>> combinedSprites;
     private final Warehouse warehouse;
     private final AvatarSprite avatar;
 
-    private final List<KeyEvent> moveQueue = new ArrayList<>();
     private final int tries;
-    private boolean avatarEnabled = true;
-    private final Point avatarPos;
     private int moveCount = 0;
     private boolean telekinesisOn = false;
 
     public WarehouseSubView(Model model, Warehouse warehouse, int triesRemaining) {
+        super(warehouse.getPlayerStartingPosition());
         this.avatar = model.getParty().getLeader().getAvatarSprite();
         this.combinedSprites = makeCombinedSprites(avatar);
         this.warehouse = warehouse;
-        this.avatarPos = warehouse.getPlayerStartingPosition();
         this.tries = triesRemaining;
     }
 
     @Override
-    protected void specificDrawArea(Model model) {
-        drawFloor(model);
-        warehouse.drawObjects(model.getScreenHandler());
-        if (avatarEnabled) {
-            drawAvatar(model);
-        }
+    protected void drawOverlay(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), "Moves: " + moveCount,
                 X_OFFSET, Y_OFFSET, MyColors.WHITE);
         BorderFrame.drawString(model.getScreenHandler(), "Tries Left: " + tries,
                 X_MAX - 13, Y_OFFSET, MyColors.WHITE);
+    }
 
+    @Override
+    protected void drawBackground(Model model) {
+        drawFloor(model);
+        warehouse.drawObjects(model.getScreenHandler());
     }
 
     private void drawFloor(Model model) {
@@ -70,86 +61,19 @@ public class WarehouseSubView extends AvatarSubView {
         }
     }
 
-    private void drawAvatar(Model model) {
-        if (model.getParty().getLeader() != null) { // If party has been wiped out and this is just before game over screen
-            Point p = convertToScreen(avatarPos);
-            model.getScreenHandler().register("warehouse", p, model.getParty().getLeader().getAvatarSprite(), 2);
-        }
-    }
-
-    public static Point convertToScreen(Point p) {
-        return new Point(X_OFFSET + p.x*4, Y_OFFSET + p.y*4 + 2);
-    }
-
     @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (DXDYS_FOR_KEYS.containsKey(keyEvent.getKeyCode())) {
-            addToMoveQueue(keyEvent);
-            return true;
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            addToMoveQueue(keyEvent);
-            return true;
-        }
-        return super.handleKeyEvent(keyEvent, model);
-    }
-
-    private synchronized void addToMoveQueue(KeyEvent keyEvent) {
-        moveQueue.add(0, keyEvent);
-    }
-
-    public synchronized boolean hasMovesToHandle() {
-        return !moveQueue.isEmpty();
-    }
-
-    @Override
-    protected String getUnderText(Model model) {
-        String extra = "";
+    protected Point moveAvatar(KeyEvent key, Point avatarPosition, Point dxdy) {
         if (telekinesisOn) {
-            extra = " (Telekinesis)";
+            return moveSpecialBox(avatarPosition, dxdy);
         }
-        return "Move with the arrow keys, SPACE to quit." + extra;
+        return moveAvatarInWarehouse(key, avatarPosition, dxdy);
     }
 
-    @Override
-    protected String getTitleText(Model model) {
-        return "EVENT - WAREHOUSE";
-    }
-
-    public boolean handleMove() {
-        KeyEvent key = removeFromQueue();
-        if (key.getKeyCode() == KeyEvent.VK_SPACE) {
-            return false;
-        }
-        if (!avatarEnabled) {
-            return true;
-        }
-        Point dxdy = DXDYS_FOR_KEYS.get(key.getKeyCode());
-        if (telekinesisOn) {
-            moveSpecialBox(dxdy);
-        } else {
-            moveAvatar(key, dxdy);
-        }
-        return true;
-    }
-
-    private void moveSpecialBox(Point dxdy) {
-        Point boxPosition = warehouse.getSpecialBoxPosition();
-        Point newPosition = new Point(boxPosition.x + dxdy.x, boxPosition.y + dxdy.y);
-        if (warehouse.isFree(newPosition) && !newPosition.equals(avatarPos)) {
-            WarehouseObject wobj = warehouse.removeObject(boxPosition);
-            addMovementAnimation(wobj.getSprite(),
-                    convertToScreen(boxPosition), convertToScreen(newPosition));
-            waitForAnimation();
-            warehouse.addObject(newPosition, wobj);
-            removeMovementAnimation();
-        }
-    }
-
-    private void moveAvatar(KeyEvent key, Point dxdy) {
+    private Point moveAvatarInWarehouse(KeyEvent key, Point avatarPos, Point dxdy) {
         Point newPosition = new Point(avatarPos.x + dxdy.x, avatarPos.y + dxdy.y);
         if (warehouse.canMoveInto(newPosition, dxdy)) {
             moveCount++;
-            avatarEnabled = false;
+            setAvatarEnabled(false);
             if (warehouse.canMoveBox(newPosition, dxdy)) {
                 int xExtra = (dxdy.x - 1) / 2;
                 int yExtra = (dxdy.y + 1) / 2;
@@ -170,12 +94,37 @@ public class WarehouseSubView extends AvatarSubView {
             removeMovementAnimation();
             avatarPos.x = newPosition.x;
             avatarPos.y = newPosition.y;
-            avatarEnabled = true;
+            setAvatarEnabled(true);
         }
+        return avatarPos;
     }
 
-    private synchronized KeyEvent removeFromQueue() {
-        return moveQueue.remove(moveQueue.size() - 1);
+    @Override
+    protected String getUnderText(Model model) {
+        String extra = "";
+        if (telekinesisOn) {
+            extra = " (Telekinesis)";
+        }
+        return "Move with the arrow keys, SPACE to quit." + extra;
+    }
+
+    @Override
+    protected String getTitleText(Model model) {
+        return "EVENT - WAREHOUSE";
+    }
+
+    private Point moveSpecialBox(Point avatarPos, Point dxdy) {
+        Point boxPosition = warehouse.getSpecialBoxPosition();
+        Point newPosition = new Point(boxPosition.x + dxdy.x, boxPosition.y + dxdy.y);
+        if (warehouse.isFree(newPosition) && !newPosition.equals(avatarPos)) {
+            WarehouseObject wobj = warehouse.removeObject(boxPosition);
+            addMovementAnimation(wobj.getSprite(),
+                    convertToScreen(boxPosition), convertToScreen(newPosition));
+            waitForAnimation();
+            warehouse.addObject(newPosition, wobj);
+            removeMovementAnimation();
+        }
+        return avatarPos;
     }
 
     private Map<MyColors, Map<Integer, CrateAndAvatarSprite>> makeCombinedSprites(AvatarSprite avatarSprite) {
