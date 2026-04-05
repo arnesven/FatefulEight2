@@ -1,7 +1,6 @@
 package view.subviews;
 
 import model.Model;
-import model.states.GameState;
 import model.states.warehouse.SpecialWarehouseCrate;
 import model.states.warehouse.Warehouse;
 import model.states.warehouse.WarehouseCrate;
@@ -14,8 +13,6 @@ import view.sprites.CrateAndAvatarSprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 
 import static view.subviews.TavernSubView.FLOOR;
@@ -62,7 +59,7 @@ public class WarehouseSubView extends FreeMoveAvatarSubView {
     }
 
     @Override
-    protected Point moveAvatar(KeyEvent key, Point avatarPosition, Point dxdy) {
+    protected Point moveAvatar(Model model, KeyEvent key, Point avatarPosition, Point dxdy) {
         if (telekinesisOn) {
             return moveSpecialBox(avatarPosition, dxdy);
         }

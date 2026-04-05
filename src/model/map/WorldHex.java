@@ -3,10 +3,9 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
-import model.characters.PersonalityTrait;
 import model.items.puzzletube.DwarvenPuzzleTube;
-import model.mainstory.FugitiveTownEvent;
 import model.states.dailyaction.WildernessDailyAction;
+import model.states.mine.AdvancedMineEvent;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
 import model.tasks.DestinationTask;
@@ -64,6 +63,9 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
+        return new AdvancedMineEvent(model); /*
+
+
         if (isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
@@ -92,7 +94,7 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
-        return eventToReturn;
+        return eventToReturn; */
     }
 
     private boolean isPersonaNonGrata(Model model) {

@@ -70,7 +70,7 @@ public class WarehouseEvent extends DailyEventState {
         do {
             try {
                 waitUntil(subView, WarehouseSubView::hasMovesToHandle, true);
-                if (!subView.handleMove()) {
+                if (!subView.handleMove(model)) {
                     printQuote("Worker", "Are you finished?");
                     List<String> options = new ArrayList<>(List.of("Start over", "Quit"));
                     if (subView.isTelekinesisActivated()) {

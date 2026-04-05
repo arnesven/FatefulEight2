@@ -1,9 +1,6 @@
 package view.subviews;
 
 import model.Model;
-import model.states.warehouse.WarehouseObject;
-import view.BorderFrame;
-import view.MyColors;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -40,7 +37,7 @@ public abstract class FreeMoveAvatarSubView extends AvatarSubView {
 
     protected abstract void drawBackground(Model model);
 
-    protected abstract Point moveAvatar(KeyEvent key, Point avatarPosition, Point dxdy);
+    protected abstract Point moveAvatar(Model model, KeyEvent key, Point avatarPosition, Point dxdy);
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
@@ -66,7 +63,7 @@ public abstract class FreeMoveAvatarSubView extends AvatarSubView {
         return moveQueue.remove(moveQueue.size() - 1);
     }
 
-    public boolean handleMove() {
+    public boolean handleMove(Model model) {
         KeyEvent key = removeFromQueue();
         if (key.getKeyCode() == KeyEvent.VK_SPACE) {
             return false;
@@ -76,7 +73,7 @@ public abstract class FreeMoveAvatarSubView extends AvatarSubView {
         }
         Point dxdy = DXDYS_FOR_KEYS.get(key.getKeyCode());
 
-        Point newPosition = moveAvatar(key, avatarPos, dxdy);
+        Point newPosition = moveAvatar(model, key, avatarPos, dxdy);
         avatarPos.x = newPosition.x;
         avatarPos.y = newPosition.y;
         return true;

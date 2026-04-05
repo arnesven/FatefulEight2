@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
+import model.states.events.MineEvent;
 import util.MyPair;
 import util.MyRandom;
 import view.combat.CombatTheme;
