@@ -9,6 +9,7 @@ import util.MyRandom;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class MineRoom {
@@ -41,36 +42,115 @@ public class MineRoom {
 
     public static MineRoom makeBasicRoom(Random random, int level, List<Point> connectPositions) {
         SteppingMatrix<MineObject> matrix = new SteppingMatrix<>(MINE_COLUMNS, MINE_ROWS);
+        fillWithRock(matrix, random, level, connectPositions);
+        addPassages(matrix, connectPositions);
+        addTunnels(matrix, random, connectPositions);
+        addSupports(matrix);
+        return new MineRoom(matrix, connectPositions);
+    }
+
+    private static void fillWithRock(SteppingMatrix<MineObject> matrix, Random random,
+                                     int level, List<Point> connectPositions) {
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 int finalX = x;
                 int finalY = y;
                 boolean isOnExit = MyLists.any(connectPositions, p -> p != null && p.x == finalX && p.y == finalY);
                 if (!isOnExit) {
-              //      matrix.addElement(x, y, makeRockForLevel(level));
+                    matrix.addElement(x, y, makeRockForLevel(level));
                 }
             }
         }
+    }
 
+    private static void addPassages(SteppingMatrix<MineObject> matrix, List<Point> connectPositions) {
         for (int dir = 0; dir < connectPositions.size(); dir++) {
             Point doorPos = connectPositions.get(dir);
             if (doorPos != null) {
                 matrix.addElement(doorPos.x, doorPos.y, new MinePassageObject(dir));
             }
         }
+    }
 
+    private static void addTunnels(SteppingMatrix<MineObject> matrix, Random random, List<Point> connectPositions) {
+        List<Point> filtered = MyLists.filter(connectPositions, Objects::nonNull);
+        for (int i = 0; i < filtered.size() - 1; ++i) {
+            addTunnel(matrix, random, new Point(filtered.get(i)), new Point(filtered.get(i+1)));
+        }
+    }
+
+    private static void addTunnel(SteppingMatrix<MineObject> matrix, Random random, Point start, Point end) {
+        System.out.println("Making tunnel from " + start + " to " + end);
+        int horiSteps = end.x - start.x;
+        int vertiSteps = end.y - start.y;
+
+        do {
+            System.out.println("Hori steps " + horiSteps + ", verti steps: " + vertiSteps);
+            print(matrix);
+            boolean step;
+            if (horiSteps != 0 && vertiSteps != 0) {
+                step = random.nextBoolean();
+            } else {
+                step = horiSteps != 0;
+            }
+
+            if (step) {
+                System.out.println("Step x");
+                int dx = (int) Math.signum(horiSteps);
+                start.x += dx;
+                horiSteps -= dx;
+            } else {
+                System.out.println("Step y");
+                int dy = (int) Math.signum(vertiSteps);
+                start.y += dy;
+                vertiSteps -= dy;
+            }
+            if (start.equals(end)) {
+                break;
+            }
+            MineObject obj = matrix.getElementAt(start.x, start.y);
+            if (isRock(obj)) {
+                matrix.remove(obj);
+            }
+        } while (true);
+    }
+
+    private static void print(SteppingMatrix<MineObject> matrix) {
+        for (int y = 0; y < matrix.getRows(); ++y) {
+            for (int x = 0; x < matrix.getColumns(); ++x) {
+                MineObject obj = matrix.getElementAt(x, y);
+                if (obj == null) {
+                    System.out.print(" ");
+                } else if (obj instanceof RockMineObject) {
+                    System.out.print("R");
+                } else if (obj instanceof MinePassageObject) {
+                    System.out.print(">");
+                } else if (obj instanceof MineExitObject) {
+                    System.out.print("E");
+                } else {
+                    System.out.print("?");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private static void addSupports(SteppingMatrix<MineObject> matrix) {
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 1; x < matrix.getColumns()-1; ++x) {
                 MineObject obj = matrix.getElementAt(x, y);
                 MineObject left = matrix.getElementAt(x-1, y);
                 MineObject right = matrix.getElementAt(x+1, y);
-                if (obj == null && left != null && right != null) {
+                if (obj == null && isRock(left) && isRock(right)) {
                     matrix.addElement(x, y, new MineTunnelSupportObject());
                 }
             }
         }
+    }
 
-        return new MineRoom(matrix, connectPositions);
+    private static boolean isRock(MineObject obj) {
+        return obj instanceof RockMineObject;
     }
 
     public static MineRoom makeConnectingRoom(Random random, int level, MineRoom currentRoom, int direction) {
