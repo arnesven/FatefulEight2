@@ -3,13 +3,11 @@ package model.states.mine;
 import model.Model;
 import model.SteppingMatrix;
 import util.MyPair;
-import util.MyRandom;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.List;
 
 public class LogicalMine {
     // Directions in the mine:
@@ -28,7 +26,7 @@ public class LogicalMine {
         // First room
         this.currentRoom = MineRoom.makeBasicRoom(random, currentLocation.level);
         currentRoom.makeExit(random);
-        startPoint = currentRoom.getStartingPoint();
+        startPoint = currentRoom.getExitPosition();
         rooms.put(currentLocation.asString(), currentRoom);
 
         // Room on other side of mine exit (missing one connection)
@@ -51,10 +49,10 @@ public class LogicalMine {
     public void moveToRoom(int direction) {
         currentLocation.moveInDirection(direction);
         if (!rooms.containsKey(currentLocation.asString())) {
-            rooms.put(currentLocation.asString(), MineRoom.makeBasicRoom(random, currentLocation.level));
+            rooms.put(currentLocation.asString(), MineRoom.makeConnectingRoom(random, currentLocation.level, currentRoom, direction));
         }
-        startPoint = new Point(currentRoom.getPositionOppositeExit(direction));
         currentRoom = rooms.get(currentLocation.asString());
+        startPoint = new Point(currentRoom.getConnector(getOppositeDirection(direction)));
     }
 
     public static int getOppositeDirection(int direction) {

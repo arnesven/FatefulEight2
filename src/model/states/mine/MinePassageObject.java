@@ -12,21 +12,12 @@ public class MinePassageObject extends MineObject {
 
     private static final Sprite[] SPRITES =  makeSprites();
     private final Sprite sprite;
-    private int direction;
+    private final int direction;
 
-    public MinePassageObject(Point exitPoint) {
-        if (exitPoint.y == 0) {
-            direction = 0;
-        } else if (exitPoint.y == 8) {
-            direction = 3;
-        } else if (exitPoint.x == 0) {
-            direction = 1;
-        } else {
-            direction = 2;
-        }
+    public MinePassageObject(int direction) {
+        this.direction = direction;
         this.sprite = SPRITES[direction];
     }
-
 
     private static Sprite[] makeSprites() {
         Sprite[] result = new Sprite[]{

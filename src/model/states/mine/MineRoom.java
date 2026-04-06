@@ -7,6 +7,7 @@ import util.MyPair;
 import util.MyRandom;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,37 +16,47 @@ public class MineRoom {
     private static final int MINE_COLUMNS = 8;
     private static final int MINE_ROWS = 9;
 
-    private static Random random = null;
-
-    private static final java.util.List<Point> EXIT_POSITIONS = List.of(
-            new Point(MINE_COLUMNS/2-1, 0),            // NORTH
-            new Point(0, MINE_ROWS/2),                 // WEST
-            new Point(MINE_COLUMNS-1, 4),              // EAST
-            new Point(MINE_COLUMNS/2-1, MINE_ROWS-1)); // SOUTH
-
     private SteppingMatrix<MineObject> matrix;
+    private final List<Point> connectPositions;
     private Point exitPos = null;
     private int exitDir = -1;
 
-    private MineRoom(SteppingMatrix<MineObject> matrix) {
+    private MineRoom(SteppingMatrix<MineObject> matrix, List<Point> connectPositions) {
         this.matrix = matrix;
+        this.connectPositions = connectPositions;
     }
 
     public static MineRoom makeBasicRoom(Random random, int level) {
+        return makeBasicRoom(random, level, makeRandomConnections(random));
+    }
+
+    private static List<Point> makeRandomConnections(Random random) {
+        List<Point> connectPositions = new ArrayList<>();
+        connectPositions.add(new Point(random.nextInt(MINE_COLUMNS-2)+1, 0));            // NORTH
+        connectPositions.add(new Point(0, random.nextInt(MINE_COLUMNS-2)+1));            // WEST
+        connectPositions.add(new Point(MINE_COLUMNS-1, random.nextInt(MINE_ROWS-2)+1));  // EAST
+        connectPositions.add(new Point(random.nextInt(MINE_COLUMNS-2)+1, MINE_ROWS-1));  // SOUTH
+        return connectPositions;
+    }
+
+    public static MineRoom makeBasicRoom(Random random, int level, List<Point> connectPositions) {
         SteppingMatrix<MineObject> matrix = new SteppingMatrix<>(MINE_COLUMNS, MINE_ROWS);
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 int finalX = x;
                 int finalY = y;
-                boolean isOnExit = MyLists.any(EXIT_POSITIONS, p -> p.x == finalX && p.y == finalY);
+                boolean isOnExit = MyLists.any(connectPositions, p -> p != null && p.x == finalX && p.y == finalY);
                 if (!isOnExit) {
-                    matrix.addElement(x, y, makeRockForLevel(level));
+              //      matrix.addElement(x, y, makeRockForLevel(level));
                 }
             }
         }
 
-        for (Point doorPos : EXIT_POSITIONS) {
-            matrix.addElement(doorPos.x, doorPos.y, new MinePassageObject(doorPos));
+        for (int dir = 0; dir < connectPositions.size(); dir++) {
+            Point doorPos = connectPositions.get(dir);
+            if (doorPos != null) {
+                matrix.addElement(doorPos.x, doorPos.y, new MinePassageObject(dir));
+            }
         }
 
         for (int y = 0; y < matrix.getRows(); ++y) {
@@ -59,25 +70,37 @@ public class MineRoom {
             }
         }
 
-        return new MineRoom(matrix);
+        return new MineRoom(matrix, connectPositions);
+    }
+
+    public static MineRoom makeConnectingRoom(Random random, int level, MineRoom currentRoom, int direction) {
+        List<Point> connectPositions = makeRandomConnections(random);
+        int opposDir = LogicalMine.getOppositeDirection(direction);
+        Point newExit = connectPositions.get(opposDir);
+        if (direction == 0 || direction == 3) {
+            newExit.x = currentRoom.connectPositions.get(direction).x;
+        } else {
+            newExit.y = currentRoom.connectPositions.get(direction).y;
+        }
+        return makeBasicRoom(random, level, connectPositions);
     }
 
     public void makeExit(Random random) {
         this.exitDir = random.nextInt(4);
-        this.exitPos = new Point(EXIT_POSITIONS.get(exitDir));
+        this.exitPos = new Point(connectPositions.get(exitDir));
         matrix.remove(matrix.getElementAt(exitPos.x, exitPos.y));
-        matrix.addElement(exitPos.x, exitPos.y, new MineExitObject(exitPos));
+        matrix.addElement(exitPos.x, exitPos.y, new MineExitObject(exitDir));
     }
 
-    public Point getStartingPoint() {
+    public Point getExitPosition() {
         return exitPos;
     }
 
     public MyPair<MineRoom, MineRoomLocation> makeAntiRoom(Random random, int level) {
-        MineRoom antiRoom = makeBasicRoom(random, level);
+        List<Point> exits = makeRandomConnections(random);
         int opposDir = LogicalMine.getOppositeDirection(exitDir);
-        Point otherSideOfExit = EXIT_POSITIONS.get(opposDir);
-        antiRoom.matrix.remove(antiRoom.matrix.getElementAt(otherSideOfExit.x, otherSideOfExit.y));
+        exits.set(opposDir, null);
+        MineRoom antiRoom = makeBasicRoom(random, level, exits);
         MineRoomLocation antiRoomLoc = new MineRoomLocation(0, 0, 1);
         antiRoomLoc.moveInDirection(exitDir);
         return new MyPair<>(antiRoom, antiRoomLoc);
@@ -106,8 +129,7 @@ public class MineRoom {
         return new BreakableRockMineObject();
     }
 
-    public Point getPositionOppositeExit(int direction) {
-        int oppDir = LogicalMine.getOppositeDirection(direction);
-        return EXIT_POSITIONS.get(oppDir);
+    public Point getConnector(int dir) {
+        return connectPositions.get(dir);
     }
 }
