@@ -4,7 +4,6 @@ import model.Model;
 import model.SteppingMatrix;
 import util.MyLists;
 import util.MyPair;
-import util.MyRandom;
 
 import java.awt.*;
 import java.util.*;
@@ -43,7 +42,9 @@ public class MineRoom {
         fillWithRock(matrix, random, level, connectPositions);
         addPassages(matrix, connectPositions);
         addTunnels(matrix, random, connectPositions);
+        makeTunnelWalls(matrix);
         addSupports(matrix);
+        replaceRocks(matrix, random, level);
         return new MineRoom(matrix, connectPositions);
     }
 
@@ -55,7 +56,7 @@ public class MineRoom {
                 int finalY = y;
                 boolean isOnExit = MyLists.any(connectPositions, p -> p != null && p.x == finalX && p.y == finalY);
                 if (!isOnExit) {
-                    matrix.addElement(x, y, makeRockForLevel(level));
+                    matrix.addElement(x, y, makeInitialRocks(random));
                 }
             }
         }
@@ -121,8 +122,10 @@ public class MineRoom {
                 MineObject obj = matrix.getElementAt(x, y);
                 if (obj == null) {
                     System.out.print(" ");
-                } else if (obj instanceof RockMineObject) {
-                    System.out.print("R");
+                } else if (obj instanceof BreakableRockMineObject) {
+                    System.out.print("o");
+                } else if (obj instanceof UnbreakableRockObject) {
+                    System.out.print("W");
                 } else if (obj instanceof MinePassageObject) {
                     System.out.print(">");
                 } else if (obj instanceof MineExitObject) {
@@ -134,6 +137,80 @@ public class MineRoom {
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void makeTunnelWalls(SteppingMatrix<MineObject> matrix) {
+        List<Rectangle> wallsFound = new ArrayList<>();
+        for (int y = 0; y < matrix.getRows() - 1; ++y) {
+            for (int x = 0; x < matrix.getColumns() - 1; ++x) {
+                Rectangle wall = findBlockHorizontally(matrix, x, y);
+                if (wall != null) {
+                    wallsFound.add(wall);
+                }
+            }
+        }
+
+        wallsFound.sort(Comparator.comparingInt(o -> o.width * o.height));
+        List<Rectangle> intersectors = new ArrayList<>();
+        for (int i = 0; i < wallsFound.size(); ++i) {
+            Rectangle r = wallsFound.get(i);
+            for (int j = i + 1; j < wallsFound.size(); ++j) {
+                Rectangle r2 = wallsFound.get(j);
+                if (r.intersects(r2)) {
+                    intersectors.add(r);
+                    break;
+                }
+            }
+        }
+        wallsFound.removeAll(intersectors);
+
+        for (Rectangle r : wallsFound) {
+            for (int y = r.y; y < r.y + r.height; ++y) {
+                for (int x = r.x; x < r.x + r.width; ++x) {
+                    matrix.remove(matrix.getElementAt(x, y));
+                    matrix.addElement(x, y, new MineWallObject(x, y, r));
+                }
+            }
+        }
+    }
+
+    private static Rectangle findBlockHorizontally(SteppingMatrix<MineObject> matrix, int xStart, int yStart) {
+        Rectangle size = null;
+        for (int x = xStart; x < matrix.getColumns(); ++x) {
+            if (matrix.getElementAt(x, yStart) instanceof UnbreakableRockObject) {
+                if (size == null) {
+                    size = new Rectangle(x, yStart, 1, 1);
+                } else {
+                    size.width++;
+                }
+            } else {
+                break;
+            }
+        }
+        if (size == null || size.width < 2) {
+            return null;
+        }
+
+        for (int y = yStart + 1; y < matrix.getRows(); ++y) {
+            if (matrix.getElementAt(xStart, y) instanceof UnbreakableRockObject) {
+                size.height++;
+            } else {
+                break;
+            }
+        }
+
+        if (size.height < 2) {
+            return null;
+        }
+
+        for (int y = yStart + 1; y < yStart + size.height; ++y) {
+            for (int x = xStart + 1; x < xStart + size.width; ++x) {
+                if (!(matrix.getElementAt(x, y) instanceof UnbreakableRockObject)) {
+                    return null;
+                }
+            }
+        }
+        return size;
     }
 
     private static void addSupports(SteppingMatrix<MineObject> matrix) {
@@ -150,7 +227,32 @@ public class MineRoom {
     }
 
     private static boolean isRock(MineObject obj) {
-        return obj instanceof RockMineObject;
+        return obj instanceof RockMineObject || obj instanceof MineWallObject;
+    }
+
+    private static void replaceRocks(SteppingMatrix<MineObject> matrix, Random random, int level) {
+        for (int y = 0; y < matrix.getRows(); ++y) {
+            for (int x = 1; x < matrix.getColumns(); ++x) {
+                MineObject obj = matrix.getElementAt(x, y);
+                if (obj instanceof UnbreakableRockObject) {
+                    int roll = random.nextInt(6);
+                    if (roll != 0) {
+                        matrix.remove(obj);
+                    }
+                    if (roll == 1) {
+                        matrix.addElement(x, y, new BreakableRockMineObject());
+                    } else if (roll == 2) {
+                        matrix.addElement(x, y, new MaterialsOreObject(random.nextInt(3)));
+                    } else if (roll == 3) {
+                        matrix.addElement(x, y, new SilverOreObject(random.nextInt(3)));
+                    } else if (roll == 4) {
+                        matrix.addElement(x, y, new GoldOreObject(random.nextInt(3)));
+                    } else if (roll == 5) {
+                        matrix.addElement(x, y, new RubyRockObject());
+                    }
+                }
+            }
+        }
     }
 
     public static MineRoom makeConnectingRoom(Random random, MineRoomLocation currentLocation, MineRoomMap map,
@@ -245,8 +347,8 @@ public class MineRoom {
         return true;
     }
 
-    private static MineObject makeRockForLevel(int level) {
-        if (MyRandom.flipCoin()) {
+    private static MineObject makeInitialRocks(Random random) {
+        if (random.nextInt(5) > 0) {
             return new UnbreakableRockObject();
         }
         return new BreakableRockMineObject();
