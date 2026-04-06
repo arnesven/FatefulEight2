@@ -2,6 +2,7 @@ package model.states.mine;
 
 import model.Model;
 import model.SteppingMatrix;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 
@@ -34,11 +35,11 @@ public class MineRoom {
         SteppingMatrix<MineObject> matrix = new SteppingMatrix<>(MINE_COLUMNS, MINE_ROWS);
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
-                if (x != MINE_COLUMNS/2-1 && y != MINE_ROWS/2) {
+                int finalX = x;
+                int finalY = y;
+                boolean isOnExit = MyLists.any(EXIT_POSITIONS, p -> p.x == finalX && p.y == finalY);
+                if (!isOnExit) {
                     matrix.addElement(x, y, makeRockForLevel(level));
-                } else if (y != 0 && y != MINE_ROWS - 1 &&
-                        y != MINE_ROWS/2 && random.nextInt(3) == 0) {
-                    matrix.addElement(x, y, new MineTunnelSupportObject());
                 }
             }
         }
@@ -46,6 +47,18 @@ public class MineRoom {
         for (Point doorPos : EXIT_POSITIONS) {
             matrix.addElement(doorPos.x, doorPos.y, new MinePassageObject(doorPos));
         }
+
+        for (int y = 0; y < matrix.getRows(); ++y) {
+            for (int x = 1; x < matrix.getColumns()-1; ++x) {
+                MineObject obj = matrix.getElementAt(x, y);
+                MineObject left = matrix.getElementAt(x-1, y);
+                MineObject right = matrix.getElementAt(x+1, y);
+                if (obj == null && left != null && right != null) {
+                    matrix.addElement(x, y, new MineTunnelSupportObject());
+                }
+            }
+        }
+
         return new MineRoom(matrix);
     }
 
