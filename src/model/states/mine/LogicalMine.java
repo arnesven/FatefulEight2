@@ -15,8 +15,8 @@ public class LogicalMine {
 
     private final Random random;
     private Point startPoint;
-    private Map<String, MineRoom> rooms = new HashMap<>();
-    private MineRoomLocation currentLocation;
+    private final MineRoomMap rooms = new MineRoomMap();
+    private final MineRoomLocation currentLocation;
     private MineRoom currentRoom;
 
     public LogicalMine() {
@@ -27,11 +27,11 @@ public class LogicalMine {
         this.currentRoom = MineRoom.makeBasicRoom(random, currentLocation.level);
         currentRoom.makeExit(random);
         startPoint = currentRoom.getExitPosition();
-        rooms.put(currentLocation.asString(), currentRoom);
+        rooms.put(currentLocation, currentRoom);
 
         // Room on other side of mine exit (missing one connection)
         MyPair<MineRoom, MineRoomLocation> pair = currentRoom.makeAntiRoom(random, currentLocation.level);
-        rooms.put(pair.second.asString(), pair.first);
+        rooms.put(pair.second, pair.first);
     }
 
     public boolean canMoveInto(Model model, AdvancedMineEvent state, Point newPosition) {
@@ -48,10 +48,11 @@ public class LogicalMine {
 
     public void moveToRoom(int direction) {
         currentLocation.moveInDirection(direction);
-        if (!rooms.containsKey(currentLocation.asString())) {
-            rooms.put(currentLocation.asString(), MineRoom.makeConnectingRoom(random, currentLocation.level, currentRoom, direction));
+        if (!rooms.roomExists(currentLocation)) {
+            MineRoom newRoom = MineRoom.makeConnectingRoom(random, currentLocation, rooms, currentRoom, direction);
+            rooms.put(currentLocation, newRoom);
         }
-        currentRoom = rooms.get(currentLocation.asString());
+        currentRoom = rooms.get(currentLocation);
         startPoint = new Point(currentRoom.getConnector(getOppositeDirection(direction)));
     }
 

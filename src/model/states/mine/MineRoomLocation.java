@@ -26,4 +26,8 @@ public class MineRoomLocation {
             xy.x++;
         }
     }
+
+    public MineRoomLocation copy() {
+        return new MineRoomLocation(xy.x, xy.y, level);
+    }
 }

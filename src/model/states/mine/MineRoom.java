@@ -7,10 +7,8 @@ import util.MyPair;
 import util.MyRandom;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class MineRoom {
 
@@ -74,8 +72,14 @@ public class MineRoom {
 
     private static void addTunnels(SteppingMatrix<MineObject> matrix, Random random, List<Point> connectPositions) {
         List<Point> filtered = MyLists.filter(connectPositions, Objects::nonNull);
-        for (int i = 0; i < filtered.size() - 1; ++i) {
-            addTunnel(matrix, random, new Point(filtered.get(i)), new Point(filtered.get(i+1)));
+        if (filtered.size() == 1) {
+            addTunnel(matrix, random, new Point(filtered.getFirst()),
+                    new Point(random.nextInt(MINE_COLUMNS-2)+1,
+                            random.nextInt(MINE_ROWS-2)+1));
+        } else {
+            for (int i = 0; i < filtered.size() - 1; ++i) {
+                addTunnel(matrix, random, new Point(filtered.get(i)), new Point(filtered.get(i + 1)));
+            }
         }
     }
 
@@ -85,8 +89,6 @@ public class MineRoom {
         int vertiSteps = end.y - start.y;
 
         do {
-            System.out.println("Hori steps " + horiSteps + ", verti steps: " + vertiSteps);
-            print(matrix);
             boolean step;
             if (horiSteps != 0 && vertiSteps != 0) {
                 step = random.nextBoolean();
@@ -95,12 +97,10 @@ public class MineRoom {
             }
 
             if (step) {
-                System.out.println("Step x");
                 int dx = (int) Math.signum(horiSteps);
                 start.x += dx;
                 horiSteps -= dx;
             } else {
-                System.out.println("Step y");
                 int dy = (int) Math.signum(vertiSteps);
                 start.y += dy;
                 vertiSteps -= dy;
@@ -153,16 +153,59 @@ public class MineRoom {
         return obj instanceof RockMineObject;
     }
 
-    public static MineRoom makeConnectingRoom(Random random, int level, MineRoom currentRoom, int direction) {
+    public static MineRoom makeConnectingRoom(Random random, MineRoomLocation currentLocation, MineRoomMap map,
+                                              MineRoom oldRoom, int direction) {
+        System.out.println("From room:");
+        print(oldRoom.matrix);
         List<Point> connectPositions = makeRandomConnections(random);
         int opposDir = LogicalMine.getOppositeDirection(direction);
-        Point newExit = connectPositions.get(opposDir);
-        if (direction == 0 || direction == 3) {
-            newExit.x = currentRoom.connectPositions.get(direction).x;
-        } else {
-            newExit.y = currentRoom.connectPositions.get(direction).y;
+        Set<Integer> freeConnections = new HashSet<>(List.of(0, 1, 2, 3));
+        freeConnections.remove(opposDir);
+
+        for (int dir = 0; dir < 4; ++dir) {
+            if (dir == opposDir) { // Direction we came from, fix adjoining connection
+                adjustConnectionToSame(connectPositions, oldRoom, opposDir, direction);
+            } else { // Other connection
+                System.out.println("Other room in dir: " + dir);
+                MineRoomLocation otherLoc = currentLocation.copy();
+                otherLoc.moveInDirection(dir);
+                int otherOpposDir = LogicalMine.getOppositeDirection(dir);
+                if (map.roomExists(otherLoc)) {
+                    freeConnections.remove(dir);
+                    MineRoom otherRoom = map.get(otherLoc);
+                    if (otherRoom.getConnector(otherOpposDir) != null) { // has a door in direction
+                        adjustConnectionToSame(connectPositions, otherRoom, dir, otherOpposDir);
+                    } else { // No door there, remove it in this room as well
+                        connectPositions.set(dir, null);
+                    }
+                }
+            }
         }
-        return makeBasicRoom(random, level, connectPositions);
+
+        // freeConnections will be [0,3] in size
+        System.out.println("Newly created room has " + freeConnections.size() + " free connections.");
+        List<Integer> freeList = new ArrayList<>(freeConnections);
+        Collections.shuffle(freeList);
+        if (freeList.size() > 1 && random.nextInt(10) == 0) {
+            connectPositions.set(freeList.removeFirst(), null);
+        }
+        if (freeList.size() > 1 && random.nextInt(10) > 1) {
+            connectPositions.set(freeList.removeFirst(), null);
+        }
+        if (freeList.size() > 1 && random.nextInt(10) < 2) {
+            connectPositions.set(freeList.removeFirst(), null);
+        }
+
+        return makeBasicRoom(random, currentLocation.level, connectPositions);
+    }
+
+    private static void adjustConnectionToSame(List<Point> connectPositions, MineRoom other, int towardOther, int towardNew) {
+        Point newConnect = connectPositions.get(towardOther);
+        if (towardNew == 0 || towardNew == 3) {
+            newConnect.x = other.connectPositions.get(towardNew).x;
+        } else {
+            newConnect.y = other.connectPositions.get(towardNew).y;
+        }
     }
 
     public void makeExit(Random random) {
