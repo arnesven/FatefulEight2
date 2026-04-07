@@ -1,5 +1,6 @@
 package view.subviews;
 
+import control.FatefulEight;
 import model.Model;
 import model.states.mine.AdvancedMineEvent;
 import model.states.mine.LogicalMine;
@@ -30,10 +31,13 @@ public class MineSubView extends FreeMoveAvatarSubView {
     protected void drawBackground(Model model) {
         Point topPos = convertToScreen(new Point(0, -1));
         topPos.y += 2;
-        //BorderFrame.drawString(model.getScreenHandler(), "Level " + state.getCurrentLevel(), topPos.x, topPos.y,
-        //        MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), state.getCurrentLocation().asString(), topPos.x, topPos.y,
-                MyColors.WHITE, MyColors.BLACK);
+        if (FatefulEight.inDebugMode()) {
+            BorderFrame.drawString(model.getScreenHandler(), state.getCurrentLocation().asString(), topPos.x, topPos.y,
+                    MyColors.WHITE, MyColors.BLACK);
+        } else {
+            BorderFrame.drawString(model.getScreenHandler(), "Level " + state.getCurrentLevel(), topPos.x, topPos.y,
+                    MyColors.WHITE, MyColors.BLACK);
+        }
 
         BorderFrame.drawString(model.getScreenHandler(), String.format("Moves Left:%3d", state.getMovesLeft()),
                 topPos.x+18, topPos.y,
@@ -54,6 +58,12 @@ public class MineSubView extends FreeMoveAvatarSubView {
     protected Point moveAvatar(Model model, KeyEvent key, Point avatarPos, Point dxdy) {
         Point newPosition = new Point(avatarPos.x + dxdy.x, avatarPos.y + dxdy.y);
         if (!logicalMine.canMoveInto(model, state, newPosition)) {
+            if (logicalMine.getMatrix().getElementAt(avatarPos.x, avatarPos.y) != null) {
+                setAvatarEnabled(false);
+                Point toReturn = logicalMine.getMatrix().getElementAt(avatarPos.x, avatarPos.y).bumpedWall(model, state, avatarPos, dxdy);
+                setAvatarEnabled(true);
+                return toReturn;
+            }
             return avatarPos;
         }
         state.decrementMoves();

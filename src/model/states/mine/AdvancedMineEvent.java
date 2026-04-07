@@ -3,10 +3,7 @@ package model.states.mine;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
-import view.subviews.CollapsingTransition;
-import view.subviews.FreeMoveAvatarSubView;
-import view.subviews.MineSubView;
-import view.subviews.SwipingTransition;
+import view.subviews.*;
 
 import java.awt.*;
 
@@ -59,12 +56,11 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public Point moveToRoom(Model model, AdvancedMineEvent state, MineDirection direction) {
-        SwipingTransition.transition(model, mineSubView, direction, new SwipingTransition.Action() {
-                    @Override
-                    public void doAction() {
-                        mine.moveToRoom(direction);
-                    }
-                });
+        if (direction == MineDirection.up || direction == MineDirection.down) {
+            CollapsingTransition.transition(model, mineSubView, () -> mine.moveToRoom(direction));
+        } else {
+            SwipingTransition.transition(model, mineSubView, direction, () -> mine.moveToRoom(direction));
+        }
         return mine.getStartingPoint();
     }
 

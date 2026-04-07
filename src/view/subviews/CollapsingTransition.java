@@ -8,22 +8,29 @@ import view.sprites.Sprite;
 
 public class CollapsingTransition extends TransitionView {
 
+    private final TransitionAction action;
+
     private static final int STEPS_START = (Y_MAX - Y_OFFSET) / 2;
     private final int xStart;
     private final int xEnd;
 
-    public CollapsingTransition(SubView fromView, SubView toView, String title, int stepsStart, int xStart, int xEnd) {
+    public CollapsingTransition(SubView fromView, SubView toView, String title, int stepsStart, int xStart, int xEnd, TransitionAction act) {
         super(fromView, toView, title, stepsStart);
         this.xStart = xStart;
         this.xEnd = xEnd;
+        this.action = act;
     }
 
-    public CollapsingTransition(SubView fromView, SubView toView, String title, int stepsStart) {
-        this(fromView, toView, title, stepsStart, X_OFFSET, X_MAX);
+    public CollapsingTransition(SubView fromView, SubView toView, String title, int stepsStart, TransitionAction act) {
+        this(fromView, toView, title, stepsStart, X_OFFSET, X_MAX, act);
     }
 
     @Override
     protected void drawAnimation(Model model, int steps) {
+        if (steps == 0 && action != null) {
+            action.doAction();
+        }
+
         model.getScreenHandler().clearForeground(xStart, xEnd, Y_OFFSET, Y_OFFSET+(STEPS_START-steps));
         model.getScreenHandler().clearForeground(xStart, xEnd, Y_MAX-(STEPS_START-steps), Y_MAX);
 
@@ -53,7 +60,15 @@ public class CollapsingTransition extends TransitionView {
 
 
     public static void transition(Model model, SubView nextSubView) {
-        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), nextSubView, nextSubView.getTitleText(model), STEPS_START);
+        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), nextSubView, nextSubView.getTitleText(model), STEPS_START, null);
+        model.setSubView(spiral);
+        spiral.waitToBeOver();
+        model.setSubView(nextSubView);
+        AnimationManager.unregister(spiral);
+    }
+
+    public static void transition(Model model, SubView nextSubView, TransitionAction act) {
+        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), nextSubView, nextSubView.getTitleText(model), STEPS_START, act);
         model.setSubView(spiral);
         spiral.waitToBeOver();
         model.setSubView(nextSubView);
@@ -61,7 +76,7 @@ public class CollapsingTransition extends TransitionView {
     }
 
     public static void wideTransition(Model model, SubView nextSubView) {
-        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), nextSubView, nextSubView.getTitleText(model), STEPS_START, X_OFFSET-8, X_MAX+8);
+        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), nextSubView, nextSubView.getTitleText(model), STEPS_START, X_OFFSET-8, X_MAX+8, null);
         model.setSubView(spiral);
         spiral.waitToBeOver();
         model.setSubView(nextSubView);

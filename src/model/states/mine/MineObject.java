@@ -35,4 +35,8 @@ public abstract class MineObject {
     public boolean gotBumpedInto(Model model, AdvancedMineEvent state, Point currentLocation) {
         return true;
     }
+
+    public Point bumpedWall(Model model, AdvancedMineEvent state, Point avatarPos, Point dxdy) {
+        return avatarPos;
+    }
 }

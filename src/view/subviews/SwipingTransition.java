@@ -10,16 +10,12 @@ public class SwipingTransition extends TransitionView {
 
     private static final int HORIZONTAL_STEPS = X_MAX - X_OFFSET - 1;
     private static final int VERTICAL_STEPS = Y_MAX - Y_OFFSET - 1;
-    private final Action action;
+    private final TransitionAction action;
     private final MineDirection direction;
     private final int maxSteps;
     private boolean flipped;
 
-    public static abstract class Action {
-        public abstract void doAction();
-    }
-
-    private SwipingTransition(SubView fromView, SubView toView, String title, MineDirection direction, Action act, int stepsStart) {
+    private SwipingTransition(SubView fromView, SubView toView, String title, MineDirection direction, TransitionAction act, int stepsStart) {
         super(fromView, toView, title, stepsStart);
         this.direction = direction;
         this.action = act;
@@ -71,7 +67,7 @@ public class SwipingTransition extends TransitionView {
         return steps >= maxSteps;
     }
 
-    public static void transition(Model model, SubView nextSubview, MineDirection direction, Action act) {
+    public static void transition(Model model, SubView nextSubview, MineDirection direction, TransitionAction act) {
         SwipingTransition swipe = new SwipingTransition(model.getSubView(), nextSubview,
                 model.getSubView().getTitleText(model), direction, act, getStepsForDirection(direction));
         model.setSubView(swipe);

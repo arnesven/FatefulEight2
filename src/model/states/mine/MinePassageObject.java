@@ -40,6 +40,20 @@ public class MinePassageObject extends MineObject {
 
     @Override
     public Point gotMovedInto(Model model, AdvancedMineEvent state, Point currentPoint) {
+        if (direction == MineDirection.up || direction == MineDirection.down) {
+            state.print("Climb " + direction.toString().toLowerCase() + " the ladder? (Y/N) ");
+            if (!state.yesNoInput()) {
+                return currentPoint;
+            }
+        }
         return state.moveToRoom(model, state, direction);
+    }
+
+    @Override
+    public Point bumpedWall(Model model, AdvancedMineEvent state, Point avatarPos, Point dxdy) {
+        if (direction.getDxDy().equals(dxdy)) {
+            return state.moveToRoom(model, state, direction);
+        }
+        return avatarPos;
     }
 }
