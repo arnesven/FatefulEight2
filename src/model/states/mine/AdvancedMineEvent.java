@@ -6,6 +6,7 @@ import model.states.SpellCastException;
 import view.subviews.CollapsingTransition;
 import view.subviews.FreeMoveAvatarSubView;
 import view.subviews.MineSubView;
+import view.subviews.SwipingTransition;
 
 import java.awt.*;
 
@@ -58,7 +59,12 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public Point moveToRoom(Model model, AdvancedMineEvent state, int direction) {
-        mine.moveToRoom(direction);
+        SwipingTransition.transition(model, mineSubView, direction, new SwipingTransition.Action() {
+                    @Override
+                    public void doAction() {
+                        mine.moveToRoom(direction);
+                    }
+                });
         return mine.getStartingPoint();
     }
 

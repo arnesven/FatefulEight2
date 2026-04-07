@@ -62,10 +62,10 @@ public class MineSubView extends FreeMoveAvatarSubView {
                 convertToScreen(avatarPos), convertToScreen(newPosition));
         waitForAnimation();
         MineObject objAtDestination = logicalMine.getMatrix().getElementAt(newPosition.x, newPosition.y);
+        removeMovementAnimation();
         if (objAtDestination != null) {
             newPosition = objAtDestination.gotMovedInto(model, state, newPosition);
         }
-        removeMovementAnimation();
         setAvatarEnabled(true);
         return newPosition;
     }

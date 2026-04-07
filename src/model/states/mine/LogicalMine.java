@@ -12,6 +12,11 @@ import java.util.Random;
 public class LogicalMine {
     // Directions in the mine:
     // 0 => NORTH, 1 => WEST, 2 => EAST, 3 => SOUTH
+    public static final int NORTH = 0;
+    public static final int WEST = 1;
+    public static final int EAST = 2;
+    public static final int SOUTH = 3;
+
 
     private final Random random;
     private Point startPoint;
