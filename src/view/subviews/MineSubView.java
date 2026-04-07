@@ -5,16 +5,24 @@ import model.Model;
 import model.states.mine.AdvancedMineEvent;
 import model.states.mine.LogicalMine;
 import model.states.mine.MineObject;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
+import view.sprites.AnimationManager;
+import view.sprites.BreakingRockAnimation;
+import view.sprites.RunOnceAnimationSprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MineSubView extends FreeMoveAvatarSubView {
 
     private final LogicalMine logicalMine;
     private final AdvancedMineEvent state;
+    private final List<MyPair<Point, RunOnceAnimationSprite>> animations = new ArrayList<>();
+
 
     public MineSubView(AdvancedMineEvent state, LogicalMine logicalMine) {
         super(logicalMine.getStartingPoint());
@@ -24,7 +32,15 @@ public class MineSubView extends FreeMoveAvatarSubView {
 
     @Override
     protected void drawOverlay(Model model) {
-
+        for (MyPair<Point, RunOnceAnimationSprite> pair : animations) {
+            model.getScreenHandler().register(pair.second.getName(), pair.first, pair.second);
+        }
+        for (MyPair<Point, RunOnceAnimationSprite> pair : animations) {
+            if (pair.second.isDone()) {
+                AnimationManager.unregister(pair.second);
+            }
+        }
+        animations.removeIf(p -> p.second.isDone());
     }
 
     @Override
@@ -88,5 +104,9 @@ public class MineSubView extends FreeMoveAvatarSubView {
     @Override
     protected String getTitleText(Model model) {
         return "EVENT - MINE";
+    }
+
+    public void addAnimation(Point positionFor, BreakingRockAnimation breakingRockAnimation) {
+        this.animations.add(new MyPair<>(convertToScreen(positionFor), breakingRockAnimation));
     }
 }

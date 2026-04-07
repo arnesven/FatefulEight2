@@ -107,4 +107,8 @@ public class SoundEffects {
     public static void playClickSound() {
         playWithVolume("click", Volume.HIGH);
     }
+
+    public static void playRockBreak() {
+        playWithVolume("rockbreak", Volume.HIGHEST);
+    }
 }

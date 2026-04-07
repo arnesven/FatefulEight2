@@ -9,7 +9,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 
-public class RockMineObject extends MineObject {
+public class RockMineObject extends MineableObject {
 
     private static final Sprite[] SPRITES = new Sprite[]{
         new MineRockSprite(0x04, MyColors.BLACK, MyColors.DARK_GRAY),
@@ -23,9 +23,12 @@ public class RockMineObject extends MineObject {
     };
 
     private final Sprite sprite;
+    private final boolean isBreakable;
 
     public RockMineObject(boolean isBreakable) {
+        super("Rock", 2);
         this.sprite = SPRITES[(isBreakable ? 4 : 0) + MyRandom.randInt(SPRITES.length/2)];
+        this.isBreakable = isBreakable;
     }
 
     @Override
@@ -35,6 +38,17 @@ public class RockMineObject extends MineObject {
 
     @Override
     public boolean gotBumpedInto(Model model, AdvancedMineEvent state, Point currentLocation) {
+        if (isBreakable) {
+            return state.askToMineObject(model, this);
+        }
         return false;
+    }
+
+    @Override
+    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {}
+
+    @Override
+    public MyColors getAnimationColor() {
+        return MyColors.GRAY;
     }
 }

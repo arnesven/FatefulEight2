@@ -1,5 +1,6 @@
 package model.states.mine;
 
+import model.Model;
 import util.MyRandom;
 import view.MyColors;
 import view.ScreenHandler;
@@ -23,5 +24,10 @@ public class RubyRockObject extends MineObject {
     @Override
     public void drawYourself(ScreenHandler screenHandler, LogicalMine mine, Point screenPosition) {
         screenHandler.put(screenPosition.x, screenPosition.y, sprite);
+    }
+
+    @Override
+    public boolean gotBumpedInto(Model model, AdvancedMineEvent state, Point currentLocation) {
+        return false;
     }
 }

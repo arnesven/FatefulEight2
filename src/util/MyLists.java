@@ -98,6 +98,19 @@ public class MyLists {
         return max;
     }
 
+    public static <E> E maximumValue(List<E> source, MyUnaryIntFunction<E> fun) {
+        int max = Integer.MIN_VALUE;
+        E best = source.getFirst();
+        for (E e : source) {
+            int val = fun.apply(e);
+            if (val > max) {
+                max = val;
+                best = e;
+            }
+        }
+        return best;
+    }
+
     public static <E> double maximumDouble(List<E> source, MyUnaryDoubleFunction<E> fun) {
         double max = Double.MIN_VALUE;
         for (E e : source) {

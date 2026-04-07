@@ -60,4 +60,14 @@ public class LogicalMine {
     public boolean roomIsDiscovered(MineRoomLocation loc) {
         return rooms.isRoomDiscovered(loc);
     }
+
+    public void destroyRock(Model model, MineableObject mineObject) {
+        Point position = getPositionFor(mineObject);
+        getMatrix().remove(mineObject);
+        getMatrix().addElement(position.x, position.y, new RockDebrisObject(mineObject.getDebrisSprite()));
+    }
+
+    public Point getPositionFor(MineableObject mineObject) {
+        return getMatrix().getPositionFor(mineObject);
+    }
 }

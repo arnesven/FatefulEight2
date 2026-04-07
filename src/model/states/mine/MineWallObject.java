@@ -31,7 +31,7 @@ public class MineWallObject extends MineObject {
         } else {
             spriteNum = 0x10;
         }
-        this.sprite = new Sprite32x32("minewall", "warehouse.png",
+        this.sprite = new Sprite32x32("minewall", "warehouse.png", // TODO: Static initialization
                 spriteNum, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.GRAY_RED);
     }
 
