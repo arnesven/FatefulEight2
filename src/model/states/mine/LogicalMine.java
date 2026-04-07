@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import util.MyPair;
 
 import java.awt.*;
+import java.util.Map;
 import java.util.Random;
 
 public class LogicalMine {
@@ -20,12 +21,10 @@ public class LogicalMine {
         currentLocation = new MineRoomLocation(0, 0, 1);
 
         // First room
-        this.currentRoom = MineRoom.makeBasicRoom(random, currentLocation.level);
-        currentRoom.makeExit(random);
+        this.currentRoom = MineRoom.makeStartingRoom(random, currentLocation.level);
         startPoint = currentRoom.getExitPosition();
         rooms.put(currentLocation, currentRoom);
 
-        // Room on other side of mine exit (missing one connection)
         MyPair<MineRoom, MineRoomLocation> pair = currentRoom.makeAntiRoom(random, currentLocation.level);
         rooms.put(pair.second, pair.first);
     }

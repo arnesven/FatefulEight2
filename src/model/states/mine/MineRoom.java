@@ -25,17 +25,27 @@ public class MineRoom {
         this.connectPositions = connectPositions;
     }
 
-    public static MineRoom makeBasicRoom(Random random, int level) {
-        return makeBasicRoom(random, level, makeRandomConnections(random));
-    }
-
-    private static Map<MineDirection, Point> makeRandomConnections(Random random) {
+    private static Map<MineDirection, Point> makeRandomConnections(Random random, int level) {
         Map<MineDirection, Point> connectPositions = new HashMap<>();
         connectPositions.put(MineDirection.north, new Point(random.nextInt(MINE_COLUMNS-2)+1, 0));
         connectPositions.put(MineDirection.west, new Point(0, random.nextInt(MINE_COLUMNS-2)+1));
         connectPositions.put(MineDirection.east, new Point(MINE_COLUMNS-1, random.nextInt(MINE_ROWS-2)+1));
         connectPositions.put(MineDirection.south, new Point(random.nextInt(MINE_COLUMNS-2)+1, MINE_ROWS-1));
+        Point randomVertical = new Point(random.nextInt(MINE_COLUMNS-4) + 2,
+                random.nextInt(MINE_ROWS-4) + 2);
+        MineDirection vertDir = level == 1 ? MineDirection.down
+                : (random.nextBoolean() ? MineDirection.down : MineDirection.up);
+        if (random.nextInt(4) == 0) {
+            connectPositions.put(vertDir, randomVertical);
+        }
         return connectPositions;
+    }
+
+    private static Map<MineDirection, Point> makeRandomConnectionsNoVertical(Random random, int level) {
+        Map<MineDirection, Point> result = makeRandomConnections(random, level);
+        result.remove(MineDirection.up);
+        result.remove(MineDirection.down);
+        return result;
     }
 
     public static MineRoom makeBasicRoom(Random random, int level, Map<MineDirection, Point> connectPositions) {
@@ -262,7 +272,7 @@ public class MineRoom {
                                               MineRoom oldRoom, MineDirection direction) {
         System.out.println("From room:");
         print(oldRoom.matrix);
-        Map<MineDirection, Point> connectPositions = makeRandomConnections(random);
+        Map<MineDirection, Point> connectPositions = makeRandomConnections(random, currentLocation.level);
         MineDirection opposDir = direction.getOpposite();
         Set<MineDirection> freeConnections = new HashSet<>(List.of(MineDirection.values()));
         freeConnections.remove(opposDir);
@@ -302,13 +312,16 @@ public class MineRoom {
         if (freeList.size() > 1 && random.nextInt(10) < 2) {
             connectPositions.remove(freeList.removeFirst());
         }
-
         return makeBasicRoom(random, currentLocation.level, connectPositions);
     }
 
     private static void adjustConnectionToSame(Map<MineDirection, Point> connectPositions, MineRoom other, MineDirection towardOther) {
         MineDirection towardNew = towardOther.getOpposite();
         Point newConnect = connectPositions.get(towardOther);
+        if (newConnect == null) {
+            newConnect = new Point(other.connectPositions.get(towardNew));
+            connectPositions.put(towardOther, newConnect);
+        }
         if (towardNew == MineDirection.north || towardNew == MineDirection.south) {
             newConnect.x = other.connectPositions.get(towardNew).x;
         } else if (towardNew == MineDirection.west || towardNew == MineDirection.east){
@@ -317,6 +330,13 @@ public class MineRoom {
             newConnect.x = other.connectPositions.get(towardNew).x;
             newConnect.y = other.connectPositions.get(towardNew).y;
         }
+    }
+
+    public static MineRoom makeStartingRoom(Random random, int level) {
+        Map<MineDirection, Point> connections = makeRandomConnectionsNoVertical(random, level);
+        MineRoom room = makeBasicRoom(random, level, connections);
+        room.makeExit(random);
+        return room;
     }
 
     public void makeExit(Random random) {
@@ -332,7 +352,9 @@ public class MineRoom {
     }
 
     public MyPair<MineRoom, MineRoomLocation> makeAntiRoom(Random random, int level) {
-        Map<MineDirection, Point> exits = makeRandomConnections(random);
+        Map<MineDirection, Point> exits = makeRandomConnectionsNoVertical(random, level);
+        exits.remove(MineDirection.down);
+        exits.remove(MineDirection.up);
         MineDirection opposDir = exitDir.getOpposite();
         exits.remove(opposDir);
         MineRoom antiRoom = makeBasicRoom(random, level, exits);

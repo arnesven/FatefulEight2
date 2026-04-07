@@ -25,8 +25,8 @@ public class MinePassageObject extends MineObject {
                 new Sprite32x32("passagewest", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
                 new Sprite32x32("passageeast", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
                 new Sprite32x32("passagesouth", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
-                new Sprite32x32("passageup", "warehouse.png", 0x31, MyColors.GRAY, MyColors.WHITE, MyColors.RED),
-                new Sprite32x32("passagedown", "warehouse.png", 0x30, MyColors.GRAY, MyColors.WHITE, MyColors.RED)};
+                new Sprite32x32("passageup", "warehouse.png", 0x30, MyColors.BROWN, MyColors.DARK_BROWN, MyColors.DARK_GRAY),
+                new Sprite32x32("passagedown", "warehouse.png", 0x31, MyColors.BROWN, MyColors.DARK_BROWN, MyColors.DARK_GRAY)};
         result[0].setRotation(90);
         result[2].setRotation(180);
         result[3].setRotation(270);
