@@ -5,18 +5,9 @@ import model.SteppingMatrix;
 import util.MyPair;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class LogicalMine {
-    // Directions in the mine:
-    // 0 => NORTH, 1 => WEST, 2 => EAST, 3 => SOUTH
-    public static final int NORTH = 0;
-    public static final int WEST = 1;
-    public static final int EAST = 2;
-    public static final int SOUTH = 3;
-
 
     private final Random random;
     private Point startPoint;
@@ -51,27 +42,14 @@ public class LogicalMine {
         return startPoint;
     }
 
-    public void moveToRoom(int direction) {
+    public void moveToRoom(MineDirection direction) {
         currentLocation.moveInDirection(direction);
         if (!rooms.roomExists(currentLocation)) {
             MineRoom newRoom = MineRoom.makeConnectingRoom(random, currentLocation, rooms, currentRoom, direction);
             rooms.put(currentLocation, newRoom);
         }
         currentRoom = rooms.get(currentLocation);
-        startPoint = new Point(currentRoom.getConnector(getOppositeDirection(direction)));
-    }
-
-    public static int getOppositeDirection(int direction) {
-        if (direction == 0) {
-            return 3;
-        }
-        if (direction == 1) {
-            return 2;
-        }
-        if (direction == 2) {
-            return 1;
-        }
-        return 0;
+        startPoint = new Point(currentRoom.getConnector(direction.getOpposite()));
     }
 
     public MineRoomLocation getCurrentLocation() {

@@ -12,11 +12,11 @@ public class MinePassageObject extends MineObject {
 
     private static final Sprite[] SPRITES =  makeSprites();
     private final Sprite sprite;
-    private final int direction;
+    private final MineDirection direction;
 
-    public MinePassageObject(int direction) {
+    public MinePassageObject(MineDirection direction) {
         this.direction = direction;
-        this.sprite = SPRITES[direction];
+        this.sprite = SPRITES[direction.ordinal()];
     }
 
     private static Sprite[] makeSprites() {
@@ -24,7 +24,9 @@ public class MinePassageObject extends MineObject {
                 new Sprite32x32("passagenorth", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
                 new Sprite32x32("passagewest", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
                 new Sprite32x32("passageeast", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
-                new Sprite32x32("passagesouth", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED)};
+                new Sprite32x32("passagesouth", "warehouse.png", 0x21, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY_RED),
+                new Sprite32x32("passageup", "warehouse.png", 0x31, MyColors.GRAY, MyColors.WHITE, MyColors.RED),
+                new Sprite32x32("passagedown", "warehouse.png", 0x30, MyColors.GRAY, MyColors.WHITE, MyColors.RED)};
         result[0].setRotation(90);
         result[2].setRotation(180);
         result[3].setRotation(270);

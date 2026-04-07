@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import util.MyLists;
 import util.MyPair;
+import util.MyRandom;
 
 import java.awt.*;
 import java.util.*;
@@ -15,11 +16,11 @@ public class MineRoom {
     private static final int MINE_ROWS = 9;
 
     private SteppingMatrix<MineObject> matrix;
-    private final List<Point> connectPositions;
+    private final Map<MineDirection, Point> connectPositions;
     private Point exitPos = null;
-    private int exitDir = -1;
+    private MineDirection exitDir = null;
 
-    private MineRoom(SteppingMatrix<MineObject> matrix, List<Point> connectPositions) {
+    private MineRoom(SteppingMatrix<MineObject> matrix, Map<MineDirection, Point> connectPositions) {
         this.matrix = matrix;
         this.connectPositions = connectPositions;
     }
@@ -28,16 +29,16 @@ public class MineRoom {
         return makeBasicRoom(random, level, makeRandomConnections(random));
     }
 
-    private static List<Point> makeRandomConnections(Random random) {
-        List<Point> connectPositions = new ArrayList<>();
-        connectPositions.add(new Point(random.nextInt(MINE_COLUMNS-2)+1, 0));            // NORTH
-        connectPositions.add(new Point(0, random.nextInt(MINE_COLUMNS-2)+1));            // WEST
-        connectPositions.add(new Point(MINE_COLUMNS-1, random.nextInt(MINE_ROWS-2)+1));  // EAST
-        connectPositions.add(new Point(random.nextInt(MINE_COLUMNS-2)+1, MINE_ROWS-1));  // SOUTH
+    private static Map<MineDirection, Point> makeRandomConnections(Random random) {
+        Map<MineDirection, Point> connectPositions = new HashMap<>();
+        connectPositions.put(MineDirection.north, new Point(random.nextInt(MINE_COLUMNS-2)+1, 0));
+        connectPositions.put(MineDirection.west, new Point(0, random.nextInt(MINE_COLUMNS-2)+1));
+        connectPositions.put(MineDirection.east, new Point(MINE_COLUMNS-1, random.nextInt(MINE_ROWS-2)+1));
+        connectPositions.put(MineDirection.south, new Point(random.nextInt(MINE_COLUMNS-2)+1, MINE_ROWS-1));
         return connectPositions;
     }
 
-    public static MineRoom makeBasicRoom(Random random, int level, List<Point> connectPositions) {
+    public static MineRoom makeBasicRoom(Random random, int level, Map<MineDirection, Point> connectPositions) {
         SteppingMatrix<MineObject> matrix = new SteppingMatrix<>(MINE_COLUMNS, MINE_ROWS);
         fillWithRock(matrix, random, level, connectPositions);
         addPassages(matrix, connectPositions);
@@ -49,12 +50,14 @@ public class MineRoom {
     }
 
     private static void fillWithRock(SteppingMatrix<MineObject> matrix, Random random,
-                                     int level, List<Point> connectPositions) {
+                                     int level, Map<MineDirection, Point> connectPositions) {
+        List<Point> connections = new ArrayList<>(connectPositions.values());
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 int finalX = x;
                 int finalY = y;
-                boolean isOnExit = MyLists.any(connectPositions, p -> p != null && p.x == finalX && p.y == finalY);
+                boolean isOnExit = MyLists.any(connections,
+                        p ->  p != null && p.x == finalX && p.y == finalY);
                 if (!isOnExit) {
                     matrix.addElement(x, y, makeInitialRocks(random));
                 }
@@ -62,8 +65,8 @@ public class MineRoom {
         }
     }
 
-    private static void addPassages(SteppingMatrix<MineObject> matrix, List<Point> connectPositions) {
-        for (int dir = 0; dir < connectPositions.size(); dir++) {
+    private static void addPassages(SteppingMatrix<MineObject> matrix, Map<MineDirection, Point> connectPositions) {
+        for (MineDirection dir : MineDirection.values()) {
             Point doorPos = connectPositions.get(dir);
             if (doorPos != null) {
                 matrix.addElement(doorPos.x, doorPos.y, new MinePassageObject(dir));
@@ -71,8 +74,8 @@ public class MineRoom {
         }
     }
 
-    private static void addTunnels(SteppingMatrix<MineObject> matrix, Random random, List<Point> connectPositions) {
-        List<Point> filtered = MyLists.filter(connectPositions, Objects::nonNull);
+    private static void addTunnels(SteppingMatrix<MineObject> matrix, Random random, Map<MineDirection, Point> connectPositions) {
+        List<Point> filtered = new ArrayList<>(connectPositions.values());
         if (filtered.size() == 1) {
             addTunnel(matrix, random, new Point(filtered.getFirst()),
                     new Point(random.nextInt(MINE_COLUMNS-2)+1,
@@ -256,62 +259,69 @@ public class MineRoom {
     }
 
     public static MineRoom makeConnectingRoom(Random random, MineRoomLocation currentLocation, MineRoomMap map,
-                                              MineRoom oldRoom, int direction) {
+                                              MineRoom oldRoom, MineDirection direction) {
         System.out.println("From room:");
         print(oldRoom.matrix);
-        List<Point> connectPositions = makeRandomConnections(random);
-        int opposDir = LogicalMine.getOppositeDirection(direction);
-        Set<Integer> freeConnections = new HashSet<>(List.of(0, 1, 2, 3));
+        Map<MineDirection, Point> connectPositions = makeRandomConnections(random);
+        MineDirection opposDir = direction.getOpposite();
+        Set<MineDirection> freeConnections = new HashSet<>(List.of(MineDirection.values()));
         freeConnections.remove(opposDir);
 
-        for (int dir = 0; dir < 4; ++dir) {
+        for (MineDirection dir : MineDirection.values()) {
             if (dir == opposDir) { // Direction we came from, fix adjoining connection
-                adjustConnectionToSame(connectPositions, oldRoom, opposDir, direction);
+                adjustConnectionToSame(connectPositions, oldRoom, opposDir);
             } else { // Other connection
                 System.out.println("Other room in dir: " + dir);
                 MineRoomLocation otherLoc = currentLocation.copy();
                 otherLoc.moveInDirection(dir);
-                int otherOpposDir = LogicalMine.getOppositeDirection(dir);
+                MineDirection otherOpposDir = dir.getOpposite();
                 if (map.roomExists(otherLoc)) {
                     freeConnections.remove(dir);
                     MineRoom otherRoom = map.get(otherLoc);
                     if (otherRoom.getConnector(otherOpposDir) != null) { // has a door in direction
-                        adjustConnectionToSame(connectPositions, otherRoom, dir, otherOpposDir);
+                        adjustConnectionToSame(connectPositions, otherRoom, dir);
                     } else { // No door there, remove it in this room as well
-                        connectPositions.set(dir, null);
+                        connectPositions.remove(dir);
                     }
                 }
             }
         }
 
+        freeConnections.remove(MineDirection.up);
+        freeConnections.remove(MineDirection.down);
         // freeConnections will be [0,3] in size
         System.out.println("Newly created room has " + freeConnections.size() + " free connections.");
-        List<Integer> freeList = new ArrayList<>(freeConnections);
+        List<MineDirection> freeList = new ArrayList<>(freeConnections);
         Collections.shuffle(freeList);
         if (freeList.size() > 1 && random.nextInt(10) == 0) {
-            connectPositions.set(freeList.removeFirst(), null);
+            connectPositions.remove(freeList.removeFirst());
         }
         if (freeList.size() > 1 && random.nextInt(10) > 1) {
-            connectPositions.set(freeList.removeFirst(), null);
+            connectPositions.remove(freeList.removeFirst());
         }
         if (freeList.size() > 1 && random.nextInt(10) < 2) {
-            connectPositions.set(freeList.removeFirst(), null);
+            connectPositions.remove(freeList.removeFirst());
         }
 
         return makeBasicRoom(random, currentLocation.level, connectPositions);
     }
 
-    private static void adjustConnectionToSame(List<Point> connectPositions, MineRoom other, int towardOther, int towardNew) {
+    private static void adjustConnectionToSame(Map<MineDirection, Point> connectPositions, MineRoom other, MineDirection towardOther) {
+        MineDirection towardNew = towardOther.getOpposite();
         Point newConnect = connectPositions.get(towardOther);
-        if (towardNew == 0 || towardNew == 3) {
+        if (towardNew == MineDirection.north || towardNew == MineDirection.south) {
             newConnect.x = other.connectPositions.get(towardNew).x;
-        } else {
+        } else if (towardNew == MineDirection.west || towardNew == MineDirection.east){
+            newConnect.y = other.connectPositions.get(towardNew).y;
+        } else { // Vertical movement
+            newConnect.x = other.connectPositions.get(towardNew).x;
             newConnect.y = other.connectPositions.get(towardNew).y;
         }
     }
 
     public void makeExit(Random random) {
-        this.exitDir = random.nextInt(4);
+        this.exitDir = MyRandom.sample(List.of(MineDirection.north, MineDirection.west,
+                MineDirection.east, MineDirection.south));
         this.exitPos = new Point(connectPositions.get(exitDir));
         matrix.remove(matrix.getElementAt(exitPos.x, exitPos.y));
         matrix.addElement(exitPos.x, exitPos.y, new MineExitObject(exitDir));
@@ -322,9 +332,9 @@ public class MineRoom {
     }
 
     public MyPair<MineRoom, MineRoomLocation> makeAntiRoom(Random random, int level) {
-        List<Point> exits = makeRandomConnections(random);
-        int opposDir = LogicalMine.getOppositeDirection(exitDir);
-        exits.set(opposDir, null);
+        Map<MineDirection, Point> exits = makeRandomConnections(random);
+        MineDirection opposDir = exitDir.getOpposite();
+        exits.remove(opposDir);
         MineRoom antiRoom = makeBasicRoom(random, level, exits);
         MineRoomLocation antiRoomLoc = new MineRoomLocation(0, 0, 1);
         antiRoomLoc.moveInDirection(exitDir);
@@ -354,7 +364,7 @@ public class MineRoom {
         return new BreakableRockMineObject();
     }
 
-    public Point getConnector(int dir) {
+    public Point getConnector(MineDirection dir) {
         return connectPositions.get(dir);
     }
 }

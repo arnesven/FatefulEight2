@@ -18,8 +18,11 @@ public class MineExitObject extends MineObject {
 
     private final Sprite sprite;
 
-    public MineExitObject(int direction) {
-        this.sprite = SPRITES[direction];
+    public MineExitObject(MineDirection direction) {
+        if (direction == MineDirection.up || direction == MineDirection.down) {
+            throw new IllegalArgumentException("No Up/Down exit from mine!");
+        }
+        this.sprite = SPRITES[direction.ordinal()];
     }
 
     @Override

@@ -15,15 +15,19 @@ public class MineRoomLocation {
         return xy.x + ":" + xy.y + ":" + level;
     }
 
-    public void moveInDirection(int direction) {
-        if (direction == 0) {
+    public void moveInDirection(MineDirection direction) {
+        if (direction == MineDirection.north) {
             xy.y--;
-        } else if (direction == 3) {
+        } else if (direction == MineDirection.south) {
             xy.y++;
-        } else if (direction == 1) {
+        } else if (direction == MineDirection.west) {
             xy.x--;
-        } else {
+        } else if (direction == MineDirection.east) {
             xy.x++;
+        } else if (direction == MineDirection.up) {
+            level--;
+        } else { // Down
+            level++;
         }
     }
 

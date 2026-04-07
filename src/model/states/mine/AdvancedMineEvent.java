@@ -58,7 +58,7 @@ public class AdvancedMineEvent extends DailyEventState {
         stepsLeft--;
     }
 
-    public Point moveToRoom(Model model, AdvancedMineEvent state, int direction) {
+    public Point moveToRoom(Model model, AdvancedMineEvent state, MineDirection direction) {
         SwipingTransition.transition(model, mineSubView, direction, new SwipingTransition.Action() {
                     @Override
                     public void doAction() {
