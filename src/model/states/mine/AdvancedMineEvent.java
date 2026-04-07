@@ -56,10 +56,16 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public Point moveToRoom(Model model, AdvancedMineEvent state, MineDirection direction) {
-        if (direction == MineDirection.up || direction == MineDirection.down) {
-            CollapsingTransition.transition(model, mineSubView, () -> mine.moveToRoom(direction));
+        MineRoomLocation loc = mine.getCurrentLocation().copy();
+        loc.moveInDirection(direction);
+        if (mine.roomIsDiscovered(loc)) {
+            mine.moveToRoom(direction);
         } else {
-            SwipingTransition.transition(model, mineSubView, direction, () -> mine.moveToRoom(direction));
+            if (direction == MineDirection.up || direction == MineDirection.down) {
+                CollapsingTransition.transition(model, mineSubView, () -> mine.moveToRoom(direction));
+            } else {
+                SwipingTransition.transition(model, mineSubView, direction, () -> mine.moveToRoom(direction));
+            }
         }
         return mine.getStartingPoint();
     }

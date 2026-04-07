@@ -1,7 +1,6 @@
 package view.subviews;
 
 import model.Model;
-import model.states.mine.LogicalMine;
 import model.states.mine.MineDirection;
 import view.sprites.AnimationManager;
 import view.sprites.FilledBlockSprite;
