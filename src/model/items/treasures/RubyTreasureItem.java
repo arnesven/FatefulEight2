@@ -6,7 +6,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class RubyTreasureItem extends GemstoneItem {
-    private static final Sprite SPRITE = new ItemSprite(6, 17, MyColors.RED, MyColors.DARK_RED,
+    private static final Sprite SPRITE = new ItemSprite(8, 17, MyColors.RED, MyColors.DARK_RED,
             MyColors.DARK_GRAY);
 
     public RubyTreasureItem() {

@@ -42,11 +42,11 @@ public class MinePassageObject extends MineObject {
     public Point gotMovedInto(Model model, AdvancedMineEvent state, Point currentPoint) {
         if (direction == MineDirection.up || direction == MineDirection.down) {
             state.print("Climb " + direction.toString().toLowerCase() + " the ladder? (Y/N) ");
-            if (!state.yesNoInput()) {
-                return currentPoint;
+            if (state.yesNoInput()) {
+                return state.moveToRoom(model, state, direction);
             }
         }
-        return state.moveToRoom(model, state, direction);
+        return currentPoint;
     }
 
     @Override

@@ -132,6 +132,7 @@ public class AdvancedMineEvent extends DailyEventState {
         if (mineObject.breaksOnFailure()) {
             println("The rock shatters, but you are unable to recover any gemstones. (Labor " + result.asString() + ")");
             mine.destroyRock(model, mineObject);
+            SoundEffects.playRockBreak();
         } else {
             println("But the rock does not even crack. (Labor " + result.asString() + ")");
         }

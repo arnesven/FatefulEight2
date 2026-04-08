@@ -245,7 +245,7 @@ public class MineRoom {
 
     private static void replaceRocks(SteppingMatrix<MineObject> matrix, Random random, int level) {
         for (int y = 0; y < matrix.getRows(); ++y) {
-            for (int x = 1; x < matrix.getColumns(); ++x) {
+            for (int x = 0; x < matrix.getColumns(); ++x) {
                 MineObject obj = matrix.getElementAt(x, y);
                 if (obj instanceof UnbreakableRockObject) {
                     int roll = random.nextInt(7);
