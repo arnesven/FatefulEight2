@@ -6,11 +6,10 @@ import model.states.mine.AdvancedMineEvent;
 import model.states.mine.LogicalMine;
 import model.states.mine.MineObject;
 import util.MyPair;
+import util.MyTriplet;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.AnimationManager;
-import view.sprites.BreakingRockAnimation;
-import view.sprites.RunOnceAnimationSprite;
+import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -22,6 +21,7 @@ public class MineSubView extends FreeMoveAvatarSubView {
     private final LogicalMine logicalMine;
     private final AdvancedMineEvent state;
     private final List<MyPair<Point, RunOnceAnimationSprite>> animations = new ArrayList<>();
+    private final List<MyTriplet<Point, Sprite, Integer>> floatingAnimations = new ArrayList<>();
 
 
     public MineSubView(AdvancedMineEvent state, LogicalMine logicalMine) {
@@ -41,6 +41,11 @@ public class MineSubView extends FreeMoveAvatarSubView {
             }
         }
         animations.removeIf(p -> p.second.isDone());
+        for (MyTriplet<Point, Sprite, Integer> trip : floatingAnimations) {
+            model.getScreenHandler().register(trip.second.getName(), trip.first, trip.second, 2, 0, trip.third/3);
+            trip.third -= 1;
+        }
+        floatingAnimations.removeIf(trip -> trip.third < 0);
     }
 
     @Override
@@ -108,5 +113,11 @@ public class MineSubView extends FreeMoveAvatarSubView {
 
     public void addAnimation(Point positionFor, BreakingRockAnimation breakingRockAnimation) {
         this.animations.add(new MyPair<>(convertToScreen(positionFor), breakingRockAnimation));
+    }
+
+    public void addFloatingAnimation(Point p, Sprite32x32 floatingSprite) {
+        Point pos = convertToScreen(p);
+        pos.y -= 2;
+        this.floatingAnimations.add(new MyTriplet<>(pos, floatingSprite, 48));
     }
 }

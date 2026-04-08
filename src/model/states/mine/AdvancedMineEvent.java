@@ -12,6 +12,7 @@ import model.states.SpellCastException;
 import sound.SoundEffects;
 import util.MyLists;
 import view.sprites.BreakingRockAnimation;
+import view.sprites.Sprite32x32;
 import view.subviews.*;
 
 import java.util.List;
@@ -128,7 +129,12 @@ public class AdvancedMineEvent extends DailyEventState {
             SoundEffects.playRockBreak();
             return true;
         }
-        println("But the rock does not even crack. (Labor " + result.asString() + ")");
+        if (mineObject.breaksOnFailure()) {
+            println("The rock shatters, but you are unable to recover any gemstones. (Labor " + result.asString() + ")");
+            mine.destroyRock(model, mineObject);
+        } else {
+            println("But the rock does not even crack. (Labor " + result.asString() + ")");
+        }
         if (chosen.testSkillHidden(Skill.Endurance, mineObject.getDifficulty()/2, 0).isFailure()) {
             println(chosen.getFirstName() + " is worn out from the physical labor and exhausts 1 Stamina Point.");
             chosen.addToSP(-1);
@@ -147,5 +153,10 @@ public class AdvancedMineEvent extends DailyEventState {
 
     private boolean isMiningGear(Weapon weapon) {
         return weapon.isOfType(Pickaxe.class) || weapon.isOfType(GrandMaul.class);
+    }
+
+    public void addFloatingAnimation(MineableObject obj, Sprite32x32 floatingSprite) {
+        Point p = mine.getPositionFor(obj);
+        mineSubView.addFloatingAnimation(p, floatingSprite);
     }
 }

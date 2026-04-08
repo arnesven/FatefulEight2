@@ -1,5 +1,6 @@
 package model.states.mine;
 
+import model.Model;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite;
@@ -33,6 +34,11 @@ public class MineWallObject extends MineObject {
         }
         this.sprite = new Sprite32x32("minewall", "warehouse.png", // TODO: Static initialization
                 spriteNum, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.GRAY_RED);
+    }
+
+    @Override
+    public boolean gotBumpedInto(Model model, AdvancedMineEvent state, Point currentLocation) {
+        return false;
     }
 
     @Override

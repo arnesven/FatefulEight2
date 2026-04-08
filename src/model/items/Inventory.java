@@ -10,6 +10,7 @@ import model.items.special.PearlItem;
 import model.items.special.StoryItem;
 import model.items.spells.CombatSpell;
 import model.items.spells.Spell;
+import model.items.treasures.TreasureItem;
 import model.items.weapons.*;
 import model.states.fishing.Fish;
 import util.MyLists;
@@ -38,6 +39,7 @@ public class Inventory implements Serializable {
     private final List<Parcel> parcels = new ArrayList<>();
     private final List<ReadableItem> books = new ArrayList<>();
     private final List<StoryItem> storyItems = new ArrayList<>();
+    private final List<TreasureItem> treasureItems = new ArrayList<>();
     private int gold = STARTING_GOLD;
     private int obols = 0;
     private int food = 10;
@@ -81,6 +83,8 @@ public class Inventory implements Serializable {
     public void add(ReadableItem book) { books.add(book); }
 
     public void add(StoryItem storyItem) { storyItems.add(storyItem); }
+
+    public void add(TreasureItem treasureItem) { treasureItems.add(treasureItem); }
 
     public List<Weapon> getWeapons() {
         return weapons;
@@ -171,6 +175,7 @@ public class Inventory implements Serializable {
         sets.add(parcels);
         sets.add(books);
         sets.add(storyItems);
+        sets.add(treasureItems);
         return sets;
     }
 
@@ -238,6 +243,10 @@ public class Inventory implements Serializable {
 
     public List<StoryItem> getStoryItems() {
         return storyItems;
+    }
+
+    public List<TreasureItem> getTreasureItems() {
+        return treasureItems;
     }
 
     public int getTentSize() {

@@ -33,4 +33,8 @@ public abstract class MineableObject extends MineObject {
     public Sprite getDebrisSprite() {
         return DEBRIS_SPRITE;
     }
+
+    public boolean breaksOnFailure() {
+        return false;
+    }
 }

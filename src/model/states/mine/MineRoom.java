@@ -248,7 +248,7 @@ public class MineRoom {
             for (int x = 1; x < matrix.getColumns(); ++x) {
                 MineObject obj = matrix.getElementAt(x, y);
                 if (obj instanceof UnbreakableRockObject) {
-                    int roll = random.nextInt(6);
+                    int roll = random.nextInt(7);
                     if (roll != 0) {
                         matrix.remove(obj);
                     }
@@ -261,7 +261,9 @@ public class MineRoom {
                     } else if (roll == 4) {
                         matrix.addElement(x, y, new GoldOreObject(random.nextInt(3)));
                     } else if (roll == 5) {
-                        matrix.addElement(x, y, new RubyRockObject());
+                        matrix.addElement(x, y, new RubyGeodeObject());
+                    } else if (roll == 6) {
+                        matrix.addElement(x, y, new DiamondGeodeObject());
                     }
                 }
             }
