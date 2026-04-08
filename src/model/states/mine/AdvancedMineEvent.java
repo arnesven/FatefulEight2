@@ -118,10 +118,9 @@ public class AdvancedMineEvent extends DailyEventState {
             } while (true);
         }
         println(chosen.getName() + " hacks at the " + mineObject.getName() + "...");
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model,
-                this, chosen, Skill.Labor, mineObject.getDifficulty(), 0, 0);
+        SkillCheckResult result = chosen.testSkill(model, Skill.Labor, mineObject.getDifficulty());
         if (result.isSuccessful()) {
-            println("And the rock breaks apart!");
+            println("And the rock breaks apart! (Labor " + result.asString() + ")");
             model.getLog().waitForAnimationToFinish();
             mineObject.giveReward(model, this);
             mineSubView.addAnimation(mine.getPositionFor(mineObject), new BreakingRockAnimation(mineObject.getAnimationColor()));
@@ -129,8 +128,8 @@ public class AdvancedMineEvent extends DailyEventState {
             SoundEffects.playRockBreak();
             return true;
         }
-        println("But the rock does not even crack.");
-        if (chosen.testSkillHidden(Skill.Endurance, 4, 0).isFailure()) {
+        println("But the rock does not even crack. (Labor " + result.asString() + ")");
+        if (chosen.testSkillHidden(Skill.Endurance, mineObject.getDifficulty()/2, 0).isFailure()) {
             println(chosen.getFirstName() + " is worn out from the physical labor and exhausts 1 Stamina Point.");
             chosen.addToSP(-1);
         }
