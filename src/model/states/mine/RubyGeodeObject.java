@@ -21,7 +21,7 @@ public class RubyGeodeObject extends GeodeRockObject {
     private final Sprite sprite;
 
     public RubyGeodeObject() {
-        super("Ruby", 10, FLOATING_SPRITE);
+        super("Ruby", 15, FLOATING_SPRITE);
         this.sprite = SPRITES[MyRandom.randInt(4)];
    }
 

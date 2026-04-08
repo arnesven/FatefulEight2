@@ -5,12 +5,13 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class RubyTreasureItem extends GemstoneItem {
-    private static final Sprite SPRITE = new ItemSprite(8, 17, MyColors.RED, MyColors.DARK_RED,
+public class EmeraldTreasureItem extends GemstoneItem {
+
+    private static final Sprite SPRITE = new ItemSprite(6, 17, MyColors.DARK_GREEN, MyColors.GREEN,
             MyColors.DARK_GRAY);
 
-    public RubyTreasureItem() {
-        super("Ruby", 500);
+    public EmeraldTreasureItem() {
+        super("Emerald", 250);
     }
 
     @Override
@@ -20,6 +21,6 @@ public class RubyTreasureItem extends GemstoneItem {
 
     @Override
     public Item copy() {
-        return new RubyTreasureItem();
+        return new EmeraldTreasureItem();
     }
 }

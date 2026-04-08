@@ -1,26 +1,26 @@
 package model.states.mine;
 
-import model.items.treasures.DiamondTreasureItem;
+import model.items.treasures.EmeraldTreasureItem;
 import model.items.treasures.TreasureItem;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class DiamondGeodeObject extends GeodeRockObject {
+public class EmeraldGeodeObject extends GeodeRockObject {
 
-    private static MyColors LINE_COLOR = MyColors.CYAN;
-    private static final MyColors FILL_COLOR = MyColors.WHITE;
+    private static final MyColors FILL_COLOR = MyColors.GREEN;
+    private static final MyColors LINE_COLOR = MyColors.DARK_GREEN;
 
     private static final Sprite[] SPRITES = GeodeRockObject.makeGeodeSpriteSet(LINE_COLOR, FILL_COLOR);
-
-    private static final Sprite32x32 FLOATING_SPRITE =
-            new Sprite32x32("floatingdiamond", "warehouse.png", 0x45,
-                    LINE_COLOR, FILL_COLOR, MyColors.GRAY_RED);
     private final Sprite sprite;
 
-    public DiamondGeodeObject() {
-        super("Diamond", 18, FLOATING_SPRITE);
+    private static final Sprite32x32 FLOATING_SPRITE =
+            new Sprite32x32("floatingemerald", "warehouse.png", 0x44,
+                    LINE_COLOR, FILL_COLOR, MyColors.GRAY_RED);
+
+    public EmeraldGeodeObject() {
+        super("Emerald", 13, FLOATING_SPRITE);
         this.sprite = SPRITES[MyRandom.randInt(4)];
     }
 
@@ -31,6 +31,6 @@ public class DiamondGeodeObject extends GeodeRockObject {
 
     @Override
     protected TreasureItem makeGemItem() {
-        return new DiamondTreasureItem();
+        return new EmeraldTreasureItem();
     }
 }
