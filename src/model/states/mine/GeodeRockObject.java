@@ -3,6 +3,7 @@ package model.states.mine;
 import model.Model;
 import model.items.treasures.TreasureItem;
 import sound.SoundEffects;
+import util.MyStrings;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.MineRockSprite;
@@ -15,7 +16,7 @@ public abstract class GeodeRockObject extends MineableObject {
     private final Sprite32x32 floatingSprite;
 
     public GeodeRockObject(String name, int difficulty, Sprite32x32 floatingSprite) {
-        super(name + " Geode", difficulty);
+        super(name + " Geode", difficulty - 10); // TODO: Remove
         this.floatingSprite = floatingSprite;
     }
 
@@ -38,7 +39,7 @@ public abstract class GeodeRockObject extends MineableObject {
     public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {
         advancedMineEvent.addFloatingAnimation(this, floatingSprite);
         TreasureItem gemstone = makeGemItem();
-        advancedMineEvent.println("You get a " + gemstone.getName() + "!");
+        advancedMineEvent.println("You got " + MyStrings.aOrAn(gemstone.getName()) + " " + gemstone.getName() + "!");
         gemstone.addYourself(model.getParty().getInventory());
         SoundEffects.playSound(gemstone.getSound());
     }

@@ -8,6 +8,6 @@ public abstract class GemstoneItem extends TreasureItem {
 
     @Override
     public int getWeight() {
-        return 50;
+        return 1;
     }
 }

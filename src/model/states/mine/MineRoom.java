@@ -248,31 +248,33 @@ public class MineRoom {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 MineObject obj = matrix.getElementAt(x, y);
                 if (obj instanceof UnbreakableRockObject) {
-                    int roll = random.nextInt(8);
-                    if (roll != 0) {
-                        matrix.remove(obj);
-                    }
-                    if (roll == 1) {
-                        matrix.addElement(x, y, new BreakableRockMineObject());
-                    } else if (roll == 2) {
-                        matrix.addElement(x, y, new MaterialsOreObject(random.nextInt(3)));
-                    } else if (roll == 3) {
-                        matrix.addElement(x, y, new SilverOreObject(random.nextInt(3)));
-                    } else if (roll == 4) {
-                        matrix.addElement(x, y, new GoldOreObject(random.nextInt(3)));
-                    } else if (roll == 5) {
-                        matrix.addElement(x, y, new RubyGeodeObject());
-                    } else if (roll == 6) {
-                        matrix.addElement(x, y, new DiamondGeodeObject());
-                    } else if (roll == 7) {
-                        matrix.addElement(x, y, new EmeraldGeodeObject());
-                    }
-                    // TODO: Add Sapphires (diff 11, value 100)
-                    // TODO: Add Topazes (diff 10, value 50)
-                    // TODO: Add Amethysts (diff 9, value 25)
+                    MineObject replacement = getObjectForLevel(random, level);
+                    matrix.remove(obj);
+                    matrix.addElement(x, y, replacement);
                 }
             }
         }
+    }
+
+    private static MineObject getObjectForLevel(Random random, int level) {
+        int roll = random.nextInt(11);
+        return switch (roll) {
+            case 0 -> new UnbreakableRockObject();
+            case 1 -> new BreakableRockMineObject();
+            case 2 -> new MaterialsOreObject(random.nextInt(3));
+            case 3 -> new SilverOreObject(random.nextInt(3));
+            case 4 -> new GoldOreObject(random.nextInt(3));
+            case 5 -> new DiamondGeodeObject();
+            case 6 -> new RubyGeodeObject();
+            case 7 -> new EmeraldGeodeObject();
+            case 8 -> new SapphireGeodeObject();
+            case 9 -> new TopazGeodeObject();
+            case 10 -> new AmethystGeodeObject();
+            default -> throw new IllegalStateException();
+        };
+        // TODO: Add Sapphires (diff 11, value 100)
+        // TODO: Add Topazes (diff 10, value 50)
+        // TODO: Add Amethysts (diff 9, value 25)
     }
 
     public static MineRoom makeConnectingRoom(Random random, MineRoomLocation currentLocation, MineRoomMap map,
