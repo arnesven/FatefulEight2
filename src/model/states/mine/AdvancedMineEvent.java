@@ -2,6 +2,7 @@ package model.states.mine;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.GrandMaul;
@@ -11,6 +12,8 @@ import model.states.DailyEventState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
 import util.MyLists;
+import util.MyRandom;
+import util.MyStrings;
 import view.sprites.BreakingRockAnimation;
 import view.sprites.Sprite32x32;
 import view.subviews.*;
@@ -18,11 +21,13 @@ import view.subviews.*;
 import java.util.List;
 
 import java.awt.*;
+import java.util.Map;
 
 public class AdvancedMineEvent extends DailyEventState {
     private boolean playerHasQuit = false;
     private int currentLevel = 1;
     private int stepsLeft = 99;
+    private int round = 1;
     private LogicalMine mine;
     private MineSubView mineSubView;
 
@@ -35,17 +40,68 @@ public class AdvancedMineEvent extends DailyEventState {
         this.mine = new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
-
+        GameCharacter originalLeader = model.getParty().getLeader();
         do {
             try {
                 waitUntil(mineSubView, FreeMoveAvatarSubView::hasMovesToHandle, true);
                 if (!mineSubView.handleMove(model)) {
                     askToExit(model);
                 }
+                if (stepsLeft <= 0) {
+                    playerHasQuit = handleTiredPartyMembers(model);
+                    if (!playerHasQuit) {
+                        stepsLeft = 50;
+                        round++;
+                    }
+                }
             } catch (SpellCastException sce) {
 
             }
         } while (!playerHasQuit);
+        model.getParty().unbenchAll();
+        if (model.getParty().getLeader() != originalLeader) {
+            model.getParty().setLeader(originalLeader);
+            println(originalLeader.getName() + " is now the leader of the party again.");
+        }
+        println("You exit the mine"); // TODO: Mine summary
+    }
+
+    private boolean handleTiredPartyMembers(Model model) {
+        GameCharacter talker = MyRandom.sample(getPresentCharacters(model));
+        partyMemberSay(talker, MyRandom.sample(List.of(
+                "How much longer are we going to wander around in here?",
+                "I'm getting pretty tired.",
+                "Anybody else feel tired?",
+                "I don't think I can go on much further.",
+                "My feet are so sore. We need to stop.",
+                "I'm pretty spent, do we need to go on?"
+        )), MyRandom.flipCoin() ? FacialExpression.disappointed : FacialExpression.relief);
+        List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Endurance, 2 + round);
+        if (!failers.isEmpty()) {
+            if (failers.size() == getPresentCharacters(model).size()) {
+                println("Your party is too tired to continue, and you must leave the mine.");
+                return true;
+            }
+            print(MyLists.commaAndJoin(failers, GameCharacter::getName) + " " +
+                    (failers.size() > 1 ? "are":"is") + " too tired to continue, do you go on without them? (Y/N) ");
+            if (!yesNoInput()) {
+                return true;
+            }
+            model.getParty().benchPartyMembers(failers);
+            println("The tired party member" + (failers.size() > 1 ? "s have":" has")+
+                    " temporarily left the party and will meet you later at the entrance of the mine.");
+            if (model.getParty().getBench().contains(model.getParty().getLeader())) {
+                GameCharacter newLeader = getPresentCharacters(model).getFirst();
+                model.getParty().setLeader(newLeader);
+                println(newLeader.getName() + " is the temporary leader of the party.");
+            }
+        }
+        return false;
+    }
+
+    private List<GameCharacter> getPresentCharacters(Model model) {
+        return MyLists.filter(model.getParty().getPartyMembers(),
+                gc -> !model.getParty().getBench().contains(gc));
     }
 
     public int getCurrentLevel() {

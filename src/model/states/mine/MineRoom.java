@@ -59,7 +59,7 @@ public class MineRoom {
         Point randomVertical = new Point(random.nextInt(MINE_COLUMNS-4) + 2,
                 random.nextInt(MINE_ROWS-4) + 2);
         MineDirection vertDir = level == 1 ? MineDirection.down
-                : (random.nextInt(3) == 0 ? MineDirection.up : MineDirection.down);
+                : (random.nextInt(4) == 0 ? MineDirection.up : MineDirection.down);
         if (random.nextInt(4) == 0) {
             connectPositions.put(vertDir, randomVertical);
         }
@@ -296,7 +296,7 @@ public class MineRoom {
         if (level < 1) {
             throw new IllegalArgumentException("Bad level when spawning objects: " + level);
         }
-        if (random.nextBoolean()) {
+        if (random.nextInt(3) > 0) {
             if (random.nextInt(3) == 0) {
                 return new UnbreakableRockObject();
             }
