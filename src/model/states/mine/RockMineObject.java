@@ -9,7 +9,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 
-public class RockMineObject extends MineableObject {
+public abstract class RockMineObject extends MineableObject {
 
     private static final Sprite[] SPRITES = new Sprite[]{
         new MineRockSprite(0x04, MyColors.BLACK, MyColors.DARK_GRAY),

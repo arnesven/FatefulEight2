@@ -32,4 +32,9 @@ public class TopazGeodeObject extends GeodeRockObject {
     protected TreasureItem makeGemItem() {
         return new TopazTreasureItem();
     }
+
+    @Override
+    public MineObject copy() {
+        return new TopazGeodeObject();
+    }
 }

@@ -32,4 +32,9 @@ public class AmethystGeodeObject extends GeodeRockObject {
     protected TreasureItem makeGemItem() {
         return new AmethystTreasureItem();
     }
+
+    @Override
+    public MineObject copy() {
+        return new AmethystGeodeObject();
+    }
 }

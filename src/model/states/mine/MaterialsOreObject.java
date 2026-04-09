@@ -35,6 +35,11 @@ public class MaterialsOreObject extends MineOreObject {
     }
 
     @Override
+    public MineObject copy() {
+        return new MaterialsOreObject(richness);
+    }
+
+    @Override
     public Sprite getDebrisSprite() {
         return DEBRIS;
     }

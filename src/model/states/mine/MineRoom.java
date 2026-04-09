@@ -15,6 +15,31 @@ public class MineRoom {
     private static final int MINE_COLUMNS = 8;
     private static final int MINE_ROWS = 9;
 
+    private static final List<MineableObject> TOP_LEVEL_OBJECTS = List.of(
+            new MaterialsOreObject(0), new SilverOreObject(0), new GoldOreObject(0),
+            new AmethystGeodeObject(), new TopazGeodeObject(), new SapphireGeodeObject());
+    private static final List<MineableObject> MID_LEVEL_OBJECTS = List.of(
+            new SilverOreObject(1), new GoldOreObject(1), new MaterialsOreObject(1),
+            new TopazGeodeObject(), new SapphireGeodeObject(), new EmeraldGeodeObject());
+    private static final List<MineableObject> BOTTOM_LEVEL_OBJECTS = List.of(
+            new GoldOreObject(2), new MaterialsOreObject(2), new SilverOreObject(2),
+            new SapphireGeodeObject(), new EmeraldGeodeObject(), new RubyGeodeObject());
+
+    private static final int[][] PROBABILITIES = new int[][]{
+            new int[]{45, 70, 85, 95, 99},
+            //        45  25  15  10   4   1
+            new int[]{44, 67, 80, 92, 98},
+            //        44  23  13  12   6   2
+            new int[]{43, 64, 75, 89, 97},
+            //        43  21  11  14   8   3
+            new int[]{42, 61, 70, 86, 96},
+            //        42  19   9  16  10   4
+            new int[]{41, 58, 65, 83, 95},
+            //        41  17   7  18  12   5
+            new int[]{40, 55, 60, 80, 94},
+            //        40  15   5  20  16   6
+    };
+
     private SteppingMatrix<MineObject> matrix;
     private final Map<MineDirection, Point> connectPositions;
     private Point exitPos = null;
@@ -34,7 +59,7 @@ public class MineRoom {
         Point randomVertical = new Point(random.nextInt(MINE_COLUMNS-4) + 2,
                 random.nextInt(MINE_ROWS-4) + 2);
         MineDirection vertDir = level == 1 ? MineDirection.down
-                : (random.nextBoolean() ? MineDirection.down : MineDirection.up);
+                : (random.nextInt(3) == 0 ? MineDirection.up : MineDirection.down);
         if (random.nextInt(4) == 0) {
             connectPositions.put(vertDir, randomVertical);
         }
@@ -50,7 +75,7 @@ public class MineRoom {
 
     public static MineRoom makeBasicRoom(Random random, int level, Map<MineDirection, Point> connectPositions) {
         SteppingMatrix<MineObject> matrix = new SteppingMatrix<>(MINE_COLUMNS, MINE_ROWS);
-        fillWithRock(matrix, random, level, connectPositions);
+        fillWithRock(matrix, random, connectPositions);
         addPassages(matrix, connectPositions);
         addTunnels(matrix, random, connectPositions);
         makeTunnelWalls(matrix);
@@ -60,7 +85,7 @@ public class MineRoom {
     }
 
     private static void fillWithRock(SteppingMatrix<MineObject> matrix, Random random,
-                                     int level, Map<MineDirection, Point> connectPositions) {
+                                     Map<MineDirection, Point> connectPositions) {
         List<Point> connections = new ArrayList<>(connectPositions.values());
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
@@ -244,11 +269,12 @@ public class MineRoom {
     }
 
     private static void replaceRocks(SteppingMatrix<MineObject> matrix, Random random, int level) {
+        int diamondChance = level * level;
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 MineObject obj = matrix.getElementAt(x, y);
                 if (obj instanceof UnbreakableRockObject) {
-                    MineObject replacement = getObjectForLevel(random, level);
+                    MineObject replacement = getObjectForLevel(random, level, diamondChance);
                     matrix.remove(obj);
                     matrix.addElement(x, y, replacement);
                 }
@@ -256,25 +282,36 @@ public class MineRoom {
         }
     }
 
-    private static MineObject getObjectForLevel(Random random, int level) {
-        int roll = random.nextInt(11);
-        return switch (roll) {
-            case 0 -> new UnbreakableRockObject();
-            case 1 -> new BreakableRockMineObject();
-            case 2 -> new MaterialsOreObject(random.nextInt(3));
-            case 3 -> new SilverOreObject(random.nextInt(3));
-            case 4 -> new GoldOreObject(random.nextInt(3));
-            case 5 -> new DiamondGeodeObject();
-            case 6 -> new RubyGeodeObject();
-            case 7 -> new EmeraldGeodeObject();
-            case 8 -> new SapphireGeodeObject();
-            case 9 -> new TopazGeodeObject();
-            case 10 -> new AmethystGeodeObject();
-            default -> throw new IllegalStateException();
-        };
-        // TODO: Add Sapphires (diff 11, value 100)
-        // TODO: Add Topazes (diff 10, value 50)
-        // TODO: Add Amethysts (diff 9, value 25)
+    private static MineObject spawn(Random random, int intraLevel, List<MineableObject> templates) {
+        int dieRoll = random.nextInt(100);
+        for (int i = 0; i < PROBABILITIES[0].length; ++i) {
+            if (dieRoll < PROBABILITIES[intraLevel-1][i]) {
+                return templates.get(i).copy();
+            }
+        }
+        return templates.getLast().copy();
+    }
+
+    private static MineObject getObjectForLevel(Random random, int level, int diamondChance) {
+        if (level < 1) {
+            throw new IllegalArgumentException("Bad level when spawning objects: " + level);
+        }
+        if (random.nextBoolean()) {
+            if (random.nextInt(3) == 0) {
+                return new UnbreakableRockObject();
+            }
+            return new BreakableRockMineObject();
+        }
+        if (random.nextInt(100_000) < diamondChance) {
+            return new DiamondGeodeObject();
+        }
+        if (level <= 6) {
+            return spawn(random, level, TOP_LEVEL_OBJECTS);
+        }
+        if (level <= 12) {
+            return spawn(random, level - 6, MID_LEVEL_OBJECTS);
+        }
+        return spawn(random, level - 12, BOTTOM_LEVEL_OBJECTS);
     }
 
     public static MineRoom makeConnectingRoom(Random random, MineRoomLocation currentLocation, MineRoomMap map,

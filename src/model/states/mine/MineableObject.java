@@ -30,6 +30,8 @@ public abstract class MineableObject extends MineObject {
 
     public abstract MyColors getAnimationColor();
 
+    public abstract MineObject copy();
+
     public Sprite getDebrisSprite() {
         return DEBRIS_SPRITE;
     }

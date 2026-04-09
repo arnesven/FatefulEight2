@@ -33,4 +33,9 @@ public class SapphireGeodeObject extends GeodeRockObject {
     protected TreasureItem makeGemItem() {
         return new SapphireTreasureItem();
     }
+
+    @Override
+    public MineObject copy() {
+        return new SapphireGeodeObject();
+    }
 }

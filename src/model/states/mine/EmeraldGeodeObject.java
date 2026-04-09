@@ -33,4 +33,9 @@ public class EmeraldGeodeObject extends GeodeRockObject {
     protected TreasureItem makeGemItem() {
         return new EmeraldTreasureItem();
     }
+
+    @Override
+    public MineObject copy() {
+        return new EmeraldGeodeObject();
+    }
 }

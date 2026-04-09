@@ -26,4 +26,9 @@ public class SilverOreObject extends MineOreObject {
     public MyColors getAnimationColor() {
         return MyColors.GRAY;
     }
+
+    @Override
+    public MineObject copy() {
+        return new SilverOreObject(richness);
+    }
 }

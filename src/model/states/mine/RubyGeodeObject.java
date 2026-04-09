@@ -34,4 +34,9 @@ public class RubyGeodeObject extends GeodeRockObject {
     protected TreasureItem makeGemItem() {
         return new RubyTreasureItem();
     }
+
+    @Override
+    public MineObject copy() {
+        return new RubyGeodeObject();
+    }
 }
