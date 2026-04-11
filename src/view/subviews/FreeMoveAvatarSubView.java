@@ -97,4 +97,12 @@ public abstract class FreeMoveAvatarSubView extends AvatarSubView {
             model.getScreenHandler().register("warehouse", p, model.getParty().getLeader().getAvatarSprite(), 2);
         }
     }
+
+    public Point getAvatarPosition() {
+        return avatarPos;
+    }
+
+    public void clearMoves() {
+        moveQueue.clear();
+    }
 }

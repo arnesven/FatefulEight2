@@ -101,6 +101,10 @@ public class MineSubView extends FreeMoveAvatarSubView {
         return newPosition;
     }
 
+    public void moveEnemyToPlayer(Sprite avatar, Point from) {
+        addMovementAnimation(avatar, convertToScreen(from), convertToScreen(getAvatarPosition()));
+    }
+
     @Override
     protected String getUnderText(Model model) {
         return "Move with the arrow keys, SPACE to quit.";

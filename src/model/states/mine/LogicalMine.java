@@ -2,10 +2,15 @@ package model.states.mine;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.combat.CombatAdvantage;
+import model.states.CombatEvent;
 import util.MyPair;
+import util.MyRandom;
+import util.MyStrings;
+import view.combat.CaveTheme;
+import view.subviews.MineSubView;
 
 import java.awt.*;
-import java.util.Map;
 import java.util.Random;
 
 public class LogicalMine {
@@ -21,12 +26,12 @@ public class LogicalMine {
         currentLocation = new MineRoomLocation(0, 0, 1);
 
         // First room
-        this.currentRoom = MineRoom.makeStartingRoom(random, currentLocation.level);
+        this.currentRoom = MineRoom.makeStartingRoom(this, random, currentLocation.level);
         startPoint = currentRoom.getExitPosition();
         rooms.put(currentLocation, currentRoom);
         rooms.setDiscovered(currentRoom);
 
-        MyPair<MineRoom, MineRoomLocation> pair = currentRoom.makeAntiRoom(random, currentLocation.level);
+        MyPair<MineRoom, MineRoomLocation> pair = currentRoom.makeAntiRoom(this, random, currentLocation.level);
         rooms.put(pair.second, pair.first);
     }
 
@@ -45,7 +50,7 @@ public class LogicalMine {
     public void moveToRoom(MineDirection direction) {
         currentLocation.moveInDirection(direction);
         if (!rooms.roomExists(currentLocation)) {
-            MineRoom newRoom = MineRoom.makeConnectingRoom(random, currentLocation, rooms, currentRoom, direction);
+            MineRoom newRoom = MineRoom.makeConnectingRoom(this, random, currentLocation, rooms, currentRoom, direction);
             rooms.put(currentLocation, newRoom);
         }
         currentRoom = rooms.get(currentLocation);
@@ -69,5 +74,70 @@ public class LogicalMine {
 
     public Point getPositionFor(MineableObject mineObject) {
         return getMatrix().getPositionFor(mineObject);
+    }
+
+    public void addNPCs(SteppingMatrix<MineObject> matrix, int level) {
+
+    }
+
+    public CombatEvent combatIsTriggered(Model model, AdvancedMineEvent state, MineSubView subView, Point previousPosition) {
+        Point currentPosition = subView.getAvatarPosition();
+        MineObject currentObj = getMatrix().getElementAt(currentPosition.x, currentPosition.y);
+        if (currentObj instanceof EnemyMineObject enemyObj) {
+            state.println("You encounter " + enemyObj.getDescription() + "!");
+            model.getLog().waitForAnimationToFinish();
+            CombatEvent combatEvent = new CombatEvent(model, enemyObj.getEnemies(),
+                    new CaveTheme(), true, CombatAdvantage.Neither);
+            combatEvent.run(model);
+            return combatEvent;
+        }
+
+        return checkForAdjacentCombat(model, state, subView, currentPosition, previousPosition);
+    }
+
+    private CombatEvent checkForAdjacentCombat(Model model, AdvancedMineEvent state, MineSubView subView, Point currentPosition, Point previousPosition) {
+        for (MineDirection dir : MineDirection.FLAT_DIRECTIONS) {
+            MineRoomLocation loc = new MineRoomLocation(currentPosition.x, currentPosition.y, 0);
+            loc.moveInDirection(dir);
+
+            if (MineRoom.isWithinRoomBounds(loc.xy)) {
+                MineObject adjacentObj = getMatrix().getElementAt(loc.xy.x, loc.xy.y);
+                if (adjacentObj instanceof EnemyMineObject enemyAdjacentObj && enemyAdjacentObj.doesTriggerCombatFromAdjacent()) {
+                    enemyAdjacentObj.moveToPlayer(subView, loc.xy);
+
+                    Point directionOfTravel = new Point(currentPosition.x - previousPosition.x,
+                            currentPosition.y - previousPosition.y);
+                    System.out.println("Direction of travel: " + directionOfTravel);
+                    System.out.println("Direction of enemy: " + dir.getDxDy());
+                    CombatAdvantage advantage;
+                    if (directionOfTravel.equals(dir.getDxDy())) {
+                        state.println("You encounter " + enemyAdjacentObj.getDescription() + "!");
+                        advantage = CombatAdvantage.Neither;
+                    } else {
+                        state.println(MyStrings.capitalize(enemyAdjacentObj.getDescription()) + " ambushes you!");
+                        advantage = CombatAdvantage.Enemies;
+                    }
+                    model.getLog().waitForAnimationToFinish();
+                    CombatEvent combatEvent = new CombatEvent(model, enemyAdjacentObj.getEnemies(),
+                            new CaveTheme(), true, advantage);
+                    combatEvent.run(model);
+                    subView.removeMovementAnimation();
+                    return combatEvent;
+                }
+            }
+        }
+        return null;
+    }
+
+    protected void placeRandomly(SteppingMatrix<MineObject> matrix, EnemyMineObject enemyObj) {
+        for (int i = 0; i < 100; ++i) {
+            int col = MyRandom.randInt(matrix.getColumns());
+            int row = MyRandom.randInt(matrix.getRows());
+            if (matrix.getElementAt(col, row) == null) {
+                matrix.addElement(col, row, enemyObj);
+                return;
+            }
+        }
+        System.err.println("Could not place enemy after 100 tries.");
     }
 }

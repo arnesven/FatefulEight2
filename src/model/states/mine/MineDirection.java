@@ -1,9 +1,12 @@
 package model.states.mine;
 
 import java.awt.*;
+import java.util.List;
 
 public enum MineDirection {
     north, west, east, south, up, down;
+
+    public static final List<MineDirection> FLAT_DIRECTIONS = List.of(north, west, east, south);
 
     public MineDirection getOpposite() {
         return switch (this) {

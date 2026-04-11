@@ -10,7 +10,7 @@ public class GoblinClubWielder extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0xA7, MyColors.BROWN);
 
     public GoblinClubWielder(char a) {
-        super(a, "Goblin Club Wielder", new KnockDownAttackBehavior(2));
+        super(a, "Club Wielder", new KnockDownAttackBehavior(2));
     }
 
     @Override

@@ -11,7 +11,7 @@ public class GoblinWolfRiderEnemy extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinWolfRiderEnemySprite();
 
     public GoblinWolfRiderEnemy(char a) {
-        super(a, "Goblin Wolf Rider", new MeleeAttackBehavior());
+        super(a, "Wolf Rider", new MeleeAttackBehavior());
     }
 
     @Override

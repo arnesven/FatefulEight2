@@ -8,7 +8,7 @@ public class GoblinAxeWielder extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0x88);
 
     public GoblinAxeWielder(char b) {
-        super(b, "Goblin Axe Wielder", new MeleeAttackBehavior());
+        super(b, "Axe Wielder", new MeleeAttackBehavior());
     }
 
     @Override

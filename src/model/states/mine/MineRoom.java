@@ -2,6 +2,7 @@ package model.states.mine;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.items.Equipment;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -14,6 +15,7 @@ public class MineRoom {
 
     private static final int MINE_COLUMNS = 8;
     private static final int MINE_ROWS = 9;
+    private static final Rectangle ROOM_BOUNDS = new Rectangle(MINE_COLUMNS, MINE_ROWS);
 
     private static final List<MineableObject> TOP_LEVEL_OBJECTS = List.of(
             new MaterialsOreObject(0), new SilverOreObject(0), new GoldOreObject(0),
@@ -73,7 +75,7 @@ public class MineRoom {
         return result;
     }
 
-    public static MineRoom makeBasicRoom(Random random, int level, Map<MineDirection, Point> connectPositions) {
+    public static MineRoom makeBasicRoom(LogicalMine logicalMine, Random random, int level, Map<MineDirection, Point> connectPositions) {
         SteppingMatrix<MineObject> matrix = new SteppingMatrix<>(MINE_COLUMNS, MINE_ROWS);
         fillWithRock(matrix, random, connectPositions);
         addPassages(matrix, connectPositions);
@@ -81,6 +83,7 @@ public class MineRoom {
         makeTunnelWalls(matrix);
         addSupports(matrix);
         replaceRocks(matrix, random, level);
+        logicalMine.addNPCs(matrix, level);
         return new MineRoom(matrix, connectPositions);
     }
 
@@ -314,7 +317,7 @@ public class MineRoom {
         return spawn(random, level - 12, BOTTOM_LEVEL_OBJECTS);
     }
 
-    public static MineRoom makeConnectingRoom(Random random, MineRoomLocation currentLocation, MineRoomMap map,
+    public static MineRoom makeConnectingRoom(LogicalMine mine, Random random, MineRoomLocation currentLocation, MineRoomMap map,
                                               MineRoom oldRoom, MineDirection direction) {
         System.out.println("From room:");
         print(oldRoom.matrix);
@@ -358,7 +361,7 @@ public class MineRoom {
         if (freeList.size() > 1 && random.nextInt(10) < 2) {
             connectPositions.remove(freeList.removeFirst());
         }
-        return makeBasicRoom(random, currentLocation.level, connectPositions);
+        return makeBasicRoom(mine, random, currentLocation.level, connectPositions);
     }
 
     private static void adjustConnectionToSame(Map<MineDirection, Point> connectPositions, MineRoom other, MineDirection towardOther) {
@@ -378,9 +381,9 @@ public class MineRoom {
         }
     }
 
-    public static MineRoom makeStartingRoom(Random random, int level) {
+    public static MineRoom makeStartingRoom(LogicalMine logicalMine, Random random, int level) {
         Map<MineDirection, Point> connections = makeRandomConnectionsNoVertical(random, level);
-        MineRoom room = makeBasicRoom(random, level, connections);
+        MineRoom room = makeBasicRoom(logicalMine, random, level, connections);
         room.makeExit(random);
         return room;
     }
@@ -397,13 +400,13 @@ public class MineRoom {
         return exitPos;
     }
 
-    public MyPair<MineRoom, MineRoomLocation> makeAntiRoom(Random random, int level) {
+    public MyPair<MineRoom, MineRoomLocation> makeAntiRoom(LogicalMine mine, Random random, int level) {
         Map<MineDirection, Point> exits = makeRandomConnectionsNoVertical(random, level);
         exits.remove(MineDirection.down);
         exits.remove(MineDirection.up);
         MineDirection opposDir = exitDir.getOpposite();
         exits.remove(opposDir);
-        MineRoom antiRoom = makeBasicRoom(random, level, exits);
+        MineRoom antiRoom = makeBasicRoom(mine, random, level, exits);
         MineRoomLocation antiRoomLoc = new MineRoomLocation(0, 0, 1);
         antiRoomLoc.moveInDirection(exitDir);
         return new MyPair<>(antiRoom, antiRoomLoc);
@@ -414,8 +417,7 @@ public class MineRoom {
     }
 
     public boolean canMoveInto(Model model, AdvancedMineEvent state, Point newPosition) {
-        Rectangle r = new Rectangle(MINE_COLUMNS, MINE_ROWS);
-        if (!r.contains(newPosition)) {
+        if (!isWithinRoomBounds(newPosition)) {
             return false;
         }
         MineObject obj = matrix.getElementAt(newPosition.x, newPosition.y);
@@ -423,6 +425,10 @@ public class MineRoom {
             return obj.gotBumpedInto(model, state, newPosition);
         }
         return true;
+    }
+
+    public static boolean isWithinRoomBounds(Point newPosition) {
+        return ROOM_BOUNDS.contains(newPosition);
     }
 
     private static MineObject makeInitialRocks(Random random) {

@@ -11,7 +11,7 @@ public class GoblinKingEnemy extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0xB7);
 
     public GoblinKingEnemy(char a) {
-        super(a, "Goblin King", new MultiKnockBackBehavior(4,3));
+        super(a, "King", new MultiKnockBackBehavior(4,3));
     }
 
     @Override

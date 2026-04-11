@@ -9,11 +9,7 @@ import model.items.potions.SleepingPotion;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
 import model.states.events.RareBirdEvent;
-import view.MyColors;
-import view.sprites.Animation;
-import view.sprites.LoopingSprite;
-import view.sprites.SmokeBallAnimation;
-import view.sprites.Sprite;
+import view.sprites.*;
 import view.subviews.DungeonDrawer;
 import view.subviews.StripedTransition;
 
@@ -164,13 +160,4 @@ public class DungeonMonster extends CenterDungeonObject {
         return enemies.get(0).getName();
     }
 
-    private static class SleepAnimationSprite extends LoopingSprite {
-        public SleepAnimationSprite() {
-            super("sleepanimation", "dungeon.png", 0x46, 32);
-            setColor1(MyColors.BLACK);
-            setColor2(MyColors.PINK);
-            setFrames(2);
-            setDelay(32);
-        }
-    }
 }

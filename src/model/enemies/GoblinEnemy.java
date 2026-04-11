@@ -10,7 +10,7 @@ import model.states.CombatEvent;
 
 public abstract class GoblinEnemy extends Enemy {
     public GoblinEnemy(char enemyGroup, String name, EnemyAttackBehavior behavior) {
-        super(enemyGroup, name, behavior);
+        super(enemyGroup, "Goblin " + name, behavior);
     }
 
     @Override

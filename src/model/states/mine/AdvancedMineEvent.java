@@ -8,12 +8,12 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.GrandMaul;
 import model.items.weapons.Pickaxe;
 import model.items.weapons.Weapon;
+import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyRandom;
-import util.MyStrings;
 import view.sprites.BreakingRockAnimation;
 import view.sprites.Sprite32x32;
 import view.subviews.*;
@@ -21,7 +21,6 @@ import view.subviews.*;
 import java.util.List;
 
 import java.awt.*;
-import java.util.Map;
 
 public class AdvancedMineEvent extends DailyEventState {
     private boolean playerHasQuit = false;
@@ -37,15 +36,27 @@ public class AdvancedMineEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.mine = new LogicalMine();
+        this.mine = new GoblinInfestedMine(); //new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
         GameCharacter originalLeader = model.getParty().getLeader();
+        Point previousPosition = new Point(mineSubView.getAvatarPosition());
         do {
             try {
                 waitUntil(mineSubView, FreeMoveAvatarSubView::hasMovesToHandle, true);
                 if (!mineSubView.handleMove(model)) {
                     askToExit(model);
+                }
+                CombatEvent combat = mine.combatIsTriggered(model, this, mineSubView, previousPosition);
+                if (combat != null) {
+                    mineSubView.clearMoves();
+                    if (model.getParty().isWipedOut()) {
+                        return;
+                    }
+                    if (combat.fled()) {
+                        println("You are chased out of the mine!");
+                        break;
+                    }
                 }
                 if (stepsLeft <= 0) {
                     playerHasQuit = handleTiredPartyMembers(model);
@@ -54,6 +65,8 @@ public class AdvancedMineEvent extends DailyEventState {
                         round++;
                     }
                 }
+                previousPosition.x = mineSubView.getAvatarPosition().x;
+                previousPosition.y = mineSubView.getAvatarPosition().y;
             } catch (SpellCastException sce) {
 
             }

@@ -52,7 +52,7 @@ public class MineEvent extends DailyEventState {
         }
         int bonus = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.getCharClass().id() == Classes.MIN.id() || gc.getRace() == Race.DWARF) {
+            if (gc.getCharClass().id() == Classes.MIN.id() || gc.getRace().id() == Race.DWARF.id()) {
                 model.getParty().partyMemberSay(model, gc, "Looks interesting! We should explore it!");
                 bonus = 1;
             }
