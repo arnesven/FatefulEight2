@@ -29,9 +29,9 @@ public class WestWingMonsterFactory extends MonsterFactory {
                 }
                 break;
             case 2:
-                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new SpiderEnemy('A'));
+                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new CaveSpiderEnemy('A'));
                 for (int i = 0; i < numberOfEnemies; ++i) {
-                    enemies.add(new SpiderEnemy('A'));
+                    enemies.add(new CaveSpiderEnemy('A'));
                 }
                 break;
             case 3:

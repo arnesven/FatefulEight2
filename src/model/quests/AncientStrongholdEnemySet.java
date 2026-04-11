@@ -47,7 +47,7 @@ public class AncientStrongholdEnemySet {
         switch (dieRoll) {
             case 1 :
             case 2 : return new MyPair<>(List.of(new GiantRatEnemy('A'), new GiantRatEnemy('A'), new GiantRatEnemy('A'),
-                    new GiantRatEnemy('A'), new GiantRatEnemy('A'), new SpiderEnemy('B'), new SpiderEnemy('B'), new SpiderEnemy('B')),
+                    new GiantRatEnemy('A'), new GiantRatEnemy('A'), new CommonSpiderEnemy('B'), new CommonSpiderEnemy('B'), new CommonSpiderEnemy('B')),
                     MyColors.WHITE);
             case 3 :
             case 4 : return new MyPair<>(List.of(new ManticoreEnemy('A'), new ManticoreEnemy('A'), new ManticoreEnemy('A'),
@@ -60,8 +60,7 @@ public class AncientStrongholdEnemySet {
                     new FaeryEnemy('A'), new FaeryEnemy('A'), new FaeryEnemy('A'), new FaeryEnemy('A'), new FaeryEnemy('A')),
                     MyColors.WHITE);
             case 9:
-            default : return new MyPair<>(List.of(new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A'),
-                    new SpiderEnemy('B'), new SpiderEnemy('B')),
+            default : return new MyPair<>(List.of(new ForestSpiderEnemy('B'), new ForestSpiderEnemy('B'), new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A')),
                     MyColors.WHITE);
         }
     }

@@ -36,9 +36,9 @@ public class FatueGardenMonsterFactory extends MonsterFactory {
                 }
                 break;
             case 3:
-                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new SpiderEnemy('A'));
+                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new ForestSpiderEnemy('A'));
                 for (int i = 0; i < numberOfEnemies; ++i) {
-                    enemies.add(new SpiderEnemy('A'));
+                    enemies.add(new ForestSpiderEnemy('A'));
                 }
                 break;
             case 4:

@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.enemies.CaveSpiderEnemy;
 import view.combat.CaveTheme;
 import model.enemies.Enemy;
 import model.items.weapons.RustyPickaxe;
@@ -89,7 +90,7 @@ public class MineEvent extends DailyEventState {
                 break;
             case 2:
                 println("This mine is infested with spiders!");
-                runCombat(SpidersEvent.makeSpiders(), new CaveTheme(), true);
+                runCombat(SpidersEvent.makeSpiders(new CaveSpiderEnemy('A')), new CaveTheme(), true);
                 break;
             case 3:
                 println("The mine seems to be abandoned.");

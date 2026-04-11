@@ -5,12 +5,14 @@ import model.combat.loot.CombatLoot;
 import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.enemies.behaviors.ParalysisAttackBehavior;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class SpiderEnemy extends BeastEnemy {
-    private static final Sprite SPRITE = new SpiderSprite();
+import java.util.List;
+
+public abstract class SpiderEnemy extends BeastEnemy {
 
     public SpiderEnemy(char a, String name, int aggressiveness, EnemyAttackBehavior attackBehavior) {
         super(a, name, aggressiveness, attackBehavior);
@@ -31,11 +33,6 @@ public class SpiderEnemy extends BeastEnemy {
     }
 
     @Override
-    protected Sprite getSprite() {
-        return SPRITE;
-    }
-
-    @Override
     public int getDamage() {
         return 3;
     }
@@ -45,13 +42,15 @@ public class SpiderEnemy extends BeastEnemy {
         return new MonsterCombatLoot(model);
     }
 
-    private static class SpiderSprite extends LoopingSprite {
-        public SpiderSprite() {
+    public abstract SpiderEnemy copy();
+
+    protected static class SpiderSprite extends LoopingSprite {
+        public SpiderSprite(MyColors contour, MyColors fill, MyColors eyes, MyColors body) {
             super("spiderenemy", "enemies.png", 0x47, 32);
-            setColor1(MyColors.BLACK);
-            setColor2(MyColors.DARK_RED);
-            setColor3(MyColors.RED);
-            setColor4(MyColors.DARK_GRAY);
+            setColor1(contour);
+            setColor2(fill);
+            setColor3(eyes);
+            setColor4(body);
             setFrames(4);
         }
     }

@@ -43,7 +43,7 @@ public class EnemyMineObject extends MineObject {
     }
 
     public String getDescription() {
-        return "a group of " + enemies.getFirst().getName();
+        return "a group of " + enemies.getFirst().getName() + "s";
     }
 
     public void moveToPlayer(MineSubView subView, Point from) {

@@ -87,7 +87,7 @@ public class MonsterHuntEvent extends DailyEventState {
         if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
-            monsterHunts.add(new MonsterHuntData(path.getLast(), "burrow", new GiantSpider('A'), path.size()-1));
+            monsterHunts.add(new MonsterHuntData(path.getLast(), "burrow", new GiantSpiderEnemy('A'), path.size()-1));
         }
 
         path = model.getWorld().generalShortestPath(0, wh -> wh instanceof DesertHex);

@@ -130,9 +130,9 @@ public abstract class RoamingMonsterEvent extends DailyEventState {
 
     protected List<Enemy> makeSpiderEnemies() {
         List<Enemy> result = new ArrayList<>();
-        int num = getSuggestedNumberOfEnemies(getModel(), new SpiderEnemy('A'));
+        int num = getSuggestedNumberOfEnemies(getModel(), new CommonSpiderEnemy('A'));
         for (int i = num; i > 0; --i) {
-            result.add(new SpiderEnemy('A'));
+            result.add(new CommonSpiderEnemy('A'));
         }
         return result;
     }

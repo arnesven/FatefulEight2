@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.enemies.Enemy;
+import model.enemies.ForestSpiderEnemy;
 import model.enemies.SmallScorpionEnemy;
 import model.enemies.SpiderEnemy;
 import model.states.DailyEventState;
@@ -21,9 +22,9 @@ public class SpiderNightAttackEvent extends NightTimeAttackEvent {
         List<Enemy> enemies = new ArrayList<>();
         System.out.println("Party strength: " + model.getParty().partyStrength());
         System.out.println("Spider threat: " + (new SmallScorpionEnemy('A')).getThreat());
-        int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (new SpiderEnemy('A')).getThreat());
+        int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (new ForestSpiderEnemy('A')).getThreat());
         for (int i = numberOfEnemies; i > 0; --i) {
-            enemies.add(new SpiderEnemy('A'));
+            enemies.add(new ForestSpiderEnemy('A'));
         }
         return enemies;
     }

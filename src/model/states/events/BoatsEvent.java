@@ -197,7 +197,7 @@ public class BoatsEvent extends RiverEvent {
                     new GrassCombatTheme(), true);
         } else {
             println("a scary looking spider!");
-            runCombat(List.of(new SpiderEnemy('A')), new GrassCombatTheme(), true);
+            runCombat(List.of(new CommonSpiderEnemy('A')), new GrassCombatTheme(), true);
         }
         if (model.getParty().isWipedOut()) {
             return;

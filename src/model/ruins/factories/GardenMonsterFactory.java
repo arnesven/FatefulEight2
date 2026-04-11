@@ -23,7 +23,7 @@ public class GardenMonsterFactory extends MonsterFactory {
             case 2:
                 return new DungeonMonster(List.of(new SkeletonEnemy('A'), new SkeletonEnemy('A')));
             case 3:
-                return new DungeonMonster(List.of(new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A')));
+                return new DungeonMonster(List.of(new ForestSpiderEnemy('A'), new ForestSpiderEnemy('A'), new ForestSpiderEnemy('A')));
             case 4:
                 return new DungeonMonster(List.of(new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'),
                         new RatEnemy('A'), new RatEnemy('A')));

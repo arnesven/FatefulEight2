@@ -36,7 +36,7 @@ public class AdvancedMineEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.mine = new GoblinInfestedMine(); //new LogicalMine();
+        this.mine = new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
         GameCharacter originalLeader = model.getParty().getLeader();

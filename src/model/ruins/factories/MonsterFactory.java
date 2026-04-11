@@ -44,7 +44,7 @@ public class MonsterFactory implements Serializable {
             case 7:
                 return new DungeonMonster(List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new CrocodileEnemy('B'), new CrocodileEnemy('B')));
             case 8:
-                return new DungeonMonster(List.of(new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A'), new ScorpionEnemy('B')));
+                return new DungeonMonster(List.of(new CaveSpiderEnemy('A'), new CaveSpiderEnemy('A'), new CaveSpiderEnemy('A'), new ScorpionEnemy('B')));
             case 9:
                 return new DungeonMonster(List.of(new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'),
                         new GiantRatEnemy('B'), new GiantRatEnemy('B'), new GiantRatEnemy('B')));
