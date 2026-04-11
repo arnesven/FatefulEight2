@@ -24,12 +24,19 @@ import java.util.Map;
 public class MinerEvent extends GeneralInteractionEvent {
     private final Race race;
     private boolean withIntro;
-    private AdvancedAppearance app;
+    private AdvancedAppearance app = null;
 
     public MinerEvent(Model model, boolean withIntro, Race race) {
         super(model, "Talk to", MyRandom.randInt(10, 40));
         this.withIntro = withIntro;
         this.race = race;
+    }
+
+    public MinerEvent(Model model, boolean withIntro, AdvancedAppearance appearance) {
+        super(model, "Talk to", MyRandom.randInt(10, 40));
+        this.withIntro = withIntro;
+        this.race = appearance.getRace();
+        this.app = appearance;
     }
 
     public MinerEvent(Model model) {
@@ -43,7 +50,9 @@ public class MinerEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        this.app = PortraitSubView.makeRandomPortrait(Classes.MIN, race);
+        if (app == null) {
+            this.app = PortraitSubView.makeRandomPortrait(Classes.MIN, race);
+        }
         showExplicitPortrait(model, app, "Miner");
         if (withIntro) {
             showEventCard("The party encounters a miner. ");
@@ -93,6 +102,14 @@ public class MinerEvent extends GeneralInteractionEvent {
 
     @Override
     protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
+        if (model.isInCaveSystem()) {
+            if (MyRandom.flipCoin()) {
+                return Map.of("mine", new MyPair<>("Can you tell me where the nearest mine is?",
+                        "You must be pretty lost. You're in one buddy!"));
+            }
+            return Map.of("mine", new MyPair<>("What are you mining down here?",
+                    "Anything we can get our hands on. Iron for forging, silver, gold and gemstones for trading."));
+        }
         return Map.of("mine", new MyPair<>("Can you tell me where the nearest mine is?",
                 "You think I'll give up my secrets that easily? Get real. However, mines are pretty " +
                         "common actually. Look for them in hills and mountain areas."));

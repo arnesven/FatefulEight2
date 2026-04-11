@@ -15,6 +15,7 @@ import model.states.SpellCastException;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyRandom;
+import view.sprites.AnimationManager;
 import view.sprites.BreakingRockAnimation;
 import view.sprites.Sprite32x32;
 import view.subviews.*;
@@ -37,11 +38,13 @@ public class AdvancedMineEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.mine = new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
+        this.mine = new ActiveMine();//new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
+        AnimationManager.synchAnimations();
         GameCharacter originalLeader = model.getParty().getLeader();
         Point previousPosition = new Point(mineSubView.getAvatarPosition());
+        model.enterCaveSystem(false);
         do {
             try {
                 waitUntil(mineSubView, FreeMoveAvatarSubView::hasMovesToHandle, true);
@@ -77,6 +80,7 @@ public class AdvancedMineEvent extends DailyEventState {
             model.getParty().setLeader(originalLeader);
             println(originalLeader.getName() + " is now the leader of the party again.");
         }
+        model.exitCaveSystem(false);
         println("You exit the mine"); // TODO: Mine summary
     }
 
@@ -157,6 +161,7 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public boolean askToMineObject(Model model, MineableObject mineObject) {
+        mineSubView.clearMoves();
         List<GameCharacter> nonBenchers = MyLists.filter(model.getParty().getPartyMembers(),
                 gc -> !model.getParty().getBench().contains(gc));
         if (!MyLists.any(nonBenchers, gc -> gc.getSP() > 0)) {

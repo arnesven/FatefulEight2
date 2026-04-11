@@ -133,14 +133,13 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 options.add("Attack " + victim);
             }
             if (withInteract) {
-                options.add(0, this.interactText + " " + victim);
-            } else {
-                options.add(0, "Leave " + victim);
+                options.addFirst(this.interactText + " " + victim);
             }
             if (getModel().getParty().size() > 1) {
                 options.add("Steal from " + victim);
             }
             options.add("Make Inquiry");
+            options.add("Leave " + victim);
             int chosen = multipleOptionArrowMenu(getModel(), 24, 23, options);
             if (chosen == 0) {
                 return false;
@@ -155,6 +154,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             }
             if (options.get(chosen).contains("Make Inquiry")) {
                 makeInquiry(getModel(), victim, victimChar);
+            }
+            if (options.get(chosen).contains("Leave")) {
+                return withInteract;
             }
         }
     }

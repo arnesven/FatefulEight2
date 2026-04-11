@@ -292,15 +292,6 @@ public abstract class GameState implements GameStateConstants {
         return cls;
     }
 
-    public static CharacterClass[] makeRandomClassSet(CharacterClass cls) {
-        Set<CharacterClass> hashSet = new HashSet<>(List.of(cls));
-        while (hashSet.size() < 4) {
-            hashSet.add(randomClass());
-        }
-        List<CharacterClass> list = new ArrayList<>(hashSet);
-        return new CharacterClass[]{list.get(0), list.get(1), list.get(2), list.get(3)};
-    }
-
     public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {
         int max = 24;
         if (enemy.getWidth() > 1) {
