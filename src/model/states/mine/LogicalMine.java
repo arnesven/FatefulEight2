@@ -129,7 +129,7 @@ public class LogicalMine {
         return null;
     }
 
-    protected void placeRandomly(SteppingMatrix<MineObject> matrix, EnemyMineObject enemyObj) {
+    protected void placeRandomly(SteppingMatrix<MineObject> matrix, MineObject enemyObj) {
         for (int i = 0; i < 100; ++i) {
             int col = MyRandom.randInt(matrix.getColumns());
             int row = MyRandom.randInt(matrix.getRows());

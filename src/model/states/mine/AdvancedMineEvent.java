@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.GrandMaul;
 import model.items.weapons.Pickaxe;
 import model.items.weapons.Weapon;
+import model.quests.AbandonedMineQuest;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
@@ -36,7 +37,7 @@ public class AdvancedMineEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.mine = new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
+        this.mine = new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
         GameCharacter originalLeader = model.getParty().getLeader();

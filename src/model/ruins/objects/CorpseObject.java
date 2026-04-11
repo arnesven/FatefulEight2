@@ -3,9 +3,18 @@ package model.ruins.objects;
 import model.Model;
 import model.combat.loot.CombinedLoot;
 import model.combat.loot.PersonCombatLoot;
+import model.items.Item;
+import model.items.accessories.Helm;
+import model.items.accessories.LeatherGloves;
+import model.items.accessories.SkullCap;
+import model.items.weapons.CommonPickaxe;
+import model.items.weapons.RustyPickaxe;
+import model.items.weapons.Weapon;
 import model.ruins.DungeonRoom;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
+import model.states.GameState;
+import model.states.mine.AdvancedMineEvent;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -38,8 +47,7 @@ public class CorpseObject extends CenterDungeonObject {
         return "A corpse";
     }
 
-    @Override
-    public void doAction(Model model, ExploreRuinsState state) {
+    public void doAction(Model model, GameState state) {
         if (looted) {
             model.getParty().randomPartyMemberSay(model, TALK_LIST);
         } else {
@@ -58,30 +66,47 @@ public class CorpseObject extends CenterDungeonObject {
                 } else {
                     state.println("You found nothing of interest.");
                 }
-            } else {
-                String type = state.getDungeonType().toLowerCase();
+            } else if (state instanceof ExploreRuinsState ruinsState) {
+                String type = ruinsState.getDungeonType().toLowerCase();
                 if (type.equals("ruins")) {
                     type = "these " + type;
                 } else if (type.equals("dungeon")) {
                     type = "this " + type;
                 }
-                state.println("You found a map of " + type + "!");
-                state.mapsFound(state.getCurrentLevel());
-                int startLevel = state.getCurrentLevel();
+                ruinsState.println("You found a map of " + type + "!");
+                ruinsState.mapsFound(ruinsState.getCurrentLevel());
+                int startLevel = ruinsState.getCurrentLevel();
                 if (MyRandom.rollD6() + MyRandom.rollD6() == 2) {
-                    startLevel = state.getDungeon().getNumberOfLevels()-1;
-                    state.leaderSay("Incredible - this map looks like it's complete!");
+                    startLevel = ruinsState.getDungeon().getNumberOfLevels() - 1;
+                    ruinsState.leaderSay("Incredible - this map looks like it's complete!");
                 } else {
-                    state.leaderSay("It's not complete, but I bet it will come in handy!");
+                    ruinsState.leaderSay("It's not complete, but I bet it will come in handy!");
                 }
 
                 for (int i = 0; i <= startLevel; ++i) {
-                    for (DungeonRoom room : state.getDungeon().getLevel(i).getRoomList()) {
+                    for (DungeonRoom room : ruinsState.getDungeon().getLevel(i).getRoomList()) {
                         room.setRevealedOnMap(true);
                     }
                 }
+            } else if (state instanceof AdvancedMineEvent) {
+                if (MyRandom.flipCoin()) {
+                    Item w = MyRandom.sample(List.of(new RustyPickaxe(), new CommonPickaxe(),
+                            new LeatherGloves(), new SkullCap()));
+                    w.addYourself(model.getParty().getInventory());
+                    state.println("You found a " + w.getName() + ".");
+                } else {
+                    int materials = MyRandom.randInt(1, 5);
+                    state.println("You found " + materials + " materials.");
+                    model.getParty().getInventory().addToMaterials(materials);
+                }
             }
         }
+    }
+
+    @Override
+    public void doAction(Model model, ExploreRuinsState state) {
+        GameState gameState = state;
+        doAction(model, gameState);
     }
 
     @Override
