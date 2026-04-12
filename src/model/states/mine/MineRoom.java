@@ -4,7 +4,6 @@ import model.Model;
 import model.SilentSteppingMatrix;
 import model.SteppingMatrix;
 import util.MyLists;
-import util.MyPair;
 import util.MyRandom;
 import util.MyTriplet;
 
@@ -87,9 +86,40 @@ public class MineRoom {
         makeTunnelWalls(matrix);
         addSupports(matrix);
         replaceRocks(matrix, random, level);
+        if (logicalMine.didEnterFromSurface() && 1 <= level && level <= 5) { // 3 to 5
+            possiblyAddCaveExit(logicalMine, matrix, random);
+        } else if (!logicalMine.didEnterFromSurface() && level == 1) {
+            possiblyAddNormalExit(logicalMine, matrix, random);
+        }
         logicalMine.addNPCs(matrix, level);
         return new MineRoom(matrix, connectPositions);
     }
+
+    private static void possiblyAddNormalExit(LogicalMine logicalMine, SteppingMatrix<MineObject> matrix, Random random) {
+        if (random.nextInt(10) == 0) {
+            logicalMine.placeRandomly(matrix, new MineExitObject(MineDirection.north));
+        }
+    }
+
+    private static void possiblyAddCaveExit(LogicalMine logicalMine, SteppingMatrix<MineObject> matrix,
+                                            Random random) {
+        for (int y = 0; y < matrix.getRows() - 1; ++y) {
+            for (int x = 1; x < matrix.getColumns() - 1; ++x) {
+                boolean allWall = true;
+                for (int j = x - 1; j <= x + 1; ++j) {
+                    if (!(matrix.getElementAt(j, y) instanceof MineWallObject)) {
+                        allWall = false;
+                    }
+                }
+                if (allWall && matrix.getElementAt(x, y + 1) == null) {
+                    matrix.remove(matrix.getElementAt(x, y));
+                    matrix.addElement(x, y, new CaveExitMineObject());
+                    return;
+                }
+            }
+        }
+    }
+
 
     private static void fillWithRock(SteppingMatrix<MineObject> matrix, Random random,
                                      MineRoomConnections connectPositions) {
@@ -406,16 +436,20 @@ public class MineRoom {
     public static MineRoom makeStartingRoom(LogicalMine logicalMine, Random random, int level) {
         MineRoomConnections connections = makeRandomConnectionsNoVertical(random, level);
         MineRoom room = makeBasicRoom(logicalMine, random, level, connections);
-        room.makeExit(random);
+        room.makeExit(random, level);
         return room;
     }
 
-    public void makeExit(Random random) {
+    public void makeExit(Random random, int level) {
         this.exitDir = MyRandom.sample(List.of(MineDirection.north, MineDirection.west,
                 MineDirection.east, MineDirection.south));
         this.exitPos = new Point(connectPositions.get(exitDir));
         matrix.remove(matrix.getElementAt(exitPos.x, exitPos.y));
-        matrix.addElement(exitPos.x, exitPos.y, new MineExitObject(exitDir));
+        if (level == 1) {
+            matrix.addElement(exitPos.x, exitPos.y, new MineExitObject(exitDir));
+        } else {
+            matrix.addElement(exitPos.x, exitPos.y, new CaveExitMineObject());
+        }
     }
 
     public Point getExitPosition() {

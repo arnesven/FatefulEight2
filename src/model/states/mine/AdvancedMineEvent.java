@@ -8,7 +8,6 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.GrandMaul;
 import model.items.weapons.Pickaxe;
 import model.items.weapons.Weapon;
-import model.quests.AbandonedMineQuest;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
@@ -34,6 +33,7 @@ public class AdvancedMineEvent extends DailyEventState {
     private int round = 1;
     private LogicalMine mine;
     private MineSubView mineSubView;
+    private boolean exitToSurface;
 
     public AdvancedMineEvent(Model model) {
         super(model);
@@ -42,18 +42,21 @@ public class AdvancedMineEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.caveSong);
-        this.mine = new LogicalMine();//new ActiveMine();//new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
+        boolean enteredFromSurface = !model.isInCaveSystem();
+        this.exitToSurface = enteredFromSurface;
+        this.mine = new LogicalMine(enteredFromSurface);//new ActiveMine();//new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
         AnimationManager.synchAnimations();
         GameCharacter originalLeader = model.getParty().getLeader();
         Point previousPosition = new Point(mineSubView.getAvatarPosition());
         model.enterCaveSystem(false);
+        registerDiscoveredLevel(model);
         do {
             try {
                 waitUntil(mineSubView, FreeMoveAvatarSubView::hasMovesToHandle, true);
                 if (!mineSubView.handleMove(model)) {
-                    askToExit(model);
+                    anytimeExit();
                 }
                 CombatEvent combat = mine.combatIsTriggered(model, this, mineSubView, previousPosition);
                 if (combat != null) {
@@ -84,8 +87,12 @@ public class AdvancedMineEvent extends DailyEventState {
             model.getParty().setLeader(originalLeader);
             println(originalLeader.getName() + " is now the leader of the party again.");
         }
-        model.exitCaveSystem(false);
-        println("You exit the mine"); // TODO: Mine summary
+        if (exitToSurface) {
+            model.exitCaveSystem(false);
+            println("You exit the mine"); // TODO: Mine summary
+        } else {
+            println("The party returns to the caves.");
+        }
     }
 
     private boolean handleTiredPartyMembers(Model model) {
@@ -130,10 +137,26 @@ public class AdvancedMineEvent extends DailyEventState {
         return stepsLeft;
     }
 
-    public void askToExit(Model model) {
+    public void anytimeExit() {
         print("Do you want to exit the mine? (Y/N) ");
         if (yesNoInput()) {
             playerHasQuit = true;
+        }
+    }
+
+    public void exitThroughDoor() {
+        print("Do you want to exit to the surface? (Y/N) ");
+        if (yesNoInput()) {
+            playerHasQuit = true;
+            exitToSurface = true;
+        }
+    }
+
+    public void exitThroughCaveOpening() {
+        print("Do you want to exit to the caves? (Y/N) ");
+        if (yesNoInput()) {
+            playerHasQuit = true;
+            exitToSurface = false;
         }
     }
 
@@ -162,7 +185,7 @@ public class AdvancedMineEvent extends DailyEventState {
         loc.level = destinationLevel;
         SoundEffects.playElevator();
         CollapsingTransition.transition(model, mineSubView, () -> {
-            delay(1000);
+            delay(2000);
             mine.moveWithElevator(destinationLevel);
         });
         return mine.getStartingPoint();
@@ -274,5 +297,11 @@ public class AdvancedMineEvent extends DailyEventState {
             return choice + 1;
         }
         return choice;
+    }
+
+    public void moveElevatorToCurrentLevel() {
+        SoundEffects.playElevator();
+        delay(2000);
+        mine.getElevatorObject().setLevel(getCurrentLocation().level);
     }
 }

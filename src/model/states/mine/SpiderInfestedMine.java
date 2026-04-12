@@ -12,6 +12,10 @@ public class SpiderInfestedMine extends LogicalMine {
     private final List<SpiderEnemy> SPIDER_TYPES = List.of(
             new CommonSpiderEnemy('A'), new ForestSpiderEnemy('A'), new CaveSpiderEnemy('A'), new GiantSpiderEnemy('A'));
 
+    public SpiderInfestedMine(boolean enteredFromSurface) {
+        super(enteredFromSurface);
+    }
+
     @Override
     public void addNPCs(SteppingMatrix<MineObject> matrix, int level) {
         if (MyRandom.randInt(3) == 0) {

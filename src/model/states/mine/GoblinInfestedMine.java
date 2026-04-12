@@ -11,6 +11,10 @@ public class GoblinInfestedMine extends LogicalMine {
     private static final int[] MIN_GROUPS = new int[]{1, 0, 0, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0};
     private static final int[] MAX_GROUPS = new int[]{1, 1, 1, 1, 1, 2, 2, 3, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
 
+    public GoblinInfestedMine(boolean enteredFromSurface) {
+        super(enteredFromSurface);
+    }
+
     @Override
     public void addNPCs(SteppingMatrix<MineObject> matrix, int level) {
         for (int i = 0; i < groupsToPlace(level); ++i) {

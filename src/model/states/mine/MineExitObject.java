@@ -32,7 +32,7 @@ public class MineExitObject extends MineObject {
 
     @Override
     public Point gotMovedInto(Model model, AdvancedMineEvent state, Point currentLocation) {
-        state.askToExit(model);
+        state.exitThroughDoor();
         return currentLocation;
     }
 }

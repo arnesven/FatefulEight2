@@ -18,14 +18,17 @@ public class LogicalMine {
 
     private final Random random;
     private final ElevatorMineObject elevator;
+    private final boolean enteredFromSurface;
     private Point startPoint;
     private final MineRoomMap rooms = new MineRoomMap();
     private final MineRoomLocation currentLocation;
     private MineRoom currentRoom;
 
-    public LogicalMine() {
-        this.random = new Random(1234);
-        currentLocation = new MineRoomLocation(0, 0, 1);
+    public LogicalMine(boolean enteredFromSurface) {
+        this.enteredFromSurface = enteredFromSurface;
+        this.random = new Random();
+        int startingLevel = enteredFromSurface ? 1 : random.nextInt(3, 6);
+        currentLocation = new MineRoomLocation(0, 0, startingLevel);
         // First room
         this.currentRoom = MineRoom.makeStartingRoom(this, random, currentLocation.level);
         startPoint = currentRoom.getExitPosition();
@@ -161,5 +164,9 @@ public class LogicalMine {
 
     public ElevatorMineObject getElevatorObject() {
         return elevator;
+    }
+
+    public boolean didEnterFromSurface() {
+        return enteredFromSurface;
     }
 }

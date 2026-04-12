@@ -17,6 +17,10 @@ public class ActiveMine extends LogicalMine {
 
     private static final List<Weapon> WEAPONS = List.of(new RustyPickaxe(), new CommonPickaxe(), new Warhammer(), new Sicle());
 
+    public ActiveMine(boolean enteredFromSurface) {
+        super(enteredFromSurface);
+    }
+
     @Override
     public void addNPCs(SteppingMatrix<MineObject> matrix, int level) {
         if (level > 5) {

@@ -50,6 +50,10 @@ public class ElevatorMineObject extends MineObject {
         boolean elevatorIsOnLevel = state.getCurrentLocation().level == room.level;
         if (!elevatorIsOnLevel) {
             state.leaderSay("A shaft with a cable going down into the abyss... Is there an elevator in the mine?");
+            state.print("Do you want to move the elevator to this level? (Y/N) ");
+            if (state.yesNoInput()) {
+                state.moveElevatorToCurrentLevel();
+            }
         }
         return elevatorIsOnLevel;
     }

@@ -14,6 +14,10 @@ public class AbandonedMine extends LogicalMine {
 
     private static final MockDrawer mockDrawer = new MockDrawer();
 
+    public AbandonedMine(boolean enteredFromSurface) {
+        super(enteredFromSurface);
+    }
+
     @Override
     public void addNPCs(SteppingMatrix<MineObject> matrix, int level) {
         if (level > 5 || MyRandom.randInt(3) != 0) {
