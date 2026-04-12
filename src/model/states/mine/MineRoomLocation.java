@@ -3,8 +3,8 @@ package model.states.mine;
 import java.awt.*;
 
 public class MineRoomLocation {
-    Point xy;
-    int level;
+    public Point xy;
+    public int level;
 
     public MineRoomLocation(int x, int y, int level) {
         xy = new Point(x, y);

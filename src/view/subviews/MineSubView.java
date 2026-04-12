@@ -56,7 +56,7 @@ public class MineSubView extends FreeMoveAvatarSubView {
             BorderFrame.drawString(model.getScreenHandler(), state.getCurrentLocation().asString(), topPos.x, topPos.y,
                     MyColors.WHITE, MyColors.BLACK);
         } else {
-            BorderFrame.drawString(model.getScreenHandler(), "Level " + state.getCurrentLevel(), topPos.x, topPos.y,
+            BorderFrame.drawString(model.getScreenHandler(), "Level " + state.getCurrentLocation().level, topPos.x, topPos.y,
                     MyColors.WHITE, MyColors.BLACK);
         }
 

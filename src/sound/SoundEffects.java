@@ -111,4 +111,8 @@ public class SoundEffects {
     public static void playRockBreak() {
         playWithVolume("rockbreak", Volume.HIGHEST);
     }
+
+    public static void playElevator() {
+        playWithVolume("elevator", Volume.HIGH);
+    }
 }

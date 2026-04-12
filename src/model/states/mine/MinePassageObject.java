@@ -43,7 +43,11 @@ public class MinePassageObject extends MineObject {
         if (direction == MineDirection.up || direction == MineDirection.down) {
             state.print("Climb " + direction.toString().toLowerCase() + " the ladder? (Y/N) ");
             if (state.yesNoInput()) {
-                return state.moveToRoom(model, state, direction);
+                Point toReturn = state.moveToRoom(model, state, direction);
+                if (direction == MineDirection.down) {
+                    state.registerDiscoveredLevel(model);
+                }
+                return toReturn;
             }
         }
         return currentPoint;
@@ -55,5 +59,9 @@ public class MinePassageObject extends MineObject {
             return state.moveToRoom(model, state, direction);
         }
         return avatarPos;
+    }
+
+    public MineDirection getDirection() {
+        return direction;
     }
 }

@@ -7,6 +7,7 @@ import model.states.CombatEvent;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
+import util.MyTriplet;
 import view.combat.CaveTheme;
 import view.subviews.MineSubView;
 
@@ -16,6 +17,7 @@ import java.util.Random;
 public class LogicalMine {
 
     private final Random random;
+    private final ElevatorMineObject elevator;
     private Point startPoint;
     private final MineRoomMap rooms = new MineRoomMap();
     private final MineRoomLocation currentLocation;
@@ -24,15 +26,15 @@ public class LogicalMine {
     public LogicalMine() {
         this.random = new Random(1234);
         currentLocation = new MineRoomLocation(0, 0, 1);
-
         // First room
         this.currentRoom = MineRoom.makeStartingRoom(this, random, currentLocation.level);
         startPoint = currentRoom.getExitPosition();
         rooms.put(currentLocation, currentRoom);
         rooms.setDiscovered(currentRoom);
 
-        MyPair<MineRoom, MineRoomLocation> pair = currentRoom.makeAntiRoom(this, random, currentLocation.level);
-        rooms.put(pair.second, pair.first);
+        MyTriplet<MineRoom, MineRoomLocation, ElevatorMineObject> triple = currentRoom.makeAntiRoom(this, random, currentLocation.level);
+        rooms.put(triple.second, triple.first);
+        this.elevator = triple.third;
     }
 
     public boolean canMoveInto(Model model, AdvancedMineEvent state, Point newPosition) {
@@ -56,6 +58,18 @@ public class LogicalMine {
         currentRoom = rooms.get(currentLocation);
         rooms.setDiscovered(currentRoom);
         startPoint = new Point(currentRoom.getConnector(direction.getOpposite()));
+    }
+
+    public void moveWithElevator(int destinationLevel) {
+        currentLocation.level = destinationLevel;
+        if (!rooms.roomExists(currentLocation)) {
+            MineRoom newRoom = MineRoom.makeConnectingRoom(this, random, currentLocation, rooms, null, null);
+            rooms.put(currentLocation, newRoom);
+        }
+        elevator.setLevel(destinationLevel);
+        currentRoom = rooms.get(currentLocation);
+        rooms.setDiscovered(currentRoom);
+        startPoint = new Point(elevator.getPositionInRoom());
     }
 
     public MineRoomLocation getCurrentLocation() {
@@ -139,5 +153,13 @@ public class LogicalMine {
             }
         }
         System.err.println("Could not place enemy after 100 tries.");
+    }
+
+    public boolean isInElevatorShaft(MineRoomLocation roomLocation) {
+        return getElevatorObject().getLocation().xy.equals(roomLocation.xy);
+    }
+
+    public ElevatorMineObject getElevatorObject() {
+        return elevator;
     }
 }

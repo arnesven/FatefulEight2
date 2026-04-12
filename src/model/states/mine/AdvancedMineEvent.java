@@ -12,6 +12,8 @@ import model.quests.AbandonedMineQuest;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyRandom;
@@ -20,13 +22,14 @@ import view.sprites.BreakingRockAnimation;
 import view.sprites.Sprite32x32;
 import view.subviews.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.*;
 
 public class AdvancedMineEvent extends DailyEventState {
+    private static final String GLOBAL_DISCOVERED_LEVELS_KEY = "DISCOVERED_MINE_LEVELS";
     private boolean playerHasQuit = false;
-    private int currentLevel = 1;
     private int stepsLeft = 99;
     private int round = 1;
     private LogicalMine mine;
@@ -38,7 +41,8 @@ public class AdvancedMineEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.mine = new ActiveMine();//new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.caveSong);
+        this.mine = new LogicalMine();//new ActiveMine();//new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
         AnimationManager.synchAnimations();
@@ -122,10 +126,6 @@ public class AdvancedMineEvent extends DailyEventState {
                 gc -> !model.getParty().getBench().contains(gc));
     }
 
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
-
     public int getMovesLeft() {
         return stepsLeft;
     }
@@ -142,6 +142,7 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public Point moveToRoom(Model model, AdvancedMineEvent state, MineDirection direction) {
+        mineSubView.clearMoves();
         MineRoomLocation loc = mine.getCurrentLocation().copy();
         loc.moveInDirection(direction);
         if (mine.roomIsDiscovered(loc)) {
@@ -153,6 +154,17 @@ public class AdvancedMineEvent extends DailyEventState {
                 SwipingTransition.transition(model, mineSubView, direction, () -> mine.moveToRoom(direction));
             }
         }
+        return mine.getStartingPoint();
+    }
+
+    public Point moveWithElevator(Model model, AdvancedMineEvent state, int destinationLevel) {
+        MineRoomLocation loc = mine.getCurrentLocation().copy();
+        loc.level = destinationLevel;
+        SoundEffects.playElevator();
+        CollapsingTransition.transition(model, mineSubView, () -> {
+            delay(1000);
+            mine.moveWithElevator(destinationLevel);
+        });
         return mine.getStartingPoint();
     }
 
@@ -234,5 +246,33 @@ public class AdvancedMineEvent extends DailyEventState {
     public void addFloatingAnimation(MineableObject obj, Sprite32x32 floatingSprite) {
         Point p = mine.getPositionFor(obj);
         mineSubView.addFloatingAnimation(p, floatingSprite);
+    }
+
+    public void registerDiscoveredLevel(Model model) {
+        int previouslyDiscovered = getDiscoveredLevels(model);
+        model.getSettings().getMiscCounters().put("DISCOVERED_MINE_LEVELS", Math.max(previouslyDiscovered, getCurrentLocation().level));
+    }
+
+    public int getDiscoveredLevels(Model model) {
+        int result = 1;
+        if (model.getSettings().getMiscCounters().containsKey(GLOBAL_DISCOVERED_LEVELS_KEY)) {
+            result = model.getSettings().getMiscCounters().get(GLOBAL_DISCOVERED_LEVELS_KEY);
+        }
+        return result;
+    }
+
+    public int askToTakeElevator(Model model) {
+        println("Take the elevator?");
+        List<String> options = new ArrayList<>(List.of("Cancel"));
+        for (int i = 1; i <= getDiscoveredLevels(model); ++i) {
+            if (i != getCurrentLocation().level) {
+                options.add("Level " + i);
+            }
+        }
+        int choice = multipleOptionArrowMenu(model, 24, 24, options);
+        if (choice >= getCurrentLocation().level) {
+            return choice + 1;
+        }
+        return choice;
     }
 }
