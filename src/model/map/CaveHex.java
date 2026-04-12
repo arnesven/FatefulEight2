@@ -83,6 +83,7 @@ public class CaveHex extends WorldHex {
                     new UndergroundLakeEvent(model),
                     new ChasmEvent(model),
                     new MineEvent(model),
+                    new MineEvent(model),
                     new HideoutEvent(model),
                     new DwarvenCityEvent(model),
                     new DeadBodyEvent(model),

@@ -86,8 +86,8 @@ public class MineRoom {
         makeTunnelWalls(matrix);
         addSupports(matrix);
         replaceRocks(matrix, random, level);
-        if (logicalMine.didEnterFromSurface() && 1 <= level && level <= 5) { // 3 to 5
-            possiblyAddCaveExit(logicalMine, matrix, random);
+        if (logicalMine.didEnterFromSurface() && MyRandom.flipCoin() && 3 <= level && level <= 5) {
+            possiblyAddCaveExit(matrix);
         } else if (!logicalMine.didEnterFromSurface() && level == 1) {
             possiblyAddNormalExit(logicalMine, matrix, random);
         }
@@ -101,8 +101,7 @@ public class MineRoom {
         }
     }
 
-    private static void possiblyAddCaveExit(LogicalMine logicalMine, SteppingMatrix<MineObject> matrix,
-                                            Random random) {
+    private static void possiblyAddCaveExit(SteppingMatrix<MineObject> matrix) {
         for (int y = 0; y < matrix.getRows() - 1; ++y) {
             for (int x = 1; x < matrix.getColumns() - 1; ++x) {
                 boolean allWall = true;

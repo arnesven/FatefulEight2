@@ -16,7 +16,7 @@ public abstract class GeodeRockObject extends MineableObject {
     private final Sprite32x32 floatingSprite;
 
     public GeodeRockObject(String name, int difficulty, Sprite32x32 floatingSprite) {
-        super(name + " Geode", difficulty - 10); // TODO: Remove
+        super(name + " Geode", difficulty);
         this.floatingSprite = floatingSprite;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SpiderInfestedMine extends LogicalMine {
 
-    private final List<SpiderEnemy> SPIDER_TYPES = List.of(
+    private static final List<SpiderEnemy> SPIDER_TYPES = List.of(
             new CommonSpiderEnemy('A'), new ForestSpiderEnemy('A'), new CaveSpiderEnemy('A'), new GiantSpiderEnemy('A'));
 
     public SpiderInfestedMine(boolean enteredFromSurface) {

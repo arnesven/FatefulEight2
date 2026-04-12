@@ -51,7 +51,8 @@ public class SteppingMatrix<T> {
             throw new IllegalStateException("Cannot add null to a stepping matrix");
         }
         if (grid.get(col).get(row) != null) {
-            System.err.println("Warning, overwrite of element in stepping matrix, at column " + col + ", row " + row + "!");
+            throw new IllegalStateException("Overwrite of element in stepping matrix, at column " +
+                    col + ", row " + row + ": " + comb.toString());
         }
         grid.get(col).set(row, comb);
         if (selected == null || getSelectedElement() == null) {

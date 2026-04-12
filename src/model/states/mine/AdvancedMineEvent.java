@@ -2,12 +2,15 @@ package model.states.mine;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.FacialExpression;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.GrandMaul;
 import model.items.weapons.Pickaxe;
 import model.items.weapons.Weapon;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
@@ -18,6 +21,7 @@ import util.MyLists;
 import util.MyRandom;
 import view.sprites.AnimationManager;
 import view.sprites.BreakingRockAnimation;
+import view.sprites.MiniPictureSprite;
 import view.sprites.Sprite32x32;
 import view.subviews.*;
 
@@ -27,6 +31,8 @@ import java.util.List;
 import java.awt.*;
 
 public class AdvancedMineEvent extends DailyEventState {
+
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x12);
     private static final String GLOBAL_DISCOVERED_LEVELS_KEY = "DISCOVERED_MINE_LEVELS";
     private boolean playerHasQuit = false;
     private int stepsLeft = 99;
@@ -41,10 +47,13 @@ public class AdvancedMineEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        if (!runIntro(model)) {
+            return;
+        }
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.caveSong);
         boolean enteredFromSurface = !model.isInCaveSystem();
         this.exitToSurface = enteredFromSurface;
-        this.mine = new LogicalMine(enteredFromSurface);//new ActiveMine();//new AbandonedMine();//new SpiderInfestedMine(); //new GoblinInfestedMine(); //new LogicalMine();
+        this.mine = makeRandomMine(enteredFromSurface);
         this.mineSubView = new MineSubView(this, mine);
         CollapsingTransition.transition(model, mineSubView);
         AnimationManager.synchAnimations();
@@ -88,22 +97,70 @@ public class AdvancedMineEvent extends DailyEventState {
             println(originalLeader.getName() + " is now the leader of the party again.");
         }
         if (exitToSurface) {
-            model.exitCaveSystem(false);
+            model.exitCaveSystem(!enteredFromSurface);
             println("You exit the mine"); // TODO: Mine summary
         } else {
             println("The party returns to the caves.");
         }
     }
 
+    private boolean runIntro(Model model) {
+        if (model.isInCaveSystem()) {
+            model.getParty().randomPartyMemberSay(model, List.of("Looks like this cave is connected to a mine."));
+        } else {
+            model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mine"));
+            model.getParty().randomPartyMemberSay(model,
+                    List.of("That looks like an old mine over there in the hillside."));
+        }
+        int bonus = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc.getCharClass().id() == Classes.MIN.id() || gc.getRace().id() == Race.DWARF.id()) {
+                model.getParty().partyMemberSay(model, gc, "Looks interesting! We should explore it!");
+                bonus = 1;
+            }
+        }
+        if (bonus == 0) {
+            randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),
+                    "Are we really going down there?");
+            randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()),
+                    "Sometimes you have to be a little bold.");
+            randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
+                    "Looks dark... and scary.");
+            model.getParty().randomPartyMemberSay(model,
+                    List.of("Entering could be perilous, but could also yield rewards..."));
+        }
+        print("Do you go inside the mine? (Y/N) ");
+        if (!yesNoInput()) {
+            leaderSay("Let's just continue on our journey.");
+            return false;
+        }
+        if (!model.isInCaveSystem()) {
+            leaderSay("Bring out your torches, we're going down there.");
+            randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
+                    "Okay, but you first!");
+        }
+        return true;
+    }
+
+    private LogicalMine makeRandomMine(boolean enteredFromSurface) {
+        int dieRoll = MyRandom.rollD6();
+        return switch (dieRoll) {
+            case 1 -> new GoblinInfestedMine(enteredFromSurface);
+            case 2 -> new SpiderInfestedMine(enteredFromSurface);
+            case 3, 4 -> new AbandonedMine(enteredFromSurface);
+            default -> new ActiveMine(enteredFromSurface);
+        };
+    }
+
     private boolean handleTiredPartyMembers(Model model) {
         GameCharacter talker = MyRandom.sample(getPresentCharacters(model));
         partyMemberSay(talker, MyRandom.sample(List.of(
-                "How much longer are we going to wander around in here?",
+                "How much longer going to wander around in here?",
                 "I'm getting pretty tired.",
                 "Anybody else feel tired?",
                 "I don't think I can go on much further.",
-                "My feet are so sore. We need to stop.",
-                "I'm pretty spent, do we need to go on?"
+                "My feet are so sore. " + iOrWeCap() + " need to stop.",
+                "I'm pretty spent, do " + iOrWe() + " need to go on?"
         )), MyRandom.flipCoin() ? FacialExpression.disappointed : FacialExpression.relief);
         List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Endurance, 2 + round);
         if (!failers.isEmpty()) {

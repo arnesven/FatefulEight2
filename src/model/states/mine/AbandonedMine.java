@@ -20,10 +20,10 @@ public class AbandonedMine extends LogicalMine {
 
     @Override
     public void addNPCs(SteppingMatrix<MineObject> matrix, int level) {
-        if (level > 5 || MyRandom.randInt(3) != 0) {
+        if (level > 5 || MyRandom.randInt(4) != 0) {
             return;
         }
-        for (int i = MyRandom.randInt(1, level + 1); i >= 0; --i) {
+        for (int i = MyRandom.randInt(0, level/2 + 1); i >= 0; --i) {
             placeRandomly(matrix, new CorpseMineObject());
         }
     }
