@@ -693,6 +693,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void mines(Model model) {
+        runOnce("mines", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialMines(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

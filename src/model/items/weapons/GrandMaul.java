@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.*;
 
-public class GrandMaul extends BluntWeapon {
+public class GrandMaul extends BluntWeapon implements MiningTool {
     private static final Sprite SPRITE = new TwoHandedItemSprite(9, 1);
 
     private static final AvatarItemSprite ON_AVATAR_SPRITE =

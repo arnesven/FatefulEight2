@@ -8,6 +8,7 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.GrandMaul;
+import model.items.weapons.MiningTool;
 import model.items.weapons.Pickaxe;
 import model.items.weapons.Weapon;
 import model.races.Race;
@@ -112,6 +113,7 @@ public class AdvancedMineEvent extends DailyEventState {
             model.getParty().randomPartyMemberSay(model,
                     List.of("That looks like an old mine over there in the hillside."));
         }
+        model.getTutorial().mines(model);
         int bonus = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getCharClass().id() == Classes.MIN.id() || gc.getRace().id() == Race.DWARF.id()) {
@@ -320,7 +322,7 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     private boolean isMiningGear(Weapon weapon) {
-        return weapon.isOfType(Pickaxe.class) || weapon.isOfType(GrandMaul.class);
+        return weapon.isOfType(MiningTool.class);
     }
 
     public void addFloatingAnimation(MineableObject obj, Sprite32x32 floatingSprite) {

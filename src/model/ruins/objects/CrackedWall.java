@@ -9,10 +9,7 @@ import model.items.potions.Potion;
 import model.items.potions.UnstablePotion;
 import model.items.spells.ErodeSpell;
 import model.items.spells.Spell;
-import model.items.weapons.GrandMaul;
-import model.items.weapons.Pickaxe;
-import model.items.weapons.RustyPickaxe;
-import model.items.weapons.Weapon;
+import model.items.weapons.*;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
@@ -143,8 +140,7 @@ public class CrackedWall extends DungeonDoor {
     }
 
     private boolean hasBreakDownWeapon(GameCharacter user) {
-        return MyLists.any(List.of(GrandMaul.class, Pickaxe.class, RustyPickaxe.class),
-                cls -> user.getEquipment().getWeapon().isOfType(cls));
+        return user.getEquipment().getWeapon().isOfType(MiningTool.class);
     }
 
     private void explodeAndSound(GameState state) {
