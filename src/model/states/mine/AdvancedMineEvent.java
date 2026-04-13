@@ -7,14 +7,13 @@ import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.items.weapons.GrandMaul;
 import model.items.weapons.MiningTool;
-import model.items.weapons.Pickaxe;
 import model.items.weapons.Weapon;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
+import model.states.events.GuideData;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
@@ -44,6 +43,11 @@ public class AdvancedMineEvent extends DailyEventState {
 
     public AdvancedMineEvent(Model model) {
         super(model);
+    }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to mine", "There's " + getDistantDescription() + " nearby");
     }
 
     @Override

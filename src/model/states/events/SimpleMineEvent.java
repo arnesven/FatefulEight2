@@ -17,11 +17,11 @@ import view.subviews.MiniPictureSubView;
 
 import java.util.List;
 
-public class MineEvent extends DailyEventState {
+public class SimpleMineEvent extends DailyEventState {
 
     private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x12);
 
-    public MineEvent(Model model) {
+    public SimpleMineEvent(Model model) {
         super(model);
     }
 

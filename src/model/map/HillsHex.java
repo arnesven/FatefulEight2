@@ -3,7 +3,8 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
-import model.states.events.MineEvent;
+import model.states.events.SimpleMineEvent;
+import model.states.mine.AdvancedMineEvent;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.DailyActionMenu;
@@ -45,7 +46,7 @@ public class HillsHex extends WorldHex {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
                     new WizardsAbodeEvent(model),
-                    new MineEvent(model),
+                    new AdvancedMineEvent(model),
                     new HalfOrcEvent(model),
                     new BarbarianEvent(model),
                     new StormEvent(model),
@@ -79,7 +80,7 @@ public class HillsHex extends WorldHex {
 
     @Override
     public DailyEventState generateDogEvent(Model model) {
-        return MyRandom.sample(List.of(new CaveEvent(model), new MineEvent(model), new AbandonedShackEvent(model)));
+        return MyRandom.sample(List.of(new CaveEvent(model), new AdvancedMineEvent(model), new AbandonedShackEvent(model)));
     }
 
     @Override

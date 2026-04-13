@@ -3,7 +3,8 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
-import model.states.events.MineEvent;
+import model.states.events.SimpleMineEvent;
+import model.states.mine.AdvancedMineEvent;
 import util.MyPair;
 import util.MyRandom;
 import view.combat.CombatTheme;
@@ -44,7 +45,7 @@ public class MountainHex extends WorldHex {
             return MyRandom.sample(List.of(
                     new BarbarianEvent(model),
                     new MinerEvent(model),
-                    new MineEvent(model),
+                    new AdvancedMineEvent(model),
                     new StormEvent(model),
                     new DragonEvent(model),
                     new DwarfEvent(model),

@@ -2,7 +2,8 @@ package model.map;
 
 import model.Model;
 import model.actions.*;
-import model.states.events.MineEvent;
+import model.states.events.SimpleMineEvent;
+import model.states.mine.AdvancedMineEvent;
 import sound.BackgroundMusic;
 import view.combat.CombatTheme;
 import view.combat.CaveTheme;
@@ -82,8 +83,8 @@ public class CaveHex extends WorldHex {
                     new BatsEvent(model),
                     new UndergroundLakeEvent(model),
                     new ChasmEvent(model),
-                    new MineEvent(model),
-                    new MineEvent(model),
+                    new AdvancedMineEvent(model),
+                    new AdvancedMineEvent(model),
                     new HideoutEvent(model),
                     new DwarvenCityEvent(model),
                     new DeadBodyEvent(model),
