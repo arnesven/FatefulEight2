@@ -11,29 +11,43 @@ import java.awt.*;
 public class MineWallObject extends MineObject {
     private final Sprite32x32 sprite;
 
-    public MineWallObject(int x, int y, Rectangle r) {
-        int spriteNum = 0;
-        if (x == r.x && y == r.y) {
-            spriteNum = 0x22;
-        } else if (x == r.x && y == r.y + r.height - 1) {
-            spriteNum = 0x32;
-        } else if (x == r.x + r.width - 1 && y == r.y) {
-            spriteNum = 0x23;
-        } else if (x == r.x + r.width - 1 && y == r.y + r.height - 1) {
-            spriteNum = 0x33;
-        } else if (x == r.x) {
-            spriteNum = 0x25;
-        } else if (x == r.x + r.width - 1) {
-            spriteNum = 0x35;
-        } else if (y == r.y) {
-            spriteNum = 0x24;
-        } else if (y == r.y + r.height - 1){
-            spriteNum = 0x34;
-        } else {
-            spriteNum = 0x10;
+    private static final Sprite32x32[][] SPRITES = makeWallSprites();
+
+    private static Sprite32x32[][] makeWallSprites() {
+        Sprite32x32[][] sprites = new Sprite32x32[5][2];
+        for (int y = 0; y < sprites[0].length; ++y) {
+            for (int x = 0; x < sprites.length-1; ++x) {
+                sprites[x][y] = new Sprite32x32("minewall"+x+":"+y, "warehouse.png",
+                        0x20 + 0x10 * y + x + 2, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.GRAY_RED);
+            }
         }
-        this.sprite = new Sprite32x32("minewall", "warehouse.png", // TODO: Static initialization
-                spriteNum, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.GRAY_RED);
+        sprites[4][0] = new Sprite32x32("mineblank", "warehouse.png",
+                0x10, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.GRAY_RED);
+        return sprites;
+    }
+
+    public MineWallObject(int x, int y, Rectangle r) {
+        Sprite32x32 spriteNum;
+        if (x == r.x && y == r.y) {
+            spriteNum = SPRITES[0][0];
+        } else if (x == r.x && y == r.y + r.height - 1) {
+            spriteNum = SPRITES[0][1];
+        } else if (x == r.x + r.width - 1 && y == r.y) {
+            spriteNum = SPRITES[1][0];
+        } else if (x == r.x + r.width - 1 && y == r.y + r.height - 1) {
+            spriteNum = SPRITES[1][1];
+        } else if (x == r.x) {
+            spriteNum = SPRITES[3][0];
+        } else if (x == r.x + r.width - 1) {
+            spriteNum = SPRITES[3][1];
+        } else if (y == r.y) {
+            spriteNum = SPRITES[2][0];
+        } else if (y == r.y + r.height - 1){
+            spriteNum = SPRITES[2][1];
+        } else {
+            spriteNum = SPRITES[4][0];
+        }
+        this.sprite = spriteNum;
     }
 
     @Override

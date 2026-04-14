@@ -154,7 +154,6 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     private LogicalMine makeRandomMine(boolean enteredFromSurface) {
-        return new SpiderInfestedMine(enteredFromSurface); /*
         int dieRoll = MyRandom.rollD6();
         return switch (dieRoll) {
             case 1 -> new GoblinInfestedMine(enteredFromSurface);
@@ -162,7 +161,6 @@ public class AdvancedMineEvent extends DailyEventState {
             case 3, 4 -> new AbandonedMine(enteredFromSurface);
             default -> new ActiveMine(enteredFromSurface);
         };
-        */
     }
 
     private boolean handleTiredPartyMembers(Model model) {
