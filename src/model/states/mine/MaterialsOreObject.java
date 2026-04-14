@@ -22,7 +22,7 @@ public class MaterialsOreObject extends MineOreObject {
     @Override
     public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {
         int materials = 0;
-        for (int i = 0; i < richness; ++i) {
+        for (int i = 0; i < richness+1; ++i) {
             materials += MyRandom.rollD6();
         }
         advancedMineEvent.println("The party gains " + materials + " materials.");

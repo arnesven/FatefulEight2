@@ -48,7 +48,7 @@ public class PartySalaryEvent extends DailyEventState {
                     FacialExpression.disappointed);
             leaderSay("The party needs the money. You know, for equipment, lodging and food.");
             partyMemberSay(other, "Fine...#");
-            other.addToAttitude(model.getParty().getLeader(), -amount/3);
+            other.addToAttitude(model.getParty().getLeader(), -5);
         }
         model.getLog().waitForAnimationToFinish();
         showPartyAttitudesSubView(model);

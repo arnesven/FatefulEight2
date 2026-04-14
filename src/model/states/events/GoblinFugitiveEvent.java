@@ -84,6 +84,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
                             List.of("Well, he's dead.", "Poor bugger.", "I wonder why the were after him...",
                             "Comon folks, let's move on.", "Don't have much sympathy for goblins."));
                 } else {
+                    showExplicitPortrait(model, goblinChar.getAppearance(), goblinChar.getName());
                     recruit(model);
                 }
             }

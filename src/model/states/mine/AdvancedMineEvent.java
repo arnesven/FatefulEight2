@@ -51,6 +51,11 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "the entrance to a mine";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (!runIntro(model)) {
             return;
