@@ -8,6 +8,7 @@ import model.items.Inventory;
 import model.items.Item;
 import model.items.special.MagicBroom;
 import model.items.special.StoryItem;
+import model.map.CaveHex;
 import model.map.Direction;
 import model.map.UrbanLocation;
 import model.races.Race;
@@ -201,6 +202,9 @@ public class TravelState extends GameState {
     }
 
     protected boolean checkForRiding(Model model) {
+        if (model.isInCaveSystem()) {
+            return false;
+        }
         if (!model.getParty().hasHorses()) {
             return false;
         }

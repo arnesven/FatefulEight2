@@ -28,7 +28,6 @@ public class ArcheryRangeEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showEventCard("Archery Range", "There is an archery range on the outskirts of town. The marksman there approaches you.");
-        // TODO: Make real portrait
         showRandomPortrait(model, Classes.MAR, "Marksman");
         portraitSay("Hello there. Want to practice your marksmanship? For 5 gold I'll lend you " +
                 "a bow if you don't have one and some arrows.");

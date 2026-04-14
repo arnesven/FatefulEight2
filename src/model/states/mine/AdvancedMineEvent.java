@@ -118,7 +118,7 @@ public class AdvancedMineEvent extends DailyEventState {
         }
         if (exitToSurface) {
             model.exitCaveSystem(!enteredFromSurface);
-            println("You exit the mine"); // TODO: Mine summary
+            println("You exit the mine");
         } else {
             println("The party returns to the caves.");
         }
