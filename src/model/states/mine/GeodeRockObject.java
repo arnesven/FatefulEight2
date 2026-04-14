@@ -9,6 +9,7 @@ import view.ScreenHandler;
 import view.sprites.MineRockSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.MineSummaryView;
 
 import java.awt.*;
 
@@ -36,12 +37,13 @@ public abstract class GeodeRockObject extends MineableObject {
     }
 
     @Override
-    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {
+    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent, MineSummaryView mineSummaryView) {
         advancedMineEvent.addFloatingAnimation(this, floatingSprite);
         TreasureItem gemstone = makeGemItem();
         advancedMineEvent.println("You got " + MyStrings.aOrAn(gemstone.getName()) + " " + gemstone.getName() + "!");
         gemstone.addYourself(model.getParty().getInventory());
         SoundEffects.playSound(gemstone.getSound());
+        mineSummaryView.incrementGemstones();
     }
 
     @Override

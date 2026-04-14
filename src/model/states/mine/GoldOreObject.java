@@ -4,6 +4,7 @@ import model.Model;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
+import view.subviews.MineSummaryView;
 
 public class GoldOreObject extends MineOreObject {
 
@@ -17,10 +18,11 @@ public class GoldOreObject extends MineOreObject {
     }
 
     @Override
-    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {
+    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent, MineSummaryView mineSummaryView) {
         int gold = MyRandom.rollObD6(2 * richness + 1);
         advancedMineEvent.println("The party gains " + gold + " gold.");
         model.getParty().earnGold(gold);
+        mineSummaryView.incrementGold(gold);
     }
 
     @Override

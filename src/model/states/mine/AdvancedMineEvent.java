@@ -40,6 +40,7 @@ public class AdvancedMineEvent extends DailyEventState {
     private LogicalMine mine;
     private MineSubView mineSubView;
     private boolean exitToSurface;
+    private MineSummaryView mineSummaryView;
 
     public AdvancedMineEvent(Model model) {
         super(model);
@@ -71,6 +72,7 @@ public class AdvancedMineEvent extends DailyEventState {
         Point previousPosition = new Point(mineSubView.getAvatarPosition());
         model.enterCaveSystem(false);
         registerDiscoveredLevel(model);
+        this.mineSummaryView = new MineSummaryView();
         do {
             try {
                 waitUntil(mineSubView, FreeMoveAvatarSubView::hasMovesToHandle, true);
@@ -85,7 +87,10 @@ public class AdvancedMineEvent extends DailyEventState {
                     }
                     if (combat.fled()) {
                         println("You are chased out of the mine!");
+                        mineSummaryView = null;
                         break;
+                    } else {
+                        mineSummaryView.incrementEnemiesDefeated();
                     }
                 }
                 if (stepsLeft <= 0) {
@@ -105,6 +110,11 @@ public class AdvancedMineEvent extends DailyEventState {
         if (model.getParty().getLeader() != originalLeader) {
             model.getParty().setLeader(originalLeader);
             println(originalLeader.getName() + " is now the leader of the party again.");
+        }
+        if (mineSummaryView != null) {
+            CollapsingTransition.transition(model, mineSummaryView);
+            println("Press enter to continue.");
+            waitForReturn();
         }
         if (exitToSurface) {
             model.exitCaveSystem(!enteredFromSurface);
@@ -230,6 +240,7 @@ public class AdvancedMineEvent extends DailyEventState {
 
     public void decrementMoves() {
         stepsLeft--;
+        mineSummaryView.incrementSteps();
     }
 
     public Point moveToRoom(Model model, AdvancedMineEvent state, MineDirection direction) {
@@ -239,17 +250,20 @@ public class AdvancedMineEvent extends DailyEventState {
         if (mine.roomIsDiscovered(loc)) {
             mine.moveToRoom(direction);
         } else {
+            mineSummaryView.incrementRoomsDiscovered();
             if (direction == MineDirection.up || direction == MineDirection.down) {
                 CollapsingTransition.transition(model, mineSubView, () -> mine.moveToRoom(direction));
             } else {
                 SwipingTransition.transition(model, mineSubView, direction, () -> mine.moveToRoom(direction));
             }
         }
+        mineSummaryView.setMaxLevel(getCurrentLocation().level);
         return mine.getStartingPoint();
     }
 
     public Point moveWithElevator(Model model, AdvancedMineEvent state, int destinationLevel) {
         MineRoomLocation loc = mine.getCurrentLocation().copy();
+        mineSummaryView.incrementRoomsDiscovered();
         loc.level = destinationLevel;
         SoundEffects.playElevator();
         CollapsingTransition.transition(model, mineSubView, () -> {
@@ -299,9 +313,10 @@ public class AdvancedMineEvent extends DailyEventState {
         println(chosen.getName() + " hacks at the " + mineObject.getName() + "...");
         SkillCheckResult result = chosen.testSkill(model, Skill.Labor, mineObject.getDifficulty());
         if (result.isSuccessful()) {
+            mineSummaryView.incrementObjectsMined();
             println("And the rock breaks apart! (Labor " + result.asString() + ")");
             model.getLog().waitForAnimationToFinish();
-            mineObject.giveReward(model, this);
+            mineObject.giveReward(model, this, mineSummaryView);
             mineSubView.addAnimation(mine.getPositionFor(mineObject), new BreakingRockAnimation(mineObject.getAnimationColor()));
             mine.destroyRock(model, mineObject);
             SoundEffects.playRockBreak();

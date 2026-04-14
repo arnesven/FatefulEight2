@@ -5,6 +5,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.MineSummaryView;
 
 public class MaterialsOreObject extends MineOreObject {
     private static final Sprite[] SPRITES = MineObject.makeOreSprites(MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.GOLD);
@@ -20,13 +21,14 @@ public class MaterialsOreObject extends MineOreObject {
     }
 
     @Override
-    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {
+    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent, MineSummaryView mineSummaryView) {
         int materials = 0;
         for (int i = 0; i < richness+1; ++i) {
             materials += MyRandom.rollD6();
         }
         advancedMineEvent.println("The party gains " + materials + " materials.");
         model.getParty().getInventory().addToMaterials(materials);
+        mineSummaryView.incrementMaterials(materials);
     }
 
     @Override

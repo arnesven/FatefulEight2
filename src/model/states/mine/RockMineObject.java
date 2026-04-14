@@ -6,6 +6,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.MineRockSprite;
 import view.sprites.Sprite;
+import view.subviews.MineSummaryView;
 
 import java.awt.*;
 
@@ -45,7 +46,7 @@ public abstract class RockMineObject extends MineableObject {
     }
 
     @Override
-    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {}
+    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent, MineSummaryView mineSummaryView) {}
 
     @Override
     public MyColors getAnimationColor() {

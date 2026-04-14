@@ -4,6 +4,7 @@ import model.Model;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.MineSummaryView;
 
 public abstract class MineableObject extends MineObject {
 
@@ -26,7 +27,7 @@ public abstract class MineableObject extends MineObject {
         return diff;
     }
 
-    public abstract void giveReward(Model model, AdvancedMineEvent advancedMineEvent);
+    public abstract void giveReward(Model model, AdvancedMineEvent advancedMineEvent, MineSummaryView mineSummaryView);
 
     public abstract MyColors getAnimationColor();
 

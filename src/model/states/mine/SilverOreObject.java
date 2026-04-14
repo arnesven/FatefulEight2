@@ -4,6 +4,7 @@ import model.Model;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
+import view.subviews.MineSummaryView;
 
 public class SilverOreObject extends MineOreObject {
     private static final Sprite[] SPRITES = MineObject.makeOreSprites(MyColors.DARK_GRAY, MyColors.GRAY, MyColors.LIGHT_GRAY);
@@ -16,10 +17,11 @@ public class SilverOreObject extends MineOreObject {
     }
 
     @Override
-    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent) {
+    public void giveReward(Model model, AdvancedMineEvent advancedMineEvent, MineSummaryView mineSummaryView) {
         int obols = MyRandom.rollObD6((richness + 1) * (richness + 1));
         advancedMineEvent.println("The party gains " + obols + " obols.");
         model.getParty().addToObols(obols);
+        mineSummaryView.incrementObols(obols);
     }
 
     @Override
