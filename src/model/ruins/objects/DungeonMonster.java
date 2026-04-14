@@ -9,6 +9,7 @@ import model.items.potions.SleepingPotion;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
 import model.states.events.RareBirdEvent;
+import util.MyLists;
 import view.sprites.*;
 import view.subviews.DungeonDrawer;
 import view.subviews.StripedTransition;
@@ -139,12 +140,7 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     private void useSleepingPotion(Model model, ExploreRuinsState state) {
-        Potion pot = null;
-        for (Potion p : model.getParty().getInventory().getPotions()) {
-            if (p instanceof SleepingPotion) {
-                pot = p;
-            }
-        }
+        Potion pot = MyLists.find(model.getParty().getInventory().getPotions(), p -> p instanceof SleepingPotion);
         if (pot != null) {
             state.print("Do you want to throw your sleeping potion to distract the " + enemies.get(0).getName() + "? (Y/N) ");
             if (state.yesNoInput()) {

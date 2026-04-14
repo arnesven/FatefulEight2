@@ -44,9 +44,16 @@ public class TutorialMines extends ExpandableHelpDialog {
     }
 
     private static class MineMonstersChapter extends SubChapterHelpDialog {
+        private static final String MONSTERS_TEXT = "Some mines are infested with monsters and may block your way " +
+                "or otherwise interfere with your mining activities.\n\n" +
+                "Monsters in mines are either dormant or alert. Alert monsters will attack you as soon as you " +
+                "venture into a space adjacent to it. Unless you moved straight toward the monster, that attack will " +
+                "result in an Ambush.\n\n" +
+                "A dormant enemy will not attack you unless you enter into its space, " +
+                "and doing so will trigger a Surprise Attack on that enemy.";
+
         public MineMonstersChapter(GameView view) {
-            super(view, "Mine Monsters", "TODO");
-            // TODO
+            super(view, "Mine Monsters", MONSTERS_TEXT);
         }
     }
 

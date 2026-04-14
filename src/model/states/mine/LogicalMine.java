@@ -120,26 +120,29 @@ public class LogicalMine {
             if (MineRoom.isWithinRoomBounds(loc.xy)) {
                 MineObject adjacentObj = getMatrix().getElementAt(loc.xy.x, loc.xy.y);
                 if (adjacentObj instanceof EnemyMineObject enemyAdjacentObj && enemyAdjacentObj.doesTriggerCombatFromAdjacent()) {
-                    enemyAdjacentObj.moveToPlayer(subView, loc.xy);
+                    state.print("The " + enemyAdjacentObj.getDescription() + " has detected you... ");
+                    if (!enemyAdjacentObj.usedSleepingPotion(model, state)) {
+                        enemyAdjacentObj.moveToPlayer(subView, loc.xy);
 
-                    Point directionOfTravel = new Point(currentPosition.x - previousPosition.x,
-                            currentPosition.y - previousPosition.y);
-                    System.out.println("Direction of travel: " + directionOfTravel);
-                    System.out.println("Direction of enemy: " + dir.getDxDy());
-                    CombatAdvantage advantage;
-                    if (directionOfTravel.equals(dir.getDxDy())) {
-                        state.println("You encounter " + enemyAdjacentObj.getDescription() + "!");
-                        advantage = CombatAdvantage.Neither;
-                    } else {
-                        state.println(MyStrings.capitalize(enemyAdjacentObj.getDescription()) + " ambushes you!");
-                        advantage = CombatAdvantage.Enemies;
+                        Point directionOfTravel = new Point(currentPosition.x - previousPosition.x,
+                                currentPosition.y - previousPosition.y);
+                        System.out.println("Direction of travel: " + directionOfTravel);
+                        System.out.println("Direction of enemy: " + dir.getDxDy());
+                        CombatAdvantage advantage;
+                        if (directionOfTravel.equals(dir.getDxDy())) {
+                            state.println("It attacks you!");
+                            advantage = CombatAdvantage.Neither;
+                        } else {
+                            state.println("It ambushes you!");
+                            advantage = CombatAdvantage.Enemies;
+                        }
+                        model.getLog().waitForAnimationToFinish();
+                        CombatEvent combatEvent = new CombatEvent(model, enemyAdjacentObj.getEnemies(),
+                                new CaveTheme(), true, advantage);
+                        combatEvent.run(model);
+                        subView.removeMovementAnimation();
+                        return combatEvent;
                     }
-                    model.getLog().waitForAnimationToFinish();
-                    CombatEvent combatEvent = new CombatEvent(model, enemyAdjacentObj.getEnemies(),
-                            new CaveTheme(), true, advantage);
-                    combatEvent.run(model);
-                    subView.removeMovementAnimation();
-                    return combatEvent;
                 }
             }
         }
