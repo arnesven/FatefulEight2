@@ -12,7 +12,7 @@ import java.util.List;
 public class GoblinNightAttackEvent extends NightTimeAttackEvent {
     public GoblinNightAttackEvent(Model model) {
         super(model, 7, "can spot goblins approaching the camp",
-                new MountainNightCombatTheme(), "the camp is swarming with goblins");
+                "the camp is swarming with goblins");
     }
 
     @Override

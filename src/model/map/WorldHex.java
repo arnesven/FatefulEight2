@@ -18,6 +18,7 @@ import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
 import util.MyRandom;
+import view.combat.NightGrassCombatTheme;
 import view.sprites.Sprite;
 import view.combat.CombatTheme;
 import view.subviews.DailyActionMenu;
@@ -425,11 +426,11 @@ public abstract class WorldHex {
         if (mainStoryEveningState != null) {
             return mainStoryEveningState;
         }
-
+        HexLocation hexLocation = model.getCurrentHex().getLocation();
         if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.getEveningState(model, freeLodging, freeRations);
         }
-        return new EveningState(model, freeLodging, freeRations, true);
+        return new PartyManagementEveningState(model, freeLodging, freeRations);
     }
 
     public void addWaterPath(WaterPath p) {
@@ -447,6 +448,15 @@ public abstract class WorldHex {
             }
         }
         return new GrassCombatTheme();
+    }
+
+    public CombatTheme getNightTimeCombatTheme() {
+        if (getLocation() != null) {
+            if (getLocation() instanceof UrbanLocation) {
+                return ((UrbanLocation)getLocation()).getCombatTheme();
+            }
+        }
+        return new NightGrassCombatTheme();
     }
 
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {

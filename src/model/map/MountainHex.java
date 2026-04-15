@@ -9,6 +9,7 @@ import util.MyPair;
 import util.MyRandom;
 import view.combat.CombatTheme;
 import view.combat.MountainCombatTheme;
+import view.combat.MountainNightCombatTheme;
 import view.subviews.*;
 import view.MyColors;
 
@@ -78,6 +79,11 @@ public class MountainHex extends WorldHex {
     @Override
     public CombatTheme getCombatTheme() {
         return new MountainCombatTheme();
+    }
+
+    @Override
+    public CombatTheme getNightTimeCombatTheme() {
+        return new MountainNightCombatTheme();
     }
 
     @Override

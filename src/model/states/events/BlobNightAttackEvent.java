@@ -14,7 +14,7 @@ import java.util.List;
 public class BlobNightAttackEvent extends NightTimeAttackEvent {
     public BlobNightAttackEvent(Model model) {
         super(model, 6, "the ground suddenly seems sponge. Gelatinous Blobs are rising out of the ground",
-                new WastelandNightCombatTheme(), "Gelatinous Blobs are rising out of the ground");
+                "Gelatinous Blobs are rising out of the ground");
     }
 
     @Override

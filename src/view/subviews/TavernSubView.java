@@ -13,6 +13,8 @@ import view.combat.GrassCombatTheme;
 import view.sprites.*;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -42,20 +44,25 @@ public class TavernSubView extends RoomDailyActionSubView {
             MyColors.BLACK, MyColors.GOLD, Race.NORTHERN_HUMAN.getColor(), MyColors.RED);
     private static final Sprite SIGN = new Sprite32x32("innsign", "world_foreground.png", 0x64,
             MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
+    private static final List<Point> AROUND_TABLE_POSITIONS =
+            List.of(new Point(6, 6), new Point(6, 5),
+            new Point(5, 6), new Point(6, 4), new Point(4, 6),
+            new Point(5, 4), new Point(4, 5));
 
     private final boolean inTown;
+    private final ArrayList<Point> aroundTheTable;
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
         super(state, matrix);
         this.inTown = inTown;
+        this.aroundTheTable = new ArrayList<>(AROUND_TABLE_POSITIONS);
+        Collections.shuffle(aroundTheTable);
     }
 
     @Override
     protected void drawParty(Model model) {
-        drawPartyArea(model, List.of(new Point(6, 6), new Point(6, 5),
-                new Point(5, 6), new Point(6, 4), new Point(4, 6),
-                new Point(5, 4), new Point(4, 5)));
+        drawPartyArea(model, aroundTheTable);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class MagicianEvent extends MagicExpertGeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        this.portrait = PortraitSubView.makeRandomPortrait(Classes.MAR);
+        this.portrait = PortraitSubView.makeRandomPortrait(Classes.MAG);
         println("A traveling magician has set up his stage next to the road " +
                 "and you can hear him calling to the small crowd that has gathered here.");
         showExplicitPortrait(model, portrait, "Magician");

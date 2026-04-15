@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
-    private static final int WIDTH = 24;
-    private static final int HEIGHT = 33;
+    private static final int WIDTH = 28;
+    private static final int HEIGHT = 35;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -30,7 +30,7 @@ public class SettingsView extends SelectableListMenu {
         return List.of(new DrawableObject(xStart, yStart+1) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                print(model.getScreenHandler(), x+6, y, "- Settings -");
+                print(model.getScreenHandler(), x+8, y, "- Settings -");
             }
         });
     }
@@ -111,13 +111,13 @@ public class SettingsView extends SelectableListMenu {
                 model.getSettings().toggleAnimateDieRolls();
             }
         });
-//        y += 1;
-//        result.add(new ListContent(xStart+2, y, "Hide Spells in Sell " + (model.getSettings().hideSpellsInSell()?"ON":"OFF")) {
-//            @Override
-//            public void performAction(Model model, int x, int y) {
-//                model.getSettings().toggleHideSpellsInSell();
-//            }
-//        });
+        y += 1;
+        result.add(new ListContent(xStart+2, y, "Evening Party Mgmt " + (model.getSettings().skipPartyManagementEveningState()?"SKIP":"DO")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleSkipPartyManagementEveningState();
+            }
+        });
 
         y += 2;
         result.add(new ListContent(xStart+2, y++, "Top Bar Contents:"));

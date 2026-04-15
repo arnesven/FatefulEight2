@@ -68,6 +68,11 @@ public class CaveHex extends WorldHex {
     }
 
     @Override
+    public CombatTheme getNightTimeCombatTheme() {
+        return getCombatTheme();
+    }
+
+    @Override
     public void travelTo(Model model) {
         super.travelTo(model);
         CaveSystem.visitPosition(model, model.getParty().getPosition());

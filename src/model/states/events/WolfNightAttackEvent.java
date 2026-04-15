@@ -16,7 +16,7 @@ public class WolfNightAttackEvent extends NightTimeAttackEvent {
 
     public WolfNightAttackEvent(Model model) {
         super(model, 8, "can hear wolves howling",
-                new NightGrassCombatTheme(), "the camp is full of vicious wolves");
+                "the camp is full of vicious wolves");
     }
 
     @Override

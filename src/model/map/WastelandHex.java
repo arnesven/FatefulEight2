@@ -8,6 +8,7 @@ import model.states.events.*;
 import util.MyRandom;
 import view.MyColors;
 import view.combat.CombatTheme;
+import view.combat.WastelandNightCombatTheme;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
@@ -85,6 +86,11 @@ public class WastelandHex extends WorldHex {
     @Override
     public CombatTheme getCombatTheme() {
         return new WastelandCombatTheme();
+    }
+
+    @Override
+    public CombatTheme getNightTimeCombatTheme() {
+        return new WastelandNightCombatTheme();
     }
 
     @Override

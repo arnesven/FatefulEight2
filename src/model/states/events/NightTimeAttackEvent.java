@@ -16,15 +16,13 @@ import java.util.List;
 public abstract class NightTimeAttackEvent extends NightTimeEvent {
     private final int perceptionDifficulty;
     private final String perceptionSuccessString;
-    private final CombatTheme combatTheme;
     private final String ambushIntro;
 
     public NightTimeAttackEvent(Model model, int perceptionDifficulty, String perceptSuccess,
-                                CombatTheme combatTheme, String ambushIntro) {
+                                String ambushIntro) {
         super(model);
         this.perceptionDifficulty = perceptionDifficulty;
         this.perceptionSuccessString = perceptSuccess;
-        this.combatTheme = combatTheme;
         this.ambushIntro = ambushIntro;
     }
 
@@ -70,11 +68,11 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
                 randomSayIfPersonality(PersonalityTrait.diplomatic, List.of(rando), "More fighting? Isn't there a peaceful solution?");
             }
             model.getLog().waitForAnimationToFinish();
-            runCombat(enemies, combatTheme, true);
+            runCombat(enemies, model.getCurrentHex().getNightTimeCombatTheme(), true);
         } else {
             showEventCard("Before " + rando.getFirstName() + " has a chance to react " + ambushIntro + "!");
             model.getLog().waitForAnimationToFinish();
-            runAmbushCombat(enemies, combatTheme, true);
+            runAmbushCombat(enemies, model.getCurrentHex().getNightTimeCombatTheme(), true);
         }
     }
 }

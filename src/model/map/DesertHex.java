@@ -6,6 +6,7 @@ import model.states.events.*;
 import util.MyRandom;
 import view.combat.CombatTheme;
 import view.combat.DesertCombatTheme;
+import view.combat.DesertNightCombatTheme;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
@@ -81,6 +82,11 @@ public class DesertHex extends WorldHex {
     @Override
     public CombatTheme getCombatTheme() {
         return new DesertCombatTheme();
+    }
+
+    @Override
+    public CombatTheme getNightTimeCombatTheme() {
+        return new DesertNightCombatTheme();
     }
 
     @Override

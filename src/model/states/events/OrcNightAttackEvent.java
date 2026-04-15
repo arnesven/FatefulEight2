@@ -12,7 +12,7 @@ import java.util.List;
 public class OrcNightAttackEvent extends NightTimeAttackEvent {
     public OrcNightAttackEvent(Model model) {
         super(model, 6, "spots a group of orcs sneaking up on the camp",
-                new NightGrassCombatTheme(), "orcs run into the camp causing chaos and confusion");
+                "orcs run into the camp causing chaos and confusion");
     }
 
     @Override

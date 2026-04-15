@@ -14,7 +14,7 @@ import java.util.List;
 public class SpiderNightAttackEvent extends NightTimeAttackEvent {
     public SpiderNightAttackEvent(Model model) {
         super(model, 9, "giant spiders nimbly descending on the camp",
-                new NightGrassCombatTheme(), "giant spiders a crawling all over the camp");
+                "giant spiders a crawling all over the camp");
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public class CobraNightAttackEvent extends NightTimeAttackEvent {
     public CobraNightAttackEvent(Model model) {
         super(model, 9, "notices a large snake slithering into the camp",
-                new NightGrassCombatTheme(), "a large snake has slithered into the camp");
+                "a large snake has slithered into the camp");
     }
 
     @Override

@@ -24,6 +24,7 @@ public class SettingsManager implements Serializable {
     private final Map<String, Integer> miscCounters = new HashMap<>();
     private boolean animateDieRolls = true;
     private int gameDifficulty = 1;
+    private boolean skipEveningPartyManagement = false;
     public static final int MAX_DIFFICULTY = 3;
 
     public SettingsManager() {
@@ -164,5 +165,13 @@ public class SettingsManager implements Serializable {
         if (gameDifficulty == MAX_DIFFICULTY && autosave) {
             autosave = false;
         }
+    }
+
+    public boolean skipPartyManagementEveningState() {
+        return skipEveningPartyManagement;
+    }
+
+    public void toggleSkipPartyManagementEveningState() {
+        skipEveningPartyManagement = !skipEveningPartyManagement;
     }
 }

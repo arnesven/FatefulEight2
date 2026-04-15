@@ -13,7 +13,7 @@ import java.util.List;
 public class ScorpionNightAttackEvent extends NightTimeAttackEvent {
     public ScorpionNightAttackEvent(Model model) {
         super(model, 9, "notices a bunch of scorpions crawling into the camp",
-                new DesertNightCombatTheme(), "scorpions are crawling all over the camp");
+                "scorpions are crawling all over the camp");
     }
 
     @Override
