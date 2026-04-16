@@ -1,10 +1,16 @@
 package view.sprites;
 
+import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
+import model.combat.loot.CombatLoot;
 import model.enemies.Enemy;
 import model.horses.Horse;
 import model.horses.Pony;
+import model.items.Equipment;
 import model.items.weapons.Weapon;
+import model.races.Race;
 import view.MyColors;
 
 import java.awt.*;
@@ -47,6 +53,10 @@ public class RidingSprite extends LoopingSprite {
         this.avatar = enemy.getAvatar();
     }
 
+    public RidingSprite(Horse horse) {
+        this(new DummyEnemy(), horse);
+    }
+
     @Override
     protected BufferedImage internalGetImage() throws IOException {
         BufferedImage img = super.internalGetImage();
@@ -65,5 +75,41 @@ public class RidingSprite extends LoopingSprite {
         }
         g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
         return toReturn;
+    }
+
+    private static class DummyEnemy extends Enemy {
+        public DummyEnemy() {
+            super('A', "Dummy");
+        }
+
+        @Override
+        protected Sprite getSprite() {
+            return null;
+        }
+
+        @Override
+        public int getDamage() {
+            return 0;
+        }
+
+        @Override
+        public CombatLoot getLoot(Model model) {
+            return null;
+        }
+
+        @Override
+        public int getMaxHP() {
+            return 0;
+        }
+
+        @Override
+        public int getSpeed() {
+            return 0;
+        }
+
+        @Override
+        public String getDeathSound() {
+            return "";
+        }
     }
 }

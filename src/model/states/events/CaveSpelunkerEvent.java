@@ -114,7 +114,7 @@ public class CaveSpelunkerEvent extends DailyEventState {
         leaderSay("Calm down... you...");
         println("The life leaves the eyes of the " + who + ".");
         GameCharacter rando = model.getParty().getRandomPartyMember();
-        partyMemberSay(rando, heOrSheCap(gender) + " dead...");
+        partyMemberSay(rando, heOrSheCap(gender) + "'s dead...");
 
         if (!MyLists.any(model.getParty().getDestinationTasks(), (DestinationTask dt) -> dt instanceof FatueDestinationTask)) {
             model.getParty().addDestinationTask(

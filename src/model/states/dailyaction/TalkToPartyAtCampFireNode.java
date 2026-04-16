@@ -12,7 +12,7 @@ public class TalkToPartyAtCampFireNode extends TalkToPartyNode {
 
     @Override
     public void drawYourself(Model model, Point p) {
-        p.y += 4;
-        model.getScreenHandler().register(CAMP_FIRE.getName(), p, CAMP_FIRE);
+        Point p2 = new Point(p.x, p.y + 4);
+        model.getScreenHandler().register(CAMP_FIRE.getName(), p2, CAMP_FIRE);
     }
 }

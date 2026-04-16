@@ -30,6 +30,7 @@ public class SwordInTheStoneEvent extends PersonalityTraitEvent {
 
     @Override
     protected void doEvent(Model model) {
+        setCurrentTerrainSubview(model);
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Sword in the Stone"));
 
         String cardText = "";

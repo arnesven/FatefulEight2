@@ -3,15 +3,9 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.map.HexLocation;
-import model.states.dailyaction.AdvancedDailyActionState;
-import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.GoToSleepNode;
-import model.states.dailyaction.TalkToPartyAtCampFireNode;
-import model.states.dailyaction.tavern.TalkToPartyNode;
-import model.states.dailyaction.town.CampOutsideOfTownNode;
+import model.states.dailyaction.*;
 import view.subviews.DailyActionSubView;
 import view.subviews.PartyManagementEveningSubView;
-import view.subviews.TownSubView;
 
 import java.awt.*;
 
@@ -26,6 +20,9 @@ public class PartyManagementEveningState extends AdvancedDailyActionState {
         addNode(4, 2, new GoToSleepNode(freeRations, model));
         addNode(PartyManagementEveningSubView.CAMP_FIRE_POS.x, PartyManagementEveningSubView.CAMP_FIRE_POS.y-1,
                 new TalkToPartyAtCampFireNode());
+        if (!model.getParty().getHorseHandler().isEmpty()) {
+            addNode(1, 2, new CheckOnHorsesNode(model.getParty().getHorseHandler()));
+        }
     }
 
     @Override
