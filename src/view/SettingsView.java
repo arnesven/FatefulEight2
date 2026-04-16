@@ -1,6 +1,7 @@
 package view;
 
 import control.FatefulEight;
+import model.GameDifficulty;
 import model.Model;
 import model.SettingsManager;
 import view.party.DrawableObject;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
-    private static final int WIDTH = 28;
+    private static final int WIDTH = 31;
     private static final int HEIGHT = 35;
 
     public SettingsView(GameView previous) {
@@ -30,7 +31,7 @@ public class SettingsView extends SelectableListMenu {
         return List.of(new DrawableObject(xStart, yStart+1) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                print(model.getScreenHandler(), x+8, y, "- Settings -");
+                print(model.getScreenHandler(), x+12, y, "- Settings -");
             }
         });
     }
@@ -39,7 +40,7 @@ public class SettingsView extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> result = new ArrayList<>();
         int y = yStart + 3;
-        result.add(new ListContent(xStart+2, y, "Autosave " + (model.getSettings().autosaveEnabled()?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Autosave", (model.getSettings().autosaveEnabled()?"ON":"OFF"))) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleAutosave();
@@ -47,12 +48,12 @@ public class SettingsView extends SelectableListMenu {
 
             @Override
             public boolean isEnabled(Model model) {
-                return model.getSettings().getGameDifficulty() != SettingsManager.MAX_DIFFICULTY;
+                return model.getSettings().getGameDifficulty() != GameDifficulty.IMPOSSIBLE;
             }
         });
 
         y += 2;
-        result.add(new ListContent(xStart+2, y, "Log Speed " + SettingsManager.logSpeedAsText(model.getSettings().getLogSpeed())) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Log Speed", SettingsManager.logSpeedAsText(model.getSettings().getLogSpeed()))) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleLogSpeed();
@@ -60,14 +61,14 @@ public class SettingsView extends SelectableListMenu {
         });
 
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Combat Speed " + SettingsManager.logSpeedAsText(model.getSettings().getCombatLogSpeed())) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Combat Speed", SettingsManager.logSpeedAsText(model.getSettings().getCombatLogSpeed()))) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleCombatLogSpeed();
             }
         });
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Movement Speed " + SettingsManager.logSpeedAsText(model.getSettings().getMovementSpeed())) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Movement Speed", SettingsManager.logSpeedAsText(model.getSettings().getMovementSpeed()))) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleMovementSpeed();
@@ -75,7 +76,7 @@ public class SettingsView extends SelectableListMenu {
         });
 
         y += 2;
-        result.add(new ListContent(xStart+2, y, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Tutorial", SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 SettingsManager.toggleTutorial(model);
@@ -83,7 +84,7 @@ public class SettingsView extends SelectableListMenu {
         });
 
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Level Up Summary " + (model.getSettings().levelUpSummaryEnabled()?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Level Up Summary", model.getSettings().levelUpSummaryEnabled()?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleLevelUpSummary();
@@ -91,28 +92,28 @@ public class SettingsView extends SelectableListMenu {
         });
 
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Always Ride " + (model.getSettings().alwaysRide()?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Always Ride", (model.getSettings().alwaysRide()?"ON":"OFF"))) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleAlwaysRide();
             }
         });
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Game Difficulty " + (model.getSettings().getGameDifficultyString())) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Game Difficulty", model.getSettings().getGameDifficultyString())) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().cycleGameDifficulty();
             }
         });
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Die Animations " + (model.getSettings().animateDieRollsEnabled()?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Die Animations", model.getSettings().animateDieRollsEnabled()?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleAnimateDieRolls();
             }
         });
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Evening Party Mgmt " + (model.getSettings().skipPartyManagementEveningState()?"SKIP":"DO")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Evening Party Mgmt", model.getSettings().skipPartyManagementEveningState()?"SKIP":"DO")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleSkipPartyManagementEveningState();
@@ -122,22 +123,22 @@ public class SettingsView extends SelectableListMenu {
         y += 2;
         result.add(new ListContent(xStart+2, y++, "Top Bar Contents:"));
         int x = xStart+3;
-        y = addTopBarSettings(model, result, x, y, "Time of Day   ", TopText.TIME_OF_DAY_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Gold          ", TopText.GOLD_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Obols         ", TopText.OBOLS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Food          ", TopText.FOOD_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Weight        ", TopText.WEIGHT_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Carrying Cap. ", TopText.CARRYING_CAPACITY_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Horses        ", TopText.HORSE_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Alignment     ", TopText.ALIGNMENT_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Notoriety     ", TopText.NOTORIETY_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Ingredients   ", TopText.INGREDIENTS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Materials     ", TopText.MATERIALS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Lockpicks     ", TopText.LOCKPICKS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, x, y, "Key Reminders ", TopText.KEY_REMINDERS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Time of Day     ", TopText.TIME_OF_DAY_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Gold            ", TopText.GOLD_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Obols           ", TopText.OBOLS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Food            ", TopText.FOOD_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Weight          ", TopText.WEIGHT_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Carrying Cap.   ", TopText.CARRYING_CAPACITY_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Horses          ", TopText.HORSE_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Alignment       ", TopText.ALIGNMENT_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Notoriety       ", TopText.NOTORIETY_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Ingredients     ", TopText.INGREDIENTS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Materials       ", TopText.MATERIALS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Lockpicks       ", TopText.LOCKPICKS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Key Reminders   ", TopText.KEY_REMINDERS_SETTINGS_FLAG);
 
         y += 1;
-        result.add(new ListContent(xStart+2, y, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y, twoStrings("Fullscreen Mode", FatefulEight.inFullScreenMode?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.toggleFullScreen();
@@ -145,6 +146,11 @@ public class SettingsView extends SelectableListMenu {
         });
 
         return result;
+    }
+
+    private String twoStrings(String s1, String s2) {
+        int width = WIDTH - 13;
+        return String.format("%-" + width + "s%10s", s1, s2);
     }
 
     private int addTopBarSettings(Model model, List<ListContent> result, int xStart, int y, String label, String key) {

@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameDifficulty;
 import model.Model;
 import model.Party;
 import model.TimeOfDay;
@@ -85,8 +86,23 @@ public class EveningState extends GameState {
             return;
         }
         List<GameCharacter> dissidents = new ArrayList<>(MyLists.filter(model.getParty().getPartyMembers(),
-                (GameCharacter gc) -> gc.getAttitude(model.getParty().getLeader()) < 0));
+                gc -> gc.getAttitude(model.getParty().getLeader()) < 0));
         if (dissidents.isEmpty()) {
+            return;
+        }
+        int dieRoll = MyRandom.rollD10();
+        System.out.println("Checking for leader change, die roll is " + dieRoll + ".");
+        int target = -1 * MyLists.intAccumulate(dissidents,
+                gc -> gc.getAttitude(model.getParty().getLeader()));
+        System.out.print("Target is " + target);
+        if (model.getSettings().getGameDifficulty() == GameDifficulty.EASY) {
+            target = target / 2;
+            System.out.println(" / 2 (Game Difficulty Easy) = " + target + ".");
+        } else {
+            System.out.println(".");
+        }
+        if (dieRoll > target) {
+            System.out.println("Roll is above target. No leader change.");
             return;
         }
         Collections.shuffle(dissidents);

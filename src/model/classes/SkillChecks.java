@@ -75,7 +75,7 @@ public class SkillChecks {
     }
 
     public static int adjustDifficulty(Model model, int difficulty) {
-        return difficulty + model.getSettings().getGameDifficulty() - 1;
+        return difficulty + model.getSettings().getGameDifficulty().ordinal() - 1;
     }
 
     public static int doDamageToDoor(Model model, GameState state) {

@@ -678,7 +678,7 @@ public class GameCharacter extends Combatant {
         combatEvent.blockSneakAttackFor(this);
         combatEvent.addSpecialEffect(this, enemy.getStrikeEffect());
         MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
-        int damage = Math.max(0, pair.first + model.getSettings().getGameDifficulty() - 1);
+        int damage = Math.max(0, pair.first + model.getSettings().getGameDifficulty().ordinal() - 1);
         Damage dmg = isPhysicalAttack ? new PhysicalDamage(damage) : new MagicDamage(damage);
         boolean critical = pair.second;
         if (checkForEvade(enemy)) {

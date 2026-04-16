@@ -5,7 +5,6 @@ import view.widget.TopText;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SettingsManager implements Serializable {
@@ -23,7 +22,7 @@ public class SettingsManager implements Serializable {
     private final Map<String, Boolean> miscFlags = new HashMap<>();
     private final Map<String, Integer> miscCounters = new HashMap<>();
     private boolean animateDieRolls = true;
-    private int gameDifficulty = 1;
+    private GameDifficulty gameDifficulty = GameDifficulty.NORMAL;
     private boolean skipEveningPartyManagement = false;
     public static final int MAX_DIFFICULTY = 3;
 
@@ -44,7 +43,7 @@ public class SettingsManager implements Serializable {
     }
 
     public void toggleAutosave() {
-        if (gameDifficulty != MAX_DIFFICULTY) {
+        if (gameDifficulty != GameDifficulty.IMPOSSIBLE) {
             autosave = !autosave;
         }
     }
@@ -135,34 +134,24 @@ public class SettingsManager implements Serializable {
         animateDieRolls = !animateDieRolls;
     }
 
-    public int getGameDifficulty() {
+    public GameDifficulty getGameDifficulty() {
         return gameDifficulty;
     }
 
     public String getGameDifficultyString() {
-        switch (gameDifficulty) {
-            case 0 :
-                return "EASY";
-            case 1:
-                return "NORMAL";
-            case 2:
-                return "HARD";
-            case MAX_DIFFICULTY:
-                return "IMPOS";
-        }
-        throw new IllegalStateException("Illegal game difficulty: " + gameDifficulty);
+        return gameDifficulty.toString();
     }
 
     public void cycleGameDifficulty() {
-        gameDifficulty = Arithmetics.incrementWithWrap(gameDifficulty, MAX_DIFFICULTY+1);
-        if (gameDifficulty == MAX_DIFFICULTY && autosave) {
+        gameDifficulty = GameDifficulty.values()[Arithmetics.incrementWithWrap(gameDifficulty.ordinal(), GameDifficulty.values().length)];
+        if (gameDifficulty == GameDifficulty.IMPOSSIBLE && autosave) {
             autosave = false;
         }
     }
 
-    public void setGameDifficulty(int difficulty) {
+    public void setGameDifficulty(GameDifficulty difficulty) {
         this.gameDifficulty = difficulty;
-        if (gameDifficulty == MAX_DIFFICULTY && autosave) {
+        if (gameDifficulty == GameDifficulty.IMPOSSIBLE && autosave) {
             autosave = false;
         }
     }

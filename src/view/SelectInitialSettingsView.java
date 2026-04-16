@@ -1,5 +1,6 @@
 package view;
 
+import model.GameDifficulty;
 import model.Model;
 import model.map.WorldBuilder;
 import util.Arithmetics;
@@ -36,8 +37,12 @@ public class SelectInitialSettingsView extends SelectableListMenu {
 
     @Override
     public void transitionedFrom(Model model) {
-        model.getSettings().setGameDifficulty(selectedDifficulty);
+        model.getSettings().setGameDifficulty(getSelectedDifficulty());
         model.setStartingPosition(getPositionForSelected(selectedLocation));
+    }
+
+    private GameDifficulty getSelectedDifficulty() {
+        return GameDifficulty.values()[selectedDifficulty];
     }
 
     @Override
@@ -66,7 +71,7 @@ public class SelectInitialSettingsView extends SelectableListMenu {
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> decorations = new ArrayList<>();
         addCenteredText(decorations, DIFFICULTY_INTRO_TEXT, yStart+DIFFICULTY_START_Y);
-        addCenteredText(decorations, getDifficultyDescription(selectedDifficulty), yStart+DIFFICULTY_START_Y + 6);
+        addCenteredText(decorations, getDifficultyDescription(), yStart+DIFFICULTY_START_Y + 6);
         addCenteredText(decorations, LOCATION_INTRO_TEXT, yStart + LOCATION_START_Y);
         addCenteredText(decorations, getLocationDescription(selectedLocation), yStart+LOCATION_START_Y+4);
         return decorations;
@@ -79,18 +84,8 @@ public class SelectInitialSettingsView extends SelectableListMenu {
         }
     }
 
-    private String getDifficultyDescription(int selectedRow) {
-        switch (selectedRow) {
-        case 0:
-            return "Skill checks and combat events are slightly easier.";
-        case 1:
-            return "No adjustment.";
-        case 2:
-            return "Skill checks and combat events are slightly harder.";
-        case 3:
-            return "Skill checks and combat events are much harder. Autosaving disabled.";
-        }
-        throw new IllegalStateException("Illegal difficulty: " + selectedRow);
+    private String getDifficultyDescription() {
+        return getSelectedDifficulty().getDescription();
     }
 
     private String getLocationDescription(int selectedLoc) {

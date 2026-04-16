@@ -1,5 +1,6 @@
 package model.map;
 
+import model.GameDifficulty;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
@@ -476,19 +477,28 @@ public abstract class WorldHex {
     }
 
     public static DailyEventState generatePartyEvent(Model model) {
-        return MyRandom.sample(List.of(
-                new RationsGoneBadEvent(model),
-                new PartyMemberArgument(model),
+        List<DailyEventState> always = new ArrayList<>(List.of(
                 new PartyEntertainmentEvent(model),
                 new PartyCookingEvent(model),
                 new PartyJokeEvent(model),
                 new PartyLowOnCashEvent(model),
-                new PartySalaryEvent(model),
-                new PartyMemberWantsToLeaveEvent(model),
-                new PartyMemberWantsToLeaveEvent(model),
+                new PartyMemberWantsToLeaveEvent(model), // Both here and below.
                 new CheckForVampireEvent(model),
-                new PersonalityEvent(model)
-        ));
+                new PersonalityEvent(model)));
+
+        List<DailyEventState> negatives = new ArrayList<>(List.of(
+                new RationsGoneBadEvent(model),
+                new PartyMemberArgument(model),
+                new PartySalaryEvent(model),
+                new PartyMemberWantsToLeaveEvent(model)));
+
+        List<DailyEventState> toDrawFrom = new ArrayList<>(always);
+        if (model.getSettings().getGameDifficulty() != GameDifficulty.EASY) {
+            toDrawFrom.addAll(negatives);
+        } else {
+            toDrawFrom.add(MyRandom.sample(negatives));
+        }
+        return MyRandom.sample(toDrawFrom);
     }
 
     public int getState() {
