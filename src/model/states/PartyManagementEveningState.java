@@ -23,6 +23,11 @@ public class PartyManagementEveningState extends AdvancedDailyActionState {
         if (!model.getParty().getHorseHandler().isEmpty()) {
             addNode(1, 2, new CheckOnHorsesNode(model.getParty().getHorseHandler()));
         }
+
+        for (int i = 0; i < model.getParty().getActiveTravellers().size() && i < 5; ++i) {
+            addNode(6, 7-i, new TalkToTravellerNode(model.getParty().getActiveTravellers().get(i)));
+        }
+
     }
 
     @Override

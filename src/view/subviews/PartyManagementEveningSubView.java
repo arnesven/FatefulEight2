@@ -1,13 +1,15 @@
 package view.subviews;
 
 import model.Model;
+import model.Party;
 import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.TalkToTravellerNode;
+import util.MyPair;
 import view.MyColors;
 import view.combat.CombatTheme;
-import view.sprites.CampfireSprite;
-import view.sprites.Sprite32x32;
+import view.sprites.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
             new Point(CAMP_FIRE_POS.x, CAMP_FIRE_POS.y + 1),
             new Point(CAMP_FIRE_POS.x +1, CAMP_FIRE_POS.y + 1));
     private final ArrayList<Point> campfirePositions;
+    private final List<MyPair<RunOnceAnimationSprite, Point>> callouts = new ArrayList<>();
 
     public PartyManagementEveningSubView(AdvancedDailyActionState advancedDailyActionState,
                                          SteppingMatrix<DailyActionNode> matrix) {
@@ -43,6 +46,7 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
         drawExtraTents(model);
         drawPartyArea(model, campfirePositions);
+        drawCallouts(model);
     }
 
     private void drawExtraTents(Model model) {
@@ -60,6 +64,22 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
     @Override
     protected String getPlaceType() {
         return "CAMP";
+    }
+
+    private synchronized void drawCallouts(Model model) {
+        for (MyPair<RunOnceAnimationSprite, Point> effect : new ArrayList<>(callouts)) {
+            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first, 3);
+            if (effect.first.isDone()) {
+                callouts.remove(effect);
+                AnimationManager.unregister(effect.first);
+            }
+        }
+    }
+
+    public synchronized void addCalloutAtNode(TalkToTravellerNode node, int length) {
+        Point p = getMatrix().getPositionFor(node);
+        Point p2 = new Point(p.x+1, p.y);
+        callouts.add(new MyPair<>(new NonCombatSpeechBubble(length), convertToScreen(p2)));
     }
 
     private static class PartyManagementTentSprite extends Sprite32x32 {

@@ -1,7 +1,9 @@
 package model.states.dailyaction.tavern;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
@@ -30,14 +32,7 @@ public class TravellerNode extends DailyActionNode {
     public TravellerNode(Model model) {
         super("Traveller");
         this.traveller = makeRandomTraveller(model, 5);
-        int spriteNum = 0xAB;
-        if (traveller.getRace().isShort()) {
-            spriteNum = 0xBB;
-        }
-        this.sprite = new Sprite32x32("traveller", "world_foreground.png", spriteNum,
-                MyColors.BLACK, MyColors.DARK_RED, traveller.getRace().getColor(), MyColors.BROWN);
-
-
+        this.sprite = getSpriteForTraveller(traveller);
     }
 
     @Override
@@ -80,16 +75,27 @@ public class TravellerNode extends DailyActionNode {
     }
 
     public static Traveller makeRandomTraveller(Model model, int howManyNearest) {
-        AdvancedAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.None);
+        AdvancedAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER);
         int minRank = model.getCurrentHex().getLocation() != null &&
                 model.getCurrentHex().getLocation() instanceof UrbanLocation ? 1 : 0;
         int rank = MyRandom.randInt(minRank, howManyNearest);
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> points = model.getWorld().shortestPathToNearestTownOrCastle(rank);
         HexLocation loc = model.getWorld().getHex(points.get(points.size()-1)).getLocation();
-        return new Traveller("Traveller", appearance, loc, points.size(), 0, new TravellerCompletionHook());
+        GameCharacter gc = new GameCharacter("Traveller", "", appearance.getRace(), Classes.TRAVELLER,
+                appearance);
+        return new Traveller("Traveller", gc, loc, points.size(), 0, new TravellerCompletionHook());
     }
 
     @Override
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+
+    public static Sprite32x32 getSpriteForTraveller(Traveller traveller) {
+        int spriteNum = 0xAB;
+        if (traveller.getRace().isShort()) {
+            spriteNum = 0xBB;
+        }
+        return new Sprite32x32("traveller", "world_foreground.png", spriteNum,
+                MyColors.BLACK, MyColors.DARK_RED, traveller.getRace().getColor(), MyColors.BROWN);
+    }
 }

@@ -1,14 +1,20 @@
 package model.travellers;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.npcs.NPCClass;
 import model.journal.JournalEntry;
 import model.map.HexLocation;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.dailyaction.tavern.TravellerNode;
 import util.MyRandom;
+import view.sprites.AvatarSprite;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.SubView;
 import view.subviews.TavernSubView;
 
@@ -19,29 +25,31 @@ import java.util.List;
 public class Traveller implements Serializable {
 
     private final String name;
-    private final CharacterAppearance appearance;
+    private final GameCharacter character;
     private final String destination;
     private final int time;
     private final int gold;
     private final TravellerCompletionHook completionHook;
+    private final Sprite32x32 npcSprite;
     private int acceptedOnDay = 0;
 
-    public Traveller(String name, CharacterAppearance appearance, HexLocation destination,
+    public Traveller(String name, GameCharacter character, HexLocation destination,
                      int distance, int extraReward, TravellerCompletionHook hook) {
         this.name = name;
-        this.appearance = appearance;
+        this.character = character;
         this.destination = destination.getName();
-        this.time = MyRandom.randInt(distance-1, (int)(distance*1.5));
+        this.time = MyRandom.randInt(distance, distance*2);
         this.gold = MyRandom.randInt(distance/2, distance*2) +
                 MyRandom.randInt(distance/2, distance*2) + extraReward;
         this.completionHook = hook;
+        this.npcSprite = TravellerNode.getSpriteForTraveller(this);
     }
 
     public String getAcceptString() {
-        return "This " + appearance.getRace().getName() + " traveller wants to go to " + destination + " and would prefer to arrive " +
+        return "This " + character.getRace().getName() + " traveller wants to go to " + destination + " and would prefer to arrive " +
                 "within " + time + " days. " +
-                DailyEventState.heOrSheCap(appearance.getGender()) + " is offering " + gold +
-                " gold for escorting " + DailyEventState.himOrHer(appearance.getGender()) + ".";
+                DailyEventState.heOrSheCap(character.getGender()) + " is offering " + gold +
+                " gold for escorting " + DailyEventState.himOrHer(character.getGender()) + ".";
     }
 
     public String getName() {
@@ -49,7 +57,7 @@ public class Traveller implements Serializable {
     }
 
     public Race getRace() {
-        return appearance.getRace();
+        return character.getRace();
     }
 
     public void printReady(Model model, GameState state) {
@@ -114,7 +122,7 @@ public class Traveller implements Serializable {
     }
 
     public void abandon(Model model, GameState state) {
-        state.println(name + " approaches you. " + DailyEventState.heOrSheCap(appearance.getGender()) + " looks annoyed.");
+        state.println(name + " approaches you. " + DailyEventState.heOrSheCap(character.getGender()) + " looks annoyed.");
         travellerSay(model, state,   "I'm fed up with you. I'm going to " + destination + " on my own.");
         state.println(name + " stomps off. You are no longer escorting " + name + ".");
         model.getParty().abandonTraveller(this);
@@ -131,6 +139,17 @@ public class Traveller implements Serializable {
 
     public JournalEntry getJournalEntry(Model model, boolean active, boolean completed) {
         return new TravellerJournalEntry(model, active, completed);
+    }
+
+    public GameCharacter getCharacter() {
+        return character;
+    }
+
+    public Sprite getAvatarSprite() {
+        if (character.getCharClass() instanceof NPCClass) {
+            return npcSprite;
+        }
+        return character.getAvatarSprite();
     }
 
     private class TravellerJournalEntry implements JournalEntry {

@@ -39,7 +39,7 @@ public abstract class MeetTravellerEvent extends GeneralInteractionEvent {
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         List<Point> path = getPathToDestination(model);
         HexLocation location = model.getWorld().getHex(path.get(path.size()-1)).getLocation();
-        Traveller t = new Traveller(traveller.getName(), traveller.getAppearance(),
+        Traveller t = new Traveller(traveller.getName(), traveller,
                 location, path.size(), extraReward, completionHook);
         AcceptTravellerState accept = new AcceptTravellerState(model, this, t);
         accept.run(model);

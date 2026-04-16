@@ -12,7 +12,7 @@ import view.sprites.Sprite;
 import java.awt.*;
 
 public class CheckOnHorsesNode extends DailyActionNode {
-    private static final Point SHIFT = new Point(4, 4);
+    private static final Point SHIFT = new Point(-4, -6);
     private final Sprite sprite;
 
     public CheckOnHorsesNode(HorseHandler horseHandler) {
@@ -37,6 +37,11 @@ public class CheckOnHorsesNode extends DailyActionNode {
     @Override
     public Sprite getBackgroundSprite() {
         return sprite;
+    }
+
+    @Override
+    public Point getCursorShift() {
+        return SHIFT;
     }
 
     @Override
