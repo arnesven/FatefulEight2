@@ -5,7 +5,7 @@ public enum GameDifficulty {
 
     public String getDescription() {
         return switch (this) {
-            case EASY -> "Skill checks and combat events are slightly easier. Negative party events less frequent.";
+            case EASY -> "Skill checks and combat events are slightly easier. Negative party events are less frequent.";
             case NORMAL -> "No adjustment.";
             case HARD -> "Skill checks and combat events are slightly harder.";
             case IMPOSSIBLE -> "Skill checks and combat events are much harder. Autosaving disabled.";
