@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.StartingPotionKit;
 import model.items.accessories.Buckler;
 import model.items.potions.RejuvenationPotion;
 import model.items.weapons.Longsword;
@@ -57,7 +58,8 @@ public class ChooseStartingItemView extends SelectableListMenu {
         } else {
             itemMap.put(new Buckler().getName(), new Buckler());
         }
-        itemMap.put(new RejuvenationPotion().getName(), new RejuvenationPotion());
+        StartingPotionKit kit = new StartingPotionKit();
+        itemMap.put(kit.getName(), kit);
         return new ArrayList<>(itemMap.values());
     }
 

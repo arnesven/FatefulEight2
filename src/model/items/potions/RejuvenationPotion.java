@@ -13,7 +13,7 @@ import view.sprites.Sprite;
 public class RejuvenationPotion extends Potion implements StaminaRecoveryItem {
 
     private static final MyColors POTION_COLOR = MyColors.DARK_PURPLE;
-    private static final Sprite SPRITE = new ItemSprite(13, 7, MyColors.WHITE, POTION_COLOR);
+    public static final Sprite SPRITE = new ItemSprite(13, 7, MyColors.WHITE, POTION_COLOR);
     private static final Sprite[] higherTierSprites = new ItemSprite[]{
             new ItemSprite(10, 6, MyColors.WHITE, POTION_COLOR),
             new ItemSprite(11, 6, MyColors.WHITE, POTION_COLOR),
