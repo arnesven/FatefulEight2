@@ -3,6 +3,8 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
+import model.characters.TamedDragonCharacter;
+import model.enemies.ElderDragonEnemy;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.mainstory.FugitiveTownEvent;
 import model.states.dailyaction.WildernessDailyAction;
@@ -65,7 +67,6 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
-        return new MonkEvent(model); /*
         if (isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
@@ -94,7 +95,7 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
-        return eventToReturn; */
+        return eventToReturn;
     }
 
     private boolean isPersonaNonGrata(Model model) {

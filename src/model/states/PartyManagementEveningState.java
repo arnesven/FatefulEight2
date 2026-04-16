@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.characters.GameCharacter;
 import model.map.HexLocation;
 import model.states.dailyaction.*;
 import view.subviews.DailyActionSubView;
@@ -28,6 +29,11 @@ public class PartyManagementEveningState extends AdvancedDailyActionState {
             addNode(6, 7-i, new TalkToTravellerNode(model.getParty().getActiveTravellers().get(i)));
         }
 
+        int dragonIndex = 0;
+        for (GameCharacter gc : model.getParty().getTamedDragons().keySet()) {
+             addNode(1, 7-dragonIndex, new CheckOutTamedDragonNode(model.getParty().getTamedDragons().get(gc)));
+             dragonIndex++;
+        }
     }
 
     @Override

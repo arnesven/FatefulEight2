@@ -3,10 +3,12 @@ package view.subviews;
 import model.Model;
 import model.Party;
 import model.SteppingMatrix;
+import model.horses.DogHorse;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TalkToTravellerNode;
 import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.sprites.*;
@@ -30,14 +32,19 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
             new Point(CAMP_FIRE_POS.x - 1, CAMP_FIRE_POS.y + 1),
             new Point(CAMP_FIRE_POS.x, CAMP_FIRE_POS.y + 1),
             new Point(CAMP_FIRE_POS.x +1, CAMP_FIRE_POS.y + 1));
+    private static final List<Point> DOG_POSITIONS = List.of(new Point(3, 3), new Point(5, 3),
+            new Point(2, 3), new Point(2, 4));
     private final ArrayList<Point> campfirePositions;
     private final List<MyPair<RunOnceAnimationSprite, Point>> callouts = new ArrayList<>();
+    private final Point dogPosition;
+    private Sprite dogMini = null;
 
     public PartyManagementEveningSubView(AdvancedDailyActionState advancedDailyActionState,
                                          SteppingMatrix<DailyActionNode> matrix) {
         super(advancedDailyActionState, matrix, DailyActionSubView.DIRECT_MOVEMENT);
         this.campfirePositions = new ArrayList<>(AROUND_CAMP_FIRE);
         Collections.shuffle(campfirePositions);
+        dogPosition = MyRandom.sample(DOG_POSITIONS);
     }
 
     @Override
@@ -46,7 +53,19 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
         drawExtraTents(model);
         drawPartyArea(model, campfirePositions);
+        drawDog(model);
         drawCallouts(model);
+    }
+
+    private void drawDog(Model model) {
+        if (model.getParty().hasDog()) {
+            DogHorse dog = model.getParty().getDog();
+            if (dogMini == null) {
+                this.dogMini = dog.getMiniSprite();
+            }
+            Point p = convertToScreen(dogPosition);
+            model.getScreenHandler().register(dogMini.getName(), p, dogMini);
+        }
     }
 
     private void drawExtraTents(Model model) {
