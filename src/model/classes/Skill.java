@@ -112,7 +112,7 @@ public enum Skill implements Comparable<Skill> {
 
     public boolean isFightingSkill() {
         return switch (this) {
-            case Axes, Blades, BluntWeapons, Bows, Polearms -> true;
+            case Axes, Blades, BluntWeapons, Bows, Polearms, UnarmedCombat -> true;
             default -> false;
         };
     }
