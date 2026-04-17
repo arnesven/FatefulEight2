@@ -1,5 +1,6 @@
 package model.tasks;
 
+import model.GameStatistics;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.CharacterAppearance;
@@ -131,6 +132,7 @@ public class BountyDestinationTask extends DestinationTask {
             model.getParty().earnGold(bounty.getReward());
             state.leaderSay(MyRandom.sample(List.of("One bad guy less in the world.", "Ka-ching!",
                     "It's nice working with the law.", "Bounty collected. Now, what's next?")));
+            GameStatistics.incrementBounties();
         }
     }
 

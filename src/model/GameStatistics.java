@@ -476,4 +476,44 @@ public class GameStatistics {
     public static int getVampireFeedings() {
         return get("vampireFeedings");
     }
+
+    public static void incrementDeliveries() {
+        increment("deliveries", 1);
+    }
+
+    public static int getDeliveries() {
+        return get("deliveries");
+    }
+
+    public static void incrementMonsterHunts() {
+        increment("monsterhunts", 1);
+    }
+
+    public static int getMonsterHunts() {
+        return get("monsterhunts");
+    }
+
+    public static void incrementAssassinations() {
+        increment("assassinations", 1);
+    }
+
+    public static int getAssassinations() {
+        return get("assassinations");
+    }
+
+    public static void incrementTravellers() {
+        increment("travellers", 1);
+    }
+
+    public static int getTravellers() {
+        return get("travellers");
+    }
+
+    public static void incrementBounties() {
+        increment("bountyhunts", 1);
+    }
+
+    public static int getBountyHunts() {
+        return get("bountyhunts");
+    }
 }

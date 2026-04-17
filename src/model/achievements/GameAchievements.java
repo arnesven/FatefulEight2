@@ -67,6 +67,11 @@ public class GameAchievements implements Serializable {
         new SalvagerAchievement().registerYourself(partyAchievements);
         new TinkererAchievement().registerYourself(partyAchievements);
         new BloodLustAchievement().registerYourself(partyAchievements);
+        new DeliveryBoyAchievement().registerYourself(partyAchievements);
+        new MonsterHunterAchievement().registerYourself(partyAchievements);
+        new EnvoyOfDeathAchievement().registerYourself(partyAchievements);
+        new EscortAchievement().registerYourself(partyAchievements);
+        new BountyHunterAchievement().registerYourself(partyAchievements);
         partyAchievements.put(HighDamageAchievement.KEY, new HighDamageAchievement());
         partyAchievements.put(MultiSlayerAchievement.KEY, new MultiSlayerAchievement());
         partyAchievements.put(AlucardAchievement.KEY, new AlucardAchievement());

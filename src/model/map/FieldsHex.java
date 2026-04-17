@@ -21,6 +21,8 @@ public class FieldsHex extends WorldHex {
         super(MyColors.LIGHT_YELLOW, roads, rivers, new FieldsLocation(), state);
     }
 
+    // TODO: Make combat theme
+
     @Override
     public String getTerrainName() {
         return "fields";

@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -52,6 +53,7 @@ public class MakeDeliveryEvent extends GeneralInteractionEvent {
         portraitSay("Oh, yes, I've been expecting this! Thank you.");
         portraitSay("Let me find my purse so I can pay you.");
         deliverTask.receivePayment(model);
+        GameStatistics.incrementDeliveries();
         return true;
     }
 

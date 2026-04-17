@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.classes.Skill;
 import model.items.potions.PoisonPotion;
@@ -121,6 +122,7 @@ public class CarryOutAssassinationEvent extends DailyEventState {
             case success:
                 task.setCompleted(true);
                 JournalEntry.printJournalUpdateMessage(model);
+                GameStatistics.incrementAssassinations();
                 break;
             case unresolvedEndOfDay:
                 break;

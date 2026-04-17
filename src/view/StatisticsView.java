@@ -273,16 +273,28 @@ public class StatisticsView extends SelectableListMenu {
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "MISCELLANEOUS"));
-        result.add(makeIntLine(leftColumn, row++, "Card games played", GameStatistics.getCardGamesPlayed()));
-        result.add(makeIntLine(leftColumn, row++, "Rituals performed", GameStatistics.getRituals()));
-        result.add(makeIntLine(leftColumn, row++, "Magic Duels", GameStatistics.getMagicDuels()));
-        result.add(makeIntLine(leftColumn, row++, "Battles fought", GameStatistics.getBattlesFought()));
-        result.add(makeIntLine(leftColumn, row++, "Number of fish caught", GameStatistics.getFishCaught()));
-        result.add(makeIntLine(leftColumn, row++, "Largest fish caught", GameStatistics.getLargestFishCaught()));
-        result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
-        result.add(makeIntLine(leftColumn, row++, "Intoxicating Beverages consumed", GameStatistics.getIntoxicatingBeverages()));
-        result.add(makeIntLine(leftColumn, row++, "Vampire feedings", GameStatistics.getVampireFeedings()));
+        row = addIfPositive(result, leftColumn, row, "Assassinations", GameStatistics.getAssassinations());
+        row = addIfPositive(result, leftColumn, row, "Battles fought", GameStatistics.getBattlesFought());
+        row = addIfPositive(result, leftColumn, row, "Bounty hunts", GameStatistics.getBountyHunts());
+        row = addIfPositive(result, leftColumn, row, "Card games played", GameStatistics.getCardGamesPlayed());
+        row = addIfPositive(result, leftColumn, row, "Deliveries made", GameStatistics.getDeliveries());
+        row = addIfPositive(result, leftColumn, row, "Horse races participated in", GameStatistics.getHorseRaces());
+        row = addIfPositive(result, leftColumn, row, "Intoxicating Beverages consumed", GameStatistics.getIntoxicatingBeverages());
+        row = addIfPositive(result, leftColumn, row, "Largest fish caught", GameStatistics.getLargestFishCaught());
+        row = addIfPositive(result, leftColumn, row, "Magic Duels", GameStatistics.getMagicDuels());
+        row = addIfPositive(result, leftColumn, row, "Monster Hunts completed", GameStatistics.getMonsterHunts());
+        row = addIfPositive(result, leftColumn, row, "Number of fish caught", GameStatistics.getFishCaught());
+        row = addIfPositive(result, leftColumn, row, "Rituals performed", GameStatistics.getRituals());
+        row = addIfPositive(result, leftColumn, row, "Travellers escorted", GameStatistics.getTravellers());
+        row = addIfPositive(result, leftColumn, row, "Vampire feedings", GameStatistics.getVampireFeedings());
         return result;
+    }
+
+    private int addIfPositive(List<ListContent> result, int leftColumn, int row, String key, int value) {
+        if (value > 0) {
+            result.add(makeIntLine(leftColumn, row++, key, value));
+        }
+        return row;
     }
 
     private String getHorsesNeededText(Model model) {

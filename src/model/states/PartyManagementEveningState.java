@@ -33,6 +33,9 @@ public class PartyManagementEveningState extends AdvancedDailyActionState {
         for (GameCharacter gc : model.getParty().getTamedDragons().keySet()) {
              addNode(1, 7-dragonIndex, new CheckOutTamedDragonNode(model.getParty().getTamedDragons().get(gc)));
              dragonIndex++;
+             if (dragonIndex >= 4) {
+                 break;
+             }
         }
     }
 

@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import model.GameStatistics;
 import model.Model;
 import model.map.UrbanLocation;
 import model.states.GameState;
@@ -38,6 +39,7 @@ public class GetPaidForMonstersDailyAction extends GameState {
             lordSay("Thank you. That " + dt.getMonster().getName() + " has been a real nuisance to us.");
             leaderSay("I'm glad " + iOrWe() + " could be of service.");
             dt.setCompleted(true);
+            GameStatistics.incrementMonsterHunts();
         }
         lordSay("Please enjoy your stay here in " + location.getPlaceName() + ".");
         leaderSay("Thank you. Bye for now.");

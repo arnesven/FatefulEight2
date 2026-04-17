@@ -1,5 +1,6 @@
 package model.travellers;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -110,7 +111,7 @@ public class Traveller implements Serializable {
             model.getParty().earnGold((gold/2));
         }
         completionHook.run(model, state, this);
-
+        GameStatistics.incrementTravellers();
         if (model.getParty().getLeader().hasPersonality(PersonalityTrait.rude)) {
             state.leaderSay("Smell you later traveller!");
         } else {
