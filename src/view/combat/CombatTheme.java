@@ -8,6 +8,7 @@ import view.sprites.Sprite32x32;
 public abstract class CombatTheme {
     public static final int ROCKY_ROW = 0;
     public static final int GRASSY_ROW = 1;
+    public static final int VERY_GRASSY_ROW = 0x12;
 
     public abstract void drawBackground(Model model, int xOffset, int yOffset);
 

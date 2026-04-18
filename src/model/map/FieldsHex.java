@@ -5,6 +5,9 @@ import model.states.DailyEventState;
 import model.states.events.NoEventState;
 import model.states.events.*;
 import util.MyRandom;
+import view.combat.CombatTheme;
+import view.combat.FieldsCombatTheme;
+import view.combat.NightFieldsCombatTheme;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
@@ -21,7 +24,15 @@ public class FieldsHex extends WorldHex {
         super(MyColors.LIGHT_YELLOW, roads, rivers, new FieldsLocation(), state);
     }
 
-    // TODO: Make combat theme
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new FieldsCombatTheme();
+    }
+
+    @Override
+    public CombatTheme getNightTimeCombatTheme() {
+        return new NightFieldsCombatTheme();
+    }
 
     @Override
     public String getTerrainName() {

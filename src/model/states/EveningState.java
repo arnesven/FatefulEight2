@@ -593,7 +593,7 @@ public class EveningState extends GameState {
         }
         int twoDice = MyRandom.rollD10() + MyRandom.rollD10();
         return (isUrbanLocation && twoDice <= 3) || // 8.3% chance
-                (isFarmLocation && twoDice <= 2);   // 2.7% chance
+                (isFarmLocation && twoDice <= 12);   // 2.7% chance
     }
 
     private boolean partyVampireFeedInUrbanLocation(Model model, GameCharacter vampire, List<GameCharacter> nonVampires, boolean onFarm) {

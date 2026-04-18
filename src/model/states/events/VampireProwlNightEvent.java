@@ -85,6 +85,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
                     }
                 }
             } else {
+                model.getParty().setFacialExpression(victim, FacialExpression.none, FacialExpression.PERMANENT);
                 model.getParty().forceEyesClosed(victim, true);
                 if (model.getSubView() instanceof PortraitSubView) {
                     ((PortraitSubView) model.getSubView()).forceVampireFeedingLook();

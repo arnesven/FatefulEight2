@@ -47,7 +47,7 @@ public class PartyManagementEveningState extends AdvancedDailyActionState {
     @Override
     protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState,
                                              SteppingMatrix<DailyActionNode> matrix) {
-        return new PartyManagementEveningSubView(advancedDailyActionState, matrix);
+        return new PartyManagementEveningSubView(model, advancedDailyActionState, matrix);
     }
 
     @Override

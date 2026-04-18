@@ -42,7 +42,7 @@ public class TalkToTravellerNode extends DailyActionNode {
         if (sprite instanceof Animation) {
             ((Animation) sprite).synch();
         }
-        model.getScreenHandler().register(sprite.getName(), p2, sprite);
+        model.getScreenHandler().register(sprite.getName(), p2, sprite, 1);
     }
 
     @Override

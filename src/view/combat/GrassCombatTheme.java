@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class GrassCombatTheme extends CombatTheme {
-    private Random random;
+    private Random random = new Random(555);
     private static Sprite treeUpperSprite = new Sprite32x32("treeupper", "combat.png", 0x10, MyColors.DARK_GREEN, MyColors.GREEN, MyColors.CYAN);
     private static Sprite treeLowerSprite = new Sprite32x32("treelower", "combat.png", 0x11, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.DARK_GRAY);
     private static Sprite grassLineSprite = new Sprite32x32("treelower", "combat.png", 0x12, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.GREEN);
@@ -22,7 +22,7 @@ public class GrassCombatTheme extends CombatTheme {
 
     @Override
     public void drawBackground(Model model, int xOffset, int yOffset) {
-        random = new Random(555);
+        random.setSeed(555);
         for (int i = 0; i < 8; ++i) {
             model.getScreenHandler().put(xOffset + i*4, yOffset, treeUpperSprite);
             model.getScreenHandler().register(upperContour.getName() + i, new Point(xOffset + i*4, yOffset), upperContour);

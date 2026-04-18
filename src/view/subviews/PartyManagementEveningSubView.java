@@ -34,27 +34,42 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
             new Point(CAMP_FIRE_POS.x +1, CAMP_FIRE_POS.y + 1));
     private static final List<Point> DOG_POSITIONS = List.of(new Point(3, 3), new Point(5, 3),
             new Point(2, 3), new Point(2, 4));
+    private static final Sprite ROAD_SPRITE = new Sprite32x32("roadoverlay", "combat.png", 0x7D,
+            MyColors.TRANSPARENT, MyColors.BROWN, MyColors.DARK_BROWN, MyColors.BROWN);
     private final ArrayList<Point> campfirePositions;
     private final List<MyPair<RunOnceAnimationSprite, Point>> callouts = new ArrayList<>();
     private final Point dogPosition;
+    private final boolean isOnRoad;
     private Sprite dogMini = null;
+    private CombatTheme theme = null;
 
-    public PartyManagementEveningSubView(AdvancedDailyActionState advancedDailyActionState,
+    public PartyManagementEveningSubView(Model model, AdvancedDailyActionState advancedDailyActionState,
                                          SteppingMatrix<DailyActionNode> matrix) {
         super(advancedDailyActionState, matrix, DailyActionSubView.DIRECT_MOVEMENT);
         this.campfirePositions = new ArrayList<>(AROUND_CAMP_FIRE);
         Collections.shuffle(campfirePositions);
         dogPosition = MyRandom.sample(DOG_POSITIONS);
+        theme = model.getCurrentHex().getNightTimeCombatTheme();
+        this.isOnRoad = model.getParty().isOnRoad();
     }
 
     @Override
     protected void drawBackground(Model model) {
-        CombatTheme theme = model.getCurrentHex().getNightTimeCombatTheme();
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
+        if (isOnRoad) {
+            drawRoad(model);
+        }
         drawExtraTents(model);
         drawPartyArea(model, campfirePositions);
         drawDog(model);
         drawCallouts(model);
+    }
+
+    private void drawRoad(Model model) {
+        for (int i = 0; i < 8; ++i) {
+            Point p = convertToScreen(new Point(i, 8));
+            model.getScreenHandler().register("road", p, ROAD_SPRITE);
+        }
     }
 
     private void drawDog(Model model) {
