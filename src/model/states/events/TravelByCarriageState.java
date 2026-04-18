@@ -96,7 +96,6 @@ public class TravelByCarriageState extends GameState {
 
     private static void travelByCarriage(Model model, MyPair<TownLocation, Integer> carriage, TravelByCarriageState state) {
         MapSubView mapSubView = new CarriageTravelSubView(model, carriage.first);
-        CollapsingTransition.transition(model, mapSubView);
         Point newPosition = model.getWorld().getPositionForHex(carriage.first.getHex());
         if (model.getCurrentHex().getLocation() != null) {
             DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(), carriage.first,
@@ -106,36 +105,38 @@ public class TravelByCarriageState extends GameState {
 
         Point currentPos = model.getParty().getPosition();
         List<Point> path = model.getWorld().shortestPathToPoint(currentPos);
-        path.remove(path.size()-1);
+        int legSize = path.size() / 3;
+        path.removeLast();
         Point closest;
+        model.getCurrentHex().travelFrom(model);
         do {
-            closest = path.remove(path.size()-1);
-            if (closest.equals(currentPos)) {
-                break;
+            CollapsingTransition.transition(model, mapSubView);
+            state.println("The party spends the day on the carriage traveling to the " + carriage.first.getName());
+            for (int i = 0; i < legSize && !path.isEmpty(); i++) {
+                closest = path.removeLast();
+                if (closest.equals(currentPos)) {
+                    break;
+                }
+                mapSubView.addMovementAnimation(
+                        AVATAR,
+                        model.getWorld().translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                        model.getWorld().translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                mapSubView.waitForAnimation();
+                mapSubView.removeMovementAnimation();
+                model.getParty().setPosition(closest);
+                currentPos = closest;
             }
-            mapSubView.addMovementAnimation(
-                    AVATAR,
-                    model.getWorld().translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                    model.getWorld().translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
-            mapSubView.waitForAnimation();
-            mapSubView.removeMovementAnimation();
-            model.getParty().setPosition(closest);
-            currentPos = closest;
+            doOneNightOnRoad(model, state, mapSubView);
         } while (!(currentPos.x == newPosition.x && currentPos.y == newPosition.y));
 
-
-        model.getCurrentHex().travelFrom(model);
-        new EveningState(model).setSubView(model);
-        new EveningDuringLineTravelState(model).noLodging(model); // TODO: Perhaps put this in the middle of the loop above
-        state.stepToNextDay(model);
-        state.println("The party spends the day on the carriage traveling to the " + carriage.first.getName());
-        new EveningDuringLineTravelState(model).noLodging(model);
-        state.stepToNextDay(model);
-        state.println("The party spends the day on the carriage traveling to the " + carriage.first.getName());
-        new EveningDuringLineTravelState(model).noLodging(model);
-        state.stepToNextDay(model);
         model.getParty().setPosition(newPosition);
         model.getCurrentHex().travelTo(model);
+    }
+
+    private static void doOneNightOnRoad(Model model, TravelByCarriageState state, MapSubView mapSubView) {
+        new EveningState(model).setSubView(model);
+        new EveningDuringLineTravelState(model).noLodging(model);
+        state.stepToNextDay(model);
     }
 
 
