@@ -6,7 +6,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class VampireClawsWeapon extends UnarmedCombatWeapon {
-    private static final Sprite SPRITE = new ItemSprite(0, 14, MyColors.BEIGE, MyColors.RED, MyColors.BEIGE);
+    private static final Sprite SPRITE = new ItemSprite(0, 14, MyColors.BEIGE, MyColors.RED, MyColors.TRANSPARENT);
 
     @Override
     public String getName() {

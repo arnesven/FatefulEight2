@@ -5,13 +5,13 @@ import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Claws extends BrawlingWeapon {
+public class SteelClaws extends BrawlingWeapon {
     private static final Sprite SPRITE = new ItemSprite(1, 8, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY);
     private static final AvatarItemSprite AVATAR_SPRITE =
             new AvatarItemSprite(0x50, MyColors.GRAY, MyColors.GRAY, MyColors.GRAY, MyColors.BEIGE);
 
-    public Claws() {
-        super("Claws", 15, new int[]{7, 7, 13}, false);
+    public SteelClaws() {
+        super("Steel Claws", 15, new int[]{7, 7, 13}, false);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Claws extends BrawlingWeapon {
 
     @Override
     public Item copy() {
-        return new Claws();
+        return new SteelClaws();
     }
 
     @Override

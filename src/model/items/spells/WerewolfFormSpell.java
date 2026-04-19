@@ -22,7 +22,7 @@ public class WerewolfFormSpell extends CombatSpell {
     }
 
     public static String getMagicExpertTips() {
-        return "I know a druid who is a master at Werewolf Form. When he casts the spell, he gains strong health regeneration.";
+        return "I know a druid who is a master at Werewolf Form. When he casts the spell, he gains strong health regeneration and fight with a bestial fury.";
     }
 
     @Override
@@ -49,6 +49,11 @@ public class WerewolfFormSpell extends CombatSpell {
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         if (!performer.hasCondition(WerewolfFormCondition.class)) {
             performer.addCondition(new WerewolfFormCondition(performer, getMasteryLevel(performer) + 1));
+            combat.print("Sharp claws grow out from " + performer.getFirstName() + "'s fingertips. Do you want " +
+                            performer.getFirstName() + " to fight unarmed? (Y/N) ");
+            if (combat.yesNoInput()) {
+                performer.unequipWeapon();
+            }
         } else {
             combat.println(getName() + " has no effect on " + performer.getName() + ".");
         }

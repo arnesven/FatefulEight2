@@ -18,10 +18,7 @@ import model.items.accessories.OffhandItem;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
-import model.items.weapons.NaturalWeapon;
-import model.items.weapons.UnarmedCombatWeapon;
-import model.items.weapons.VampireClawsWeapon;
-import model.items.weapons.Weapon;
+import model.items.weapons.*;
 import model.map.UrbanLocation;
 import model.races.ColoredRace;
 import model.races.Race;
@@ -553,6 +550,8 @@ public class GameCharacter extends Combatant {
         }
         if (ClawsVampireAbility.canDoAbility(this)) {
             equipment.setWeapon(new VampireClawsWeapon());
+        } else if (hasCondition(WerewolfFormCondition.class)) {
+            equipment.setWeapon(new WerewolfClawsWeapon());
         } else {
             equipment.setWeapon(new UnarmedCombatWeapon());
         }

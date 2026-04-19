@@ -353,7 +353,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     private static List<? extends Weapon> allBrawlingWeapons() {
-        return List.of(new BrassKnuckles(), new SpikedKnuckles(), new Claws(), new Tonfa());
+        return List.of(new BrassKnuckles(), new SpikedKnuckles(), new SteelClaws(), new Tonfa());
     }
 
     public static List<? extends Weapon> allSpears() {

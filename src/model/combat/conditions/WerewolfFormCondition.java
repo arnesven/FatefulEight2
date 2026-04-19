@@ -5,6 +5,7 @@ import model.actions.RegenerationCondition;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
+import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.spells.WerewolfFormSpell;
 import model.states.GameState;
@@ -38,8 +39,11 @@ public class WerewolfFormCondition extends Condition {
     }
 
     @Override
-    public int getAttackBonus() {
-        return attackBonus;
+    public int getBonusForSkill(Skill skill) {
+        if (skill.isFightingSkill()) {
+            return attackBonus;
+        }
+        return 0;
     }
 
     @Override
