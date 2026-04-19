@@ -657,7 +657,14 @@ public class Model {
         return gameData.currentWorld == WorldType.thePast;
     }
 
-    public MyPair<String, Double> prepForNewGameStep() {
-        return NewGamePrepper.prepStep(this);
+    public MyPair<String, Double> prepForNewGameStep(boolean loadPreviousGame) {
+        if (loadPreviousGame) {
+            return NewGamePrepper.prepForLoad(this);
+        }
+        return NewGamePrepper.prepForNewGame(this);
+    }
+
+    public void resetLoadPrep() {
+        NewGamePrepper.resetLoadPrep();
     }
 }

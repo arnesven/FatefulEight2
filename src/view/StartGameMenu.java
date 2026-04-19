@@ -17,6 +17,7 @@ public class StartGameMenu extends GameView {
             "Credits", "Sprite Previewer", "Jukebox",
             "Minigames", "Quit"};
     private boolean loadingNewGame = false;
+    private boolean loadingSaveSlots = false;
     private final LoadingGameView loadGameView = new LoadingGameView();
 
     public StartGameMenu() {
@@ -38,6 +39,8 @@ public class StartGameMenu extends GameView {
     public void internalUpdate(Model model) {
         if (loadingNewGame) {
             prepForNewGame(model);
+        } else if (loadingSaveSlots) {
+            prepForLoad(model);
         } else {
             drawMenu(model);
         }
@@ -69,13 +72,23 @@ public class StartGameMenu extends GameView {
     }
 
     private void prepForNewGame(Model model) {
-        MyPair<String, Double> loaded = model.prepForNewGameStep();
+        MyPair<String, Double> loaded = model.prepForNewGameStep(false);
         if (loaded.second < 1.0) {
             drawProgressBar(model, loaded.first, loaded.second);
             madeChanges();
         } else {
             setTimeToTransition(true);
         }
+    }
+
+    private void prepForLoad(Model model) {
+        MyPair<String, Double> loaded = model.prepForNewGameStep(true);
+        drawProgressBar(model, loaded.first, loaded.second);
+        if (loaded.second >= 1.0) {
+            loadingSaveSlots = false;
+            model.transitionToDialog(new SelectSaveSlotMenu(this, true));
+        }
+        madeChanges();
     }
 
     private void drawProgressBar(Model model, String stepText, double percentage) {
@@ -100,7 +113,7 @@ public class StartGameMenu extends GameView {
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (loadingNewGame) {
+        if (loadingNewGame || loadingSaveSlots) {
             return;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -109,7 +122,10 @@ public class StartGameMenu extends GameView {
                 drawProgressBar(model, "", 0.0);
                 madeChanges();
             } else if (cursorPos == 1) {
-                model.transitionToDialog(new SelectSaveSlotMenu(this, true));
+                loadingSaveSlots = true;
+                model.resetLoadPrep();
+                drawProgressBar(model, "", 0.0);
+                madeChanges();
             } else if (cursorPos == 2) {
                 model.showHallOfFame();
             } else if (cursorPos == 3) {
