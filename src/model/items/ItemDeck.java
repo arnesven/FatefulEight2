@@ -359,7 +359,7 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<? extends Weapon> allSpears() {
         return List.of(new WoodenSpear(), new Spear(), new Javelins(), new Trident(),
                 new Glaive(), new Halberd(), new Pike(), new ShortSpear(), new BecDeCorbin(), new Naginata(),
-                new BoatHook(), new Harpoons());
+                new BoatHook(), new Harpoons(), new ImperialSpear());
     }
 
     public static List<? extends Weapon> allBows() {
@@ -375,7 +375,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<? extends Weapon> allAxes() {
         return List.of(new Hatchet(), new ThrowingAxes(), new CommonPickaxe(), new RustyPickaxe(), new RaidersAxe(), new BattleAxe(),
-                new Choppa(), new TwinHatchets(), new DoubleAxe(), new GreatAxe(), new Sicle());
+                new Choppa(), new TwinHatchets(), new DoubleAxe(), new GreatAxe(), new Sicle(), new DwarvenAxe());
     }
 
     public static List<? extends Weapon> allBluntWeapons() {
@@ -402,7 +402,8 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<? extends Weapon> allSpecialWeapons() {
-        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol(), new Musket(), new MagicBroom());
+        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol(), new Musket(), new MagicBroom(),
+                new HalflingSling());
     }
 
     public void setStandardItemTier(int averageLevel) {

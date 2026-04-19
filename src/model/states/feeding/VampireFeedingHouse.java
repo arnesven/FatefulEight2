@@ -324,7 +324,7 @@ public class VampireFeedingHouse {
             } else if (victim.getRace().id() == Race.DWARF.id()) {
                 state.println("The thickness of the dwarven blood weighs heavy inside of " + vampire.getFirstName() + "!");
                 vampire.addCondition(new SlowedCondition(6, model.getDay()));
-            } else if (victim.getRace() instanceof HumanRace && !(vampire.getRace() instanceof HumanRace)) {
+            } else if (HumanRace.isHuman(victim.getRace()) && !(HumanRace.isHuman(vampire.getRace()))) {
                 state.println("The richness of the human blood saturates " + vampire.getFirstName() +
                         "'s system and gives " + state.himOrHer(vampire.getGender()) + " an aura of strangeness.");
                 vampire.addCondition(new StrangenessCondition(model.getDay()));

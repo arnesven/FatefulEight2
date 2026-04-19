@@ -13,7 +13,8 @@ public class Spear extends PolearmWeapon {
     private static final AvatarItemSprite POLEARM_SPRITES =
             new FixedAvatarItemSprite( 0x90, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT, MyColors.GRAY);
 
-    private static final Sprite SPRITE = new TwoHandedItemSprite(1, 4);
+    private static final Sprite SPRITE = new TwoHandedItemSprite(1, 4,
+            MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
 
     public Spear() {
         super("Spear", 20, new int[]{9, 9, 9, 9});

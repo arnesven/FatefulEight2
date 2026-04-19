@@ -10,7 +10,8 @@ import view.sprites.Sprite;
 
 public class Sling extends Weapon {
 
-    private static final Sprite SPRITE = new ItemSprite(5, 16, MyColors.BROWN, MyColors.GRAY);
+    private static final Sprite SPRITE = new ItemSprite(5, 16, MyColors.BROWN, MyColors.GRAY,
+            MyColors.BROWN);
 
     public Sling() {
         super("Sling", 5, Skill.Acrobatics, new int[]{8, 9});

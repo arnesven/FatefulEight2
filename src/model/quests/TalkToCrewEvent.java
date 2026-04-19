@@ -223,7 +223,7 @@ class TalkToCrewEvent extends DailyEventState {
         if (choice == 0) {
             article = "";
             leaderSay("Are you human?");
-            affirmative = person.getRace() instanceof HumanRace;
+            affirmative = HumanRace.isHuman(person.getRace());
         } else if (choice == 1) {
             article = " an";
             leaderSay("Are you an elf?");
@@ -264,7 +264,7 @@ class TalkToCrewEvent extends DailyEventState {
                 return true;
             }
             if (person.isJovial()) {
-                if (person.getRace() instanceof HumanRace && races.get(choice).equalsIgnoreCase("Elf")) {
+                if (HumanRace.isHuman(person.getRace()) && races.get(choice).equalsIgnoreCase("Elf")) {
                     portraitSay("Yes! My ears were clipped by a sadistic prison guard.");
                 } else if (person.getRace().isShort()) {
                     portraitSay("Yes! I never ate my greens as a child, and my growth was stunted in puberty.");

@@ -9,6 +9,10 @@ public abstract class HumanRace extends Race {
         super(name, color, 0, 0, 20, skillBonuses, description);
     }
 
+    public static boolean isHuman(Race race) {
+        return race.id() == NORTHERN_HUMAN.id() || race.id() == SOUTHERN_HUMAN.id() || race.id() == EASTERN_HUMAN.id();
+    }
+
     @Override
     public PortraitSprite getLeftEar(MyColors hairColor) {
         return Race.normalLeftEar(hairColor);

@@ -57,7 +57,7 @@ public class SingerAssassinationEndingEvent extends AssassinationEndingEvent {
     private Race generateBodyguardRace(AssassinationDestinationTask task) {
         if (bodyguardAppearance == null) {
             List<Race> races;
-            if (task.getWrit().getRace() instanceof HumanRace) {
+            if (HumanRace.isHuman(task.getWrit().getRace())) {
                 races = List.of(Race.HALF_ORC, Race.DWARF);
             } else {
                 races = new ArrayList<>(List.of(Race.HALF_ORC, Race.DWARF, Race.NORTHERN_HUMAN, Race.SOUTHERN_HUMAN));
