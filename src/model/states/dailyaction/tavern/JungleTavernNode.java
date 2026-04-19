@@ -15,8 +15,8 @@ public class JungleTavernNode extends TavernNode {
     private static final Sprite SPRITE2 = new Sprite32x32("jungleinnupper", "world_foreground.png", 0xBD,
             MyColors.BLACK, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.BROWN);
 
-    public JungleTavernNode(boolean freeLodging) {
-        super(freeLodging);
+    public JungleTavernNode(Model model, boolean freeLodging) {
+        super(model, freeLodging);
     }
 
     @Override

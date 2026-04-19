@@ -29,7 +29,7 @@ public class AncientCityDailyActionState extends TownishDailyActionState {
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
         blockPosition(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y-2);
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y,
-                new AncientCityTavernNode(freeLodging));
+                new AncientCityTavernNode(model, freeLodging));
     }
 
     @Override

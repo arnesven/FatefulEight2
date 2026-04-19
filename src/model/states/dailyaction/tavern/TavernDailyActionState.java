@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.actions.Loan;
+import model.items.Item;
 import model.states.GameState;
 import model.states.dailyaction.*;
 import model.states.dailyaction.town.CampOutsideOfTownNode;
@@ -14,12 +15,14 @@ import view.subviews.TavernSubView;
 import view.subviews.TownSubView;
 
 import java.awt.*;
+import java.util.List;
 
 public class TavernDailyActionState extends AdvancedDailyActionState {
     private static final Point DOOR_POSITION = new Point(3, 7);
     private final boolean inTown;
 
-    public TavernDailyActionState(Model model, boolean freeLodging, boolean inTown) {
+    public TavernDailyActionState(Model model, boolean freeLodging, boolean inTown,
+                                  List<Item> inTownInventory) {
         super(model);
         this.inTown = inTown;
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
@@ -28,7 +31,11 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(2, 5, new RecruitNode(model));
         }
         addNode(6, 1, new LodgingNode(freeLodging));
-        addNode(2, 3, new TalkToBartenderNode(model, inTown));
+        if (inTown) {
+            addNode(2, 3, new TalkToBartenderNode(true, inTownInventory));
+        } else {
+            addNode(2, 3, new TalkToBartenderNode(model, false));
+        }
         addNode(5, 5, new TalkToPartyNode());
         if (getModel().isInOriginalWorld() && model.getParty().getActiveTravellers().isEmpty()) {
             addNode(2, 2, new TravellerNode(model));

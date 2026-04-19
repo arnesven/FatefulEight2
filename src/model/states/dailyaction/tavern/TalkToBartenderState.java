@@ -97,7 +97,7 @@ public class TalkToBartenderState extends GameState {
             bartenderSay(model, "Sorry, not at the moment.");
             return;
         }
-        talkToBartenderNode.setWorkDone(true);
+
         model.getSettings().getMiscFlags().put("innworkdone", true);
 
         List<InnWorkAction> works = new ArrayList<>(List.of(MyRandom.sample(ALL_INN_WORKS)));
@@ -120,13 +120,15 @@ public class TalkToBartenderState extends GameState {
         for (InnWorkAction ia : works) {
             bartenderSay(model, ia.getDescription());
         }
-        InnWorkAction innWork = works.get(0);
-        if (works.size() == 1) {
-            leaderSay("I'll do it.");
-        } else {
-            int choice = multipleOptionArrowMenu(model, 24, 24, MyLists.transform(works, InnWorkAction::getName));
-            innWork = works.get(choice);
+
+        List<String> options = MyLists.transform(works, InnWorkAction::getName);
+        options.add("Cancel");
+        int choice = multipleOptionArrowMenu(model, 24, 24, options);
+        if (choice == works.size()) {
+            return;
         }
+        InnWorkAction innWork = works.get(choice);
+        talkToBartenderNode.setWorkDone(true);
         innWork.doWork(model, this);
     }
 

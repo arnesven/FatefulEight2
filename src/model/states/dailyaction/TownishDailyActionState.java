@@ -36,7 +36,7 @@ public class TownishDailyActionState extends AdvancedDailyActionState {
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
         Point tavernPos = urbanLocation.getTavernPosition();
         blockPosition(tavernPos.x, tavernPos.y - 1);
-        super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
+        super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(model, freeLodging));
     }
 
     protected void addTent(Model model, boolean freeRations, UrbanLocation urbanLocation) {

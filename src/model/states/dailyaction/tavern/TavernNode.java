@@ -1,10 +1,10 @@
 package model.states.dailyaction.tavern;
 
 import model.Model;
+import model.items.Item;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.tavern.TavernDailyActionState;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
@@ -12,6 +12,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.TownSubView;
 
 import java.awt.*;
+import java.util.List;
 
 public class TavernNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("innlower", "world_foreground.png", 0x33,
@@ -20,15 +21,17 @@ public class TavernNode extends DailyActionNode {
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite INN_SIGN = new SignSprite("innisgn", 0x07, MyColors.BLACK, MyColors.WHITE);
     private final boolean freeLodging;
+    private List<Item> bartenderInventory;
 
-    public TavernNode(boolean freeLodging) {
+    public TavernNode(Model model, boolean freeLodging) {
         super("Visit Tavern");
         this.freeLodging = freeLodging;
+        bartenderInventory = TalkToBartenderNode.makeInventory(model);
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new TavernDailyActionState(model, freeLodging, true);
+        return new TavernDailyActionState(model, freeLodging, true, bartenderInventory);
     }
 
     @Override

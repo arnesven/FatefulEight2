@@ -1,5 +1,6 @@
 package model.states.dailyaction.tavern;
 
+import model.Model;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -12,8 +13,8 @@ public class VikingTavernNode extends TavernNode {
     private static final Sprite SPRITE2 = new Sprite32x32("innupper", "world_foreground.png", 0x23,
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.WHITE, MyColors.GOLD);
 
-    public VikingTavernNode(boolean freeLodging) {
-        super(freeLodging);
+    public VikingTavernNode(Model model, boolean freeLodging) {
+        super(model, freeLodging);
     }
 
     @Override

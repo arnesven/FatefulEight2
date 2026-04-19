@@ -14,7 +14,6 @@ import model.items.special.TentUpgradeItem;
 import model.items.weapons.FishingPole;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
-import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.InsideDailyActionNode;
 import util.MyRandom;
 import view.MyColors;
@@ -33,31 +32,40 @@ public class TalkToBartenderNode extends InsideDailyActionNode {
     private boolean workDone = false;
     private final List<Item> itemsForSale;
 
-    public TalkToBartenderNode(Model model, boolean inTown) {
+    public TalkToBartenderNode(boolean inTown, List<Item> itemsForSale) {
         super("Talk to bartender");
         this.inTown = inTown;
-        itemsForSale = new ArrayList<>(List.of(new ObolsDummyItem(10),
+        this.itemsForSale = itemsForSale;
+    }
+
+    public TalkToBartenderNode(Model model, boolean inTown) {
+        this(inTown, makeInventory(model));
+    }
+
+    public static List<Item> makeInventory(Model model) {
+        List<Item> result = new ArrayList<>(List.of(new ObolsDummyItem(10),
                 new FoodDummyItem(5)));
         for (int i = MyRandom.randInt(4); i > 0; --i) {
-            itemsForSale.add(new BeerPotion());
+            result.add(new BeerPotion());
         }
         for (int i = MyRandom.randInt(3); i > 0; --i) {
-            itemsForSale.add(new WinePotion());
+            result.add(new WinePotion());
         }
         if (model.getParty().getInventory().getTentSize() != Party.MAXIMUM_PARTY_SIZE) {
             if (MyRandom.randInt(4) != 0) {
-                itemsForSale.add(new TentUpgradeItem());
+                result.add(new TentUpgradeItem());
             }
             if (MyRandom.randInt(4) == 0) {
-                itemsForSale.add(new LargeTentUpgradeItem());
+                result.add(new LargeTentUpgradeItem());
             }
         }
         if (MyRandom.randInt(4) == 0) {
-            itemsForSale.add(new FishingPole());
+            result.add(new FishingPole());
         }
         if (MyRandom.randInt(6) == 0) {
-            itemsForSale.add(new Spyglass());
+            result.add(new Spyglass());
         }
+        return result;
     }
 
     @Override

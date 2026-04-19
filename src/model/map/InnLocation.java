@@ -81,12 +81,12 @@ public class InnLocation extends HexLocation {
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TavernDailyActionState(model, false, false);
+        return new TavernDailyActionState(model, false, false, null);
     }
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new TavernDailyActionState(model, freeLodge, false);
+        return new TavernDailyActionState(model, freeLodge, false, null);
     }
 
     @Override
