@@ -50,6 +50,7 @@ public class InvisibilityCombatAction extends SpecialAbilityCombatAction impleme
             combat.println(target.getName() + " turns invisible!");
             combat.addSpecialEffect(target, new SmokePuffAnimation());
             target.addCondition(new InvisibilityCondition(turns));
+            combat.unblockSneakAttackFor((GameCharacter) target);
         }
     }
 

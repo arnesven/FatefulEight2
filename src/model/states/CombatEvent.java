@@ -640,6 +640,10 @@ public class CombatEvent extends DailyEventState {
         blockSneakAttack.add(character);
     }
 
+    public void unblockSneakAttackFor(GameCharacter character) {
+        blockSneakAttack.remove(character);
+    }
+
     public void addExtraLoot(List<CombatLoot> extraLoot) {
         this.extraLoot.addAll(extraLoot);
     }

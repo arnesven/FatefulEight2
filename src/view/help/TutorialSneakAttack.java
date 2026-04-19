@@ -5,8 +5,8 @@ import view.GameView;
 public class TutorialSneakAttack extends SubChapterHelpDialog {
     private static final String TEXT =
             "A character with at least 1 rank of sneaking can perform a sneak " +
-            "attack once per combat. Unless that character has already attacked, " +
-            "or been attacked the character can initiate the sneak attack as a " +
+            "attacks in combat. Unless that character has already attacked, " +
+            "or been attacked, the character can initiate the sneak attack as a " +
             "combat action (or if the character is invisible).\n\n" +
             "The character rolls a D10 and adds his sneaking modifier " +
             "to get a Stealth rating. The rest of the sneak attack will be resolved at " +

@@ -21,7 +21,7 @@ public class MiniPictureSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
-        model.getScreenHandler().clearForeground(X_OFFSET+5, X_OFFSET+17+PortraitSubView.PORTRAIT_FRAME_WIDTH,
+        model.getScreenHandler().clearForeground(X_OFFSET+5, X_OFFSET+16+PortraitSubView.PORTRAIT_FRAME_WIDTH,
                 Y_OFFSET+5, Y_OFFSET+7+PortraitSubView.PORTRAIT_FRAME_HEIGHT);
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET+7, Y_OFFSET+7,
                 PortraitSubView.PORTRAIT_FRAME_WIDTH, PortraitSubView.PORTRAIT_FRAME_HEIGHT,
