@@ -165,13 +165,7 @@ public class InvisibleEvent extends PersonalityTraitEvent {
     }
 
     private static String makeRacePlural(Race race) {
-        if (race.id() == Race.DWARF.id()) {
-            return "dwarves";
-        }
-        if (race instanceof ElvenRace) {
-            return "elves";
-        }
-        return race.getName().toLowerCase() + "s";
+        return race.getPlural().toLowerCase();
     }
 
     private static class AskAroundTownDestinationTask extends DestinationTask {

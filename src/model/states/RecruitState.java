@@ -6,11 +6,8 @@ import model.characters.appearance.FacialExpression;
 import model.headquarters.TransferCharacterHeadquartersAction;
 import model.items.InventoryDummyItem;
 import model.items.Item;
-import model.items.spells.Spell;
 import model.map.UrbanLocation;
-import model.races.Dwarf;
 import model.races.ElvenRace;
-import model.races.HalfOrc;
 import model.races.Race;
 import util.*;
 import view.subviews.RecruitSubView;
@@ -236,7 +233,7 @@ public class RecruitState extends GameState {
                             "Hmph...")), FacialExpression.disappointed);
                 } else {
                     String raceString = gc.getRace().getName();
-                    if (!(other.getRace() instanceof ElvenRace) && gc.getRace() instanceof ElvenRace) {
+                    if (!(ElvenRace.isElf(other.getRace())) && ElvenRace.isElf(gc.getRace())) {
                         raceString = "elf";
                     }
                     partyMemberSay(other, "Not another " + raceString + "...", FacialExpression.disappointed);
@@ -250,7 +247,7 @@ public class RecruitState extends GameState {
                     partyMemberSay(other, "Hello there. I'm " + other.getFirstName() + ".");
                 } else {
                     String raceString = gc.getRace().getName();
-                    if (!(other.getRace() instanceof ElvenRace) && gc.getRace() instanceof ElvenRace) {
+                    if (!(ElvenRace.isElf(other.getRace())) && ElvenRace.isElf(gc.getRace())) {
                         raceString = "elf";
                     }
                     partyMemberSay(other, "Nice to see another " + raceString + " in the party. I'm " + other.getFirstName() + ".", FacialExpression.relief);
@@ -405,7 +402,7 @@ public class RecruitState extends GameState {
 
     private boolean partyHasAnElf(Party party) {
         return party.getPartyMembers().stream().anyMatch(
-                gameCharacter -> gameCharacter.getRace() instanceof ElvenRace);
+                gameCharacter -> ElvenRace.isElf(gameCharacter.getRace()));
     }
 
     private MyPair<Integer, String> getModifiers(Model model) {

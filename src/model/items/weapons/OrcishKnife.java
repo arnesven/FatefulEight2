@@ -1,6 +1,9 @@
 package model.items.weapons;
 
+import model.characters.GameCharacter;
 import model.items.Item;
+import model.races.Race;
+import util.MyPair;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
@@ -35,5 +38,18 @@ public class OrcishKnife extends SmallBladedWeapon implements PairableWeapon {
     @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return SMALL_BLADES;
+    }
+
+    @Override
+    protected int getAttackBonusForRace(Race race) {
+        if (race.id() == Race.HALF_ORC.id()) {
+            return getAttackBonusForRace().first;
+        }
+        return 0;
+    }
+
+    @Override
+    protected MyPair<Integer, String> getAttackBonusForRace() {
+        return new MyPair<>(1, Race.HALF_ORC.getPlural());
     }
 }

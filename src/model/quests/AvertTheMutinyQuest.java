@@ -450,7 +450,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
                 }
 
                 private String isSameRace(Race race1, Race race2) {
-                    if (race1 instanceof ElvenRace && race2 instanceof ElvenRace) {
+                    if (ElvenRace.isElf(race1) && ElvenRace.isElf(race2)) {
                         return "is an elf";
                     }
                     if (race1 instanceof HumanRace && race2 instanceof HumanRace) {
@@ -459,7 +459,7 @@ public class AvertTheMutinyQuest extends RemotePeopleQuest {
                     if (race1.id() == race2.id()) {
                         return "is a " + race1.getName().toLowerCase();
                     }
-                    if (race1 instanceof ElvenRace) {
+                    if (ElvenRace.isElf(race1)) {
                         return "is not an elf";
                     }
                     if (race1 instanceof HumanRace) {

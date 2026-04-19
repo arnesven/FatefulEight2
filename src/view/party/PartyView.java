@@ -290,7 +290,7 @@ public class PartyView extends SelectableListMenu {
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString()));
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getAttackString(w)));
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(w)));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText()));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText().replace(", ", "")));
                 } else {
                     newY++;
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText()));

@@ -249,7 +249,7 @@ public class GameCharacter extends Combatant {
         if (target.hasCondition(ExposedCondition.class)) {
             bonus += 2;
         }
-        bonus += equipment.getWeapon().getAttackBonus();
+        bonus += equipment.getWeapon().getAttackBonus(this);
         SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this),
                 SkillCheckResult.NO_DIFFICULTY, bonus);
         applyAttack(model, combatEvent, target, sneakAttack, extraDamage, crit, effectSprite, result);
@@ -533,9 +533,10 @@ public class GameCharacter extends Combatant {
     public double calcAverageDamage() {
         double sum = 0.0;
         int rank = getRankForSkill(equipment.getWeapon().getSkillToUse(this));
+        int bonus = equipment.getWeapon().getAttackBonus(this);
         for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); ++i) {
             for (int roll = 1; roll <= 10; roll++) {
-                int modified = roll + rank;
+                int modified = roll + rank + bonus;
                 if (roll >= equipment.getWeapon().getCriticalTarget()) {
                     sum += equipment.getWeapon().getDamage(modified, this) * 2;
                 } else {

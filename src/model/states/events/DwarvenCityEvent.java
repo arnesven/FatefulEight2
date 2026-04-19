@@ -122,7 +122,7 @@ public class DwarvenCityEvent extends DailyEventState {
 
     private boolean partyContainsElves(Model model) {
         return MyLists.any(model.getParty().getPartyMembers(), (GameCharacter gc) ->
-                gc.getRace() instanceof ElvenRace);
+                ElvenRace.isElf(gc.getRace()));
     }
 
     @Override

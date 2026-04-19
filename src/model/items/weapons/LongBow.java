@@ -2,11 +2,12 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 public class LongBow extends BowWeapon {
-    private static final Sprite SPRITE = new TwoHandedItemSprite(7, 6);
+    private static final Sprite SPRITE = new TwoHandedItemSprite(7, 6, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.TRANSPARENT);
 
     public LongBow() {
         super("Long Bow", 20, new int[]{10,10,13,13});

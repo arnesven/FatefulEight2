@@ -33,6 +33,6 @@ public class BeerPotion extends IntoxicatingPotion {
 
     @Override
     public boolean doesReject(Model model, Race race) {
-        return race instanceof ElvenRace;
+        return ElvenRace.isElf(race);
     }
 }

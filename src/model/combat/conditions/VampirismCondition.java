@@ -159,7 +159,7 @@ public class VampirismCondition extends Condition {
         if (stage >= 4) {
             return PALEST_SKIN_COLOR;
         }
-        if (owner.getRace() instanceof ElvenRace) {
+        if (ElvenRace.isElf(owner.getRace())) {
             return owner.getRace().getColor();
         }
         if (owner.getRace().id() == Race.HALFLING.id()) {

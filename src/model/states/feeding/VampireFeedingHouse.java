@@ -11,7 +11,6 @@ import model.combat.conditions.SlowedCondition;
 import model.combat.conditions.StrangenessCondition;
 import model.combat.conditions.VampirismCondition;
 import model.quests.*;
-import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HumanRace;
 import model.races.Race;
@@ -312,7 +311,7 @@ public class VampireFeedingHouse {
                 state.println("The half-orc's blood is slightly toxic to " + vampire.getFirstName() + ". " +
                         vampire.getFirstName() + " became poisoned.");
                 vampire.addCondition(new PoisonCondition());
-            } else if (victim.getRace() instanceof ElvenRace && !(vampire.getRace() instanceof ElvenRace)) {
+            } else if (ElvenRace.isElf(victim.getRace()) && !(ElvenRace.isElf(vampire.getRace()))) {
                 state.println("The purity of the elven blood burns " + vampire.getFirstName() + "!");
                 if (vampire.getHP() < vampire.getMaxHP() / 2 && vampire.getHP() > 0) {
                     vampire.addToHP(-1);

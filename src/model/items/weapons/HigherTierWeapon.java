@@ -170,8 +170,8 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     }
 
     @Override
-    public int getAttackBonus() {
-        return inner.getAttackBonus();
+    public int getAttackBonus(GameCharacter user) {
+        return inner.getAttackBonus(user);
     }
 
     @Override

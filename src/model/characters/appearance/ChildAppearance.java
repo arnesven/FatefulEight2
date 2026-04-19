@@ -34,7 +34,7 @@ public class ChildAppearance extends CharacterAppearance {
         hairSprite.setColor2(hairColor);
         hairSprite.setColor3(MyColors.CYAN);
 
-        headSprite = new Sprite("childhead", "child.png", race instanceof ElvenRace ? 1 : 0,
+        headSprite = new Sprite("childhead", "child.png", ElvenRace.isElf(race) ? 1 : 0,
                 0, 24, 40, List.of(hairSprite));
         headSprite.setColor1(race.getColor());
         headSprite.setColor2(MyColors.WHITE);

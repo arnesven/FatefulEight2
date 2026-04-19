@@ -1,21 +1,15 @@
 package view;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.classes.CharacterClass;
-import model.classes.Classes;
 import model.races.AllRaces;
 import model.races.ElvenRace;
 import model.races.Race;
 import util.Arithmetics;
-import util.MyLists;
-import util.MyTriplet;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
-import view.sprites.PieChartSprite;
 import view.widget.*;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
@@ -51,7 +45,7 @@ public class PartyCompositionView extends SelectableListMenu {
     public void transitionedFrom(Model model) { }
 
     private static String getBasicName(Race race) {
-        if (race instanceof ElvenRace) {
+        if (ElvenRace.isElf(race)) {
             return "Elf";
         }
         return race.getName();

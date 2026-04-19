@@ -50,7 +50,7 @@ public class Dwarf extends Race {
 
     @Override
     public int getInitialAttitudeFor(Race race) {
-        if (race instanceof ElvenRace || race.id() == Race.HALF_ORC.id()) {
+        if (ElvenRace.isElf(race) || race.id() == Race.HALF_ORC.id()) {
             return STRONG_DISLIKE_ATTITUDE;
         }
         if (race.id() == id()) {

@@ -2,10 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.PersonalityTrait;
-import model.items.weapons.Pistol;
 import model.mainstory.pirates.PotentialMutineer;
 import model.races.ElvenRace;
-import model.races.HalfOrc;
 import model.races.HumanRace;
 import model.states.DailyEventState;
 import model.states.QuestState;
@@ -229,7 +227,7 @@ class TalkToCrewEvent extends DailyEventState {
         } else if (choice == 1) {
             article = " an";
             leaderSay("Are you an elf?");
-            affirmative = person.getRace() instanceof ElvenRace;
+            affirmative = ElvenRace.isElf(person.getRace());
         } else {
             leaderSay("Are you a " + races.get(choice) + "?");
             affirmative = person.getRace().getName().equalsIgnoreCase(races.get(choice));

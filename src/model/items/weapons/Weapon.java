@@ -1,5 +1,6 @@
 package model.items.weapons;
 
+import model.classes.CharacterClass;
 import model.combat.Combatant;
 import model.items.*;
 import model.Model;
@@ -8,7 +9,9 @@ import model.classes.Skill;
 import model.items.analysis.DamageAnalysis;
 import model.items.analysis.ItemAnalysis;
 import model.items.imbuements.WeaponImbuement;
+import model.races.Race;
 import model.states.CombatEvent;
+import util.MyPair;
 import util.MyStrings;
 import view.*;
 import view.party.SelectableListMenu;
@@ -111,8 +114,9 @@ public abstract class Weapon extends EquipableItem {
             result.append(", Magic Damage");
         }
         result.append(getSkillBonusesAsString());
-        if (!getExtraText().equals("")) {
-            result.append(", " + getExtraText());
+        String extraText = getExtraText();
+        if (!extraText.isEmpty()) {
+            result.append(extraText);
         }
         return result.toString();
     }
@@ -122,17 +126,21 @@ public abstract class Weapon extends EquipableItem {
     }
 
     public String getExtraText() {
+        StringBuilder result = new StringBuilder();
         if (this instanceof StartingItem) {
-            return "Starting item";
+            result.append("Starting item");
         }
         if (getCriticalTarget() != 10) {
             int chance = (11 - getCriticalTarget()) * 10;
-            return chance + "% Critical Hit Chance";
+            result.append(", ").append(chance).append("% Critical Hit Chance");
+        }
+        if (getAttackBonusForRace() != null) {
+            result.append(", +").append(getAttackBonusForRace().first).append(" to hit for ").append(getAttackBonusForRace().second);
         }
         if (isImbued()) {
-            return getImbuement().getText();
+            result.append(",").append(getImbuement().getText());
         }
-        return "";
+        return result.toString();
     }
 
     public int getNumberOfAttacks() { return 1; }
@@ -228,10 +236,22 @@ public abstract class Weapon extends EquipableItem {
         this.imbuement = null;
     }
 
-    public int getAttackBonus() {
+    public int getAttackBonus(GameCharacter user) {
+        int bonus = 0;
         if (isImbued()) {
-            return getImbuement().getAttackBonus();
+            bonus += getImbuement().getAttackBonus();
         }
+        if (getAttackBonusForRace() != null) {
+            bonus += getAttackBonusForRace(user.getRace());
+        }
+        return bonus;
+    }
+
+    protected MyPair<Integer, String> getAttackBonusForRace() {
+        return null;
+    }
+
+    protected int getAttackBonusForRace(Race race) {
         return 0;
     }
 
@@ -239,3 +259,4 @@ public abstract class Weapon extends EquipableItem {
         return NORMAL_STANCE;
     }
 }
+

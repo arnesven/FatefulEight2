@@ -14,6 +14,10 @@ public abstract class ElvenRace extends Race {
         super(name, color, -1, +1, 20, skillBonuses, description);
     }
 
+    public static boolean isElf(Race race) {
+        return race.id() == Race.DARK_ELF.id() || race.id() == WOOD_ELF.id() || race.id() == HIGH_ELF.id();
+    }
+
     @Override
     public PortraitSprite getLeftEar(MyColors hairColor) {
         return new FaceSpriteWithHair(0x72, hairColor);
@@ -34,7 +38,7 @@ public abstract class ElvenRace extends Race {
         if (race.id() == id()) {
             return POSITIVE_ATTITUDE;
         }
-        if (race instanceof ElvenRace) {
+        if (isElf(race)) {
             return SLIGHT_DISLIKE_ATTITUDE;
         }
         return DISLIKE_ATTITUDE;
