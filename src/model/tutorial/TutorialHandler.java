@@ -700,6 +700,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void robberies(Model model) {
+        runOnce("robberies", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialRobberies(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

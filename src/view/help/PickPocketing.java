@@ -5,10 +5,10 @@ import view.GameView;
 
 public class PickPocketing extends HelpDialog {
     private static final String TEXT =
-            "During some events, you will have the opportunity to pick-pocket " +
-            "people you come across. To pick-pocket you need at least two people " +
+            "During some events, you will have the opportunity to pickpocket " +
+            "people you come across. To pickpocket you need at least two people " +
             "in your party, one to distract the mark, and one to perform the thieving.\n\n" +
-            "When a character attempts pick-pocketing, they first tests Sneak with a difficulty of " +
+            "When a character attempts pickpocketing, they first tests Sneak with a difficulty of " +
             GeneralInteractionEvent.PICK_POCKETING_BASE_SNEAK_DIFFICULTY + " plus the mark's ranks of perception. " +
             "Should the first check be " +
             "successful the next test is against Security with a difficulty of " +
@@ -19,6 +19,6 @@ public class PickPocketing extends HelpDialog {
             "picket, without being noticed.";
 
     public PickPocketing(GameView view) {
-        super(view, "Pick-Pocketing", TEXT);
+        super(view, "Pickpocketing", TEXT);
     }
 }

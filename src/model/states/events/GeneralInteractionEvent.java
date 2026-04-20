@@ -42,11 +42,13 @@ import java.util.*;
 import java.util.List;
 
 public abstract class GeneralInteractionEvent extends DailyEventState {
-    public static final int PICK_POCKETING_NOTORIETY = 5;
-    public static final int MURDER_NOTORIETY = 50;
+
     public static final int PICK_POCKETING_BASE_SNEAK_DIFFICULTY = 7;
     public static final int PICK_POCKETING_BASE_SECURITY_DIFFICULTY = 6;
-    public static final int ASSAULT_NOTORIETY = 10;
+    public static final int PICK_POCKETING_NOTORIETY =  5; // Theft
+    public static final int ROBBERY_NOTORIETY        = 10; // Theft with threat of physical harm
+    public static final int ASSAULT_NOTORIETY        = 15; // Physical harm, but not lethal
+    public static final int MURDER_NOTORIETY         = 50; // Lethal harm
     private final int stealMoney;
     private final String interactText;
     private final List<Enemy> companions;
@@ -136,8 +138,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 options.addFirst(this.interactText + " " + victim);
             }
             if (getModel().getParty().size() > 1) {
-                options.add("Steal from " + victim);
+                options.add("Pickpocket " + victim);
             }
+            options.add("Rob " + victim);
             options.add("Make Inquiry");
             options.add("Leave " + victim);
             int chosen = multipleOptionArrowMenu(getModel(), 24, 23, options);
@@ -148,8 +151,12 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 attack(victimChar, companions, strat, true);
                 return true;
             }
-            if (options.get(chosen).contains("Steal")) {
+            if (options.get(chosen).contains("Pickpocket")) {
                 attemptPickPocket(victim, victimChar, stealMoney, companions, strat);
+                return true;
+            }
+            if (options.get(chosen).contains("Rob")) {
+                rob(victimChar, companions, stealMoney, strat);
                 return true;
             }
             if (options.get(chosen).contains("Make Inquiry")) {
@@ -161,9 +168,59 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
     }
 
+    private void rob(GameCharacter victimChar, List<Enemy> companions, int stealMoney, ProvokedStrategy strat) {
+        leaderSay(MyRandom.sample(List.of("Stand and deliver!", "Stick'em up!",
+                "This isn't your lucky day I'm afraid. I'm robbing you.", "Hand over your valuables, or else!",
+                        "Your money or your life, " + victimChar.getName() + ".")),
+                FacialExpression.wicked);
+        getModel().getTutorial().robberies(getModel());
+        boolean robbed = false;
+        if (strat == ProvokedStrategy.ALWAYS_ESCAPE) {
+            portraitSay("Fine! Here's the coin, just don't hurt " + (companions.isEmpty() ? "me":"us") + "!",
+                    FacialExpression.afraid);
+            robbed = true;
+            randomSayIfPersonality(PersonalityTrait.greedy, List.of(getModel().getParty().getLeader()), 
+                    "Hah! Easy money!", FacialExpression.wicked);
+        } else if (strat == ProvokedStrategy.FIGHT_IF_ADVANTAGE) {
+            if (CowardlyCondition.goodGuysHasTheAdvantage(getModel(), this, makeEnemyTeam(victimChar, companions),
+                    getModel().getParty().getPartyMembers())) {
+                portraitSay("I would fight you... but uh... Well, I just don't want to.");
+                if (!giveOptionToAttack(victimChar, companions, strat)) {
+                    println("The " + victimChar.getName() + " reluctantly hands over " + hisOrHer(victimChar.getGender()) + " valuables.");
+                    robbed = true;
+                }
+            } else {
+                portraitSay(MyRandom.sample(List.of("No way!", "Get lost scum!",
+                        "I'm not giving you a penny.")), FacialExpression.disappointed);
+                if (giveOptionToAttack(victimChar, companions, strat)) {
+                    return; // Did fight
+                }
+            }
+        } else {
+            portraitSay("You think you can just take our money? You'll regret this.");
+            println(victimChar.getName() + " attacks you!");
+            attack(victimChar, companions, strat, false);
+            return;
+        }
+
+        if (robbed) {
+            randomSayIfPersonality(PersonalityTrait.lawful, List.of(getModel().getParty().getLeader()),
+                    "This is a crime. We can't stoop this low!", FacialExpression.disappointed);
+            int robMoney = (int)(stealMoney * (1.0 + MyRandom.nextDouble()));
+            println("The party gains " + robMoney + " gold.");
+            addToNotoriety(getModel(), this, ROBBERY_NOTORIETY);
+            getModel().getParty().earnGold(robMoney);
+            if (MyRandom.flipCoin()) {
+                portraitSay(MyRandom.sample(List.of("I'll get you for this one day.", "I won't forget this.",
+                        "What goes around comes around.", "They'll catch you in the end.")), FacialExpression.disappointed);
+            }
+        }
+        println("You part ways with the " + victimChar.getName() + ".");
+    }
+
     private void attemptPickPocket(String victim, GameCharacter victimChar, int stealMoney,
                                    List<Enemy> companions, ProvokedStrategy strat) {
-        print("Who should attempt to pick-pocket the " + victim + "?");
+        print("Who should attempt to pickpocket the " + victim + "?");
         getModel().getTutorial().pickPocketing(getModel());
         GameCharacter thief = getModel().getParty().partyMemberInput(getModel(),
                 this, getModel().getParty().getPartyMember(0));
@@ -182,7 +239,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             }
             if (teleUsed || result.isSuccessful()) {
                 GameStatistics.incrementGoldStolen(stealMoney);
-                println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");
+                println(thief.getFirstName() + " successfully pickpocketed " + stealMoney + " gold from the " + victim + ".");
                 getModel().getParty().earnGold(stealMoney);
                 leaderSay("Please excuse us " + victim + ", we have pressing matters to attend.");
                 portraitSay(MyRandom.sample(List.of("Oh... alright.", "I see, goodbye.",
@@ -205,7 +262,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
         addToNotoriety(getModel(), this, PICK_POCKETING_NOTORIETY);
         portraitSay(MyRandom.sample(List.of("Hey, there! Keep your fingers to yourself!",
-                "Stop! Thief!", "Huh? A pick-pocket? Get away from me!#")));
+                "Stop! Thief!", "Huh? A pickpocket? Get away from me!#")));
         if (strat == ProvokedStrategy.ALWAYS_ESCAPE) {
             print("Do you want to attack the " + victim + "? (Y/N) ");
             if (yesNoInput()) {
@@ -217,15 +274,28 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 CowardlyCondition.goodGuysHasTheAdvantage(getModel(), this, makeEnemyTeam(victimChar, companions),
                         getModel().getParty().getPartyMembers())) {
             portraitSay("I would fight you... but uh... Well, I just don't want to.");
-            print("Do you want to attack the " + victim + "? (Y/N) ");
-            if (yesNoInput()) {
-                attack(victimChar, companions, strat, true);
-            } else {
-                println("The " + victim + " flees.");
+            if (!giveOptionToAttack(victimChar, companions, strat)) {
+                println("The " + victimChar.getFirstName() + " flees.");
             }
         } else {
             attack(victimChar, companions, strat, false);
         }
+    }
+
+    private boolean giveOptionToAttack(GameCharacter victimChar, List<Enemy> companions, ProvokedStrategy strat) {
+        print("Do you want to attack the " + victimChar.getName() + "? (Y/N) ");
+        if (yesNoInput()) {
+            leaderSay(MyRandom.sample(List.of("You're asking for it.", "Then I'm afraid things will get ugly.",
+                    "Perhaps you'll feel differently in a moment. To arms!")));
+            if (MyRandom.flipCoin()) {
+                randomSayIfPersonality(PersonalityTrait.aggressive, List.of(getModel().getParty().getLeader()),
+                        MyRandom.sample(List.of("Finally we get to crack some skulls!", "I've been waiting for this.",
+                                "Yes! Let's go!", "Wraaaah!")));
+            }
+            attack(victimChar, companions, strat, true);
+            return true;
+        }
+        return false;
     }
 
     private boolean tryUseTelekinesis(GameCharacter thief) {
@@ -233,7 +303,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 s -> s instanceof TelekinesisSpell);
         if (sp != null) {
             print("Would you like " + thief.getFirstName() + " to use " + sp.getName() +
-                    " instead of Security while pick-pocketing? (Y/N) ");
+                    " instead of Security while pickpocketing? (Y/N) ");
             if (yesNoInput()) {
                 if (sp.castYourself(getModel(), this, thief)) {
                     return true;
