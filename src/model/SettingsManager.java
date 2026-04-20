@@ -1,5 +1,8 @@
 package model;
 
+import sound.BackgroundMusic;
+import sound.SoundEffects;
+import sound.Volume;
 import util.Arithmetics;
 import view.widget.TopText;
 
@@ -24,6 +27,8 @@ public class SettingsManager implements Serializable {
     private boolean animateDieRolls = true;
     private GameDifficulty gameDifficulty = GameDifficulty.NORMAL;
     private boolean skipEveningPartyManagement = false;
+    private Volume effectsSoundLevel = SoundEffects.DEFAULT_VOLUME;
+    private Volume musicSoundLevel = BackgroundMusic.DEFAULT_VOLUME;
     public static final int MAX_DIFFICULTY = 3;
 
     public SettingsManager() {
@@ -162,5 +167,21 @@ public class SettingsManager implements Serializable {
 
     public void toggleSkipPartyManagementEveningState() {
         skipEveningPartyManagement = !skipEveningPartyManagement;
+    }
+
+    public Volume getEffectsSoundLevel() {
+        return effectsSoundLevel;
+    }
+
+    public void cycleEffectsSoundLevel() {
+        effectsSoundLevel = Volume.values()[Arithmetics.incrementWithWrap(effectsSoundLevel.ordinal(), Volume.values().length)];
+    }
+
+    public Volume getMusicSoundLevel() {
+        return musicSoundLevel;
+    }
+
+    public void cycleMusicSoundLevel() {
+        musicSoundLevel = Volume.values()[Arithmetics.incrementWithWrap(musicSoundLevel.ordinal(), Volume.values().length)];
     }
 }

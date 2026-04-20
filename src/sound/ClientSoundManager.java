@@ -11,11 +11,6 @@ public class ClientSoundManager extends SoundManager {
     private static BackgroundMusic backgroundSound = null;
     private static SoundJLayer bgSoundLayer;
 
-    public static void playSound(String key) {
-        SoundJLayer sjl = new SoundJLayer(getSoundResource(key, Volume.HIGH));
-        sjl.play();
-    }
-
     public static void playSoundWithVolume(String key, Volume vol) {
         SoundJLayer sjl = new SoundJLayer(getSoundResource(key, vol));
         sjl.play();
@@ -25,13 +20,17 @@ public class ClientSoundManager extends SoundManager {
         if (!loadedSounds.containsKey(key)) {
             loadSoundResource(key, vol);
         }
+        ClientSound s = loadedSounds.get(key);
+        if (s.getVolume() != vol.amplitude) {
+            changeSoundVolume(key, vol);
+        }
         return loadedSounds.get(key);
     }
 
     public static void changeSoundVolume(String key, Volume vol) {
         if (loadedSounds.containsKey(key)) {
             loadedSounds.get(key).setVolume(vol.amplitude);
-            if (backgroundSound.getFileName().equals(key)) {
+            if (backgroundSound != null && backgroundSound.getFileName().equals(key)) {
                 bgSoundLayer.adjustVolume();
             }
         }
@@ -52,7 +51,7 @@ public class ClientSoundManager extends SoundManager {
             }
             if (!ambientSound.getFileName().equals("nothing")) {
                 bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound.getFileName(),
-                        ambientSound.getVolume()), true);
+                        SoundEffects.modifyBySettingsBg(ambientSound.getVolume())), true);
                 bgSoundLayer.play();
             }
         } else {

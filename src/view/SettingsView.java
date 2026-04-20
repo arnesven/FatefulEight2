@@ -4,6 +4,9 @@ import control.FatefulEight;
 import model.GameDifficulty;
 import model.Model;
 import model.SettingsManager;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
+import sound.SoundEffects;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.widget.TopText;
@@ -14,7 +17,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 31;
-    private static final int HEIGHT = 35;
+    private static final int HEIGHT = 37;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -31,7 +34,7 @@ public class SettingsView extends SelectableListMenu {
         return List.of(new DrawableObject(xStart, yStart+1) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                print(model.getScreenHandler(), x+12, y, "- Settings -");
+                print(model.getScreenHandler(), x+10, y, "- Settings -");
             }
         });
     }
@@ -138,10 +141,30 @@ public class SettingsView extends SelectableListMenu {
         y = addTopBarSettings(model, result, x, y, "Key Reminders   ", TopText.KEY_REMINDERS_SETTINGS_FLAG);
 
         y += 1;
-        result.add(new ListContent(xStart+2, y, twoStrings("Fullscreen Mode", FatefulEight.inFullScreenMode?"ON":"OFF")) {
+        result.add(new ListContent(xStart+2, y++, twoStrings("Fullscreen Mode", FatefulEight.inFullScreenMode?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.toggleFullScreen();
+            }
+        });
+        y++;
+
+        result.add(new ListContent(xStart+2, y++, twoStrings("Sound Effects",
+                model.getSettings().getEffectsSoundLevel().name().replace("_", " "))) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().cycleEffectsSoundLevel();
+                SoundEffects.playSpellSuccess();
+            }
+        });
+
+        result.add(new ListContent(xStart+2, y, twoStrings("Music",
+                model.getSettings().getMusicSoundLevel().name().replace("_", " "))) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().cycleMusicSoundLevel();
+                ClientSoundManager.changeSoundVolume(ClientSoundManager.getCurrentBackgroundMusic().getFileName(),
+                        model.getSettings().getMusicSoundLevel());
             }
         });
 

@@ -119,6 +119,7 @@ public class Model {
         gameStartFileName = null;
         getParty().clearAnimations();
         GameStatistics.setModel(this);
+        SoundEffects.setSettings(gameData.settings);
     }
 
     public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {
@@ -139,6 +140,7 @@ public class Model {
             //MainStoryTest.testSuit(this);
         }
         GameStatistics.setModel(this);
+        SoundEffects.setSettings(gameData.settings);
     }
 
     public void initializeSubViewAndLog() {
