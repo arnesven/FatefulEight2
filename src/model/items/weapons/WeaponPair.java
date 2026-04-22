@@ -279,14 +279,19 @@ public class WeaponPair extends Weapon implements BlockingItem {
         return mainBlock + offBlock;
     }
 
-    // TODO: Add an implementation for these:
-//    @Override
-//    protected int getAttackBonusForRace(Race race) {
-//        return super.getAttackBonusForRace(race);
-//    }
-//
-//    @Override
-//    protected MyPair<Integer, String> getAttackBonusForRace() {
-//        return super.getAttackBonusForRace();
-//    }
+    @Override
+    protected int getAttackBonusForRace(Race race) {
+        if (mainHand.getAttackBonusForRace(race) > 0 && offHand.getAttackBonusForRace(race) > 0) {
+            return mainHand.getAttackBonusForRace(race);
+        }
+        return 0;
+    }
+
+    @Override
+    protected MyPair<Integer, String> getAttackBonusForRace() {
+        if (mainHand.getAttackBonusForRace().second.equals(offHand.getAttackBonusForRace().second)) {
+            return mainHand.getAttackBonusForRace();
+        }
+        return null;
+    }
 }
