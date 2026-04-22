@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.conditions.ThrallCondition;
@@ -73,7 +74,7 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
             model.getParty().forceEyesClosed(victim, false);
             CheckForVampireEvent vampireEvent = new CheckForVampireEvent(model);
             if (!vampireEvent.askForMesmerize(model, vampire, victim, vampCond)) {
-                partyMemberSay(victim, "Help! A vampire!!! What, " + vampire.getFirstName() + ", you're a vampire?");
+                partyMemberSay(victim, "Help! A vampire!!! What, " + vampire.getFirstName() + ", you're a vampire?", FacialExpression.afraid);
                 model.getLog().waitForAnimationToFinish();
                 if (model.getParty().size() > 2) {
                     println("The rest of the party members quickly wake up and grab their weapons.");
@@ -133,12 +134,12 @@ public class FeedOnPartyMemberEvent extends DailyEventState {
                 println(victim.getFirstName() + "'s dark deed has been detected! (Sneak " + result.asString() + ")");
                 model.getParty().unbenchAll();
                 partyMemberSay(other, "What's going on here. " + vampire.getFirstName() +
-                        " what are you doing to " + victim.getFirstName() + "?");
+                        " what are you doing to " + victim.getFirstName() + "?", FacialExpression.angry);
                 partyMemberSay(victim, "I think... I think " + heOrShe(vampire.getGender()) + " was trying to bite me! " +
-                        "Wait a minute, " + heOrShe(vampire.getGender()) + "'s a bloody vampire!");
+                        "Wait a minute, " + heOrShe(vampire.getGender()) + "'s a bloody vampire!", FacialExpression.afraid);
             } else {
                 partyMemberSay(victim, "I think... I think you were trying to bite me! " +
-                        "Wait a minute, you're a bloody vampire!");
+                        "Wait a minute, you're a bloody vampire!", FacialExpression.afraid);
                 if (new CheckForVampireEvent(model).askForMesmerize(model, vampire, victim,
                         (VampirismCondition) vampire.getCondition(VampirismCondition.class))) {
                     return false;

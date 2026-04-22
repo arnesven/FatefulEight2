@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.conditions.ThrallCondition;
@@ -41,8 +42,8 @@ public class CheckForVampireEvent extends DailyEventState {
         partyMemberSay(other, "Hey " + vampire.getFirstName() + ", can I ask you something?");
         partyMemberSay(vampire, "Sure, what is it?");
         partyMemberSay(other, "Well... It's a little hard to ask...");
-        partyMemberSay(vampire, "Oh, just spit it out!");
-        partyMemberSay(other, "Fair enough. Here it goes. Are you a vampire?");
+        partyMemberSay(vampire, "Oh, just spit it out!", FacialExpression.disappointed);
+        partyMemberSay(other, "Fair enough. Here it goes. Are you a vampire?", FacialExpression.questioning);
         partyMemberSay(vampire, "A vampire? No, hehehe, goodness. Whatever gave you that idea?");
         VampirismCondition vampCond = (VampirismCondition) vampire.getCondition(VampirismCondition.class);
         SkillCheckResult result = vampire.testSkill(model, Skill.Persuade, PERSUADE_BASE_DIFFICULTY + vampCond.getStage() * 2);
@@ -58,7 +59,7 @@ public class CheckForVampireEvent extends DailyEventState {
         model.setInCombat(true);
         partyMemberSay(other, "Well, you're skin looks paler than before, your teeth are pointier and " +
                 "on some nights you just disappear for hours. Please tell me there is a good explanations for all of this!");
-        partyMemberSay(vampire, "Uhm, well... Fine I'm a vampire. Are you happy?");
+        partyMemberSay(vampire, "Uhm, well... Fine I'm a vampire. Are you happy?", FacialExpression.disappointed);
         println(other.getFirstName() + " is visibly shaken by the news.");
         if (askForMesmerize(model, vampire, other, vampCond)) {
             return;
@@ -66,10 +67,10 @@ public class CheckForVampireEvent extends DailyEventState {
 
         if (model.getParty().size() > 2) {
             partyMemberSay(other, "Yikes... Hey guys... I think you better know that " +
-                    vampire.getFirstName() + " just confessed to being a vampire.");
+                    vampire.getFirstName() + " just confessed to being a vampire.", FacialExpression.afraid);
         } else {
             partyMemberSay(other, "Yikes... A vampire? Really. I mean, I had my suspicions, " +
-                    "but deep down I really just thought I was imagining things!");
+                    "but deep down I really just thought I was imagining things!", FacialExpression.afraid);
         }
         dealWithVampire(model, vampire, other);
         model.setInCombat(false);
@@ -104,7 +105,7 @@ public class CheckForVampireEvent extends DailyEventState {
         println(other.getFirstName() + " pushes " + vampire.getName() + " away!");
         other.addToAttitude(vampire, -30);
         partyMemberSay(other, "Help! " + vampire.getFirstName() + " Is a vampire and " + heOrShe(vampire.getGender()) +
-                " is trying to hypnotize me!");
+                " is trying to hypnotize me!", FacialExpression.afraid);
         return false;
     }
 
@@ -119,12 +120,12 @@ public class CheckForVampireEvent extends DailyEventState {
     private void vampireNotLeader(Model model, GameCharacter vampire, GameCharacter other) {
         if (vampire.getAttitude(other) >= ATTITUDE_THRESHOLD) {
             partyMemberSay(other, "I think we both know we can't continue being " +
-                    "in the same party. I think you should leave.");
+                    "in the same party. I think you should leave.", FacialExpression.disappointed);
             partyMemberSay(vampire, "Fine. I'll find my own way I guess. Perhaps we will meet " +
-                    "sometime again? Perhaps during the night?");
+                    "sometime again? Perhaps during the night?", FacialExpression.wicked);
             partyMemberSay(other, "Don't even think about it. Be happy we don't end you right here " +
-                    "and now. Now begone foul creature.");
-            partyMemberSay(vampire, "I'm gone. But I shall not forget this.");
+                    "and now. Now begone foul creature.", FacialExpression.disappointed);
+            partyMemberSay(vampire, "I'm gone. But I shall not forget this.", FacialExpression.disappointed);
             model.getLog().waitForAnimationToFinish();
             model.getParty().remove(vampire, false, false, 0);
             println(vampire.getFirstName() + " has left the party.");
@@ -137,8 +138,8 @@ public class CheckForVampireEvent extends DailyEventState {
             }
         } else {
             partyMemberSay(other, "I'm sorry " + vampire.getFirstName() +
-                    ". But It's our duty to hold you accountable for your crimes against the innocent.");
-            partyMemberSay(vampire, "You can try.");
+                    ". But It's our duty to hold you accountable for your crimes against the innocent.", FacialExpression.disappointed);
+            partyMemberSay(vampire, "You can try.", FacialExpression.disappointed);
             model.getLog().waitForAnimationToFinish();
             model.getParty().remove(vampire, false, false, 0);
             println(vampire.getFirstName() + " has left the party.");
@@ -167,19 +168,19 @@ public class CheckForVampireEvent extends DailyEventState {
             String imOrWere = (model.getParty().size() > 2 ? "We're" : "I'm");
             String iveOrWeve = (model.getParty().size() > 2 ? "We've" : "I've");
             partyMemberSay(other, "I can't believe " + iveOrWeve + " been travelling around with a blood sucking monster!" +
-                    imOrWere + " leaving, right now!#");
-            partyMemberSay(vampire, "Fine. Who needs you?");
+                    imOrWere + " leaving, right now!#", FacialExpression.angry);
+            partyMemberSay(vampire, "Fine. Who needs you?", FacialExpression.disappointed);
             for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
                 if (!isVampireFriendly(gc)) {
                     model.getParty().remove(gc, false, false, 0);
                     println(gc.getFirstName() + " left the party.");
                 } else if (gc != vampire) {
-                    partyMemberSay(gc, "Actually, I think I'll stick with you " + vampire.getFirstName() + ".");
+                    partyMemberSay(gc, "Actually, I think I'll stick with you " + vampire.getFirstName() + ".", FacialExpression.relief);
                 }
             }
         } else {
             partyMemberSay(other, "I'm sorry " + vampire.getFirstName() +
-                    ". But It's our duty to hold you accountable for your crimes against the innocent.");
+                    ". But It's our duty to hold you accountable for your crimes against the innocent.", FacialExpression.disappointed);
             partyMemberSay(vampire, "You can try.");
             List<Enemy> enemies = new ArrayList<>();
             for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
@@ -188,7 +189,7 @@ public class CheckForVampireEvent extends DailyEventState {
                     println(gc.getFirstName() + " left the party.");
                     enemies.add(new FormerPartyMemberEnemy(gc));
                 } else if (gc != vampire) {
-                    partyMemberSay(gc, "Actually, I think I'll stick with you " + vampire.getFirstName() + ".");
+                    partyMemberSay(gc, "Actually, I think I'll stick with you " + vampire.getFirstName() + ".", FacialExpression.relief);
                 }
             }
             if (!enemies.isEmpty()) {
@@ -210,14 +211,14 @@ public class CheckForVampireEvent extends DailyEventState {
 
     private void persuadeSuccess(Model model, GameCharacter vampire, GameCharacter other) {
         partyMemberSay(other, "Yeah, I guess I'm being silly. I just thought your teeth had " +
-                "gotten a little pointier or something. Sorry for cornering you like that.");
+                "gotten a little pointier or something. Sorry for cornering you like that.", FacialExpression.relief);
         partyMemberSay(vampire, "It's okay " + other.getFirstName() + ", I didn't take any offense. " +
-                "Who wouldn't want to be a vampire. They're really cool right?.");
+                "Who wouldn't want to be a vampire. They're really cool right?.", FacialExpression.relief);
         partyMemberSay(other, "If by 'cool' you mean super scary, gross and an abomination which " +
-                "must be rooted out at all costs, then yes.");
-        partyMemberSay(vampire, "That's not exactly what I meant.");
+                "must be rooted out at all costs, then yes.", FacialExpression.disappointed);
+        partyMemberSay(vampire, "That's not exactly what I meant.", FacialExpression.disappointed);
         partyMemberSay(other, "Oh... Anyway. I'm glad your not one. If you were I don't think we could " +
-                "continue being in a party together anymore.");
+                "continue being in a party together anymore.", FacialExpression.relief);
         partyMemberSay(vampire, "Perhaps you are right.");
     }
 }
