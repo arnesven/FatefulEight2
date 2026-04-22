@@ -48,8 +48,9 @@ public class VampirismCondition extends Condition {
     private static final int CARRY_CAP_BONUS_PER_STAGE = 15;
     private static final MyColors PALEST_SKIN_COLOR = MyColors.WHITE;
     private static final MyColors PALEST_LIP_COLOR = MyColors.GRAY;
-    public static final int PROGRESS_EVERY_N_DAYS = 10;
-    private final int dayAdded; // FEATURE: Change this to Vampirism Points, add 1 every day. Feeding adds 2?
+
+    private int vampirePointsPerDay;
+    private int vampirePoints = 0;
     private int stage;
     private CharacterAppearance originalAppearance = null;
     private List<VampireAbility> learnedAbilities = new ArrayList<>();
@@ -57,7 +58,7 @@ public class VampirismCondition extends Condition {
     public VampirismCondition(int initialStage, int dayAdded) {
         super("Vampirism", "VMP");
         this.stage = initialStage;
-        this.dayAdded = dayAdded;
+        this.vampirePointsPerDay = 1;
     }
 
     public static void makeVampire(Model model, GameState state, GameCharacter target) {
@@ -74,10 +75,18 @@ public class VampirismCondition extends Condition {
 
     @Override
     public void endOfDayTrigger(Model model, GameState state, Combatant comb) {
-        if (model.getDay() != dayAdded &&
-                ((model.getDay() - dayAdded) % PROGRESS_EVERY_N_DAYS) == 0) {
+        System.out.println(comb.getName() + " gains " + vampirePointsPerDay + " vampire points.");
+        vampirePoints += vampirePointsPerDay;
+        vampirePointsPerDay = Math.max(1, vampirePointsPerDay - 1);
+        System.out.println(comb.getName() + " now has " + vampirePoints + " vampire points.");
+        if (getStageForPoints(vampirePoints) > stage) {
+            System.out.println(comb.getName() + " progresses to next stage.");
             progress(model, state, (GameCharacter) comb);
         }
+    }
+
+    private int getStageForPoints(int points) {
+        return (points - 5) / 10;
     }
 
     @Override
@@ -255,5 +264,9 @@ public class VampirismCondition extends Condition {
 
     public boolean hasClawsAbility() {
         return MyLists.any(learnedAbilities, (VampireAbility va) -> va instanceof ClawsVampireAbility);
+    }
+
+    public void setMaximumProgressionRate() {
+        vampirePointsPerDay = 4;
     }
 }

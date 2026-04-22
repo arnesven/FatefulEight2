@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.quests.*;
 import model.states.feeding.VampireFeedingHouse;
 import model.states.feeding.VampireFeedingState;
@@ -124,6 +125,10 @@ public class VampireFeedingSubView extends AvatarSubView {
             house.getPortrait().drawYourself(model.getScreenHandler(), p.x, p.y);
             if (!house.isOpenEyes()) {
                 house.getPortrait().drawBlink(model.getScreenHandler(), p.x + 3, p.y + 3);
+            }
+            if (house.isVictimAfraid()) {
+                house.getPortrait().drawFacialExpression(model.getScreenHandler(), p.x + 3, p.y + 3,
+                        FacialExpression.afraid, true, false);
             }
         }
     }

@@ -45,6 +45,7 @@ public class VampireFeedingHouse {
     private boolean batForm = false;
     private AdvancedAppearance portrait = null;
     private boolean openEyes;
+    private boolean afraid = false;
 
     public VampireFeedingHouse(GameCharacter vampire, int width, int stories, int dwellers, int sleeping, int lockDifficulty) {
         this.width = width;
@@ -74,11 +75,11 @@ public class VampireFeedingHouse {
         if (sleeping < dwellers) { // Some awake
             int roll = MyRandom.rollD10();
             System.out.println("Lock roll is " + roll + ".");
-            if (roll >= 9) {
+            if (roll >= 9) {                                  // 80% Locked
                 lockDifficulty = 0;
             }
         } else { // All sleeping
-            if (MyRandom.rollD6() + MyRandom.rollD6() == 12) {
+            if (MyRandom.rollD6() + MyRandom.rollD6() == 12) { // 97% Locked
                 lockDifficulty = 0;
             }
         }
@@ -92,11 +93,11 @@ public class VampireFeedingHouse {
         int sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
         int lockDifficulty = MyRandom.randInt(5, 7); // Farm people have lower quality locks and lock their doors less often
         if (sleeping < dwellers) { // Some awake
-            if (MyRandom.rollD10() > 1) {
+            if (MyRandom.rollD10() > 2) {   // 20% Locked
                 lockDifficulty = 0;
             }
         } else { // All sleeping
-            if (MyRandom.rollD6() > 4) {
+            if (MyRandom.rollD6() > 4) {    // 60% Locked
                 lockDifficulty = 0;
             }
         }
@@ -246,6 +247,14 @@ public class VampireFeedingHouse {
         return openEyes;
     }
 
+    public boolean isVictimAfraid() {
+        return afraid;
+    }
+
+    public void setVictimAfraid(boolean b) {
+        afraid = b;
+    }
+
     public void setSleepInfoGiven(boolean b) {
         sleepInfoGiven = b;
     }
@@ -271,10 +280,12 @@ public class VampireFeedingHouse {
         if (state.yesNoInput()) {
             model.getParty().enabledVampireLookFor(vampire);
             VampireFeedingHouse.this.setOpenEyes(true);
+            VampireFeedingHouse.this.setVictimAfraid(true);
             state.println(vampire.getFirstName() + " descends upon the " + victim.getRace().getName() +
                     " and sinks " + state.hisOrHer(vampire.getGender()) + " teeth into " + state.hisOrHer(victim.getGender()) + " neck.");
             model.getLog().waitForAnimationToFinish();
             VampireFeedingHouse.this.setOpenEyes(false);
+            VampireFeedingHouse.this.setVictimAfraid(false);
             state.println("The " + victim.getRace().getName() + " gasps and for a moment it seems " + state.heOrShe(victim.getGender()) +
                     " is about to wake up, but then it appears the dark aura of the vampire lulls " + state.himOrHer(victim.getGender()) +
                     " back into a lethargic state. At last, " + vampire.getFirstName() + " can drink " +
@@ -283,7 +294,8 @@ public class VampireFeedingHouse {
             model.getLog().waitForAnimationToFinish();
             model.getParty().disableVampireLookFor(vampire);
             GameStatistics.incrementVampireFeedings();
-            // FEATURE: Progress vampires vampire condition extra
+            VampirismCondition vampCond = (VampirismCondition) vampire.getCondition(VampirismCondition.class);
+            vampCond.setMaximumProgressionRate();
             return true;
         }
         VampireFeedingHouse.this.setPortrait(null);

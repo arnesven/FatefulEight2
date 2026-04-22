@@ -6,14 +6,15 @@ import view.GameView;
 public class VampirismHelpView extends ConditionHelpDialog {
     private static final String TEXT =
             "A condition indicating that this character is turning, or has turned into " +
-                    "a vampire. Vampires are commonly feared and shunned by society due to the fact that they prey on innocents for their blood.\n\n" +
+            "a vampire. Vampires are commonly feared and shunned by society due to the fact that they prey on innocents for their blood.\n\n" +
             "Initially, this condition is scarcely noticeable by others, but as it progresses " +
             "and the character reaches higher stages of vampirism it will become much more apparent. Specifically other party " +
             "members may not react positively to having a vampire in the party.\n\n" +
             "A character with the Vampirism condition has his or her Health, Stamina, Speed and Carrying Capacity increased in " +
-            "proportion to the condition's stage. However, a vampire never recovers stamina by resting in a bed, or drinking potions but must instead " +
+            "proportion to the condition's stage. However, a vampire never recovers stamina by resting in a bed, or drinking potions, but must instead " +
             "drink the blood of another living creature to replenish itself.\n\n" +
-            "The condition progresses every " + VampirismCondition.PROGRESS_EVERY_N_DAYS + " days, and the fifth stage is the last.";
+            "The condition progresses naturally every 15 days, but feeding will hasten the process. " +
+            "The fifth stage is the final vampiric stage.";
 
     public VampirismHelpView(GameView view, VampirismCondition cond) {
         super(view, cond, makeStageText(cond) + TEXT);
