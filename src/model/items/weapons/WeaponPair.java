@@ -8,6 +8,7 @@ import model.combat.conditions.Condition;
 import model.items.BlockingItem;
 import model.items.Item;
 import model.items.Prevalence;
+import model.races.Race;
 import model.states.CombatEvent;
 import util.MyPair;
 import view.GameView;
@@ -277,4 +278,15 @@ public class WeaponPair extends Weapon implements BlockingItem {
         int offBlock = offHand instanceof BlockingItem ? ((BlockingItem) offHand).getBlockChance() : 0;
         return mainBlock + offBlock;
     }
+
+    // TODO: Add an implementation for these:
+//    @Override
+//    protected int getAttackBonusForRace(Race race) {
+//        return super.getAttackBonusForRace(race);
+//    }
+//
+//    @Override
+//    protected MyPair<Integer, String> getAttackBonusForRace() {
+//        return super.getAttackBonusForRace();
+//    }
 }

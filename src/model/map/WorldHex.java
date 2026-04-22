@@ -482,6 +482,7 @@ public abstract class WorldHex {
                 new PartyCookingEvent(model),
                 new PartyJokeEvent(model),
                 new PartyLowOnCashEvent(model),
+                new PartyMembersOfSameClassEvent(model),
                 new PartyMemberWantsToLeaveEvent(model), // Both here and below.
                 new CheckForVampireEvent(model),
                 new PersonalityEvent(model)));
