@@ -6,8 +6,10 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
+import model.mainstory.MainStory;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import model.quests.SpecialDeliveryQuest;
 import model.races.Race;
@@ -55,12 +57,9 @@ public class WitchStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        if (internalStep == DO_QUEST) {
-            Point position = model.getWorld().getPositionForHex(model.getCurrentHex());
-            if (position.x == witchPoint.x && position.y == witchPoint.y) {
-                quests.add(getQuestAndSetPortrait(SpecialDeliveryQuest.QUEST_NAME, witchAppearance, "Witch"));
-            }
+    public void setQuestPortrait(Model model, MainQuest quest) {
+        if (quest.getName().equals(SpecialDeliveryQuest.QUEST_NAME)) {
+            prepareQuest(quest, witchAppearance, "Witch");
         }
     }
 
@@ -193,6 +192,7 @@ public class WitchStoryPart extends StoryPart {
                         "Although in this case, it seems somebody has been blabbing.");
                 portraitSay("Do this and I'll tell you the story about your crimson orb. If your wondering if it will be worth " +
                         "it, you can stop. It will be. Now off you go.");
+                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(SpecialDeliveryQuest.QUEST_NAME));
                 increaseStep(model);
             } else if (internalStep == DO_QUEST) {
                 portraitSay("You better deliver that potion soon. My Client is waiting!", FacialExpression.disappointed);

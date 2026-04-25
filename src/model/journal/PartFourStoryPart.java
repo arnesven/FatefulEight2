@@ -4,9 +4,11 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.items.Item;
+import model.mainstory.MainStory;
 import model.mainstory.VisitLordEvent;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.quests.MainQuest;
 import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
 import model.races.AllRaces;
@@ -92,13 +94,10 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        if (step == TRAVEL_STEP) {
-            Point position = model.getWorld().getPositionForHex(model.getCurrentHex());
-            if (position.x == campPoint.x && position.y == campPoint.y) {
-                CastleLocation loc = model.getWorld().getCastleByName(castleName);
-                quests.add(getQuestAndSetPortrait(OrcWarCampQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
-            }
+    public void setQuestPortrait(Model model, MainQuest quest) {
+        if (quest.getName().equals(OrcWarCampQuest.QUEST_NAME)) {
+            CastleLocation loc = model.getWorld().getCastleByName(castleName);
+            prepareQuest(quest, model.getLordPortrait(loc), loc.getLordName());
         }
     }
 
@@ -222,6 +221,7 @@ public class PartFourStoryPart extends StoryPart {
                         "bulk of the enemy force and what the invaders' orders are.");
                 leaderSay("Leave it to us.");
                 portraitSay("Thank you.");
+                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(OrcWarCampQuest.QUEST_NAME));
                 model.transitionToDialog(new SimpleMessageView(model.getView(),
                         "Warning. It is recommended that your party members " +
                                 "are at least level 4 before taking on the orc camp."));

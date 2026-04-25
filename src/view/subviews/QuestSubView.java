@@ -103,7 +103,7 @@ public class QuestSubView extends AvatarSubView {
             converted.y -= 2;
             model.getScreenHandler().clearSpace(converted.x, converted.x+4,
                     converted.y, converted.y+4);
-            WorldHex hex = model.getWorld().getHex(state.getStartingLocation());
+            WorldHex hex = model.getWorld().getHex(model.getParty().getQuestHandler().getOfferedQuest(quest.getName()).getOfferPosition());
             model.getScreenHandler().put(converted.x, converted.y, hex.getLocation().getTownOrCastleSprite());
         }
 

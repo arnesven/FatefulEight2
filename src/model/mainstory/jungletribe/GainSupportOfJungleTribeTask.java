@@ -3,6 +3,7 @@ package model.mainstory.jungletribe;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
@@ -120,29 +121,35 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     }
 
     @Override
-    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
-        List<MyTriplet<String, CharacterAppearance, String>> list = new ArrayList<>();
-        if (jequenMet() && !isCompleted()) {
-            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
-                model.partyIsInOverworldPosition(WorldBuilder.RUBIQ_PYRAMID_LOCATION)) {
-                if (!crownIsNotIn.contains(RubiqPyramidLocation.NAME + " Pyramid")) {
-                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(RubiqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
-                }
-            }
-            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
-                    model.partyIsInOverworldPosition(WorldBuilder.SUDOQ_PYRAMID_LOCATION)) {
-                if (!crownIsNotIn.contains(SudoqPyramidLocation.NAME + " Pyramid")) {
-                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(SudoqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
-                }
-            }
-            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
-                    model.partyIsInOverworldPosition(WorldBuilder.QANOI_PYRAMID_LOCATION)) {
-                if (!crownIsNotIn.contains(QanoiPyramidLocation.NAME + " Pyramid")) {
-                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(QanoiPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
-                }
-            }
+    public MyPair<CharacterAppearance, String> getQuestProvider(Model model, MainQuest quest) {
+        if (quest.getName().equals(SeekTheJadeCrownQuest.getQuestName(RubiqPyramidLocation.NAME)) ||
+            quest.getName().equals(SeekTheJadeCrownQuest.getQuestName(SudoqPyramidLocation.NAME)) ||
+            quest.getName().equals(SeekTheJadeCrownQuest.getQuestName(QanoiPyramidLocation.NAME))) {
+            return new MyPair<>(jequenPortrait, "Prince Jequen");
         }
-        return list;
+        return null;
+//        List<MyTriplet<String, CharacterAppearance, String>> list = new ArrayList<>();
+//        if (jequenMet() && !isCompleted()) {
+//            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
+//                model.partyIsInOverworldPosition(WorldBuilder.RUBIQ_PYRAMID_LOCATION)) {
+//                if (!crownIsNotIn.contains(RubiqPyramidLocation.NAME + " Pyramid")) {
+//                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(RubiqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
+//                }
+//            }
+//            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
+//                    model.partyIsInOverworldPosition(WorldBuilder.SUDOQ_PYRAMID_LOCATION)) {
+//                if (!crownIsNotIn.contains(SudoqPyramidLocation.NAME + " Pyramid")) {
+//                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(SudoqPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
+//                }
+//            }
+//            if (model.partyIsInOverworldPosition(WorldBuilder.JUNGLE_VILLAGE_LOCATION) ||
+//                    model.partyIsInOverworldPosition(WorldBuilder.QANOI_PYRAMID_LOCATION)) {
+//                if (!crownIsNotIn.contains(QanoiPyramidLocation.NAME + " Pyramid")) {
+//                    list.add(new MyTriplet<>(SeekTheJadeCrownQuest.getQuestName(QanoiPyramidLocation.NAME), jequenPortrait, "Prince Jequen"));
+//                }
+//            }
+//        }
+//        return list;
     }
 
     @Override

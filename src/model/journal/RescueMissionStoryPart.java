@@ -5,12 +5,10 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
+import model.mainstory.MainStory;
 import model.mainstory.VisitLordEvent;
 import model.map.*;
-import model.quests.Quest;
-import model.quests.RescueMissionQuest;
-import model.quests.SpecialDeliveryQuest;
-import model.quests.VampiresLairQuest;
+import model.quests.*;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
@@ -53,31 +51,14 @@ public class RescueMissionStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof CastleLocation) {
-            if (model.getCurrentHex().getLocation().getName().equals(castleName)) {
-                if (internalStep == DO_QUEST_STEP) {
-                    CastleLocation castle = model.getWorld().getCastleByName(castleName);
-                    quests.add(getQuestAndSetPortrait(RescueMissionQuest.QUEST_NAME, model.getLordPortrait(castle),
-                            castle.getLordName()));
-                }
-            }
+    public void setQuestPortrait(Model model, MainQuest quest) {
+        if (quest.getName().equals(RescueMissionQuest.QUEST_NAME)) {
+            CastleLocation castle = model.getWorld().getCastleByName(castleName);
+            prepareQuest(quest, model.getLordPortrait(castle), castle.getLordName());
+        } else if (quest.getName().equals(VampiresLairQuest.QUEST_NAME)) {
+            GameCharacter caid = model.getMainStory().getCaidCharacter();
+            prepareQuest(quest, caid.getAppearance(), caid.getName());
         }
-        if (giveCaidQuest(model)) {
-            quests.add(getQuestAndSetPortrait(VampiresLairQuest.QUEST_NAME, model.getMainStory().getCaidCharacter().getAppearance(),
-                    model.getMainStory().getCaidCharacter().getName()));
-            this.caidQuestPosition = new Point(model.getParty().getPosition());
-        }
-    }
-
-    private boolean giveCaidQuest(Model model) {
-        return model.getCurrentHex().getLocation() != null &&
-                model.getCurrentHex().getLocation() instanceof MountainLocation &&
-                internalStep >= COMPLETED &&
-                !model.getMainStory().isCaidQuestDone() &&
-                !model.getMainStory().getCaidCharacter().isDead() &&
-                (caidQuestPosition == null || model.partyIsInOverworldPosition(caidQuestPosition))
-                && !model.getMainStory().isFugitive();
     }
 
     @Override
@@ -182,6 +163,8 @@ public class RescueMissionStoryPart extends StoryPart {
                         "on his back rather than by his side.");
                 leaderSay("Alright. We'll keep our eyes open.");
                 increaseStep(model);
+                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(RescueMissionQuest.QUEST_NAME));
+                JournalEntry.printJournalUpdateMessage(model);
             } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Have you found Caid yet?");
                 if (witchPartCompleted()) {

@@ -8,6 +8,7 @@ import model.mainstory.thepast.ThePastJournalEntry;
 import model.mainstory.thepast.VisitAncientCityTask;
 import model.map.Direction;
 import model.map.locations.AncientCityLocation;
+import model.quests.MainQuest;
 import model.quests.MindMachineQuest;
 import model.quests.Quest;
 import model.states.EveningState;
@@ -54,9 +55,7 @@ public class PartSevenStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-
-    }
+    public void setQuestPortrait(Model model, MainQuest quest) {}
 
     @Override
     protected boolean isCompleted() {

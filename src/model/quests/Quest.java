@@ -212,7 +212,7 @@ public abstract class Quest {
                         "I don't think this was my fault.",
                         "Let's not blame anybody, OK?")));
             }
-            adjustAttitudes(model, -10);
+            adjustAttitudes(model, -5);
         } else if (payWages) {
             new PayWagesState(model).run(model);
         } else {
@@ -282,10 +282,10 @@ public abstract class Quest {
     }
 
     public static Quest findMainOrGenericQuest(Model model, String questName) {
-        Quest q = MyLists.find(MainStory.getQuests(), quest -> quest.getName().equals(questName));
-        if (q == null) {
-            q = model.getQuestDeck().getQuestByName(questName);
+        Quest q = MainStory.getQuest(questName);
+        if (q != null) {
+            return q;
         }
-        return q;
+        return model.getQuestDeck().getQuestByName(questName);
     }
 }

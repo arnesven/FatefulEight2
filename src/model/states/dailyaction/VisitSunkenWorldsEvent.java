@@ -12,12 +12,15 @@ import model.items.potions.BeerPotion;
 import model.items.potions.IntoxicatingPotion;
 import model.items.potions.RumPotion;
 import model.items.potions.WinePotion;
+import model.journal.JournalEntry;
 import model.journal.PartSixStoryPart;
 import model.journal.StoryPart;
+import model.mainstory.MainStory;
 import model.mainstory.pirates.GainSupportOfPiratesTask;
 import model.map.CastleLocation;
 import model.map.WorldBuilder;
 import model.map.locations.SunblazeCastle;
+import model.quests.AvertTheMutinyQuest;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.NoLodgingState;
@@ -159,6 +162,8 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                     portraitSay("As soon as you like. But tonight, let's celebrate!");
                     leaderSay("Can't argue with that. My thanks " + GainSupportOfPiratesTask.CAPTAIN_NAME + ".");
                     getGainSupportTask(model).setBlackboneMet(true);
+                    model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(AvertTheMutinyQuest.QUEST_NAME));
+                    JournalEntry.printJournalUpdateMessage(model);
                     removePortraitSubView(model);
                 } else {
                     println("You look around for Captain " + randomCaptain + " but can only catch a glimpse, as the notorious pirate is " +

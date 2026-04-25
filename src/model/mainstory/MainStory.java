@@ -117,17 +117,13 @@ public class MainStory implements Serializable {
         return !storyParts.isEmpty();
     }
 
-    public void addQuests(Model model, List<Quest> quests) {
+    public void setSpawnDataAndPortrait(Model model, MainQuest quest) {
         if (isStarted()) {
             for (StoryPart sp : storyParts) {
-                sp.addQuests(model, quests);
+                sp.setQuestPortrait(model, quest);
             }
         }
-        for (Quest q : quests) {
-            if (q instanceof MainQuest) {
-                ((MainQuest)q).setSpawnData(spawnData);
-            }
-        }
+        quest.setSpawnData(spawnData);
     }
 
     public static List<Quest> getQuests() {

@@ -7,6 +7,9 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.mainstory.MainStory;
+import model.map.MountainHex;
+import model.map.MountainLocation;
 import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.SoldierEnemy;
@@ -448,6 +451,10 @@ public class RescueMissionQuest extends MainQuest {
             leaderSay("Will do. So long.");
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
+
+            model.getWorld().dijkstrasByLand(model.getParty().getPosition());
+            List<Point> pathToMountain = model.getWorld().generalShortestPath(2, hex -> hex.getLocation() instanceof MountainLocation);
+            model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(VampiresLairQuest.QUEST_NAME), pathToMountain.getLast());
         }
     }
 

@@ -2,8 +2,13 @@ package model.states.events;
 
 import model.Model;
 import model.journal.JournalEntry;
+import model.mainstory.MainStory;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.map.CastleLocation;
+import model.map.locations.QanoiPyramidLocation;
+import model.map.locations.RubiqPyramidLocation;
+import model.map.locations.SudoqPyramidLocation;
+import model.quests.SeekTheJadeCrownQuest;
 import model.states.DailyEventState;
 import util.MyPair;
 import util.MyStrings;
@@ -81,6 +86,12 @@ public class MeetWithJequenEvent extends DailyEventState {
         leaderSay("Alright. I guess " + iOrWe() + " have no other choice.");
         portraitSay("Thank you for doing this. And... if you find out what happened to my father, I would like to know.");
         leaderSay(iOrWe() + " will be back.");
+        model.getParty().getQuestHandler().offerQuest(model,
+                MainStory.getQuest(SeekTheJadeCrownQuest.getQuestName(RubiqPyramidLocation.NAME)));
+        model.getParty().getQuestHandler().offerQuest(model,
+                MainStory.getQuest(SeekTheJadeCrownQuest.getQuestName(SudoqPyramidLocation.NAME)));
+        model.getParty().getQuestHandler().offerQuest(model,
+                MainStory.getQuest(SeekTheJadeCrownQuest.getQuestName(QanoiPyramidLocation.NAME)));
         JournalEntry.printJournalUpdateMessage(model);
         jungleTribeTask.setJequenMet();
     }

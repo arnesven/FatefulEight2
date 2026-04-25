@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.map.TownLocation;
 import model.quests.FrogmenProblemQuest;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import model.races.Race;
 import model.states.dailyaction.TownDailyActionState;
@@ -59,15 +60,9 @@ public class InitialStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        if (internalStep == DO_QUEST_STEP) {
-            if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
-                TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
-                if (loc.getName().equals(townName)) {
-                    quests.add(getQuestAndSetPortrait(FrogmenProblemQuest.QUEST_NAME, unclePortrait,
-                            whosUncle.getFirstName() + "'s Uncle"));
-                }
-            }
+    public void setQuestPortrait(Model model, MainQuest quest) {
+        if (quest.getName().equals(FrogmenProblemQuest.QUEST_NAME)) {
+            prepareQuest(quest, unclePortrait, whosUncle.getFirstName() + "'s Uncle");
         }
     }
 

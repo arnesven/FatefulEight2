@@ -7,9 +7,12 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.journal.InitialStoryPart;
+import model.journal.JournalEntry;
 import model.journal.StoryPart;
+import model.mainstory.MainStory;
 import model.map.CastleLocation;
 import model.map.TownLocation;
+import model.quests.FrogmenProblemQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -129,6 +132,8 @@ public class VisitUncleNode extends DailyActionNode {
                 showUnclePortrait(model);
                 portraitSay("We'll compensate you of course, the " + town.getLordTitle() + " has assured me there's gold put aside " +
                         "as a reward for whoever helps us.");
+                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(FrogmenProblemQuest.QUEST_NAME));
+                JournalEntry.printJournalUpdateMessage(model);
             } else if (storyPart.getStep() == 1) {
                 showUnclePortrait(model);
                 portraitSay("Please take care of the Frogmen as soon as you can!");

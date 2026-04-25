@@ -63,11 +63,10 @@ public class PartFiveStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        if (model.getCurrentHex().getLocation() != null &&
-                model.getCurrentHex().getLocation() instanceof AncientStrongholdLocation && internalStep < QUEST_DONE) {
+    public void setQuestPortrait(Model model, MainQuest quests) {
+        if (quests.getName().equals(AncientStrongholdQuest.QUEST_NAME)) {
             CastleLocation loc = model.getWorld().getCastleByName(castleName);
-            quests.add(getQuestAndSetPortrait(AncientStrongholdQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
+            prepareQuest(quests, model.getLordPortrait(loc), loc.getLordName());
         }
     }
 
@@ -195,8 +194,9 @@ public class PartFiveStoryPart extends StoryPart {
             List<Item> belongings = MyLists.filter(model.getParty().getInventory().getAllItems(),
                     (Item it) -> !getsToKeep(it));
             model.getLog().addAnimated(LogView.GOLD_COLOR + "Your belongings have been taken from you!\n" + LogView.DEFAULT_COLOR);
-            EscapeTheDungeonQuest q = (EscapeTheDungeonQuest)getQuestAndSetPortrait(EscapeTheDungeonQuest.QUEST_NAME,
-                    model.getParty().getLeader().getAppearance(), "Yourself");
+
+            EscapeTheDungeonQuest q = (EscapeTheDungeonQuest)(MainStory.getQuest(EscapeTheDungeonQuest.QUEST_NAME));
+            prepareQuest(q, model.getParty().getLeader().getAppearance(), "Yourself");
             q.setLootRewardItems(belongings,
                     model.getParty().getGold(),
                     model.getParty().getObols(),

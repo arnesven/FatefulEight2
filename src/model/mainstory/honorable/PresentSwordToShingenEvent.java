@@ -4,8 +4,12 @@ import model.Model;
 import model.items.Item;
 import model.items.SpecialEasternWeapon;
 import model.items.weapons.*;
+import model.journal.JournalEntry;
+import model.mainstory.MainStory;
+import model.quests.NightAtTheTheaterQuest;
 import model.states.DailyEventState;
 import util.MyLists;
+import view.JournalView;
 import view.MyColors;
 
 import java.util.ArrayList;
@@ -89,6 +93,8 @@ public class PresentSwordToShingenEvent extends DailyEventState {
                 "of our new alliance.");
         leaderSay(iOrWeCap() + " will! Thank you Lord Shingen.");
         portraitSay("Good bye then.");
+        JournalEntry.printJournalUpdateMessage(model);
+        model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(NightAtTheTheaterQuest.QUEST_NAME));
     }
 
     private abstract class GiftOptions {

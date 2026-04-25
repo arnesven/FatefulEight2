@@ -3,6 +3,8 @@ package model.mainstory.vikings;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.mainstory.MainStory;
+import model.quests.SavageVikingsQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import view.subviews.PortraitSubView;
@@ -35,5 +37,6 @@ public class JustArrivedInVikingTownEvent extends DailyEventState {
         portraitSay("That's it. You'll be sorry.");
         println("The viking stomps off in anger.");
         leaderSay("Did we offend " + himOrHer(app.getGender()) + " somehow?");
+        model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(SavageVikingsQuest.QUEST_NAME));
     }
 }

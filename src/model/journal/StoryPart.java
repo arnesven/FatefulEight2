@@ -44,14 +44,12 @@ public abstract class StoryPart implements Serializable {
 
     protected abstract StoryPart getNextStoryPart(Model model, int track);
 
-    public abstract void addQuests(Model model, List<Quest> quests);
+    public abstract void setQuestPortrait(Model model, MainQuest quest);
 
-    protected MainQuest getQuestAndSetPortrait(String questName, CharacterAppearance appearance, String portraitName) {
-        MainQuest quest = MainStory.getQuest(questName).copy();
+    protected void prepareQuest(MainQuest quest, CharacterAppearance appearance, String portraitName) {
         quest.setStoryPart(this);
         quest.setPortrait(appearance);
         quest.setProvider(portraitName);
-        return quest;
     }
 
     public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {

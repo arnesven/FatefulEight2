@@ -10,6 +10,7 @@ import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.WorldBuilder;
 import model.map.locations.PirateHavenLocation;
 import model.quests.AvertTheMutinyQuest;
+import model.quests.MainQuest;
 import model.quests.RemotePeopleQuest;
 import util.MyPair;
 import util.MyTriplet;
@@ -98,12 +99,11 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     }
 
     @Override
-    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
-        if (model.getCurrentHex().getLocation() instanceof PirateHavenLocation &&
-                blackboneMet && !isCompleted()) {
-            return List.of(new MyTriplet<>(AvertTheMutinyQuest.QUEST_NAME, blackboneAppearance, "Captain " + CAPTAIN_NAME));
+    public MyPair<CharacterAppearance, String> getQuestProvider(Model model, MainQuest quest) {
+        if (quest.getName().equals(AvertTheMutinyQuest.QUEST_NAME)) {
+            return new MyPair<>(blackboneAppearance,  "Captain " + CAPTAIN_NAME);
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @Override

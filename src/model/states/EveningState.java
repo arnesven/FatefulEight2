@@ -13,6 +13,7 @@ import model.classes.Skill;
 import model.items.Inventory;
 import model.mainstory.MainStory;
 import model.map.*;
+import model.quests.MainQuest;
 import model.quests.OfferedQuest;
 import model.quests.Quest;
 import model.states.dailyaction.tavern.HireGuideAction;
@@ -232,38 +233,15 @@ public class EveningState extends GameState {
                 oq -> !oq.isCompleted()),
                 oq -> Quest.findMainOrGenericQuest(model, oq.getQuestName()));
 
-        if (quests.isEmpty()) {
-            print("Checking for quests... ");
-            println("The party has not been offered any quests.");
-        } else {
-            print("Checking for quests... ");
+        if (!quests.isEmpty()) {
             goOnQuest = offerQuests(model, this, quests);
+            if (goOnQuest instanceof MainQuest mq) {
+                goOnQuest = mq.copy();
+                model.getMainStory().setSpawnDataAndPortrait(model, (MainQuest) goOnQuest);
+            }
         }
     }
 
-
-//    private void addRandomQuests(Model model, List<Quest> quests, int mainQuests) {
-//        int baseNumberOfQuests = 3;
-//        if (model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-//            if (model.getQuestDeck().hadSuccessIn(model.getCurrentHex().getLocation())) {
-//                baseNumberOfQuests = 0;
-//            }
-//        }
-//        int numQuests = MyRandom.randInt(0, Math.max(0, baseNumberOfQuests + mainQuests - quests.size()));
-//        for (int i = numQuests; i > 0; --i) {
-//            Quest q;
-//            int tries = 0;
-//            do {
-//                q = model.getQuestDeck().getRandomQuest();
-//                if (tries++ > 1000) {
-//                    System.err.println("Abandoned getting random quests, tried 100 times");
-//                    return;
-//                }
-//            } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
-//            q.setRemoteLocation(model);
-//            quests.add(q);
-//        }
-//    }
 
     public static Quest offerQuests(Model model, GameState state, List<Quest> quests) {
         Quest toReturn = null;

@@ -4,12 +4,10 @@ import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.mainstory.MainStory;
 import model.map.CastleLocation;
 import model.map.TownLocation;
-import model.quests.HelpWillisQuest;
-import model.quests.Quest;
-import model.quests.TroubleInTheLibraryQuest;
-import model.quests.WillisEndingEvent;
+import model.quests.*;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.*;
@@ -63,22 +61,13 @@ public class PartThreeStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
-            TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
-            if (loc.getName().equals(libraryTown)) {
-                GameCharacter willis =  model.getMainStory().getWillisCharacter();
-                if (internalStep == DO_QUEST_STEP) {
-                    quests.add(getQuestAndSetPortrait(TroubleInTheLibraryQuest.QUEST_NAME, willis.getAppearance(),
-                            willis.getFirstName()));
-                } else if (internalStep == LIBRARY_CLEANED && helpOffered) {
-                    quests.add(getQuestAndSetPortrait(HelpWillisQuest.QUEST_NAME, willis.getAppearance(),
-                            willis.getFirstName()));
-                }
-            }
+    public void setQuestPortrait(Model model, MainQuest quest) {
+        if (quest.getName().equals(TroubleInTheLibraryQuest.QUEST_NAME) ||
+            quest.getName().equals(HelpWillisQuest.QUEST_NAME)) {
+            GameCharacter willis =  model.getMainStory().getWillisCharacter();
+            prepareQuest(quest, willis.getAppearance(), willis.getFirstName());
         }
     }
-
 
 
     @Override
@@ -254,6 +243,8 @@ public class PartThreeStoryPart extends StoryPart {
                 portraitSay("Of course! But please, prepare well, those automatons are very dangerous. And there's a fair few of them in there.");
                 leaderSay("We can handle ourselves.");
                 increaseStep(model);
+                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(TroubleInTheLibraryQuest.QUEST_NAME));
+                JournalEntry.printJournalUpdateMessage(model);
                 model.transitionToDialog(new SimpleMessageView(model.getView(),
                         "Warning. It is recommended that your party members " +
                                 "are at least level 3 before doing the quest " +
@@ -326,6 +317,8 @@ public class PartThreeStoryPart extends StoryPart {
                         leaderSay("I'm sure we can spare a little time.");
                         helpOffered = true;
                         portraitSay("That's very generous of you. With your help, maybe we can find some good workers.");
+                        model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(HelpWillisQuest.QUEST_NAME));
+                        JournalEntry.printJournalUpdateMessage(model);
                     } else {
                         leaderSay("You're right. Good luck with those crazy machines.");
                         portraitSay("Uh, thanks. I guess.");

@@ -101,18 +101,27 @@ public class PartSixStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        List<MyTriplet<String, CharacterAppearance, String>> triplets = gainSupportOfRemotePeopleTask.addQuests(model);
-        for (MyTriplet<String, CharacterAppearance, String> triplet : triplets) {
-            quests.add(getQuestAndSetPortrait(triplet.first, triplet.second, triplet.third));
+    public void setQuestPortrait(Model model, MainQuest quest) {
+        var pair = gainSupportOfRemotePeopleTask.getQuestProvider(model, quest);
+        if (pair != null) {
+            prepareQuest(quest, pair.first, pair.second);
         }
-        if (completed && model.partyIsInOverworldPosition(assaultPoint)) {
-            MainQuest q = getQuestAndSetPortrait(MindMachineQuest.QUEST_NAME, model.getParty().getLeader().getAppearance(),
+        if (quest.getName().equals(MindMachineQuest.QUEST_NAME)) {
+            prepareQuest(quest, model.getParty().getLeader().getAppearance(),
                     "Yourself");
-            if (!q.isCompleted(model)) {
-                quests.add(q);
-            }
         }
+
+//        List<MyTriplet<String, CharacterAppearance, String>> triplets = gainSupportOfRemotePeopleTask.addQuests(model);
+//        for (MyTriplet<String, CharacterAppearance, String> triplet : triplets) {
+//            quests.add(getQuestAndSetPortrait(triplet.first, triplet.second, triplet.third));
+//        }
+//        if (completed && model.partyIsInOverworldPosition(assaultPoint)) {
+//            MainQuest q = getQuestAndSetPortrait(MindMachineQuest.QUEST_NAME, model.getParty().getLeader().getAppearance(),
+//                    "Yourself");
+//            if (!q.isCompleted(model)) {
+//                quests.add(q);
+//            }
+//        }
     }
 
     @Override

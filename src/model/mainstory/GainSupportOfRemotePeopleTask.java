@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import model.quests.RemotePeopleQuest;
 import model.tasks.DestinationTask;
@@ -39,7 +40,7 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
         return false;
     }
 
-    public abstract List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model);
+    public abstract  MyPair<CharacterAppearance, String> getQuestProvider(Model model, MainQuest quest);
 
     public abstract void setQuestSuccessful(RemotePeopleQuest remotePeopleQuest);
 
@@ -52,4 +53,5 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public abstract CharacterAppearance getLeaderPortrait();
 
     public abstract String getLeaderName();
+
 }

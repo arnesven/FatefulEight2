@@ -14,6 +14,7 @@ import model.journal.MainStoryTask;
 import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.WorldBuilder;
 import model.map.locations.VikingVillageLocation;
+import model.quests.MainQuest;
 import model.quests.RemotePeopleQuest;
 import model.quests.SavageVikingsQuest;
 import model.races.Race;
@@ -130,13 +131,11 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
 
     @Override
-    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
-        if (model.getCurrentHex().getLocation() instanceof VikingVillageLocation &&
-                step == INITIAL_STEP) {
-            return List.of(new MyTriplet<>(SavageVikingsQuest.QUEST_NAME,
-                    model.getParty().getLeader().getAppearance(), "Yourself"));
+    public MyPair<CharacterAppearance, String> getQuestProvider(Model model, MainQuest q) {
+        if (q.getName().equals(SavageVikingsQuest.QUEST_NAME)) {
+            return new MyPair<>(model.getParty().getLeader().getAppearance(), "Yourself");
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @Override

@@ -21,6 +21,7 @@ import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.HillsHex;
 import model.map.WorldBuilder;
 import model.map.locations.EasternPalaceLocation;
+import model.quests.MainQuest;
 import model.quests.NightAtTheTheaterQuest;
 import model.quests.RemotePeopleQuest;
 import model.races.Race;
@@ -87,14 +88,11 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         this.step = SWORD_GIVEN;
     }
 
-    @Override
-    public List<MyTriplet<String, CharacterAppearance, String>> addQuests(Model model) {
-        if (model.getCurrentHex().getLocation() instanceof EasternPalaceLocation &&
-                step == SWORD_GIVEN &&
-                !isCompleted()) {
-            return List.of(new MyTriplet<>(NightAtTheTheaterQuest.QUEST_NAME, getShingenPortrait(), "Lord Shingen"));
+    public MyPair<CharacterAppearance, String> getQuestProvider(Model model, MainQuest quest) {
+        if (quest.getName().equals(NightAtTheTheaterQuest.QUEST_NAME)) {
+            return new MyPair<>(getShingenPortrait(), "Lord Shingen");
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @Override

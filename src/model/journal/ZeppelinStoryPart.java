@@ -12,6 +12,7 @@ import model.items.potions.Potion;
 import model.items.potions.ZeppelinFuel;
 import model.items.special.CommunicatorDevice;
 import model.map.WorldHex;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -123,7 +124,7 @@ public class ZeppelinStoryPart extends StoryPart {
     }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) { }
+    public void setQuestPortrait(Model model, MainQuest quest) { }
 
     @Override
     protected boolean isCompleted() {

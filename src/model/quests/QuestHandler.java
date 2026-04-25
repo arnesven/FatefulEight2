@@ -22,8 +22,19 @@ public class QuestHandler implements Serializable {
         if (loc instanceof UrbanLocation) {
             placeName = ((UrbanLocation) loc).getPlaceName();
         }
+        if (q instanceof MainQuest mq) {
+            model.getMainStory().setSpawnDataAndPortrait(model, mq);
+        }
         offeredQuests.put(q.getName(), new OfferedQuest(q.getName(),
                 q.getPortrait(), path, placeName, q.getWorldOrigin(), q.getProvider()));
+    }
+
+    public void offerQuest(Model model, Quest q, Point remotelyOffered) {
+        if (q instanceof MainQuest mq) {
+            model.getMainStory().setSpawnDataAndPortrait(model, mq);
+        }
+        offeredQuests.put(q.getName(), new OfferedQuest(q.getName(),
+                q.getPortrait(), List.of(remotelyOffered), null, q.getWorldOrigin(), q.getProvider()));
     }
 
     public List<OfferedQuest> getOfferedQuestsForPosition(Model model) {
