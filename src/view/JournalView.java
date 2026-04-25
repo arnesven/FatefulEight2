@@ -5,7 +5,11 @@ import model.QuestDeck;
 import model.Summon;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.journal.*;
+import model.mainstory.MainStory;
 import model.map.UrbanLocation;
+import model.quests.MainQuest;
+import model.quests.OfferedQuest;
+import model.quests.Quest;
 import model.states.events.RareBirdEvent;
 import model.states.events.VisitMonasteryEvent;
 import model.tasks.DestinationTask;
@@ -93,12 +97,9 @@ public class JournalView extends TwoPaneSelectableListMenu {
     }
 
     private void addGenericQuests(Model model) {
-        for (QuestDeck.LocationAndQuest locationAndQuest : model.getQuestDeck().getLocationsAndQuests()) {
-            QuestEntry entry = new QuestEntry(model, locationAndQuest.getLocation(),
-                    locationAndQuest.getQuest(), locationAndQuest.getDay());
-            if (entry.isValid()) {
-                questsAndTasks.add(entry);
-            }
+        for (OfferedQuest oq : model.getParty().getQuestHandler().getOfferedQuestsAsList()) {
+            Quest q = Quest.findMainOrGenericQuest(model, oq.getQuestName());
+            questsAndTasks.add(new QuestEntry(oq, q.getText()));
         }
     }
 

@@ -76,19 +76,13 @@ public class SelectQuestSubView extends SubView {
 
     private List<Point> getRemotePath(Model model) {
         Quest selectedQuest = quests.get(index);
-        if (model.getParty().questIsHeld(selectedQuest)) {
-            return model.getParty().getHeldDataFor(selectedQuest).getRemotePath();
-        }
-        return quests.get(index).getRemotePath();
+        return model.getParty().getQuestHandler().getOfferedQuest(selectedQuest.getName()).getRemotePath();
     }
 
 
     private CharacterAppearance getPortrait(Model model) {
         Quest selectedQuest = quests.get(index);
-        if (model.getParty().questIsHeld(selectedQuest)) {
-            return model.getParty().getHeldDataFor(selectedQuest).getAppearance();
-        }
-        return quests.get(index).getPortrait();
+        return model.getParty().getQuestHandler().getOfferedQuest(selectedQuest.getName()).getAppearance();
     }
 
     private void drawSelectedQuest(Model model) {
@@ -118,12 +112,6 @@ public class SelectQuestSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(), q.getName(),
                     X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 1 + y,
                     MyColors.WHITE, MyColors.BLUE);
-
-            if (model.getParty().questIsHeld(q)) {
-                BorderFrame.drawString(model.getScreenHandler(), "HELD",
-                        X_OFFSET+24, Y_OFFSET + LIST_START_Y + 1 + y,
-                        MyColors.ORANGE, MyColors.BLUE);
-            }
             y++;
         }
         BorderFrame.drawString(model.getScreenHandler(), "DON'T GO",
@@ -135,7 +123,7 @@ public class SelectQuestSubView extends SubView {
         int row = 2;
         for (String detail : quest.getDetails()) {
             String toPrint = detail.replace("(", "").replace(")", "");
-            BorderFrame.drawString(model.getScreenHandler(), detail,
+            BorderFrame.drawString(model.getScreenHandler(), toPrint,
                     xStart + 17, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
         }
     }

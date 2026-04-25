@@ -12,7 +12,13 @@ import model.classes.Classes;
 import model.combat.CombatAdvantage;
 import model.items.spells.ResurrectSpell;
 import model.items.spells.Spell;
+import model.journal.JournalEntry;
+import model.quests.OfferedQuest;
+import model.quests.Quest;
+import model.quests.QuestDifficulty;
+import model.quests.TestQuest;
 import model.states.events.GuideData;
+import view.JournalView;
 import view.combat.CombatTheme;
 import view.combat.CaveTheme;
 import model.combat.loot.CombatLoot;
@@ -36,6 +42,7 @@ public abstract class DailyEventState extends GameState {
 
     private boolean fledCombat = false;
     private PortraitSubView portraitSubView;
+    private boolean doQuestIntro = false;
 
     public DailyEventState(Model model) {
         super(model);
@@ -69,7 +76,49 @@ public abstract class DailyEventState extends GameState {
             return WorldHex.generatePartyEvent(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
+        doQuestIntro(model);
         return getEveningState(model);
+    }
+
+    private void doQuestIntro(Model model) {
+        if (model.getCurrentHex().givesQuests() && doQuestIntro) {
+            List<OfferedQuest> alreadyOffered = model.getParty().getQuestHandler().getOfferedQuestsForPosition(model);
+            QuestDifficulty recommendedDifficulty = getCurrentQuestDifficulty(model);
+            alreadyOffered.removeIf(oq -> Quest.findMainOrGenericQuest(model, oq.getQuestName()).getDifficulty() != recommendedDifficulty);
+            if (!alreadyOffered.isEmpty()) { // Already have suitable quests to do or have done
+                System.out.println("Party already has offered quest of correct difficulty in this town.");
+                return;
+            }
+
+           for (int tries = 10; tries >= 0; tries--) {
+               Quest q = model.getQuestDeck().getRandomQuest();
+               boolean alreadyDoneThatQuest = MyLists.any(model.getParty().getQuestHandler().getOfferedQuestsAsList(),
+                       oq -> oq.getQuestName().equals(q.getName()));
+               if (!alreadyDoneThatQuest) {
+                   if (q.getDifficulty() == recommendedDifficulty || tries == 0) {
+                       q.getIntroEvent(model).doTheEvent(model);
+                       JournalEntry.printJournalUpdateMessage(model);
+                       model.getParty().getQuestHandler().offerQuest(model, q);
+                       break;
+                   }
+               }
+           }
+
+        }
+    }
+
+    private QuestDifficulty getCurrentQuestDifficulty(Model model) {
+        double average = GameState.calculateAverageLevel(model);
+        if (average < 2.0) {
+            return QuestDifficulty.EASY;
+        }
+        if (average < 3.5) {
+            return QuestDifficulty.MEDIUM;
+        }
+        if (average < 4.5) {
+            return QuestDifficulty.HARD;
+        }
+        return QuestDifficulty.VERY_HARD;
     }
 
     protected boolean allowPartyEvent() {
@@ -415,5 +464,9 @@ public abstract class DailyEventState extends GameState {
     protected void portraitPermanentExpression(FacialExpression facialExpression) {
         getModel().getLog().waitForAnimationToFinish();
         portraitSubView.setFacialExpression(facialExpression);
+    }
+
+    public void setQuestIntrosEnabled(boolean b) {
+        this.doQuestIntro = b;
     }
 }

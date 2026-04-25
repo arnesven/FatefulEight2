@@ -51,9 +51,9 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     protected abstract void resetPuzzleState();
 
     @Override
-    public void setRemoteLocation(Model model) {
+    public List<Point> makeRemotePath(Model model) {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), false);
-        setRemotePath(model, model.getWorld().shortestPathToPoint(pyramidLocation));
+        return model.getWorld().shortestPathToPoint(pyramidLocation);
     }
 
     public static String getQuestName(String pyramidName) {

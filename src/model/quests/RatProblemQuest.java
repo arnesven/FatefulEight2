@@ -1,7 +1,9 @@
 package model.quests;
 
+import model.Model;
 import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -10,6 +12,7 @@ import model.enemies.RatEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
+import model.states.DailyEventState;
 import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -52,6 +55,11 @@ public class RatProblemQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public DailyEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -183,5 +191,33 @@ public class RatProblemQuest extends Quest {
             }
         }
         return list;
+    }
+
+    private class IntroEvent extends DailyEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            println("An old woman approaches you.");
+            showExplicitPortrait(model, getPortrait(), "Granny Petronella");
+            portraitSay("Hello there young " + manOrWoman(model.getParty().getLeader().getGender()) + ".");
+            leaderSay("Uhm hello. Can I help you?", FacialExpression.questioning);
+            portraitSay("You're the new adventurer" + (model.getParty().getPartyMembers().size() > 1 ? "s":"") +
+                            " in town, aren't you?");
+            leaderSay("I suppose " + iAmOrWeAre() + ". How are you?", FacialExpression.questioning);
+            portraitSay("You can call me Granny Petronella. I have a little trouble in my basement I would like you " +
+                    "to take care of. I have rats.");
+            leaderSay("Sounds like you need an exterminator, not a...");
+            portraitSay("Let's just say it's quite a problem at this point.", FacialExpression.relief);
+            leaderSay("I understand. Maybe we'll look into it. I expect you are offering a reward?");
+            portraitSay("Not really, but I hear rat carcases are a precious commodity these days. " +
+                    "They're in high demand, and you'll have no trouble selling them to the merchants.", FacialExpression.none);
+            leaderSay("I can't tell if you're serious or making a joke...");
+            portraitSay("Just deal with the rats youngster.", FacialExpression.disappointed);
+            println(model.getParty().getLeader() + " is about to protest but the old woman has already walked away.");
+            leaderSay("Rats...");
+        }
     }
 }

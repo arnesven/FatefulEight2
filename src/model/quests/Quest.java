@@ -4,21 +4,24 @@ import model.Model;
 import model.TimeOfDay;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
-import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
+import model.mainstory.MainStory;
+import model.map.WorldType;
+import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.PayWagesState;
 import model.states.QuestState;
 import model.states.events.ForcedMovementEvent;
 import model.states.events.MoveAwayFromCurrentPositionEvent;
+import model.states.events.SilentNoEventState;
 import sound.BackgroundMusic;
+import util.MyLists;
 import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.combat.DungeonTheme;
-import view.subviews.ArrowMenuSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -198,7 +201,6 @@ public abstract class Quest {
         state.print("Press enter to continue.");
         state.waitForReturn();
         QuestState.setCurrentTerrainSubview(model);
-        model.getParty().stopHoldingQuest(state.getQuest());
         model.setTimeOfDay(TimeOfDay.EVENING);
         if (!questWasSuccess) {
             if (state.getQuest().sayCommentAfterFailure()) {
@@ -250,43 +252,17 @@ public abstract class Quest {
         return null;
     }
 
-    public boolean canBeHeld() {
-        return true;
-    }
-
     public abstract BackgroundMusic getMusic();
 
-    public void setRemoteLocation(Model model) {
+    public List<Point> makeRemotePath(Model model) {
         if (moveAfter > 0) {
-            setRemotePath(model, MoveAwayFromCurrentPositionEvent.makePathToRemoteLocation(model, moveAfter));
-        } else {
-            setRemotePath(model, new ArrayList<>(List.of(new Point(model.getParty().getPosition()))));
+            return MoveAwayFromCurrentPositionEvent.makePathToRemoteLocation(model, moveAfter);
         }
+        return new ArrayList<>(List.of(new Point(model.getParty().getPosition())));
     }
 
-    protected void setRemotePath(Model model, List<Point> path) {
-        this.remotePath = path;
-    }
-
-
-    public HeldQuestData getHeldData() {
-        return new HeldQuestData(getPortrait(), remotePath);
-    }
-
-    public List<Point> getRemotePath() {
-        return remotePath;
-    }
-
-    public void movePartyToRemoteLocation(Model model) {
-        if (moveAfter > 0) {
-            List<Point> path = remotePath;
-            if (model.getParty().questIsHeld(this)) {
-                path = model.getParty().getHeldDataFor(this).getRemotePath();
-            }
-            if (path.size() > 1) {
-                new ForcedMovementEvent(model, path).doTheEvent(model);
-            }
-        }
+    public WorldType getWorldOrigin() {
+        return WorldType.original;
     }
 
     public boolean hasBlackCursor() {
@@ -299,5 +275,17 @@ public abstract class Quest {
 
     public Achievement.Data getAchievementData() {
         return null;
+    }
+
+    public DailyEventState getIntroEvent(Model model) {
+        return new DefaultQuestIntro(model, this);
+    }
+
+    public static Quest findMainOrGenericQuest(Model model, String questName) {
+        Quest q = MyLists.find(MainStory.getQuests(), quest -> quest.getName().equals(questName));
+        if (q == null) {
+            q = model.getQuestDeck().getQuestByName(questName);
+        }
+        return q;
     }
 }

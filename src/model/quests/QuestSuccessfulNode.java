@@ -1,8 +1,6 @@
 package model.quests;
 
 import model.Model;
-import model.map.UrbanLocation;
-import model.map.WorldHex;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -60,10 +58,7 @@ public class QuestSuccessfulNode extends QuestNode {
         } else {
             state.println(".");
         }
-        WorldHex hex = model.getWorld().getHex(state.getStartingLocation());
-        if (hex.getLocation() instanceof UrbanLocation) {
-            model.getQuestDeck().setSuccessfulIn(model, state.getQuest(), hex.getLocation());
-        }
+        model.getParty().getQuestHandler().completeQuest(state.getQuest());
         reward.giveYourself(model);
         if (state.getQuest().givesAchievement()) {
             state.completeAchievement(state.getQuest().getAchievementData().getKey());

@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.map.objects.MapFilter;
 import model.map.objects.MapObject;
+import model.quests.OfferedQuest;
 import model.races.Race;
 import model.states.dailyaction.town.FlagPoleNode;
 import model.tasks.DestinationTask;
@@ -127,6 +128,7 @@ public class World implements Serializable {
                 }
                 model.getMainStory().drawMapObjects(model, x, y, screenX, screenY);
                 drawDestinationTasks(model, x, y, screenX, screenY);
+                drawAcceptedQuests(model, x, y, screenX, screenY);
                 drawFilterObjects(model, filterObjects, x, y, screenX, screenY);
                 if (filter != null) {
                     filter.drawSpecial(model, hexes, x, y, screenX, screenY);
@@ -154,6 +156,19 @@ public class World implements Serializable {
                     dt.getWorld() == model.getWorld().getWorldType() &&
                     !dt.isCompleted() && !dt.isFailed(model)) {
                 model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
+            }
+        }
+    }
+
+    private void drawAcceptedQuests(Model model, int x, int y, int screenX, int screenY) {
+        for (OfferedQuest oq : model.getParty().getQuestHandler().getOfferedQuestsAsList()) {
+            if (oq.isAccepted()) {
+                Point pos = oq.getRemotePosition();
+                if (pos != null && pos.x == x && pos.y == y &&
+                        oq.getWorld() == model.getWorld().getWorldType() &&
+                        !oq.isCompleted()) {
+                    model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
+                }
             }
         }
     }

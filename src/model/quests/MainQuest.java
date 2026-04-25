@@ -39,11 +39,7 @@ public abstract class MainQuest extends Quest {
         if (questWasSuccess) {
             storyPart.increaseStep(model);
             model.getSettings().getMiscFlags().put(getSettingsKey(), true);
-        } else if (model.getCurrentHex().getLocation() != null) {
-            state.println("However, this quest can be accepted again.");
-            if (model.getCurrentHex().getLocation() != null) {
-                model.getQuestDeck().unsetFailureIn(model.getCurrentHex().getLocation());
-            }
+        } else {
             resetQuest();
         }
         return super.endOfQuest(model, state, questWasSuccess);
@@ -54,10 +50,7 @@ public abstract class MainQuest extends Quest {
     }
 
     public boolean isCompleted(Model model) {
-        if (model.getSettings().getMiscFlags().containsKey(getSettingsKey())) {
-            return model.getSettings().getMiscFlags().get(getSettingsKey()); // Should always be true...
-        }
-        return false;
+        return model.getParty().getQuestHandler().getOfferedQuest(getName()).isCompleted();
     }
 
     public abstract MainQuest copy();
@@ -65,10 +58,5 @@ public abstract class MainQuest extends Quest {
     protected void getCrimsonPearl(Model model, QuestState state) {
         state.println("The party receives a Crimson Pearl.");
         model.getParty().addToInventory(new CrimsonPearl());
-    }
-
-    @Override
-    public boolean canBeHeld() {
-        return false;
     }
 }

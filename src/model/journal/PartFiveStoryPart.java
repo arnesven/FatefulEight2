@@ -210,7 +210,7 @@ public class PartFiveStoryPart extends StoryPart {
             model.getParty().getInventory().addToLockpicks(-model.getParty().getInventory().getLockpicks());
             MyLists.forEach(belongings, it -> model.getParty().removeFromInventory(it));
             q.setStoryPart(model.getMainStory().getStoryParts().get(model.getMainStory().getStoryParts().size()-1));
-            q.setRemoteLocation(model);
+            model.getParty().getQuestHandler().offerQuest(model, q);
             return new SitInDungeonState(model, castle, q, 3, true);
         }
     }

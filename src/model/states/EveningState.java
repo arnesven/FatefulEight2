@@ -2,7 +2,6 @@ package model.states;
 
 import model.GameDifficulty;
 import model.Model;
-import model.Party;
 import model.TimeOfDay;
 import model.characters.ConvoLine;
 import model.characters.GameCharacter;
@@ -12,7 +11,9 @@ import model.characters.appearance.WeepingAmount;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Inventory;
+import model.mainstory.MainStory;
 import model.map.*;
+import model.quests.OfferedQuest;
 import model.quests.Quest;
 import model.states.dailyaction.tavern.HireGuideAction;
 import model.states.dailyaction.LodgingState;
@@ -218,54 +219,51 @@ public class EveningState extends GameState {
             return model.getCurrentHex().getDailyActionState(model);
         }
         Point beforeMoving = new Point(model.getParty().getPosition());
-        goOnQuest.movePartyToRemoteLocation(model);
+        var path = model.getParty().getQuestHandler().getOfferedQuest(goOnQuest.getName()).getRemotePath();
+        if (!model.getParty().getPosition().equals(path.getLast())) {
+            new ForcedMovementEvent(model, path).doTheEvent(model);
+        }
         return new QuestState(model, goOnQuest, beforeMoving);
     }
 
     protected void checkForQuest(Model model) {
-        List<Quest> quests = new ArrayList<>();
-        model.getMainStory().addQuests(model, quests);
-        if (model.getCurrentHex().givesQuests()) {
-            int mainQuests = quests.size();
-            addHeldQuests(model, quests);
-            addRandomQuests(model, quests, mainQuests);
-            if (quests.isEmpty()) {
-                print("Checking for quests... ");
-                println("The party has not been offered any quests.");
-            }
-        }
-        if (!quests.isEmpty()) {
+
+        List<Quest> quests = MyLists.transform(MyLists.filter(model.getParty().getQuestHandler().getOfferedQuestsForPosition(model),
+                oq -> !oq.isCompleted()),
+                oq -> Quest.findMainOrGenericQuest(model, oq.getQuestName()));
+
+        if (quests.isEmpty()) {
+            print("Checking for quests... ");
+            println("The party has not been offered any quests.");
+        } else {
             print("Checking for quests... ");
             goOnQuest = offerQuests(model, this, quests);
         }
     }
 
-    private void addHeldQuests(Model model, List<Quest> quests) {
-        quests.addAll(model.getParty().getHeldQuests(model));
-    }
 
-    private void addRandomQuests(Model model, List<Quest> quests, int mainQuests) {
-        int baseNumberOfQuests = 3;
-        if (model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-            if (model.getQuestDeck().hadSuccessIn(model.getCurrentHex().getLocation())) {
-                baseNumberOfQuests = 0;
-            }
-        }
-        int numQuests = MyRandom.randInt(0, Math.max(0, baseNumberOfQuests + mainQuests - quests.size()));
-        for (int i = numQuests; i > 0; --i) {
-            Quest q;
-            int tries = 0;
-            do {
-                q = model.getQuestDeck().getRandomQuest();
-                if (tries++ > 1000) {
-                    System.err.println("Abandoned getting random quests, tried 100 times");
-                    return;
-                }
-            } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
-            q.setRemoteLocation(model);
-            quests.add(q);
-        }
-    }
+//    private void addRandomQuests(Model model, List<Quest> quests, int mainQuests) {
+//        int baseNumberOfQuests = 3;
+//        if (model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
+//            if (model.getQuestDeck().hadSuccessIn(model.getCurrentHex().getLocation())) {
+//                baseNumberOfQuests = 0;
+//            }
+//        }
+//        int numQuests = MyRandom.randInt(0, Math.max(0, baseNumberOfQuests + mainQuests - quests.size()));
+//        for (int i = numQuests; i > 0; --i) {
+//            Quest q;
+//            int tries = 0;
+//            do {
+//                q = model.getQuestDeck().getRandomQuest();
+//                if (tries++ > 1000) {
+//                    System.err.println("Abandoned getting random quests, tried 100 times");
+//                    return;
+//                }
+//            } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
+//            q.setRemoteLocation(model);
+//            quests.add(q);
+//        }
+//    }
 
     public static Quest offerQuests(Model model, GameState state, List<Quest> quests) {
         Quest toReturn = null;
@@ -282,32 +280,19 @@ public class EveningState extends GameState {
             Point cursor = subView.getCursorPoint();
             if (subView.didSelectQuest()) {
                 Quest q = subView.getSelectedQuest();
-                List<String> options = new ArrayList<>(List.of("Accept", "Hold", "Back"));
-                if (model.getParty().questIsHeld(q)) {
-                    options.set(1, "Stop Holding");
-                }
+                List<String> options = new ArrayList<>(List.of("Accept", "Back"));
                 int selectedOption = state.multipleOptionArrowMenu(model, cursor.x, cursor.y, options);
                 if (selectedOption == 0) {
                     if (q.arePrerequisitesMet(model)) {
                         toReturn = q;
-                        state.println("You have accepted quest '" + q.getName() + "'!");
+                        state.println("You have accepted quest '" + q.getName() + "'! " +
+                                "Your party will start on the quest first thing in the morning.");
                         if (model.getCurrentHex().getLocation() != null) {
-                            model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
+                            model.getParty().getQuestHandler().accept(model, q);
                         }
                         done = true;
                     } else {
                         state.println(q.getPrerequisites(model));
-                    }
-                } else if (selectedOption == 1){
-                    if (model.getParty().questIsHeld(q)) {
-                        model.getParty().stopHoldingQuest(q);
-                    } else {
-                        if (q.canBeHeld()) {
-                            model.getParty().holdQuest(q);
-                            state.println("Quest will be held as long as you remain in your current location.");
-                        } else {
-                            state.println("That quest cannot be held.");
-                        }
                     }
                 }
             } else {

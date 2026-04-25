@@ -21,8 +21,9 @@ import model.items.designs.CraftingDesign;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
-import model.quests.HeldQuestData;
+import model.quests.OfferedQuest;
 import model.quests.Quest;
+import model.quests.QuestHandler;
 import model.states.GameState;
 import model.states.SpellCastException;
 import model.tasks.DestinationTask;
@@ -57,7 +58,7 @@ public class Party implements Serializable {
     private final PortraitAnimations portraitAnimations = new PortraitAnimations();
     private final Map<String, Summon> summons = new HashMap<>();
     private final Set<String> templeBannings = new HashSet<>();
-    private final Map<String, HeldQuestData> heldQuests = new HashMap<>();
+    private final QuestHandler questHandler = new QuestHandler();
     private Point position;
     private Point previousPosition;
     private boolean onRoad = true;
@@ -177,7 +178,6 @@ public class Party implements Serializable {
     }
 
     public void move(Model model, int dx, int dy) {
-        heldQuests.clear();
         this.previousPosition = new Point(position);
         Point nextPosition = new Point(position);
         model.getWorld().move(nextPosition, dx, dy);
@@ -186,9 +186,6 @@ public class Party implements Serializable {
     }
 
     public void setPosition(Point newPosition) {
-        if (!newPosition.equals(previousPosition)) {
-            heldQuests.clear();
-        }
         this.previousPosition = new Point(position);
         this.position = new Point(newPosition);
         GameStatistics.incrementDistanceTraveled((int)Math.round(previousPosition.distance(position)));
@@ -858,25 +855,8 @@ public class Party implements Serializable {
                         Equipment::getTotalWeight);
     }
 
-    public void holdQuest(Quest q) {
-        heldQuests.put(q.getName(), q.getHeldData());
-    }
-
-    public void stopHoldingQuest(Quest q) {
-        heldQuests.remove(q.getName());
-    }
-
-    public boolean questIsHeld(Quest q) {
-        return heldQuests.containsKey(q.getName());
-    }
-
-    public List<Quest> getHeldQuests(Model model) {
-        List<Quest> result = new ArrayList<>();
-        for (String key : heldQuests.keySet()) {
-            Quest q = model.getQuestDeck().getQuestByName(key);
-            result.add(model.getQuestDeck().getQuestByName(key));
-        }
-        return result;
+    public QuestHandler getQuestHandler() {
+        return questHandler;
     }
 
     public Map<GameCharacter, TamedDragonCharacter> getTamedDragons() {
@@ -1024,10 +1004,6 @@ public class Party implements Serializable {
 
     public List<DiscoveredRoute> getDiscoveredRoutes() {
         return discoveredRoutes;
-    }
-
-    public HeldQuestData getHeldDataFor(Quest quest) {
-        return heldQuests.get(quest.getName());
     }
 
     public boolean permanentlyLearn(Item it) {

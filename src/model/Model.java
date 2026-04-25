@@ -48,6 +48,7 @@ public class Model {
     private static final String HALL_OF_FAME_PATH = "hall_of_fame.ff8";
     private FatefulEight frame;
     private GameData gameData;
+    public QuestDeck questDeck = new QuestDeck();
 
     private World world = new World(WorldBuilder.buildWorld(WorldType.original),
                                         WorldBuilder.getWorldBounds(WorldBuilder.ORIGINAL),
@@ -406,7 +407,7 @@ public class Model {
     }
 
     public QuestDeck getQuestDeck() {
-        return gameData.questDeck;
+        return questDeck;
     }
 
     public SpellHandler getSpellHandler() {
