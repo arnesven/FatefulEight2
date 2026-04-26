@@ -164,7 +164,6 @@ public class RescueMissionStoryPart extends StoryPart {
                 leaderSay("Alright. We'll keep our eyes open.");
                 increaseStep(model);
                 model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(RescueMissionQuest.QUEST_NAME));
-                JournalEntry.printJournalUpdateMessage(model);
             } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Have you found Caid yet?");
                 if (witchPartCompleted()) {

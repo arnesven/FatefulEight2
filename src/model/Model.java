@@ -21,6 +21,7 @@ import model.map.*;
 import model.map.objects.MapObject;
 import model.map.objects.UnderworldEntrance;
 import model.map.wars.WarHandler;
+import model.quests.OfferedQuest;
 import model.races.Race;
 import model.ruins.RuinsDungeon;
 import model.states.*;
@@ -237,16 +238,19 @@ public class Model {
         return getWorld().getHex(getParty().getPosition());
     }
 
-    public String getPartyHexInfo() {
-        return getHexInfo(getParty().getPosition());
-    }
-
     public String getHexInfo(Point position) {
         List<MapObject> mapObjects = getMapObjects(position);
         StringBuilder bldr = new StringBuilder();
         for (MapObject mobj : mapObjects) {
             bldr.append(", ");
             bldr.append(mobj.getDescription());
+        }
+        List<OfferedQuest> oqs = MyLists.filter(getParty().getQuestHandler().getOfferedQuestsAsList(),
+                oq -> (getWorld().getWorldType() == gameData.currentWorld) && !oq.isCompleted() &&
+                        (oq.isAccepted() && oq.getRemotePosition().equals(position) ||
+                        (!oq.isAccepted() && oq.getOfferPosition().equals(position))));
+        if (!oqs.isEmpty()) {
+            bldr.append(", Quest").append(oqs.size() > 1 ? "s" : "").append(": ").append(MyLists.commaAndJoin(oqs, OfferedQuest::getQuestName));
         }
         String mapObjectExtra = bldr.toString();
         return "(" + position.x + "," + position.y + ") " +

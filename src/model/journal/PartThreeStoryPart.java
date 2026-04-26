@@ -244,7 +244,6 @@ public class PartThreeStoryPart extends StoryPart {
                 leaderSay("We can handle ourselves.");
                 increaseStep(model);
                 model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(TroubleInTheLibraryQuest.QUEST_NAME));
-                JournalEntry.printJournalUpdateMessage(model);
                 model.transitionToDialog(new SimpleMessageView(model.getView(),
                         "Warning. It is recommended that your party members " +
                                 "are at least level 3 before doing the quest " +

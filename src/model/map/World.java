@@ -11,7 +11,9 @@ import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.DrawingArea;
+import view.MyColors;
 import view.ScreenHandler;
+import view.sprites.DestinationMapMarker;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 import view.subviews.SubView;
@@ -31,7 +33,8 @@ public class World implements Serializable {
     //  x   y
     private final WorldHex[][] hexes;
     private final ViewPointMarker cursor = new HexCursorMarker();
-    private static final Sprite DESTINATION_SPRITE = new SpriteQuestMarker();
+    private static final Sprite TASK_SPRITE = new DestinationMapMarker();
+    private static final Sprite QUEST_SPRITE = new SpriteQuestMarker(MyColors.LIGHT_BLUE);
     private Sprite alternativeAvatar = null;
     private int currentState;
     private Rectangle bounds;
@@ -155,21 +158,25 @@ public class World implements Serializable {
             if (dt.drawTaskOnMap(model) && pos != null && pos.x == x && pos.y == y &&
                     dt.getWorld() == model.getWorld().getWorldType() &&
                     !dt.isCompleted() && !dt.isFailed(model)) {
-                model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
+                model.getScreenHandler().register(TASK_SPRITE.getName(), new Point(screenX, screenY), TASK_SPRITE);
             }
         }
     }
 
     private void drawAcceptedQuests(Model model, int x, int y, int screenX, int screenY) {
         for (OfferedQuest oq : model.getParty().getQuestHandler().getOfferedQuestsAsList()) {
+            Point pos;
             if (oq.isAccepted()) {
-                Point pos = oq.getRemotePosition();
-                if (pos != null && pos.x == x && pos.y == y &&
-                        oq.getWorld() == model.getWorld().getWorldType() &&
-                        !oq.isCompleted()) {
-                    model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
-                }
+                pos = oq.getRemotePosition();
+            } else {
+                pos = oq.getOfferPosition();
             }
+            if (pos != null && pos.x == x && pos.y == y &&
+                    oq.getWorld() == model.getWorld().getWorldType() &&
+                    !oq.isCompleted()) {
+                model.getScreenHandler().register(QUEST_SPRITE.getName(), new Point(screenX, screenY), QUEST_SPRITE);
+            }
+
         }
     }
 

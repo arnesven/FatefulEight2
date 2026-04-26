@@ -12,6 +12,7 @@ import model.quests.Quest;
 import model.states.EveningState;
 import model.states.dailyaction.TownDailyActionState;
 import util.MyPair;
+import view.sprites.DestinationMapMarker;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class StoryPart implements Serializable {
-    protected static final Sprite MAP_SPRITE = new SpriteQuestMarker();
+    protected static final Sprite MAP_SPRITE = new DestinationMapMarker();
 
     public abstract List<JournalEntry> getJournalEntries();
 

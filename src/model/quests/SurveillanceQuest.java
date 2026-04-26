@@ -65,7 +65,7 @@ public class SurveillanceQuest extends Quest {
         return List.of(new QuestScene("Travel",
                         List.of(new CollectiveSkillCheckSubScene(0, 1, Skill.Survival, 3,
                                         "It's quite the hike to get to the camp."),
-                                new PayGoldSubScene(3, 0, 8,
+                                new PayGoldSubScene(3, 0, 2,
                                         "We can hire some horses, but it will be expensive."))),
                 new QuestScene("Survey",
                         List.of(new CollectiveSkillCheckSubScene(3, 1, Skill.Sneak, 2,

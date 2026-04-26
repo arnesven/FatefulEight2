@@ -1,5 +1,6 @@
 package util;
 
+import control.FatefulEight;
 import model.races.Race;
 import view.MyColors;
 
@@ -12,6 +13,12 @@ public class MyRandom {
     }
 
     public static int rollD10() {
+        if (FatefulEight.isLoadedDice1()) {
+            return 1;
+        }
+        if (FatefulEight.isLoadedDice10()) {
+            return 10;
+        }
         return randInt(10) + 1;
     }
 

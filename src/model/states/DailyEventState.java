@@ -90,7 +90,8 @@ public abstract class DailyEventState extends GameState {
                 return;
             }
 
-           for (int tries = 10; tries >= 0; tries--) {
+            System.out.println("Trying to find a suitable quest.");
+           for (int tries = 9; tries >= 0; tries--) {
                Quest q = model.getQuestDeck().getRandomQuest();
                boolean alreadyDoneThatQuest = MyLists.any(model.getParty().getQuestHandler().getOfferedQuestsAsList(),
                        oq -> oq.getQuestName().equals(q.getName()));
@@ -100,8 +101,14 @@ public abstract class DailyEventState extends GameState {
                        JournalEntry.printJournalUpdateMessage(model);
                        model.getParty().getQuestHandler().offerQuest(model, q);
                        break;
+                   } else {
+                       System.out.println("Quest '" + getClass().getName() + "' not of suitable difficulty level (= " +
+                               q.getDifficulty().name() + " != target " + recommendedDifficulty.name() + ")");
                    }
+               } else {
+                   System.out.println("Already done quest '" + q.getName() + "'.");
                }
+               System.out.println(tries + " tries left.");
            }
 
         }

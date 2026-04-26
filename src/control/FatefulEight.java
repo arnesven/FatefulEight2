@@ -2,6 +2,7 @@ package control;
 
 import model.Model;
 import test.Balancing;
+import util.Arithmetics;
 import view.DrawingArea;
 import view.MyColors;
 import view.sprites.AnimationManager;
@@ -26,6 +27,7 @@ public class FatefulEight extends JFrame {
     private final Deque<KeyEvent> keyboardEvents = new LinkedList<>();
     private Timer timer;
     private MyKeyListener keyListener;
+    private static int loadedDice = 0;
 
     public FatefulEight(DrawingArea drawingArea) {
         super("Fateful Eight");
@@ -40,7 +42,7 @@ public class FatefulEight extends JFrame {
     }
 
     private void setModel(Model model) {
-        this.keyListener = new MyKeyListener(model, this);
+        this.keyListener = new MyKeyListener(this);
         this.addKeyListener(keyListener);
         timer = new Timer(TIMER_DELAY_MS, new ActionListener() {
             private long lastUpdateTime = System.currentTimeMillis();
@@ -145,4 +147,29 @@ public class FatefulEight extends JFrame {
     public void enqueueKeyEvent(KeyEvent keyEvent) {
         keyboardEvents.addLast(keyEvent);
     }
+
+    public static void cycleLoadedDice() {
+        if (inDebugMode()) {
+            loadedDice = Arithmetics.incrementWithWrap(loadedDice, 3);
+            if (loadedDice > 0) {
+                System.out.print("D10 are loaded - ");
+                if (loadedDice == 1) {
+                    System.out.println("10 every time.");
+                } else {
+                    System.out.println("1 every time");
+                }
+            } else {
+                System.out.println("D10 are no longer loaded.");
+            }
+        }
+    }
+
+    public static boolean isLoadedDice10() {
+        return loadedDice == 1;
+    }
+
+    public static boolean isLoadedDice1() {
+        return loadedDice == 2;
+    }
+
 }
