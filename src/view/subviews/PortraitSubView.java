@@ -6,6 +6,7 @@ import model.PortraitAnimations;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.NoClass;
 import model.races.Race;
 import model.states.GameState;
 import util.MyPair;
@@ -78,6 +79,11 @@ public class PortraitSubView extends SubView {
             if (MyRandom.randInt(15) == 0) {
                 appearance.addFaceDetail(new RougeDetail());
                 appearance.setDetailColor(MakeUpColors.randomRougeColor(raceToUse));
+            }
+        }
+        if (cls.id() == Classes.None.id()) {
+            if (race.getColor() == MyColors.BEIGE) {
+                cls = new NoClass(MyColors.DARK_GREEN);
             }
         }
         appearance.setClass(cls);

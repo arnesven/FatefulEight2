@@ -102,17 +102,10 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
-        if (campPoint.x == x && campPoint.y == y && step == TRAVEL_STEP) {
-            model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
-        }
-    }
+    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) { }
 
     @Override
     public String getHexInfo(Point position) {
-        if (campPoint.x == position.x && campPoint.y == position.y && step == TRAVEL_STEP) {
-            return "Orc War Camp";
-        }
         return super.getHexInfo(position);
     }
 
@@ -221,7 +214,8 @@ public class PartFourStoryPart extends StoryPart {
                         "bulk of the enemy force and what the invaders' orders are.");
                 leaderSay("Leave it to us.");
                 portraitSay("Thank you.");
-                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(OrcWarCampQuest.QUEST_NAME));
+                model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(OrcWarCampQuest.QUEST_NAME),
+                        campPoint);
                 model.transitionToDialog(new SimpleMessageView(model.getView(),
                         "Warning. It is recommended that your party members " +
                                 "are at least level 4 before taking on the orc camp."));

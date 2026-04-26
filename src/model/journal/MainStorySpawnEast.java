@@ -22,7 +22,7 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new Point(38, 11),
               new UrnTownTown().getName(),
               WorldBuilder.EXPAND_EAST,
-              new Point(40, 10),
+              new Point(40, 11),
               new Point(33, 11),
                 "Honorable Warriors",
                 WorldBuilder.EASTERN_PALACE_LOCATION,
