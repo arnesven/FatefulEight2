@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.spells.DispelSpell;
@@ -135,7 +136,8 @@ public class MeetWithChieftainEvent extends DailyEventState {
             portraitSay("I don't understand. Are you or are you not?");
             leaderSay(iOrWeCap() + " were investigating a matter for the " + bogdown.getLordTitle() + ". The quest " +
                     "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
-                    iOrWe() + " were wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped " + kingdom +
+                    iOrWe() + " were wrongfully imprisoned.", FacialExpression.disappointed);
+            leaderSay(iOrWeCap() + " narrowly escaped " + kingdom +
                     " alive. It seems the " + bogdown.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                     "Because of this, the kingdom has been descended into disorder.");
             portraitSay("I understand. But why seek refuge here? Some call us madmen for settling in this land.");

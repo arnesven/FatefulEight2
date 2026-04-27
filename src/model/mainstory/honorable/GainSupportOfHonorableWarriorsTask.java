@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.*;
 import model.classes.prestige.SamuraiClass;
 import model.combat.CombatAdvantage;
@@ -240,15 +241,15 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                     " stroll into this exotic town you notice everybody is staring at you. " +
                     "Children are pointing, some laughing, some clinging to their parents. A man approaches you.");
             showRandomPortrait(model, Classes.FARMER, Race.EASTERN_HUMAN,"Villager");
-            portraitSay("You don't belong here outsider. What's your business?");
+            portraitSay("You don't belong here outsider. What's your business?", FacialExpression.disappointed);
             leaderSay("We've come to conduct diplomatic negotiations with your people. Who among you do you call leader?");
             portraitSay("Our Lord Shingen rules this land. But he will surely not see a lowly outsider as yourself.");
-            leaderSay("Why not, " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."));
+            leaderSay("Why not, " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."), FacialExpression.disappointed);
             portraitSay("Nevertheless, I'm sure our lord will not meet with you. " +
                     "You had better go see old Miko, he is wise and knows most about western affairs among us. He will advise you.");
             print("Do you follow the villager to Miko's home? (Y/N) ");
             if (!yesNoInput()) {
-                leaderSay(iOrWeCap() + " don't have time to banter with some old codger. Show " + meOrUs() + " to your leader!");
+                leaderSay(iOrWeCap() + " don't have time to banter with some old codger. Show " + meOrUs() + " to your leader!", FacialExpression.disappointed);
                 println("The villager is affronted by your brusque manner, and walks off.");
                 return;
             }

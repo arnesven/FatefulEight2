@@ -43,7 +43,7 @@ public class JoinGentlepersonsClubTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return !isCompleted();
+        return !isCompleted() && model.partyIsInOverworldPosition(getPosition());
     }
 
     @Override

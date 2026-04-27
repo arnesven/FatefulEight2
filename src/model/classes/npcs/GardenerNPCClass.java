@@ -14,7 +14,8 @@ public class GardenerNPCClass extends NPCClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, SHIRT_COLOR);
+        Looks.putOnTunic(characterAppearance,
+                characterAppearance.getRace().getColor() == SHIRT_COLOR ? MyColors.BROWN : SHIRT_COLOR);
         Looks.putOnApron(characterAppearance, COVERALLS_COLOR, SHIRT_COLOR);
     }
 }

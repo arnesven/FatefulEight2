@@ -108,10 +108,6 @@ public class WeaponPair extends Weapon implements BlockingItem {
     @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return combinedOnAvatarSprite;
-//        if (mainHand.isOfType(BladedWeapon.class) && offHand.isOfType(BladedWeapon.class)) {
-//            return TWIN_BLADES;
-//        }
-//        return OTHER_WEAPONS;
     }
 
     private static String makeName(Weapon w1, Weapon w2) {
@@ -297,4 +293,7 @@ public class WeaponPair extends Weapon implements BlockingItem {
         }
         return null;
     }
+
+    // TODO:
+    // Override drawYourself and draw imbuement if either weapon has imbuement.
 }

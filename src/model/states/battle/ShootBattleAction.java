@@ -26,6 +26,7 @@ public class ShootBattleAction extends BattleAction {
         Point position = state.getPositionForUnit(unit);
         this.grid = new SteppingMatrix<>(BattleState.BATTLE_GRID_WIDTH, BattleState.BATTLE_GRID_HEIGHT);
         int range = state.getTerrainForPosition(position) instanceof HillsBattleTerrain ? getLongRange() : getShortRange();
+        System.out.println("Shoot battle action for " + unit.getName() + ", Range is: " + range);
         int count = 0;
         for (int y = 0; y < grid.getRows(); y++) {
             for (int x = 0; x < grid.getColumns(); ++x) {

@@ -8,6 +8,8 @@ import model.classes.Looks;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.spells.WerewolfFormSpell;
+import model.items.weapons.UnarmedCombatWeapon;
+import model.items.weapons.WerewolfClawsWeapon;
 import model.states.GameState;
 import view.GameView;
 import view.MyColors;
@@ -77,7 +79,13 @@ public class WerewolfFormCondition extends Condition {
     }
 
     @Override
-    public void wasRemoved(Combatant combatant) { }
+    public void wasRemoved(Combatant combatant) {
+        if (combatant instanceof GameCharacter chara) {
+            if (chara.getEquipment().getWeapon() instanceof WerewolfClawsWeapon) {
+                chara.getEquipment().setWeapon(new UnarmedCombatWeapon());
+            }
+        }
+    }
 
     @Override
     public ConditionHelpDialog getHelpView(GameView view) {

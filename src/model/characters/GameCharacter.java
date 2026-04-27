@@ -254,6 +254,11 @@ public class GameCharacter extends Combatant {
 
     public void applyAttack(Model model, CombatEvent combatEvent, Combatant target, boolean sneakAttack,
                              int extraDamage, int crit, RunOnceAnimationSprite effectSprite, SkillCheckResult result) {
+        if (result.getUnmodifiedRoll() == 1) {
+            combatEvent.println(", but misses the target.");
+            combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
+            return;
+        }
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         if (hasCondition(WerewolfFormCondition.class)) {
             extraDamage += 1;
@@ -708,13 +713,13 @@ public class GameCharacter extends Combatant {
             if (pair.second) {
                 critString = ", " + LogView.YELLOW_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR;
             }
-            combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + critString + ".");
-            combatEvent.addFloatyDamage(this, damage,
+            combatEvent.println(enemy.getName() + " deals " + dmg.getAmount() + " damage to " + getFirstName() + critString + ".");
+            combatEvent.addFloatyDamage(this, dmg.getAmount(),
                     critical ? DamageValueEffect.CRITICAL_DAMAGE
                             : (isPhysicalAttack ? DamageValueEffect.STANDARD_DAMAGE
                                                 : DamageValueEffect.MAGICAL_DAMAGE));
             if (party != null) {
-                combatEvent.tookDamageTalk(this, damage);
+                combatEvent.tookDamageTalk(this, dmg.getAmount());
             }
             combatEvent.getStatistics().addEnemyDamage(damage);
         }
@@ -726,7 +731,7 @@ public class GameCharacter extends Combatant {
 
     @Override
     public Damage reduceDamage(CombatEvent combatEvent, Damage dmg, GameCharacter gameCharacter) {
-        if (dmg instanceof PhysicalDamage && getMP() > 0 || equipment.applyArmorToMagicAttacks()) {
+        if (dmg instanceof PhysicalDamage && getAP() > 0 || equipment.applyArmorToMagicAttacks()) {
             int reduction = Math.min(dmg.getAmount(), calculateDamageReduction(getAP()));
             dmg.reduceBy(reduction);
             combatEvent.getStatistics().addToReduced(reduction);

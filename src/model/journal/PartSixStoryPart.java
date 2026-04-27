@@ -16,6 +16,7 @@ import model.items.spells.VomitSpell;
 import model.mainstory.*;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
 import model.map.*;
+import model.map.locations.RubiqPyramidLocation;
 import model.quests.*;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
@@ -112,18 +113,6 @@ public class PartSixStoryPart extends StoryPart {
             prepareQuest(quest, model.getParty().getLeader().getAppearance(),
                     "Yourself");
         }
-
-//        List<MyTriplet<String, CharacterAppearance, String>> triplets = gainSupportOfRemotePeopleTask.addQuests(model);
-//        for (MyTriplet<String, CharacterAppearance, String> triplet : triplets) {
-//            quests.add(getQuestAndSetPortrait(triplet.first, triplet.second, triplet.third));
-//        }
-//        if (completed && model.partyIsInOverworldPosition(assaultPoint)) {
-//            MainQuest q = getQuestAndSetPortrait(MindMachineQuest.QUEST_NAME, model.getParty().getLeader().getAppearance(),
-//                    "Yourself");
-//            if (!q.isCompleted(model)) {
-//                quests.add(q);
-//            }
-//        }
     }
 
     @Override
@@ -132,8 +121,9 @@ public class PartSixStoryPart extends StoryPart {
         if (witchPoint.x == x && witchPoint.y == y && internalStep == 2) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         }
-        MainQuest mmq = MainStory.getQuest(MindMachineQuest.QUEST_NAME);
-        if (allSupportTasksDone() && assaultPoint.x == x && assaultPoint.y == y && !mmq.isCompleted(model)) {
+        boolean questOffered = MyLists.any(model.getParty().getQuestHandler().getOfferedQuestsAsList(),
+                    oq -> oq.getQuestName().equals(MindMachineQuest.QUEST_NAME));
+        if (allSupportTasksDone() && assaultPoint.x == x && assaultPoint.y == y && !questOffered) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         } else if (internalStep > 2) {
             for (DestinationTask dt : getAllSupportTasks()) {
@@ -566,6 +556,8 @@ public class PartSixStoryPart extends StoryPart {
                 portraitSay("I wish you well.");
                 transitionStep(model);
                 setCompleted(true);
+                MainQuest q = MainStory.getQuest(MindMachineQuest.QUEST_NAME);
+                model.getParty().getQuestHandler().offerQuest(model, q);
             } else {
                 leaderSay("Not quite yet, there are still some things that need to be prepared.");
                 portraitSay("Okay. Return here when you are ready. But don't take too long. " +

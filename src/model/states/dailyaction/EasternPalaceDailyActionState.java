@@ -7,6 +7,7 @@ import model.states.GameState;
 import model.states.dailyaction.tavern.EasternTavernNode;
 import model.states.dailyaction.tavern.PirateTavernNode;
 import model.states.dailyaction.tavern.TavernNode;
+import view.subviews.TownSubView;
 
 import java.awt.*;
 
@@ -22,6 +23,12 @@ public class EasternPalaceDailyActionState extends TownishDailyActionState {
         Point p = easternPalaceLocation.getTavernPosition();
         p.y = p.y - 1;
         blockPosition(p.x, p.y);
+    }
+
+    @Override
+    protected void addShopsAndMore(Model model, UrbanLocation urbanLocation) {
+        super.addShopsAndMore(model, urbanLocation);
+        super.addNode(1, TOWN_MATRIX_ROWS-1, new StableNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
     }
 
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {

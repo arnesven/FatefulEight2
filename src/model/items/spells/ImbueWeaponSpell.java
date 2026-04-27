@@ -8,6 +8,7 @@ import model.items.Prevalence;
 import model.items.imbuements.WeaponImbuement;
 import model.items.weapons.NaturalWeapon;
 import model.items.weapons.Weapon;
+import model.items.weapons.WeaponPair;
 import model.states.GameState;
 import util.MyLists;
 import util.MyRandom;
@@ -44,12 +45,16 @@ public class ImbueWeaponSpell extends ImmediateSpell {
     @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         state.print(caster.getName() + " is preparing to imbue a weapon with magic. Do you want to imbue " +
-                "an equipped weapon (Y) or a weapon from your inventory(N)? ");
+                "an equipped weapon (Y) or a weapon from your inventory (N)? ");
         Weapon w = null;
         if (state.yesNoInput()) {
             w = getEquippedWeapon(model, state);
         } else {
             w = getInventoryWeapon(model, state);
+        }
+        if (w instanceof WeaponPair) {
+            state.println("Weapons cannot be imbued while paired.");
+            w = null;
         }
         if (w == null) {
             state.println("Spell cancelled.");

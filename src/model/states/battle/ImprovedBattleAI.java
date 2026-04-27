@@ -62,6 +62,7 @@ public class ImprovedBattleAI extends BattleAI {
                                             BattleUnit currentUnit) {
         ShootBattleAction shootBattleAction = new SilentShootBattleAction(currentUnit, battleState);
         List<BattleUnit> unitsInRange = shootBattleAction.getUnitsInRange(battleState);
+        System.out.println("Units in range: " + MyLists.commaAndJoin(unitsInRange, BattleUnit::getName));
         unitsInRange.removeIf((BattleUnit bu) -> bu.getOrigin().equals(currentUnit.getOrigin()));
         if (unitsInRange.isEmpty()) {
             return false;

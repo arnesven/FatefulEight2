@@ -1,6 +1,7 @@
 package model.mainstory.honorable;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.items.weapons.BladedWeapon;
 import model.items.weapons.HigherTierWeapon;
 import model.map.CastleLocation;
@@ -32,15 +33,16 @@ public class MeetLordShingenEvent extends DailyEventState {
         portraitSay("Indeed. We have had a surge in orcish activity, and the forces of the " +
                 kingdom +
                 " have begin infringing on our territory in the west. Are you an envoy of " +
-                arkvale.getLordName() + "?");
-        leaderSay("No, or yes... It's complicated.");
-        portraitSay("I don't understand. Are you or are you not?");
+                arkvale.getLordName() + "?", FacialExpression.questioning);
+        leaderSay("No, or yes... It's complicated.", FacialExpression.relief);
+        portraitSay("I don't understand. Are you or are you not?", FacialExpression.questioning);
         leaderSay(MyStrings.capitalize(iWasOrWeWere()) + " investigating a matter for the " + arkvale.getLordTitle() + ". The quest " +
                 "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
-                iWasOrWeWere() + " wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped the " + kingdom +
+                iWasOrWeWere() + " wrongfully imprisoned!", FacialExpression.disappointed);
+        leaderSay(iOrWeCap() + " narrowly escaped the " + kingdom +
                 " alive. It seems the " + arkvale.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                 "Because of this, the kingdom has descended into disorder.");
-        portraitSay("I see. And now you seek refuge here?");
+        portraitSay("I see. And now you seek refuge here?", FacialExpression.questioning);
         leaderSay("For a time perhaps. " + iOrWeCap() + " aim to rally the support of the kingdoms surrounding the " +
                 kingdom + ". We intend to return to " + kingdom + " to overthrow " +
                 arkvale.getLordName() + " and root out the evil presence.");
@@ -57,9 +59,9 @@ public class MeetLordShingenEvent extends DailyEventState {
         portraitSay("My grandfather once formed such an alliance with one of the kingdoms of old. If I recall " +
                 "correctly, the Grand Duchess of Ardh brought my grandfather a magnificent sword. It was a masterfully " +
                 "crafted item. The gesture proved that the Duchess was serious about the alliance.");
-        leaderSay("You want a sword? What about all of the ones hanging on the wall behind you?");
+        leaderSay("You want a sword? What about all of the ones hanging on the wall behind you?", FacialExpression.questioning);
         portraitSay("Our customs may seem strange. But formality must be observed. Bring me a sword worthy of our " +
-                "commitment to each other, and I will give your proposal sincere consideration.");
+                "commitment to each other, and I will give your proposal sincere consideration.", FacialExpression.disappointed);
         task.setShingenMet();
         if (MyLists.find(model.getParty().getInventory().getAllItems(), it -> it instanceof BladedWeapon ||
                 (it instanceof HigherTierWeapon && ((HigherTierWeapon)it).isOfType(BladedWeapon.class))) != null) {

@@ -2,6 +2,7 @@ package model.mainstory.honorable;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.normal.ArtisanClass;
@@ -25,13 +26,13 @@ public class EasternSmithEvent extends DailyEventState {
         CharacterClass charClass = new ArtisanEvent.Smith().makeArtisanSubClass();
         AdvancedAppearance app = PortraitSubView.makeRandomPortrait(charClass, Race.EASTERN_HUMAN, true);
         showExplicitPortrait(model, app, "Smith");
-        portraitSay("A westerner? You're a long way from home.");
-        leaderSay("And you're a long way from your customers? Why is your smithy all the way out here?");
+        portraitSay("A westerner? You're a long way from home.", FacialExpression.questioning);
+        leaderSay("And you're a long way from your customers. Why is your smithy all the way out here?", FacialExpression.disappointed);
         portraitSay("I need coal from the hills to stoke my furnace. I use pristine water from the spring " +
                 "to cool the steel. The mountain air, the peace and solitude lets me focus. Because of all this, " +
                 "my blades are the finest in the world.");
-        leaderSay("Not very modest, are you?");
-        portraitSay("Why be modest, when you know you're the best?");
+        leaderSay("Not very modest, are you?", FacialExpression.questioning);
+        portraitSay("Why be modest, when you know you're the best?", FacialExpression.wicked);
         leaderSay("Uh-huh. Do you have anything for sale?");
         portraitSay("Of course, but my blades are not cheap, and I'll have no haggling. If you don't like my prices " +
                 "I urge you to take your business elsewhere.");
@@ -45,7 +46,7 @@ public class EasternSmithEvent extends DailyEventState {
         PickSamuraiSwordState pickSwordState = new PickSamuraiSwordState(model);
         pickSwordState.doTheEvent(model);
         model.setSubView(subView);
-        portraitSay("No refunds!");
+        portraitSay("No refunds!", FacialExpression.disappointed);
         leaderSay("Fine, " + iOrWe() + " understand.");
     }
 }

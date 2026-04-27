@@ -5,6 +5,7 @@ import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Skill;
 import model.classes.npcs.RegentClass;
 import model.combat.conditions.PossessedCondition;
@@ -188,6 +189,7 @@ public class MindMachineQuest extends MainQuest {
         state.println("Preparing to teleport, press enter to continue.");
         state.waitForReturn();
         TeleportBetweenWorldsTransition.transition(model, mapSubView, destinationPosition);
+        model.getParty().getHorseHandler().abandonHorses(model);
         state.println("Press enter to continue.");
         state.waitForReturn();
         CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView(model));
@@ -324,24 +326,24 @@ public class MindMachineQuest extends MainQuest {
             AdvancedAppearance marshal = PartFourStoryPart.getMarshalAppearance(model);
             AdvancedAppearance captain = PartFourStoryPart.getCaptainAppearance(model);
             showExplicitPortrait(model, captain, "Captain");
-            portraitSay("Free us!");
+            portraitSay("Free us!", FacialExpression.afraid);
             showExplicitPortrait(model, general, "General");
-            portraitSay("We've been stuck here for days!");
-            leaderSay("We didn't see any action from you when we were unjustly seized at this very castle!");
+            portraitSay("We've been stuck here for days!", FacialExpression.angry);
+            leaderSay("We didn't see any action from you when we were unjustly seized at this very castle!", FacialExpression.angry);
             showExplicitPortrait(model, marshal, "Marshal");
             portraitSay("But, but... The " + castle.getLordTitle() + "'s gone mad! " + heOrSheCap(castle.getLordGender()) +
-                    " isn't " + himOrHer(castle.getLordGender()) + "self.");
+                    " isn't " + himOrHer(castle.getLordGender()) + "self.", FacialExpression.afraid);
             leaderSay("Well obviously. We're looking for a suspicious outsider, she's supposed to be tall, dark and fair. " +
-                    "Have you seen her?");
+                    "Have you seen her?", FacialExpression.questioning);
             showExplicitPortrait(model, general, "General");
             portraitSay("We know who you're after. Free us and we'll tell you what we know.");
             println("You unshackle the three advisors.");
             leaderSay("There. Now, what's going on here?");
-            portraitSay("Her name is Arabella. She was exiled many years ago for practicing necromancy and illicit sorcery.");
+            portraitSay("Her name is Arabella. She was exiled many years ago for practicing necromancy and illicit sorcery.", FacialExpression.disappointed);
             GameCharacter caid = model.getMainStory().getCaidCharacter();
             if (model.getParty().getPartyMembers().contains(caid)) {
                 partyMemberSay(caid, "Arabella? I remember hunting her down and bringing her to justice. " +
-                        "How was she able to sneak her way back into the kigndom?");
+                        "How was she able to sneak her way back into the kingdom?", FacialExpression.questioning);
             } else {
                 showExplicitPortrait(model, captain, "Captain");
                 portraitSay("I think Caid was the one who finally exposed her.");
@@ -358,9 +360,9 @@ public class MindMachineQuest extends MainQuest {
             portraitSay("By the time the orcish raids started getting out of hand, she had inserted herself as " +
                     castle.getLordName() + "'s favorite. The " + castle.getLordTitle() + " sought her wisdom often.");
             showExplicitPortrait(model, general, "General");
-            portraitSay("Needless to say, I was already suspicious!");
-            leaderSay("And yet you did nothing!");
-            portraitSay("I did! I went to confront her, but could not find her. She was nowhere in the castle.");
+            portraitSay("Needless to say, I was already suspicious!", FacialExpression.disappointed);
+            leaderSay("And yet you did nothing!", FacialExpression.angry);
+            portraitSay("I did! I went to confront her, but could not find her. She was nowhere in the castle.", FacialExpression.sad);
             showExplicitPortrait(model, captain, "Captain");
             portraitSay("None of us could. We thought perhaps she had returned to the remote kingdom whence she came.");
             showExplicitPortrait(model, marshal, "Marshal");
@@ -368,28 +370,28 @@ public class MindMachineQuest extends MainQuest {
                     "That's when I recognized her as Arabella!");
             showExplicitPortrait(model, general, "General");
             portraitSay("When we confronted the " + castle.getLordTitle() + " about it, " + heOrShe(castle.getLordGender()) +
-                    " threw us in the dungeon!");
+                    " threw us in the dungeon!", FacialExpression.disappointed);
             leaderSay("Hmm... I wonder what she's doing.");
             portraitSay("We can give you directions to the workshop and you can deal with Arabella, but what about the " +
                     castle.getLordTitle() + "? Maybe Arabella is controlling " + hisOrHer(castle.getLordGender()) + " or something?");
             leaderSay("Don't worry, " + iOrWe() + " will sort " + hisOrHer(castle.getLordGender()) + " out. " +
                     "You have another problem to deal with.");
-            portraitSay("What do you mean?");
+            portraitSay("What do you mean?", FacialExpression.questioning);
             leaderSay("This castle is about to be stormed by the combined forces of the neighboring kingdoms.");
             showExplicitPortrait(model, captain, "Captain");
-            portraitSay("What!?");
+            portraitSay("What!?", FacialExpression.surprised);
             leaderSay("Yes. You must immediately go and try to parley with them, or the castle will be sacked.");
             showExplicitPortrait(model, marshal, "Marshal");
-            portraitSay("It seems we have no choice.");
+            portraitSay("It seems we have no choice.", FacialExpression.sad);
             leaderSay("You don't. Now go. Leave Arabella and the " + castle.getLordTitle() + " to us.");
             showExplicitPortrait(model, general, "General");
             portraitSay("Before you go, a warning. The " + castle.getLordTitle() + " is surrounded by " + hisOrHer(castle.getLordGender()) + " elite guard.");
-            leaderSay("Elite?");
+            leaderSay("Elite?", FacialExpression.questioning);
             portraitSay("Yes. They are highly skilled battle mages. Whatever you plan to do, be very careful.");
             showExplicitPortrait(model, marshal, "Marshal");
             portraitSay("Please spare the " + castle.getLordTitle() + "'s life. I'm convinced " + heOrShe(castle.getLordGender()) +
-                    " is simply being manipulated by this villain.");
-            leaderSay(iOrWeCap() + " will do what " + iOrWe() + " can.");
+                    " is simply being manipulated by this villain.", FacialExpression.afraid);
+            leaderSay(iOrWeCap() + " will do what " + iOrWe() + " can.", FacialExpression.disappointed);
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
         }
@@ -417,9 +419,9 @@ public class MindMachineQuest extends MainQuest {
             SubView oldSubView = model.getSubView();
             PortraitSubView psv = new PortraitSubView(model.getSubView(), app, castle.getLordName());
             model.setSubView(psv);
-            state.leaderSay(castle.getLordName() + ", surrender now!");
-            psv.portraitSay(model, state, "You again? Guards, eliminate them!");
-            state.leaderSay("Oh come on... But we can't just kill him. What do we do?");
+            state.leaderSay(castle.getLordName() + ", surrender now!", FacialExpression.disappointed);
+            psv.portraitSay(model, state, "You again? Guards, eliminate them!", FacialExpression.angry);
+            state.leaderSay("Oh come on... But we can't just kill " + GameState.himOrHer(app.getGender()) + ". What do we do?", FacialExpression.questioning);
             GameCharacter lordCharacter = new GameCharacter(castle.getLordName(), "", app.getRace(),
                     new RegentClass(castle.getCastleColor()), app);
             Enemy lordEnemy = new FormerPartyMemberEnemy(lordCharacter);
@@ -455,26 +457,26 @@ public class MindMachineQuest extends MainQuest {
         protected void doEvent(Model model) {
            CastleLocation castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
            showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
-           portraitSay("I feel terrible! Like I've been caught in a nightmare.");
-           leaderSay("Good to see you've come to your senses. Your kingdom is in pieces.");
+           portraitSay("I feel terrible! Like I've been caught in a nightmare.", FacialExpression.afraid);
+           leaderSay("Good to see you've come to your senses. Your kingdom is in pieces.", FacialExpression.disappointed);
            portraitSay("Yes. Mari, my advisor has been controlling me! My actions were not my own. " +
-                   "I could hear my voice talking and feel my body moving, but it was not me doing it, it was her!");
-           leaderSay("How did she manage to get you to ingest that pearl?");
-           portraitSay("We shared a particularly sweet pie in her chambers. Could she be one of the Quad?");
+                   "I could hear my voice talking and feel my body moving, but it was not me doing it, it was her!", FacialExpression.afraid);
+           leaderSay("How did she manage to get you to ingest that pearl?", FacialExpression.questioning);
+           portraitSay("We shared a particularly sweet pie in her chambers. Could she be one of the Quad?", FacialExpression.questioning);
            leaderSay("We've freed some of your other advisors. They've identified her as Arabella, a dark " +
                    "wizard at large.");
-           portraitSay("Yes of course, how could I have been so foolish?");
+           portraitSay("Arabella! Why of course, how could I have been so foolish?", FacialExpression.surprised);
            leaderSay("She's been using powerful illusions to fool us all. The spirit of the Quad we defeated " +
                    "at the Ancient Stronghold now seems more like an elaborate hoax than an actual specter.");
            portraitSay("But we must hurry to stop her. Controlling me was not enough for her. She has been building " +
                    " a machine in her workshop. I think it's some kind of improved version of the Crimson pearl magic. " +
-                   "She believes she will be able to control everybody in the kingdom once it is finished.");
+                   "She believes she will be able to control everybody in the kingdom once it is finished.", FacialExpression.afraid);
            leaderSay("Just tell us where the workshop is.");
            println(castle.getLordName() + " gives you directions to the workshop.");
-           portraitSay("I'll have to thank you later. You've done this kingdom a service not easily repaid.");
+           portraitSay("I'll have to thank you later. You've done this kingdom a service not easily repaid.", FacialExpression.relief);
            leaderSay("Don't worry about that now. Go meet up with your generals and take back control of your " +
                    "kingdom.");
-           portraitSay("I will. Be careful with Arabella. Do not underestimate her.");
+           portraitSay("I will. Be careful with Arabella. And do not underestimate her.");
            removePortraitSubView(model);
         }
     }
@@ -490,12 +492,12 @@ public class MindMachineQuest extends MainQuest {
             showExplicitPortrait(model,  model.getMainStory().getArabellaAppearance(),
                     "Arabella");
             portraitSay("Confounded interloper" + (model.getParty().size() > 1 ? "s" : "")
-                    + "! Well, no matter, I have plenty of crimson pearls!");
+                    + "! Well, no matter, I have plenty of crimson pearls!", FacialExpression.disappointed);
             println("She waves her wand once and then goes invisible.");
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
             leaderSay("She must be going to get another pearl. " + (model.getParty().size() > 1 ? "Let's" : "I'll")
-                    + " destroy this machine while " + iOrWe() + " have the chance.");
+                    + " destroy this machine while " + iOrWe() + " have the chance.", FacialExpression.disappointed);
             if (model.getParty().size() > 1) {
                 println("The party starts hacking and bashing the machine with their weapons.");
             } else {
@@ -506,14 +508,14 @@ public class MindMachineQuest extends MainQuest {
             GameCharacter willis = MyLists.find(model.getParty().getPartyMembers(), gc -> gc == model.getMainStory().getWillisCharacter());
             if (willis != null) {
                 partyMemberSay(willis, "This is not a good idea at all! " +
-                        "There's no telling what this machine will do if we continue wrecking it.");
+                        "There's no telling what this machine will do if we continue wrecking it.", FacialExpression.afraid);
             }
             println("Out of thin air, Arabella appears.");
             model.getLog().waitForAnimationToFinish();
             showExplicitPortrait(model,  model.getMainStory().getArabellaAppearance(),
                     "Arabella");
-            portraitSay("What are you doing! Stop! You're ruining everything!");
-            leaderSay(imOrWereCap() + " putting an end to your crazy plan Arabella. " + imOrWereCap() + " going to...");
+            portraitSay("What are you doing! Stop! You're ruining everything!", FacialExpression.angry);
+            leaderSay(imOrWereCap() + " putting an end to your crazy plan Arabella. " + imOrWereCap() + " going to...", FacialExpression.disappointed);
             println(model.getParty().getLeader().getFirstName() + " is interrupted by an ear-splitting noise from the machine. Then, " +
                     "as suddenly as it started, it stops");
             leaderSay("What...");

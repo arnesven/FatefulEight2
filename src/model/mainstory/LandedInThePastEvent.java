@@ -1,6 +1,7 @@
 package model.mainstory;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.states.DailyEventState;
 import model.states.GameState;
 import util.MyLists;
@@ -14,7 +15,7 @@ public class LandedInThePastEvent extends DailyEventState {
     protected void doEvent(Model model) {
         MyLists.forEach(model.getParty().getPartyMembers(),
                 gc -> model.getParty().forceEyesClosed(gc, false));
-        leaderSay("I feel like I've been turned inside out. What happened to the castle?");
+        leaderSay("I feel like I've been turned inside out. What happened to the castle?", FacialExpression.questioning);
         if (model.getParty().size() > 1) {
             partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "Where are we?");
             leaderSay("No idea. That crazy machine must have teleported us somewhere.");

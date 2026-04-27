@@ -10,6 +10,7 @@ import model.classes.WeightedSkill;
 import model.items.*;
 import model.items.spells.AlchemySpell;
 import model.items.spells.GiantGrowthSpell;
+import model.items.spells.HarmonizeSpell;
 import model.items.spells.SummonFamiliarSpell;
 import model.items.weapons.Club;
 import model.races.Race;
@@ -114,7 +115,7 @@ public class DruidClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new SummonFamiliarSpell(), new GiantGrowthSpell(), new AlchemyPackage());
+        return List.of(new SummonFamiliarSpell(), new HarmonizeSpell(), new AlchemyPackage());
     }
 
     private static class AlchemyPackage extends InventoryDummyItem {

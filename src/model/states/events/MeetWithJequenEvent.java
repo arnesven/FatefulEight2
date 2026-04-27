@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.appearance.FacialExpression;
 import model.journal.JournalEntry;
 import model.mainstory.MainStory;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
@@ -54,7 +55,7 @@ public class MeetWithJequenEvent extends DailyEventState {
         portraitSay("I don't understand. Are you or are you not?");
         leaderSay(MyStrings.capitalize(iWasOrWeWere()) + " investigating a matter for the " + ardh.getLordTitle() + ". The quest " +
                 "finally brought " + meOrUs() + " to the ancient stronghold to the west of these lands. But when " + iOrWe() + " returned " +
-                iWasOrWeWere() + " wrongfully imprisoned!");
+                iWasOrWeWere() + " wrongfully imprisoned!", FacialExpression.disappointed);
         leaderSay(iOrWeCap() + " narrowly escaped the " + kingdom +
                 " alive. It seems the " + ardh.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                 "Because of this, the kingdom has descended into disorder.");

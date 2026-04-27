@@ -19,7 +19,9 @@ public class FarmerNPCClass extends NPCClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnLooseShirt(characterAppearance, MyColors.BEIGE);
+        Looks.putOnLooseShirt(characterAppearance,
+                characterAppearance.getRace().getColor() == MyColors.BEIGE ?
+                        MyColors.DARK_GREEN : MyColors.BEIGE);
         Looks.putOnFarmersHat(characterAppearance, MyColors.BROWN);
     }
 

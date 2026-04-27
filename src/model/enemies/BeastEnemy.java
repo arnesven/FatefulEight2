@@ -7,6 +7,8 @@ import model.combat.Combatant;
 import model.combat.Damage;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.states.CombatEvent;
+import model.states.GameState;
+import util.MyRandom;
 
 public abstract class BeastEnemy extends Enemy {
     public static final int DOCILE = 1;
@@ -30,6 +32,23 @@ public abstract class BeastEnemy extends Enemy {
         if (aggro < RAMPAGING && !isDead()) {
             increaseAggressiveness();
             combatEvent.println(getName() + " got angrier.");
+        }
+    }
+
+    @Override
+    public void takeCombatTurn(Model model, CombatEvent combatEvent) {
+        if (aggro == DOCILE || (aggro == NORMAL && MyRandom.flipCoin())) {
+            return;
+        }
+        super.takeCombatTurn(model, combatEvent);
+    }
+
+    @Override
+    public void conditionsEndOfCombatRoundTrigger(Model model, GameState state) {
+        super.conditionsEndOfCombatRoundTrigger(model, state);
+        if (aggro <= NORMAL && state instanceof CombatEvent combat && MyRandom.rollD10() == 10) {
+            state.println("The " + getName() + " has retreated from combat.");
+            combat.retreatEnemy(this);
         }
     }
 

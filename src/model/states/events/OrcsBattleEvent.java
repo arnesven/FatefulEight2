@@ -129,8 +129,8 @@ public class OrcsBattleEvent extends DailyEventState {
                 "which is threatening the realm. But this can't be news to you. Now please, I'm very busy. What is your business here?");
         CastleLocation castle = findClosestCastle(model);
         KingdomWar war = makeWar(model, castle);
-        int choice = multipleOptionArrowMenu(model, 24, 26, List.of("Join a unit", "Direct the battle", "Don't get involved"));
-        if (choice == 0) {
+        int choice = multipleOptionArrowMenu(model, 24, 26, List.of("Direct the battle", "Join a unit", "Don't get involved"));
+        if (choice == 1) {
             leaderSay("We're the new recruits. Just point us in the direction of this orcish scum and victory shall soon be ours.");
             portraitSay("I admire your fervor. Just head on down the hill and you'll soon see the ranks. " +
                     "Just find any unit and report to the lieutenant.");
@@ -144,7 +144,7 @@ public class OrcsBattleEvent extends DailyEventState {
                 return;
             }
             victorious = fightEvent.isVictorious();
-        } else if (choice == 1) {
+        } else if (choice == 0) {
             leaderSay("We're the tacticians you mentioned. We'll stay with you and help you lead the battle.");
             portraitSay("All right! Let's go give the enemy a taste of our zeal!");
             BattleState battle = new BattleState(model, war, false);

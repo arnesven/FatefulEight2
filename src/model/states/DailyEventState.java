@@ -425,10 +425,15 @@ public abstract class DailyEventState extends GameState {
                 } else {
                     println("The " + enemy + " had some horses which you happily take ownership of.");
                 }
+                if (!getModel().getParty().canBuyMoreHorses()) {
+                    println("But you cannot handle anymore horses at the moment.");
+                }
                 for (int i = numberOfHorses; i > 0; --i) {
-                    Horse horse = HorseHandler.generateHorse();
-                    getModel().getParty().getHorseHandler().addHorse(horse);
-                    println("The party got a " + horse.getName() + ".");
+                    if (getModel().getParty().canBuyMoreHorses()) {
+                        Horse horse = HorseHandler.generateHorse();
+                        getModel().getParty().getHorseHandler().addHorse(horse);
+                        println("The party got a " + horse.getName() + ".");
+                    }
                 }
             }
         }

@@ -67,6 +67,7 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         CharacterAppearance fieldGeneralAppearance = war.getGeneralAppearance();
         showEventCard("You wander into the army camp.");
         intro(this, fieldGeneralAppearance.getRace());
+        model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
         if (war.isInitialBattle()) {
             portraitSay("Hello there! You must be the ones the Commander mentioned in his message. " +
