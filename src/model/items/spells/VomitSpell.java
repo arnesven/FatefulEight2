@@ -21,8 +21,7 @@ public class VomitSpell extends CombatSpell {
 
     private static final Sprite SPRITE = new GreenSpellSprite(8, true);
     private static final int CASTS_REQUIRED_TO_VOMIT_PEARL = 3;
-    private CombatEvent combatInstance = null;
-    private Map<Combatant, Integer> castCounts;
+    private static Map<Combatant, Integer> castCounts = new HashMap<>();
 
     public VomitSpell() {
         super("Expunge", 16, MyColors.GREEN, 8, 1, false);
@@ -35,10 +34,6 @@ public class VomitSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (combat != combatInstance) {
-            combatInstance = combat;
-            castCounts = new HashMap<>();
-        }
         if (target instanceof GameCharacter || target instanceof HumanoidEnemy) {
             combat.println(target.getName() + " becomes queasy.");
             if (target.hasCondition(PossessedCondition.class)) {
