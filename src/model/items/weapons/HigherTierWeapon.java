@@ -198,4 +198,9 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
         inner.wielderWasAttackedBy(enemy, combatEvent);
     }
+
+//    @Override
+//    public int getStance() {  // TODO: Add this
+//        return inner.getStance();
+//    }
 }

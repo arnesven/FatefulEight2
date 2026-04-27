@@ -2,8 +2,11 @@ package model.map.locations;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.mainstory.MainStory;
 import model.map.HexLocation;
+import model.quests.AncientStrongholdQuest;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyPair;
 import view.GameView;
 import view.MyColors;
@@ -100,6 +103,10 @@ public class AncientStrongholdLocation extends HexLocation {
                 if (model.getParty().size() > 1) {
                     partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()),
                             "Sounds wise. I don't want to go in there, but I guess we have no choice.");
+                }
+                if (MyLists.find(model.getParty().getQuestHandler().getOfferedQuestsAsList(), // TODO: Remove, quest is offered in PartFourStoryPart
+                        oq -> oq.getQuestName().equals(AncientStrongholdQuest.QUEST_NAME)) == null) {
+                    model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(AncientStrongholdQuest.QUEST_NAME));
                 }
             } else {
                 println("The door to the stronghold is shut and tightly locked. " +

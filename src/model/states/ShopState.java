@@ -276,12 +276,11 @@ public class ShopState extends GameState {
 
     protected boolean haggleForItem(Model model, Item it, int xPos, int yPos) {
         model.getTutorial().haggling(model);
-        GameCharacter haggler;
+        GameCharacter haggler = MyLists.maximumValue(model.getParty().getPartyMembers(),
+                gc -> gc.getRankForSkill(Skill.Mercantile));
         if (model.getParty().size() > 1) {
             print("Who would you like to haggle for " + it.getName() + "? ");
-            haggler = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-        } else {
-            haggler = model.getParty().getPartyMember(0);
+            haggler = model.getParty().partyMemberInput(model, this, haggler);
         }
         SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(model, this, haggler, Skill.Mercantile, HAGGLE_DIFFICULTY,
                 5, haggler.getRankForSkill(Skill.Persuade));

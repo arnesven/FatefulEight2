@@ -5,6 +5,7 @@ import model.RecruitInfo;
 import model.RecruitableCharacter;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -63,7 +64,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         partyMemberSay(main, "Hello there " + friend.getFirstName() + ".");
         friend.setClass(Classes.ART);
         showExplicitPortrait(model, friend.getAppearance(), friend.getFirstName());
-        portraitSay(main.getFirstName() + ", you're back! How have you been?");
+        portraitSay(main.getFirstName() + ", you're back! How have you been?", FacialExpression.relief);
         partyMemberSay(main, "Good. Do you want to hang out today?");
         portraitSay("Yes, of course. I'm just about to finish up my shift. Why don't you wait outside for a little bit.");
         partyMemberSay(main, "Alright.");
@@ -108,7 +109,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         } else {
             println(main.getFirstName() + " and " + friend.getFirstName() + " take the boat back to shore.");
         }
-        portraitSay("I live not far from here. Care to walk me home?");
+        portraitSay("I live not far from here. Care to walk me home?", FacialExpression.relief);
         partyMemberSay(main, "Certainly. Lead the way.");
         println("After a short walk the two end up in front of a small house.");
         portraitSay("Well this is it.");
@@ -118,9 +119,9 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         } else {
             println(friend.getFirstName() + " embraces " + main.getFirstName() + " warmly.");
         }
-        portraitSay("This was fun. You'll visit me again, right?");
-        partyMemberSay(main, "Of course. See ya " + friend.getFirstName() + ".");
-        portraitSay("Goodbye for now " + main.getFirstName());
+        portraitSay("This was fun. You'll visit me again, right?", FacialExpression.relief);
+        partyMemberSay(main, "Of course. See ya " + friend.getFirstName() + ".", FacialExpression.relief);
+        portraitSay("Goodbye for now " + main.getFirstName(), FacialExpression.relief);
         println(main.getFirstName() + " returns to the party");
 
         BoyfriendGirlfriendDestinationTask dt = findTask(model);
@@ -140,7 +141,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
                 heOrSheCap(main.getGender()) + " finds the little cottage and knocks on the door. " +
                 friend.getFirstName() + " opens it and smiles.");
         showExplicitPortrait(model, friend.getAppearance(), friend.getFirstName());
-        portraitSay(main.getFirstName() + ", I've missed you.");
+        portraitSay(main.getFirstName() + ", I've missed you.", FacialExpression.relief);
         partyMemberSay(main, "Here I am again. What are you up to today?");
         portraitSay("Actually, I'm off to work now. Can we meet this evening?");
         partyMemberSay(main, "Sure. Should I come back around sunset?");
@@ -159,7 +160,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
                 friend.getFirstName() + "'s house.");
         friend.setClass(Classes.BEAUTY);
         showExplicitPortrait(model, friend.getAppearance(), friend.getFirstName());
-        partyMemberSay(main, "Hi there " + friend.getFirstName() + ". You look nice.");
+        partyMemberSay(main, "Hi there " + friend.getFirstName() + ". You look nice.", FacialExpression.relief);
         portraitSay("Thank you. I wasn't sure what you had planned, so I took something pretty but comfortable.");
         if (chosenActivity == 0) {
             partyMemberSay(main, "Pretty is good, I was thinking we could have dinner at a nice restaurant.");
@@ -185,10 +186,10 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         }
 
         portraitSay("This has been a really nice date " + main.getFirstName() + ". But I have to ask you, where do " +
-                "you think this relationship is going?");
+                "you think this relationship is going?", FacialExpression.questioning);
         partyMemberSay(main, "Oh... I've just been enjoying our time together so much, I haven't really " +
                 "been thinking about what the next step would be.");
-        portraitSay("What would you want it to be?");
+        portraitSay("What would you want it to be?", FacialExpression.questioning);
 
         int choice = multipleOptionArrowMenu(model, 24, 24, List.of("Ask to settle down", "Ask to join party"));
         if (choice == 0) {
@@ -231,9 +232,9 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
         leaderSay("Hello there " + main.getFirstName() + ", who's your friend?");
         partyMemberSay(main, "Uhm, this is my " + (friend.getGender() ? "girl":"boy") + "friend, " +
                 friend.getName() + ". " + heOrSheCap(friend.getGender()) + " has expressed an interest in joining our party.");
-        leaderSay("Oh, really. What are your qualifications?");
+        leaderSay("Oh, really. What are your qualifications?", FacialExpression.questioning);
         portraitSay("Well, currently I'm working in a shop, you could perhaps call me an Artisan.");
-        leaderSay("Uh-huh, what else? How are you with a weapon?");
+        leaderSay("Uh-huh, what else? How are you with a weapon?", FacialExpression.questioning);
         portraitSay( "I've worked as a guard and could function well as a Captain. I'm also " +
                 "a decent hunter, and I've dabbled in some white and blue magic. What class would you like me to assume if " +
                 "I would to join your party?");
@@ -253,7 +254,7 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
             partyMemberSay(main, "This is great " + friend.getFirstName() + "! Now we can be together all the time.");
             partyMemberSay(friend, "I know. I'm so excited!");
             leaderSay("Okay... Settle down you two. Can you try to be a little discreet? Just to spare the rest of us.");
-            partyMemberSay(main, "Sure. We can get our own tent.");
+            partyMemberSay(main, "Sure. We can get our own tent.", FacialExpression.relief);
             partyMemberSay(friend, "Hehe...");
             findTask(model).setCompleted(true);
             friend.addToAttitude(main, 10);
@@ -309,9 +310,9 @@ public class RevisitBoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriend
             } else {
                 partyMemberSay(main, "Actually, no... I was thinking you could come with me?");
                 portraitSay("Oh " + main.getFirstName() + ", I don't think I can do that. That life is just not for me.");
-                partyMemberSay(main, "That makes me sad. Maybe we just aren't right for each other.");
-                portraitSay("Maybe not. But I'm glad we got to meet again. Is this goodbye then?");
-                partyMemberSay(main, "It seems like it.");
+                partyMemberSay(main, "That makes me sad. Maybe we just aren't right for each other.", FacialExpression.disappointed);
+                portraitSay("Maybe not. But I'm glad we got to meet again. Is this goodbye then?", FacialExpression.sad);
+                partyMemberSay(main, "It seems like it.", FacialExpression.sad);
                 failEnding(main);
             }
         } else {

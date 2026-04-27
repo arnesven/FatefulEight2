@@ -64,6 +64,9 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
                 blockPosition(col, 7);
             }
         }
+
+        blockPosition(2, 2); // Block by gate portcullis
+        blockPosition(4,2);
     }
 
     public CastleDailyActionState(Model model, CastleLocation castleLocation) {

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -49,41 +50,44 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
         model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, friend, friend.getRace().getName());
         portraitSay("But I see no money has changed hands yet. I'll pay double!");
-        partyMemberSay(main, "Hey now. I was here first! The early bird gets the worm.");
-        portraitSay("You can have your worms. I want the strawberries. Here's the money.");
+        partyMemberSay(main, "Hey now. I was here first! The early bird gets the worm.", FacialExpression.disappointed);
+        portraitSay("You can have your worms. I want the strawberries. Here's the money.", FacialExpression.wicked);
         showExplicitPortrait(model, farmerPortrait, "Farmer");
-        portraitSay("I'm not sure that's fair " + (friend.getGender() ? "ma'am" : "sir") + "...");
+        portraitSay("I'm not sure that's fair " + (friend.getGender() ? "ma'am" : "sir") + "...", FacialExpression.questioning);
 
         UrbanLocation homeTown = main.getHomeTown(model);
         String homeTownName = homeTown.getPlaceName();
-        partyMemberSay(main, "Wait a minute. Don't I know you? You're from " + homeTownName + "?");
+        partyMemberSay(main, "Wait a minute. Don't I know you? You're from " + homeTownName + "?", FacialExpression.questioning);
         showExplicitPortrait(model, friend, friend.getRace().getName());
         portraitSay("Yeah, that's right. I grew up there... ");
         partyMemberSay(main, "...");
         String friendName = friend.getGender() ? "Hala" : "Haldir";
-        partyMemberSay(main, friendName + "?");
+        partyMemberSay(main, friendName + "?", FacialExpression.questioning);
         println("The expression on the " + friend.getRace().getName().toLowerCase() +
                 " changes from a scowl to mild surprise.");
         showExplicitPortrait(model, friend, friendName);
-        portraitSay(main.getFirstName() + "? Is that really you. I didn't even recognize you!");
+        portraitSay(main.getFirstName() + "? Is that really you. I didn't even recognize you!", FacialExpression.relief);
         partyMemberSay(main, "No, I supposed I have changed quite a bit. What has it been, twenty years?");
         portraitSay("Yes, something like that. We were at school together, I remember we used to play all the time.");
         partyMemberSay(main, "Yes. Those were some good times in " + homeTownName + ". I tell you what, why don't you " +
                 "let me buy these strawberries, and we can share them while we talk about old times?");
-        portraitSay("That sounds delightful!");
+        portraitSay("That sounds delightful!", FacialExpression.relief);
 
         println(friendName + " and " + main.getFirstName() + " spend the rest of the day in a park talking about their " +
                 "childhood. They reminisce about their memories and mischief they used to get up to.");
-        portraitSay("We were a bit naughty back then!");
+        portraitSay("We were a bit naughty back then!", FacialExpression.relief);
         partyMemberSay(main, "We were kids. Kids do stuff like that. So what have you been up to all these years?");
         portraitSay("Well, things got a bit hard for me after school. I left " + homeTownName + " looking for work " +
                 "but could never find any work lasting more than a couple of months. I guess I just kind of drifted around " +
-                "for a while. I didn't mind so much, to be honest, but life wasn't always easy. Then, a few years back I came " +
+                "for a while.");
+        partyMemberSay(main, "That sounds a little rough.", FacialExpression.sad);
+        portraitSay("I didn't mind so much, to be honest, but life wasn't always easy. Then, a few years back I came " +
                 "to this town and was offered a job as an assistant shopkeeper. It doesn't pay much, but it's enough for " +
-                "me to be able to rent a little cottage in town. Life is simple and quite. What about you? Has your life been " +
-                "filled with adventure, like we used to dream about?");
+                "me to be able to rent a little cottage in town. Life is simple and quite.");
+        partyMemberSay(main, "That's great. I'm happy for you.", FacialExpression.relief);
+        portraitSay("What about you? Has your life been filled with adventure, like we used to dream about?", FacialExpression.questioning);
         partyMemberSay(main, "Something like that. I'm actually part of an adventuring party, we're only in town temporarily.");
-        portraitSay("Oh, I see.");
+        portraitSay("Oh, I see.", FacialExpression.sad);
         println(friendName + " seems slightly disappointed.");
 
         UrbanLocation mainHomeTown = main.getHomeTown(model);
@@ -99,7 +103,7 @@ public class BoyfriendGirlfriendEvent extends AbstractBoyfriendGirlfriendEvent {
         int topic = topicChoice(model, main, friendCharacter);
         println("The two keep talking but evening is soon approaching.");
         portraitSay("I'm afraid I need to run along now. It's a been a pleasure seeing you again " + main.getFirstName() +
-                ". Won't you please visit me the next time your in town?");
+                ". Won't you please visit me the next time your in town?", FacialExpression.relief);
         partyMemberSay(main, "Of course " + friendName + ". I'll make sure to visit you soon again.");
         println(main.getFirstName() + " and " + friendName + " part ways. Each looking back several times, " +
                 "but missing each others' glances.");

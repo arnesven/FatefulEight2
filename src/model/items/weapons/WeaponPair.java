@@ -289,6 +289,9 @@ public class WeaponPair extends Weapon implements BlockingItem {
 
     @Override
     protected MyPair<Integer, String> getAttackBonusForRace() {
+        if (mainHand.getAttackBonusForRace() == null || offHand.getAttackBonusForRace() == null) {
+            return null;
+        }
         if (mainHand.getAttackBonusForRace().second.equals(offHand.getAttackBonusForRace().second)) {
             return mainHand.getAttackBonusForRace();
         }

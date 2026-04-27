@@ -10,11 +10,13 @@ import model.enemies.*;
 import model.items.Item;
 import model.items.special.PearlItem;
 import model.items.spells.TeleportSpell;
+import model.mainstory.MainStory;
 import model.quests.scenes.CombatSubScene;
 import model.states.CombatEvent;
 import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -345,35 +347,54 @@ public class AncientStrongholdQuest extends MainQuest {
         }
 
         private void willisIntro(Model model, QuestState state) {
-            if (!willisInParty(model)) {
-                return;
-            }
             if (willisIntroElevatorRun && willisIntroOtherRun) {
                 return;
             }
 
+            GameCharacter willis = MyLists.find(model.getParty().getPartyMembers(),
+                    gc -> gc == model.getMainStory().getWillisCharacter());
+            GameCharacter other = model.getParty().getLeader();
+            if (willis == null) { // Find replacement for willis.
+                for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                    SkillCheckResult result = gc.testSkillHidden(Skill.Logic, 9, 0);
+                    if (result.isSuccessful()) {
+
+                        willis = gc;
+                        other = model.getParty().getRandomPartyMember(willis);
+                        break;
+                    }
+                }
+            } else if (willis == other) {
+                other = model.getParty().getRandomPartyMember(willis);
+            }
+            if (willis == null) {
+                return; // No Willis or wannabe-willis.
+            }
+
             if (isElevator && !willisIntroElevatorRun) {
-                willisSay(model, "This is arcanic machinery!");
-                state.leaderSay("Fascinating. Any idea what it could be good for?");
+                state.println(willis.getName() + " is looking intently at the machinery.");
+                state.partyMemberSay(willis, "This is arcanic machinery!");
+                state.partyMemberSay(other, "Fascinating. Any idea what it could be good for?");
                 willisIntroElevatorRun = true;
-                willisSay(model, "This machine probably powers the elevator I spotted on the outside of the stronghold.");
-                state.leaderSay("Interesting.");
-                willisSay(model, "...and this trap door we're standing on.");
+                state.partyMemberSay(willis, "This machine probably powers the elevator I spotted on the outside of the stronghold.");
+                state.partyMemberSay(other, "Interesting.");
+                state.partyMemberSay(willis, "...and this trap door we're standing on.");
                 state.println("You quickly jump away.");
-                state.leaderSay("Thanks for the heads up Willis.");
-                willisSay(model, "This control panel has some dials. My guess is we want all the dials cranked up to red " +
+                state.partyMemberSay(other, "Thanks for the heads up Willis.");
+                state.partyMemberSay(willis, "This control panel has some dials. My guess is we want all the dials cranked up to red " +
                         "to get this thing working. The wrong code might open the trap door.");
-                state.leaderSay("Okay, better let it be until we know what the code is.");
+                state.partyMemberSay(other, "Okay, better let it be until we know what the code is.");
             } else if (!isElevator && !willisIntroOtherRun) {
-                willisSay(model, "This is arcanic machinery!");
-                state.leaderSay("Fascinating. Any idea what it could be good for?");
+                state.println(willis.getName() + " is looking intently at the machinery.");
+                state.partyMemberSay(willis, "This is arcanic machinery!");
+                state.partyMemberSay(other, "Fascinating. Any idea what it could be good for?");
                 willisIntroOtherRun = true;
-                willisSay(model, "No clue. Maybe it is connected to the colored pearls some how.");
-                state.leaderSay("Interesting.");
-                willisSay(model, "This control panel has some dials. My guess is we want all the dials cranked up to red " +
+                state.partyMemberSay(willis, "No clue. Maybe it is connected to the colored pearls some how.");
+                state.partyMemberSay(other, "Interesting.");
+                state.partyMemberSay(willis, "This control panel has some dials. My guess is we want all the dials cranked up to red " +
                         "to get this thing working.");
-                state.leaderSay("Okay. Do you think it's safe to fiddle with it?");
-                willisSay(model, "I see no harm in it.");
+                state.partyMemberSay(other, "Okay. Do you think it's safe to fiddle with it?");
+                state.partyMemberSay(willis, "I see no harm in it.");
             }
         }
 
@@ -406,14 +427,6 @@ public class AncientStrongholdQuest extends MainQuest {
         }
 
         protected abstract AncientStrongholdControlPanel getControlPanel();
-    }
-
-    private void willisSay(Model model, String text) {
-        model.getParty().partyMemberSay(model, model.getMainStory().getWillisCharacter(), text);
-    }
-
-    private boolean willisInParty(Model model) {
-        return model.getParty().getPartyMembers().contains(model.getMainStory().getWillisCharacter());
     }
 
     @Override

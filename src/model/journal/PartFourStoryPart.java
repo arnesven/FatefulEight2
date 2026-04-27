@@ -8,6 +8,8 @@ import model.mainstory.MainStory;
 import model.mainstory.VisitLordEvent;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.map.WorldBuilder;
+import model.quests.AncientStrongholdQuest;
 import model.quests.MainQuest;
 import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
@@ -102,10 +104,10 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) { }
+    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) { } // TODO: Remove
 
     @Override
-    public String getHexInfo(Point position) {
+    public String getHexInfo(Point position) { // TODO: Remove
         return super.getHexInfo(position);
     }
 
@@ -271,6 +273,10 @@ public class PartFourStoryPart extends StoryPart {
                 model.transitionToDialog(new SimpleMessageView(model.getView(),
                         "Warning. It is recommended that your party members " +
                                 "are at least level 5 before venturing to the Ancient Stronghold."));
+                MainQuest mq = MainStory.getQuest(AncientStrongholdQuest.QUEST_NAME);
+                prepareQuest(mq, model.getLordPortrait(castle), castle.getLordName());
+                model.getParty().getQuestHandler().offerQuest(model, mq,
+                        WorldBuilder.getFortressPosition(model.getMainStory().getExpandDirection()));
                 increaseStep(model);
                 transitionStep(model);
             } else {

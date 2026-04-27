@@ -86,7 +86,7 @@ public class PartFiveStoryPart extends StoryPart {
 
     private class GoToAncientStrongholdEntry extends MainStoryTask {
         public GoToAncientStrongholdEntry() {
-            super("The Ancient Stronghold");
+            super("The Mystery of the Quad");
         }
 
         @Override

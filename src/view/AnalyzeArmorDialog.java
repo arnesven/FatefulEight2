@@ -44,7 +44,7 @@ public class AnalyzeArmorDialog extends AnalyzeDialog {
 
     private boolean cantEquip(GameCharacter gc, ArmorItem item) {
         if (gc.getEquipment().getWeapon().isTwoHanded() && item instanceof Accessory && ((Accessory) item).isOffHandItem()) {
-            return false;
+            return true;
         }
         return (!gc.getCharClass().canUseHeavyArmor() && item.isHeavy()) ||
                 (!gc.canChangeClothing() && item instanceof Clothing) ||
