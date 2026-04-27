@@ -480,8 +480,8 @@ public class CombatEvent extends DailyEventState {
     }
 
     public void doDamageToEnemyWithAnimation(Combatant target, Damage damage, GameCharacter damager) {
-        doDamageToEnemy(target, damage, damager);
         addFloatyDamage(target, damage.getAmount(), damage.getColor());
+        doDamageToEnemy(target, damage, damager);
     }
 
     public void doDamageToEnemy(Combatant target, Damage damage, GameCharacter damager) {

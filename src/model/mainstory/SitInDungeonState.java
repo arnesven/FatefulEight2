@@ -2,9 +2,7 @@ package model.mainstory;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.SilhouetteAppearance;
+import model.characters.appearance.*;
 import model.classes.Classes;
 import model.map.CastleLocation;
 import model.quests.Quest;
@@ -67,11 +65,11 @@ public class SitInDungeonState extends GameState {
         GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
         if (day == 1 && other != null) {
             partyMemberSay(other, "What in the world just happened? Has " + castle.getLordName() + " lost " +
-                    hisOrHer(castle.getLordGender()) + " mind?");
+                    hisOrHer(castle.getLordGender()) + " mind?", FacialExpression.questioning);
             leaderSay("Maybe. " + heOrShe(castle.getLordGender()) + " seemed completely different...");
             partyMemberSay(other, "Any chance we can get out of here?");
             leaderSay("I saw a lot of other prisoners in the cells on our way in here.");
-            partyMemberSay(other, "What do you mean by that?");
+            partyMemberSay(other, "What do you mean by that?", FacialExpression.questioning);
             leaderSay("I mean, either the " + castle.getLordTitle() + " has been very busy imprisoning people, " +
                     "or this place is not so easily escapable.");
             partyMemberSay(other, "Let's hope it's the former and not the latter.");
@@ -82,24 +80,24 @@ public class SitInDungeonState extends GameState {
             advisor.setMascaraColor(MyColors.BLACK);
             advisor.setMouth(0); // To prevent "Smiley mouth"
             advisor.setClass(Classes.ARISTOCRAT);
-            leaderSay("He's been beaten badly.");
+            leaderSay("He's been beaten badly.", FacialExpression.afraid);
             model.getLog().waitForAnimationToFinish();
             PortraitSubView subView = new PortraitSubView(model.getSubView(), advisor, "Advisor");
             model.setSubView(subView);
             println(model.getParty().getLeader().getFirstName() + " helps the man sit up.");
             leaderSay("Are you all right?");
             println("The man coughs and spits up blood.");
-            subView.portraitSay(model, this, "I've been better. Thank you.");
-            leaderSay("I'd offer you some water... but, well I don't have any.");
+            subView.portraitSay(model, this, "I've been better. Thank you.", FacialExpression.relief);
+            leaderSay("I'd offer you some water... but, well I don't have any.", FacialExpression.sad);
             subView.portraitSay(model, this, "Yes, it seems my " + castle.getLordTitle() +
-                    "'s hospitality has taken a bit of a downward turn. It saddens me greatly.");
+                    "'s hospitality has taken a bit of a downward turn. It saddens me greatly.", FacialExpression.sad);
             if (model.getParty().getPartyMembers().contains(model.getMainStory().getCaidCharacter())) {
                 partyMemberSay(model.getMainStory().getCaidCharacter(),
                         "Why, it's Damal. He's an advisor to the " + castle.getLordTitle() +
                                 ". He's been at the court almost as long as I have.");
                 subView.portraitSay(model, this, "That's right. But I'm an advisor no more.");
             } else {
-                leaderSay("Who are you?");
+                leaderSay("Who are you?", FacialExpression.questioning);
                 subView.portraitSay(model, this, "My name is Damal. I've been an advisor to the " +
                         castle.getLordTitle() + " for a good fifteen years. Up until a few days ago that is.");
             }
@@ -116,25 +114,30 @@ public class SitInDungeonState extends GameState {
                     "baring many pretty and curious gifts but was not very specific about who they were from. All she would " +
                     "say was 'a great and generous lord in the " + direction + "'. I remember thinking it odd at the time, " +
                     "but I quickly put it out of my mind, I had many other duties to attend to.");
-            leaderSay("An envoy you say. What did she look like?");
+            leaderSay("An envoy you say. What did she look like?", FacialExpression.questioning);
             subView.portraitSay(model, this, "She was fair, dark, tall. Now that I think about it I think I've seen " +
                     "her several times at the castle since then.");
             leaderSay("What was she doing?");
-            subView.portraitSay(model, this, "She, was... aaagh!");
-            leaderSay("You're bleeding!");
-            subView.portraitSay(model, this, "Yes... I don't feel so good. I...");
+            subView.portraitSay(model, this, "She, was... aaagh!", FacialExpression.surprised);
+            leaderSay("You're bleeding!", FacialExpression.afraid);
+            subView.portraitSay(model, this, "Yes... I don't feel so good. I...", FacialExpression.afraid);
             println("Damal coughs up a lot of blood.");
-            leaderSay("Damal!");
+            leaderSay("Damal!", FacialExpression.surprised);
             if (other != null) {
-                partyMemberSay(other, "He must be hemorrhaging internally. Dammit, if only we had our gear, we could help him!");
+                partyMemberSay(other, "He must be hemorrhaging internally. Dammit, if only we had our gear, we could help him!",
+                        FacialExpression.disappointed);
             }
-            leaderSay("Try not to speak any more Damal. Guards! Guards! This prisoner is dying!");
+            leaderSay("Try not to speak any more Damal. Guards! Guards! This prisoner is dying!", FacialExpression.surprised);
             if (other != null) {
-                partyMemberSay(other, "Nobody's coming. They're just gonna let him die! Those bastards!");
+                partyMemberSay(other, "Nobody's coming. They're just gonna let him die! Those bastards!", FacialExpression.angry);
             }
             model.getLog().waitForAnimationToFinish();
             subView.forceEyesClosed(true);
-            leaderSay("He's... dead.");
+            leaderSay("He's... dead.", FacialExpression.sad);
+            GameCharacter cryer = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+            if (cryer != null) {
+                model.getParty().setWeeping(cryer, WeepingAmount.aLittle);
+            }
             if (other != null) {
                 partyMemberSay(other, "Murdered in cold blood. We must avenge him!");
                 leaderSay("Yes. But first we need to figure out a way out of here.");
@@ -143,6 +146,9 @@ public class SitInDungeonState extends GameState {
                         "crimson pearls, who's controlling him? Surely not the envoy, the Quad?");
                 partyMemberSay(other, "But we destroyed the Quad!");
                 leaderSay("Maybe there are more of them.");
+            }
+            if (cryer != null) {
+                model.getParty().setWeeping(cryer, WeepingAmount.none);
             }
             model.getLog().waitForAnimationToFinish();
             model.setSubView(subView.getPreviousSubView());

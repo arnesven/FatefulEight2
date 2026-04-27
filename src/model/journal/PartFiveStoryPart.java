@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.characters.appearance.SilhouetteAppearance;
 import model.items.Equipment;
 import model.items.Item;
@@ -139,33 +140,34 @@ public class PartFiveStoryPart extends StoryPart {
             showLord(model);
             portraitSay("My friends, welcome back.");
             leaderSay(MyStrings.capitalize(castle.getLordTitle()) + ", we've vanquished the spirit of the Quad!");
-            portraitSay("Indeed? Then why have our borders been overrun with orcish hordes?");
-            leaderSay("That... that can't be. I assure you, the enemy has been beaten.");
-            portraitSay("Hmmm...");
+            portraitSay("Indeed? Then why have our borders been overrun with orcish hordes?", FacialExpression.questioning);
+            leaderSay("That... that can't be. I assure you, the enemy has been beaten.", FacialExpression.afraid);
+            portraitSay("Hmmm...", FacialExpression.wicked);
             println("The " + castle.getLordTitle() + " turns as to address the many bystanders in the throne room.");
             portraitSay("My subjects, I fear we have been lead astray for too long. For too long we let ourselves " +
                     "become weak and soft. We have permitted the forces of evil to harass our borders and we have " +
-                    "let corruption seep into the heart of our kingdom.");
-            leaderSay(castle.getLordName() + ", what are you talking about?");
+                    "let corruption seep into the heart of our kingdom.", FacialExpression.wicked);
+            leaderSay(castle.getLordName() + ", what are you talking about?", FacialExpression.questioning);
             println("The " + castle.getLordTitle() + " seems to ignore you.");
             portraitSay("Even I, your most devoted servant, your most resolute leader, have let myself be " +
-                    "swayed by the voices of serpents!");
-            leaderSay("Who are you calling serpents? I don't like the sound of this.");
-            portraitSay("But no more! I have decided to turn the tables on this evil!");
-            leaderSay("My lord! If it is true what you say about the attacks in the border lands, we must...");
+                    "swayed by the voices of serpents!", FacialExpression.disappointed);
+            leaderSay("Who are you calling serpents? I don't like the sound of this.", FacialExpression.disappointed);
+            portraitSay("But no more! I have decided to turn the tables on this evil!", FacialExpression.disappointed);
+            leaderSay("My lord! If it is true what you say about the attacks in the border lands, we must...", FacialExpression.afraid);
             portraitSay("We must nothing! Least not anything which you would advise. Guards, arrest these " +
-                    "jackals!");
+                    "jackals!", FacialExpression.angry);
             if (model.getParty().getPartyMembers().contains(model.getMainStory().getCaidCharacter())) {
                 partyMemberSay(model.getMainStory().getCaidCharacter(),
-                        "Arrest us? My Lord! I've been nothing but loyal to you all my life. And so have these adventurers!");
-                portraitSay("I'm sorry Caid, but you seem to be in league with these traitors.");
+                        "Arrest us? My Lord! I've been nothing but loyal to you all my life. And so have these adventurers!", FacialExpression.afraid);
+                portraitSay("I'm sorry Caid, but you seem to be in league with these traitors.", FacialExpression.wicked);
             }
             if (model.getParty().getPartyMembers().contains(model.getMainStory().getWillisCharacter())) {
                 partyMemberSay(model.getMainStory().getWillisCharacter(),
-                        "This is madness! We've done nothing wrong.");
+                        "This is madness! We've done nothing wrong.", FacialExpression.disappointed);
+                portraitSay("I'm sorry Willis. I've always put up with your ramblings, but now it seems I shan't have to anymore.");
             }
-            leaderSay("This is some kind of misunderstanding! We're innocent!");
-            portraitSay("Lock them in the dungeons!");
+            leaderSay("This is some kind of misunderstanding! We're innocent!", FacialExpression.disappointed);
+            portraitSay("Lock them in the dungeons!", FacialExpression.wicked);
             println("Before you can reach for your weapons the " + castle.getLordTitle() + "'s guards seize you " +
                     "and carry you down the hall. You are all thoroughly searched and all of your belongings are taken from you. " +
                     "Then you are promptly thrown in a cell in the castle dungeons, and a heavy door of metal " +

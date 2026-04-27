@@ -172,6 +172,11 @@ public class BrigandInBurgundyEvent extends DailyEventState {
             portraitSay("Uh, yes.");
             leaderSay("Well, good luck in your travels Brigand. " + iOrWeCap() + "'ll be on " + myOrOur() + " way now.");
             portraitSay("Farewell noble adventurer! Until we meet again.");
+        } else {
+            showExplicitPortrait(model, brigand.getAppearance(), brigand.getName());
+            portraitSay("What's the matter?");
+            leaderSay(iOrWeCap() + " can't go any further.");
+            portraitSay("Can't handle the heat? I get it. See you around...");
         }
     }
 

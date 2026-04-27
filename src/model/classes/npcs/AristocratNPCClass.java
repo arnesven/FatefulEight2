@@ -15,4 +15,9 @@ public class AristocratNPCClass extends NPCClass {
         MagicianClass.putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY);
         Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_BLUE, MyColors.DARK_GRAY);
     }
+
+    @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
 }

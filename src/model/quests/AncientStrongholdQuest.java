@@ -356,7 +356,7 @@ public class AncientStrongholdQuest extends MainQuest {
             GameCharacter other = model.getParty().getLeader();
             if (willis == null) { // Find replacement for willis.
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    SkillCheckResult result = gc.testSkillHidden(Skill.Logic, 9, 0);
+                    SkillCheckResult result = gc.testSkillHidden(Skill.Logic, 11, 0);
                     if (result.isSuccessful()) {
 
                         willis = gc;

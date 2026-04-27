@@ -46,7 +46,8 @@ public class BleedingCondition extends Condition {
 
     @Override
     public ConditionHelpDialog getHelpView(GameView view) {
-        return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is bleeding and " +
+        return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is " +
+                "bleeding from a wound and " +
                 "will suffer damage each combat round until healed.");
     }
 }
