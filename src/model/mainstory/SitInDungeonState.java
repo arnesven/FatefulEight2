@@ -137,6 +137,7 @@ public class SitInDungeonState extends GameState {
             GameCharacter cryer = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             if (cryer != null) {
                 model.getParty().setWeeping(cryer, WeepingAmount.aLittle);
+                partyMemberSay(cryer, "Damal...");
             }
             if (other != null) {
                 partyMemberSay(other, "Murdered in cold blood. We must avenge him!");

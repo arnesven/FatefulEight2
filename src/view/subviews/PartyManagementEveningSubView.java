@@ -4,6 +4,9 @@ import model.Model;
 import model.Party;
 import model.SteppingMatrix;
 import model.horses.DogHorse;
+import model.journal.InitialStoryPart;
+import model.journal.PartSixStoryPart;
+import model.journal.StoryPart;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TalkToTravellerNode;
@@ -62,7 +65,14 @@ public class PartyManagementEveningSubView extends DailyActionSubView {
         drawExtraTents(model);
         drawPartyArea(model, campfirePositions);
         drawDog(model);
+        drawMainStoryThings(model);
         drawCallouts(model);
+    }
+
+    private void drawMainStoryThings(Model model) {
+        // FEATURE: Let story part draw things between tent 1 and 2,
+        // For example, draw Everix in Part Six, first lying down and then standing up
+        // after talking to her.
     }
 
     private void drawRoad(Model model) {

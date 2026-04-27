@@ -82,7 +82,7 @@ public class PortraitSubView extends SubView {
             }
         }
         if (cls.id() == Classes.None.id()) {
-            if (race.getColor() == MyColors.BEIGE) {
+            if (raceToUse.getColor() == MyColors.BEIGE) {
                 cls = new NoClass(MyColors.DARK_GREEN);
             }
         }

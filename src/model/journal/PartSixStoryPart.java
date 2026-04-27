@@ -4,9 +4,14 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
-import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
+import model.characters.appearance.WeepingAmount;
 import model.classes.Classes;
+import model.horses.Horse;
+import model.horses.Pony;
+import model.horses.Regal;
+import model.horses.Sphinx;
 import model.items.spells.VomitSpell;
 import model.mainstory.*;
 import model.mainstory.jungletribe.GainSupportOfJungleTribeTask;
@@ -15,10 +20,7 @@ import model.quests.*;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 import model.tasks.DestinationTask;
-import util.MyLists;
-import util.MyPair;
-import util.MyStrings;
-import util.MyTriplet;
+import util.*;
 import view.LogView;
 
 import java.awt.*;
@@ -262,11 +264,11 @@ public class PartSixStoryPart extends StoryPart {
             println("Slowly, Everix gets up.");
             leaderSay("Didn't expect to see us again did you?");
             portraitSay("No. But I'm glad to see you. The last thing I remember is " + castle.getLordName() +
-                    "'s thugs beating me up, and interrogating me.");
+                    "'s thugs beating me up, and interrogating me.", FacialExpression.relief);
             leaderSay("Interrogating you, about what?");
             portraitSay("They were asking about you and that damn crimson pearl.");
             leaderSay("About " + meOrUs() + "? And the pearl? Wait a minute, Everix, let's back up. " +
-                    "Why were you in " + castle.getLordName() + "'s dungeons anyway?");
+                    "Why were you in " + castle.getLordName() + "'s dungeons anyway?", FacialExpression.questioning);
             String companyName = "'" + model.getParty().getLeader().getFullName() + "'s Company'";
             portraitSay("It was about a week ago I think. " + castle.getLordName() +
                     "'s troops came to our town. They were asking if anybody had seen or " +
@@ -277,7 +279,7 @@ public class PartSixStoryPart extends StoryPart {
                     "have told them about you, and I think he must have mentioned the crimson pearl you found " +
                     "because once they'd found me they kept asking me about it.");
             if (model.getParty().getPartyMembers().contains(whosUncle)) {
-                partyMemberSay(whosUncle, "My uncle... what happened then?");
+                partyMemberSay(whosUncle, "My uncle... what happened then?", FacialExpression.afraid);
                 uncle = "your uncle";
             } else {
                 leaderSay("Then what happened?");
@@ -289,15 +291,20 @@ public class PartSixStoryPart extends StoryPart {
                     " however, when he realized the " + castle.getLordTitle() + "'s intentions were less than honorable, he " +
                     "wasn't to keen on cooperating.");
             if (model.getParty().getPartyMembers().contains(whosUncle)) {
-                partyMemberSay(whosUncle, "That old fool.");
+                partyMemberSay(whosUncle, "That old fool.", FacialExpression.disappointed);
                 portraitSay("I'm sorry to say, I don't think he survived their beatings.");
-                partyMemberSay(whosUncle, "Uncle... No!");
+                partyMemberSay(whosUncle, "Uncle... No!", FacialExpression.sad);
+                model.getParty().setWeeping(whosUncle, WeepingAmount.aLittle);
                 leaderSay(whosUncle.getFirstName() + ", I'm so sorry...");
             }
             leaderSay("Did you tell them about your friend the Witch?");
             portraitSay("No, I never got around to it. What did she tell you about the crimson pearl? " +
                     "What's all this about really?");
             String direction = model.getMainStory().getExpandDirectionName().toLowerCase();
+            if (model.getParty().getPartyMembers().contains(whosUncle)) {
+                model.getLog().waitForAnimationToFinish();
+                model.getParty().setWeeping(whosUncle, WeepingAmount.none);
+            }
             println("You spend some time filling Everix in on what you've found out about " +
                     "the crimson pearl and the Quad. You tell about your adventures at the Ancient Stronghold," +
                     " and the latest events at " + castle.getName() + ", including your encounter with Damal the advisor " +
@@ -332,48 +339,48 @@ public class PartSixStoryPart extends StoryPart {
         protected void doEvent(Model model) {
             showWitch(model);
 
-            portraitSay("Oh... you lot. I was wondering when you...");
+            portraitSay("Oh... you lot. I was wondering when you...", FacialExpression.questioning);
             showEverix(model);
-            portraitSay("It's been a long time Edwina.");
+            portraitSay("It's been a long time Edwina.", FacialExpression.relief);
             showWitch(model);
-            portraitSay("Everix, what happened to you?");
+            portraitSay("Everix, what happened to you?", FacialExpression.surprised);
             showEverix(model);
             CastleLocation castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
             portraitSay(castle.getLordName() + "'s thugs got me. It's alright, just some light bruising.");
             showWitch(model);
-            portraitSay(castle.getLordName() + " must really have lost his mind, " +
+            portraitSay(castle.getLordName() + " must really have lost " + hisOrHer(castle.getLordGender()) + " mind, " +
                     "I keep hearing word about people trying to leave " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
-            leaderSay("Why do people want to leave?");
+            leaderSay("Why do people want to leave?", FacialExpression.questioning);
             portraitSay("Because " + castle.getLordName() + "'s troops are everywhere, and they are harassing everybody. Lately it feels " +
                             "like the " + CastleLocation.placeNameToKingdom(castle.getPlaceName()) + " is turning in to a big prison. " +
-                    "Why is "  + heOrShe(castle.getLordGender()) + " trying to make all of " + hisOrHer(castle.getLordGender()) + " miserable?");
+                    "Why is "  + heOrShe(castle.getLordGender()) + " trying to make all of " + hisOrHer(castle.getLordGender()) + " miserable?", FacialExpression.disappointed);
             leaderSay(iOrWeCap() + " think he may be under the influence of one of those crimson pearls.");
-            portraitSay("What makes you think that?");
+            portraitSay("What makes you think that?", FacialExpression.questioning);
             leaderSay("We met one of " + castle.getLordName() + "'s former advisors in the dungeons below " + castle.getPlaceName() + ".");
             leaderSay("Just a few weeks ago a strange envoy had arrived at the castle bringing gifts. She was acting suspiciously... It was around that time " +
                     castle.getLordTitle() + " " + castle.getLordName() + " went nuts.");
             showEverix(model);
             portraitSay("I'm sure this envoy is working for whoever is behind all of this.");
             showWitch(model);
-            portraitSay("It certainly seems that way. What did they look like?");
+            portraitSay("It certainly seems that way. What did they look like?", FacialExpression.questioning);
             leaderSay("Let me see... I think Damal mentioned she was tall, dark and fair.");
             portraitSay("That's not much to work with I'm afraid.");
-            leaderSay("We have to get back to the castle and try to find her, and interrogate her!");
+            leaderSay("We have to get back to the castle and try to find her, and interrogate her!", FacialExpression.disappointed);
             portraitSay("I don't think you'll be able to get anywhere near " + castle.getPlaceName() + " at the moment.");
             showEverix(model);
             portraitSay("Not with " + castle.getLordName() + " patrolling every inch of the kingdom in search of you. " +
                     "You'll be lucky if you can get into any town in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
-            boolean said = randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Let them come! I'll send them all to hell!");
+            boolean said = randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Let them come! I'll send them all to hell!", FacialExpression.angry);
             if (said) {
                 leaderSay("Calm down. We can't get carried away.");
             } else {
                 randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()), "Can't we just go somewhere far far away where " +
-                        castle.getLordName() + " won't ever find us?");
+                        castle.getLordName() + " won't ever find us?", FacialExpression.afraid);
             }
             leaderSay("We need a plan.");
             showWitch(model);
             portraitSay("Indeed, and allies.");
-            leaderSay("Hmm... we're a little thin in that section I'm afraid.");
+            leaderSay("Hmm... we're a little thin in that section I'm afraid.", FacialExpression.relief);
             portraitSay("Not necessarily. Right now " + CastleLocation.placeNameShort(castle.getPlaceName()) + "'s neighboring kingdoms " +
                     "are being subjected to " + castle.getLordName() + "'s spies and agents, as well as scores of fugitives. " +
                     "And I hear the orcish raids have spread to other kingdoms while mysteriously stopped in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ". " +
@@ -389,7 +396,7 @@ public class PartSixStoryPart extends StoryPart {
             leaderSay("Perhaps... It seems risky.");
             showEverix(model);
             portraitSay("You could even the odds a bit. You could try to gain the support of the " + model.getMainStory().getRemotePeopleName() + ".");
-            leaderSay("The " + model.getMainStory().getRemotePeopleName() + "?");
+            leaderSay("The " + model.getMainStory().getRemotePeopleName() + "?", FacialExpression.questioning);
             showWitch(model);
             portraitSay("Yes, they reside in the lands to the " + model.getMainStory().getExpandDirectionName().toLowerCase() +
                     ". With them on your side as well you are sure to prevail!");
@@ -397,18 +404,26 @@ public class PartSixStoryPart extends StoryPart {
                     " anyway. We might as well take a little tour and try to make some new friends.");
             randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()), "Sounds like a great adventure! What are we waiting for?");
             showEverix(model);
-            portraitSay("I don't think I'm up for the trip. I need to recuperate here for a while.");
+            portraitSay("I don't think I'm up for the trip. I need to recuperate here for a while.", FacialExpression.afraid);
             showWitch(model);
             portraitSay("Stay here as long as you wish Everix. You're welcome to stay too, but I would get going sooner rather than later. " +
                     "This kingdom's suffering is increasing day by day.");
-            leaderSay(iveOrWeve() + " got a big journey in front of " + meOrUs() + ".");
+            leaderSay(iveOrWeve() + " got a big journey in front of " + meOrUs() + ".", FacialExpression.relief);
             portraitSay("Be safe in your travels. Keep a low profile, at least while in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
             portraitSay("I have some provisions stowed away for situations such as these. Here, you can have them.");
             println("You gained 100 rations.");
             model.getParty().addToFood(100);
-            leaderSay("Thank you very much. This will help a lot.");
+            portraitSay("And, you can borrow my two horses, Skip and Trotter. I think you will need them more than I will.");
+            Horse h1 = new SkipHorse();
+            model.getParty().getHorseHandler().addHorse(h1);
+            Horse h2 = MyLists.any(model.getParty().getPartyMembers(), gc -> gc.getRace().isShort())
+                    ? new TrotterPony() : new TrotterHorse();
+            model.getParty().getHorseHandler().addHorse(h2);
+            println("You got " + h1.getName() + " (" + h1.getType() + ") and " +
+                    h2.getName() + " (" + h2.getType() + ") from the Witch.");
+            leaderSay("Thank you very much. This will help a lot.", FacialExpression.relief);
             showEverix(model);
-            portraitSay("Thank you for rescuing me. I owe you one.");
+            portraitSay("Thank you for rescuing me. I owe you one.", FacialExpression.relief);
             leaderSay("Goodbye.");
             progress();
         }
@@ -572,6 +587,27 @@ public class PartSixStoryPart extends StoryPart {
         @Override
         protected boolean allowPartyEvent() {
             return false;
+        }
+    }
+
+    private static class TrotterPony extends Pony {
+        @Override
+        public String getName() {
+            return "Trotter";
+        }
+    }
+
+    private static class TrotterHorse extends Regal {
+        @Override
+        public String getName() {
+            return "Trotter";
+        }
+    }
+
+    private static class SkipHorse extends Sphinx {
+        @Override
+        public String getName() {
+            return "Skip";
         }
     }
 }
