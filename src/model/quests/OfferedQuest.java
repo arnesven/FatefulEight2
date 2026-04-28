@@ -49,14 +49,12 @@ public class OfferedQuest implements Serializable {
     }
 
     public boolean isPartyInOfferPosition(Model model) {
-        // TODO: Fix support for quests in past world
         //if (world == WorldType.original) {
             return model.partyIsInOverworldPosition(remotePath.getFirst());
         //}
     }
 
     public boolean isPartyInRemotePosition(Model model) {
-        // TODO: Fix support for quests in past world
         //if (world == WorldType.original) {
         return model.partyIsInOverworldPosition(remotePath.getLast());
     }

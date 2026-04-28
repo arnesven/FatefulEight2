@@ -78,7 +78,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new ShiningAegisCondition(5),
                 new SlowedCondition(-1, 0),
                 new SneakAttackCondition(),
-                new StrangenessCondition(-1),
+                new RepulsiveCondition(-1),
                 new StrengthPotion().getCondition(),
                 new SummonCondition(null),
                 new TamedCondition(),

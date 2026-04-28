@@ -99,7 +99,7 @@ public class CrimsonAssassinsInvitationEvent extends DailyEventState {
             randomSayIfPersonality(PersonalityTrait.cold, leader,
                     "I say we take the money. So what if we have to off somebody? We've done that before.");
         }
-        print("Do you accept the writ? (Y/N) "); // TODO: Add tutorial chapter
+        print("Do you accept the writ? (Y/N) "); // FEATURE: Add tutorial chapter
         if (yesNoInput()) {
             leaderSay("Yes. Give me the gold.");
             println("The stranger hands you " + WritOfExecution.getPayment() + " gold.");

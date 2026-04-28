@@ -43,7 +43,6 @@ public class CardGameState extends GameState {
                 playCardGame(model);
             }
         }
-        // TODO: Will this get weird with new evening state?
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

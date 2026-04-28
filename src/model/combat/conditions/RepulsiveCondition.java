@@ -12,15 +12,15 @@ import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class StrangenessCondition extends Condition {
+public class RepulsiveCondition extends Condition {
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD5), MyColors.GREEN, MyColors.PURPLE, MyColors.CYAN);
     private static final int PENALTY = 2;
     private static final int DURATION_DAYS = 3;
     private final int gottenOnDay;
 
-    public StrangenessCondition(int day) { // TODO: Rename to "Repulsive"?
-        super("Strangeness", "STN");
+    public RepulsiveCondition(int day) {
+        super("Repulsive", "REP");
         this.gottenOnDay = day;
     }
 
@@ -32,7 +32,7 @@ public class StrangenessCondition extends Condition {
     @Override
     public void endOfDayTrigger(Model model, GameState state, Combatant comb) {
         if (model.getDay() == gottenOnDay + DURATION_DAYS) {
-            comb.removeCondition(StrangenessCondition.class);
+            comb.removeCondition(RepulsiveCondition.class);
         }
     }
 
@@ -49,7 +49,7 @@ public class StrangenessCondition extends Condition {
     @Override
     public ConditionHelpDialog getHelpView(GameView view) {
         return new ConditionHelpDialog(view, this,
-                "A condition indicating that this character has a strangeness, " +
+                "A condition indicating that this character has a strange repulsiveness, " +
                         "impairing his or her charisma for " + MyStrings.numberWord(DURATION_DAYS) + " days. " +
                         MyLists.commaAndJoin(Skill.getCharismaSkills(), Skill::getName) +
                         " suffer a -" + PENALTY + " penalty.");

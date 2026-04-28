@@ -11,7 +11,7 @@ public class NinjaEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        // TODO: Finish this.
+        // FEATURE: Finish this.
         new ChangeClassEvent(model, Classes.NINJA).areYouInterested(model);
     }
 }

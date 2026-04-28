@@ -111,7 +111,6 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                     println(pair.second.getFirstName() + " sings terribly and is booed and shushed.");
                 }
             } else if (choice == 3) {
-                // TODO: If blackbone already met.
                 if (isMainStoryTriggered(model)) {
                     CharacterAppearance app = getGainSupportTask(model).getCaptainAppearance();
                     println("You look around for Captain " + randomCaptain + ". Finally you get an opportunity to sit down with " + himOrHer(app.getGender()) + ".");

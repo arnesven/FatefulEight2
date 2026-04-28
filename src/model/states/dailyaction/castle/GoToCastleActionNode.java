@@ -146,7 +146,6 @@ public class GoToCastleActionNode extends DailyActionNode {
             }
         }
         returnNextState = true;
-        // TODO: Will this get weird with new evening state?
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

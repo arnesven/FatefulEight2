@@ -59,7 +59,7 @@ public class KingdomWar implements Serializable {
             units.add(new PikemenUnit(MyRandom.randInt(10, 16), name, color));
         } else {
             units.add(new KnightsUnit(MyRandom.randInt(4, 7), name, color));
-        } // TODO: Add catapult/trebuche
+        } // FEATURE: Add catapult/trebuchet
         return units;
     }
 

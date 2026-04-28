@@ -10,6 +10,7 @@ import view.sprites.BlueSpellSprite;
 import view.sprites.Sprite;
 
 public class EscapeSpell extends CombatSpell {
+    // FEATURE: Come up with a better implementation for this.
     private static final Sprite SPRITE = new BlueSpellSprite(4, false);
 
     public EscapeSpell() {

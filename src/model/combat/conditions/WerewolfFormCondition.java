@@ -27,7 +27,7 @@ public class WerewolfFormCondition extends Condition {
     private final RegenerationCondition regenCondition;
     private final int attackBonus;
     private AvatarSprite avatar;
-    // TODO: This condition does not increase damage of the character
+
     public WerewolfFormCondition(GameCharacter basedOn, int magnitude) {
         super("Werewolf Form", "WWF");
         setDuration(WerewolfFormSpell.TURNS);

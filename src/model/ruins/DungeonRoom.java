@@ -192,10 +192,10 @@ public class DungeonRoom implements Serializable {
             case 1:
                 return 0xC3 + firstConnection;
             case 2:
-                if (!connectionBlocked((firstConnection + 2) % 4)) { // TODO : or cracked wall
+                if (!connectionBlocked((firstConnection + 2) % 4)) {
                     return 0xD7 + firstConnection;
                 } else {
-                    if (!connectionBlocked(firstConnection + 1)) { // TODO: or cracked wall
+                    if (!connectionBlocked(firstConnection + 1)) {
                         return 0xD3 + firstConnection;
                     } else {
                         return 0xD6;

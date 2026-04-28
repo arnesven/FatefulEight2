@@ -8,7 +8,7 @@ import model.classes.Classes;
 import model.classes.Looks;
 import model.combat.conditions.PoisonCondition;
 import model.combat.conditions.SlowedCondition;
-import model.combat.conditions.StrangenessCondition;
+import model.combat.conditions.RepulsiveCondition;
 import model.combat.conditions.VampirismCondition;
 import model.quests.*;
 import model.races.ElvenRace;
@@ -339,7 +339,7 @@ public class VampireFeedingHouse {
             } else if (HumanRace.isHuman(victim.getRace()) && !(HumanRace.isHuman(vampire.getRace()))) {
                 state.println("The richness of the human blood saturates " + vampire.getFirstName() +
                         "'s system and gives " + state.himOrHer(vampire.getGender()) + " an aura of strangeness.");
-                vampire.addCondition(new StrangenessCondition(model.getDay()));
+                vampire.addCondition(new RepulsiveCondition(model.getDay()));
             }
         }
         fullyRecoverStamina(state, vampire);

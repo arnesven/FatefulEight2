@@ -279,7 +279,7 @@ public class MainStory implements Serializable {
     }
 
     public boolean isCompleted(Model model) {
-        return false; // TODO: Update when done.
+        return false;
         //return getQuest(AncientStrongholdQuest.QUEST_NAME).isCompleted(model);
     }
 

@@ -1,7 +1,7 @@
 package model.items.treasures;
 
 public abstract class GemstoneItem extends TreasureItem {
-    // TODO: Make stackable
+
     public GemstoneItem(String name, int cost) {
         super(name, cost);
     }
@@ -9,5 +9,10 @@ public abstract class GemstoneItem extends TreasureItem {
     @Override
     public int getWeight() {
         return 1;
+    }
+
+    @Override
+    public boolean isStackable() {
+        return true;
     }
 }

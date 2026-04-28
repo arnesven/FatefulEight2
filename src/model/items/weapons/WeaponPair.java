@@ -13,6 +13,7 @@ import model.states.CombatEvent;
 import util.MyPair;
 import view.GameView;
 import view.MyColors;
+import view.ScreenHandler;
 import view.YesNoMessageView;
 import view.party.SelectableListMenu;
 import view.sprites.*;
@@ -294,6 +295,11 @@ public class WeaponPair extends Weapon implements BlockingItem {
         return null;
     }
 
-    // TODO:
-    // Override drawYourself and draw imbuement if either weapon has imbuement.
+    @Override
+    public void drawYourself(ScreenHandler screenHandler, int col, int row) {
+        super.drawYourself(screenHandler, col, row);
+        if (mainHand.isImbued() || offHand.isImbued()) {
+            getImbuement().drawYourself(screenHandler, col + 3, row + 3);
+        }
+    }
 }

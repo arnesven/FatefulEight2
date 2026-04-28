@@ -104,10 +104,6 @@ public class AncientStrongholdLocation extends HexLocation {
                     partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()),
                             "Sounds wise. I don't want to go in there, but I guess we have no choice.");
                 }
-                if (MyLists.find(model.getParty().getQuestHandler().getOfferedQuestsAsList(), // TODO: Remove, quest is offered in PartFourStoryPart
-                        oq -> oq.getQuestName().equals(AncientStrongholdQuest.QUEST_NAME)) == null) {
-                    model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(AncientStrongholdQuest.QUEST_NAME));
-                }
             } else {
                 println("The door to the stronghold is shut and tightly locked. " +
                         "It seems like no pick could pick this lock.");

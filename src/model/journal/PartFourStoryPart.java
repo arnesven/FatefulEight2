@@ -104,14 +104,6 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) { } // TODO: Remove
-
-    @Override
-    public String getHexInfo(Point position) { // TODO: Remove
-        return super.getHexInfo(position);
-    }
-
-    @Override
     public StoryPart getNextStoryPart(Model model, int track) {
         return new PartFiveStoryPart(castleName);
     }

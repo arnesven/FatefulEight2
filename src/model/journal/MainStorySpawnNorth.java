@@ -23,7 +23,8 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
               new Point(18, 14),
                 "Vikings",
                 WorldBuilder.VIKING_VILLAGE_LOCATION,
-                new MainStoryPastData(new Point(1, 9), new Point(14, 4), TombLocation.HAARFAGRE_TOMB, RuinsLocation.URH_RUINS, RuinsLocation.GROUND_RUINS)); // TODO
+                new MainStoryPastData(new Point(1, 9), new Point(14, 4),
+                        TombLocation.HAARFAGRE_TOMB, RuinsLocation.URH_RUINS, RuinsLocation.GROUND_RUINS));
     }
 
     @Override

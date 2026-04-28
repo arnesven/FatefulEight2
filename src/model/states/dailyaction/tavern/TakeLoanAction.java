@@ -170,7 +170,7 @@ public class TakeLoanAction extends GameState {
             agentSay(model, "As a matter of fact, I do. Got one here from the Crimson Assassins. It's for a " +
                     writ.getRace().getName().toLowerCase() + " in " + castleOrTown.getPlaceName() + ". You know the deal, " +
                     "If you take it, you get " + WritOfExecution.getPayment() + " gold, but you only have " +
-                    deadlineDays + " days to complete it. Interested?"); // TODO: Add tutorial chapter
+                    deadlineDays + " days to complete it. Interested?");
             print("Do you accept the writ? (Y/N) ");
             if (yesNoInput()) {
                 leaderSay("Yes. Give me the gold.");

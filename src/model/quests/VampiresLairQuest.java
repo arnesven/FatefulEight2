@@ -75,7 +75,6 @@ public class VampiresLairQuest extends MainQuest {
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         model.getParty().unbenchAll();
         model.getMainStory().setCaidQuestDone(true);
-        // TODO: This quest was not registered as completed (possibly after load).
         if (questWasSuccess) {
            possiblyRecruitCaid(model, state);
         }

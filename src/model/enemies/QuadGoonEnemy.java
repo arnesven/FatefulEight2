@@ -13,7 +13,7 @@ public abstract class QuadGoonEnemy extends HumanoidEnemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new PersonCombatLoot(model); // TODO QuadGoonLoot
+        return new PersonCombatLoot(model);
     }
 
     @Override

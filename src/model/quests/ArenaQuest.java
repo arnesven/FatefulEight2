@@ -197,7 +197,6 @@ public class ArenaQuest extends Quest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
-            // TODO: Fix this so you can't cheat with elixir.
             // Also, should be able to flee -> quest failed
             state.printQuote("Announcer", ANNOUNCER.get(step));
 

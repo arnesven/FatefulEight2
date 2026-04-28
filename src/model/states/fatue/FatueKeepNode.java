@@ -40,7 +40,7 @@ public class FatueKeepNode extends KeyRequiredFatueDungeonNode {
         levels.add(new FinalDungeonLevel(model, random, new BlueBrickTheme()));
         levels.add(new PuzzleDungeonLevel(model, random, false, false, new BlueBrickTheme()));
         DungeonLevel level;
-        do {// TODO: Other monster factory
+        do {// FEATURE: Other monster factory
             PitfallDungeonConfig config = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new HiddenChestObject(new RingOfZeal()), 0.33);
             level = new DungeonLevel(model, random, false, 7, config);

@@ -77,7 +77,6 @@ public class VampireFeedingState extends GameState {
         waitForReturn();
         CollapsingTransition.transition(model, oldSubView);
         model.getParty().unbenchAll();
-        // TODO: Vampire feeding should take place at end of evening state...
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

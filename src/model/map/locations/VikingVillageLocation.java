@@ -129,7 +129,7 @@ public class VikingVillageLocation extends TownishLocation {
 
     @Override
     public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new GeneralShopNode(model, 6, 6)); // TODO: Viking shop
+        return List.of(new GeneralShopNode(model, 6, 6)); // FEATURE: Viking shop
     }
 
     @Override

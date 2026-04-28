@@ -431,7 +431,7 @@ public class GameCharacter extends Combatant {
     @Override
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
         if (!hasCondition(InvisibilityCondition.class)) {
-            Condition cond = MyLists.find(getConditions(), Condition::hasAlternateAvatar); // TODO: Multiple conditions which has alternate avatar, e.g. werewolf + casting full round
+            Condition cond = MyLists.find(getConditions(), Condition::hasAlternateAvatar); // FEATURE: Handle multiple conditions which has alternate avatar, e.g. werewolf + casting full round
             if (cond != null) {
                 cond.drawYourself(screenHandler, xpos, ypos);
             } else {

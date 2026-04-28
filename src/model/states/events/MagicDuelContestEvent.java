@@ -345,7 +345,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
             leaderSay("Fine. I'm sure it's a very bad person anyway.");
             println("You grab the writ and unroll it to read its contents. When you look up, " +
                     "the mysterious stranger has disappeared once more.");
-            JournalEntry.printJournalUpdateMessage(model); // TODO: Add tutorial about assassinations
+            JournalEntry.printJournalUpdateMessage(model);
             model.getParty().addDestinationTask(new AssassinationDestinationTask(new WritOfExecution(model)));
         }
     }

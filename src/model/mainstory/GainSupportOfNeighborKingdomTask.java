@@ -53,8 +53,11 @@ public abstract class GainSupportOfNeighborKingdomTask extends DestinationTask {
 
     @Override
     public DailyAction getDailyAction(Model model) {
+        if (completed) {
+            return null;
+        }
         CastleLocation defender = model.getWorld().getCastleByName(neighbor);
-        CastleLocation invader = model.getWorld().getCastleByName(kingdom); // TODO: Not if already completed!
+        CastleLocation invader = model.getWorld().getCastleByName(kingdom);
         return new DailyAction("Go to War Camp", makeBattleEvent(model, defender, invader));
     }
 
