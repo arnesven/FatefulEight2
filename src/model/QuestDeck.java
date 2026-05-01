@@ -27,7 +27,7 @@ public class QuestDeck {
                 new MissingBrotherQuest(),
                 new MurderMysteryQuest(),
                 new OrcishDelightQuest(),
-                new RatProblemQuest(),
+                new RatProblemQuest(),         // QI
                 new SurveillanceQuest(),
                 new SwampOgreQuest(),
                 new TownFairQuest(),
@@ -40,7 +40,7 @@ public class QuestDeck {
     }
 
     public Quest getRandomQuest() {
-        return MyRandom.sample(QUESTS);
+        return new AbandonedMineQuest();//MyRandom.sample(QUESTS);
     }
 
     public static List<Quest> getAllQuests() {

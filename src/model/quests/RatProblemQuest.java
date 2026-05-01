@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.TimeOfDay;
 import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.FacialExpression;
@@ -193,13 +194,13 @@ public class RatProblemQuest extends Quest {
         return list;
     }
 
-    private class IntroEvent extends DailyEventState {
+    private class IntroEvent extends QuestIntroEventState {
         public IntroEvent(Model model) {
             super(model);
         }
 
         @Override
-        protected void doEvent(Model model) {
+        protected void runQuestIntro(Model model) {
             println("An old woman approaches you.");
             showExplicitPortrait(model, getPortrait(), "Granny Petronella");
             portraitSay("Hello there young " + manOrWoman(model.getParty().getLeader().getGender()) + ".");

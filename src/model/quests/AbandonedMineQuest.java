@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.characters.preset.JordynStrong;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -22,6 +23,7 @@ import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
+import model.states.DailyEventState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import view.MyColors;
@@ -52,7 +54,7 @@ public class AbandonedMineQuest extends Quest {
     public static final Sprite WATER = new Sprite32x32("watertunnel", "quest.png", 0x48, MyColors.BLACK, MyColors.BLUE, MyColors.BROWN);
 
     private static final List<QuestBackground> BG_SPRITES = makeBackground();
-    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MIN, Race.DWARF);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MIN, Race.DWARF, false);
 
     public AbandonedMineQuest() {
         super("Abandoned Mine", "Murak", QuestDifficulty.HARD,
@@ -88,6 +90,11 @@ public class AbandonedMineQuest extends Quest {
     @Override
     public BackgroundMusic getMusic() {
         return BackgroundMusic.darkQuestSong;
+    }
+
+    @Override
+    public DailyEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -247,6 +254,33 @@ public class AbandonedMineQuest extends Quest {
             GameCharacter murak = new GameCharacter("Murak", "", Race.DWARF, Classes.MIN, new JordynStrong(),
                         new Equipment(new CommonPickaxe(), new LeatherArmor(), new FullHelm()));
             return List.of(murak);
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            showExplicitPortrait(model, getPortrait(), "Murak");
+            portraitSay("There you are. I've been looking for you?");
+            leaderSay("Do I know you?", FacialExpression.questioning);
+            portraitSay("No, but I've heard about you. You're the new party of adventurers in town.");
+            leaderSay("That's correct. Do you have a job for " + meOrUs() + "?");
+            portraitSay("I do. As you can see, I'm a miner by trade. I need an escort back and down into a mine nearby.");
+            leaderSay("I see... may I ask why? I mean, don't miners go to mines all the time? Why do you need an escort?", FacialExpression.questioning);
+            portraitSay("I uhm, left the mine hastily and got separated from my team. Furthermore, I've left some " +
+                    "important equipment in the mine that I need to retrieve.");
+            leaderSay("Is it a dangerous mine?", FacialExpression.questioning);
+            portraitSay("Oh, no no no no, no no no. No no no no.", FacialExpression.relief);
+            portraitSay("Well, maybe a little. But it shouldn't be an issue for the likes of you. It's just some " +
+                    "treacherous passages and random mine creeps. You know the normal stuff.");
+            leaderSay("Uh-huh...");
+            portraitSay("So whaddaya say? Can I count on your help?");
+            leaderSay(iOrWeCap() + " will consider it.");
+            portraitSay("Let's go soon!");
         }
     }
 }
