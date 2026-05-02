@@ -20,10 +20,10 @@ public class IntroGameView extends GameView implements Animation {
     private static final String JINGLE_SOUND = "Rise06";
     private static final Sprite BLACK_SPRITE = new CharClassIconSprite(0x1F, MyColors.RED);
     private static final long TIME_OUT_TIME_MS = 45_000;
-    private static Sprite splashSprite = makeSprite();
-    private static Sprite[] titleSprites = makeTitle();
+    private static final Sprite splashSprite = makeSprite();
+    private static final Sprite boltSprite = makeBoltSprite();
+    private static final Sprite[] titleSprites = makeTitle();
     private int aniIndex = 0;
-    private long lastUpdate = 0;
     private long animationTime = 0;
     private boolean runAnimation = false;
     private boolean fading = true;
@@ -64,7 +64,8 @@ public class IntroGameView extends GameView implements Animation {
         BorderFrame.drawCentered(model.getScreenHandler(), "Fateful Eight v " + FatefulEight.version + " - Written by Erik A. Nilsson - Copyright (C) 2026", 49, MyColors.CYAN);
         model.getScreenHandler().clearForeground();
         if (!fading) {
-            model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex]);
+            model.getScreenHandler().register("bolt", new Point(0, 5), boltSprite);
+            model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex], 1);
             if (aniDone) {
                 BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 40, MyColors.WHITE);
             }
@@ -93,6 +94,14 @@ public class IntroGameView extends GameView implements Animation {
         return sp;
     }
 
+    private static Sprite makeBoltSprite() {
+        Sprite sp = new Sprite("splash_bolt", "splash_bolt.png", 0, 0, 320, 250);
+        sp.setColor1(MyColors.TRANSPARENT);
+        sp.setColor2(MyColors.WHITE);
+        sp.setColor3(MyColors.LIGHT_BLUE);
+        return sp;
+    }
+
     @Override
     public void stepAnimation(long elapsedTimeMs, Model model) {
         if (totalTime >= TIME_OUT_TIME_MS) {
@@ -101,8 +110,7 @@ public class IntroGameView extends GameView implements Animation {
         }
         totalTime += elapsedTimeMs;
         if (fading && totalTime > 1000) {
-            double newFade = fadeLevel - (double) elapsedTimeMs / 3000.0;
-            fadeLevel = newFade;
+            fadeLevel = fadeLevel - (double) elapsedTimeMs / 3000.0;
             if (totalTime > THUNDER_START_MS && !thunder) {
                 SoundEffects.playSound("thunder");
                 thunder = true;

@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 public class ThematicIntroView extends GameView implements Animation {
 
     private static final int PRINT_DELAY = 3;
-    private String[] text = new String[]{
+    private final String[] text = new String[]{
             "Deep in the forest, the adventurers finally found the lost temple.",
             "But it turned out not to be nearly as easy to plunder as the ",
             "mysterious man who had sold them the treasure map had claimed.",
@@ -19,7 +19,7 @@ public class ThematicIntroView extends GameView implements Animation {
             "professional thief.",
             "\"Well, a few aggressive lizardmen are to be expected when you're",
             "hunting treasure,\" replied the leader of the group, the paladin",
-            "Denise Boyd.",
+            "Zhandra Merkatys.",
             "",
             "The marksman Rolf Fryt slowly drew an arrow from his quiver.",
             "\"I prefer lizardmen over frogmen. At least they understand our",
@@ -27,7 +27,7 @@ public class ThematicIntroView extends GameView implements Animation {
             "",
             "But his words were drowned out by a series of booming thunderclaps",
             "as the wizard Melethain Gauth unleashed his signature spell:",
-            "Chain Lightning. Denise gave Melethain a weary look, only to be",
+            "Chain Lightning. Zhandra gave Melethain a weary look, only to be",
             "met with a childish grin beneath his bushy mustache.",
             "",
             "Rolf let the arrow slip back into the quiver and said, ",
@@ -43,7 +43,6 @@ public class ThematicIntroView extends GameView implements Animation {
     private int charCount = 0;
     private int stepCount = 1;
     private boolean printAll = false;
-    private boolean swapBack;
     private double fadeLevel = 0.0;
     private boolean timeOut = false;
 
@@ -71,7 +70,7 @@ public class ThematicIntroView extends GameView implements Animation {
         int row = Math.max(6, 20 - currentRow);
         int col = 4;
         MyColors textColor = LogView.DEFAULT_TEXT_COLOR;
-        swapBack = false;
+        boolean swapBack = false;
         for (int i = 0; i <= currentRow; i++) {
             String substr;
             if (i < currentRow || printAll) {
