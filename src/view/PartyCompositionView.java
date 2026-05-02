@@ -22,7 +22,7 @@ public class PartyCompositionView extends SelectableListMenu {
     private PieChartWidget<CharacterClass> classPieChart;
 
     private final RaceStrategy pieChartStrategyShow = new RaceStrategy(makeRaceColors(), Race::getQualifiedName);
-    private final RaceStrategy pieChartStrategyHide = new RaceStrategy(makeBasicRaceColors(), PartyCompositionView::getBasicName);
+    private final RaceStrategy pieChartStrategyHide = new RaceStrategy(makeBasicRaceColors(), Race::getBasicName);
     private RaceStrategy currentPieChartStrategy = pieChartStrategyHide;
 
     private final ClassStrategy[] classStrategies = new ClassStrategy[]{new ClassicClassNameStrategy(),
@@ -43,13 +43,6 @@ public class PartyCompositionView extends SelectableListMenu {
 
     @Override
     public void transitionedFrom(Model model) { }
-
-    private static String getBasicName(Race race) {
-        if (ElvenRace.isElf(race)) {
-            return "Elf";
-        }
-        return race.getName();
-    }
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {

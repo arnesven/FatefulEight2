@@ -40,8 +40,9 @@ import java.util.Random;
 
 public class BrrbitsReward extends Quest {
     private static final String FROGMAN_NAME = "Brrbit";
-    private static final String INTRO = "The party is casually strolling down the street when they happen to see " +
-            "a gang of thugs ruffing up a lone frogman. Intrigued, the party joins the fight to drive off the bandits.";
+    private static final String INTRO1 = "The party is casually strolling down the street when they happen to see " +
+            "a gang of thugs ruffing up a lone frogman.";
+    private static final String INTRO2 = "Intrigued, the party joins the fight to drive off the bandits.";
     private static final String ENDING = "You return to town.";
     private static final CharacterAppearance PORTRAIT = new FrogmanAppearance();
     private BrrbitCharacter frogman;
@@ -52,7 +53,7 @@ public class BrrbitsReward extends Quest {
 
     public BrrbitsReward() {
         super(FROGMAN_NAME + "'s Reward", "Brrbit", QuestDifficulty.EASY,
-                new Reward(0, 50), 3, INTRO, ENDING);
+                new Reward(0, 50), 3, INTRO1 + " " + INTRO2, ENDING);
     }
 
     @Override
@@ -76,6 +77,11 @@ public class BrrbitsReward extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -640,5 +646,25 @@ public class BrrbitsReward extends Quest {
         result.add(new QuestBackground(new Point(7, 7), huts, true));
 
         return result;
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println(INTRO1);
+            showExplicitPortrait(model, getPortrait(), "Frogman");
+            portraitSay(FrogmanRace.makeFrogmanMumboJumbo(3) + "!");
+            if (model.getParty().getPartyMembers().size() > 1) {
+                GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                partyMemberSay(other, "Do you think he's calling for help?");
+                leaderSay("Possibly. But who can tell?");
+            } else {
+                partyMemberSay(model.getParty().getLeader(), "He could be calling for help. But Who can tell really?");
+            }
+        }
     }
 }

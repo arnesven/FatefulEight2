@@ -4,6 +4,7 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.loot.StandardCombatLoot;
@@ -15,9 +16,11 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.AllRaces;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyStrings;
 import view.LogView;
 import view.sprites.DungeonWallSprite;
 import util.MyRandom;
@@ -73,6 +76,11 @@ public class CultistDenQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -320,6 +328,45 @@ public class CultistDenQuest extends Quest {
         @Override
         protected String getCombatDetails() {
             return "Elder Daemon";
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            Race race = getPortrait().getRace();
+            String raceName = race.getBasicName();
+            println("The party is casually enjoying a brew at the tavern when " + MyStrings.aOrAn(raceName) + " " + raceName.toLowerCase() +
+                    " rushes in, panting and drenched in sweat.");
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("Help! Someone! Anyone!", FacialExpression.surprised);
+            CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.BARTENDER, Race.ALL);
+            showExplicitPortrait(model, app, "Bartender");
+            portraitSay("Slow down there friend. What's the trouble?", FacialExpression.questioning);
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("It's those damn cultists! They're summoning a some kind of daemon! " +
+                    "Somebody's got to stop them!", FacialExpression.afraid);
+            showExplicitPortrait(model, app, "Bartender");
+            portraitSay("Oh, I see. But it's not so bad right? It's like a friendly daemon, that mostly keeps to itself?", FacialExpression.relief);
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("This is no times for jokes barkeep. This is serious bad news. A daemon of this caliber... " +
+                    "I'm not sure this town will survive the ordeal.", FacialExpression.disappointed);
+            showExplicitPortrait(model, app, "Bartender");
+            portraitSay("Right. Well, I think we have some strong adventuring types right over there.", FacialExpression.afraid);
+            leaderSay("Is he talking about " + meOrUs() + "?");
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("Please, you've got to intervene. There's no telling what might happen if that ancient one is brought into our world.", FacialExpression.afraid);
+            println(model.getParty().getLeader().getName() + " nods non-committally while " + heOrShe(model.getParty().getLeader().getGender()) +
+                    " moves over towards the bar.");
+            portraitSay("There will be terror, fire, damnation...");
+            leaderSay("Sounds pretty rough... barkeep, another ale please?");
+            println("But the bartender is nowhere to be seen. " + model.getParty().getLeader().getFirstName() + " tries to calm " +
+                    "the hysterical " + getProvider() + ". A little while later, the bartender pushes past both " +
+                    "of them out the door, with " + hisOrHer(app.getGender())+ " bags packed.");
         }
     }
 }

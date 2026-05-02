@@ -58,6 +58,7 @@ public interface Classes {
     CharacterClass WARLOCK = new WarlockNPCClass();
     CharacterClass OFFICIAL = new OfficialNPCClass();
     CharacterClass BAKER = new BakerNPCClass();
+    CharacterClass BARTENDER = new BartenderNPCClass();
     CharacterClass HERMIT = new HermitNPCClass();
     CharacterClass BARBER = new BarberNPCClass();
     CharacterClass PROFESSOR = new ProfessorNPCClass();

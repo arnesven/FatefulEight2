@@ -52,4 +52,9 @@ public abstract class ElvenRace extends Race {
 
     @Override
     public abstract String getShortDescription();
+
+    @Override
+    public String getBasicName() {
+        return "Elf";
+    }
 }

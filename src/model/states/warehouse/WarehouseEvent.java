@@ -56,7 +56,7 @@ public class WarehouseEvent extends DailyEventState {
                 "Oh, and don't even bother with the gray ones, they're super heavy.");
         print("Help the worker with the boxes in the warehouse? (Y/N) ");
         if (!yesNoInput()) {
-            leaderSay("On second thought, we have places to be.");
+            leaderSay("On second thought, " + iOrWe() + " have places to be.");
             model.getLog().waitForAnimationToFinish();
             getPortraitSubView().setFacialExpression(FacialExpression.sad);
             portraitSay("Okay, I better get back to work. I just need to catch my breath first.");

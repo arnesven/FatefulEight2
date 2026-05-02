@@ -13,8 +13,8 @@ public class QuestDeck {
         return List.of(
                 new AbandonedMineQuest(),     // QI
                 new ArenaQuest(),             // QI
-                new BrrbitsReward(),
-                new CultistDenQuest(),
+                new BrrbitsReward(),          // QI
+                new CultistDenQuest(),        // QI
                 new DeepDungeonQuest(),
                 new DefendTheVillageQuest(),
                 new ElvenHighCouncilQuest(),
@@ -40,7 +40,7 @@ public class QuestDeck {
     }
 
     public Quest getRandomQuest() {
-        return new ArenaQuest();//MyRandom.sample(QUESTS);
+        return MyRandom.sample(QUESTS);
     }
 
     public static List<Quest> getAllQuests() {

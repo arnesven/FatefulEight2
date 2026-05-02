@@ -118,6 +118,8 @@ public abstract class Race implements Serializable {
         return getName();
     }
 
+    public String getBasicName() { return getName(); }
+
     public int id() {
         return id;
     }
