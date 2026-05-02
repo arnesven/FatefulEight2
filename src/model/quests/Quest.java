@@ -277,7 +277,7 @@ public abstract class Quest {
         return null;
     }
 
-    public DailyEventState getIntroEvent(Model model) {
+    public QuestIntroEventState getIntroEvent(Model model) {
         return new DefaultQuestIntro(model, this);
     }
 

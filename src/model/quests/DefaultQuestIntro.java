@@ -3,7 +3,7 @@ package model.quests;
 import model.Model;
 import model.states.DailyEventState;
 
-public class DefaultQuestIntro extends DailyEventState {
+public class DefaultQuestIntro extends QuestIntroEventState {
     private final Quest quest;
 
     public DefaultQuestIntro(Model model, Quest quest) {
@@ -12,7 +12,7 @@ public class DefaultQuestIntro extends DailyEventState {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void runQuestIntro(Model model) {
         println("You have been offered a quest: " + quest.getName());
     }
 }

@@ -59,7 +59,7 @@ public class RatProblemQuest extends Quest {
     }
 
     @Override
-    public DailyEventState getIntroEvent(Model model) {
+    public QuestIntroEventState getIntroEvent(Model model) {
         return new IntroEvent(model);
     }
 

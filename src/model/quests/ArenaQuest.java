@@ -4,12 +4,14 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.combat.CombatAdvantage;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
 import model.states.CombatEvent;
+import model.states.DailyEventState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -87,6 +89,11 @@ public class ArenaQuest extends Quest {
     @Override
     public List<QuestBackground> getDecorations() {
         return DECORATIONS;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -235,6 +242,40 @@ public class ArenaQuest extends Quest {
             if (shirtColor.hashCode() % 2 == 0) {
                 setCurrentFrame(1);
             }
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("That evening, while " + model.getParty().getLeader().getFirstName() +
+                    " is at the tavern a dwarf rudely pushes past " + himOrHer(model.getParty().getLeader().getGender()) + ".");
+            leaderSay("Hey now!", FacialExpression.disappointed);
+            model.getLog().waitForAnimationToFinish();
+            showRandomPortrait(model, Classes.PAL, Race.DWARF, "Dwarf");
+            leaderSay("You should be more mindful! I almost spilled my drink.", FacialExpression.disappointed);
+            portraitSay("I can't help it if you get in my way. Don't you know who I am?", FacialExpression.disappointed);
+            leaderSay("Yeah I know you. You're that rude dwarf that needs to learn some manners.", FacialExpression.wicked);
+            portraitSay("Why you...!", FacialExpression.angry);
+            boolean dwarfGender = getPortraitGender();
+            println("The dwarf is about to draw " + hisOrHer(dwarfGender) + " but another person " +
+                    "comes up.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("Quintus, calm down. This rabble is not worth your time and energy.");
+            println("The dwarf gives you a loathing look, then returns to " + hisOrHer(dwarfGender) +
+                    " table, where a mixed group of individuals sit.");
+            leaderSay("Who are you calling rabble?", FacialExpression.disappointed);
+            portraitSay("Cute. Say, if you want a piece of Quintus. Find us at the arena here in town.");
+            leaderSay("The arena?");
+            portraitSay("It's the ultimate form of entertainment. A battle royale. " +
+                    "But, are you really tough enough? I doubt it.", FacialExpression.wicked);
+            leaderSay("You'll be surprised. Maybe " + iOrWe() + " come around and give your team a good shellacking.");
+            portraitSay("I look forward to seeing you try.");
         }
     }
 }

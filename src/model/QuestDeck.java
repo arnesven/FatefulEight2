@@ -11,8 +11,8 @@ public class QuestDeck {
 
     private static List<Quest> makeAllQuests() {
         return List.of(
-                new AbandonedMineQuest(),
-                new ArenaQuest(),
+                new AbandonedMineQuest(),     // QI
+                new ArenaQuest(),             // QI
                 new BrrbitsReward(),
                 new CultistDenQuest(),
                 new DeepDungeonQuest(),
@@ -40,7 +40,7 @@ public class QuestDeck {
     }
 
     public Quest getRandomQuest() {
-        return new AbandonedMineQuest();//MyRandom.sample(QUESTS);
+        return new ArenaQuest();//MyRandom.sample(QUESTS);
     }
 
     public static List<Quest> getAllQuests() {
