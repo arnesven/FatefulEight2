@@ -7,31 +7,20 @@ import view.sprites.AnimationManager;
 
 import java.awt.event.KeyEvent;
 
-public class CreditsView extends GameView implements Animation {
+public abstract class CreditsView extends GameView implements Animation {
+    private final String title;
     private double fadeLevel = 1.0;
     private long totalTime = 0;
     private static final MyColors[] textColors = new MyColors[]{MyColors.BLACK, MyColors.DARK_GRAY, MyColors.DARK_RED,
             MyColors.ORANGE, MyColors.LIGHT_YELLOW, MyColors.WHITE};
     private int colorStep = 0;
-    private String[][] creditParts = new String[][]{
-            new String[]{
-                "Game Design and Programming",
-                "Erik Nilsson",
-            },
-            new String[]{
-                "Music",
-                "Per Soderberg",
-            },
-            new String[]{
-            "Play Testers",
-            "Nathalie Bjallerhag",
-            "Peter Komaromy",
-            "Pontus Haglund"}
-    };
+    private String[][] creditParts;
 
-    public CreditsView() {
+    public CreditsView(String title, String[][] content) {
         super(false);
         AnimationManager.register(this);
+        this.title = title;
+        this.creditParts = content;
     }
 
     @Override
@@ -45,18 +34,14 @@ public class CreditsView extends GameView implements Animation {
     @Override
     protected void internalUpdate(Model model) {
         model.getScreenHandler().clearAll();
-        BorderFrame.drawCentered(model.getScreenHandler(), "- Credits -", 8, MyColors.WHITE);
+        BorderFrame.drawCentered(model.getScreenHandler(), "- " + title + " -", 8, MyColors.WHITE);
         if (fadeLevel <= 0.001) {
             int y = 10;
             for (int i = 0; i < creditParts.length; ++i) {
                 y += 4;
                 for (int j = 0; j < creditParts[i].length; ++j) {
                     BorderFrame.drawCentered(model.getScreenHandler(), creditParts[i][j], y, getColor(j*2 + i * 16));
-                    if (j == 0) {
-                        y += 4;
-                    } else {
-                        y += 2;
-                    }
+                    y += 2;
                 }
             }
         }
@@ -65,11 +50,6 @@ public class CreditsView extends GameView implements Animation {
 
     private MyColors getColor(int i) {
         return textColors[Math.min(Math.max(colorStep-i, 0), textColors.length-1)];
-    }
-
-    @Override
-    public GameView getNextView(Model model) {
-        return new StartGameMenu();
     }
 
     @Override

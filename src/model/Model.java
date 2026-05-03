@@ -523,7 +523,7 @@ public class Model {
     }
 
     public void showCredits() {
-        gameView = new CreditsView();
+        gameView = new StartingCreditsView();
     }
 
     public void setGameStarted(boolean b) {

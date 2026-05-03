@@ -22,6 +22,11 @@ public class TundraHex extends WorldHex {
     }
 
     @Override
+    public CombatTheme getNightTimeCombatTheme() {
+        return new TundraCombatTheme();
+    }
+
+    @Override
     public String getTerrainName() {
         return "tundra";
     }
