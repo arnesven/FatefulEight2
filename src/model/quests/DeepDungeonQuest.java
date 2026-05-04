@@ -3,7 +3,9 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.spells.LevitateSpell;
@@ -47,6 +49,11 @@ public class DeepDungeonQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -199,6 +206,44 @@ public class DeepDungeonQuest extends Quest {
                 ((CombatSubScene)getScenes().get(0).get(0)).setDefeated(true);
                 return new QuestEdge(getJunctions().get(1));
             });
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You pass a shop with many curious items in the window. 'Antiques' is written on the sign above the door.");
+            leaderSay("This could be interesting.");
+            if (model.getParty().size() > 1) {
+                boolean didSay = randomSayIfPersonality(PersonalityTrait.critical, List.of(model.getParty().getLeader()),
+                        "Probably not.", FacialExpression.disappointed);
+                if (didSay) {
+                    leaderSay("You never know. Let's look inside.");
+                } else {
+                    randomSayIfPersonality(PersonalityTrait.romantic, List.of(model.getParty().getLeader()),
+                        "Yes! I love thrift shops!");
+                }
+            }
+            println("You browse the shop, and there are indeed some interesting things. But nothing worth bartering for.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("See anything you like?");
+            leaderSay("Unfortunately no.");
+            String adventurer = model.getParty().size() > 1 ? "those new adventurers" : "that new adventurer";
+            portraitSay("You're " + adventurer + " in town, right?");
+            leaderSay("Word travels fast around here.");
+            portraitSay("It sure does. Say, perhaps you'd be willing to track down a particular item for me? " +
+                    "It's in a rather perilous place, so I don't dare go myself.");
+            leaderSay("Peril is my middle name. Go on.");
+            portraitSay("There's a dungeon nearby. It's believed to be the tomb of the Count of Vizmeria. " +
+                    "According to history, the count was buried with a particularly shiny artifact. Bring it to me " +
+                    "and I'll make it worth your while.");
+            leaderSay("I'll think about it.");
+            portraitSay("Please do. I'm eager to put it on display.");
         }
     }
 }
