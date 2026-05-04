@@ -48,6 +48,7 @@ public class CharacterCollection extends ArrayList<PresetCharacter> {
         add(new JennaWildflowerCharacter());
         add(new AlewynSolethalCharacter());
         add(new MelethainGauthCharacter());
+        add(new NainGlimmerthalCharacter());
         System.out.println(size() + " characters loaded!");
     }
 }

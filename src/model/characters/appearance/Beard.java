@@ -38,6 +38,7 @@ public class Beard implements Serializable {
             new BeardAndMustache(MyColors.BLACK),
             new MikosBeard(MyColors.BLACK),
             new StarBeard(MyColors.BLACK),
+            new BraidedBeard(MyColors.BLACK, MyColors.DARK_GREEN)
     };
 
     private final boolean isTrueBeard;
@@ -89,9 +90,14 @@ public class Beard implements Serializable {
         return isTrueBeard;
     }
 
-    protected static void setSpriteOnTop(AdvancedAppearance appearance, int num, int x, int y, MyColors lineColor) {
+    protected static void setSpriteOnTop(AdvancedAppearance appearance, int num, int x, int y, MyColors lineColor, MyColors auxColor) {
         FaceSprite spr = new FaceAndClothesSprite(num, appearance.getFacialHairColor());
         spr.setColor1(lineColor);
+        spr.setColor4(auxColor);
         appearance.addSpriteOnTop(x, y, spr);
+    }
+
+    protected static void setSpriteOnTop(AdvancedAppearance appearance, int num, int x, int y, MyColors lineColor){
+        setSpriteOnTop(appearance, num, x, y, lineColor, MyColors.DARK_BLUE);
     }
 }
