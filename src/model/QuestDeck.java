@@ -16,7 +16,7 @@ public class QuestDeck {
                 new BrrbitsReward(),          // QI
                 new CultistDenQuest(),        // QI
                 new DeepDungeonQuest(),       // QI
-                new DefendTheVillageQuest(),
+                new DefendTheVillageQuest(),  // QI
                 new ElvenHighCouncilQuest(),
                 new GoblinTunnelsQuest(),
                 new HauntedMansionQuest(),

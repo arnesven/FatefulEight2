@@ -2,7 +2,9 @@ package model.quests;
 
 import model.Model;
 import model.achievements.Achievement;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.BanditEnemy;
@@ -70,6 +72,11 @@ public class DefendTheVillageQuest extends Quest {
     @Override
     public List<QuestBackground> getBackgroundSprites() {
         return bgSprites;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -248,6 +255,46 @@ public class DefendTheVillageQuest extends Quest {
             } else {
                 model.getScreenHandler().register(peasantStanding.getName(), new Point(xPos, yPos), peasantStanding, 1);
             }
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("Somebody bumps into you on the street.");
+            leaderSay("Excuse me?", FacialExpression.disappointed);
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), "Peasant");
+            portraitSay("I'm sorry, I'm so sorry sir!");
+            randomSayIfPersonality(PersonalityTrait.forgiving, List.of(model.getParty().getLeader()),
+                    "Take it easy friend. It's a busy street!");
+            leaderSay("Are you alright. You seem like you are in a hurry.");
+            portraitSay("Honestly, I'm freaking out a little.");
+            leaderSay("What's the matter?");
+            portraitSay("I come from a village up in the hills. We've been troubled by a gang for some time. " +
+                    "They come and take our food and our gold and call it a tax. But they're just bandits.", FacialExpression.disappointed);
+            leaderSay("Scum. You should not give in to their demands.");
+            portraitSay("You're right. So we've collected what little money we have left. I've been sent here to " +
+                    "try to hire some warriors to defend our town, to scare off the bandits for good.");
+            randomSayIfPersonality(PersonalityTrait.lawful, List.of(model.getParty().getLeader()),
+                    "We should help these pour peasants. It is our duty.");
+            portraitSay("But I've already been here a week and I haven't been able to find any capable warriors. " +
+                    "Furthermore, the tavern is so expensive I've spent most of the gold I was suppose to offer as salary.", FacialExpression.sad);
+            randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()),
+                    "You won't attract many mercenaries if you have no money to pay them.");
+            portraitSay("That's why I'm freaking out a little. I'm afraid I will have to return to my village with bad news.", FacialExpression.sad);
+            leaderSay(iAmOrWeAre() + " used to dealing with bandits. Perhaps " + iOrWe() + " could be of help?");
+            portraitSay("Would you? That's fantastic!", FacialExpression.excited);
+            leaderSay("I can't promise anything though. We have other business in town.");
+            portraitSay("I understand. I'll mark the location of our village on your map. " +
+                    "But please consider doing this. " +
+                    "You would be saving the village from a terrible fate.");
+            leaderSay("Of course " + iOrWe() + " will give it some serious thought.");
+
         }
     }
 }
