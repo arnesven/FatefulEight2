@@ -14,7 +14,7 @@ import java.awt.event.KeyEvent;
 public class IntroGameView extends GameView implements Animation {
 
     private static final long ANIMATION_START_MS = 12000;
-    private static final long THUNDER_START_MS = 3600;
+    private static final long THUNDER_START_MS = 3230;
     private static final long FANFARE_START_MS = 3000;
     private static final String START_SOUND = "Rise03";
     private static final String JINGLE_SOUND = "Rise06";
@@ -34,6 +34,7 @@ public class IntroGameView extends GameView implements Animation {
     private boolean jingle = false;
 
     private boolean aniDone = false;
+    private boolean flashDone = false;
 
     public IntroGameView() {
         super(true);
@@ -71,7 +72,12 @@ public class IntroGameView extends GameView implements Animation {
                 BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 40, MyColors.WHITE);
             }
         }
-        model.getScreenHandler().setFade(fadeLevel, MyColors.BLACK);
+        if (model.getScreenHandler().getFadeColor() != MyColors.WHITE || flashDone) {
+            model.getScreenHandler().setFade(fadeLevel, MyColors.BLACK);
+        } else {
+            flashDone = true;
+            madeChanges();
+        }
     }
 
     @Override
