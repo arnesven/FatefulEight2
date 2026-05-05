@@ -11,6 +11,11 @@ public class ShaggyBeard extends Beard {
     }
 
     @Override
+    public boolean meetsSideburns() {
+        return false;
+    }
+
+    @Override
     public void apply(AdvancedAppearance appearance, Race race) {
         for (int y = 4; y < 6; ++y) {
             for (int x = 2; x < 5; ++x) {

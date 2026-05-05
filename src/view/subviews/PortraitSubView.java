@@ -63,6 +63,9 @@ public class PortraitSubView extends SubView {
         do {
             beard = Beard.allBeards[MyRandom.randInt(Beard.allBeards.length)];
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
+        if (beard.isTrueBeard() && beard.meetsSideburns() && MyRandom.flipCoin()) {
+            eyes = MyRandom.flipCoin() ? new SmallEyesWithSideburns() : new BaggySmallEyesWithSideburns();
+        }
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
         raceToUse.setRandomDetail(appearance);
@@ -215,6 +218,9 @@ public class PortraitSubView extends SubView {
         do {
             beard = Beard.allBeards[MyRandom.randInt(Beard.allBeards.length)];
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
+        if (beard.isTrueBeard() && beard.meetsSideburns() && MyRandom.flipCoin()) {
+            eyes = new BaggySmallEyesWithSideburns();
+        }
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
         raceToUse.setRandomDetail(appearance);

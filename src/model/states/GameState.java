@@ -10,21 +10,13 @@ import model.characters.appearance.FacialExpression;
 import model.classes.*;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
-import model.items.Item;
-import model.items.spells.Spell;
 import model.races.Race;
-import util.MyLists;
-import util.MyPair;
-import util.MyRandom;
-import util.MyStrings;
+import util.*;
 import view.LogView;
 import view.PartyAttitudesDialog;
 import view.subviews.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public abstract class GameState implements GameStateConstants {
@@ -317,6 +309,31 @@ public abstract class GameState implements GameStateConstants {
 
     public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {
         return randomSayIfPersonality(trait, excluding, line, FacialExpression.none);
+    }
+
+    public void randomPersonalityNonLeaderComment(int max, List<MyTriplet<PersonalityTrait, String, FacialExpression>> comments) {
+        var list = new ArrayList<>(comments);
+        Collections.shuffle(list);
+        Set<GameCharacter> alreadySpoken = new HashSet<>();
+        int count = 0;
+        for (var triple : comments) {
+            GameCharacter speaker = MyLists.find(getModel().getParty().getPartyMembers(),
+                    gc -> !getModel().getParty().getBench().contains(gc) &&
+                            gc != getModel().getParty().getLeader() &&
+                            gc.hasPersonality(triple.first));
+            if (speaker != null && !alreadySpoken.contains(speaker)) {
+                partyMemberSay(speaker, triple.second, triple.third);
+                alreadySpoken.add(speaker);
+                count++;
+            }
+            if (count >= max) {
+                break;
+            }
+        }
+    }
+
+    public void randomPersonalityNonLeaderComment(List<MyTriplet<PersonalityTrait, String, FacialExpression>> comments) {
+        randomPersonalityNonLeaderComment(comments.size(), comments);
     }
 
     public MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty, Skill bonusFromSkill) {

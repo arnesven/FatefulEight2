@@ -14,6 +14,11 @@ public class NarrowBeard extends Beard {
     }
 
     @Override
+    public boolean meetsSideburns() {
+        return false;
+    }
+
+    @Override
     public void apply(AdvancedAppearance appearance, Race race) {
         setSpriteOnTop(appearance, 0x135, 2, 4, lineColor);
         setSpriteOnTop(appearance, 0x136, 4, 4, lineColor);

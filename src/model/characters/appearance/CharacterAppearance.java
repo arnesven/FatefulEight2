@@ -427,7 +427,7 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     public boolean hasTuskMouth() {
-        return getMouth() == 0x57;
+        return getMouth() == 0x57 || getMouth() == 0x27F;
     }
 
     public boolean showFacialHair() {

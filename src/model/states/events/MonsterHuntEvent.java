@@ -55,7 +55,7 @@ public class MonsterHuntEvent extends DailyEventState {
         println("The note says: 'Monster Hunters Needed! " +
                 "The " + turnInTown.getLordTitle() + " of the " + turnInTown.getName() + " is offering a reward of " +
                 monsterHunt.getReward() + " gold pieces to the one who can slay the " +
-                monsterHunt.getMonster().getName() + " who resides in " + monsterHunt.getDestination() + "'");
+                monsterHunt.getMonster().getName() + " who resides in " + monsterHunt.getDestination() + ".'");
         model.getTutorial().monsterHunts(model);
         leaderSay("A " + monsterHunt.getMonster().getName() + " huh? We could take care of it.");
         print("Do you take the note? (Y/N) ");

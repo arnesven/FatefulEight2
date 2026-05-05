@@ -15,6 +15,11 @@ public class LongBeard extends Beard {
     }
 
     @Override
+    public boolean meetsSideburns() {
+        return false;
+    }
+
+    @Override
     public void apply(AdvancedAppearance appearance, Race race) {
         for (int y = 4; y <= 6; ++y) {
             FaceSprite spr = new FaceAndClothesSprite(0x3A + 0x10*y, appearance.getFacialHairColor());

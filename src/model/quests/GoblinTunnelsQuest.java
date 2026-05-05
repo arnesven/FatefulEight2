@@ -2,11 +2,16 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.races.Race;
 import sound.BackgroundMusic;
+import util.MyLists;
+import util.MyTriplet;
 import view.combat.CaveTheme;
 import model.combat.loot.StandardCombatLoot;
 import model.enemies.*;
@@ -55,6 +60,11 @@ public class GoblinTunnelsQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -412,5 +422,56 @@ public class GoblinTunnelsQuest extends Quest {
             list.add(new QuestBackground(new Point(i, 7), AbandonedMineQuest.HORIZONTAL, false));
         }
         return list;
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You're checking on the state of your camping gear when a fellow comes up to you. " +
+                    heOrSheCap(getPortrait().getGender()) + " introduces " + himOrHer(getPortrait().getGender()) +
+                    "self as a map maker.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), "Map Maker");
+            leaderSay("How can " + model.getParty().getLeader().getName() + "'s Company help you?");
+            portraitSay("It's not easy to make a living as a map maker these days.");
+            leaderSay("Why is that?");
+            portraitSay("Well... To tell the truth, back in the olden days, map makers usually made intentional errors " +
+                    "in their maps. That way they could constantly publish new updates which corrected the errors, while subtly " +
+                    "introducing new ones in the more uncharted regions of the world.");
+
+            randomPersonalityNonLeaderComment(List.of(
+                    new MyTriplet<>(PersonalityTrait.intellectual, "What an unthinkable sin!", FacialExpression.disappointed),
+                    new MyTriplet<>(PersonalityTrait.lawful, "That's criminal!", FacialExpression.disappointed),
+                    new MyTriplet<>(PersonalityTrait.jovial, "What a wonderful practical joke!", FacialExpression.relief),
+                    new MyTriplet<>(PersonalityTrait.mischievous, "Hehehe.", FacialExpression.relief)));
+
+            portraitSay("But the blanks on the maps are starting to get filled in. Map makers can't get away with that dirty trick anymore.");
+            leaderSay("How sad for you.");
+            portraitSay("Yes. But I've found something new to chart, the underworld!");
+            leaderSay("That makes sense. It's quite the labyrinth down there. Do you anything finished I could look at?");
+            portraitSay("Unfortunately I've only done very little. But I'm afraid I blabbed a little bit too much about " +
+                    "my new enterprise to other members of my guild last night at the tavern.", FacialExpression.relief);
+            leaderSay("And now you're worried they'll beat you to it.");
+            portraitSay("Exactly. But I figure, if I can get something special on my underworld map, perhaps I can make my brand known.");
+            leaderSay("What do you have in mind?", FacialExpression.questioning);
+            portraitSay("There's an ancient dwarven city known as Khaz-Ak-Ahrak...");
+            GameCharacter dwarf = MyLists.find(model.getParty().getPartyMembers(), gc -> gc.getRace().id() == Race.DWARF.id());
+            if (dwarf != null) {
+                partyMemberSay(dwarf, "That's a historic dwarven citadel! But it was abandoned many decades ago...", FacialExpression.excited);
+            } else {
+                leaderSay("It sounds familiar.");
+                portraitSay("But it was abandoned many decades ago.");
+            }
+            portraitSay("If you could explore it, and bring me back the details. Ohh... the maps I could make.");
+            leaderSay("Why was the city abandoned?");
+            portraitSay("Some trouble with goblins if I recall correctly. Does that trouble you?");
+            leaderSay("Not really. " + imOrWereCap() + " can handle a few goblins.");
+            portraitSay("Great. I look forward to seeing your notes upon your return.");
+            leaderSay(iOrWe() + "'ll check it out.");
+        }
     }
 }

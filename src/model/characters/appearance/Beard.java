@@ -11,12 +11,12 @@ public class Beard implements Serializable {
     // DO NOT CHANGE THE ORDER OF allBeards, IT WILL AFFECT PRESET CHARACTERS
     public static Beard[] allBeards = new Beard[]{
             new NoBeard(),
-            new Beard(1, 0x40),
+            new HalfBeard(),
             new Beard(2, 0x00, false),
             new Beard(3, 0x00, false),
             new Beard(4, 0x40),
-            new Beard(5, 0x41),
-            new Beard(6, 0x42),
+            new GoateeBeard(),
+            new PricklyBeard(),
             new Beard(7, 0x00, false),
             new Beard(8, 0x00, false),
             new AckneBeard(),
@@ -38,7 +38,12 @@ public class Beard implements Serializable {
             new BeardAndMustache(MyColors.BLACK),
             new MikosBeard(MyColors.BLACK),
             new StarBeard(MyColors.BLACK),
-            new BraidedBeard(MyColors.BLACK, MyColors.DARK_GREEN)
+            new BraidedBeard(MyColors.BLACK, MyColors.GOLD),
+            new FullBeard(),
+            new GatheredBeard(MyColors.BLACK, MyColors.GOLD, false),
+            new GatheredBeard(MyColors.BLACK, MyColors.DARK_RED, true),
+            new WizardsBeard(),
+            new WideMustache()
     };
 
     private final boolean isTrueBeard;
@@ -99,5 +104,9 @@ public class Beard implements Serializable {
 
     protected static void setSpriteOnTop(AdvancedAppearance appearance, int num, int x, int y, MyColors lineColor){
         setSpriteOnTop(appearance, num, x, y, lineColor, MyColors.DARK_BLUE);
+    }
+
+    public boolean meetsSideburns() {
+        return !isTrueBeard();
     }
 }

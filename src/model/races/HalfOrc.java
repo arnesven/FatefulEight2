@@ -74,6 +74,6 @@ public class HalfOrc extends Race {
 
     @Override
     public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
-        return mouthIndex == 7 || MyRandom.randInt(6) == 0; // Try to get tusks more often.
+        return mouthIndex == 7 || mouthIndex == 16 || MyRandom.randInt(6) < 3; // Try to get tusks more often.
     }
 }

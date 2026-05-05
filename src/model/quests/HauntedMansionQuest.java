@@ -3,7 +3,9 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -33,7 +35,7 @@ public class HauntedMansionQuest extends Quest {
             "and rewards you for your service,";
     private static final Sprite32x32 outdoors = new Sprite32x32("outdoors", "combat.png", 0x13,
             MyColors.DARK_GREEN, MyColors.GREEN, MyColors.CYAN, MyColors.CYAN);
-    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL, false);
 
     public HauntedMansionQuest() {
         super("Haunted Mansion", "Nobleman", QuestDifficulty.HARD,
@@ -60,6 +62,11 @@ public class HauntedMansionQuest extends Quest {
     @Override
     public BackgroundMusic getMusic() {
         return BackgroundMusic.mysticSong;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -230,6 +237,49 @@ public class HauntedMansionQuest extends Quest {
         public HauntedMansionStartPoint(List<QuestEdge> questEdges, String talk) {
             super(questEdges, talk);
             setRow(3);
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You've emptied your mug at the tavern and walk over to the bar to get another. " +
+                    "There's a nobleman at the bar. He seems deep in thought.");
+            leaderSay("Is life not greeting you friend?");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), "Nobleman");
+            portraitSay("Life greeted me, I just didn't like what it had to say.");
+            println("You weigh leaving the man to his thoughts. But you're curious. The nobleman seems quite out of place at the bar.");
+            leaderSay("That sounds bleak. What's the trouble? If you don't mind me asking.");
+            portraitSay("I never got along with my father. I've been waiting for the old fart to die for years.");
+            leaderSay("That's rather grim.");
+            portraitSay("I'm his only heir and he's been holding back a serious inheritance.");
+            randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()), "How cruel!", FacialExpression.disappointed);
+            leaderSay("What kind of inheritance? Gold, goods...", FacialExpression.questioning);
+            portraitSay("Real-estate. Our family has an ancestral home on the edge of town. It's quite the sprawling mansion. I've been wanting to " +
+                    "take ownership of the property for a long time. It's been particularly annoying since my father didn't even live there. " +
+                    "He'd been cooped up in an apartment in town for years.");
+            leaderSay("You speak about him in the past tense. So I figure your father...");
+            portraitSay("He died. Yes, two nights ago.", FacialExpression.sad);
+            boolean didSay = randomSayIfPersonality(PersonalityTrait.cold, List.of(model.getParty().getLeader()),
+                    "Congratulations to your new home!", FacialExpression.wicked);
+            if (!didSay) {
+                leaderSay("My condolences. But now I assume you can move into the mansion?");
+            }
+            portraitSay("That's what I thought. I went over there the next day. The place was a little eerie but I decided to spend the night.");
+            leaderSay("Was it drafty? I always find mansions too drafty.");
+            portraitSay("It was haunted! Now I understand why my father wouldn't live there.", FacialExpression.afraid);
+            leaderSay("What happened?");
+            portraitSay("I was woken up by chalk-white spectres, they chased me out! Now I don't know what to do!");
+            leaderSay("Why don't you let " + meOrUs() + " investigate the matter. Perhaps there is some way to drive the ghosts off?");
+            portraitSay("You would do that? Aren't you scared?", FacialExpression.questioning);
+            leaderSay("A few ghosts won't deter " + model.getParty().getLeader().getName() + "'s Company.");
+            portraitSay("Maybe this is my lucky day! I'll pay you of course, if you manage to get rid of the ghosts.");
+            leaderSay(iOrWeCap() + " will give it " + myOrOur() + " best effort.");
         }
     }
 }

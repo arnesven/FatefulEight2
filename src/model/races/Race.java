@@ -175,7 +175,7 @@ public abstract class Race implements Serializable {
     }
 
     public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
-        return mouthIndex != 7;
+        return mouthIndex != 7 && mouthIndex != 16;
     }
 
     public CharacterEyes getRandomEyes() {

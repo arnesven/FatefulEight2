@@ -17,8 +17,8 @@ public class QuestDeck {
                 new CultistDenQuest(),        // QI
                 new DeepDungeonQuest(),       // QI
                 new DefendTheVillageQuest(),  // QI
-                new ElvenHighCouncilQuest(),
-                new GoblinTunnelsQuest(),
+                new ElvenHighCouncilQuest(),  // QI
+                new GoblinTunnelsQuest(),     // QI
                 new HauntedMansionQuest(),
                 new HungryTrollQuest(),
                 new MagicSeminarQuest(),

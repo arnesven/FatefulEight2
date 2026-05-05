@@ -7,5 +7,6 @@ public class MouthSprite extends FaceSprite {
         super(i);
         setColor2(lipColor);
         setColor3(hairColor);
+        setColor4(MyColors.BEIGE); // Tusk color
     }
 }

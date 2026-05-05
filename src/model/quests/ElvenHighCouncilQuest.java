@@ -4,11 +4,13 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.ElvenGuardEnemy;
 import model.quests.scenes.*;
+import model.races.ElvenRace;
 import model.races.Race;
 import model.states.QuestState;
 import sound.BackgroundMusic;
@@ -80,6 +82,11 @@ public class ElvenHighCouncilQuest extends Quest {
     @Override
     public boolean drawTownOrCastleInBackground() {
         return true;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -344,5 +351,50 @@ public class ElvenHighCouncilQuest extends Quest {
         list.add(new QuestBackground(new Point(7, 0), KeepSubView.COLUMN, false));
 
         return list;
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You take a short break in a nice park in front of a large, rather fancy building.");
+            println("The scene however, is not very peaceful, as you spot a noble in a hectic discussion with one of " +
+                    hisOrHer(getPortrait().getGender()) + " aides. You can't help but listen in to the conversation.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), "Noble");
+            portraitSay("How are we ever going to convince these privileged, pointy eared blockheads?");
+            if (ElvenRace.isElf(model.getParty().getLeader().getRace())) {
+                leaderSay("Hey, that's offensive!");
+            } else {
+                printQuote("Aide", "They seem completely resolved. They are not getting involved.");
+                leaderSay("What's going on?");
+            }
+            portraitSay("This doesn't concern you citizen. Please go back to your own business.");
+            leaderSay("I was minding my own business, but your shouting is kind of hard to ignore.", FacialExpression.disappointed);
+            portraitSay("I'm sorry. I'm just a little flustered over this diplomatic conundrum...", FacialExpression.relief);
+            leaderSay("Some trouble with elves?");
+            portraitSay("In a way. I'm sure you've heard we are at war, and I...");
+            leaderSay("At war? With whom?", FacialExpression.surprised);
+            portraitSay("With the orcish hordes. Their armies are threatening these lands. Don't you read the newspaper?");
+            leaderSay("I don't find it very reliable...");
+            portraitSay("Well, anyway. We've managed to form a coalition. We've put together a mixed army, but we need more allies. " +
+                    "The elves have fine warriors. But they are reluctant to help!", FacialExpression.disappointed);
+            if (ElvenRace.isElf(model.getParty().getLeader().getRace())) {
+                leaderSay("We try to avoid getting involved in the political affairs of others. " +
+                        "At least that's a common attitude among those who still live in Elven Dwellings.");
+            } else {
+                leaderSay("Elves have been known to keep to themselves, sometimes rather selfishly.");
+            }
+            printQuote("Aide", "We've been working the delegation for hours. But nothing we say will change their minds.");
+            leaderSay("Perhaps " + iOrWe() + " could be of some service. " + iOrWeCap() + " can be pretty persuasive.");
+            portraitSay("You? Well, why not. I'll give you a shot, you can hardly make things worse.");
+            leaderSay("Just tell " + meOrUs() + " where to go.");
+            portraitSay("The council meeting is held in the hotel by the park. Just walk inside and show them this pass.");
+            leaderSay("Fine.");
+            portraitSay("Good luck.");
+        }
     }
 }

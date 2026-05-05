@@ -16,6 +16,12 @@ public class MikosBeard extends NoBeard {
     public boolean isTrueBeard() {
         return true;
     }
+
+    @Override
+    public boolean meetsSideburns() {
+        return false;
+    }
+
     @Override
     public void apply(AdvancedAppearance appearance, Race race) {
         FaceSprite spr = new FaceAndClothesSprite(0x155, appearance.getFacialHairColor());
