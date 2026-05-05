@@ -38,7 +38,7 @@ public class Beard implements Serializable {
             new BeardAndMustache(MyColors.BLACK),
             new MikosBeard(MyColors.BLACK),
             new StarBeard(MyColors.BLACK),
-            new BraidedBeard(MyColors.BLACK, MyColors.GOLD),
+            new BraidedBeard(MyColors.BLACK, MyColors.RED),
             new FullBeard(),
             new GatheredBeard(MyColors.BLACK, MyColors.GOLD, false),
             new GatheredBeard(MyColors.BLACK, MyColors.DARK_RED, true),
@@ -107,6 +107,6 @@ public class Beard implements Serializable {
     }
 
     public boolean meetsSideburns() {
-        return !isTrueBeard();
+        return isTrueBeard();
     }
 }
