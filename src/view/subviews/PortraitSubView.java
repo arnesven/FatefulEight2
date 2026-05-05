@@ -218,6 +218,11 @@ public class PortraitSubView extends SubView {
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
         raceToUse.setRandomDetail(appearance);
+        if (cls.id() == Classes.None.id()) {
+            if (raceToUse.getColor() == MyColors.BEIGE) {
+                cls = new NoClass(MyColors.DARK_GREEN);
+            }
+        }
         appearance.setClass(cls);
         return appearance;
     }

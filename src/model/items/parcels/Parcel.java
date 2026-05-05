@@ -6,6 +6,7 @@ import model.items.Inventory;
 import model.items.Item;
 import model.items.MysteriousMap;
 import model.items.UsableItem;
+import model.items.special.TrinketItem;
 import model.states.events.FindTreasureMapEvent;
 import util.MyRandom;
 
@@ -50,6 +51,8 @@ public abstract class Parcel extends UsableItem {
             MysteriousMap map = new MysteriousMap(model);
             inner = map;
             FindTreasureMapEvent.addDestinationTask(model, map);
+        } else if (MyRandom.rollD6() == 1) {
+            inner = new TrinketItem();
         }
         inner.addYourself(model.getParty().getInventory());
         return "The " + getName().toLowerCase() + " contained " + inner.getName() + ".";

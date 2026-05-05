@@ -10,6 +10,7 @@ import model.classes.SkillCheckResult;
 import model.classes.SkillChecks;
 import model.enemies.Enemy;
 import model.items.Item;
+import model.items.special.TrinketItem;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
 import model.races.Race;
@@ -154,7 +155,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
                     SkillChecks.adjustDifficulty(model, 6), 0);
             if (spotting.isSuccessful()) {
                 println(result.second.getName() + " also spots a shiny trinket (Perception " + spotting.asString() + "). How did that get there?");
-                Item it = model.getItemDeck().getRandomJewelry();
+                Item it = new TrinketItem();
                 println("The party gained " + it.getName() + ".");
                 it.addYourself(model.getParty().getInventory());
             }
