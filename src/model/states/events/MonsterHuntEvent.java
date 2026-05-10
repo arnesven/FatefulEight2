@@ -57,7 +57,7 @@ public class MonsterHuntEvent extends DailyEventState {
                 monsterHunt.getReward() + " gold pieces to the one who can slay the " +
                 monsterHunt.getMonster().getName() + " who resides in " + monsterHunt.getDestination() + ".'");
         model.getTutorial().monsterHunts(model);
-        leaderSay("A " + monsterHunt.getMonster().getName() + " huh? We could take care of it.");
+        leaderSay("A " + monsterHunt.getMonster().getName() + " huh? " + iOrWeCap() + " could take care of it.");
         print("Do you take the note? (Y/N) ");
         if (yesNoInput()) {
             if (withIntro) {

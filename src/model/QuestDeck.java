@@ -20,7 +20,7 @@ public class QuestDeck {
                 new ElvenHighCouncilQuest(),  // QI
                 new GoblinTunnelsQuest(),     // QI
                 new HauntedMansionQuest(),    // QI
-                new HungryTrollQuest(),
+                new HungryTrollQuest(),       // QI
                 new MagicSeminarQuest(),
                 new MansionHeistQuest(),
                 new MasqueradeQuest(),

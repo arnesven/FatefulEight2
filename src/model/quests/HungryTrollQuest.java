@@ -58,6 +58,11 @@ public class HungryTrollQuest extends Quest {
     }
 
     @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
+    }
+
+    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(
             new QuestScene("Combat with Troll", List.of(
@@ -187,5 +192,40 @@ public class HungryTrollQuest extends Quest {
     @Override
     public CombatTheme getCombatTheme() {
         return new GrassCombatTheme();
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+           boolean gender = getPortrait().getGender();
+           println("An elderly " + (gender ? "woman" : "man") + " approaches you.");
+           model.getLog().waitForAnimationToFinish();
+           showExplicitPortrait(model, getPortrait(), getProvider());
+           String leader = model.getParty().getLeader().getName();
+           portraitSay("Are you " + leader + " of " + leader + "'s Company?");
+           leaderSay("That's me. Who are you?");
+           portraitSay("I'm the town elder of a small town near here. We have some trouble and we would like to hire your services to, uh, dispose of it.");
+           leaderSay("I understand. What's the problem?", FacialExpression.questioning);
+           portraitSay("A rather large troll has decided to take up residence near our town.");
+           leaderSay("A troll? And he's causing damage and being rude about it? " +
+                   "That will be no problem. Standard procedure really. " + iOrWe() + " know what to do.");
+           portraitSay("Oh the troll isn't causing damage. And it's not too aggressive or rude...", FacialExpression.relief);
+           leaderSay("Okay... then what is the problem really?", FacialExpression.questioning);
+           portraitSay("Well, it's a very large troll and it seems to be very hungry. " +
+                   "Initially we tried to feed it, in hoping it would simply be grateful and leave.");
+           leaderSay("That sounds like a mistake.", FacialExpression.disappointed);
+           portraitSay("Yes it was, because afterwards the troll refused to leave. When we didn't feed it any more, " +
+                   "it started eating just about anything it could find.");
+           leaderSay("How annoying.", FacialExpression.disappointed);
+           portraitSay("More than that, we are being driven into poverty! We didn't have much to begin with, but now we " +
+                   "are struggling to feed our own people. Please find a way to drive the troll off.", FacialExpression.sad);
+           leaderSay("There must be away to get it to go away, trolls are semi-intelligent after all.", FacialExpression.questioning);
+           portraitSay("I'll mark the location of the village on your map. Goodbye for now.");
+           leaderSay("Until we meet again.");
+        }
     }
 }
