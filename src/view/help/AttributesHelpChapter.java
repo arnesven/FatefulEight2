@@ -1,6 +1,10 @@
 package view.help;
 
+import model.Model;
 import view.GameView;
+import view.MyColors;
+import view.party.DrawableObject;
+import view.widget.TopText;
 
 import java.util.List;
 
@@ -10,7 +14,11 @@ public class AttributesHelpChapter extends ExpandableHelpDialog {
             "character's name and portrait in the main game view, but also in the Party menu.";
     private static final String ARMOR_TEXT = "A character's Physical and Magical Armor Points (AP/MP) are based on what equipment the character " +
             "currently has equipped. Physical Armor protects a character from physical harm, whereas Magical Armor protects her from magical harm, like spells." +
-            "\n\nSome spells and conditions affect a player's current AP or MP.";
+            "\n\nSome spells and conditions affect a player's current AP or MP.\n\n" +
+            "    Physical Armor (No Heavy)\n" +
+            "    Physical Armor (Some Heavy)\n" +
+            "    Magical Armor\n\n" +
+            "A player equipped with items providing heavy armor can become Fatigued in combat.";
     private static final String HP_TEXT = "A character's Health Points (HP) are based on a character's class and receives " +
             "a bonus from that character's race. Each gained level also adds 1 to a character's HP.\n\n" +
             "When a character reaches 0 HP, they die, and unless a friendly party member has a resurrection potion handy, they " +
@@ -35,7 +43,7 @@ public class AttributesHelpChapter extends ExpandableHelpDialog {
 
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
-        return List.of(new AttributesSubChapter(view, "Armor Points", ARMOR_TEXT),
+        return List.of(new ArmorSubChapter(view),
                 new AttributesSubChapter(view, "Health Points", HP_TEXT),
                 new AttributesSubChapter(view, "Stamina Points", SP_TEXT),
                 new AttributesSubChapter(view, "Experience Points", XP_TEXT),
@@ -45,6 +53,24 @@ public class AttributesHelpChapter extends ExpandableHelpDialog {
     private static class AttributesSubChapter extends SubChapterHelpDialog {
         public AttributesSubChapter(GameView view, String title, String text) {
             super(view, title, text);
+        }
+    }
+
+    private static class ArmorSubChapter extends AttributesSubChapter {
+        public ArmorSubChapter(GameView view) {
+            super(view, "Armor Points", ARMOR_TEXT);
+        }
+
+        @Override
+        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+            List<DrawableObject> textContent = super.buildDecorations(model, xStart, yStart);
+            textContent.add(new TextDecoration("" + (char)(0x8F), xStart + 4, yStart + 17,
+                    MyColors.WHITE, MyColors.BLUE, false));
+            textContent.add(new TextDecoration("" + (char)(0x8E), xStart + 4, yStart + 18,
+                    MyColors.WHITE, MyColors.BLUE, false));
+            textContent.add(new TextDecoration("" + (char)(0x8F), xStart + 4, yStart + 19,
+                    MyColors.PURPLE, MyColors.BLUE, false));
+            return textContent;
         }
     }
 }

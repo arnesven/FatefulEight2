@@ -271,7 +271,7 @@ public class PartyView extends SelectableListMenu {
                 int ap = gc.getAP();
                 int mp = gc.getMP();
                 if (ap > 0 && mp > 0) {
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %3dAP %2dMP", ap, mp));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %3dMP %2dAP", mp, ap));
                 } else if (ap > 0) {
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %7d AP", ap));
                 } else if (mp > 0) {

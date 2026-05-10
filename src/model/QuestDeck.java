@@ -19,7 +19,7 @@ public class QuestDeck {
                 new DefendTheVillageQuest(),  // QI
                 new ElvenHighCouncilQuest(),  // QI
                 new GoblinTunnelsQuest(),     // QI
-                new HauntedMansionQuest(),
+                new HauntedMansionQuest(),    // QI
                 new HungryTrollQuest(),
                 new MagicSeminarQuest(),
                 new MansionHeistQuest(),

@@ -126,13 +126,19 @@ public class GameCharacter extends Combatant {
         BorderFrame.drawString(screenHandler, xPString, col+8, row+2, xpColor);
         int ap = this.getAP();
         int mp = this.getMP();
+        char filledShield = (char)(0x8F);
+        char emptyShield = (char)(0x8E);
+        char physArmorShieldToUse = filledShield;
+        if (equipment.anyHeavy()) {
+            physArmorShieldToUse = emptyShield;
+        }
         if (ap > 0 && mp > 0) {
-            BorderFrame.drawString(screenHandler, String.format("%2d/", ap), col+17, row+2, DEFAULT_TEXT_COLOR);
-            BorderFrame.drawString(screenHandler, String.format("%2d", mp), col+20, row+2, MyColors.PURPLE);
+            BorderFrame.drawString(screenHandler, String.format("%2d" + filledShield, mp), col+16, row+2, MyColors.PURPLE);
+            BorderFrame.drawString(screenHandler, String.format("%2d" + physArmorShieldToUse, ap), col+19, row+2, DEFAULT_TEXT_COLOR);
         } else if (ap > 0) {
-            BorderFrame.drawString(screenHandler, String.format("%2d AP", ap), col+17, row+2, DEFAULT_TEXT_COLOR);
+            BorderFrame.drawString(screenHandler, String.format("%2d" + physArmorShieldToUse, ap), col+19, row+2, DEFAULT_TEXT_COLOR);
         } else if (mp > 0) {
-            BorderFrame.drawString(screenHandler, String.format("%2d MP", mp), col+17, row+2, MyColors.PURPLE);
+            BorderFrame.drawString(screenHandler, String.format("%2d" + filledShield, mp), col+19, row+2, MyColors.PURPLE);
         }
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, HealthBar.getHealthColor(this.getHP(), this.getMaxHP()));
         BorderFrame.drawString(screenHandler, String.format("%2d SP", this.getSP()), col+17, row+3, getStaminaColor());
