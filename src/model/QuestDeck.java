@@ -22,9 +22,9 @@ public class QuestDeck {
                 new HauntedMansionQuest(),    // QI
                 new HungryTrollQuest(),       // QI
                 new MagicSeminarQuest(),      // QI
-                new MansionHeistQuest(),
-                new MasqueradeQuest(),
-                new MissingBrotherQuest(),
+                new MansionHeistQuest(),      // QI
+                new MasqueradeQuest(),        // QI
+                new MissingBrotherQuest(),    // QI
                 new MurderMysteryQuest(),
                 new OrcishDelightQuest(),
                 new RatProblemQuest(),         // QI

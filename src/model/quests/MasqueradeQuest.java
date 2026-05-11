@@ -3,7 +3,10 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
+import model.characters.appearance.SilhouetteAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.*;
@@ -16,6 +19,7 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -53,7 +57,7 @@ public class MasqueradeQuest extends Quest {
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
             MyColors.GRAY, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
-    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL);
+    private static final CharacterAppearance PORTRAIT = new SilhouetteAppearance();
 
     private static final List<QuestBackground> BG_SPRITES = makeBackground();
     public static final Sprite[] SPECTATORS = makeSpectators();
@@ -74,6 +78,11 @@ public class MasqueradeQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -278,6 +287,41 @@ public class MasqueradeQuest extends Quest {
         @Override
         public int getDamage() {
             return 1;
+        }
+    }
+
+    private static class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You walk past a little house with a sign outside saying 'Bounty Office'.");
+            println("A large man with a very large axe on his back emerges from the hut, he seems very angry.");
+            showRandomPortrait(model, Classes.SWORD_MASTER,
+                    MyRandom.flipCoin() ? Race.HALF_ORC : Race.SOUTHERN_HUMAN, "Bounty Hunter");
+            portraitSay("Darn bureaucrats!", FacialExpression.angry);
+            portraitSay("I've tracked the bounty! Back to the very town I started in! I know exactly " +
+                    "where the target it. I just can't get to it!", FacialExpression.disappointed);
+            leaderSay("What do you mean?", FacialExpression.questioning);
+            portraitSay("The damn target is hiding out at masquerade party, and I can't get an invitation.", FacialExpression.disappointed);
+            leaderSay("Not so popular with the high and mighty?");
+            portraitSay("Uh... something like that. Anyway, I figured I got half the job done, so the bounty " +
+                    "office should at least pay me half the bounty, to cover my expenses. But the damn penny pinchers won't budge!",
+                    FacialExpression.disappointed);
+            leaderSay("Yeah... that's not really how it works.");
+            portraitSay("Whatever, you can take the bounty slip. I'm heading for the tavern.", FacialExpression.disappointed);
+            model.getLog().waitForAnimationToFinish();
+            if (model.getParty().size() > 1) {
+                GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                partyMemberSay(other, "Wow... He was really angry.");
+            }
+            println("You look at the bounty slip.");
+            leaderSay("A masquerade huh? Could be quite fun.");
+            randomSayIfPersonality(PersonalityTrait.romantic, List.of(model.getParty().getLeader()),
+                    "We should get ourselves something nice to wear.");
+
         }
     }
 }

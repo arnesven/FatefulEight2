@@ -2,7 +2,9 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -13,6 +15,7 @@ import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyTriplet;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
@@ -67,6 +70,11 @@ public class MansionHeistQuest extends Quest {
     @Override
     public CombatTheme getCombatTheme() {
         return new MansionTheme();
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -252,6 +260,43 @@ public class MansionHeistQuest extends Quest {
     private static class MansionSprite extends Sprite32x32 {
         public MansionSprite(int i) {
             super("mansion"+i, "quest.png", 0x40 + i, MyColors.DARK_GRAY, MyColors.TAN, MyColors.DARK_BROWN, MyColors.CYAN);
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You're stop to catch your break, and put down your pack for a moment. " +
+                    "As you wonder about what could be making it so heavy, a hooded figure approaches you.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), "Stranger");
+            portraitSay("I've been looking for you.");
+            leaderSay("Can I help you?");
+            portraitSay("Maybe you can...");
+            println("The stranger seems to look you over.");
+            calculatePartyAlignment(model, this);
+            portraitSay("Yes, perhaps you can. I have a, let's say, less than reputable business opportunity. " +
+                    "A safe needs cracking. Does that seem like something you could handle?");
+            leaderSay("Possibly. What are the details?");
+            portraitSay("There's a very wealthy widow in town, Alberta Golbrad. Have you heard of her?");
+            leaderSay("No. Should I?");
+            portraitSay("Only if you're into springs and pressings. Her late husband made a fortune " +
+                    "setting up a conglomerate of workshops some decades ago. Rumor has it he was going to " +
+                    "donate his whole fortune to the poor once he and his wife retired.");
+            randomPersonalityNonLeaderComment(List.of(
+                    new MyTriplet<>(PersonalityTrait.greedy, "What a fool.", FacialExpression.disappointed),
+                    new MyTriplet<>(PersonalityTrait.generous, "What a kind-hearted soul.", FacialExpression.relief)));
+            leaderSay("But he died before retiring, and his wife wasn't too keen on giving it all away?");
+            portraitSay("Oh, so you do know her?");
+            leaderSay("No... but I know how people think. And I think you made that story up to try to smooth " +
+                    "over the fact that your trying to hire me to steal from an old woman.");
+            portraitSay("Think whatever you like. Are you in?");
+            leaderSay("I'll think about it.");
+            portraitSay("Don't think too long...");
         }
     }
 }

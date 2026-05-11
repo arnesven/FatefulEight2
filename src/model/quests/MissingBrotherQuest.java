@@ -4,6 +4,7 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.BanditArcherEnemy;
@@ -40,7 +41,7 @@ public class MissingBrotherQuest extends Quest {
             "instead. She offers a handsome reward " +
             "for finding him.";
 
-    private static final String endText = "Ghania's brother rewards you, then he returns to town.";
+    private static final String endText = "Ghania's brother rewards you, then he returns home.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL, true);
     private static final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
@@ -81,6 +82,11 @@ public class MissingBrotherQuest extends Quest {
     @Override
     public BackgroundMusic getMusic() {
         return BackgroundMusic.calmingSong;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -257,5 +263,28 @@ public class MissingBrotherQuest extends Quest {
         result.add(new QuestBackground(new Point(7,0), roadCorner, true));
 
         return result;
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            showExplicitPortrait(model, getPortrait(), "Ghania");
+            if (model.getParty().size() > 1) {
+                portraitSay("You're that new adventuring company in town right?");
+            } else {
+                portraitSay("You're that new adventurer in town right?");
+            }
+            leaderSay("Yeah, I guess that's me. What can I do for you?");
+            portraitSay("My brother, he's been missing for a two weeks!", FacialExpression.afraid);
+            leaderSay("Where was he last seen?");
+            portraitSay("We was traveling to a nearby town, but I've since heard he never even arrived. " +
+                    "Will you look for him? Please!", FacialExpression.sad);
+            leaderSay(iOrWeCap() + " will do what " + iOrWe() + " can.");
+            portraitSay("Thank you!");
+        }
     }
 }
