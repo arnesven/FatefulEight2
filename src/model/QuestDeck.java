@@ -25,9 +25,9 @@ public class QuestDeck {
                 new MansionHeistQuest(),      // QI
                 new MasqueradeQuest(),        // QI
                 new MissingBrotherQuest(),    // QI
-                new MurderMysteryQuest(),
-                new OrcishDelightQuest(),
-                new RatProblemQuest(),         // QI
+                new MurderMysteryQuest(),     // QI
+                new OrcishDelightQuest(),     // QI
+                new RatProblemQuest(),        // QI
                 new SurveillanceQuest(),
                 new SwampOgreQuest(),
                 new TownFairQuest(),
@@ -36,6 +36,7 @@ public class QuestDeck {
                 new WarlocksDungeonQuest(),
                 new WerewolfQuest(),
                 new WizardsTowerQuest()
+                // new WineTastingQuest()
         );
     }
 

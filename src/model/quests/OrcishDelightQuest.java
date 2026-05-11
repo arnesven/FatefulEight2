@@ -65,6 +65,11 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
     }
 
     @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
+    }
+
+    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Distribute and promote", List.of(
                 new CollaborativeSkillCheckSubScene(0, 1, Skill.SeekInfo, 8, "First we need to find out where " +
@@ -291,5 +296,37 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
         list.add(new QuestBackground(new Point(6, 4), tavernUpper, false));
         list.add(new QuestBackground(new Point(6, 5), tavernLower, false));
         return list;
+    }
+
+    private static class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("Your about to order a meal at the tavern when the Barkeep presents you with a crate.");
+            leaderSay("Uh. What's this?");
+            showRandomPortrait(model, Classes.BARTENDER, "Barkeep");
+            portraitSay("Package for you. A fellow came in with it earlier.");
+            leaderSay("Odd. I didn't order anything? Who delivered it, what did they look like?");
+            portraitSay("Couldn't see his face really, had his hood down. Big fella though. Rather rough voice.");
+            leaderSay("Very odd.");
+            println("You lean over the crate to pick it up when you catch a whiff of what's inside. " +
+                    "Something smells very good, a sweet and savory scent.");
+            portraitSay("Whatever's in there, it sure smells delicious.");
+            println("You remove a piece of cloth to discover a large number of pastries. There's also a note. It simply " +
+                    "says 'Plaes distriboot theese to mershants and shopkipers. Yu will be compenseted.'");
+            boolean said1 = randomSayIfPersonality(PersonalityTrait.jovial, List.of(model.getParty().getLeader()),
+                    "Our employer is obviously a better at baking than he is at spelling. " +
+                            "I wonder how he will 'compenset' us, with cupcakes perhaps?");
+            boolean said2 = randomSayIfPersonality(PersonalityTrait.gluttonous, List.of(model.getParty().getLeader()),
+                    model.getParty().getLeader().getFirstName() + ", seriously. You got to let me taste one.");
+            if (said1 || said2) {
+                leaderSay("I don't know. This whole thing is very suspicious. We should investigate this matter.");
+            } else {
+                leaderSay("What in the world...?");
+            }
+        }
     }
 }

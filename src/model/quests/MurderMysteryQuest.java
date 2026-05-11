@@ -1,9 +1,13 @@
 package model.quests;
 
+import model.Model;
 import model.achievements.Achievement;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.quests.scenes.*;
 import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MurderMysteryQuest extends Quest implements CountingQuest {
-    private static final CharacterAppearance PORTRAIT =  PortraitSubView.makeRandomPortrait(Classes.CONSTABLE, Race.ALL);;
+    private static final CharacterAppearance PORTRAIT =  PortraitSubView.makeRandomPortrait(Classes.CONSTABLE, Race.ALL);
     private static final String INTRO = "The local authorities need help solving " +
             "this one. The victim was found in an alley, gutted and with mysterious marks " +
             "on her arm. Clues lead to the exclusive Corner Club, but can you get in?";
@@ -63,6 +67,11 @@ public class MurderMysteryQuest extends Quest implements CountingQuest {
     @Override
     public BackgroundMusic getMusic() {
         return BackgroundMusic.mysticSong;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -168,6 +177,39 @@ public class MurderMysteryQuest extends Quest implements CountingQuest {
         @Override
         protected String getCombatDetails() {
             return "Murderer";
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You're casually walking down the street when you see a small crowd of people. " +
+                    "They are murmuring worriedly, and some are even crying");
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("Okay folks, time to move a long.");
+            println("As you come closer you spot a dead body lying in the alley up ahead.");
+            println("The sheriff and " + hisOrHer(getPortraitGender())+
+                    " deputy manage to usher most of the people away from the area.");
+            portraitSay("That means you too outsider. There's been another accident...", FacialExpression.disappointed);
+            SkillCheckResult result = model.getParty().getLeader().testSkill(model, Skill.Perception,
+                    SkillCheckResult.NO_DIFFICULTY,model.getParty().getLeader().getRankForSkill(Skill.Blades));
+            println("You take one look at the victim's wounds and identify them as " +
+                    "stabs from a ritual dagger (Perception " + result.asString() + ").");
+            leaderSay("Accident? Those are clearly stab wounds. You've got a murderer on the loose in your town Sheriff.", FacialExpression.questioning);
+            portraitSay("Keep your voice down! Don't you think I know that?", FacialExpression.disappointed);
+            leaderSay("So it's a cover up then? The constabulary never ceases to amaze me.");
+            portraitSay("It's the official story until we have a suspect in custody. No need to cause a panic.");
+            leaderSay("People always figure out the truth sheriff.", FacialExpression.wicked);
+            portraitSay("Yeah, maybe the clever ones will. Say, you seem to have your wits about you. And I'm impressed you " +
+                    "picked up on the stabbings. Why don't you take a shot at cracking this case, huh?");
+            leaderSay("Seems kind of dangerous.", FacialExpression.disappointed);
+            portraitSay("Come on. It'll be something to tell the grand kids about.", FacialExpression.relief);
+            leaderSay("Maybe. If I'm lucky.");
+            portraitSay("Think it over. We can't let that killer roam free.");
         }
     }
 }
