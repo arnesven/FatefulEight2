@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.characters.appearance.HairStyle;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -47,6 +48,11 @@ public class MagicSeminarQuest extends Quest implements CountingQuest {
     protected void resetQuest() {
         super.resetQuest();
         count = 0;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -197,6 +203,49 @@ public class MagicSeminarQuest extends Quest implements CountingQuest {
             super(questEdge, "");
             setColumn(col);
             setRow(row);
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("That evening, at the tavern, you can't but help but overhear a conversation at the next table.");
+            boolean profsGender = getPortrait().getGender();
+            printQuote("Student #1", "It's pathetic! " + heOrSheCap(profsGender) + " talks about magic, but does " + heOrShe(profsGender) +
+                    " even know a single real spell?");
+            printQuote("Student #2", "We should demand a refund on our tuition fees.");
+            printQuote("Student #3", "Come on, guys, it's not that bad.");
+            printQuote("Student #2", "Tell me one thing about magic you actually learned today.");
+            printQuote("Student #3", "That's not fair. Today was all about flora and fauna. It's just a lead-up to the lecture " +
+                    "on green magic later in the course.");
+            printQuote("Student #1", "The professor is just padding out the course with inconsequential nonsense. " +
+                    heOrSheCap(profsGender) + "'s a hack, " + heOrShe(profsGender) + "'s a...");
+            println("The conversation suddenly falls silent as a middle-aged " + (profsGender ? "lady" : "gentleman") + " enters the tavern.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            printQuote("Student #3", "Uh... maybe we should keep our voices down.");
+            println("The professor clearly recognizes " + hisOrHer(profsGender) + " students, and their less-than-enthusiastic expressions. " +
+                    "Dejected, " + heOrShe(profsGender) + " retreats to a corner with " + hisOrHer(profsGender) + " ale, takes a slow sip and stares blankly at the table.");
+            println("Curious about the situation, you wander over.");
+            leaderSay("May I join you?", FacialExpression.questioning);
+            portraitSay("Be my guest.");
+            leaderSay("Thank you. I couldn't help but notice. But are those young people over there...?", FacialExpression.questioning);
+            portraitSay("My students yes. I'm a teacher at the local college here.");
+            leaderSay("How exciting. And you are a magic teacher?");
+            portraitSay("No, not at all, I'm a natural science teacher! But ever since professor Umpin left to become an adventurer full-time, I've had to cover for him.");
+            leaderSay("I understand, that's why...");
+            portraitSay("My students hate me. They all think I'm a fake, and they're right. I'm only teaching what " +
+                    "I've read about in manuals and I try to fill the lectures which as much natural science stuff as I can.", FacialExpression.sad);
+            portraitSay("It's making me miserable too. I'm thinking about quitting, and there will be nobody else to lead the course. " +
+                    "Then the collage will have to pay them their tuition back.", FacialExpression.sad);
+            leaderSay("Maybe " + iOrWe() + " can help? " + iOrWeCap() + " know a couple of things about magic actually.");
+            portraitSay("You? I uh... well. Oh, why not? It's not like you can make it any worse.", FacialExpression.surprised);
+            leaderSay("Perhaps " + iOrWe() + "'ll make an appearance.");
+            portraitSay("Please do. I'm desperate!", FacialExpression.sad);
         }
     }
 }

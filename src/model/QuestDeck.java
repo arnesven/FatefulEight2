@@ -21,7 +21,7 @@ public class QuestDeck {
                 new GoblinTunnelsQuest(),     // QI
                 new HauntedMansionQuest(),    // QI
                 new HungryTrollQuest(),       // QI
-                new MagicSeminarQuest(),
+                new MagicSeminarQuest(),      // QI
                 new MansionHeistQuest(),
                 new MasqueradeQuest(),
                 new MissingBrotherQuest(),
