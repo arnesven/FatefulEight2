@@ -48,6 +48,11 @@ public class WarlocksDungeonQuest extends Quest {
     }
 
     @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
+    }
+
+    @Override
     public boolean clockEnabled() {
         return true;
     }
@@ -284,6 +289,21 @@ public class WarlocksDungeonQuest extends Quest {
             setColor2(MyColors.WHITE);
             setColor3(MyColors.LIGHT_RED);
             setColor4(MyColors.LIGHT_GREEN);
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            showExplicitPortrait(model, getPortrait(), "Warlock");
+            portraitSay("blac blalc akdsl kfalsd kflasd9 lkf lasdlksaldfk ldsakf lkdasl fkldsakf ");
+            leaderSay("aksjd aslkas lksa lksal lsaklksal kaslk lask lasksak las");
+            portraitSay("lkads laskd lsak ldkasl dkla söldk asldk alskd lsak ");
+            waitForReturn();
         }
     }
 }

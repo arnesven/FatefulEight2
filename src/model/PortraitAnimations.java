@@ -31,7 +31,7 @@ public class PortraitAnimations implements Serializable {
     private Map<Integer, Integer> slotAnimations = new HashMap<>();
 
     public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p, boolean isVampire) {
-        if (!app.showFacialHair()) {
+        if (!app.showEyes()) {
             return;
         }
         if (!handleFacialExpression(screenHandler, app, p, isVampire) && !weepingAnimations.containsKey(app)) {

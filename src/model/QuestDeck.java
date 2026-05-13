@@ -33,7 +33,7 @@ public class QuestDeck {
                 new TownFairQuest(),
                 new TreasureHuntQuest(),
                 new UnsuspectingLoversQuest(),
-                new WarlocksDungeonQuest(),
+                new WarlocksDungeonQuest(),    // QI
                 new WerewolfQuest(),
                 new WizardsTowerQuest()
                 // new WineTastingQuest()

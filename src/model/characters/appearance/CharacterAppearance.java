@@ -41,6 +41,7 @@ public abstract class CharacterAppearance implements Serializable {
     private boolean showFacialHair = true;
     private PortraitSprite[][] grid;
     private boolean showEyebrows = true;
+    private boolean showEyes = true;
 
     public CharacterAppearance(Race race, boolean femaleGender, MyColors hairColor) {
         this.hairColor = hairColor;
@@ -254,6 +255,7 @@ public abstract class CharacterAppearance implements Serializable {
         }
         charClass.addForegroundObject(this);
         showEyebrows = !charClass.coversEyebrows();
+        showEyes = !charClass.coversEyes();
     }
 
     public void setSpecificClothing(PortraitClothing clothing) {
@@ -432,6 +434,10 @@ public abstract class CharacterAppearance implements Serializable {
 
     public boolean showFacialHair() {
         return showFacialHair;
+    }
+
+    public boolean showEyes() {
+        return showEyes;
     }
 
     protected void setFaceOverlaySprites() {

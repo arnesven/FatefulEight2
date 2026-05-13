@@ -51,6 +51,11 @@ public class WarlockNPCClass extends NPCClass {
     }
 
     @Override
+    public boolean coversEyebrows() {
+        return true;
+    }
+
+    @Override
     public boolean showDetail() {
         return false;
     }
