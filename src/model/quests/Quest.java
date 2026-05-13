@@ -288,4 +288,14 @@ public abstract class Quest {
         }
         return model.getQuestDeck().getQuestByName(questName);
     }
+
+    public GameState getStartEvent(Model model) {
+        return new GameState(model) {
+            @Override
+            public GameState run(Model model) {
+                println(getText());
+                return null;
+            }
+        };
+    }
 }

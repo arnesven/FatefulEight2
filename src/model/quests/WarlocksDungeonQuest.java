@@ -2,31 +2,40 @@ package model.quests;
 
 import model.Model;
 import model.achievements.Achievement;
+import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.map.CaveHex;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.TrapSubScene;
 import model.races.Race;
+import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyRandom;
+import util.MyTriplet;
 import view.LogView;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.CollapsingTransition;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class WarlocksDungeonQuest extends Quest {
     private static final String INTRO =
             "Caught in an evil warlock's vast dungeon, you must use all your wits " +
-            "to escape a labyrinth of dark halls, dangerous chambers and confusing clues.\n" +
-            LogView.RED_COLOR + "This is a timed quest. You have 10 minutes to escape the dungeon." + LogView.DEFAULT_COLOR;
+            "to escape a labyrinth of dark halls, dangerous chambers and confusing clues.";
     private static final String OUTRO =
             "You finally escape the dungeon and vow to one day return and deliver " +
             "vengeance upon the evil warlock.";
@@ -50,6 +59,11 @@ public class WarlocksDungeonQuest extends Quest {
     @Override
     public QuestIntroEventState getIntroEvent(Model model) {
         return new IntroEvent(model);
+    }
+
+    @Override
+    public GameState getStartEvent(Model model) {
+        return new StartEvent(model);
     }
 
     @Override
@@ -300,10 +314,91 @@ public class WarlocksDungeonQuest extends Quest {
         @Override
         protected void runQuestIntro(Model model) {
             showExplicitPortrait(model, getPortrait(), "Warlock");
-            portraitSay("blac blalc akdsl kfalsd kflasd9 lkf lasdlksaldfk ldsakf lkdasl fkldsakf ");
-            leaderSay("aksjd aslkas lksa lksal lsaklksal kaslk lask lasksak las");
-            portraitSay("lkads laskd lsak ldkasl dkla söldk asldk alskd lsak ");
-            waitForReturn();
+            boolean gender = getPortraitGender();
+            println("You're walking alone an empty street. " +
+                    "A cloaked " + manOrWoman(gender) + " approaches you.");
+            leaderSay("Who goes there?");
+            portraitSay("Good evening adventurer.");
+            leaderSay("Do I know you?");
+            portraitSay("No.");
+            leaderSay("Who are you?");
+            portraitSay("I am a Warlock.");
+            println("The " + manOrWoman(gender) + " stands motionless and silent before you.");
+            leaderSay("So Warlock... Can " + iOrWe() + " help you?");
+            println("Slowly, " + heOrShe(gender) + " retrieves something from the folds of " +
+                    hisOrHer(gender) + " robe. It's a letter.");
+            leaderSay("A letter for me?");
+            portraitSay("An invitation. Come to my house.");
+            leaderSay("Do you have a job for " + meOrUs() + "? " + imOrWereCap() + " rather busy you know.");
+            portraitSay("Not a job. It's... let's say, an opportunity...");
+            leaderSay("That's rather vague. An opportunity for what?");
+            println("The mysterious " + manOrWoman(gender) + " retreats into the shadows.");
+            portraitSay("Come to my house. You won't regret it.");
+            println("You take a few steps as if to follow the stranger, but it appears " +
+                    heOrShe(gender) + " has already disappeared into the dimness of the evening.");
+            model.getLog().waitForAnimationToFinish();
+            removePortraitSubView(model);
+
+            randomPersonalityNonLeaderComment(List.of(
+                    new MyTriplet<>(PersonalityTrait.cowardly, "Spooky. Let's not go to " + hisOrHer(gender) + " house.", FacialExpression.afraid),
+                    new MyTriplet<>(PersonalityTrait.calm, "We should go. What's the worst that could happen?", FacialExpression.relief),
+                    new MyTriplet<>(PersonalityTrait.naive, heOrSheCap(gender) + " probably just wants to show off his Warlock stuff. " +
+                            heOrSheCap(gender) + " seems harmless.", FacialExpression.none),
+                    new MyTriplet<>(PersonalityTrait.anxious, "I've got a bad feeling about this.", FacialExpression.afraid)));
+
+            leaderSay(iOrWeCap() + " should be on " + myOrOur() + " guard. Until " + iOrWe() +
+                    " discover the Warlock's intentions.");
+        }
+    }
+
+    private class StartEvent extends DailyEventState {
+        public StartEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            setCurrentTerrainSubview(model);
+            println("You travel to the address written on the Warlock's invitation. It's a large house, almost a mansion. " +
+                    "You ascend a few steps towards the front door and signal your arrival by banging twice on " +
+                    "a knocker - a heavy ring held in the mouth of a gargoyle.");
+            leaderSay("This will be interesting.");
+            println("The doors open and the Warlock appears.");
+            CharacterAppearance app = model.getParty().getQuestHandler().getOfferedQuest(WarlocksDungeonQuest.this.getName()).getAppearance();
+            showExplicitPortrait(model, app, "Warlock");
+            portraitSay("You have come.");
+            leaderSay("So " + iOrWe() + " have. Now would you please tell us why " + iAmOrWeAre() + " here?");
+            portraitSay("Certainly. Just let me do one thing first.");
+            println("The Warlock reaches for something by the door, then pulls quickly pulls a lever. Before you have time to react you fall into " +
+                    "through the trap door that opens up beneath your feet.");
+            model.getLog().waitForAnimationToFinish();
+            List<GameCharacter> party = new ArrayList<>(model.getParty().getPartyMembers());
+            for (GameCharacter gc : party) {
+                model.getParty().setFacialExpression(gc, FacialExpression.surprised, FacialExpression.PERMANENT);
+            }
+            Collections.shuffle(party);
+            for (GameCharacter gc : party) {
+                if (MyRandom.randInt(3) > 0 && !gc.hasPersonality(PersonalityTrait.calm)) {
+                    partyMemberSay(gc, MyRandom.sample(List.of("Whoa!", "Aaaaah!", "Help!", "I'm falling!", "Eeeeiiii!", "What the!?", "Oooof!")),
+                            FacialExpression.surprised);
+                }
+            }
+            model.getLog().waitForAnimationToFinish();
+            removePortraitSubView(model);
+            for (GameCharacter gc : party) {
+                model.getParty().setFacialExpression(gc, FacialExpression.none, FacialExpression.PERMANENT);
+            }
+            println("You land in what appears to be a dusty, dark basement.");
+            leaderSay("Damn you Warlock! What kind of trickery is this!");
+            println("You hear the warlocks voice as if from afar.");
+            printQuote("Warlock", "My apologies adventurer. " +
+                    "But my master requires me to provide him with souls, lest his power, and mine, will wither away.");
+            leaderSay("You rancid deceiver! Who are you offering our souls too?");
+            printQuote("Warlock", "A powerful jinn, from a alternate plane of existence. But it makes no " +
+                    "difference. You are trapped in my dungeon and I fear there is no escape.");
+            leaderSay("We'll just see about that! Warlock, " + iAmOrWeAre()  + " coming for you!");
+            println("The Warlock laughs evilly.");
+            println(LogView.RED_COLOR + "This is a timed quest. You have 10 minutes to escape the dungeon." + LogView.DEFAULT_COLOR);
         }
     }
 }

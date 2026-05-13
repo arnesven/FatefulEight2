@@ -184,6 +184,6 @@ public abstract class CharacterClass implements Serializable {
     }
 
     public boolean coversEyes() {
-        return showFacialHair();
+        return !showFacialHair();
     }
 }

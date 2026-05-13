@@ -41,7 +41,7 @@ public class QuestDeck {
     }
 
     public Quest getRandomQuest() {
-        return new WarlocksDungeonQuest(); // MyRandom.sample(QUESTS);
+        return MyRandom.sample(QUESTS);
     }
 
     public static List<Quest> getAllQuests() {
