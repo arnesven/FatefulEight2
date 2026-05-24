@@ -50,4 +50,11 @@ public class DetailedClassNameStrategy extends ClassStrategy {
     public List<String> getDescription() {
         return description;
     }
+
+    public static String getClassShortDescription(CharacterClass characterClass) {
+        String toReturn = getDetailedName(characterClass);
+        toReturn = toReturn.replaceAll("L.", "Light");
+        toReturn = toReturn.replaceAll("H.", "Heavy");
+        return toReturn;
+    }
 }
