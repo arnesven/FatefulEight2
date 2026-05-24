@@ -26,7 +26,7 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
     public SpecificClassHelpDialog(GameView view, CharacterClass characterClass) {
         super(view, characterClass.getFullName() + " (" + characterClass.getShortName() + ")",
                 new String[]{"\n\n\n\n\n" + characterClass.getDescription(),
-                            makeClassTable(characterClass)});
+                        "LVL SKILL ADVANCEMENTS\n" + makeClassTable(characterClass)});
         this.charClass = characterClass;
         Set<CharacterClass> related = ClassGraph.get(characterClass.id());
         this.related = related.isEmpty() ? "*None*" : MyLists.commaAndJoin(new ArrayList<>(related),
@@ -91,11 +91,9 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
         return textContent;
     }
 
-    private static String makeClassTable(CharacterClass characterClass) {
+    public static String makeClassTable(CharacterClass characterClass) {
         StringBuilder bld = new StringBuilder();
         Map<String, Integer> oldRanks = new HashMap<>();
-        bld.append("LVL SKILL ADVANCEMENTS\n");
-
         List<SkillAbilityCombatAction> skillAbilities = new ArrayList<>();
         skillAbilities.addAll(MyLists.transform(MyLists.filter(AbilityCombatAction.getAllCombatAbilities(null),
                 combAb -> combAb instanceof SkillAbilityCombatAction),
