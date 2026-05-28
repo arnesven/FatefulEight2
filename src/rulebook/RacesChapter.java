@@ -19,22 +19,21 @@ import java.util.List;
 
 import static rulebook.GenerateRulebook.PATH_BASE;
 
-public class RacesChapter {
-    public static void generate(BufferedWriter writer) {
-        try {
-            writer.write("Players can select from the following set of races for their character.\n");
-            for (Race r : Race.allRaces) {
-                writer.write("* " + r.getQualifiedName() + "\n");
-            }
+public class RacesChapter extends RulebookChapter {
+    public RacesChapter() {
+        super("Races");
+    }
 
-            makeRaceImages();
+    public void generate(BufferedWriter writer) throws IOException {
+        writer.write("Players can select from the following set of races for their character.\n");
+        for (Race r : Race.allRaces) {
+            writer.write("* " + r.getQualifiedName() + "\n");
+        }
 
-            for (Race r : Race.allRaces) {
-                generateSubChapter(writer, r);
-            }
+        makeRaceImages();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        for (Race r : Race.allRaces) {
+            generateSubChapter(writer, r);
         }
     }
 

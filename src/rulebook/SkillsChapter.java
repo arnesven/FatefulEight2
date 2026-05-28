@@ -12,8 +12,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class SkillsChapter {
-    public static void generate(BufferedWriter writer) throws IOException {
+public class SkillsChapter extends RulebookChapter {
+    public SkillsChapter() {
+        super("Skills");
+    }
+
+    public void generate(BufferedWriter writer) throws IOException {
         makeSkillCheckSections(writer);
         makeSkillWeightsTable(writer);
         makeSkillsPerClass(writer);

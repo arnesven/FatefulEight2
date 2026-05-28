@@ -27,7 +27,11 @@ import java.util.Scanner;
 
 import static rulebook.GenerateRulebook.PATH_BASE;
 
-public class ClassesChapter {
+public class ClassesChapter extends RulebookChapter {
+
+    public ClassesChapter() {
+        super("Classes");
+    }
 
     public static List<CharacterClass> getBasicClasses() {
         List<CharacterClass> classes = new ArrayList<>(Arrays.stream(Classes.allClasses).toList());
@@ -35,20 +39,15 @@ public class ClassesChapter {
         return classes;
     }
 
-    public static void generate(BufferedWriter writer) {
+    public void generate(BufferedWriter writer) throws IOException {
         List<CharacterClass> classes = getBasicClasses();
         makeClassIcons(classes);
-
-        try {
-            generateClassesOverview(writer, classes);
-            generateClassTemplateSubChapter(writer);
-            for (CharacterClass cc : classes) {
-                generateClassSubChapter(writer, cc);
-            }
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        generateClassesOverview(writer, classes);
+        generateClassTemplateSubChapter(writer);
+        for (CharacterClass cc : classes) {
+            generateClassSubChapter(writer, cc);
         }
+        writer.close();
     }
 
     private static void makeClassIcons(List<CharacterClass> classes) {

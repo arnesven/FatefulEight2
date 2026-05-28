@@ -3,8 +3,12 @@ package rulebook;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class CharactersChapter {
-    public static void generate(BufferedWriter writer) throws IOException {
+public class CharactersChapter extends RulebookChapter {
+    public CharactersChapter() {
+        super("Characters");
+    }
+
+    public void generate(BufferedWriter writer) throws IOException {
         writer.write("This section will take you through character creation, step by step. " +
                 "You can find the character sheet at the end of this rulebook. Go ahead and make as many " +
                 "copies of it as you want.\n");
