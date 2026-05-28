@@ -29,9 +29,14 @@ import static rulebook.GenerateRulebook.PATH_BASE;
 
 public class ClassesChapter {
 
-    public static void generate(BufferedWriter writer) {
+    public static List<CharacterClass> getBasicClasses() {
         List<CharacterClass> classes = new ArrayList<>(Arrays.stream(Classes.allClasses).toList());
         classes.removeIf(cc -> cc instanceof NoClass);
+        return classes;
+    }
+
+    public static void generate(BufferedWriter writer) {
+        List<CharacterClass> classes = getBasicClasses();
         makeClassIcons(classes);
 
         try {

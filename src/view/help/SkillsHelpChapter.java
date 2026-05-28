@@ -18,7 +18,7 @@ public class SkillsHelpChapter extends ExpandableHelpDialog {
         super(view, "Skills", makeText(), false);
     }
 
-    private static String makeText() {
+    public static String makeText() {
         StringBuilder bldr = new StringBuilder(TEXT);
         bldr.append("Level  W1 W2 W3 W4 W5 W6\n");
         for (int level = 0; level < WeightedSkill.MAX_LEVEL; ++level) {

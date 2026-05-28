@@ -25,6 +25,10 @@ public class GenerateRulebook {
             writer = makeWriter("Classes");
             ClassesChapter.generate(writer);
             writer.close();
+
+            writer = makeWriter("Skills");
+            SkillsChapter.generate(writer);
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

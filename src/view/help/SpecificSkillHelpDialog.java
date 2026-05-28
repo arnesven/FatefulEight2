@@ -21,12 +21,7 @@ public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
     }
 
     private static String makeText(Skill s) {
-
-        List<SkillAbilityCombatAction> skillAbilities = new ArrayList<>();
-
-        addAllForSkill(skillAbilities, s, AbilityCombatAction.getAllCombatAbilities(null));
-        addAllForSkill(skillAbilities, s, AbilityCombatAction.getAllPassiveCombatActions());
-        skillAbilities.sort(Comparator.comparingInt(SkillAbilityCombatAction::getRequiredRanks));
+        List<SkillAbilityCombatAction> skillAbilities = makeAbilityList(s);
 
         String abiExtra = "";
         if (!skillAbilities.isEmpty()) {
@@ -36,6 +31,14 @@ public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
 
         return "Short Name: " + s.getShortName() + "\n" +
                 getGoverningAttribute(s) + s.getDescription() + abiExtra + s.getMiscHelpText();
+    }
+
+    public static List<SkillAbilityCombatAction> makeAbilityList(Skill s) {
+        List<SkillAbilityCombatAction> skillAbilities = new ArrayList<>();
+        addAllForSkill(skillAbilities, s, AbilityCombatAction.getAllCombatAbilities(null));
+        addAllForSkill(skillAbilities, s, AbilityCombatAction.getAllPassiveCombatActions());
+        skillAbilities.sort(Comparator.comparingInt(SkillAbilityCombatAction::getRequiredRanks));
+        return skillAbilities;
     }
 
     private static String getGoverningAttribute(Skill s) {
