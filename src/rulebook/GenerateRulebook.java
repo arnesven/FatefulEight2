@@ -14,7 +14,11 @@ public class GenerateRulebook {
 
     public static void main(String[] args) {
         try {
-            BufferedWriter writer = makeWriter("Races");
+            BufferedWriter writer = makeWriter("Characters");
+            CharactersChapter.generate(writer);
+            writer.close();
+
+            writer = makeWriter("Races");
             RacesChapter.generate(writer);
             writer.close();
 
