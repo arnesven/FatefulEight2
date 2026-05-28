@@ -1,4 +1,4 @@
-package rulebook;
+package rulebook.chapters;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

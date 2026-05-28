@@ -38,12 +38,15 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
         );
     }
 
-    private static class CombatAbilitiesChapter extends ExpandableHelpDialog {
-        private static final String ABILITIES_TEXT =
+    public static class CombatAbilitiesChapter extends ExpandableHelpDialog {
+        public static final String ABILITIES_TEXT =
                 "Combat abilities are special actions which can be taken in combat if a character " +
                 "fulfill certain criteria. If those criteria include skill ranks, it is the character's " +
                 "unmodified skill ranks which is considered (i.e. equipment, condition and " +
-                        "temporary bonuses do not contribute).";
+                "temporary bonuses do not contribute).\n\n" +
+                "Some abilities are passive, and do not grant specific actions in combat, " +
+                "but give some other type of advantage.\n\n" +
+                "Some abilities can only be gained by being a Vampire.";
 
         public CombatAbilitiesChapter() {
             super(null, "Abilities", ABILITIES_TEXT, true);

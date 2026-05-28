@@ -1,6 +1,6 @@
 package rulebook;
 
-import model.classes.CharacterClass;
+import rulebook.chapters.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +18,8 @@ public class GenerateRulebook {
                 new CharactersChapter(),
                 new RacesChapter(),
                 new ClassesChapter(),
-                new SkillsChapter());
+                new SkillsChapter(),
+                new AbilitiesChapter());
         for (RulebookChapter chap : chapters) {
             try {
                 BufferedWriter writer = makeWriter(chap.getName());

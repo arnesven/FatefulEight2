@@ -89,7 +89,6 @@ public final class AbilityCombatAction extends CombatAction {
                 ClawsVampireAbility.getPassiveCombatAbility(),
                 ParryAbility.getPassiveCombatAbility(),
                 CombatProwessAbility.getPassiveCombatAbility()
-                // list.add(new CombatProwess()); // Multiple attacks carries over to other enemies
         );
     }
 

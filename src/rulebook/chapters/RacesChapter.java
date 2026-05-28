@@ -1,13 +1,12 @@
-package rulebook;
+package rulebook.chapters;
 
 import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.races.Race;
+import rulebook.ImageScreenHandler;
 import util.MyLists;
 import util.MyStrings;
-import view.sprites.Sprite;
 import view.subviews.PortraitSubView;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import static rulebook.GenerateRulebook.PATH_BASE;
 

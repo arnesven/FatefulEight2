@@ -1,4 +1,4 @@
-package rulebook;
+package rulebook.chapters;
 
 import model.classes.CharacterClass;
 import model.classes.Skill;
