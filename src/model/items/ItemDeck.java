@@ -7,7 +7,9 @@ import model.items.designs.CraftingDesign;
 import model.items.imbuements.*;
 import model.items.potions.*;
 import model.items.special.MagicBroom;
+import model.items.special.TrinketItem;
 import model.items.spells.*;
+import model.items.treasures.*;
 import model.items.weapons.SkullWand;
 import model.items.weapons.*;
 import util.MyRandom;
@@ -146,7 +148,7 @@ public class ItemDeck extends ArrayList<Item> {
         return allItems;
     }
 
-    private static List<OffhandItem> allOtherOffhandItems() {
+    public static List<OffhandItem> allOtherOffhandItems() {
         return List.of(new Spyglass(), new HolyChalice()); // FEATURE: new StrangeTotem() (Black/Red Magic, new ArcaneManuscript() (BlueMagic/Acadmeics)
     }
 
@@ -404,6 +406,11 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<? extends Weapon> allSpecialWeapons() {
         return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol(), new Musket(), new MagicBroom(),
                 new HalflingSling());
+    }
+
+    public static List<TreasureItem> allTreasures() {
+        return List.of(new TrinketItem(), new AmethystTreasureItem(), new TopazTreasureItem(), new EmeraldTreasureItem(),
+                new SapphireTreasureItem(), new RubyTreasureItem(), new DiamondTreasureItem());
     }
 
     public void setStandardItemTier(int averageLevel) {

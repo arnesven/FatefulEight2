@@ -39,8 +39,9 @@ public class CharactersChapter extends RulebookChapter {
         writer.write("10. Your class decides your armor class, either Heavy or Light. Write it down.\n");
         writer.write("11. Fill in the ranks of your skills, based on your class, don't forget to add 1 for each skill listed for your race.\n");
         writer.write("12. For each skill, check if you qualify (have enough ranks) for any associated Abilities listed for that skill. See the Skills section.\n");
-        writer.write("13. Select two starting items. If you select a weapon or clothing, they replace any default gear you would receive from your class.\n");
+        writer.write("13. Select two starting items. If you select a weapon or clothing, they replace any default gear you would receive from your class. " +
+                "Your starting items are determined by your class, but you can always take a Longsword and/or a Potion Package (one Health Potion and one Rejuvenation Potion) instead.\n");
         writer.write("14. Your character starts with 10 food, and 20 gold.\n");
-        writer.write("15. If you still haven't settled on a name for your character, it's high time to do it now!");
+        writer.write("15. If you still haven't settled on a name for your character, it's high time to do it now!\n");
     }
 }

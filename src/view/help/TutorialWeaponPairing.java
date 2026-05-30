@@ -3,7 +3,7 @@ package view.help;
 import view.GameView;
 
 public class TutorialWeaponPairing extends HelpDialog {
-    private static final String TEXT = "Most one-handed weapons can be paired together, enabling a character " +
+    public static final String TEXT = "Most one-handed weapons can be paired together, enabling a character " +
             "to dual-wield in combat. Naturally, fighting with two weapons is more difficult. " +
             "Weapon pairing can be performed from the Inventory Menu.\n\n" +
             "When pairing two weapons together the resulting 'weapon' has the following qualities:\n" +

@@ -4,7 +4,7 @@ import model.states.ShopState;
 import view.GameView;
 
 public class TutorialHaggling extends HelpDialog {
-    private static final String TEXT =
+    public static final String TEXT =
             "Sometimes you can haggle with people in order to bring down prices. " +
             "You can only haggle over items which cost at least " + ShopState.HAGGLE_LIMIT +
             " gold.\n\n" +

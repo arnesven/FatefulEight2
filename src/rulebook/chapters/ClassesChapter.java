@@ -46,7 +46,6 @@ public class ClassesChapter extends RulebookChapter {
         for (CharacterClass cc : classes) {
             generateClassSubChapter(writer, cc);
         }
-        writer.close();
     }
 
     private static void makeClassIcons(List<CharacterClass> classes) {
@@ -86,7 +85,7 @@ public class ClassesChapter extends RulebookChapter {
     }
 
     private static void generateClassTemplateSubChapter(BufferedWriter writer) throws IOException {
-        writer.write("### Class Template (Short Name)\n");
+        writer.write("## Class Template (Short Name)\n");
         writer.write("<i>Class description</i>\n");
         writer.write("<p><b>Health Points:</b> Number of Health Point your character starts with, modified by your race.<br/>\n");
         writer.write("<b>Speed:</b> Your character's speed, modified by race.<br/>\n");
@@ -104,7 +103,7 @@ public class ClassesChapter extends RulebookChapter {
     }
 
     private static void generateClassSubChapter(BufferedWriter writer, CharacterClass cc) throws IOException {
-        writer.write("### " + cc.getFullName() + " (" + cc.getShortName() + ")\n");
+        writer.write("## " + cc.getFullName() + " (" + cc.getShortName() + ")\n");
         writer.write("<p align=\"center\"><img width=64px src=\"../images/" + cc.getShortName().toLowerCase() + "_class_icon.png\" alt=\"\"/></p>\n");
         writer.newLine();
         writer.write(cc.getDescription());

@@ -40,7 +40,7 @@ public class StaminaPotion extends Potion implements StaminaRecoveryItem {
 
     @Override
     protected Sprite getSprite() {
-        return SPRITE;
+        return sprite;
     }
 
     @Override
@@ -60,7 +60,10 @@ public class StaminaPotion extends Potion implements StaminaRecoveryItem {
 
     @Override
     public Item copy() {
-        return new StaminaPotion();
+        if (tier == 0) {
+            return new StaminaPotion();
+        }
+        return new HealthPotion(tier);
     }
 
     @Override

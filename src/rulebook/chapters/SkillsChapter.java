@@ -27,29 +27,29 @@ public class SkillsChapter extends RulebookChapter {
     private static void makeSkillCheckSections(BufferedWriter writer) throws IOException {
         writer.write(TutorialSkillChecksDialog.MAIN_TEXT + "\n");
 
-        writer.write("### Solo Checks\n");
+        writer.write("## Solo Checks\n");
         writer.write(TutorialSkillChecksDialog.SOLO_TEXT);
         writer.newLine();
 
-        writer.write("### Collaborative Checks\n");
+        writer.write("## Collaborative Checks\n");
         writer.write(TutorialSkillChecksDialog.COLLABORATIVE_TEXT);
         writer.newLine();
 
-        writer.write("### Collective Checks\n");
+        writer.write("## Collective Checks\n");
         writer.write(TutorialSkillChecksDialog.COLLECTIVE_TEXT);
         writer.newLine();
 
-        writer.write("### Reactive Checks\n");
+        writer.write("## Reactive Checks\n");
         writer.write(TutorialSkillChecksDialog.REACTIVE_TEXT);
         writer.newLine();
 
-        writer.write("### Synergy Checks\n");
+        writer.write("## Synergy Checks\n");
         writer.write(TutorialSkillChecksDialog.SYNERGY_TEXT);
         writer.newLine();
     }
 
     private static void makeSkillWeightsTable(BufferedWriter writer) throws IOException {
-        writer.write("### Skill Weights\n");
+        writer.write("## Skill Weights\n");
         String skillIntroText = SkillsHelpChapter.makeText();
         Scanner scanner = new Scanner(skillIntroText);
         boolean inTable = false;
@@ -79,7 +79,7 @@ public class SkillsChapter extends RulebookChapter {
 
 
     private static void makeSkillsPerClass(BufferedWriter writer) throws IOException {
-        writer.write("### Class Skills\n");
+        writer.write("## Class Skills\n");
         writer.write("The table below shows all skills and which are considered Class Skills for each class.\n\n");
 
         List<CharacterClass> classes = ClassesChapter.getBasicClasses();
@@ -132,11 +132,6 @@ public class SkillsChapter extends RulebookChapter {
         writer.newLine();
     }
 
-    private static void forcePageBreak(BufferedWriter writer) throws IOException {
-        writer.write("<div style=\"page-break-after: always;\"></div>\n");
-        writer.newLine();
-    }
-
     private static String getAttributeForSkill(Skill s) {
         Map<String, List<Skill>> map = Skill.getAttributeSets();
         String attribute = "None";
@@ -150,14 +145,14 @@ public class SkillsChapter extends RulebookChapter {
     }
 
     private static void makeSkillDescriptions(BufferedWriter writer) throws IOException {
-        writer.write("### Skill Descriptions\n\n");
+        writer.write("## Skill Descriptions\n\n");
         writer.write("<b>Description Template</b>\n\n");
         writer.write("<i>Skill Description</i>\n\n");
         writer.write("Governing Attribute: <i>Attribute if applicable.</i>\n\n");
         writer.write("Abilities (Required Ranks): <i>Associated abilities</i>\n\n");
 
         for (Skill s : Skill.values()) {
-            writer.write("#### " + s.getName() + " (" + s.getShortName() + ")\n");
+            writer.write("### " + s.getName() + " (" + s.getShortName() + ")\n");
             writer.write(s.getDescription() + "\n");
             writer.newLine();
 

@@ -18,8 +18,8 @@ import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
-import model.items.special.TrinketItem;
 import model.items.spells.*;
+import model.items.weapons.Dagger;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.quests.QuestHandler;
@@ -85,6 +85,10 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
+        new Dagger().makeHigherTierCopy(1).addYourself(inventory);
+        new Dagger().makeHigherTierCopy(2).addYourself(inventory);
+        new Dagger().makeHigherTierCopy(3).addYourself(inventory);
+        new Dagger().makeHigherTierCopy(4).addYourself(inventory);
     }
 
     public void setStartingPosition(Point position) {

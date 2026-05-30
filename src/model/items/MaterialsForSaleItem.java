@@ -1,7 +1,7 @@
 package model.items;
 
 public class MaterialsForSaleItem extends MaterialsDummyItem {
-    private static final int FACTOR = 5;
+    public static final int FACTOR = 5;
     private final int cost;
 
     public MaterialsForSaleItem(int amount) {

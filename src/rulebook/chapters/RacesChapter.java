@@ -54,7 +54,7 @@ public class RacesChapter extends RulebookChapter {
     }
 
     private static void generateSubChapter(BufferedWriter writer, Race r) throws IOException {
-        writer.write("### " + r.getQualifiedName() + "\n");
+        writer.write("## " + r.getQualifiedName() + "\n");
         writer.write("<p align=\"center\"><img width=112px src=\"../images/race_" + r.id() + "_portrait.png\" alt=\"\"/></p>\n");
         writer.write(r.getDescription() + "\n");
         writer.newLine();

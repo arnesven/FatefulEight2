@@ -39,7 +39,7 @@ public class AbilitiesChapter extends RulebookChapter {
         Model model = new Model(drawingArea.getScreenHandler(), frame);
 
         for (CombatAction ca : abilities) {
-            writer.write("### " + ca.getName() + "\n");
+            writer.write("## " + ca.getName() + "\n");
             writer.write(ca.getHelpChapter(model).getText() + "\n");
             writer.newLine();
         }

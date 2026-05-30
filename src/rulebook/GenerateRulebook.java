@@ -19,7 +19,9 @@ public class GenerateRulebook {
                 new RacesChapter(),
                 new ClassesChapter(),
                 new SkillsChapter(),
-                new AbilitiesChapter());
+                new AbilitiesChapter(),
+                new EquipmentChapter());
+
         for (RulebookChapter chap : chapters) {
             try {
                 BufferedWriter writer = makeWriter(chap.getName());
@@ -29,13 +31,26 @@ public class GenerateRulebook {
                 throw new RuntimeException(e);
             }
         }
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_BASE + "/full/rulebook.md"));
+            for (RulebookChapter chap : chapters) {
+                writer.write("# " + chap.getName() + "\n\n");
+                chap.generate(writer);
+                writer.newLine();
+                RulebookChapter.forcePageBreak(writer);
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static BufferedWriter makeWriter(String chapterTitle) throws IOException {
         BufferedWriter writer = null;
         writer = new BufferedWriter(new FileWriter(makeFile(chapterTitle.toLowerCase())));
         writer.write(DO_NOT_EDIT_DISCLAIMER);
-        writer.write("## " + chapterTitle + "\n\n");
+        writer.write("# " + chapterTitle + "\n\n");
         return writer;
     }
 

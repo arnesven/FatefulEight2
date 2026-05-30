@@ -16,4 +16,9 @@ public abstract class RulebookChapter {
     public String getName() {
         return name;
     }
+
+    public static void forcePageBreak(BufferedWriter writer) throws IOException {
+        writer.write("<div style=\"page-break-after: always;\"></div>\n");
+        writer.newLine();
+    }
 }
