@@ -3,7 +3,7 @@ package view.help;
 import view.GameView;
 
 public class TutorialSurpriseAttack extends SubChapterHelpDialog {
-    private static final String TEXT =
+    public static final String TEXT =
             "Sometimes you will surprise your enemies, springing combat on them " +
             "when they weren't expecting it. This is called an Surprise Attack. During a Surprise Attack, " +
             "enemies will not get to take turns during the first combat round.";

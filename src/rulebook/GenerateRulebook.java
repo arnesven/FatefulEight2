@@ -20,7 +20,8 @@ public class GenerateRulebook {
                 new ClassesChapter(),
                 new SkillsChapter(),
                 new AbilitiesChapter(),
-                new EquipmentChapter());
+                new EquipmentChapter(),
+                new CombatChapter());
 
         for (RulebookChapter chap : chapters) {
             try {
