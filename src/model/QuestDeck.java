@@ -28,7 +28,7 @@ public class QuestDeck {
                 new MurderMysteryQuest(),     // QI
                 new OrcishDelightQuest(),     // QI
                 new RatProblemQuest(),        // QI
-                new SurveillanceQuest(),
+                new SurveillanceQuest(),      // QI
                 new SwampOgreQuest(),
                 new TownFairQuest(),
                 new TreasureHuntQuest(),
@@ -41,8 +41,7 @@ public class QuestDeck {
     }
 
     public Quest getRandomQuest() {
-        return new SurveillanceQuest();
-        // return MyRandom.sample(QUESTS);
+        return MyRandom.sample(QUESTS);
     }
 
     public static List<Quest> getAllQuests() {

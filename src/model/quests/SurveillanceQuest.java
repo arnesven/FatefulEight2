@@ -4,6 +4,7 @@ import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -14,6 +15,7 @@ import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -280,8 +282,18 @@ public class SurveillanceQuest extends Quest {
         protected void runQuestIntro(Model model) {
             println("As you walk down the street, you can't help overhearing an officer barking at a couple of soldiers.");
             showExplicitPortrait(model, getPortrait(), "General");
-            portraitSay("What do you mean 'you don't know where the patrol' is? They were due back this morning!");
-            waitForReturn();
+            portraitSay("What do you mean 'you don't know where the patrol is'? They were due back this morning!", FacialExpression.disappointed);
+            println("You can hear the soldiers explaining that the patrol has not come back. The general seems very upset and dismisses them.");
+            leaderSay("Trouble with your men?");
+            portraitSay("Not with my men, with an Orcish camp not far from here. That's the second patrol I've sent out for reconnaissance. " +
+                    "Those fools must have gotten themselves caught...", FacialExpression.disappointed);
+            leaderSay("Perhaps they need better training?", FacialExpression.questioning);
+            portraitSay("Are you implying... Wait, I just had an idea. You're an up-and-coming company of adventurers, why don't you do the mission?", FacialExpression.wicked);
+            leaderSay(MyStrings.capitalize(meOrUs()) + "?");
+            portraitSay("Yeah you. Just sneak up on the camp, check out what's going on, and report back here. Easy-peasy.");
+            leaderSay("Seems risky.", FacialExpression.disappointed);
+            portraitSay("Of course it's risky. But I don't fancy risking more of my men on this. What do you say? I'll pay you well.");
+            leaderSay(iOrWeCap() + "'ll think about it.");
         }
     }
 }
