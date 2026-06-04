@@ -307,9 +307,8 @@ public class EquipmentChapter extends RulebookChapter {
         writer.write("| | Alley Dice (Gambling) | 1 Obol | | |\n");
         writer.write("| | Low Stakes Card Game | 10 Obols | | |\n");
         writer.write("| | High Stakes Card Game | 35 Obols | | |\n");
-        // TODO: Rations, Obols, Tents, Cooking Gear, Rope, Lock Picks, Materials, Ingredients
-        // TODO: Food & Lodging at inns.
-        // TODO: Travel fares. Charting boats/carriages
+        writer.write("| | Attend Seminar (Career Center) | 15 Gold | | |\n");
+        writer.write("| | Receive Blessing/Healing from monk | 1 Gold | | |\n");
         writer.newLine();
     }
 

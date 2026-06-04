@@ -15,6 +15,7 @@ import view.subviews.DungeonDrawer;
 import view.subviews.StripedTransition;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DungeonMonster extends CenterDungeonObject {
@@ -24,7 +25,7 @@ public class DungeonMonster extends CenterDungeonObject {
     private SmokeBallAnimation smoke;
 
     public DungeonMonster(List<Enemy> enemies) {
-        this.enemies = enemies;
+        this.enemies = new ArrayList<>(enemies); // So that we can remove from it later, if fleeing
     }
 
     public List<Enemy> getEnemies() {

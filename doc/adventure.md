@@ -1,7 +1,7 @@
-## Trouble in Lower Theln
+# Adventure 1: Trouble in Lower Theln
 A simple adventure for a young group.
 
-### The Hook: The Missing Moon‑Pies
+## The Hook: The Missing Moon‑Pies
 It’s a bright, breezy morning in the coastal town of Lower Theln. The heroes (your wife and daughter) are enjoying the salty air when suddenly—
 
 “Oh nooooo!”
@@ -10,7 +10,9 @@ A cry echoes across the docks. It’s Harold, the cheerful halfling baker. His f
 
 Harold is too distraught to investigate, so the heroes step in.
 
-### A Busy Day in Lower Theln
+---
+
+## A Busy Day in Lower Theln
 
 Today isn’t just any day—several small events are happening around town:
 
@@ -24,14 +26,18 @@ Today isn’t just any day—several small events are happening around town:
 
 These details help the town feel alive and give the heroes fun things to notice.
 
-### Clues on the Docks
+---
+
+## Clues on the Docks
 
 A quick search (Collaborative Search 4) reveals:
 * A trail of sticky blue glaze (Harold’s secret ingredient).
 * Tiny, webbed footprints, still muddy and damp.
 * The tracks skip the road south and instead head east, toward the rolling green hills by the Thelnius River.
 
-### The Journey East
+---
+
+## The Journey East
 
 The trail winds out of town and into sunny, grassy hills. Birds chirp. The river sparkles. Everything feels peaceful… until the trail reaches a rushing little stream.
 
@@ -48,7 +54,9 @@ Possible solutions:
 
 Encourage creativity.
 
-### A Strange Sound…
+---
+
+## A Strange Sound…
 
 On the far side of the stream, the heroes hear:
 
@@ -64,7 +72,8 @@ Three Frogmen — small, silly, frog‑like creatures who aren’t mean, just gr
 
 They’ve cracked open the crate and are absolutely coated in blue glaze. They’re having the best picnic of their lives.
 
-#### Solving the Problem (No Combat Needed)
+
+### Solving the Problem (No Combat Needed)
 
 Offer gentle, playful options:
 
@@ -72,7 +81,9 @@ Offer gentle, playful options:
 * Scare Them (Playfully) – A big “BOO!” or banging pots might send them hopping away.
 * Tickle Fight – The frogmen are helpless against tickles and giggles.
 
-### The Resolution: Pastry Protectors!
+---
+
+## The Resolution: Pastry Protectors!
 
 The frogmen scamper off, leaving the crate behind. They ate a few pies, but most are still safe.
 The heroes hurry back to the docks just as the festival boat blows its horn. Harold is overjoyed and declares them:
@@ -85,7 +96,9 @@ He rewards them with:
 * Golden badges (you can draw them)
 * A giant Moon‑Pie to share
 
-### Frogman Filchers: Stats
+---
+
+## Frogman Filchers: Stats
 Health Points: 3
 Speed: 6
 Damage: 1

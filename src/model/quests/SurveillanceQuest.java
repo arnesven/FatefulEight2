@@ -50,6 +50,11 @@ public class SurveillanceQuest extends Quest {
     }
 
     @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
+    }
+
+    @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
     }
@@ -266,4 +271,17 @@ public class SurveillanceQuest extends Quest {
         }
     }
 
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("As you walk down the street, you can't help overhearing an officer barking at a couple of soldiers.");
+            showExplicitPortrait(model, getPortrait(), "General");
+            portraitSay("What do you mean 'you don't know where the patrol' is? They were due back this morning!");
+            waitForReturn();
+        }
+    }
 }

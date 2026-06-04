@@ -41,7 +41,8 @@ public class QuestDeck {
     }
 
     public Quest getRandomQuest() {
-        return MyRandom.sample(QUESTS);
+        return new SurveillanceQuest();
+        // return MyRandom.sample(QUESTS);
     }
 
     public static List<Quest> getAllQuests() {
