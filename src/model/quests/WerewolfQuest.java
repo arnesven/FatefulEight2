@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -73,6 +74,11 @@ public class WerewolfQuest extends Quest {
             spell.addYourself(model.getParty().getInventory());
         }
         return super.endOfQuest(model, state, questWasSuccess);
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -313,4 +319,40 @@ public class WerewolfQuest extends Quest {
         return result;
     }
 
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You are at the tavern, and just about to propose a toast.");
+            leaderSay("To " + getCompanyName() + ", may we find glory and...");
+            println("Suddenly a young man rushes in and heads straight toward the barkeep.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("She's gone Sam! Gone!", FacialExpression.afraid);
+
+            showRandomPortrait(model, Classes.BARTENDER, "Bartender");
+            portraitSay("Slow down Benny. What happened? Sandy's gone you say?", FacialExpression.questioning);
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("I went over to her house, and it was a real mess! Like a wild animal had wreaked havoc in there. " +
+                    "And she was nowhere to be found!", FacialExpression.sad);
+            println("The bartender tries to console the panicked man. You can't help but intervene.");
+            leaderSay("Sounds like a monster got her. Did you see any blood?");
+            portraitSay("No, none at all. Just a mess. There were some torn clothes...", FacialExpression.sad);
+            if (model.getParty().size() > 1) {
+                leaderSay("Ahum, I actually represent a party of adventurers. We could help you locate her.");
+            } else {
+                leaderSay("I have some experience with these things. I could help you locate her.");
+            }
+            portraitSay("You would do that. Thank you so much!", FacialExpression.relief);
+            leaderSay("For a small fee of course.");
+            portraitSay("Of course, anything. I just want Sandy back. Just tell me when you're ready " +
+                    "and I'll take you to her house. Perhaps there are some clues as to who - or what, took her.");
+            leaderSay("Just give " + meOrUs() + " a little time to prepare.");
+            portraitSay("Alright. But let's not take too long. Oh god, what could have happened to her!", FacialExpression.afraid);
+        }
+    }
 }

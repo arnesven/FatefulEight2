@@ -34,7 +34,7 @@ public class QuestDeck {
                 new TreasureHuntQuest(),      // QI
                 new UnsuspectingLoversQuest(),// QI
                 new WarlocksDungeonQuest(),   // QI
-                new WerewolfQuest(),
+                new WerewolfQuest(),          // QI
                 new WizardsTowerQuest()
                 // new WineTastingQuest()
         );
