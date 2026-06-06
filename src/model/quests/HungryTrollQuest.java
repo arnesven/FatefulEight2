@@ -66,7 +66,7 @@ public class HungryTrollQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
             new QuestScene("Combat with Troll", List.of(
-                new CombatSubScene(4, 5, List.of(new AbnormallyLargeTrollEnemy('A')), true) {
+                new CombatSubScene(4, 5, List.of(new AbnormallyLargeTrollEnemy('A'))) {
                     @Override
                     protected String getCombatDetails() {
                         return "Abnormally large troll";

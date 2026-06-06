@@ -73,7 +73,7 @@ public class FightInUnitDuringBattleEvent extends GameState {
             List<Enemy> enemies = makeEnemyFromUnit(unit);
             println("You spot a unit of " + unit.getName().toLowerCase() + ", they charge you!");
             leaderSay(MyRandom.sample(List.of("Everybody, stand your ground!", "Get ready!", "Keep together now.", "Courage!")));
-            CombatEvent combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), true, CombatAdvantage.Neither);
+            CombatEvent combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), CombatAdvantage.Neither);
             combat.addAllies(allies);
             combat.run(model);
             if (combat.haveFledCombat() || model.getParty().isWipedOut()) {

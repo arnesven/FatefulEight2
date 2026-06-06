@@ -167,9 +167,9 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    public void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage combatAdvantage,
+    public void runCombat(List<Enemy> enemies, CombatTheme theme, CombatAdvantage combatAdvantage,
                           List<GameCharacter> allies) {
-        CombatEvent combat = new CombatEvent(getModel(), enemies, theme, fleeingEnabled, combatAdvantage);
+        CombatEvent combat = new CombatEvent(getModel(), enemies, theme, combatAdvantage);
         combat.addExtraLoot(getExtraCombatLoot(getModel()));
         combat.addAllies(allies);
         combat.run(getModel());
@@ -181,7 +181,7 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void runCombat(List<Enemy> enemies) {
-        runCombat(enemies, defaultCombatTheme(getModel()), true, CombatAdvantage.Neither, new ArrayList<>());
+        runCombat(enemies, defaultCombatTheme(getModel()), CombatAdvantage.Neither, new ArrayList<>());
     }
 
     private CombatTheme defaultCombatTheme(Model model) {
@@ -191,20 +191,16 @@ public abstract class DailyEventState extends GameState {
         return model.getCurrentHex().getCombatTheme();
     }
 
-    protected void runCombat(List<Enemy> enemies, boolean fleeingEnabled) {
-        runCombat(enemies, defaultCombatTheme(getModel()), fleeingEnabled, CombatAdvantage.Neither, new ArrayList<>());
+    protected void runCombat(List<Enemy> enemies, CombatTheme theme) {
+        runCombat(enemies, theme, CombatAdvantage.Neither, new ArrayList<>());
     }
 
-    protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
-        runCombat(enemies, theme, fleeingEnabled, CombatAdvantage.Neither, new ArrayList<>());
+    protected void runSurpriseCombat(List<Enemy> enemies, CombatTheme theme) {
+        runCombat(enemies, theme, CombatAdvantage.Party, new ArrayList<>());
     }
 
-    protected void runSurpriseCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
-        runCombat(enemies, theme, fleeingEnabled, CombatAdvantage.Party, new ArrayList<>());
-    }
-
-    protected void runAmbushCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
-        runCombat(enemies, theme, fleeingEnabled, CombatAdvantage.Enemies, new ArrayList<>());
+    protected void runAmbushCombat(List<Enemy> enemies, CombatTheme theme) {
+        runCombat(enemies, theme, CombatAdvantage.Enemies, new ArrayList<>());
     }
 
     public boolean haveFledCombat() {

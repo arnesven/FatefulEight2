@@ -87,7 +87,7 @@ public class GhostTownEvent extends DailyEventState {
         for (int i = getSuggestedNumberOfEnemies(model, new GhostEnemy('A')); i > 0; --i) {
             enemy.add(new GhostEnemy('A'));
         }
-        runCombat(enemy, new TownCombatTheme(), true);
+        runCombat(enemy, new TownCombatTheme());
         if (model.getParty().isWipedOut()) {
             return;
         }

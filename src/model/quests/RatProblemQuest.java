@@ -165,7 +165,7 @@ public class RatProblemQuest extends Quest {
         private final boolean giant;
 
         public RatCombatSubScene(int col, int row, int numberOfRats, boolean isGiant) {
-            super(col, row, generateEnemyList(numberOfRats, isGiant), false);
+            super(col, row, generateEnemyList(numberOfRats, isGiant));
             this.numberOfRats = numberOfRats;
             this.giant = isGiant;
         }

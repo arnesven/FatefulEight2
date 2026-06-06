@@ -294,7 +294,7 @@ public class OrcWarCampQuest extends MainQuest {
     private class WarCampCombatSubScene extends CombatSubScene {
 
         public WarCampCombatSubScene(int col, int row) {
-            super(col, row, List.of(new OrcWarrior('A')), true);
+            super(col, row, List.of(new OrcWarrior('A')));
         }
 
         @Override
@@ -333,7 +333,7 @@ public class OrcWarCampQuest extends MainQuest {
 
     private class PalisadeArchersCombatSubScene extends CombatSubScene {
         public PalisadeArchersCombatSubScene(int col, int row) {
-            super(col, row, List.of(new OrcArcherEnemy('A')), true);
+            super(col, row, List.of(new OrcArcherEnemy('A')));
             setTimeLimit(6);
         }
 

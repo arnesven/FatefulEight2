@@ -165,7 +165,7 @@ public class SmugglersEvent extends LetterOnTheStreetEvent {
                         new Equipment(new TwoHandedSword(), new ScaleArmor(), new GrayRing())));
         }
 
-        runCombat(enemies, model.getCurrentHex().getCombatTheme(), true, CombatAdvantage.Neither, allies);
+        runCombat(enemies, model.getCurrentHex().getCombatTheme(), CombatAdvantage.Neither, allies);
         setCurrentTerrainSubview(model);
         if (haveFledCombat()) {
             println("You run out from the city limits.");

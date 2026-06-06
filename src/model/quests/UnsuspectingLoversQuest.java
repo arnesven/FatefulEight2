@@ -182,7 +182,7 @@ public class UnsuspectingLoversQuest extends Quest {
 
     private static class ReducePartyRepCombatSubScene extends CombatSubScene {
         public ReducePartyRepCombatSubScene(int col, int row) {
-            super(col, row, List.of(new InterloperEnemy('A')), true);
+            super(col, row, List.of(new InterloperEnemy('A')));
         }
 
         @Override

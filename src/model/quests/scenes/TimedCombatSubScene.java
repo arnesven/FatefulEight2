@@ -8,8 +8,8 @@ import model.states.QuestState;
 import java.util.List;
 
 public class TimedCombatSubScene extends CombatSubScene {
-    public TimedCombatSubScene(int col, int row, List<Enemy> enemies, boolean fleeingEnabled, int turns) {
-        super(col, row, enemies, fleeingEnabled);
+    public TimedCombatSubScene(int col, int row, List<Enemy> enemies, int turns) {
+        super(col, row, enemies);
         setTimeLimit(turns);
     }
 

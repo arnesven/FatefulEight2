@@ -74,7 +74,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
                 } else {
                     println("The vampire attacks you!");
                     if (inTavern) {
-                        runCombat(List.of(new VampireEnemy('A')), new MansionTheme(), true);
+                        runCombat(List.of(new VampireEnemy('A')), new MansionTheme());
                     } else {
                         runCombat(List.of(new VampireEnemy('A')));
                     }

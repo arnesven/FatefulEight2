@@ -14,7 +14,7 @@ public class CultistNPCClass extends NPCClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, MyColors.DARK_BLUE, MyColors.DARK_GREEN);
-        Looks.putOnHood(characterAppearance, MyColors.DARK_BLUE);
+        Looks.putOnHood(characterAppearance, MyColors.DARK_BLUE); // TODO: make look like warlock?
         Looks.putOnMask(characterAppearance, MyColors.DARK_BLUE);
     }
 

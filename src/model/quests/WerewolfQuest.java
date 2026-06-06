@@ -238,7 +238,7 @@ public class WerewolfQuest extends Quest {
     private static class WerewolfTimedCombatSubScene extends TimedCombatSubScene {
 
         public WerewolfTimedCombatSubScene(int col, int row, List<Enemy> enemies) {
-            super(col, row, enemies, true, WerewolfQuest.TURNS_TO_SURVIVE);
+            super(col, row, enemies, WerewolfQuest.TURNS_TO_SURVIVE);
         }
 
         @Override

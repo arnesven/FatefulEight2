@@ -62,7 +62,7 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>(List.of(new RisenWarriorEnemy('B'), new RisenWarriorEnemy('B'),
                 ultimateAdversary, new RisenWarriorEnemy('B'), new RisenWarriorEnemy('B')));
         do {
-            CombatEvent combatEvent = new CombatEvent(model, enemies, new DungeonTheme(), true, CombatAdvantage.Neither);
+            CombatEvent combatEvent = new CombatEvent(model, enemies, new DungeonTheme(), CombatAdvantage.Neither);
             combatEvent.setTimeLimit(3);
             combatEvent.run(model);
             setCurrentTerrainSubview(model);

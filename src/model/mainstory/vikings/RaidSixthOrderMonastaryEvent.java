@@ -57,7 +57,7 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
         portraitSay("Come Vikings! Odiiiiin!");
         println("The vikings scream with blood lust as they rush into battle.");
         List<GameCharacter> vikingAllies = makeVikingAllies();
-        runCombat(makeMonkEnemies(), new GrassCombatTheme(), false, CombatAdvantage.Party,
+        runCombat(makeMonkEnemies(), new GrassCombatTheme(), CombatAdvantage.Party,
                 vikingAllies);
         setCurrentTerrainSubview(model);
         println("The monks lay slain all around you.");
@@ -71,7 +71,7 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
                 "In no time at all the door to the cloister has been bashed in, and the monks flee in panic.");
         portraitSay("For glory! Odiiiiin!");
         vikingAllies = MyLists.filter(vikingAllies, gc -> !gc.isDead());
-        runCombat(makeMonkEnemies(), new DungeonTheme(), false, CombatAdvantage.Neither,
+        runCombat(makeMonkEnemies(), new DungeonTheme(), CombatAdvantage.Neither,
                 vikingAllies);
         setCurrentTerrainSubview(model);
         println("You help the vikings thoroughly ransack the monastary.");

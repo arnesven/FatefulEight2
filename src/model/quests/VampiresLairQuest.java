@@ -193,7 +193,7 @@ public class VampiresLairQuest extends MainQuest {
         private GameCharacter caidCharacter;
 
         public VampirePuppeteerCombatSubScene(int col, int row, int thralls, int vampires) {
-            super(col, row, makeEnemies(thralls, vampires), true);
+            super(col, row, makeEnemies(thralls, vampires));
             this.vampires = vampires;
         }
 

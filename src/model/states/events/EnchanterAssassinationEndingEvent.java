@@ -32,7 +32,7 @@ public class EnchanterAssassinationEndingEvent extends AssassinationEndingEvent 
         leaderSay("What in the world are those?");
         println("The machines are moving about from room to room, and there is no way to avoid them.");
         model.getLog().waitForAnimationToFinish();
-        runCombat(getVictimCompanions(model, task, false), new MansionTheme(), true);
+        runCombat(getVictimCompanions(model, task, false), new MansionTheme());
         if (haveFledCombat()) {
             println("You escape from the " + place + ".");
             leaderSay("That was pretty crazy. If " + task.getWrit().getName() + " was in there I'm sure " +

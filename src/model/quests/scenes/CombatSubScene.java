@@ -23,19 +23,13 @@ public abstract class CombatSubScene extends QuestSubScene {
     private static final Sprite32x32 SPRITE = new Sprite32x32("combatsubscene", "quest.png", 0x03,
             MyColors.BLACK, MyColors.WHITE, MyColors.GRAY, MyColors.BROWN);
     private List<Enemy> enemies;
-    private final boolean fleeingEnabled;
     private boolean defeated = false;
     private int timeLimit = 0;
     private boolean surprise = false;
 
-    public CombatSubScene(int col, int row, List<Enemy> enemies, boolean fleeingEnabled) {
+    public CombatSubScene(int col, int row, List<Enemy> enemies) {
         super(col, row);
         this.enemies = enemies;
-        this.fleeingEnabled = fleeingEnabled;
-    }
-
-    public CombatSubScene(int col, int row, List<Enemy> enemies) {
-        this(col, row, enemies, false);
     }
 
     @Override
@@ -83,7 +77,7 @@ public abstract class CombatSubScene extends QuestSubScene {
         } while (true);
         unacceptAllSpells(model);
 
-        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled,
+        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(),
                 surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
         List<GameCharacter> allies = getAllies();
         if (!allies.isEmpty()) {
@@ -101,7 +95,11 @@ public abstract class CombatSubScene extends QuestSubScene {
             state.transitionToQuestView(model);
         }
         if (combat.fled() || model.getParty().isWipedOut()) {
-            return getFailEdge();
+            QuestEdge edge = getFailEdge();
+            if (edge != null) {
+                return edge;
+            }
+            return new QuestEdge(state.getQuest().getFailEndingNode());
         }
         if (combat.didTimeOut()) {
             if (timeLimit == 0) { // Quest timed out from other reason => Escape spell

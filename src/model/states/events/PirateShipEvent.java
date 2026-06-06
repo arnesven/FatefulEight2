@@ -27,7 +27,7 @@ public class PirateShipEvent extends DailyEventState {
         print("Press enter to continue.");
         waitForReturn();
         List<Enemy> enemies = makePirateEnemies(model);
-        runCombat(enemies, new ShipCombatTheme(), true);
+        runCombat(enemies, new ShipCombatTheme());
     }
 
     public static List<Enemy> makePirateEnemies(Model model) {

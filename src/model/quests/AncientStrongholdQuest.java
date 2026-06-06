@@ -213,7 +213,7 @@ public class AncientStrongholdQuest extends MainQuest {
                     state.waitForReturn();
                     AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
                     CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
-                            state.getCombatTheme(), true, surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
+                            state.getCombatTheme(), surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
                     combat.addExtraLoot(enemySet.getPearls());
                     combat.run(model);
                     if (!model.getParty().isWipedOut()) {

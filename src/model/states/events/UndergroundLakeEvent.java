@@ -71,7 +71,7 @@ public class UndergroundLakeEvent extends DailyEventState {
             model.getParty().randomPartyMemberSay(model, List.of("Didn't I say the lake was a bad idea?"));
             leaderSay("It's coming right for us. Get ready to fight!");
             List<Enemy> enemies = OctopusEnemy.makeEnemyList();
-            runCombat(enemies, new CaveTheme(), false);
+            runCombat(enemies, new CaveTheme());
             if (model.getParty().isWipedOut()) {
                 return;
             }

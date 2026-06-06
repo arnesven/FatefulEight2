@@ -68,7 +68,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Trek to the pyramid", List.of(
-                    new CombatSubScene(3, 2, makeJungleMonsters(), false) {
+                    new CombatSubScene(3, 2, makeJungleMonsters()) {
                         @Override
                         protected String getCombatDetails() {
                             return "many monsters";
@@ -82,7 +82,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                             "It may take some time to find where the crown could be hidden.")
                 )),
                 new QuestScene("Denizens of the pyramid", List.of(
-                        new CombatSubScene(6, 5, makePyramidDenizens(), false) {
+                        new CombatSubScene(6, 5, makePyramidDenizens()) {
                             @Override
                             protected String getCombatDetails() {
                                 return "many monsters";
@@ -93,7 +93,7 @@ public abstract class SeekTheJadeCrownQuest extends RemotePeopleQuest {
                 )),
                 new QuestScene("Stone Golem", List.of(
                         new PuzzleSubScene(6, 2),
-                        new CombatSubScene(7, 2, List.of(new StoneGolemEnemy('A')), false) {
+                        new CombatSubScene(7, 2, List.of(new StoneGolemEnemy('A'))) {
 
                             @Override
                             protected String getCombatDetails() {

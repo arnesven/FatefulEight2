@@ -159,9 +159,9 @@ public class MonsterHuntDestinationTask extends DestinationTask {
             monsterHunt.setTracked(true);
             println("You find the lair of the " + monsterHunt.getMonster().getName() + ". It attacks you!");
             if (monsterHunt.getShortDescription().contains("cave")) {
-                runCombat(List.of(monsterHunt.getMonster()), new CaveTheme(), true);
+                runCombat(List.of(monsterHunt.getMonster()), new CaveTheme());
             } else if (monsterHunt.getShortDescription().contains("crypt")) {
-                runCombat(List.of(monsterHunt.getMonster()), new DungeonTheme(), true);
+                runCombat(List.of(monsterHunt.getMonster()), new DungeonTheme());
             } else {
                 runCombat(List.of(monsterHunt.getMonster()));
             }

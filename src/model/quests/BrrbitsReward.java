@@ -294,8 +294,8 @@ public class BrrbitsReward extends Quest {
     private static abstract class ProtectFrogmanCombatScene extends CombatSubScene {
         private final BrrbitCharacter frogman;
 
-        public ProtectFrogmanCombatScene(BrrbitCharacter frogman, int col, int row, List<Enemy> enemies, boolean fleeingEnabled) {
-            super(col, row, enemies, fleeingEnabled);
+        public ProtectFrogmanCombatScene(BrrbitCharacter frogman, int col, int row, List<Enemy> enemies) {
+            super(col, row, enemies);
             this.frogman = frogman;
         }
 
@@ -319,7 +319,7 @@ public class BrrbitsReward extends Quest {
     private static class ThugsCombatScene extends ProtectFrogmanCombatScene {
         public ThugsCombatScene(int col, int row, BrrbitCharacter frogman) {
             super(frogman, col, row, List.of(new MuggerEnemy('A'), new MuggerEnemy('A'),
-                    new MuggerEnemy('A')), true);
+                    new MuggerEnemy('A')));
         }
 
         @Override
@@ -413,7 +413,7 @@ public class BrrbitsReward extends Quest {
 
     private class BlobsCombatScene extends ProtectFrogmanCombatScene {
         public BlobsCombatScene(int col, int row, BrrbitCharacter frogman) {
-            super(frogman, col, row, GelatinousBlobEvent.makeRandomBlobEnemies(2, 2), true);
+            super(frogman, col, row, GelatinousBlobEvent.makeRandomBlobEnemies(2, 2));
         }
 
         @Override
@@ -478,7 +478,7 @@ public class BrrbitsReward extends Quest {
         public LizardmenCombatScene(int col, int row, BrrbitCharacter frogman) {
             super(frogman, col, row,
                     List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'),
-                            new LizardmanEnemy('A'), new LizardmanEnemy('A')), true);
+                            new LizardmanEnemy('A'), new LizardmanEnemy('A')));
         }
 
         @Override

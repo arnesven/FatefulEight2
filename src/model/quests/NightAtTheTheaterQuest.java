@@ -135,7 +135,7 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
 
     private class GatheredFightCombatSubScene extends CombatSubScene {
         public GatheredFightCombatSubScene(int col, int row) {
-            super(col, row, makeOrcishNinjas(TOTAL_NUMBER_OF_NINJAS), true);
+            super(col, row, makeOrcishNinjas(TOTAL_NUMBER_OF_NINJAS));
         }
 
         @Override
@@ -224,7 +224,7 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         }
 
         private CombatSubScene makeSmallCombatSubscene(int enemyCount) {
-            return new CombatSubScene(0, 0, makeOrcishNinjas(enemyCount), true) {
+            return new CombatSubScene(0, 0, makeOrcishNinjas(enemyCount)) {
                 @Override
                 protected String getCombatDetails() {
                     return "Mysterious Ninjas";

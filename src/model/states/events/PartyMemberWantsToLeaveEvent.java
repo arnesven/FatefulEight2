@@ -144,7 +144,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
                 }
                 separtists.add(gc);
                 printAlert(gc.getName() + " attacks you!");
-                runCombat(transformToEnemies(separtists), model.getCurrentHex().getCombatTheme(), true);
+                runCombat(transformToEnemies(separtists), model.getCurrentHex().getCombatTheme());
                 setCurrentTerrainSubview(model);
                 model.setInCombat(false);
                 return true;

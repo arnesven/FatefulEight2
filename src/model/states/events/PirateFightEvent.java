@@ -39,7 +39,7 @@ public class PirateFightEvent extends DailyEventState {
             for (int i = 0; i < MyRandom.randInt(1, Math.min(6, enemies.size())); ++i) {
                 allies.add(new AllyFromEnemyCharacter(new PirateEnemy('A')));
             }
-            runCombat(enemies, new MansionTheme(), true, CombatAdvantage.Neither, allies);
+            runCombat(enemies, new MansionTheme(), CombatAdvantage.Neither, allies);
         } else if (choice == 2) {
             leaderSay("You're all a bunch of feckless ingrates!");
             println("A sudden silence follows your insult. Then, with not so much as a warning, " +

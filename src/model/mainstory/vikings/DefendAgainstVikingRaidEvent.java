@@ -68,7 +68,7 @@ public class DefendAgainstVikingRaidEvent extends DailyEventState {
 
         List<Enemy> enemies = makeEnemies();
         List<GameCharacter> reserves = makeAllies(4);
-        CombatEvent combat = new CombatEvent(model, enemies, new MonastaryWallCombatTheme(reserves), false, advantage);
+        CombatEvent combat = new CombatEvent(model, enemies, new MonastaryWallCombatTheme(reserves), advantage);
         List<GameCharacter> allies = makeAllies(16);
         combat.addAllies(allies);
         combat.setTimeLimit(4 + (advantage == CombatAdvantage.Party ? 1 : 0));
@@ -107,7 +107,7 @@ public class DefendAgainstVikingRaidEvent extends DailyEventState {
             allies.add(reserves.removeFirst());
         }
 
-        CombatEvent combat2 = new CombatEvent(model, enemies, new DungeonTheme(), false, advantage);
+        CombatEvent combat2 = new CombatEvent(model, enemies, new DungeonTheme(), advantage);
         combat2.addAllies(allies);
         combat2.run(model);
         if (model.getParty().isWipedOut()) {

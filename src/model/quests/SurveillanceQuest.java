@@ -202,7 +202,7 @@ public class SurveillanceQuest extends Quest {
         private String text;
 
         public OrcsCombatSubScene(int col, int row, int num) {
-            super(col, row, generateEnemies(num), false);
+            super(col, row, generateEnemies(num));
             this.text = "orcs";
             if (num > 3) {
                 this.text = "lots of orcs";

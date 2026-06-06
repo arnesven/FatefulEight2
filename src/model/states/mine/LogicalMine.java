@@ -104,7 +104,7 @@ public class LogicalMine {
             state.println("You encounter " + enemyObj.getDescription() + "!");
             model.getLog().waitForAnimationToFinish();
             CombatEvent combatEvent = new CombatEvent(model, enemyObj.getEnemies(),
-                    new CaveTheme(), true, CombatAdvantage.Neither);
+                    new CaveTheme(), CombatAdvantage.Neither);
             combatEvent.run(model);
             return combatEvent;
         }
@@ -138,7 +138,7 @@ public class LogicalMine {
                         }
                         model.getLog().waitForAnimationToFinish();
                         CombatEvent combatEvent = new CombatEvent(model, enemyAdjacentObj.getEnemies(),
-                                new CaveTheme(), true, advantage);
+                                new CaveTheme(), advantage);
                         combatEvent.run(model);
                         subView.removeMovementAnimation();
                         return combatEvent;

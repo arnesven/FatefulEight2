@@ -57,7 +57,7 @@ public class OrcRaidEvent extends DailyEventState {
             for (int i = 0; i < numberOfOrcs; ++i) {
                 enemies.add(new OrcWarrior('A'));
             }
-            this.combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), true, CombatAdvantage.Neither);
+            this.combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), CombatAdvantage.Neither);
             List<GameCharacter> allies = new ArrayList<>();
             int numberOfMilitias = MyRandom.randInt(2, 4);
             for (int i = 0; i < numberOfMilitias; ++i) {

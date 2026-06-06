@@ -136,7 +136,7 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
         for (int i = MyRandom.randInt(3, 7); i > 0; --i) {
             enemies.add(new Brawler());
         }
-        runCombat(enemies, new MansionTheme(), true);
+        runCombat(enemies, new MansionTheme());
         if (model.getParty().isWipedOut()) {
             return;
         }

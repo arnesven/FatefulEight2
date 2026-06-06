@@ -43,7 +43,7 @@ public class WastelandMonsterEvent extends RoamingMonsterEvent {
                 enemies = makeTrollEnemies();
         }
         if (ambush) {
-            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme());
         } else {
             runCombat(enemies);
         }

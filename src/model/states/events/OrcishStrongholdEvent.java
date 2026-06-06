@@ -125,7 +125,11 @@ public class OrcishStrongholdEvent extends DailyEventState {
             enemies.add(new TrollEnemy('B'));
         }
         enemies.add(new OrcChieftain('C'));
-        runCombat(enemies, false);
+        runCombat(enemies);
+        if (haveFledCombat()) {
+            println("You run away from the orcish stronghold.");
+            return;
+        }
         if (model.getParty().isWipedOut()) {
             return;
         }

@@ -158,7 +158,7 @@ public class BathHouseEvent extends DailyEventState {
             partyMemberSay(groupB.get(groupB.size()-1), "What a disappointment.");
         } else {
             List<Enemy> rowdyBunch = makeRowdyBunch(gender);
-            CombatEvent combat = new CombatEvent(getModel(), rowdyBunch, new MansionTheme(), false, CombatAdvantage.Neither);
+            CombatEvent combat = new CombatEvent(getModel(), rowdyBunch, new MansionTheme(), CombatAdvantage.Neither);
             combat.setTimeLimit(5);
             combat.run(getModel());
             if (model.getParty().isWipedOut()) {

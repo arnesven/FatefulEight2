@@ -75,7 +75,7 @@ public class HuntingEvent extends DailyEventState {
                     enemies.add(new WildBoarEnemy('A'));
                 }
             }
-            runCombat(enemies, new GrassCombatTheme(), true);
+            runCombat(enemies, new GrassCombatTheme());
         }
     }
 

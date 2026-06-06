@@ -49,7 +49,7 @@ public class RiverTrollsEvent extends RiverEvent {
             } else {
                 println("The trolls suddenly notice you, they seem startled and gruff loudly amongst themselves. " +
                         "Then they attack you!");
-                runCombat(enemies, new RiverCombatTheme(), true);
+                runCombat(enemies, new RiverCombatTheme());
             }
         } else if (selected == 1) {
             if (model.getParty().size() > 1) {
@@ -78,7 +78,7 @@ public class RiverTrollsEvent extends RiverEvent {
                 leaderSay("How about 5 gold?");
                 printQuote("Troll", "NO GOLD STUPID!");
                 partyMemberSay(model.getParty().getRandomPartyMember(), "Yeah... this went well...");
-                runCombat(enemies, new RiverCombatTheme(), true);
+                runCombat(enemies, new RiverCombatTheme());
             } else {
                 printQuote("Troll", "GOOD FISH. NOW GO!");
                 leaderSay("We're as good as gone.");
@@ -87,7 +87,7 @@ public class RiverTrollsEvent extends RiverEvent {
         } else {
             println("You rush up to the trolls with your weapons drawn. You've caught them off guard, " +
                     "time to press your advantage!");
-            runSurpriseCombat(enemies, new RiverCombatTheme(), true);
+            runSurpriseCombat(enemies, new RiverCombatTheme());
         }
         if (!model.getParty().isWipedOut() && !haveFledCombat()) {
             gotToCross = true;

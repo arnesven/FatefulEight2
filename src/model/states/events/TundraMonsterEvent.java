@@ -43,7 +43,7 @@ public class TundraMonsterEvent extends RoamingMonsterEvent {
                 break;
         }
         if (ambush) {
-            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme());
         } else {
             runCombat(enemies);
         }

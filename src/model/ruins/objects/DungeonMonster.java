@@ -78,7 +78,7 @@ public class DungeonMonster extends CenterDungeonObject {
         exploreRuinsState.waitForReturn();
 
         CombatEvent combat = new CombatEvent(model, enemies, exploreRuinsState.getCombatTheme(),
-                true, surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
+                surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
         if (getTimeLimit() != -1) {
             combat.setTimeLimit(getTimeLimit());
         }

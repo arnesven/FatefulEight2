@@ -182,22 +182,22 @@ public class BoatsEvent extends RiverEvent {
         }
         if (roll2 < 3) {
             println("a bear!");
-            runCombat(List.of(new BearEnemy('A')), new GrassCombatTheme(), true);
+            runCombat(List.of(new BearEnemy('A')), new GrassCombatTheme());
         } else if (roll2 < 5) {
             println("wild boar!");
             runCombat(List.of(new WildBoarEnemy('A'), new WildBoarEnemy('A'), new WildBoarEnemy('A')),
-                    new GrassCombatTheme(), true);
+                    new GrassCombatTheme());
         } else if (roll2 < 7) {
             println("a pair of hungry wolves!");
             runCombat(List.of(new WolfEnemy('A'), new WolfEnemy('A')),
-                    new GrassCombatTheme(), true);
+                    new GrassCombatTheme());
         } else if (roll2 < 9) {
             println("some slithering snakes!");
             runCombat(List.of(new ViperEnemy('A'), new ViperEnemy('A'), new ViperEnemy('A')),
-                    new GrassCombatTheme(), true);
+                    new GrassCombatTheme());
         } else {
             println("a scary looking spider!");
-            runCombat(List.of(new CommonSpiderEnemy('A')), new GrassCombatTheme(), true);
+            runCombat(List.of(new CommonSpiderEnemy('A')), new GrassCombatTheme());
         }
         if (model.getParty().isWipedOut()) {
             return;

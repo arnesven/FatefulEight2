@@ -92,7 +92,7 @@ public class ChooseNode extends QuestJunction {
             }
         }
         state.println("You encounter a group of " + groupName + "!");
-        CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), true, advantage);
+        CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), advantage);
         combat.run(model);
         state.transitionToQuestView(model);
         for (MovingEnemyGroup group : enemyGroups) {

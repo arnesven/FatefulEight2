@@ -418,7 +418,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             }
             enemies.add(new BanditLeaderEnemy('C'));
             Collections.shuffle(enemies);
-            runCombat(enemies, new MountainCombatTheme(), true, adv, new ArrayList<>());
+            runCombat(enemies, new MountainCombatTheme(), adv, new ArrayList<>());
             setCurrentTerrainSubview(model);
             if (haveFledCombat() || model.getParty().isWipedOut()) {
                 return false;

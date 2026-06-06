@@ -51,7 +51,7 @@ public class FindBountyEvent extends DailyEventState {
         } else {
             portraitSay("Come on then!");
         }
-        runCombat(enemies, task.getCombatTheme(), true);
+        runCombat(enemies, task.getCombatTheme());
         if (model.getParty().isWipedOut()) {
             return;
         }

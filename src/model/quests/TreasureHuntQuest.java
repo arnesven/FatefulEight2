@@ -187,7 +187,7 @@ public class TreasureHuntQuest extends Quest {
 
     private static class LizardmanCombatSubScene extends CombatSubScene {
         public LizardmanCombatSubScene(int col, int row) {
-            super(col, row, makeEnemies(), false);
+            super(col, row, makeEnemies());
         }
 
         @Override

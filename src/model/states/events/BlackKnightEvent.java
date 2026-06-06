@@ -43,7 +43,7 @@ public class BlackKnightEvent extends RiverEvent {
         model.getParty().randomPartyMemberSay(model, List.of("I think we're going to have to fight him if we want to cross here."));
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
-            runCombat(List.of(new BlackKnightEnemy('A')), new RiverCombatTheme(), true);
+            runCombat(List.of(new BlackKnightEnemy('A')), new RiverCombatTheme());
             if (model.getParty().isWipedOut()) {
                 return;
             }

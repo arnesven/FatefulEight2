@@ -190,7 +190,7 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
 
     private static class ConfectionistCombatSubScene extends CombatSubScene {
         public ConfectionistCombatSubScene(int col, int row) {
-            super(col, row, makeEnemies(), true);
+            super(col, row, makeEnemies());
         }
 
         private static List<Enemy> makeEnemies() {

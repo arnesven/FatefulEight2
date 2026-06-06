@@ -132,9 +132,9 @@ public abstract class AssassinationEndingEvent extends DailyEventState {
         enemies.addAll(companions);
         Collections.shuffle(enemies);
         if (surprise) {
-            runSurpriseCombat(enemies, theme, true);
+            runSurpriseCombat(enemies, theme);
         } else {
-            runCombat(enemies, theme, true);
+            runCombat(enemies, theme);
         }
         setCurrentTerrainSubview(model);
         Ending ending;

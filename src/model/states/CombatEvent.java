@@ -24,6 +24,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.*;
+import model.items.spells.EscapeSpell;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
@@ -56,7 +57,6 @@ public class CombatEvent extends DailyEventState {
     private boolean selectingFormation;
     private final List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
-    private boolean fleeingEnabled;
     private boolean blockCombat = false;
     private CombatAction selectedCombatAction = null;
     private Combatant selectedTarget;
@@ -76,7 +76,7 @@ public class CombatEvent extends DailyEventState {
     private final List<String> autoTranscript = new ArrayList<>();
     private String transcriptTemporary = "";
 
-    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage advantage) {
+    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, CombatAdvantage advantage) {
         super(model);
         selectingFormation = true;
         combatMatrix = new CombatMatrix();
@@ -88,7 +88,6 @@ public class CombatEvent extends DailyEventState {
         this.participants.addAll(model.getParty().getBackRow());
         setInitiativeOrder();
         this.subView = new CombatSubView(this, combatMatrix, theme);
-        this.fleeingEnabled = fleeingEnabled;
         this.originalAdvantage = advantage;
         this.advantage = advantage;
         this.sneakAttackers = new ArrayList<>();
@@ -101,7 +100,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {
-        this(model, startingEnemies, new GrassCombatTheme(), true, CombatAdvantage.Neither);
+        this(model, startingEnemies, new GrassCombatTheme(), CombatAdvantage.Neither);
     }
 
     @Override
@@ -130,7 +129,9 @@ public class CombatEvent extends DailyEventState {
         if (advantage != CombatAdvantage.Enemies) {
             runQuickCastTurns(model);
         }
-        runCombatLoop(model);
+        if (!combatDone(model)) { // Could already be over due to quick cast turns.
+            runCombatLoop(model);
+        }
         model.getLog().waitForAnimationToFinish();
         handleLootAndSummary(model);
         removeKilledPartyMembers(model, partyFled);
@@ -513,14 +514,6 @@ public class CombatEvent extends DailyEventState {
                                 "Slain.")), MyRandom.flipCoin() ? FacialExpression.excited : FacialExpression.none);
             }
         }
-    }
-
-    public boolean fleeingEnabled() {
-        return fleeingEnabled;
-    }
-
-    public void setFleeingEnabled(boolean fleeingEnabled) {
-        this.fleeingEnabled = fleeingEnabled;
     }
 
     public boolean fled() {

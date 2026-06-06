@@ -220,7 +220,7 @@ public class FrogmenProblemQuest extends MainQuest {
     private static class FrogmanGuardsCombat extends CombatSubScene {
         public FrogmanGuardsCombat(int col, int row) {
             super(col, row, List.of(new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('B'),
-                    new FrogmanScoutEnemy('A')), true);
+                    new FrogmanScoutEnemy('A')));
         }
 
         @Override
@@ -232,7 +232,7 @@ public class FrogmenProblemQuest extends MainQuest {
     private static class FrogmanShamanCombat extends CombatSubScene {
         public FrogmanShamanCombat(int col, int row) {
             super(col, row, List.of(new FrogmanShamanEnemy('B'), new FrogmanScoutEnemy('A'),
-                    new FrogmanScoutEnemy('A')), true);
+                    new FrogmanScoutEnemy('A')));
 
         }
 
@@ -245,8 +245,7 @@ public class FrogmenProblemQuest extends MainQuest {
     private static class FrogmanChieftainCombat extends CombatSubScene {
         public FrogmanChieftainCombat(int col, int row) {
             super(col, row, List.of(new FrogmanLeaderEnemy('A'), new FrogmanScoutEnemy('B'),
-                    new FrogmanChiefEnemy('C'), new FrogmanScoutEnemy('B'), new FrogmanLeaderEnemy('A')),
-                    true);
+                    new FrogmanChiefEnemy('C'), new FrogmanScoutEnemy('B'), new FrogmanLeaderEnemy('A')));
         }
 
         @Override

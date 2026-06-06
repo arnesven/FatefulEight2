@@ -213,7 +213,7 @@ public class HauntedMansionQuest extends Quest {
         private final int numberOfGhosts;
 
         public GhostCombatScene(int col, int row, int numberOfGhosts) {
-            super(col, row, makeGhosts(numberOfGhosts), false);
+            super(col, row, makeGhosts(numberOfGhosts));
             this.numberOfGhosts = numberOfGhosts;
         }
 

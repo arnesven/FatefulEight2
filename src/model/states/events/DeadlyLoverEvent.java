@@ -196,7 +196,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         runCombat(List.of(new GangsterEnemy('A',  model), new GangsterEnemy('A',  model),
                 new GangsterEnemy('A', beauty.getRace(), mainsLoot),
                 new GangsterEnemy('A',  model), new GangsterEnemy('A',  model)),
-                new MansionTheme(), true);
+                new MansionTheme());
         if (model.getParty().isWipedOut()) {
             return;
         }

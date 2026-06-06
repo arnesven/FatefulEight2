@@ -132,7 +132,7 @@ public class BoozersEvent extends DailyEventState {
             setFledCombat(true);
         } else {
             println("The two drunks quickly catch up to you and attack you.");
-            runAmbushCombat(makeEnemyList(), model.getCurrentHex().getCombatTheme(), true);
+            runAmbushCombat(makeEnemyList(), model.getCurrentHex().getCombatTheme());
         }
     }
 

@@ -52,7 +52,7 @@ public class JungleMonsterEvent extends RoamingMonsterEvent{
         if (!ambush) {
             runCombat(enemies);
         } else {
-            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme());
         }
     }
 }

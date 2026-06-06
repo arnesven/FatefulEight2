@@ -27,7 +27,7 @@ public class VampireCryptEvent extends DailyEventState {
         for (int i = num; i > 0; --i) {
             result.add(new VampireEnemy('A'));
         }
-        runCombat(result, new DungeonTheme(), true,
+        runCombat(result, new DungeonTheme(),
                 ambush ? CombatAdvantage.Enemies : CombatAdvantage.Neither, new ArrayList<>());
     }
 }

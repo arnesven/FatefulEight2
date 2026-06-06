@@ -191,7 +191,7 @@ public class ArenaQuest extends Quest {
         private final int step;
 
         public SingleCharacterCombatSubScene(int col, int row, Enemy enemy) {
-            super(col, row, List.of(enemy), false);
+            super(col, row, List.of(enemy));
             this.enemy = enemy;
             this.step = row - 2;
         }
@@ -214,7 +214,7 @@ public class ArenaQuest extends Quest {
             benchers.addAll(model.getParty().getPartyMembers());
             benchers.remove(fighter);
             model.getParty().benchPartyMembers(benchers);
-            CombatEvent combat = new CombatEvent(model, List.of(enemy), state.getCombatTheme(), false, CombatAdvantage.Neither);
+            CombatEvent combat = new CombatEvent(model, List.of(enemy), state.getCombatTheme(), CombatAdvantage.Neither);
             combat.run(model);
             model.getParty().unbenchAll();
             state.transitionToQuestView(model);

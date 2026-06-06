@@ -403,7 +403,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
     private boolean combatVampireInside(Model model, boolean isAmbush) {
         Enemy enm = new VampireFromCharacterEnemy(vampire);
         enm.setAttackBehavior(new VampireAttackBehavior());
-        runCombat(List.of(enm), new MansionTheme(), true, isAmbush ? CombatAdvantage.Party : CombatAdvantage.Neither, List.of());
+        runCombat(List.of(enm), new MansionTheme(), isAmbush ? CombatAdvantage.Party : CombatAdvantage.Neither, List.of());
         setCurrentTerrainSubview(model);
         if (haveFledCombat()) {
             println("Valuing your lives, you flee from the house. When you have calmed down a bit, " +

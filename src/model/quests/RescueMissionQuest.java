@@ -249,7 +249,7 @@ public class RescueMissionQuest extends MainQuest {
 
     private static class CombatGuardSubScene extends CombatSubScene {
         public CombatGuardSubScene(int col, int row) {
-            super(col, row, List.of(new SoldierEnemy('A'), new SoldierEnemy('A')), true); // Two of them
+            super(col, row, List.of(new SoldierEnemy('A'), new SoldierEnemy('A'))); // Two of them
         }
 
         @Override

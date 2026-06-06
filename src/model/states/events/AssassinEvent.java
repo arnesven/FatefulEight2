@@ -32,7 +32,7 @@ public class AssassinEvent extends DailyEventState {
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.ASN);
             change.areYouInterested(model);
         } else {
-            runCombat(List.of(new AssassinEnemy('A')), new TownCombatTheme(), true);
+            runCombat(List.of(new AssassinEnemy('A')), new TownCombatTheme());
         }
     }
 }

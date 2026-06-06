@@ -173,7 +173,7 @@ public class WizardsTowerQuest extends Quest {
 
     private static class AutomatonCombatSubScene extends CombatSubScene {
         public AutomatonCombatSubScene(int col, int row) {
-            super(col, row, List.of(new AutomatonEnemy('A')), false);
+            super(col, row, List.of(new AutomatonEnemy('A')));
         }
 
         @Override
@@ -184,7 +184,7 @@ public class WizardsTowerQuest extends Quest {
 
     private static class RostomelCombatSubScene extends CombatSubScene {
         public RostomelCombatSubScene(int col, int row) {
-            super(col, row, List.of(new RedMageEnemy('A')), false);
+            super(col, row, List.of(new RedMageEnemy('A')));
         }
 
         @Override

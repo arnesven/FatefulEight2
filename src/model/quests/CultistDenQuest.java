@@ -212,7 +212,7 @@ public class CultistDenQuest extends Quest {
         private final int noOfCultists;
 
         public CultistCombatSubScene(int col, int row, int noOfCultists) {
-            super(col, row, makeCultistList(noOfCultists), true);
+            super(col, row, makeCultistList(noOfCultists));
             this.noOfCultists = noOfCultists;
         }
 
@@ -322,7 +322,7 @@ public class CultistDenQuest extends Quest {
 
     private static class ElderDaemonSubScene extends CombatSubScene{
         public ElderDaemonSubScene(int col, int row) {
-            super(col, row, List.of(new ElderDaemonEnemy('A')), false);
+            super(col, row, List.of(new ElderDaemonEnemy('A')));
         }
 
         @Override

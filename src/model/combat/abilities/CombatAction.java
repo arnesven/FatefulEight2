@@ -94,7 +94,7 @@ public abstract class CombatAction {
         if (character.canAttackInCombat() && target.canBeAttackedBy(character) && !combatEvent.isInQuickCast()) {
             result.add(new AttackCombatAction(!character.getEquipment().getWeapon().isRangedAttack()));
         }
-        if (character.isLeader() && combatEvent.fleeingEnabled() && !combatEvent.isInQuickCast()) {
+        if (character.isLeader() && !combatEvent.isInQuickCast()) {
             result.add(new FleeCombatAction());
         }
 

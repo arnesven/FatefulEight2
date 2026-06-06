@@ -153,7 +153,7 @@ public class DefendTheVillageQuest extends Quest {
 
     private class VariableBanditCombatSubScene extends CombatSubScene {
         public VariableBanditCombatSubScene(int col, int row) {
-            super(col, row, List.of(new BanditEnemy('A', "Bandit", 5)), true);
+            super(col, row, List.of(new BanditEnemy('A', "Bandit", 5)));
         }
 
         @Override

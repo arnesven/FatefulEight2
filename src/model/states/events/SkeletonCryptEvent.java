@@ -25,10 +25,10 @@ public class SkeletonCryptEvent extends DailyEventState {
         }
         if (MyRandom.flipCoin()) {
             println("The party encounters some skeletons!");
-            runCombat(result, new DungeonTheme(), true);
+            runCombat(result, new DungeonTheme());
         } else {
             println("The party is ambushed by some skeletons!");
-            runAmbushCombat(result, new DungeonTheme(), true);
+            runAmbushCombat(result, new DungeonTheme());
         }
     }
 }

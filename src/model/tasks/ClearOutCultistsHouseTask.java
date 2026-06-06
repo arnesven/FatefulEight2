@@ -217,7 +217,7 @@ public class ClearOutCultistsHouseTask extends SummonTask {
             runCombat(List.of(
                     new CultistEnemy('A'), new CultistEnemy('A'), new CultistEnemy('A'),
                     new CultistEnemy('A'), new CultistEnemy('A'), new CultistEnemy('A'),
-                    new CultistEnemy('A'), new CultistEnemy('A')), new MansionTheme(), true);
+                    new CultistEnemy('A'), new CultistEnemy('A')), new MansionTheme());
             return haveFledCombat();
         }
     }

@@ -198,7 +198,7 @@ public class SpecialDeliveryQuest extends MainQuest {
     private static class BrotherHoodCombatSubScene extends CombatSubScene {
         private String countWord;
         public BrotherHoodCombatSubScene(int col, int row, List<Enemy> enemies) {
-            super(col, row, enemies, true);
+            super(col, row, enemies);
             this.countWord = MyStrings.numberWord(enemies.size());
             countWord = countWord.substring(0, 1).toUpperCase() + countWord.substring(1);
         }

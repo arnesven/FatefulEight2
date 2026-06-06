@@ -82,13 +82,13 @@ public class OrcsBattleEvent extends DailyEventState {
                     }
                 } else {
                     println("The party finds an enclosure where soldiers can practice fighting against dummies.");
-                    leaderSay("We'll this is one fight I think we ought to win.");
+                    leaderSay("Well this is one fight I think we ought to win.");
                     model.getLog().waitForAnimationToFinish();
                     List<Enemy> enemies = new ArrayList<>();
                     for (int i = 0; i < model.getParty().size(); ++i) {
                         enemies.add(new TrainingDummyEnemy('A'));
                     }
-                    runCombat(enemies, false);
+                    runCombat(enemies);
                 }
 
                 this.freeLodging = true;

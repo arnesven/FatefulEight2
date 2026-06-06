@@ -38,7 +38,7 @@ public class GelatinousBlobEvent extends DailyEventState {
             runCombat(enemies);
         } else {
             model.getSettings().getMiscFlags().put(HAVE_MET_BLOBS, true);
-            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme());
         }
     }
 

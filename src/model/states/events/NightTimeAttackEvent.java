@@ -68,11 +68,11 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
                 randomSayIfPersonality(PersonalityTrait.diplomatic, List.of(rando), "More fighting? Isn't there a peaceful solution?");
             }
             model.getLog().waitForAnimationToFinish();
-            runCombat(enemies, model.getCurrentHex().getNightTimeCombatTheme(), true);
+            runCombat(enemies, model.getCurrentHex().getNightTimeCombatTheme());
         } else {
             showEventCard("Before " + rando.getFirstName() + " has a chance to react " + ambushIntro + "!");
             model.getLog().waitForAnimationToFinish();
-            runAmbushCombat(enemies, model.getCurrentHex().getNightTimeCombatTheme(), true);
+            runAmbushCombat(enemies, model.getCurrentHex().getNightTimeCombatTheme());
         }
     }
 }

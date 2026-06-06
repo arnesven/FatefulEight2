@@ -101,7 +101,7 @@ public class NecromancerRitual extends RitualEvent {
             }
             enemies.add(new UndeadLordEnemy('A'));
             Collections.shuffle(enemies);
-            runCombat(enemies, getTheme(), true);
+            runCombat(enemies, getTheme());
             if (model.getParty().isWipedOut()) {
                 return;
             }

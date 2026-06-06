@@ -35,9 +35,9 @@ public class CrocodilesEvent extends DailyEventState {
         }
         List<Enemy> enemies = List.of(new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A'));
         if (spotted) {
-            runCombat(enemies, false);
+            runCombat(enemies);
         } else {
-            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), false);
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme());
         }
     }
 }
