@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Equipment;
@@ -68,6 +69,11 @@ public class TownFairQuest extends Quest {
     @Override
     public BackgroundMusic getMusic() {
         return BackgroundMusic.happyMandolin;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -298,6 +304,27 @@ public class TownFairQuest extends Quest {
         @Override
         public String getDetailedDescription() {
             return "Bows H";
+        }
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You see a lot of people hustling and bustling today. A nearby commoner is carrying a large box " +
+                    "full of bottles of yellow liquid.");
+            leaderSay("What's going on?");
+            showRandomPortrait(model, Classes.None, "Commoner");
+            portraitSay("I've got to get these bottles of lemonade over to the fair.");
+            leaderSay("Fair?", FacialExpression.questioning);
+            portraitSay("You're not from around here, right? We have a town fair bi-annually. " +
+                    "You should check it out. There are food stands, games, contests and " +
+                    "It's a good opportunity to meet everybody.");
+            leaderSay("Maybe " + iOrWe() + " should check it out?");
+            portraitSay("I'll see you there!");
         }
     }
 }

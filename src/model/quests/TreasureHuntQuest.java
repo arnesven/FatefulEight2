@@ -1,7 +1,10 @@
 package model.quests;
 
+import model.Model;
 import model.achievements.Achievement;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -11,6 +14,8 @@ import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
 import sound.BackgroundMusic;
+import util.MyTriplet;
+import view.IntroGameView;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
@@ -45,6 +50,11 @@ public class TreasureHuntQuest extends Quest {
     @Override
     public Achievement.Data getAchievementData() {
         return makeAchievement(this, END_TEXT);
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -192,5 +202,58 @@ public class TreasureHuntQuest extends Quest {
             list.add(new LizardmanEnemy('A'));
         }
         return list;
+    }
+
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("There's a stand at the square with many curios for sale. The man selling them " +
+                    "looks as mysterious as his wares.");
+            leaderSay("Where do you find your merchandise?");
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("From all over the world " + (model.getParty().getLeader().getGender() ? "madam":"sir")+ 
+                    ". Are you looking for anything in particular?");
+            leaderSay("Not at all. Just killing some time before heading off on " + myOrOur() + " next mission.");
+            portraitSay("Ah, the adventuring type I see. If you're up for a treasure hunt, " +
+                    "I've got a genuine treasure map right here.");
+            randomSayIfPersonality(PersonalityTrait.critical, List.of(model.getParty().getLeader()), "'Genuine'? I doubt it.");
+            leaderSay("I see. Can I inspect it?");
+            portraitSay("Hmmm... alright, only for a minute though. It's value is in the information it conveys!");
+            println("The junk seller hands you the parchment. You look at the map, and despite your initial skepticism, " +
+                    "it actually looks promising.");
+            leaderSay("Looks fair. How much?");
+            portraitSay("100 gold.");
+            if (model.getParty().getGold() < 5) {
+                leaderSay("Completely outrageous!", FacialExpression.angry);
+                portraitSay("If you don't like my prices, you can go elsewhere.");
+                leaderSay("I must certainly will.");
+                model.getLog().waitForAnimationToFinish();
+                removePortraitSubView(model);
+                println("You walk away from the stand, but the thought of the map lingers in your mind.");
+                leaderSay("What if that treasure is real...");
+                println("You can't stop thinking about it and decide to return to the market. The junk seller " +
+                        "is packing up his wears and does not notice you approaching.");
+                model.getLog().waitForAnimationToFinish();
+                model.getParty().getLeader().testSkill(model, Skill.Sneak);
+                println("You quickly snatch the map from his table and step away.");
+                randomPersonalityNonLeaderComment(List.of(
+                        new MyTriplet<>(PersonalityTrait.mischievous,
+                            "Nice snatch " + model.getParty().getLeader().getFirstName() + "!",
+                            FacialExpression.wicked),
+                        new MyTriplet<>(PersonalityTrait.lawful,
+                            "That was a crime...",
+                            FacialExpression.disappointed)));
+            } else {
+                leaderSay("I'll give you 5.");
+                portraitSay("Sold.");
+                println("You hand over 5 gold to the junk seller and he hands you the map.");
+                model.getParty().spendGold(5);
+            }
+            leaderSay("Now, let's go treasure hunting!");
+        }
     }
 }

@@ -30,8 +30,8 @@ public class QuestDeck {
                 new RatProblemQuest(),        // QI
                 new SurveillanceQuest(),      // QI
                 new SwampOgreQuest(),         // QI
-                new TownFairQuest(),
-                new TreasureHuntQuest(),
+                new TownFairQuest(),          // QI
+                new TreasureHuntQuest(),      // QI
                 new UnsuspectingLoversQuest(),
                 new WarlocksDungeonQuest(),    // QI
                 new WerewolfQuest(),
