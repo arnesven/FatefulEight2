@@ -1,9 +1,6 @@
 package rulebook.chapters;
 
-import model.classes.CharacterClass;
-import model.classes.Classes;
-import model.classes.NoClass;
-import model.classes.Skill;
+import model.classes.*;
 import model.items.Equipment;
 import model.items.HorseStartingItem;
 import model.items.InventoryDummyItem;
@@ -11,6 +8,7 @@ import model.items.Item;
 import model.items.spells.Spell;
 import util.MyStrings;
 import view.help.SpecificClassHelpDialog;
+import view.help.TutorialClassesDialog;
 import view.sprites.Sprite;
 import view.widget.DetailedClassNameStrategy;
 
@@ -46,6 +44,8 @@ public class ClassesChapter extends RulebookChapter {
         for (CharacterClass cc : classes) {
             generateClassSubChapter(writer, cc);
         }
+
+        generateChangeClassSubchapter(writer);
     }
 
     private static void makeClassIcons(List<CharacterClass> classes) {
@@ -165,4 +165,26 @@ public class ClassesChapter extends RulebookChapter {
         writer.newLine();
     }
 
+
+    private void generateChangeClassSubchapter(BufferedWriter writer) throws IOException {
+        writer.write("## Changing Class\n");
+        boolean verbatim = false;
+        String buf = TutorialClassesDialog.makeClassGraphTable();
+
+        for (String line : buf.split("\n")) {
+            boolean isGraphLine = line.contains("/") || line.contains("--") || line.contains(":");
+
+            if (!verbatim && isGraphLine) {
+                verbatim = true;
+                writer.write("```\n");
+            }
+
+            writer.write(line + "\n");
+
+            if (verbatim && !isGraphLine) {
+                verbatim = false;
+                writer.write("```\n");
+            }
+        }
+    }
 }

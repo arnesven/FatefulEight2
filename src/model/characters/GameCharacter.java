@@ -44,11 +44,11 @@ public class GameCharacter extends Combatant {
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
     private static final int MAX_ATTITUDE = 40;
     private static final int MIN_ATTITUDE = -40;
-    private static final int[] XP_LEVELS = new int[]{
+    public static final int[] XP_LEVELS = new int[]{
             // 0   1    2    3    4     5     6
                0, 100, 250, 450, 700, 1100, 1600,
-            // 7      8     9    10    11    12    13
-              2200, 3000, 4000, 5000, 6000, 7000, 8000};
+            // 7      8     9    10    11    12    13     14      15
+              2200, 3000, 4000, 5000, 6000, 7000, 8000, 10_000, 12_000};
 
     private final String firstName;
     private final String lastName;
@@ -89,7 +89,7 @@ public class GameCharacter extends Combatant {
 
     public static int getXPForNextLevel(int level) {
         if (level >= XP_LEVELS.length) {
-            return 99999;
+            return XP_LEVELS[XP_LEVELS.length-1];
         }
         return XP_LEVELS[level];
     }
@@ -199,13 +199,17 @@ public class GameCharacter extends Combatant {
     }
 
     public int getSpeed() {
-        int levelBonus = Math.max(0, (level-2) / 3);
+        int levelBonus = speedBonusForLevel(level);
         int heavyClothing = equipment.getClothing().isHeavy() ? -2 : 0;
         int heavyAccessory = equipment.getAccessory() != null && equipment.getAccessory().isHeavy() ? -1 : 0;
         int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getSpeedBonus);
         return charClass.getSpeed() + race.getSpeedModifier() + levelBonus +
                 equipment.getSpeedModifiers() + heavyClothing +
                 heavyAccessory + conditionBonus;
+    }
+
+    public static int speedBonusForLevel(int level) {
+        return Math.max(0, (level-2) / 3);
     }
 
     @Override
@@ -518,16 +522,21 @@ public class GameCharacter extends Combatant {
     }
 
     public int getMaxSP() {
-        int levelBonus = 0;
-        if (level > 6) {
-            levelBonus = (level - 5) / 2;
-        }
+        int levelBonus = staminaBonusPerLevel(level);
         int equipmentBonus = 0;
         if (equipment.getAccessory() != null) {
             equipmentBonus = equipment.getAccessory().getSPBonus();
         }
         int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getStaminaBonus);
         return 2 + levelBonus + equipmentBonus + conditionBonus;
+    }
+
+    public static int staminaBonusPerLevel(int level) {
+        int bonus = 0;
+        if (level > 6) {
+            bonus = (level - 5) / 2;
+        }
+        return bonus;
     }
 
     public Equipment getEquipment() {

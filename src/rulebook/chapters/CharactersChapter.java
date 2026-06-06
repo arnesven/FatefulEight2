@@ -1,5 +1,7 @@
 package rulebook.chapters;
 
+import model.characters.GameCharacter;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -9,6 +11,13 @@ public class CharactersChapter extends RulebookChapter {
     }
 
     public void generate(BufferedWriter writer) throws IOException {
+        generateCharacterCreationSubchapter(writer);
+        generateExperiencePointsSubchapter(writer);
+        generateLevelZeroCharacterSubchapter(writer);
+    }
+
+    private void generateCharacterCreationSubchapter(BufferedWriter writer) throws IOException {
+        writer.write("## Character Creation");
         writer.write("This section will take you through character creation, step by step. " +
                 "You can find the character sheet at the end of this rulebook. Go ahead and make as many " +
                 "copies of it as you want.\n");
@@ -43,5 +52,50 @@ public class CharactersChapter extends RulebookChapter {
                 "Your starting items are determined by your class, but you can always take a Longsword and/or a Potion Package (one Health Potion and one Rejuvenation Potion) instead.\n");
         writer.write("14. Your character starts with 10 food, and 20 gold.\n");
         writer.write("15. If you still haven't settled on a name for your character, it's high time to do it now!\n");
+        writer.newLine();
+    }
+
+    private void generateExperiencePointsSubchapter(BufferedWriter writer) throws IOException {
+        writer.write("## Experience Points\n");
+        writer.write("After each session, or whenever the Game Master feels like it, he or she may award a character " +
+                "Experience Points (XP). When a character has gained enough XP, he or she will level up to the next level. " +
+                "The amount of required XP is listed in the table below. The table also lists what kind of advancement " +
+                "the character receives in addition to Skills and Abilities from that character's class.\n\n");
+
+        writer.write("| Level |   XP  |  Advancement |\n");
+        writer.write("|-------|-------|--------------|\n");
+        for (int i = 0; i < GameCharacter.XP_LEVELS.length; ++i) {
+            writer.write("| " + i + " | " + GameCharacter.XP_LEVELS[i] + "|");
+            writer.write("Health +1");
+            int speed = GameCharacter.speedBonusForLevel(i) - GameCharacter.speedBonusForLevel(i - 1);
+            if (speed > 0) {
+                writer.write(", Speed +" + speed);
+            }
+            int stamina = GameCharacter.staminaBonusPerLevel(i) - GameCharacter.staminaBonusPerLevel(i - 1);
+            if (stamina > 0) {
+                writer.write(", Stamina +" + stamina);
+            }
+            writer.write("|\n");
+        }
+        writer.write("| " + GameCharacter.XP_LEVELS.length + "+ | " +
+                GameCharacter.XP_LEVELS[GameCharacter.XP_LEVELS.length-1] + "|\n");
+        writer.newLine();
+        writer.write("Level " + (GameCharacter.XP_LEVELS.length-1) + " is by no means the maximum level, " +
+                "but higher level characters are covered in later source book. In any case, it will take your " +
+                "characters quite some time to reach level 15 so don't worry about that right now.");
+        writer.newLine();
+    }
+
+    private void generateLevelZeroCharacterSubchapter(BufferedWriter writer) throws IOException {
+        writer.write("## Level Zero Characters\n");
+        writer.write("Normally characters start at level 1. There are however some circumstances where " +
+                "characters may start out in a more untrained state. Such characters are always <i>classless</i>, i.e. " +
+                "they get no bonuses to skills from class. They have a base HP of 3 and a speed of 3. Please note that " +
+                "even higher level characters can be classless, but level zero characters are always classless.\n\n" +
+                "Level zero characters do not gain XP like other characters, they must first gain a profession. " +
+                "At any time a character would get to change his or her class, a level zero character can take that " +
+                "opportunity to change into that new class. When that happens the level zero character will automatically " +
+                "gain a number of XP equal to the average XP of the party, or begin at 0 XP if that character is not in a party.\n");
+        writer.newLine();
     }
 }

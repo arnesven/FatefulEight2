@@ -36,21 +36,14 @@ public class TutorialClassesDialog extends ExpandableHelpDialog {
         return subsections;
     }
 
-    private static String makeClassGraphTable() {
+    public static String makeClassGraphTable() {
         String description = "The following graph shows how each class relates to other classes. " +
                 "A character can only change class into a class related to his or her current class.\n\n";
-        StringBuilder bldr = new StringBuilder();
-        for (CharacterClass cls : CharacterClass.getSelectableClasses()) {
-            bldr.append(cls.getShortName()).append(":");
-            for (CharacterClass cls2 : ClassGraph.get(cls.id())) {
-                bldr.append(cls2.getShortName()).append(" ");
-            }
-            bldr.append("\n");
-        }
-        String caption = "\n\nIn addition to the edges seen, each class also relates to the one 'across' from it, e.g. " +
+        String caption = "\n\nIn addition to the edges seen in the graph, each class also relates to the one 'across' from it, e.g. " +
                 Classes.CAP.getShortName() + " is related to " + ClassGraph.getWrapNeighbor(Classes.CAP.id()).getShortName() + " and " +
-                Classes.ART.getShortName() + " is related to " + ClassGraph.getWrapNeighbor(Classes.ART.id()).getShortName() + ".";
-        return description + ClassGraph.printNoCosts() + caption;
+                Classes.ART.getShortName() + " is related to " + ClassGraph.getWrapNeighbor(Classes.ART.id()).getShortName() + ".\n" +
+                "Classless characters can change inty any class\n";
+        return description + ClassGraph.printNoCosts() + caption + "\n";
     }
 
 }
