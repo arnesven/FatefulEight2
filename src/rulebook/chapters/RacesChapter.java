@@ -20,6 +20,7 @@ import static rulebook.GenerateRulebook.PATH_BASE;
 public class RacesChapter extends RulebookChapter {
     public RacesChapter() {
         super("Races");
+        makeRaceImages();
     }
 
     public void generate(BufferedWriter writer) throws IOException {
@@ -27,8 +28,6 @@ public class RacesChapter extends RulebookChapter {
         for (Race r : Race.allRaces) {
             writer.write("* " + r.getQualifiedName() + "\n");
         }
-
-        makeRaceImages();
 
         for (Race r : Race.allRaces) {
             generateSubChapter(writer, r);

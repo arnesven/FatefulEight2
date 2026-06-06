@@ -42,7 +42,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
         return result;
     }
 
-    private List<Condition> makeAllConditions() {
+    public static List<Condition> makeAllConditions() {
         return List.of(
                 new BatFormCondition(),
                 new BlackPactCondition(),

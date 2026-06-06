@@ -38,7 +38,7 @@ public class BoneArmorCondition extends Condition {
     @Override
     public ConditionHelpDialog getHelpView(GameView view) {
         return new ConditionHelpDialog(view, this,
-                "A condition indicating that this combatant has summed bone armor to protect them.");
+                "A condition indicating that this combatant has summoned bone armor to protect them.");
     }
 
     @Override

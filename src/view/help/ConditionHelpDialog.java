@@ -11,11 +11,13 @@ import java.util.List;
 
 public class ConditionHelpDialog extends SubChapterHelpDialog {
     private final Sprite symbol;
+    private final String text;
 
     public ConditionHelpDialog(GameView view, Condition cond, String text) {
         super(view, makeTitle(cond),
                 "Abbreviation: " + cond.getShortName() +
                 "\nSymbol:\n\n" + text);
+        this.text = text;
         this.symbol = cond.getSymbol();
         setLevel(1);
     }
@@ -23,6 +25,8 @@ public class ConditionHelpDialog extends SubChapterHelpDialog {
     private static String makeTitle(Condition cond) {
         return cond.getName();
     }
+
+    public String getText() { return text; };
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {

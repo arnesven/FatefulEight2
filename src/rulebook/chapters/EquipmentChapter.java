@@ -30,12 +30,11 @@ import static rulebook.GenerateRulebook.PATH_BASE;
 public class EquipmentChapter extends RulebookChapter {
     public EquipmentChapter() {
         super("Equipment");
+        makeImages();
     }
 
     @Override
     public void generate(BufferedWriter writer) throws IOException {
-        makeImages();
-
         makeEquippingSubchapter(writer);
         makeSellingSubchapter(writer);
         makeHigherTierSubchapter(writer);

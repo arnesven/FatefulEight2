@@ -28,6 +28,8 @@ public class ClassesChapter extends RulebookChapter {
 
     public ClassesChapter() {
         super("Classes");
+        List<CharacterClass> classes = getBasicClasses();
+        makeClassIcons(classes);
     }
 
     public static List<CharacterClass> getBasicClasses() {
@@ -38,7 +40,6 @@ public class ClassesChapter extends RulebookChapter {
 
     public void generate(BufferedWriter writer) throws IOException {
         List<CharacterClass> classes = getBasicClasses();
-        makeClassIcons(classes);
         generateClassesOverview(writer, classes);
         generateClassTemplateSubChapter(writer);
         for (CharacterClass cc : classes) {
