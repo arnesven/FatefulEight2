@@ -22,6 +22,9 @@ public class ChildAppearance extends CharacterAppearance {
         super(race, false, hairColor);
         this.realGender = gender;
         this.hairColor = hairColor;
+        do {
+            hairColor = race.getRandomHairColor(gender);
+        } while (hairColor == race.getColor());
         setShoulders(ShouldersFactory.makeShoulders("Narrow", false));
         setNeck(new SlenderNeck());
 

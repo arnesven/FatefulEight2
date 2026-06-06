@@ -125,7 +125,13 @@ public class PortraitSubView extends SubView {
 
     public static ChildAppearance makeChildAppearance(Race race, boolean gender) {
         ChildAppearance app = new ChildAppearance(race, gender, HairStyle.randomHairColor());
-        app.setClass(Classes.None);
+        CharacterClass cls = Classes.None;
+        if (gender) {
+            cls = new NoClass(MyColors.PINK);
+        } else {
+            cls = new NoClass(MyColors.DARK_BLUE);
+        }
+        app.setClass(cls);
         return app;
     }
 

@@ -191,7 +191,7 @@ public abstract class Race implements Serializable {
     }
 
     public void setRandomDetail(AdvancedAppearance appearance) {
-        if (MyRandom.randInt(50) == 0) {
+        if (MyRandom.randInt(75) == 0) {
             appearance.addFaceDetail(new EyePatchDetail());
             appearance.setDetailColor(MyColors.BLACK);
         } else {

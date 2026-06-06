@@ -29,7 +29,7 @@ public class QuestDeck {
                 new OrcishDelightQuest(),     // QI
                 new RatProblemQuest(),        // QI
                 new SurveillanceQuest(),      // QI
-                new SwampOgreQuest(),
+                new SwampOgreQuest(),         // QI
                 new TownFairQuest(),
                 new TreasureHuntQuest(),
                 new UnsuspectingLoversQuest(),
