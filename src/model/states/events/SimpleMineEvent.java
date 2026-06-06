@@ -86,11 +86,11 @@ public class SimpleMineEvent extends DailyEventState {
             case 1 :
                 println("This mine is infested with goblins!");
                 List<Enemy> enemies = GoblinsEvent.randomGoblins();
-                runCombat(enemies, new CaveTheme(), true);
+                runCombat(enemies, new CaveTheme());
                 break;
             case 2:
                 println("This mine is infested with spiders!");
-                runCombat(SpidersEvent.makeSpiders(new CaveSpiderEnemy('A')), new CaveTheme(), true);
+                runCombat(SpidersEvent.makeSpiders(new CaveSpiderEnemy('A')), new CaveTheme());
                 break;
             case 3:
                 println("The mine seems to be abandoned.");
