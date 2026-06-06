@@ -76,7 +76,7 @@ public class TalkToPartyNode extends InsideDailyActionNode {
             GameCharacter gc = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
             if (gc == model.getParty().getLeader()) {
                 leaderSay(MyRandom.sample(List.of("Now what should we do next...",
-                        "'" + gc.getName() + "'s Company', that sounds pretty good...",
+                        "'" + getCompanyName() + "', that sounds pretty good...",
                         "Perhaps we should get some new gear.",
                         "Things are going pretty good.",
                         "Hmm... Should we have a fun night at the tavern? Or maybe just another night in the tent.")));

@@ -206,7 +206,7 @@ public class HungryTrollQuest extends Quest {
            model.getLog().waitForAnimationToFinish();
            showExplicitPortrait(model, getPortrait(), getProvider());
            String leader = model.getParty().getLeader().getName();
-           portraitSay("Are you " + leader + " of " + leader + "'s Company?");
+           portraitSay("Are you " + leader + " of " + getCompanyName() + "?");
            leaderSay("That's me. Who are you?");
            portraitSay("I'm the town elder of a small town near here. We have some trouble and we would like to hire your services to, uh, dispose of it.");
            leaderSay("I understand. What's the problem?", FacialExpression.questioning);

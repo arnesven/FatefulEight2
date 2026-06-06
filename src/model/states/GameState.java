@@ -411,4 +411,8 @@ public abstract class GameState implements GameStateConstants {
         model.getLog().addAnimated(LogView.GOLD_COLOR + "You have unlocked an achievement '" +
                 a.getName() + "'!\n" + LogView.DEFAULT_COLOR);
     }
+
+    public String getCompanyName() {
+        return getModel().getParty().getLeader().getFullName() + "'s Company";
+    }
 }

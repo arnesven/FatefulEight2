@@ -259,7 +259,7 @@ public class PartSixStoryPart extends StoryPart {
             portraitSay("They were asking about you and that damn crimson pearl.");
             leaderSay("About " + meOrUs() + "? And the pearl? Wait a minute, Everix, let's back up. " +
                     "Why were you in " + castle.getLordName() + "'s dungeons anyway?", FacialExpression.questioning);
-            String companyName = "'" + model.getParty().getLeader().getFullName() + "'s Company'";
+            String companyName = "'" + getCompanyName() + "'";
             portraitSay("It was about a week ago I think. " + castle.getLordName() +
                     "'s troops came to our town. They were asking if anybody had seen or " +
                     "heard about a group called " + companyName + ".");

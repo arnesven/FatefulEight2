@@ -436,7 +436,7 @@ public class GoblinTunnelsQuest extends Quest {
                     "self as a map maker.");
             model.getLog().waitForAnimationToFinish();
             showExplicitPortrait(model, getPortrait(), "Map Maker");
-            leaderSay("How can " + model.getParty().getLeader().getName() + "'s Company help you?");
+            leaderSay("How can " + getCompanyName() + " help you?");
             portraitSay("It's not easy to make a living as a map maker these days.");
             leaderSay("Why is that?");
             portraitSay("Well... To tell the truth, back in the olden days, map makers usually made intentional errors " +

@@ -277,7 +277,7 @@ public class HauntedMansionQuest extends Quest {
             portraitSay("I was woken up by chalk-white spectres, they chased me out! Now I don't know what to do!");
             leaderSay("Why don't you let " + meOrUs() + " investigate the matter. Perhaps there is some way to drive the ghosts off?");
             portraitSay("You would do that? Aren't you scared?", FacialExpression.questioning);
-            leaderSay("A few ghosts won't deter " + model.getParty().getLeader().getName() + "'s Company.");
+            leaderSay("A few ghosts won't deter " + getCompanyName() + ".");
             portraitSay("Maybe this is my lucky day! I'll pay you of course, if you manage to get rid of the ghosts.");
             leaderSay(iOrWeCap() + " will give it " + myOrOur() + " best effort.");
         }

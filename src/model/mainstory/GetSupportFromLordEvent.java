@@ -37,7 +37,7 @@ public abstract class GetSupportFromLordEvent extends VisitLordEvent {
 
         String agent;
         if (model.getParty().size() > 1) {
-            portraitSay("Oh, it's you. I've heard of you, '" + model.getParty().getLeader().getFullName() + "'s Company', right?", FacialExpression.questioning);
+            portraitSay("Oh, it's you. I've heard of you, '" + getCompanyName() + "', right?", FacialExpression.questioning);
             leaderSay("Yes, that's us.");
             agent = "an agent";
         } else {

@@ -276,7 +276,7 @@ public class RecruitState extends GameState {
     private void newPartyMemberComment(RecruitableCharacter rgc) {
         List<MyTriplet<String, List<PersonalityTrait>, String>> comments = new ArrayList<>();
         comments.add(new MyTriplet<>("Great. What do we call our group?", List.of(),
-                getModel().getParty().getLeader().getName() + "'s Company."));
+                getCompanyName() + "."));
         comments.add(new MyTriplet<>("Wonderful. What's your name?", List.of(),
                 getModel().getParty().getLeader().getName() + ". Good to meet you."));
         comments.add(new MyTriplet<>("Yes. I was getting pretty bored around here.", List.of(),

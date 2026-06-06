@@ -32,8 +32,8 @@ public class QuestDeck {
                 new SwampOgreQuest(),         // QI
                 new TownFairQuest(),          // QI
                 new TreasureHuntQuest(),      // QI
-                new UnsuspectingLoversQuest(),
-                new WarlocksDungeonQuest(),    // QI
+                new UnsuspectingLoversQuest(),// QI
+                new WarlocksDungeonQuest(),   // QI
                 new WerewolfQuest(),
                 new WizardsTowerQuest()
                 // new WineTastingQuest()

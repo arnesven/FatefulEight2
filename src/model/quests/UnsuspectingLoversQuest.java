@@ -2,6 +2,9 @@ package model.quests;
 
 import model.Model;
 import model.achievements.Achievement;
+import model.characters.PersonalityTrait;
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.FacialExpression;
 import model.characters.preset.DeniseBoyd;
 import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
@@ -10,6 +13,7 @@ import model.classes.Skill;
 import model.enemies.Enemy;
 import model.states.events.GeneralInteractionEvent;
 import sound.BackgroundMusic;
+import util.MyTriplet;
 import view.combat.TownCombatTheme;
 import model.enemies.InterloperEnemy;
 import model.items.spells.FireworksSpell;
@@ -23,6 +27,7 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
+import view.subviews.PortraitSubView;
 import view.subviews.TownSubView;
 import view.widget.QuestBackground;
 
@@ -40,6 +45,8 @@ public class UnsuspectingLoversQuest extends Quest {
             "perfect date will seal their love forever!";
 
     private static final String endText = "Jason and Tamara both thank you for bringing them together. What a happy ending!";
+    private static final Race JASONS_RACE = Race.SOUTHERN_HUMAN;
+    private static final Race TAMARAS_RACE = Race.WOOD_ELF;
     private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public UnsuspectingLoversQuest() {
@@ -60,6 +67,11 @@ public class UnsuspectingLoversQuest extends Quest {
     @Override
     public BackgroundMusic getMusic() {
         return BackgroundMusic.gentleMemory;
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -105,10 +117,10 @@ public class UnsuspectingLoversQuest extends Quest {
         });
 
         DecorativeJunction jason = new SpriteDecorativeJunction(7, 0,
-                Classes.None.getAvatar(Race.SOUTHERN_HUMAN, new DefaultAppearance()), "Jason");
+                Classes.None.getAvatar(JASONS_RACE, new DefaultAppearance()), "Jason");
 
         DecorativeJunction tamara = new SpriteDecorativeJunction(6, 6,
-                Classes.PRI.getAvatar(Race.WOOD_ELF, new DeniseBoyd()), "Tamara");
+                Classes.PRI.getAvatar(TAMARAS_RACE, new DeniseBoyd()), "Tamara");
 
         return List.of(new PauseQuestJunction(0, 0, new QuestEdge(scenes.get(0).get(0)),
                 "We'll get these two lovebirds together in no time."),
@@ -196,4 +208,79 @@ public class UnsuspectingLoversQuest extends Quest {
         }
     }
 
+    private class IntroEvent extends QuestIntroEventState {
+        private final AdvancedAppearance jasonsFather;
+        private final AdvancedAppearance tamarasMother;
+
+        public IntroEvent(Model model) {
+            super(model);
+            this.jasonsFather = PortraitSubView.makeRandomPortrait(Classes.None, Race.SOUTHERN_HUMAN, false);
+            this.tamarasMother = PortraitSubView.makeRandomPortrait(Classes.None, Race.WOOD_ELF, true);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You are just about to turn in for the night when two people approach you.");
+
+            showFather();
+            portraitSay("Excuse me, could we have a minute of your time?");
+            leaderSay("Uh, yes. How can " + iOrWe() + " be of service?");
+            showMother();
+            portraitSay("The word is going around about you. That you are quite capable, up for any task?");
+            leaderSay("That's correct! " + getCompanyName() + " can get it done. What seems to be the trouble folks? " +
+                    "A monster that needs slaying? Some bandits that need to be disposed of? Somebody gone missing?",
+                    FacialExpression.wicked);
+            showFather();
+            portraitSay("Oh no no. It's nothing like that. It's our kids...");
+            showMother();
+            portraitSay("They need some help...");
+            leaderSay("Yes...?");
+            showFather();
+            portraitSay("Well, we feel they need a little match making. They are obviously in love with each other " +
+                    "but they just don't seem to be brave enough to take that next step.");
+            randomPersonalityNonLeaderComment(List.of(
+                    new MyTriplet<>(PersonalityTrait.romantic, "That's so sweet. Of course we'll help", FacialExpression.relief),
+                    new MyTriplet<>(PersonalityTrait.cold, "This is not our job. To little skull bashing.", FacialExpression.disappointed),
+                    new MyTriplet<>(PersonalityTrait.benevolent, "This could be a gould change of scene for us. An opportunity to do some good.", FacialExpression.relief),
+                    new MyTriplet<>(PersonalityTrait.jovial, "Just toss them in a hot spring together. That should get things cooking!", FacialExpression.relief)));
+            leaderSay("Why don't you do it yourselves?", FacialExpression.questioning);
+            showMother();
+            portraitSay("We've tried! Subtly at first, but they were impervious to our guidance.", FacialExpression.sad);
+            showFather();
+            portraitSay("When we tried more direct interference... Well, it hasn't been appreciated.", FacialExpression.sad);
+            leaderSay("I see the dilemma. What are their names?", FacialExpression.questioning);
+            showMother();
+            portraitSay("Tamara and Jason. They live here in town. Will you try to fix them up? They're already good friends, " +
+                    "but they'd make a really cute couple!", FacialExpression.relief);
+            leaderSay(iOrWe() + "'ll look into it, but " + iOrWe() + " can't promise anything. These things tend to " +
+                    "be more complicated than they look.");
+            portraitSay("Indeed, there's also the matter of Bobby.");
+            showFather();
+            portraitSay("*Sigh*, yes Bobby.", FacialExpression.disappointed);
+            leaderSay("Who's Bobby?");
+            showMother();
+            portraitSay("Tamara's ex-boyfriend. He was never any good to her. He's a rascal who lives here in town. " +
+                    "Fancies himself a poet. Tamara fell for his boyish charms and suggestive rhymes when she was younger. " +
+                    "But she's moved on.", FacialExpression.sad);
+            showFather();
+            portraitSay("He on the other hand, doesn't seem to understand that it's over. It does indeed complicate things.", FacialExpression.disappointed);
+            leaderSay("I think " + iOrWe() + " can probably get through to him.");
+            portraitSay("That's good to hear. Give it your best shot. If you can't get Jason and Tamara together, " +
+                    "than perhaps it's fate that they shall remain friends.", FacialExpression.relief);
+            model.getLog().waitForAnimationToFinish();
+            println("The two parents walk away.");
+            randomSayIfPersonality(PersonalityTrait.prudish, List.of(model.getParty().getLeader()),
+                    "Parents fixing up their kids? Embarrassing!");
+        }
+
+        private void showMother() {
+            getModel().getLog().waitForAnimationToFinish();
+            showExplicitPortrait(getModel(), tamarasMother, "Tamara's Father");
+        }
+
+        private void showFather() {
+            getModel().getLog().waitForAnimationToFinish();
+            showExplicitPortrait(getModel(), jasonsFather, "Jason's Father");
+        }
+    }
 }

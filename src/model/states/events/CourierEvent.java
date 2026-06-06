@@ -56,7 +56,7 @@ public class CourierEvent extends DailyEventState {
             showEventCard("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
                     " catches " + hisOrHer(getPortraitGender()) + " breath.");
         }
-        portraitSay("'" + model.getParty().getLeader().getFullName() + "'s Company' - that's you right? I have a letter for you.");
+        portraitSay("'" + getCompanyName() + "' - that's you right? I have a letter for you.");
         println(heOrSheCap(getPortraitGender()) + " hands you a letter which reads: 'You have been summoned by the honorable " + destination.getLordName() + " to " +
                 destination.getPlaceName() + ".'");
         println("That's all the letter says. You stare blankly at it and then look at the messenger.");
