@@ -3,7 +3,9 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.FacialExpression;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.AutomatonEnemy;
@@ -47,6 +49,11 @@ public class WizardsTowerQuest extends Quest {
     @Override
     public Achievement.Data getAchievementData() {
         return makeAchievement(this, "You helped a local bookie collect a debt from a troublesome mage, Rastomel.");
+    }
+
+    @Override
+    public QuestIntroEventState getIntroEvent(Model model) {
+        return new IntroEvent(model);
     }
 
     @Override
@@ -244,4 +251,33 @@ public class WizardsTowerQuest extends Quest {
         return new Sprite32x32("wizardtower"+num, "quest.png", num, MyColors.BLACK, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GREEN);
     }
 
+    private class IntroEvent extends QuestIntroEventState {
+        public IntroEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void runQuestIntro(Model model) {
+            println("You're walking down the street when you hear somebody whisper from an alley.");
+            model.getLog().waitForAnimationToFinish();
+            showExplicitPortrait(model, getPortrait(), getProvider());
+            portraitSay("Hey, you! Yeah you.");
+            leaderSay("What do you want... I warn you not to mess with...", FacialExpression.disappointed);
+            portraitSay("Calm down. I know who you are. Word travels fast. Wanna make some money?");
+            randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()), "Always.");
+            leaderSay("What's the deal?");
+            portraitSay("I've got a deadbeat who's holding out on me. Rostomel, he owes me money.");
+            leaderSay("Let me guess, he employs you as a security service, but now he doesn't want to pay your wage?");
+            portraitSay("Something like that. Doesn't matter though. He's being unreasonably tricky to collect from. " +
+                    "He's a mage, and he's locked himself in his tower.");
+            leaderSay("Mages can be a bit eccentric. " + iOrWeCap() + "'ll see what " + iOrWe() + " can do.");
+            portraitSay("It's 500 gold. I know he's got it. You get it from him and I'll split it with you. Sound good?");
+            leaderSay("I'll give it some serious thought.");
+            portraitSay("Good. And don't get any ideas after you collect it, or I'll send the brotherhood after you.", FacialExpression.disappointed);
+            randomSayIfPersonality(PersonalityTrait.jovial, List.of(model.getParty().getLeader()), "How many brother's do you have?", FacialExpression.relief);
+            leaderSay("Don't worry. My word is golden.", FacialExpression.wicked);
+            portraitSay("Yeah yeah. That's what they all say. See you later.");
+            println("The bookie walks away.");
+        }
+    }
 }
