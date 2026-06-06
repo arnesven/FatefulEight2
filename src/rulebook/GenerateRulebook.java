@@ -21,8 +21,13 @@ public class GenerateRulebook {
                 new SkillsChapter(),
                 new AbilitiesChapter(),
                 new EquipmentChapter(),
+                // new CraftingChapter(),
                 new CombatChapter(),
-                new ConditionsChapter());
+                new ConditionsChapter()
+                // new MagicChapter()
+                // new WorldChapter()  // Towns, Castles, Terrain Types, Events, Shops
+                // new EnemiesChapter()
+        );
 
         for (RulebookChapter chap : chapters) {
             try {
