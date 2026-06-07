@@ -6,6 +6,7 @@ import model.achievements.Achievement;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
+import model.items.spells.EscapeSpell;
 import model.mainstory.MainStory;
 import model.map.WorldType;
 import model.states.DailyEventState;
@@ -213,6 +214,9 @@ public abstract class Quest {
                         "Let's not blame anybody, OK?")));
             }
             adjustAttitudes(model, -5);
+            if (state.wasEscapeSpellUsed()) {
+                return EscapeSpell.makeTeleportHomeEvent(model);
+            }
         } else if (payWages) {
             new PayWagesState(model).run(model);
         } else {

@@ -90,6 +90,9 @@ public class DungeonMonster extends CenterDungeonObject {
             exploreRuinsState.println("The monsters chase you out of the dungeon!");
             exploreRuinsState.setDungeonExited(true);
             enemies.removeIf(Enemy::isDead);
+        } else if (combat.wasEscapeSpellUsed()) {
+            exploreRuinsState.setDungeonExited(true);
+            exploreRuinsState.setEscapeSpellUsed(true);
         } else {
             exploreRuinsState.getCurrentRoom().removeObject(this);
             exploreRuinsState.addDefeatedMonster(this);

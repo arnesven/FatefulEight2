@@ -94,6 +94,10 @@ public abstract class CombatSubScene extends QuestSubScene {
             }
             state.transitionToQuestView(model);
         }
+        if (combat.wasEscapeSpellUsed()) {
+            state.setEscapeSpellUsed(true);
+            return new QuestEdge(state.getQuest().getFailEndingNode());
+        }
         if (combat.fled() || model.getParty().isWipedOut()) {
             QuestEdge edge = getFailEdge();
             if (edge != null) {

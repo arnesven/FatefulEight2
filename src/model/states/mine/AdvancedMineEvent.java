@@ -89,6 +89,10 @@ public class AdvancedMineEvent extends DailyEventState {
                         println("You are chased out of the mine!");
                         mineSummaryView = null;
                         break;
+                    } else if (combat.wasEscapeSpellUsed()) {
+                        mineSummaryView = null;
+                        setUsedEscape(true);
+                        break;
                     } else {
                         mineSummaryView.incrementEnemiesDefeated();
                     }

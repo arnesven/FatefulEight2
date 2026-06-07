@@ -5,9 +5,12 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.items.Item;
 import model.states.CombatEvent;
+import model.states.GameState;
 import view.MyColors;
 import view.sprites.BlueSpellSprite;
 import view.sprites.Sprite;
+
+import java.awt.*;
 
 public class EscapeSpell extends CombatSpell {
 
@@ -35,7 +38,8 @@ public class EscapeSpell extends CombatSpell {
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         combat.println(performer.getFirstName() + " teleports the party out of combat!");
-        combat.setTimeLimit(combat.getCurrentRound());
+        combat.setTimeLimit(combat.getCurrentRound() - 1);
+        combat.setUsedEscapeSpell(true);
     }
 
     @Override
@@ -45,6 +49,17 @@ public class EscapeSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "Teleports the party out of combat.";
+        return "Teleports the party out of combat and back home.";
+    }
+
+    public static GameState makeTeleportHomeEvent(Model model) {
+        Point p = model.getParty().getHomePosition(model);
+        return new GameState(model) {
+            @Override
+            public GameState run(Model model) {
+                TeleportSpell.teleportPartyToPosition(model, this, p, false);
+                return model.getCurrentHex().getEveningState(model, false, false);
+            }
+        };
     }
 }

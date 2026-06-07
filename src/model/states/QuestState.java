@@ -25,6 +25,7 @@ public class QuestState extends GameState {
     private boolean cursorEnabled;
     private int counter = 0;
     private long timeStarted = -1;
+    private boolean escapeSpellUsed = false;
 
     public QuestState(Model model, Quest quest, Point questStartingPos) {
         super(model);
@@ -140,5 +141,13 @@ public class QuestState extends GameState {
 
     public Point getStartingLocation() {
         return startingPosition;
+    }
+
+    public void setEscapeSpellUsed(boolean b) {
+        this.escapeSpellUsed = b;
+    }
+
+    public boolean wasEscapeSpellUsed() {
+        return this.escapeSpellUsed;
     }
 }

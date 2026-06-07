@@ -10,8 +10,10 @@ import model.characters.preset.PresetCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.CombatAdvantage;
+import model.items.spells.EscapeSpell;
 import model.items.spells.ResurrectSpell;
 import model.items.spells.Spell;
+import model.items.spells.TeleportSpell;
 import model.journal.JournalEntry;
 import model.quests.OfferedQuest;
 import model.quests.Quest;
@@ -41,6 +43,7 @@ import java.util.List;
 public abstract class DailyEventState extends GameState {
 
     private boolean fledCombat = false;
+    private boolean usedEscape = false;
     private PortraitSubView portraitSubView;
     private boolean doQuestIntro = false;
 
@@ -64,6 +67,9 @@ public abstract class DailyEventState extends GameState {
         if (allowCheckForFlee()) {
             if (haveFledCombat()) {
                 return new RunAwayState(model);
+            }
+            if (usedEscape) {
+                return EscapeSpell.makeTeleportHomeEvent(model);
             }
         }
         return doEndOfEventHook(model);
@@ -174,6 +180,7 @@ public abstract class DailyEventState extends GameState {
         combat.addAllies(allies);
         combat.run(getModel());
         fledCombat = combat.fled();
+        usedEscape = combat.wasEscapeSpellUsed();
     }
 
     protected List<CombatLoot> getExtraCombatLoot(Model model) {
@@ -476,5 +483,9 @@ public abstract class DailyEventState extends GameState {
 
     public void setQuestIntrosEnabled(boolean b) {
         this.doQuestIntro = b;
+    }
+
+    public void setUsedEscape(boolean usedEscape) {
+        this.usedEscape = usedEscape;
     }
 }

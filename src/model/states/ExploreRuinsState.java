@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.items.spells.EscapeSpell;
 import model.ruins.*;
 import model.ruins.objects.*;
 import util.MyLists;
@@ -32,6 +33,7 @@ public class ExploreRuinsState extends GameState {
     private Set<DungeonRoom> visitedRooms = new HashSet<>();
     private Set<DungeonLevel> visitedLevels = new HashSet<>();
     private Set<Integer> mapsFound = new HashSet<>();
+    private boolean escapeSpellUsed = false;
 
     public ExploreRuinsState(Model model, String ruinsName, String dungeonType) {
         super(model);
@@ -61,6 +63,9 @@ public class ExploreRuinsState extends GameState {
         doStuff(model);
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);
+        }
+        if (escapeSpellUsed) {
+            return EscapeSpell.makeTeleportHomeEvent(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
         return model.getCurrentHex().getEveningState(model, false, false);
@@ -331,4 +336,8 @@ public class ExploreRuinsState extends GameState {
     public void modifyCombatWithMonsters(Model model, CombatEvent combat, boolean surprise) {}
 
     public void combatPostHook(Model model, CombatEvent combat) { }
+
+    public void setEscapeSpellUsed(boolean b) {
+        this.escapeSpellUsed = b;
+    }
 }

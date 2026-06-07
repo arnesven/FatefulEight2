@@ -75,6 +75,7 @@ public class CombatEvent extends DailyEventState {
     private boolean autoCombat;
     private final List<String> autoTranscript = new ArrayList<>();
     private String transcriptTemporary = "";
+    private boolean usedEscapeSpell = false;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, CombatAdvantage advantage) {
         super(model);
@@ -390,7 +391,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private boolean combatDone(Model model) {
-        return allEnemiesDead() || isWipedOut() || partyFled || roundCounter > timeLimit;
+        return allEnemiesDead() || isWipedOut() || partyFled || roundCounter > timeLimit || wasEscapeSpellUsed();
     }
 
     private boolean isWipedOut() {
@@ -531,7 +532,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     public boolean playerHasSelectedAction() {
-        return selectedCombatAction != null;
+        return selectedCombatAction != null || usedEscapeSpell;
     }
 
 
@@ -859,5 +860,13 @@ public class CombatEvent extends DailyEventState {
 
     public void triggerDamageReductionTutorial() {
         getModel().getTutorial().damageReduction(getModel());
+    }
+
+    public void setUsedEscapeSpell(boolean b) {
+        usedEscapeSpell = b;
+    }
+
+    public boolean wasEscapeSpellUsed() {
+        return usedEscapeSpell;
     }
 }

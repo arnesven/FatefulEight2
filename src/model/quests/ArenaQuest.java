@@ -218,7 +218,7 @@ public class ArenaQuest extends Quest {
             combat.run(model);
             model.getParty().unbenchAll();
             state.transitionToQuestView(model);
-            if (combat.fled() || fighter.isDead()) {
+            if (combat.fled() || fighter.isDead() || combat.wasEscapeSpellUsed()) {
                 return new QuestEdge(ArenaQuest.this.getFailEndingNode());
             }
             setDefeated(true);

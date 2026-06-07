@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.combat.conditions.FeebleCondition;
 import model.combat.conditions.PoisonCondition;
 import model.states.EveningState;
+import view.LogView;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class LodgingState extends EveningState {
 
     @Override
     protected void locationSpecificEvening(Model model) {
+        model.getParty().setLastLodgingPosition(model.getWorld().getPositionForHex(model.getCurrentHex()));
         if (freeLodging) {
             println("The party has received food and lodging.");
             model.getParty().lodging(0);

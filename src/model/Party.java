@@ -22,6 +22,7 @@ import model.items.spells.*;
 import model.items.weapons.Dagger;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
+import model.map.WorldHex;
 import model.quests.QuestHandler;
 import model.states.GameState;
 import model.states.SpellCastException;
@@ -82,13 +83,15 @@ public class Party implements Serializable {
     private final List<Item> permanentlyLearnedItems = new ArrayList<>();
     private List<GameCharacter> unhandledGrief = new ArrayList<>();
     private int leaderLockedUntil = 0;
+    private Point lastLodgingPosition;
 
     public Party() {
         cursorSprites = makeCursorSprites();
     }
 
     public void setStartingPosition(Point position) {
-        this.position = position;
+        this.position = new Point(position);
+        setLastLodgingPosition(position);
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -1077,5 +1080,16 @@ public class Party implements Serializable {
 
     public void setWeeping(GameCharacter chara, WeepingAmount weep) {
         portraitAnimations.setWeeping(getLocationForPartyMember(partyMembers.indexOf(chara)), chara.getAppearance(), weep);
+    }
+
+    public Point getHomePosition(Model model) {
+        if (headquarters != null) {
+            return model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(headquarters.getLocationName()));
+        }
+        return lastLodgingPosition;
+    }
+
+    public void setLastLodgingPosition(Point currentHex) {
+        lastLodgingPosition = new Point(currentHex);
     }
 }
