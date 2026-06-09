@@ -23,6 +23,27 @@ import java.util.List;
 
 public class PartyManagementEveningSubView extends DailyActionSubView {
 
+    /*     0     1     2     3     4     5     6     7
+
+     0    BG    BG    BG    BG    BG    BG    BG    BG
+
+     1    BG    BG    BG    BG    BG    BG    BG    BG
+
+     2      HORSE   (TENT) STORY TENT (TENT)
+
+     3     DRAGON     DOG   DOG         DOG
+
+     4     DRAGON     DOG  PARTY       PARTY  TRAVELER
+
+     5     DRAGON          PARTY FIRE  PARTY  TRAVELER
+
+     6     DRAGON          PARTY PARTY PARTY  TRAVELER
+
+     7     DRAGON                             TRAVELER
+
+     8   ROAD  ROAD  ROAD  ROAD  ROAD  ROAD  ROAD  ROAD
+     */
+
     private final static Sprite32x32 TENT_LEFT = new PartyManagementTentSprite(false);
     private final static Sprite32x32 TENT_RIGHT = new PartyManagementTentSprite(true);
 
