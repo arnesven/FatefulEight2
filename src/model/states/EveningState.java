@@ -233,6 +233,13 @@ public class EveningState extends GameState {
                 oq -> !oq.isCompleted()),
                 oq -> Quest.findMainOrGenericQuest(model, oq.getQuestName()));
 
+
+        for (Quest q : quests) {
+            if (q instanceof MainQuest mq) {
+                model.getMainStory().setSpawnDataAndPortrait(model, mq);
+            }
+        }
+
         if (!quests.isEmpty()) {
             goOnQuest = offerQuests(model, this, quests);
             if (goOnQuest instanceof MainQuest mq) {
