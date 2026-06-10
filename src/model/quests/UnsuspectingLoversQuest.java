@@ -117,7 +117,7 @@ public class UnsuspectingLoversQuest extends Quest {
         });
 
         DecorativeJunction jason = new SpriteDecorativeJunction(7, 0,
-                Classes.None.getAvatar(JASONS_RACE, new DefaultAppearance()), "Jason");
+                Classes.None.getAvatar(JASONS_RACE, new DefaultAppearance(false)), "Jason");
 
         DecorativeJunction tamara = new SpriteDecorativeJunction(6, 6,
                 Classes.PRI.getAvatar(TAMARAS_RACE, new DeniseBoyd()), "Tamara");

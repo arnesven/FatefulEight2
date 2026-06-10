@@ -5,9 +5,15 @@ import model.characters.appearance.DogAppearance;
 import model.characters.appearance.FacialExpression;
 import model.combat.conditions.BleedingCondition;
 import model.horses.DogHorse;
+import model.items.Item;
+import model.items.ItemDeck;
+import model.items.Prevalence;
+import model.items.weapons.*;
 import model.states.DailyEventState;
 import model.states.GameState;
 import util.MyRandom;
+
+import java.util.List;
 
 public class DogEvent extends DailyEventState {
     private final DogAppearance dogPortrait;
@@ -103,10 +109,11 @@ public class DogEvent extends DailyEventState {
     }
 
     private void doEvening(Model model) {
+        boolean dogGender = model.getParty().getDog().getGender();
         if (MyRandom.flipCoin()) {
             showExplicitPortrait(model, dogPortrait, "Dog");
             showEventCard("Your dog comes to your side and whimpers a little.");
-            leaderSay("Hello there " + boyOrGirl(model.getParty().getDog().getGender()) + ".");
+            leaderSay("Hello there " + boyOrGirl(dogGender) + ".");
             if (CheckForVampireEvent.isVampire(model.getParty().getLeader())) {
                 println("The dog snarls and backs away.");
                 leaderSay("...");
@@ -115,12 +122,49 @@ public class DogEvent extends DailyEventState {
             int dieRoll = MyRandom.rollD6();
             if (dieRoll < 3) {
                 println("You pet the dog.");
-            } else if (dieRoll < 5) {
+            } else if (dieRoll < 4) {
                 println("You ruffle the dog's fur.");
                 leaderSay("You're a good dog.");
-            } else {
+            } else if (dieRoll < 6) {
                 println("You bring out some food for the dog.");
                 leaderSay("There you go.");
+            } else {
+                println("The dog brings you a stick.");
+                leaderSay("You want to play catch?");
+                portraitSay("Ruff ruff!");
+                leaderSay("He he, okay, okay " + boyOrGirl(dogGender) + ". Catch!");
+                println("The dog runs off in pursuit of the stick, but when " + heOrShe(dogGender) +
+                        " returns, she has something else in " + hisOrHer(dogGender) + " mouth.");
+                leaderSay("What do you have there " + boyOrGirl(dogGender) + "?");
+                println("The dog drops the wet item at your feet.");
+                int dieRoll2 = MyRandom.rollD6();
+                if (dieRoll2 < 3) {
+                    println("It's an old boot.");
+                    leaderSay("Thanks...");
+                } else if (dieRoll2 < 4) {
+                    println("It's a rather find piece of wood, suitable for crafting.");
+                    leaderSay("This actually looks useful. Thanks dog.");
+                    println("You have gained 1 material.");
+                    model.getParty().getInventory().addToMaterials(1);
+                } else if (dieRoll2 < 5) {
+                    println("It's a rather odd herb, suitable for alchemy.");
+                    leaderSay("This actually looks useful. Thanks dog.");
+                    println("You have gained 1 ingredient.");
+                    model.getParty().getInventory().addToIngredients(1);
+                } else if (dieRoll2 < 6) {
+                    println("It's a lockpick!");
+                    leaderSay("This actually looks useful. Thanks dog.");
+                    println("You have gained 1 lockpick.");
+                    model.getParty().getInventory().addToLockpicks(1);
+                } else {
+                    List<Item> its = model.getItemDeck().draw(List.of(new Club(), new Truncheon(), new LongStaff(), new MagesStaff(),
+                            new OrbWand(), new PineWand()), 1, Prevalence.unspecified, 0.01);
+                    Item it = its.getFirst();
+                    leaderSay("This isn't a stick, it's a " + it.getName().toLowerCase() + "! Where did you find this?");
+                    portraitSay("Woof?");
+                    println("You gained a " + it.getName());
+                    it.addYourself(model.getParty().getInventory());
+                }
             }
             portraitSay("Ruff ruff!");
         }

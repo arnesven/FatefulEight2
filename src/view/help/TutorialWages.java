@@ -8,7 +8,8 @@ public class TutorialWages extends HelpDialog {
             "The more you pay them, the more content they will be, and their attitude toward the party leader will increase." +
             " Of course, you could just keep " +
             "the money for yourself, but that will sow serious discontent among the party members.\n\n" +
-            "You can also pay wages to any single party member while you are visiting an Inn or Tavern.";
+            "You can also pay wages to any single party member while you are visiting an Inn or Tavern or " +
+                    "during in the evening when camping in the wild.";
 
     public TutorialWages(GameView view) {
         super(view, "Wages", TEXT);

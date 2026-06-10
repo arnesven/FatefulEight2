@@ -29,6 +29,11 @@ public class MassSpell extends ImmediateSpell {
     }
 
     @Override
+    public boolean canExistsAsScroll() {
+        return false;
+    }
+
+    @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         List<Spell> spells = getMassSpells(model);
         if (spells.isEmpty()) {

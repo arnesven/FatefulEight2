@@ -10,7 +10,7 @@ import model.races.Race;
 import view.sprites.Sprite;
 
 public class InterloperEnemy extends HumanoidEnemy {
-    private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, new DefaultAppearance());
+    private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, new DefaultAppearance(false));
 
     public InterloperEnemy(char a) {
         super(a, "Interloper");

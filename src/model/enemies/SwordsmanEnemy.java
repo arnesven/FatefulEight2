@@ -6,6 +6,7 @@ import model.characters.appearance.DefaultAppearance;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
 import model.races.Race;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
@@ -15,8 +16,8 @@ public class SwordsmanEnemy extends HumanoidEnemy {
 
     public SwordsmanEnemy(char a, Race race) {
         super(a, "Swordsman");
-        sprite = new AvatarSprite(race, 0x120, MyColors.GRAY_RED, race.getColor(), race.getColor(),
-                new DefaultAppearance().getNormalHair(), CharacterAppearance.noHair());
+        sprite = new AvatarSprite(race, AvatarSprite.LIGHT_ARMOR_BASE, MyColors.GRAY_RED, race.getColor(), race.getColor(),
+                new DefaultAppearance(MyRandom.flipCoin()).getNormalHair(), CharacterAppearance.noHair());
     }
 
     @Override

@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.*;
 
 public class Javelins extends OneHandedPolearmWeapon {
-    private static final Sprite SPRITE = new ItemSprite(2, 4);
+    private static final Sprite SPRITE = new TwoHandedItemSprite(2, 4);
 
     public Javelins() {
         super("Javelins", 16, new int[]{10,10,10});

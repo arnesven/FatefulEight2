@@ -4,8 +4,8 @@ import model.races.Race;
 import view.MyColors;
 
 public class DefaultAppearance extends CharacterAppearance {
-    public DefaultAppearance() {
-        super(Race.NORTHERN_HUMAN, true, MyColors.ORANGE);
+    public DefaultAppearance(boolean gender) {
+        super(Race.NORTHERN_HUMAN, gender, MyColors.ORANGE);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class DefaultAppearance extends CharacterAppearance {
 
     @Override
     public CharacterAppearance copy() {
-        return new DefaultAppearance();
+        return new DefaultAppearance(getGender());
     }
 }
