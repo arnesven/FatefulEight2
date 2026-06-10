@@ -17,7 +17,7 @@ public class CharactersChapter extends RulebookChapter {
     }
 
     private void generateCharacterCreationSubchapter(BufferedWriter writer) throws IOException {
-        writer.write("## Character Creation");
+        writer.write("## Character Creation\n\n");
         writer.write("This section will take you through character creation, step by step. " +
                 "You can find the character sheet at the end of this rulebook. Go ahead and make as many " +
                 "copies of it as you want.\n");
