@@ -221,11 +221,12 @@ public abstract class DailyEventState extends GameState {
             return;
         }
 
+        boolean anybodyLeftToResurrect = model.getParty().size() > toRemove.size();
         for (GameCharacter gc : new ArrayList<>(toRemove)) {
-            if (!didResurrect(model, this, gc)) {
-                model.getParty().remove(gc, !abandonEquipment, false, 0);
-            } else {
+            if (anybodyLeftToResurrect && didResurrect(model, this, gc)) {
                 toRemove.remove(gc);
+            } else {
+                model.getParty().remove(gc, !abandonEquipment, false, 0);
             }
         }
         if (toRemove.isEmpty()) {
