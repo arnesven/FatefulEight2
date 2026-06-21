@@ -489,4 +489,8 @@ public abstract class DailyEventState extends GameState {
     public void setUsedEscape(boolean usedEscape) {
         this.usedEscape = usedEscape;
     }
+
+    public boolean didUseEscapeSpell() {
+        return usedEscape;
+    }
 }

@@ -546,6 +546,7 @@ public class Party implements Serializable {
                         performer = partyMemberInput(model, event, best);
                     } while (!performers.contains(performer));
                 } else {
+                    model.getTutorial().skillChecks(model);
                     performer = nonBenchers.get(0);
                 }
                 break;

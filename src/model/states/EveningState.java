@@ -129,10 +129,10 @@ public class EveningState extends GameState {
 
         partyMemberSay(mainDissident, MyRandom.sample(List.of("Perhaps it's time for new leadership?",
                 "I think it's time for a new leader.", "This party needs new leadership, urgently.",
-                "Who else thinks we need to appoint a new leader?")));
+                "Who else thinks we need to appoint a new leader?")), FacialExpression.disappointed);
         if (dissidents.size() > 1) {
             partyMemberSay(dissidents.get(1), MyRandom.sample(List.of("I agree!", "Here here!", "Well said.",
-                    "I concur.", "Couldn't have said it better myself!", "So true!")));
+                    "I concur.", "Couldn't have said it better myself!", "So true!")), FacialExpression.wicked);
         }
         GameCharacter proposedLeader = candidates.get(0);
         if (proposedLeader == mainDissident) {
@@ -181,6 +181,8 @@ public class EveningState extends GameState {
     public void setSubView(Model model) {
         if (model.getSpellHandler().creatureComfortsCastToday(model)) {
             CollapsingTransition.transition(model, subViewCreatureComforts);
+        } else if (model.getCurrentHex() instanceof CaveHex) {
+            CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView(model));
         } else if (showTentSubView()) {
             CollapsingTransition.transition(model, subViewTent);
         } else {
