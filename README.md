@@ -1,6 +1,6 @@
 # FatefulEight2
 
-An open world RPG inspired by Wizardry 8, the classic solitair boardgame
+An open world RPG inspired by Wizardry 8, the classic solitaire boardgame
 Barbarian Prince and various JRPGs.
 
 Features:
@@ -8,11 +8,12 @@ Features:
 - Over 40 preset characters. 20+ Classes, 9 Races.
 - 25+ Skills for your characters to master.
 - Lots of items to equip your characters with.
-- 20+ Quests, 100+ Random Events
+- 30+ Quests, 200+ Random Events
 - Create your own custom characters
-- 48 spells, with unique and interesting effects.
+- 50+ spells, with unique and interesting effects.
 - Item Crafting and Alchemy
-- Informative tutorial (which can be turned off)
+- Minigames including: Horse Racing, Archery, Mining, Bean Game, Warehouse, Garden Maze, Digging Game etc.
+- Informative tutorial (which can be turned off) and help section
 - Save in up to 3 slot + autosave
 - Original artwork (mostly)
 - Original soundtrack.
