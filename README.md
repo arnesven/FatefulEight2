@@ -19,7 +19,7 @@ Features:
 - Original soundtrack.
   
 
-Just download the latest bundled release, unzip it and run the run script (run.bat for windows, run.sh for linux).
+Just download the latest bundled release, unzip it and run the run script (run.bat).
 Enjoy!
 
 <img width="1601" height="1037" alt="splash" src="https://github.com/user-attachments/assets/fa81d6b7-a1d5-49c5-a32a-6110cde8027e" />
