@@ -6,9 +6,12 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.*;
+import model.items.clothing.Clothing;
+import model.items.clothing.HalflingHeavyArmor;
 import model.items.clothing.JustClothes;
 import model.items.designs.CraftingDesign;
 import model.items.weapons.UnarmedCombatWeapon;
+import model.races.Race;
 import model.states.DailyActionState;
 import model.states.GameState;
 import util.MyLists;
@@ -34,10 +37,12 @@ public class CraftItemState extends GameState {
         println("What would you like to do at the workbench?");
         do { // FEATURE: Add improvise: write name of item, make something randomly!
             int selected = multipleOptionArrowMenu(model, 24, 26,
-                    List.of("Craft Item", "Upgrade Item", "Salvage Item", "Cancel"));
+                    List.of("Craft Item", "Upgrade Item", "Customize Item", "Salvage Item", "Cancel"));
             if (selected == 1) {
                 upgradeItem(model);
             } else if (selected == 2) {
+                customizeItem(model);
+            } else if (selected == 3) {
                 salvageItem(model);
             } else if (selected == 0) {
                 craftItem(model);
@@ -345,7 +350,94 @@ public class CraftItemState extends GameState {
         model.setSubView(oldSubview);
     }
 
-    public interface UpgradeCallback {
-        void doAction();
+    private void customizeItem(Model model) {
+        List<Clothing> customizableItems = new ArrayList<>(model.getParty().getInventory().getClothing());
+        customizableItems.removeIf(c -> !c.isHeavy());
+        if (customizableItems.isEmpty()) {
+            println("You have no items in your inventory which can be customized.");
+            return;
+        }
+        println("Which item would you like to customize?");
+        List<String> names = MyLists.transform(customizableItems, Item::getName);
+        names.add("Cancel");
+        int selected = showMenu(model, names);
+        Clothing selectedItem = null;
+        for (Clothing it : customizableItems) {
+            if (names.get(selected).contains(it.getName())) {
+                selectedItem = it;
+            }
+        }
+        if (selectedItem == null) { // Cancel chosen
+            return;
+        }
+        if (selectedItem.isHalflingArmor()) {
+            convertToBigPeopleArmor(model, selectedItem);
+        } else {
+            convertToHalflingArmor(model, selectedItem);
+        }
+    }
+
+    private void convertToBigPeopleArmor(Model model, Clothing selectedItem) {
+        int cost = HalflingHeavyArmor.CONVERT_BACK_MATERIALS_COST;
+        println(selectedItem.getName() + " is customized for Halflings.");
+        if (cost > model.getParty().getInventory().getMaterials()) {
+            println("Converting it to non-halfling armor costs " + cost + " materials, but you do not have that many materials.");
+            return;
+        }
+        print("Do you want to convert it to non-halfling armor (costs " + cost + " materials)? (Y/N) ");
+        if (yesNoInput()) {
+            println("Who should perform the conversion?");
+            GameCharacter performer = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            model.getParty().getInventory().addToMaterials(-cost);
+
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, performer, Skill.Labor,
+                    HalflingHeavyArmor.CONVERT_SKILL_DIFFICULTY, 10, 0);
+            model.getParty().removeFromInventory(selectedItem);
+            if (result.isSuccessful()) {
+                partyMemberSay(performer, "There we go. Now anybody should be able to wear it.");
+                if (selectedItem instanceof HigherTierClothing) {
+                    int tier = ((HigherTierClothing) selectedItem).getTier();
+                    Clothing hlArmor = (Clothing) ((HigherTierClothing) selectedItem).getInnerItem();
+                    Clothing normalArmor = ((HalflingHeavyArmor) hlArmor).getInnerItem();
+                    Item higher = normalArmor.makeHigherTierCopy(tier);
+                    higher.addYourself(model.getParty().getInventory());
+                } else {
+                    Clothing normalArmor = ((HalflingHeavyArmor) selectedItem).getInnerItem();
+                    normalArmor.addYourself(model.getParty().getInventory());
+                }
+                println(cost + " materials were used to convert " + selectedItem.getName() + " to non-halfling armor.");
+            } else {
+                partyMemberSay(performer, MyRandom.sample(List.of("Darn it!", "Uh-oh", "Oops.", "Shoot!",
+                        "I may have screwed up here.")));
+                println("The " + selectedItem.getName() + " was ruined!");
+                println("You lost " + cost + " materials.");
+            }
+        }
+    }
+
+    private void convertToHalflingArmor(Model model, Clothing selectedItem) {
+        model.getTutorial().halflingArmor(model);
+        print("Do you want to customize " + selectedItem.getName() + " for halflings? (Y/N) ");
+        if (yesNoInput()) {
+            println("Who should perform the conversion?");
+            GameCharacter performer = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, performer, Skill.Labor,
+                    HalflingHeavyArmor.CONVERT_SKILL_DIFFICULTY, 10, 0);
+            model.getParty().removeFromInventory(selectedItem);
+            if (result.isSuccessful()) {
+                if (performer.getRace().id() == Race.HALFLING.id()) {
+                    partyMemberSay(performer, "There we go. Now it's more suitable for somebody like me.");
+                } else {
+                    partyMemberSay(performer, "There we go. Now it's perfect for a little person.");
+                }
+                HalflingHeavyArmor halflingHeavyArmor = new HalflingHeavyArmor(selectedItem);
+                halflingHeavyArmor.addYourself(model.getParty().getInventory());
+                println(selectedItem.getName() + " was converted to halfling armor.");
+            } else {
+                partyMemberSay(performer, MyRandom.sample(List.of("Darn it!", "Uh-oh", "Oops.", "Shoot!",
+                        "I may have screwed up here.")));
+                println("The " + selectedItem.getName() + " was ruined!");
+            }
+        }
     }
 }

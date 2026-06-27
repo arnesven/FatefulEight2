@@ -10,6 +10,7 @@ import model.items.clothing.JustClothes;
 import model.items.clothing.MytheriumArmor;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
+import model.races.Race;
 import model.states.CombatEvent;
 import util.MyPair;
 import view.ScreenHandler;
@@ -42,8 +43,13 @@ public class Equipment implements Serializable {
     }
 
     public static String canEquip(Item item, GameCharacter person) {
-        if ((item instanceof Clothing) && !person.canChangeClothing()) {
-            return person.getFirstName() + " cannot unequip clothing.";
+        if (item instanceof Clothing clothing) {
+            if (!person.canChangeClothing()) {
+                return person.getFirstName() + " cannot unequip clothing.";
+            }
+            if (clothing.isHalflingArmor() && person.getRace().id() != Race.HALFLING.id()) {
+                return person.getFirstName() + " cannot equip Halfling Armor";
+            }
         }
 
         if (item instanceof Accessory && !person.canChangeAccessory()) {

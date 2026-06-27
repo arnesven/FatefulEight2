@@ -8,12 +8,12 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class RustyChestPlate extends Clothing implements StartingItem {
+public class RustyChestPlate extends HeavyArmorClothing implements StartingItem {
 
     private BreastPlate breastPlate = new BreastPlate();
 
     public RustyChestPlate() {
-        super("Rusty Chest Plate", 20, 4, true);
+        super("Rusty Chest Plate", 20, 4);
     }
 
     @Override

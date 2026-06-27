@@ -97,4 +97,8 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     public int getMP() {
         return 0;
     }
+
+    public boolean isHalflingArmor() {
+        return false;
+    }
 }

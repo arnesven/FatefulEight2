@@ -13,11 +13,10 @@ import model.enemies.Enemy;
 import model.enemies.ServantEnemy;
 import model.items.*;
 import model.items.accessories.*;
-import model.items.clothing.Clothing;
-import model.items.clothing.FancyJerkin;
-import model.items.clothing.JustClothes;
+import model.items.clothing.*;
 import model.items.weapons.*;
 import model.races.AllRaces;
+import model.races.Halfling;
 import model.races.Race;
 import model.states.ShopState;
 import util.MyRandom;
@@ -89,7 +88,11 @@ public class ArtisanEvent extends GeneralInteractionEvent {
                 subType.getItemType() + " at a discount.");
 
 
-        itemList.add(subType.getItem(model));
+        Item it = subType.getItem(model);
+        if (it instanceof HeavyArmorClothing && race.id() == Race.HALFLING.id()) {
+            it = new HalflingHeavyArmor((Clothing) it);
+        }
+        itemList.add(it);
         this.portrait = PortraitSubView.makeRandomPortrait(
                 subType.makeArtisanSubClass(), race);
         showExplicitPortrait(model, portrait, subType.getName());

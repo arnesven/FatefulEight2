@@ -1,9 +1,7 @@
 package view.help;
 
 import model.Model;
-import model.journal.MainStoryTask;
 import util.MyStrings;
-import view.BorderFrame;
 import view.DrawingArea;
 import view.GameView;
 import view.TwoPaneSelectableListMenu;
@@ -170,6 +168,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
                 new TutorialGameLog(null),
                 new TutorialGuides(null),
                 new TutorialHaggling(null),
+                new HalflingArmorHelpChapter(null),
                 new TutorialHeadquarters(null),
                 new TutorialHorses(null),
                 new TutorialHorseRacing(null),

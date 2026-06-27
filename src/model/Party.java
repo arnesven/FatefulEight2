@@ -17,6 +17,9 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
+import model.items.clothing.Brigandine;
+import model.items.clothing.HalflingHeavyArmor;
+import model.items.clothing.TemplarArmor;
 import model.items.designs.CraftingDesign;
 import model.items.spells.*;
 import model.items.weapons.Dagger;
@@ -87,6 +90,8 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
+        new HalflingHeavyArmor(new HigherTierClothing(new Brigandine(), 1)).addYourself(inventory);
+        new HalflingHeavyArmor(new TemplarArmor()).addYourself(inventory);
     }
 
     public void setStartingPosition(Point position) {

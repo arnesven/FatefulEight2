@@ -6,14 +6,19 @@ import model.characters.GameCharacter;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
+import model.items.clothing.HalflingHeavyArmor;
+import model.items.clothing.HeavyArmorClothing;
 import model.items.clothing.JustClothes;
 import model.items.special.MagicMirror;
+import model.items.weapons.HalflingSling;
 import model.items.weapons.Weapon;
 import model.journal.MainStorySpawnEast;
 import model.journal.MainStorySpawnNorth;
 import model.journal.MainStorySpawnSouth;
 import model.journal.MainStorySpawnWest;
 import model.mainstory.MainStoryStep;
+import model.races.Halfling;
+import model.races.Race;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyRandom;
@@ -217,6 +222,10 @@ public class ChooseStartingCharacterState extends GameState {
 
     public static void addSelectedItem(Model model, GameCharacter gc, Item startingItem) {
         assert startingItem != null;
+        if (startingItem instanceof HeavyArmorClothing armor &&
+                gc.getRace().id() == Race.HALFLING.id()) {
+            startingItem = new HalflingHeavyArmor(armor);
+        }
         boolean canEquip = Equipment.canEquip(startingItem, gc).equals("");
         if (canEquip) {
             if (startingItem instanceof Weapon && gc.getEquipment().getWeapon() instanceof StartingItem) {

@@ -99,4 +99,9 @@ public class HigherTierClothing extends Clothing implements HigherTierItem {
     public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
         innerItem.wielderWasAttackedBy(enemy, combatEvent);
     }
+
+    @Override
+    public boolean isHalflingArmor() {
+        return innerItem.isHalflingArmor();
+    }
 }

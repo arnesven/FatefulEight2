@@ -707,6 +707,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void halflingArmor(Model model) {
+        runOnce("halflingarmor", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new HalflingArmorHelpChapter(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
