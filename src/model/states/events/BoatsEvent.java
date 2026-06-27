@@ -91,7 +91,7 @@ public class BoatsEvent extends RiverEvent {
         leaderSay("Okay, see you on the other side. Be safe!");
         println("You cross the river in the boats.");
         riverCrossed = true;
-        println("The party disembarks on the other.");
+        println("The party disembarks on the other side.");
         model.getParty().getHorseHandler().abandonHorses(model);
         model.getLog().waitForAnimationToFinish();
 

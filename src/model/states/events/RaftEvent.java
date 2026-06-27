@@ -30,9 +30,6 @@ class RaftEvent extends AlternativeTravelEvent {
         showEventCard("Raft", "There are enough vines and logs here to make a good raft. " +
                 "Not only could the party use it to " + description + ", but travel " +
                 "downstream as well.");
-        if (model.getParty().hasHorses()) {
-            println("Your horses cannot accompany you on a raft.");
-        }
         print("Do you wish to attempt to build a raft? (Y/N) ");
         if (!yesNoInput()) {
             return false;
@@ -48,7 +45,6 @@ class RaftEvent extends AlternativeTravelEvent {
             println("You have failed to build the raft, and cannot " + description + ".");
             return false;
         }
-        model.getParty().getHorseHandler().abandonHorses(model);
         GameStatistics.incrementFreeRides();
         return true;
     }
