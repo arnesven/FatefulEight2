@@ -21,6 +21,11 @@ public class Pike extends PolearmWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 7;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

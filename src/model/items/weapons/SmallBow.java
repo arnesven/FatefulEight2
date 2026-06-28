@@ -14,6 +14,11 @@ public abstract class SmallBow extends BowWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 10;
+    }
+
+    @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return BOW_SPRITES;
     }

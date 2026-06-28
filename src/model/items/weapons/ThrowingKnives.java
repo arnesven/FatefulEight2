@@ -16,6 +16,11 @@ public class ThrowingKnives extends SmallBladedWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 9;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

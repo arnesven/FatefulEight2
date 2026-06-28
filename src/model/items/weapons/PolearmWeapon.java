@@ -20,6 +20,11 @@ public abstract class PolearmWeapon extends Weapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 5;
+    }
+
+    @Override
     public String getSound() {
         return "wood-small";
     }

@@ -19,6 +19,11 @@ public class Flail extends BluntWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 2;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

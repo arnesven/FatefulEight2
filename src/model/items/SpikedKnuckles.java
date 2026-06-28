@@ -16,7 +16,7 @@ public class SpikedKnuckles extends BrawlingWeapon {
 
     @Override
     public int getSpeedModifier() {
-        return -1;
+        return 1;
     }
 
     @Override

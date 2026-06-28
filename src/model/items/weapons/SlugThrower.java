@@ -19,6 +19,11 @@ public abstract class SlugThrower extends Weapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 15;
+    }
+
+    @Override
     public boolean isTwoHanded() {
         return isTwoHanded;
     }

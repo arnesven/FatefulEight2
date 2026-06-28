@@ -23,6 +23,11 @@ public abstract class BladedWeapon extends Weapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return isTwoHanded() ? 3 : 1;
+    }
+
+    @Override
     public final boolean isTwoHanded() {
         return twoHander;
     }

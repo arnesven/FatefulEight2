@@ -12,6 +12,11 @@ public class DoubleAxe extends AxeWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 1;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

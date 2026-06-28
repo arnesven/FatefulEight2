@@ -90,8 +90,6 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
-        new HalflingHeavyArmor(new HigherTierClothing(new Brigandine(), 1)).addYourself(inventory);
-        new HalflingHeavyArmor(new TemplarArmor()).addYourself(inventory);
     }
 
     public void setStartingPosition(Point position) {

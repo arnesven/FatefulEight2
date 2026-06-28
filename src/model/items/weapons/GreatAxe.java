@@ -20,6 +20,11 @@ public class GreatAxe extends AxeWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 3;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

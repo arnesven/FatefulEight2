@@ -17,7 +17,7 @@ public class BrassKnuckles extends BrawlingWeapon {
 
     @Override
     public int getSpeedModifier() {
-        return -2;
+        return 1;
     }
 
     @Override

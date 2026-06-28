@@ -201,4 +201,6 @@ public abstract class Combatant implements Serializable {
     public List<Condition> getConditions() {
         return conditions;
     }
+
+    public abstract int getInitBonus(boolean firstTime);
 }

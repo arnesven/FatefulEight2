@@ -21,6 +21,11 @@ public class BoatHook extends PolearmWeapon implements PirateItem {
     }
 
     @Override
+    public int getInitBonus() {
+        return 4;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

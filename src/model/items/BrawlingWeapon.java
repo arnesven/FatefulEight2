@@ -15,6 +15,11 @@ public abstract class BrawlingWeapon extends Weapon implements PairableWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return -2;
+    }
+
+    @Override
     public boolean isTwoHanded() {
         return isTwoHanded;
     }

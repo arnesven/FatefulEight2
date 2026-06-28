@@ -13,6 +13,11 @@ public class Choppa extends AxeWeapon implements PairableWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 1;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

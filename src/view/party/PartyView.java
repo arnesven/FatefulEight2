@@ -213,17 +213,22 @@ public class PartyView extends SelectableListMenu {
     private String getAttackString(Weapon w) {
         StringBuilder bldr = new StringBuilder();
         if (w.isRangedAttack()) {
-            bldr.append("Ranged ");
+            bldr.append("Range");
         } else {
-            bldr.append("Melee ");
+            bldr.append("Melee");
         }
-        bldr.append("Atk");
         if (w.getNumberOfAttacks() > 1) {
             bldr.append(" x").append(w.getNumberOfAttacks());
         }
-
+        if (w.getInitBonus() != 0) {
+            bldr.append(" Init ");
+            if (w.getInitBonus() > 0) {
+                bldr.append("+");
+            }
+            bldr.append(w.getInitBonus());
+        }
         if (w.getSpeedModifier() != 0) {
-            bldr.append(", Speed ");
+            bldr.append(" Speed ");
             if (w.getSpeedModifier() > 0) {
                 bldr.append("+");
             }
@@ -235,13 +240,13 @@ public class PartyView extends SelectableListMenu {
     private String getArmorString(ArmorItem armor, boolean showZeroArmor) {
         String extra = "";
         if (armor.getMP() != 0) {
-            extra = "Mag. Armor " + armor.getMP() + " ";
+            extra = armor.getMP() + " MP ";
             if (armor.getAP() == 0) {
                 return extra;
             }
         }
         if (armor.getAP() != 0 || showZeroArmor) {
-            return "Phys. Armor " + armor.getAP() + " " + extra + (armor.isHeavy() ? "Heavy" : "Light");
+            return armor.getAP() + " AP " + extra + (armor.isHeavy() ? "Heavy" : "Light");
         }
         return "";
     }
@@ -287,10 +292,27 @@ public class PartyView extends SelectableListMenu {
                 int capSize = rightColumnX - xStart - 7;
                 if (!(w instanceof UnarmedCombatWeapon)) {
                     newY++;
+                    // ROW 1: Skill and Damage Table
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString()));
+                    // ROW 2: Type of attack, speed and init bonus
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getAttackString(w)));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(w)));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText().replace(", ", "")));
+                    // ROW 3 and 4: Skill Bonuses and Extra
+                    String bonuses = getBonusesAsString(w);
+                    if (!bonuses.isEmpty()) {
+                        bonuses += " ";
+                    }
+                    String restContent = bonuses + w.getExtraText().replace(", ", "");
+                    String[] parts = MyStrings.partition(restContent, capSize);
+                    if (parts.length > 0) {
+                        print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[0]);
+                    } else {
+                        newY++;
+                    }
+                    if (parts.length > 1) {
+                        print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[1]);
+                    } else {
+                        newY++;
+                    }
                 } else {
                     newY++;
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText()));

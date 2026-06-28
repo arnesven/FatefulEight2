@@ -21,6 +21,11 @@ public class Tonfa extends BrawlingWeapon implements BlockingItem {
     }
 
     @Override
+    public int getInitBonus() {
+        return -1;
+    }
+
+    @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return AVATAR_SPRITE;
     }

@@ -26,6 +26,11 @@ public abstract class BowWeapon extends Weapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 12;
+    }
+
+    @Override
     public String getSound() {
         return "wood-small";
     }

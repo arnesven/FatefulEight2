@@ -87,7 +87,7 @@ public class CombatEvent extends DailyEventState {
         this.participants = new ArrayList<>();
         this.participants.addAll(model.getParty().getFrontRow());
         this.participants.addAll(model.getParty().getBackRow());
-        setInitiativeOrder();
+        setInitiativeOrder(true);
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.originalAdvantage = advantage;
         this.advantage = advantage;
@@ -109,6 +109,7 @@ public class CombatEvent extends DailyEventState {
         GameStatistics.incrementCombatEvents();
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         startMusic();
+        model.getTutorial().tutorialCombat(model);
         StripedTransition.transition(model, subView);
         AnimationManager.synchAnimations();
         partyMemberComment(model);
@@ -121,7 +122,7 @@ public class CombatEvent extends DailyEventState {
         } else if (advantage == CombatAdvantage.Enemies) {
             model.getTutorial().ambushes(model);
         }
-        setInitiativeOrder();
+        setInitiativeOrder(true);
         model.setInCombat(true);
         if (advantage != CombatAdvantage.Enemies) {
             setFormation(model);
@@ -166,7 +167,7 @@ public class CombatEvent extends DailyEventState {
         }
     }
 
-    private void setInitiativeOrder() {
+    private void setInitiativeOrder(boolean firstTime) {
         currentInit = 0;
         initiativeOrder = new ArrayList<>();
         initiativeOrder.addAll(participants);
@@ -181,7 +182,7 @@ public class CombatEvent extends DailyEventState {
             initiativeOrder.add(groupMap.get(c));
         }
         Collections.shuffle(initiativeOrder);
-        Collections.sort(initiativeOrder, (c1, c2) -> c2.getSpeed() - c1.getSpeed());
+        Collections.sort(initiativeOrder, (c1, c2) -> c2.getInitBonus(firstTime) - c1.getInitBonus(firstTime));
         for (GameCharacter gc : participants) {
             if (CelerityVampireAbility.canDoAbility(gc)) {
                 initiativeOrder.add(gc);
@@ -198,7 +199,7 @@ public class CombatEvent extends DailyEventState {
             if (combatDone(model)) {
                 break;
             }
-            setInitiativeOrder();
+            setInitiativeOrder(false);
             if (!checkForOverrun(model)) {
                 setFormation(model);
                 checkForOpportunityAttacks(model);

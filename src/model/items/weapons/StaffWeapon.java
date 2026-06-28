@@ -12,6 +12,11 @@ public abstract class StaffWeapon extends BluntWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 4;
+    }
+
+    @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return STAFF_SPRITES;
     }

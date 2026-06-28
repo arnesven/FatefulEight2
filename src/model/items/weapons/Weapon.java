@@ -107,6 +107,9 @@ public abstract class Weapon extends EquipableItem {
         if (getSpeedModifier() != 0) {
             result.append(", Speed ").append(MyStrings.withPlus(getSpeedModifier()));
         }
+        if (getInitBonus() != 0) {
+            result.append(", Init ").append(MyStrings.withPlus(getInitBonus()));
+        }
         if (isTwoHanded()) {
             result.append(", Two-handed");
         }
@@ -257,6 +260,10 @@ public abstract class Weapon extends EquipableItem {
 
     public int getStance() {
         return NORMAL_STANCE;
+    }
+
+    public int getInitBonus() {
+        return 0;
     }
 }
 

@@ -18,6 +18,11 @@ public class TripleFlail extends BluntWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 2;
+    }
+
+    @Override
     public int getNumberOfAttacks() {
         return 3;
     }

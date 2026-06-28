@@ -213,6 +213,14 @@ public class GameCharacter extends Combatant {
     }
 
     @Override
+    public int getInitBonus(boolean firstTime) {
+        if (firstTime) {
+            return equipment.getWeapon().getInitBonus();
+        }
+        return getSpeed();
+    }
+
+    @Override
     public void addToHP(int i) {
         super.addToHP(i);
     }

@@ -21,6 +21,11 @@ public abstract class WandWeapon extends Weapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 9;
+    }
+
+    @Override
     public Skill getSkillToUse(GameCharacter gc) {
         if (gc.getRankForSkill(super.getSkillToUse(gc)) < gc.getRankForSkill(Skill.MagicAny)) {
             return Skill.MagicAny;

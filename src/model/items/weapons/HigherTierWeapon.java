@@ -175,6 +175,11 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     }
 
     @Override
+    public int getInitBonus() {
+        return inner.getInitBonus();
+    }
+
+    @Override
     public boolean isTwoHanded() {
         return inner.isTwoHanded();
     }

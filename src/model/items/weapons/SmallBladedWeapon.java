@@ -13,6 +13,11 @@ public abstract class SmallBladedWeapon extends BladedWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return -2;
+    }
+
+    @Override
     public int getWeight() {
         return 500;
     }

@@ -275,4 +275,9 @@ public abstract class Enemy extends Combatant {
     public void setAttackBehavior(EnemyAttackBehavior behavior) {
         this.combatBehavior = behavior;
     }
+    
+    @Override
+    public int getInitBonus(boolean firstTime) {
+        return getSpeed();
+    }
 }

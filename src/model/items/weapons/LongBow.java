@@ -14,6 +14,11 @@ public class LongBow extends BowWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 14;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

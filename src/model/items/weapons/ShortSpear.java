@@ -20,6 +20,11 @@ public class ShortSpear extends OneHandedPolearmWeapon implements PairableWeapon
     }
 
     @Override
+    public int getInitBonus() {
+        return 4;
+    }
+
+    @Override
     public int getSpeedModifier() {
         return 1;
     }

@@ -14,6 +14,11 @@ public class ThrowingAxes extends SmallAxeWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 9;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

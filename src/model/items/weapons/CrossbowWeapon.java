@@ -17,6 +17,11 @@ public abstract class CrossbowWeapon extends BowWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 14;
+    }
+
+    @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return ON_SPRITE;
     }

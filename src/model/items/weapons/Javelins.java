@@ -17,6 +17,11 @@ public class Javelins extends OneHandedPolearmWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 10;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

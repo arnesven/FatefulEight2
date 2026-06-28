@@ -20,6 +20,11 @@ public class Zweihander extends BladedWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 5;
+    }
+
+    @Override
     public int getWeight() {
         return 5000;
     }

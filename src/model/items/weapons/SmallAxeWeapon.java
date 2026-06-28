@@ -13,6 +13,11 @@ public abstract class SmallAxeWeapon extends AxeWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return -1;
+    }
+
+    @Override
     public AvatarItemSprite getOnAvatarSprite() {
         return AXE_SPRITES;
     }

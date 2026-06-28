@@ -20,7 +20,12 @@ public class HeavyCrossbow extends CrossbowWeapon {
 
     @Override
     public int getSpeedModifier() {
-        return -1;
+        return -2;
+    }
+
+    @Override
+    public int getInitBonus() {
+        return 15;
     }
 
     @Override

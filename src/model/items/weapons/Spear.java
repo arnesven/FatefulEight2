@@ -21,6 +21,11 @@ public class Spear extends PolearmWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 6;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

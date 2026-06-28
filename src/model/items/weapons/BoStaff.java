@@ -20,6 +20,11 @@ public class BoStaff extends BluntWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 5;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }
