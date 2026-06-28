@@ -291,7 +291,8 @@ public class PartyView extends SelectableListMenu {
                 if (!(w instanceof UnarmedCombatWeapon)) {
                     newY++;
                     // ROW 1: Skill and Damage Table
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString()));
+                    String skillName = w.getSkill().getName().replace(" Weapons","").replace(" Combat", "");
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, skillName + " " + w.getDamageTableAsString()));
                     // ROW 2: Type of attack, speed and init bonus
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getAttackString(w)));
                     // ROW 3 and 4: Skill Bonuses and Extra
@@ -299,7 +300,7 @@ public class PartyView extends SelectableListMenu {
                     if (!bonuses.isEmpty()) {
                         bonuses += " ";
                     }
-                    String restContent = bonuses + w.getExtraText().replace(", ", "");
+                    String restContent = bonuses + w.getExtraText().replace(", ", " ");
                     String[] parts = MyStrings.partition(restContent, capSize);
                     for (int i = 0; i < 2; ++i) {
                         if (parts.length > i) {
@@ -341,9 +342,9 @@ public class PartyView extends SelectableListMenu {
                     if (!bonuses.isEmpty()) {
                         bonuses += " ";
                     }
-                    String restContent = bonuses + accessory.getExtraText().replace(", ", "");
+                    String restContent = bonuses + accessory.getExtraText().replace(", ", " ");
                     String[] parts = MyStrings.partition(restContent, capSize);
-                    for (int i = 0; i < 3; ++i) {
+                    for (int i = 0; i < 2; ++i) {
                         if (parts.length > i) {
                             print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[i]);
                         } else {
