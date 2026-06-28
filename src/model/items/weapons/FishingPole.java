@@ -26,6 +26,11 @@ public class FishingPole extends PolearmWeapon {
     }
 
     @Override
+    public int getInitBonus() {
+        return 8;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

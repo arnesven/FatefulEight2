@@ -18,6 +18,14 @@ public abstract class AxeWeapon extends Weapon {
     }
 
     @Override
+    public int getSpeedModifier() {
+        if (isTwoHanded()) {
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
     public boolean isTwoHanded() {
         return twoHander;
     }

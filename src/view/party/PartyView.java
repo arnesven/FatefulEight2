@@ -177,25 +177,23 @@ public class PartyView extends SelectableListMenu {
 
     private String getSPString(Accessory accessory) {
         if (accessory.getSPBonus() != 0) {
-            return "Stamina " + (accessory.getSPBonus()>0?"+":"") + accessory.getSPBonus();
+            return "Stamina " + MyStrings.withPlus(accessory.getSPBonus());
         }
         return "";
     }
 
     private String getHealthString(Accessory accessory) {
         if (accessory.getHealthBonus() != 0) {
-            return "Health " + (accessory.getHealthBonus()>0?"+":"") + accessory.getHealthBonus();
+            return "Health " + MyStrings.withPlus(accessory.getHealthBonus());
         }
         return "";
     }
 
     private String getSpeedString(Accessory accessory) {
-        if (accessory.getSpeedModifier() == 0) {
-            return "";
-        } else if (accessory.getSpeedModifier() > 0) {
-            return "Speed +" + accessory.getSpeedModifier();
+        if (accessory.getSpeedModifier() != 0) {
+            return "Speed " + MyStrings.withPlus(accessory.getSpeedModifier());
         }
-        return "Speed " + accessory.getSpeedModifier();
+        return "";
     }
 
     private void addDisabledListContent(List<ListContent> content, int x, int y, String text) {
@@ -254,7 +252,7 @@ public class PartyView extends SelectableListMenu {
     private String getBonusesAsString(Item w) {
         StringBuilder bldr = new StringBuilder();
         for (MyPair<Skill, Integer> bonus : w.getSkillBonuses()) {
-            bldr.append(bonus.first.getName() + " " + bonus.second + " ");
+            bldr.append(bonus.first.getName() + " " + MyStrings.withPlus(bonus.second) + " ");
         }
         return bldr.toString();
     }
@@ -303,15 +301,12 @@ public class PartyView extends SelectableListMenu {
                     }
                     String restContent = bonuses + w.getExtraText().replace(", ", "");
                     String[] parts = MyStrings.partition(restContent, capSize);
-                    if (parts.length > 0) {
-                        print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[0]);
-                    } else {
-                        newY++;
-                    }
-                    if (parts.length > 1) {
-                        print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[1]);
-                    } else {
-                        newY++;
+                    for (int i = 0; i < 2; ++i) {
+                        if (parts.length > i) {
+                            print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[i]);
+                        } else {
+                            newY++;
+                        }
                     }
                 } else {
                     newY++;
@@ -320,18 +315,41 @@ public class PartyView extends SelectableListMenu {
                 }
 
                 newY++;
+                // ROW 1: Armor bonuses
                 print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getArmorString(gc.getEquipment().getClothing(), true)));
-                print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(gc.getEquipment().getClothing())));
-                newY +=2;
+                // ROW 2, 3, 4
+                {
+                    String[] parts = MyStrings.partition(getBonusesAsString(gc.getEquipment().getClothing()), capSize);
+                    for (int i = 0; i < 3; ++i) {
+                        if (parts.length > i) {
+                            print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[i]);
+                        } else {
+                            newY++;
+                        }
+                    }
+                }
 
                 Accessory accessory = gc.getEquipment().getAccessory();
                 if (accessory != null) {
                     newY++;
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getArmorString(accessory, false) + " " +  getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory)));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(accessory)));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, accessory.getExtraText()));
-                } else {
-                    newY++;
+                    String row1 = getArmorString(accessory, false);
+                    if (!row1.isEmpty()) {
+                        row1 += " ";
+                    }
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, row1 + getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory)));
+                    String bonuses = getBonusesAsString(accessory);
+                    if (!bonuses.isEmpty()) {
+                        bonuses += " ";
+                    }
+                    String restContent = bonuses + accessory.getExtraText().replace(", ", "");
+                    String[] parts = MyStrings.partition(restContent, capSize);
+                    for (int i = 0; i < 3; ++i) {
+                        if (parts.length > i) {
+                            print(model.getScreenHandler(), rightOfPortraitX, newY++, parts[i]);
+                        } else {
+                            newY++;
+                        }
+                    }
                 }
 
                 drawEquipment(model, gc, x+1, y+9);

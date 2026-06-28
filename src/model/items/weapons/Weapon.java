@@ -141,7 +141,7 @@ public abstract class Weapon extends EquipableItem {
             result.append(", +").append(getAttackBonusForRace().first).append(" to hit for ").append(getAttackBonusForRace().second);
         }
         if (isImbued()) {
-            result.append(",").append(getImbuement().getText());
+            result.append(", ").append(getImbuement().getText());
         }
         return result.toString();
     }
