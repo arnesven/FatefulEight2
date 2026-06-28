@@ -96,7 +96,7 @@ public class TravelState extends GameState {
     private boolean showThrowAwayMenu(Model model) {
         List<String> options = new ArrayList<>();
         int chosen;
-        model.setInCombat(true);
+        model.setMenuLock(true);
         do {
             options.clear();
             for (Item it : model.getParty().getInventory().getAllItems()) {
@@ -140,7 +140,7 @@ public class TravelState extends GameState {
                 println("You threw away " + x + " lockpick" + (x == 1 ? "" : "s") + ".");
                 model.getParty().getInventory().addToLockpicks(-x);
             } else if (chosen == options.size()-1) {
-                model.setInCombat(false);
+                model.setMenuLock(false);
                 return true;
             } else {
                 Item itemToThrowAway = null;
@@ -157,7 +157,7 @@ public class TravelState extends GameState {
                 }
             }
         } while (options.size() != 1);
-        model.setInCombat(false);
+        model.setMenuLock(false);
         return false;
     }
 

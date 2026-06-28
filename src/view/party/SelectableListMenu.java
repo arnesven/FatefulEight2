@@ -258,7 +258,7 @@ public abstract class SelectableListMenu extends GameView {
 
         @Override
         public boolean isEnabled(Model model) {
-            return !model.isInCombat();
+            return !model.areMenusLocked();
         }
 
         @Override

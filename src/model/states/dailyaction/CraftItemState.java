@@ -328,6 +328,7 @@ public class CraftItemState extends GameState {
         if (selectedItem == null) { // Cancel chosen
             return;
         }
+        model.setMenuLock(true);
         Item potentialItem;
         if (selectedItem instanceof HigherTierItem) {
             HigherTierItem higherItem = (HigherTierItem)selectedItem;
@@ -348,6 +349,7 @@ public class CraftItemState extends GameState {
             }
         }
         model.setSubView(oldSubview);
+        model.setMenuLock(false);
     }
 
     private void customizeItem(Model model) {
@@ -370,11 +372,13 @@ public class CraftItemState extends GameState {
         if (selectedItem == null) { // Cancel chosen
             return;
         }
+        model.setMenuLock(true);
         if (selectedItem.isHalflingArmor()) {
             convertToBigPeopleArmor(model, selectedItem);
         } else {
             convertToHalflingArmor(model, selectedItem);
         }
+        model.setMenuLock(false);
     }
 
     private void convertToBigPeopleArmor(Model model, Clothing selectedItem) {

@@ -56,7 +56,7 @@ public class CheckForVampireEvent extends DailyEventState {
     }
 
     private void persuadeFailed(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
-        model.setInCombat(true);
+        model.setMenuLock(true);
         partyMemberSay(other, "Well, you're skin looks paler than before, your teeth are pointier and " +
                 "on some nights you just disappear for hours. Please tell me there is a good explanations for all of this!");
         partyMemberSay(vampire, "Uhm, well... Fine I'm a vampire. Are you happy?", FacialExpression.disappointed);
@@ -73,7 +73,7 @@ public class CheckForVampireEvent extends DailyEventState {
                     "but deep down I really just thought I was imagining things!", FacialExpression.afraid);
         }
         dealWithVampire(model, vampire, other);
-        model.setInCombat(false);
+        model.setMenuLock(false);
     }
 
     protected boolean askForMesmerize(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
@@ -84,7 +84,7 @@ public class CheckForVampireEvent extends DailyEventState {
                 if (!tryMesmerize(model, vampire, other, vampCond)) {
                     dealWithVampire(model, vampire, other);
                 }
-                model.setInCombat(false);
+                model.setMenuLock(false);
                 return true;
             }
         }

@@ -68,6 +68,7 @@ public class Model {
     private boolean gameOver;
     private boolean gameStarted;
     private boolean inCombat;
+    private boolean lockMenus;
     private boolean gameAbandoned;
     private String gameStartFileName = null;
 
@@ -89,6 +90,7 @@ public class Model {
         gameOver = false;
         gameStarted = false;
         inCombat = false;
+        lockMenus = false;
         gameAbandoned = false;
     }
 
@@ -408,6 +410,14 @@ public class Model {
 
     public void setInCombat(boolean b) {
         inCombat = b;
+    }
+
+    public void setMenuLock(boolean lock) {
+        lockMenus = lock;
+    }
+
+    public boolean areMenusLocked() {
+        return lockMenus;
     }
 
     public QuestDeck getQuestDeck() {

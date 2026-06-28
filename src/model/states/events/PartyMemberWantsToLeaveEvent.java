@@ -95,7 +95,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
     }
 
     public boolean wantsToLeave(Model model, GameCharacter gc, boolean angryAtLeader) {
-        model.setInCombat(true);
+        model.setMenuLock(true);
         if (angryAtLeader) {
             model.getParty().partyMemberSay(model, gc, List.of("I'm sick of this.", "It's time for me to go my own way.",
                     "I don't want to do this anymore.", "I want to leave the party.", "Guys... I'm done. I want out.",
@@ -146,11 +146,11 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
                 printAlert(gc.getName() + " attacks you!");
                 runCombat(transformToEnemies(separtists), model.getCurrentHex().getCombatTheme());
                 setCurrentTerrainSubview(model);
-                model.setInCombat(false);
+                model.setMenuLock(false);
                 return true;
             }
         }
-        model.setInCombat(false);
+        model.setMenuLock(false);
         return false;
     }
 
