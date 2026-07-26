@@ -55,7 +55,12 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
               new Point(19, 27),
               "Pirates",
                WorldBuilder.PIRATE_HAVEN_LOCATION,
-               new MainStoryPastData(new Point(15, 12), new Point(0, 14), TombLocation.CATRIONA_TOMB, RuinsLocation.ZAND_RUINS, TombLocation.MIRON_TOMB));
+               new MainStoryPastData(new Point(15, 12), new Point(0, 14),
+                       TombLocation.CATRIONA_TOMB, RuinsLocation.ZAND_RUINS, TombLocation.MIRON_TOMB,
+                       new Point(7, 4),
+                       new Point(2, 12),
+                       new Point(18, 11),
+                       new Point(19, 3)));
         this.potentialMutineers = makePotentialMutineers();
         this.realMutineer = MyRandom.sample(potentialMutineers);
     }
@@ -127,25 +132,5 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
 
     public PotentialMutineer getRealMutineer() {
         return realMutineer;
-    }
-
-    @Override
-    public Point getDesolationPoint() {
-        return new Point(19, 3);
-    }
-
-    @Override
-    public Point getSorrowPoint() {
-        return new Point(18, 11);
-    }
-
-    @Override
-    public Point getAnguishPoint() {
-        return new Point(2, 12);
-    }
-
-    @Override
-    public Point getDespairPoint() {
-        return new Point(7, 4);
     }
 }

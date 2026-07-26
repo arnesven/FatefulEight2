@@ -25,7 +25,11 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
                 "Vikings",
                 WorldBuilder.VIKING_VILLAGE_LOCATION,
                 new MainStoryPastData(new Point(1, 9), new Point(14, 4),
-                        TombLocation.HAARFAGRE_TOMB, RuinsLocation.URH_RUINS, RuinsLocation.GROUND_RUINS));
+                        TombLocation.HAARFAGRE_TOMB, RuinsLocation.URH_RUINS, RuinsLocation.GROUND_RUINS,
+                new Point(0, 0),
+                new Point(1, 13),
+                new Point(17, 13),
+                new Point(18, 2)));
     }
 
     @Override
@@ -47,15 +51,5 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
     @Override
     public AdvancedAppearance getArabellaAppearance() {
         return arabella;
-    }
-
-    @Override
-    public Point getDespairPoint() {
-        return new Point(0, 0);
-    }
-
-    @Override
-    public Point getDesolationPoint() {
-        return new Point(18, 2);
     }
 }

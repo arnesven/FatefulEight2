@@ -91,10 +91,10 @@ public abstract class MainStorySpawnLocation implements Serializable {
     }
 
     public World buildPastWorld() {
-        Point dispairPoint = getDespairPoint();
-        Point anguishPoint = getAnguishPoint();
-        Point sorrowPoint = getSorrowPoint();
-        Point desolationPoint = getDesolationPoint();
+        Point dispairPoint = pastData.despair;
+        Point anguishPoint = pastData.anguish;
+        Point sorrowPoint = pastData.sorrow;
+        Point desolationPoint = pastData.desolation;
 
         World w = WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint(), Map.of(
                 dispairPoint, new WastelandHex(0, 0, WorldBuilder.ORIGINAL),
@@ -110,22 +110,6 @@ public abstract class MainStorySpawnLocation implements Serializable {
         hex = w.getHex(desolationPoint);
         hex.setLocation(new MiningTownLocation("Desolation"));
         return w;
-    }
-
-    public Point getAnguishPoint() {
-        return new Point(1, 13);
-    }
-
-    public Point getDespairPoint() {
-        return new Point(1, 2);
-    }
-
-    public Point getSorrowPoint() {
-        return new Point(17, 13);
-    }
-
-    public Point getDesolationPoint() {
-        return new Point(18, 0);
     }
 
     public Point getPastEntryPoint() {

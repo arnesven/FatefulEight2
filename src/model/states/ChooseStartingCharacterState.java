@@ -147,9 +147,8 @@ public class ChooseStartingCharacterState extends GameState {
         model.getParty().goldTransaction(1000);
         model.getParty().getInventory().addToLockpicks(3);
         model.getParty().addToFood(300);
-        new MagicMirror().addYourself(model.getParty().getInventory());
 
-        model.progressMainStoryForTesting(MainStoryStep.THREE_SUPPORT_GOT,
+        model.progressMainStoryForTesting(MainStoryStep.INTO_THE_PAST,
                 MyRandom.sample(List.of(new MainStorySpawnEast(), new MainStorySpawnNorth(),
                         new MainStorySpawnWest(), new MainStorySpawnSouth())));
 

@@ -24,7 +24,12 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new Point(33, 11),
                 "Honorable Warriors",
                 WorldBuilder.EASTERN_PALACE_LOCATION,
-              new MainStoryPastData(new Point(7, 2), new Point(30, 10), TombLocation.SHAKMA_TOMB, RuinsLocation.RONK_RUINS, TombLocation.KZINRIC_TOMB));
+              new MainStoryPastData(new Point(7, 2), new Point(30, 10),
+                      TombLocation.SHAKMA_TOMB, RuinsLocation.RONK_RUINS, TombLocation.KZINRIC_TOMB,
+                      new Point(1, 2),
+                      new Point(1, 13),
+                      new Point(17, 13),
+                      new Point(18, 0)));
     }
 
     @Override

@@ -26,7 +26,12 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
               new Point(33, 23),
                 "Jungle Tribe",
                 WorldBuilder.JUNGLE_VILLAGE_LOCATION,
-                new MainStoryPastData(new Point(18, 1), new Point(14, 23), RuinsLocation.ZAND_RUINS, TombLocation.UZOCTL_TOMB, TombLocation.XALARDIUM_TOMB));
+                new MainStoryPastData(new Point(18, 1), new Point(14, 23),
+                        RuinsLocation.ZAND_RUINS, TombLocation.UZOCTL_TOMB, TombLocation.XALARDIUM_TOMB,
+                        new Point(3, 1),
+                        new Point(2, 11),
+                        new Point(17, 13),
+                        new Point(13, 1)));
     }
 
     @Override
@@ -74,20 +79,5 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
     @Override
     public AdvancedAppearance getArabellaAppearance() {
         return arabella;
-    }
-
-    @Override
-    public Point getAnguishPoint() {
-        return new Point(2, 11);
-    }
-
-    @Override
-    public Point getDespairPoint() {
-        return new Point(3, 1);
-    }
-
-    @Override
-    public Point getDesolationPoint() {
-        return new Point(13, 1);
     }
 }
