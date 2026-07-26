@@ -10,6 +10,7 @@ import model.map.World;
 import model.map.WorldBuilder;
 import model.map.WorldHex;
 import model.map.locations.MiningTownLocation;
+import util.MyPair;
 import view.MyColors;
 
 import java.awt.*;
@@ -90,7 +91,7 @@ public abstract class MainStorySpawnLocation implements Serializable {
         return remotePeoplePosition;
     }
 
-    public World buildPastWorld() {
+    public final World buildPastWorld() {
         Point dispairPoint = pastData.despair;
         Point anguishPoint = pastData.anguish;
         Point sorrowPoint = pastData.sorrow;
@@ -109,8 +110,15 @@ public abstract class MainStorySpawnLocation implements Serializable {
         hex.setLocation(new MiningTownLocation("Sorrow"));
         hex = w.getHex(desolationPoint);
         hex.setLocation(new MiningTownLocation("Desolation"));
+
+        addPastFishingVillages(w);
+        addPastRoads(w);
         return w;
     }
+
+    protected abstract void addPastRoads(World w);
+
+    protected abstract void addPastFishingVillages(World w);
 
     public Point getPastEntryPoint() {
         return pastData.entryPoint;
@@ -132,5 +140,11 @@ public abstract class MainStorySpawnLocation implements Serializable {
 
     public String getPastCityB() {
         return pastData.cityB;
+    }
+
+    protected static void addRoads(World w, List<MyPair<Point, Integer>> pastRoads) {
+        for (MyPair<Point, Integer> pair : pastRoads) {
+            w.getHex(pair.first).setRoads(pair.second);
+        }
     }
 }

@@ -188,6 +188,9 @@ public abstract class WorldHex {
         if (hexLocation != null) {
             hexLocation.drawLowerHalf(screenHandler, x, y);
         }
+        if (hexLocation instanceof MountainLocation) {
+            MountainLocation.drawRoadOverlay(screenHandler, x, y, this);
+        }
     }
 
     public String getDescription() {

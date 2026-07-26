@@ -215,9 +215,10 @@ public class EveningState extends GameState {
         }
         if (this.goOnQuest == null) {
             if (doAutoSave && model.getSettings().autosaveEnabled()) {
-                model.getLog().addAnimated(LogView.GRAY_COLOR + "Autosaving...\n" + LogView.DEFAULT_COLOR);
+                model.getLog().addAnimated(LogView.GRAY_COLOR + "Autosaving..." + LogView.DEFAULT_COLOR);
                 model.getLog().waitForAnimationToFinish();
                 model.saveToFile("auto");
+                model.getLog().addAnimated(LogView.GRAY_COLOR + " done.\n" + LogView.DEFAULT_COLOR);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }

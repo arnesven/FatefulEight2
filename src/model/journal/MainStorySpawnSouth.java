@@ -51,18 +51,12 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
     }
 
     @Override
-    public World buildPastWorld() {
-        World world = super.buildPastWorld();
-        addRoads(world);
-        addFishingVillages(world);
-        return world;
-    }
-
-    private void addFishingVillages(World world) {
+    protected void addPastFishingVillages(World world) {
         world.getHex(new Point(15, 3)).setLocation(new PastFishingVillage(Direction.SOUTH));
     }
 
-    private void addRoads(World world) {
+    @Override
+    protected void addPastRoads(World world) {
         List<MyPair<Point, Integer>> pastRoads =
         List.of(
                 new MyPair<>(new Point(16, 1), Direction.SOUTH_WEST | Direction.NORTH_EAST),

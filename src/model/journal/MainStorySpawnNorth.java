@@ -52,4 +52,14 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
     public AdvancedAppearance getArabellaAppearance() {
         return arabella;
     }
+
+    @Override
+    protected void addPastFishingVillages(World w) {
+
+    }
+
+    @Override
+    protected void addPastRoads(World w) {
+
+    }
 }
