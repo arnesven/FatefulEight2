@@ -9,6 +9,7 @@ import model.map.locations.*;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class MainStorySpawnNorth extends MainStorySpawnLocation {
     private AdvancedAppearance arabella = new DarkElfArabellaAppearance();;
@@ -44,12 +45,17 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
     }
 
     @Override
-    public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+    public AdvancedAppearance getArabellaAppearance() {
+        return arabella;
     }
 
     @Override
-    public AdvancedAppearance getArabellaAppearance() {
-        return arabella;
+    public Point getDespairPoint() {
+        return new Point(0, 0);
+    }
+
+    @Override
+    public Point getDesolationPoint() {
+        return new Point(18, 2);
     }
 }

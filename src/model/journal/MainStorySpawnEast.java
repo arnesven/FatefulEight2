@@ -4,14 +4,12 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.*;
 import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
-import model.map.RuinsLocation;
-import model.map.TombLocation;
-import model.map.World;
-import model.map.WorldBuilder;
+import model.map.*;
 import model.map.locations.*;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class MainStorySpawnEast extends MainStorySpawnLocation {
     private AdvancedAppearance arabella = new SouthernArabellaAppearance();
@@ -43,11 +41,6 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
         GainSupportOfNeighborKingdomByFightingOrcsTask task2 = new GainSupportOfNeighborKingdomByFightingOrcsTask(castle2,
                 model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(castle2)), getCastle(), castle1, new Point(38, 20));
         return List.of(task1, task2);
-    }
-
-    @Override
-    public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
     }
 
     @Override

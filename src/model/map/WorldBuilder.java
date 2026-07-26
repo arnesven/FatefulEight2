@@ -588,14 +588,19 @@ public class WorldBuilder {
         return hexes;
     }
 
-    public static World buildPastWorld(Point upperLeftPoint) {
+    public static World buildPastWorld(Point upperLeftPoint, Map<Point, WorldHex> replacements) {
         Rectangle bounds = OTHER_BOUNDS;
         WorldHex[][] originalHexes = makeOriginalWorld();
         WorldHex[][] hexes = new WorldHex[bounds.width][bounds.height];
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {
                 Point oldPos = new Point(x + upperLeftPoint.x, y + upperLeftPoint.y);
-                hexes[x][y] = originalHexes[oldPos.x][oldPos.y].makePastSelf(oldPos, new Point(x, y));
+                Point newPos = new Point(x, y);
+                if (replacements.containsKey(newPos)) {
+                    hexes[x][y] = replacements.get(newPos).makePastSelf(oldPos, newPos);
+                } else {
+                    hexes[x][y] = originalHexes[oldPos.x][oldPos.y].makePastSelf(oldPos, newPos);
+                }
             }
         }
         makeSeaBorders(hexes);

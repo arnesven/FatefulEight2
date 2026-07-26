@@ -11,6 +11,7 @@ import view.MyColors;
 
 import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 
 public class MainStorySpawnSouth extends MainStorySpawnLocation {
     private AdvancedAppearance arabella = new SouthernArabellaAppearance();
@@ -46,7 +47,7 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
 
     @Override
     public World buildPastWorld() {
-        World world = WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
+        World world = super.buildPastWorld();
         addRoads(world);
         addFishingVillages(world);
         return world;
@@ -73,5 +74,20 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
     @Override
     public AdvancedAppearance getArabellaAppearance() {
         return arabella;
+    }
+
+    @Override
+    public Point getAnguishPoint() {
+        return new Point(2, 11);
+    }
+
+    @Override
+    public Point getDespairPoint() {
+        return new Point(3, 1);
+    }
+
+    @Override
+    public Point getDesolationPoint() {
+        return new Point(13, 1);
     }
 }

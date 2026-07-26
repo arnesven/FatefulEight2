@@ -18,20 +18,20 @@ import java.awt.*;
 import java.util.Random;
 
 public class AncientCitySubView extends TownishSubView {
-    private static final Sprite[] HOUSE_SPRITES = new Sprite[]{
-            new Sprite32x64("tallbldg", "world_foreground.png", 0x70,
+    public static final Sprite[] HOUSE_SPRITES = new Sprite[]{
+            new Sprite32x64("tallbldg", "past_foreground.png", 0x00,
                     MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GOLD, MyColors.DARK_BROWN),
-            new Sprite32x64("tallbldg", "world_foreground.png", 0x71,
+            new Sprite32x64("tallbldg", "past_foreground.png", 0x01,
                     MyColors.BLACK, MyColors.PINK, MyColors.GRAY_RED, MyColors.BROWN),
     };
 
-    private static final Sprite TOP_ROW_DAY = new Sprite32x64("tallbldgbg", "world_foreground.png", 0x73,
+    private static final Sprite TOP_ROW_DAY = new Sprite32x64("tallbldgbg", "past_foreground.png", 0x03,
             MyColors.BLACK, MyColors.BEIGE, MyColors.DARK_GRAY, MyColors.GRAY);
-    private static final Sprite TOP_ROW_TIP_DAY = new Sprite32x32("tallbldgbg", "world_foreground.png", 0xE4,
+    private static final Sprite TOP_ROW_TIP_DAY = new Sprite32x32("tallbldgbg", "past_foreground.png", 0x04,
             MyColors.BLACK, MyColors.BEIGE, MyColors.DARK_GRAY, MyColors.CYAN);
-    private static final Sprite TOP_ROW_NIGHT = new Sprite32x64("tallbldgbg", "world_foreground.png", 0x73,
+    private static final Sprite TOP_ROW_NIGHT = new Sprite32x64("tallbldgbg", "past_foreground.png", 0x03,
             MyColors.BLACK, MyColors.BEIGE, MyColors.DARK_GRAY, MyColors.GRAY);
-    private static final Sprite TOP_ROW_TIP_NIGHT = new Sprite32x32("tallbldgbg", "world_foreground.png", 0xE4,
+    private static final Sprite TOP_ROW_TIP_NIGHT = new Sprite32x32("tallbldgbg", "past_foreground.png", 0x04,
             MyColors.BLACK, MyColors.BEIGE, MyColors.DARK_GRAY, MyColors.DARK_BLUE);
 
     public AncientCitySubView(AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix, String name) {

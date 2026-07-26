@@ -5,12 +5,17 @@ import model.characters.appearance.AdvancedAppearance;
 import model.mainstory.GainSupportOfNeighborKingdomTask;
 import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.mainstory.MainStoryPastData;
+import model.map.WastelandHex;
 import model.map.World;
+import model.map.WorldBuilder;
+import model.map.WorldHex;
+import model.map.locations.MiningTownLocation;
 import view.MyColors;
 
 import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public abstract class MainStorySpawnLocation implements Serializable {
     private final int mapExpand;
@@ -85,7 +90,43 @@ public abstract class MainStorySpawnLocation implements Serializable {
         return remotePeoplePosition;
     }
 
-    public abstract World buildPastWorld();
+    public World buildPastWorld() {
+        Point dispairPoint = getDespairPoint();
+        Point anguishPoint = getAnguishPoint();
+        Point sorrowPoint = getSorrowPoint();
+        Point desolationPoint = getDesolationPoint();
+
+        World w = WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint(), Map.of(
+                dispairPoint, new WastelandHex(0, 0, WorldBuilder.ORIGINAL),
+                anguishPoint, new WastelandHex(0, 0, WorldBuilder.ORIGINAL),
+                sorrowPoint, new WastelandHex(0, 0, WorldBuilder.ORIGINAL),
+                desolationPoint, new WastelandHex(0, 0, WorldBuilder.ORIGINAL)));
+        WorldHex hex = w.getHex(dispairPoint);
+        hex.setLocation(new MiningTownLocation("Despair"));
+        hex = w.getHex(anguishPoint);
+        hex.setLocation(new MiningTownLocation("Anguish"));
+        hex = w.getHex(sorrowPoint);
+        hex.setLocation(new MiningTownLocation("Sorrow"));
+        hex = w.getHex(desolationPoint);
+        hex.setLocation(new MiningTownLocation("Desolation"));
+        return w;
+    }
+
+    public Point getAnguishPoint() {
+        return new Point(1, 13);
+    }
+
+    public Point getDespairPoint() {
+        return new Point(1, 2);
+    }
+
+    public Point getSorrowPoint() {
+        return new Point(17, 13);
+    }
+
+    public Point getDesolationPoint() {
+        return new Point(18, 0);
+    }
 
     public Point getPastEntryPoint() {
         return pastData.entryPoint;

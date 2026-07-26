@@ -35,12 +35,12 @@ public class AncientCityLocation extends TownishLocation {
 
     @Override
     protected Sprite getUpperSprite() {
-        return HexLocationSprite.make("acityupper", 0x10C, MyColors.BLACK, MyColors.BEIGE, MyColors.GRAY_RED);
+        return HexLocationSprite.make("acityupper", "past_foreground.png", 0x07, MyColors.BLACK, MyColors.BEIGE, MyColors.GRAY_RED);
     }
 
     @Override
     protected Sprite getLowerSprite() {
-        return HexLocationSprite.make("acityupper", 0x11C, MyColors.BLACK, MyColors.BEIGE, MyColors.GRAY_RED);
+        return HexLocationSprite.make("acityupper", "past_foreground.png", 0x17, MyColors.BLACK, MyColors.BEIGE, MyColors.GRAY_RED);
     }
 
     @Override

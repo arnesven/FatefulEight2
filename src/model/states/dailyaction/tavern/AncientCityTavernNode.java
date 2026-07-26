@@ -7,9 +7,9 @@ import view.sprites.Sprite32x32;
 
 public class AncientCityTavernNode extends TavernNode {
 
-    private static final Sprite SPRITE = new Sprite32x32("innlower", "world_foreground.png", 0xF2,
+    private static final Sprite SPRITE = new Sprite32x32("innlower", "past_foreground.png", 0x12,
             MyColors.BLACK, MyColors.PEACH, MyColors.DARK_RED, MyColors.BROWN);
-    private static final Sprite SPRITE2 = new Sprite32x32("innupper", "world_foreground.png", 0xE2,
+    private static final Sprite SPRITE2 = new Sprite32x32("innupper", "past_foreground.png", 0x02,
             MyColors.BLACK, MyColors.PEACH, MyColors.DARK_RED, MyColors.BROWN);
 
     public AncientCityTavernNode(Model model, boolean freeLodging) {

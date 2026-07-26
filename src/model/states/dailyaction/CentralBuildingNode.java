@@ -10,9 +10,9 @@ import view.sprites.Sprite64x32;
 import java.awt.*;
 
 public class CentralBuildingNode extends DailyActionNode {
-    private static final Sprite SPRITE_TOP = new Sprite64x32("centralbldgbottom", "world_foreground.png", 0xE2,
+    private static final Sprite SPRITE_TOP = new Sprite64x32("centralbldgbottom", "past_foreground.png", 0x02,
             MyColors.BLACK, MyColors.PEACH, MyColors.DARK_RED, MyColors.GRAY);
-    private static final Sprite SPRITE_BOTTOM = new Sprite64x32("centralbldgbottom", "world_foreground.png", 0xF2,
+    private static final Sprite SPRITE_BOTTOM = new Sprite64x32("centralbldgbottom", "past_foreground.png", 0x12,
             MyColors.BLACK, MyColors.PEACH, MyColors.DARK_RED, MyColors.BROWN);
     private final boolean big;
 

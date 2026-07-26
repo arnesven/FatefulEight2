@@ -7,7 +7,7 @@ import view.sprites.Sprite32x32;
 
 public class AncientCityShop extends GeneralShopNode {
 
-    public static final Sprite SPRITE = new Sprite32x32("cityshop", "world_foreground.png", 0xF6,
+    public static final Sprite SPRITE = new Sprite32x32("cityshop", "past_foreground.png", 0x16,
             MyColors.BLACK, MyColors.PEACH, MyColors.DARK_RED, MyColors.BROWN);
 
     public AncientCityShop(Model model, int col, int row) {

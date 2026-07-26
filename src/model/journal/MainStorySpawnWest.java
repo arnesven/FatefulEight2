@@ -25,11 +25,9 @@ import util.MyRandom;
 import view.MyColors;
 import view.subviews.PortraitSubView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.awt.*;
+import java.util.List;
 
 public class MainStorySpawnWest extends MainStorySpawnLocation {
 
@@ -76,11 +74,6 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
         GainSupportOfNeighborKingdomByFightingOrcsTask task2 = new GainSupportOfNeighborKingdomByFightingOrcsTask(castle2,
                 model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(castle2)), getCastle(), castle1, new Point(11, 12));
         return List.of(task1, task2);
-    }
-
-    @Override
-    public World buildPastWorld() {
-        return WorldBuilder.buildPastWorld(getPastUpperLeftCornerPoint());
     }
 
     @Override
@@ -134,5 +127,25 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
 
     public PotentialMutineer getRealMutineer() {
         return realMutineer;
+    }
+
+    @Override
+    public Point getDesolationPoint() {
+        return new Point(19, 3);
+    }
+
+    @Override
+    public Point getSorrowPoint() {
+        return new Point(18, 11);
+    }
+
+    @Override
+    public Point getAnguishPoint() {
+        return new Point(2, 12);
+    }
+
+    @Override
+    public Point getDespairPoint() {
+        return new Point(7, 4);
     }
 }
