@@ -6,6 +6,7 @@ import model.mainstory.*;
 import model.mainstory.honorable.GainSupportOfHonorableWarriorsTask;
 import model.map.*;
 import model.map.locations.*;
+import util.MyLists;
 import util.MyPair;
 
 import java.awt.*;
@@ -74,6 +75,12 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
                 new MyPair<>(new Point(6, 7), Direction.NORTH_WEST | Direction.SOUTH_EAST),
                 new MyPair<>(new Point(7, 8), Direction.NORTH_WEST | Direction.SOUTH),
                 new MyPair<>(new Point(7, 9), Direction.NORTH | Direction.SOUTH_EAST)));
+
+        var ronkToAnguish = MyLists.transform(List.of(
+                new Point(7, 10), new Point(6, 10), new Point(5, 11),
+                new Point(4, 11), new Point(3, 12), new Point(2, 12)),
+                x -> new MyPair<>(x, Direction.NORTH_EAST | Direction.SOUTH_WEST));
+        addRoads(w, ronkToAnguish);
     }
 
     @Override
