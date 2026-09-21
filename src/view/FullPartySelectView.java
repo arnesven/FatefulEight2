@@ -66,7 +66,7 @@ public class FullPartySelectView extends SelectableListMenu {
     private final List<String> headquartersLocations;
 
     public FullPartySelectView(Model model) {
-        super(model.getView(), 58, DrawingArea.WINDOW_ROWS-1);
+        super(model.getView(), 58, DrawingArea.WINDOW_ROWS-3);
         this.model = model;
         this.selectableCharacters = new ArrayList<>(model.getAllCharacters());
         selectableCharacters.add(new EnchantressCharacter());

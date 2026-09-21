@@ -95,7 +95,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedHorseIndex = 0;
 
     public CharacterCreationView(GameView previous) {
-        super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
+        super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-8);
         for (int i = 0; i < 2; ++i) {
             buffers.add(new InputBufferWidget(12));
         }

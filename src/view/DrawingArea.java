@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class DrawingArea extends JComponent {
-    private static final int SCREEN_HEIGHT = 400;
+    private static final int SCREEN_HEIGHT = 416;
     private static final int SCREEN_WIDTH = 640;
     public static final int WINDOW_COLUMNS = SCREEN_WIDTH / 8;
     public static final int WINDOW_ROWS = SCREEN_HEIGHT / 8;

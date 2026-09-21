@@ -15,6 +15,7 @@ public class BorderFrame {
     public static final int CHARACTER_WINDOW_ROWS = 10;
     public static final int CENTER_TEXT_BOTTOM = 45;
     public static final int TITLE_TEXT_HEIGHT = 2;
+    private static final int LOWER_BORDER_HEIGHT = 6;
 
     public static void drawFrameTop(ScreenHandler screenHandler) {
         drawFrameHorizontalLine(screenHandler, 0, WINDOW_COLUMNS, 1);
@@ -28,25 +29,25 @@ public class BorderFrame {
         drawFrameTop(screenHandler);
         drawFrameBottom(screenHandler);
 
-        for (int y=1; y < 4; ++y ) {
+        for (int y=1; y < LOWER_BORDER_HEIGHT; ++y ) {
             drawFrameHorizontalLine(screenHandler, 0, CHARACTER_WINDOW_COLUMNS, 1+y*(CHARACTER_WINDOW_ROWS+1));
             drawFrameHorizontalLine(screenHandler, WINDOW_COLUMNS-CHARACTER_WINDOW_COLUMNS, WINDOW_COLUMNS, 1+y*(CHARACTER_WINDOW_ROWS+1));
         }
 
-        for (int r=1; r < WINDOW_ROWS-4; ++r) {
+        for (int r=1; r < WINDOW_ROWS-LOWER_BORDER_HEIGHT; ++r) {
             screenHandler.put(CHARACTER_WINDOW_COLUMNS, r, CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
             screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, r, CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         }
 
-        for (int y=1; y < 4; ++y ) {
+        for (int y=1; y < LOWER_BORDER_HEIGHT; ++y ) {
             screenHandler.put(CHARACTER_WINDOW_COLUMNS, 1+y*(CHARACTER_WINDOW_ROWS+1), CharSprite.make(VERTICAL_LEFT, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
             screenHandler.put(WINDOW_COLUMNS-CHARACTER_WINDOW_COLUMNS-1, 1+y*(CHARACTER_WINDOW_ROWS+1), CharSprite.make(VERTICAL_RIGHT, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         }
 
         screenHandler.put(CHARACTER_WINDOW_COLUMNS, 1, CharSprite.make(HORIZONTAL_DOWN, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, 1, CharSprite.make(HORIZONTAL_DOWN, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
-        screenHandler.put(CHARACTER_WINDOW_COLUMNS, WINDOW_ROWS-5, CharSprite.make(HORIZONTAL_UP, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
-        screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, WINDOW_ROWS-5, CharSprite.make(HORIZONTAL_UP, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+        screenHandler.put(CHARACTER_WINDOW_COLUMNS, WINDOW_ROWS-LOWER_BORDER_HEIGHT-1, CharSprite.make(HORIZONTAL_UP, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+        screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, WINDOW_ROWS-LOWER_BORDER_HEIGHT-1, CharSprite.make(HORIZONTAL_UP, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
 
         drawFrameHorizontalLine(screenHandler, CHARACTER_WINDOW_COLUMNS+1, 80-CHARACTER_WINDOW_COLUMNS-1, TITLE_TEXT_HEIGHT+1);
         drawFrameHorizontalLine(screenHandler, CHARACTER_WINDOW_COLUMNS+1, 80-CHARACTER_WINDOW_COLUMNS-1, CENTER_TEXT_BOTTOM-centerTextHeight-1);
@@ -128,19 +129,19 @@ public class BorderFrame {
             screenHandler.put(WINDOW_COLUMNS-CHARACTER_WINDOW_COLUMNS-1, 1+y*(CHARACTER_WINDOW_ROWS+1),
                     CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         }
-        screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, WINDOW_ROWS-5,
+        screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, WINDOW_ROWS-LOWER_BORDER_HEIGHT-1,
                 CharSprite.make(VERTICAL_LEFT, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
 
 
-        for (int i = 4; i > 0; i--) {
+        for (int i = LOWER_BORDER_HEIGHT; i > 0; i--) {
             screenHandler.put(80 - CHARACTER_WINDOW_COLUMNS - 1, WINDOW_ROWS - i,
                     CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         }
 
         for (int i = 1; i < 4; ++i) {
-            screenHandler.put(i * 14 - 1, WINDOW_ROWS - 5,
+            screenHandler.put(i * 14 - 1, WINDOW_ROWS - LOWER_BORDER_HEIGHT - 1,
                     CharSprite.make(HORIZONTAL_DOWN, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
-            for (int j = 4; j > 0; --j) {
+            for (int j = LOWER_BORDER_HEIGHT; j > 0; --j) {
                 screenHandler.put(i * 14 - 1, WINDOW_ROWS - j,
                         CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
             }

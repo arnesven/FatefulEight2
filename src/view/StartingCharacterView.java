@@ -33,7 +33,7 @@ public abstract class StartingCharacterView extends SelectableListMenu {
     private static final CharacterClass[] allClassesWithoutNone = makeAllClasses();
 
     public StartingCharacterView(Model model, GameCharacter[] charSet, boolean wide) {
-        super(model.getView(), BASE_WIDTH + (wide ? EXTRA_WIDTH : 0), DrawingArea.WINDOW_ROWS-8);
+        super(model.getView(), BASE_WIDTH + (wide ? EXTRA_WIDTH : 0), DrawingArea.WINDOW_ROWS-10);
         this.currentSet = charSet;
         selectedIndex = MyRandom.randInt(currentSet.length);
         if (currentSet[selectedIndex] instanceof PresetCharacter) {

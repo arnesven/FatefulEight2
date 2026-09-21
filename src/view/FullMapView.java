@@ -89,7 +89,8 @@ public class FullMapView extends GameView {
         if (currentFilter != null) {
             currentFilter.drawLegend(screenHandler, 0, 2);
         }
-        screenHandler.clearSpace(0, 80,49, 50);
+        screenHandler.clearSpace(0, 80,49, 52);
+        screenHandler.clearForeground(0, 80, 48, 52);
         if (worldToDraw == model.getWorld()) {
             BorderFrame.drawString(screenHandler, model.getHexInfo(cursorPos), 0, 49, MyColors.WHITE);
         } else {

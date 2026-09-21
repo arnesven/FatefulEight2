@@ -1,18 +1,13 @@
 package view.widget;
 
 import model.Model;
-import model.characters.GameCharacter;
 import util.Arithmetics;
 import view.*;
-import view.sprites.CharSprite;
 import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
 
 import static view.BorderFrame.CHARACTER_WINDOW_COLUMNS;
 import static view.DrawingArea.WINDOW_COLUMNS;
-import static view.DrawingArea.WINDOW_ROWS;
-import static view.sprites.BorderSpriteConstants.HORIZONTAL_UP;
-import static view.sprites.BorderSpriteConstants.LOWER_RIGHT_CORNER;
 
 public class MiniLog {
 
