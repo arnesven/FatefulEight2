@@ -3,10 +3,7 @@ package view;
 import control.FatefulEight;
 import model.Model;
 import sound.SoundEffects;
-import view.sprites.Animation;
-import view.sprites.AnimationManager;
-import view.sprites.CharClassIconSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,11 +15,12 @@ public class IntroGameView extends GameView implements Animation {
     private static final long FANFARE_START_MS = 3000;
     private static final String START_SOUND = "Rise03";
     private static final String JINGLE_SOUND = "Rise06";
-    private static final Sprite BLACK_SPRITE = new CharClassIconSprite(0x1F, MyColors.RED);
+    private static final Sprite BLACK_SPRITE = FilledBlockSprite.BLACK_BLOCK;
     private static final long TIME_OUT_TIME_MS = 45_000;
     private static final Sprite splashSprite = makeSprite();
     private static final Sprite boltSprite = makeBoltSprite();
     private static final Sprite[] titleSprites = makeTitle();
+    private static final int FOOTER_ROW = 49;
     private int aniIndex = 0;
     private long animationTime = 0;
     private boolean runAnimation = false;
@@ -59,17 +57,19 @@ public class IntroGameView extends GameView implements Animation {
     @Override
     public void internalUpdate(Model model) {
         model.getScreenHandler().put(0, 5, splashSprite);
-        for (int x = 0; x < 640/32; ++x) {
-            model.getScreenHandler().put(x*4, 46, BLACK_SPRITE);
+        for (int row = FOOTER_ROW; row < FOOTER_ROW+3; ++row) {
+            for (int x = 0; x < DrawingArea.WINDOW_COLUMNS; ++x) {
+                model.getScreenHandler().put(x, row, BLACK_SPRITE);
+            }
         }
-        BorderFrame.drawCentered(model.getScreenHandler(), "Alt + Enter for fullscreen", 47, MyColors.WHITE);
-        BorderFrame.drawCentered(model.getScreenHandler(), "Fateful Eight v " + FatefulEight.version + " - Written by Erik A. Nilsson - Copyright (C) 2026", 49, MyColors.CYAN);
+        BorderFrame.drawCentered(model.getScreenHandler(), "Alt + Enter for fullscreen", FOOTER_ROW, MyColors.WHITE);
+        BorderFrame.drawCentered(model.getScreenHandler(), "Fateful Eight v " + FatefulEight.version + " - Written by Erik A. Nilsson - Copyright (C) 2026", FOOTER_ROW+2, MyColors.CYAN);
         model.getScreenHandler().clearForeground();
         if (!fading) {
             model.getScreenHandler().register("bolt", new Point(0, 5), boltSprite);
             model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex], 1);
             if (aniDone) {
-                BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 40, MyColors.WHITE);
+                BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", FOOTER_ROW - 7, MyColors.WHITE);
             }
         }
         if (model.getScreenHandler().getFadeColor() != MyColors.WHITE || flashDone) {
