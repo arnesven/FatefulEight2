@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.map.HexLocation;
 import model.states.dailyaction.*;
@@ -55,6 +56,7 @@ public class PartyManagementEveningState extends AdvancedDailyActionState {
         if (model.getSettings().skipPartyManagementEveningState()) {
             return getEveningState(model);
         }
+        model.setTimeOfDay(TimeOfDay.EVENING);
         super.run(model);
         return getEveningState(model);
     }
