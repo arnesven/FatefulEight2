@@ -79,7 +79,8 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             return "a large group of people";
         }
         if (groupSize == 1) {
-            return "a person traveling alone";
+            String raceName = getVictimCharacter(getModel()).getRace().getBasicName().toLowerCase();
+            return "a person traveling alone... I think it's " + MyStrings.aOrAn(raceName) + " " + raceName;
         }
         return MyStrings.numberWord(groupSize) + " people";
     }

@@ -1,5 +1,6 @@
 package model.map;
 
+import model.Model;
 import model.map.locations.*;
 import util.MyPair;
 
@@ -673,6 +674,16 @@ public class WorldBuilder {
 
     public static boolean isInExtendedRegion(Point position) {
         return !INITIAL_WORLD_BOUNDS.contains(position);
+    }
+
+    public static boolean isInStartingArea(Model model) {
+        if (model.getWorld().getWorldType() != WorldType.original) {
+            return false;
+        }
+        Point currentPos = model.getParty().getPosition();
+        Rectangle rect = new Rectangle(CROSSROADS_INN_POSITION.x - 6, CROSSROADS_INN_POSITION.y - 6,
+                12, 12);
+        return rect.contains(currentPos);
     }
 
 
