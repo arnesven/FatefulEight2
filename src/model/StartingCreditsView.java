@@ -17,9 +17,10 @@ public class StartingCreditsView extends CreditsView {
             },
             new String[]{
                     "Play Testers",
-                    "Nathalie Bjallerhag     Peter Komaromy",
-                    "Pontus Haglund     Robert Hallberg",
-                    "Carl Johansson     Magnus Thalen",
+                    "Nathalie Bjallerhag     Peter Komaromy   ",
+                    "  Pontus Haglund     Robert Hallberg",
+                    " Carl Johansson     Magnus Thalen ",
+                    "Daniel Forsberg     Calle Wahlgren",
                     "Simon Hessling Oscarsson"
             }
     };
