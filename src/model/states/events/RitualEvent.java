@@ -104,7 +104,7 @@ public abstract class RitualEvent extends DailyEventState {
 
         RitualSubView subView = new RitualSubView(getTheme(), this, magicColor);
         BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.battleSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.ritualSong);
         CollapsingTransition.transition(model, subView);
         GameStatistics.incrementRituals();
 

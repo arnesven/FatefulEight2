@@ -14,6 +14,8 @@ import model.classes.npcs.RegentClass;
 import model.items.ItemDeck;
 import model.items.spells.Spell;
 import model.journal.MainStorySpawnLocation;
+import model.journal.PartSevenStoryPart;
+import model.journal.PartSixStoryPart;
 import model.log.GameLog;
 import model.mainstory.MainStory;
 import model.mainstory.MainStoryStep;
@@ -26,6 +28,7 @@ import model.races.Race;
 import model.ruins.RuinsDungeon;
 import model.states.*;
 import model.tutorial.TutorialHandler;
+import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
 import util.MyLists;
@@ -124,6 +127,7 @@ public class Model {
         getParty().clearAnimations();
         GameStatistics.setModel(this);
         SoundEffects.setSettings(gameData.settings);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
     }
 
     public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {
@@ -530,10 +534,12 @@ public class Model {
 
     public void showHallOfFame() {
         gameView = new HallOfFameView(this);
+        gameView.transitionedTo(this);
     }
 
     public void showCredits() {
         gameView = new StartingCreditsView();
+        gameView.transitionedTo(this);
     }
 
     public void setGameStarted(boolean b) {

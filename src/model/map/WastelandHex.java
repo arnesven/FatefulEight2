@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import sound.BackgroundMusic;
 import view.combat.WastelandCombatTheme;
 import model.map.locations.WastelandLocation;
 import model.states.DailyEventState;
@@ -22,10 +23,12 @@ public class WastelandHex extends WorldHex {
 
     public WastelandHex(int roads, int rivers, HexLocation loc, int state) {
         super(MyColors.TAN, roads, rivers, loc, state);
+        setMusic(BackgroundMusic.wasteland);
     }
 
     public WastelandHex(int roads, int rivers, int state) {
         this(roads, rivers, new WastelandLocation(), state);
+        setMusic(BackgroundMusic.wasteland);
     }
 
     @Override

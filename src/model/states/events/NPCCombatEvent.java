@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.combat.CombatAdvantage;
 import model.combat.Damage;
 import model.combat.abilities.CombatAction;
 import model.characters.GameCharacter;
@@ -36,7 +37,7 @@ public class NPCCombatEvent extends CombatEvent {
     @Override
     protected void doEvent(Model model) {
         BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
-        CombatEvent.startMusic();
+        CombatEvent.startMusic(CombatAdvantage.Party);
         CollapsingTransition.transition(model, subView);
         AnimationManager.synchAnimations();
         round = 1;

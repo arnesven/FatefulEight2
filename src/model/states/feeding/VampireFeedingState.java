@@ -39,7 +39,7 @@ public class VampireFeedingState extends GameState {
         model.setTimeOfDay(TimeOfDay.NIGHT);
         println(vampire.getFirstName() + " sneaks out at night to find a victim to feed on.");
         model.getTutorial().vampireFeeding(model);
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.vampireProwl);
         for (int i = 0; i < noOfAttempts; ++i) {
             VampireFeedingHouse house = onFarm ? VampireFeedingHouse.makeFarmHouse(vampire)
                     : VampireFeedingHouse.makeTownHouse(vampire);

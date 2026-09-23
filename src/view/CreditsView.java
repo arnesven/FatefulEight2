@@ -1,6 +1,8 @@
 package view;
 
 import model.Model;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import sound.SoundEffects;
 import view.sprites.Animation;
 import view.sprites.AnimationManager;
@@ -24,7 +26,9 @@ public abstract class CreditsView extends GameView implements Animation {
     }
 
     @Override
-    public void transitionedTo(Model model) { }
+    public void transitionedTo(Model model) {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.creditsSong);
+    }
 
     @Override
     public void transitionedFrom(Model model) {

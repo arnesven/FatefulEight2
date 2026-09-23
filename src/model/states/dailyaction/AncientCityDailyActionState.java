@@ -3,7 +3,6 @@ package model.states.dailyaction;
 import model.Model;
 import model.map.UrbanLocation;
 import model.map.locations.AncientCityLocation;
-import model.states.GameState;
 import model.states.dailyaction.tavern.AncientCityTavernNode;
 import sound.BackgroundMusic;
 import view.subviews.TownSubView;
@@ -23,7 +22,7 @@ public class AncientCityDailyActionState extends TownishDailyActionState {
 
     @Override
     protected BackgroundMusic getSound() {
-        return BackgroundMusic.caveSong;
+        return BackgroundMusic.longAgoSong;
     }
 
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {

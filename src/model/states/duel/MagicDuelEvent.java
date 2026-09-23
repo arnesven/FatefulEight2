@@ -89,6 +89,10 @@ public class MagicDuelEvent extends DailyEventState {
         return makeNPCMageOfClassAndLevel(MyRandom.sample(RITUALIST_CLASSES), 6);
     }
 
+    public static void startMusic() {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.upbeatCombat);
+    }
+
     @Override
     protected void doEvent(Model model) {
         MyColors opposColor = findBestMagicColor(opponent);
@@ -123,7 +127,7 @@ public class MagicDuelEvent extends DailyEventState {
         } while (!setupSubview.isOnStart());
 
         BackgroundMusic previousMusic = ClientSoundManager.getCurrentBackgroundMusic();
-        CombatEvent.startMusic();
+        startMusic();
 
         this.duelists = new ArrayList<>();
 

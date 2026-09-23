@@ -32,7 +32,7 @@ public class NPCOnlyMagicDuelEvent extends MagicDuelEvent {
     @Override
     protected void doEvent(Model model) {
         BackgroundMusic previousMusic = ClientSoundManager.getCurrentBackgroundMusic();
-        CombatEvent.startMusic();
+        MagicDuelEvent.startMusic();
 
         this.controller1 = new MatrixDuelistController(duelists.get(0),
                 duelists.get(0).getGauge().getAIMatrices(duelists.get(0).getCharacter()));

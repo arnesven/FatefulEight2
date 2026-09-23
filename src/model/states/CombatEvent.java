@@ -108,7 +108,7 @@ public class CombatEvent extends DailyEventState {
     protected void doEvent(Model model) {
         GameStatistics.incrementCombatEvents();
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
-        startMusic();
+        startMusic(advantage);
         model.getTutorial().tutorialCombat(model);
         StripedTransition.transition(model, subView);
         AnimationManager.synchAnimations();
@@ -145,9 +145,15 @@ public class CombatEvent extends DailyEventState {
         subView.unregisterOngoing();
     }
 
-    public static void startMusic() {
-        ClientSoundManager.playBackgroundMusic(++songCounter % 2 == 0 ?
-                BackgroundMusic.combatSong : BackgroundMusic.altCombatSong);
+    public static void startMusic(CombatAdvantage advantage) {
+        if (advantage == CombatAdvantage.Party) {
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.upbeatCombat);
+        } else if (advantage == CombatAdvantage.Enemies) {
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.miniBoss);
+        } else {
+            ClientSoundManager.playBackgroundMusic(++songCounter % 2 == 0 ?
+                    BackgroundMusic.combatSong : BackgroundMusic.altCombatSong);
+        }
     }
 
     private void runQuickCastTurns(Model model) {

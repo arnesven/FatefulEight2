@@ -2,7 +2,6 @@ package model.map;
 
 import model.Model;
 import model.actions.*;
-import model.states.events.SimpleMineEvent;
 import model.states.mine.AdvancedMineEvent;
 import sound.BackgroundMusic;
 import view.combat.CombatTheme;

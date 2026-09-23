@@ -23,6 +23,8 @@ import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.*;
 import view.LogView;
 import view.subviews.*;
@@ -595,6 +597,7 @@ public class EveningState extends GameState {
         if (deadPeople.isEmpty()) {
             return;
         }
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.griefSong);
         GameCharacter subject = MyRandom.sample(deadPeople);
         String theyOrHeOrShe = deadPeople.size() > 1 ? "they" : heOrShe(subject.getGender());
         String themHimOrHer = deadPeople.size() > 1 ? "them" : himOrHer(subject.getGender());

@@ -61,7 +61,7 @@ public class AdvancedMineEvent extends DailyEventState {
         if (!runIntro(model)) {
             return;
         }
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.caveSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.longAgoSong);
         boolean enteredFromSurface = !model.isInCaveSystem();
         this.exitToSurface = enteredFromSurface;
         this.mine = makeRandomMine(enteredFromSurface);

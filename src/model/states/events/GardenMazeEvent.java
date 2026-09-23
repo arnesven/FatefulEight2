@@ -100,7 +100,7 @@ public class GardenMazeEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);
 
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.caveSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.longAgoSong);
         int mazeSize = 12 + previousWins * 2;
         this.startingPoint = new Point(MyRandom.randInt(1, mazeSize-1), 0);
         GardenMaze maze = GardenMaze.generate(mazeSize, mazeSize, startingPoint.x);
