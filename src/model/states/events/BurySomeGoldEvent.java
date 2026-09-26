@@ -162,6 +162,7 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
             partyMemberSay(main, "THOSE robbers are gone. What about other robbers?");
             leaderSay("Now you're just being silly.");
             partyMemberSay(main, "Well, it's your call. You know what happened last time...");
+            // FEATURE: Leave the gold in the ground, make task to come back later.
             leaderSay(main.getFirstName() + ", which one of these trees was it?");
             if (model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 8)) {
                 partyMemberSay(main, "It's right here. It must be.");

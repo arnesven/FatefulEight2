@@ -36,7 +36,8 @@ import java.util.List;
 public class RescueMissionQuest extends MainQuest {
     public static final String QUEST_NAME = "Rescue Mission";
     private static final String TEXT = "The party sets out to find Caid.";
-    private static final String ENDING = "You return to the castle to receive your payment.";
+    private static final String ENDING = "Not only do you find the person you are looking for, " +
+            "you also find a chest of gold on your way out of the dungeon.";
     private SplitPartyJunction split;
     private QuestNode otherGroupCurrent = null;
     private QuestEdge otherGroupNext = null;
@@ -103,7 +104,7 @@ public class RescueMissionQuest extends MainQuest {
                         new CollaborativeSkillCheckSubScene(1, 3, Skill.Logic, 8,
                                 "Hmm. Forty bandits is more than we can handle. We need to come up with a plan.")  // 8
                 )),
-                new QuestScene("Put on a show", List.of(
+                new QuestScene("Put on a show", List.of( // FEATURE: Show bandits with portrait subview
                         new BenchOtherGroupSubScene(false, new CollaborativeSkillCheckSubScene(3, 3, Skill.Persuade, 8, // 8
                                 "First we need to persuade as many people to come to the show as possible.")),
                         new BenchOtherGroupSubScene(false, new CollectiveSkillCheckSubScene(5, 3, Skill.Entertain, 6, // 6
@@ -443,7 +444,7 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("Well, they were probably talking about how to best ransom me back to my employer when the fort was " +
                     "stormed by a rival gang, completely wiping out the Vermin.");
             portraitSay("The new tenants of the fort didn't believe me when I told them who I was and seemed to have no intentions of " +
-                    "letting me loose. So there I was stuck.");
+                    "letting me loose. So there I was, stuck.");
             leaderSay("Until now. So what's the plan now?");
             portraitSay("I still have a job to do. My only clue leads me to a cave somewhere in these mountains. I'd better be off. " +
                     "Thanks again for rescuing me. Please tell my employer " +

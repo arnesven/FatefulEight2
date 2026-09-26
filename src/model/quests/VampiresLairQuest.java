@@ -101,8 +101,8 @@ public class VampiresLairQuest extends MainQuest {
                 new QuestScene("Assassination", List.of(
                         new SoloSkillCheckSubScene(3, 6, Skill.Perception, 8, "Hmm... two of the vampires are talking. If we get a little closer we may overhear " +
                                 "the conversation and learn where the missing sister is being held."), // 8
-                        new SoloSkillCheckSubScene(0, 7, Skill.Sneak, 14, "Maybe we can just sneak up and take her out?"), // 12
-                        new SoloSkillCheckSubScene(1, 7, Skill.Bows, 12, "With one well placed arrow, she'll be one vanquished vampire."), // 12
+                        new SoloSkillCheckSubScene(0, 7, Skill.Sneak, 14, "Maybe we can just sneak up and take her out?"), // FEATURE: Describe how party member assassinates the vampire
+                        new SoloSkillCheckSubScene(1, 7, Skill.Bows, 12, "With one well placed arrow, she'll be one vanquished vampire."), // FEATURE: See above
                         new PersuadeCaidAndOthersToLeaveSubScene(2, 7)
                 ))
                 );

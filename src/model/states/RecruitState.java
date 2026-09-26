@@ -281,6 +281,10 @@ public class RecruitState extends GameState {
                 getModel().getParty().getLeader().getName() + ". Good to meet you."));
         comments.add(new MyTriplet<>("Yes. I was getting pretty bored around here.", List.of(),
                 ""));
+        comments.add(new MyTriplet<>("Good. What prospects do we have?", List.of(),
+                "You'll find out in due time."));
+        comments.add(new MyTriplet<>("You lot seem like serious types. I'm in.", List.of(),
+                "We are."));
         comments.add(new MyTriplet<>("You should be honored to have me. Okay.", List.of(
                 PersonalityTrait.narcissistic, PersonalityTrait.snobby), ""));
         comments.add(new MyTriplet<>("When do we eat dinner?.", List.of(

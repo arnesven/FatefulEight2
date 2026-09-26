@@ -74,6 +74,7 @@ public class FedUpAdventurerEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        model.getSettings().getMiscFlags().put(GOT_THIS_EVENT, true);
         leaderSay("Are you alright?");
         portraitSay("No. Not at all... I'm completely exhausted. I think I'd better sit down for a minute.");
         String raceName = victim.getRace().getBasicName();
