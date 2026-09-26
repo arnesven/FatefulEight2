@@ -172,6 +172,9 @@ public class BrigandInBurgundyEvent extends DailyEventState {
             portraitSay("Uh, yes.");
             leaderSay("Well, good luck in your travels Brigand. " + iOrWeCap() + "'ll be on " + myOrOur() + " way now.");
             portraitSay("Farewell noble adventurer! Until we meet again.");
+        } if (model.getSettings().getMiscFlags().get(DEAD_KEY)) {
+            removePortraitSubView(model);
+            leaderSay("I guess that challenge was a bit much for the Brigand.");
         } else {
             showExplicitPortrait(model, brigand.getAppearance(), brigand.getName());
             portraitSay("What's the matter?");
@@ -212,6 +215,8 @@ public class BrigandInBurgundyEvent extends DailyEventState {
     }
 
     private class ExploreMansionDungeonState extends ExploreRuinsState {
+        private boolean reactedToDeadBrigand = false;
+
         public ExploreMansionDungeonState(Model model, RuinsDungeon dungeon, String name) {
             super(model, dungeon, name);
         }
@@ -234,17 +239,25 @@ public class BrigandInBurgundyEvent extends DailyEventState {
         @Override
         public void combatPostHook(Model model, CombatEvent combat) {
             if (brigand.isDead()) {
-                model.getSettings().getMiscFlags().put(DEAD_KEY, true);
-                leaderSay("That was the end of the Brigand in Burgundy.");
-                boolean said = randomSayIfPersonality(PersonalityTrait.cold, List.of(), "Good riddance.");
-                said = said || randomSayIfPersonality(PersonalityTrait.encouraging, List.of(), "The world will mourn...");
-                said = said || randomSayIfPersonality(PersonalityTrait.romantic, List.of(), "What a terrible loss!");
-                leaderSay("I guess we can still keep going though.");
+                if (this.reactedToDeadBrigand) {
+                    reactedToDeadBrigand = true;
+                    model.getSettings().getMiscFlags().put(DEAD_KEY, true);
+                    leaderSay("That was the end of the Brigand in Burgundy.");
+                    boolean said = randomSayIfPersonality(PersonalityTrait.cold, List.of(), "Good riddance.");
+                    said = said || randomSayIfPersonality(PersonalityTrait.encouraging, List.of(), "The world will mourn...");
+                    said = said || randomSayIfPersonality(PersonalityTrait.romantic, List.of(), "What a terrible loss!");
+                    leaderSay("I guess we can still keep going though.");
+                }
             } else {
                 if (combat.fled()) {
                     printQuote(brigand.getName(), "What, we're giving up already?");
                     leaderSay(iOrWeCap() + " can't take any more. You can keep going if you wish.");
                     printQuote(brigand.getName(), "Aahh... better flee and fight another day perhaps.");
+                } else if (brigand.getHP() < 4) {
+                    printQuote(brigand.getName(), "What a fight... I'm wounded...");
+                    leaderSay("Are you okay?");
+                    printQuote(brigand.getName(), "Never better! But, uh, unless you can assist with some healing, " +
+                            "we better avoid any more fights.");
                 } else {
                     printQuote(brigand.getName(), MyRandom.sample(List.of("Vanquished!", "Low lives!",
                             "They were no match for my skill!", "Let's push on!")));
