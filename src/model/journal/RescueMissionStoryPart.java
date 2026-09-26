@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.FacialExpression;
+import model.characters.appearance.WeepingAmount;
 import model.classes.Classes;
 import model.mainstory.MainStory;
 import model.mainstory.VisitLordEvent;
@@ -175,13 +176,45 @@ public class RescueMissionStoryPart extends StoryPart {
                     leaderSay("Not yet.");
                 }
             } else {
-                portraitSay("Welcome back. Have you found Caid?");
-                leaderSay("Yes. We have.");
-                portraitSay("Was it kidnappers? Or something worse?");
-                leaderSay("Rivalling gangs. Caid got caught in the middle, but we got him out.");
-                portraitSay("Splendid. Where is he now?");
-                leaderSay("Still on the mission you gave him. He wanted you to know that.");
-                portraitSay("Thank you so much for your help.");
+                GameCharacter caid = model.getMainStory().getCaidCharacter();
+                if (model.getParty().getPartyMembers().contains(caid)) {
+                    partyMemberSay(caid, "I have returned sire.");
+                    portraitSay("Caid! I was worried about you. Wherever have you been?");
+                    partyMemberSay(caid, "I got caught in the middle of gang war. I've been held captive.");
+                    portraitSay("Oh my goodness.", FacialExpression.surprised);
+                    if (model.getParty().getLeader() == caid) {
+                        leaderSay("With the help of my friends here, I managed to escape.");
+                    } else {
+                        leaderSay("We got him out, and we've assisted him in his mission.");
+                    }
+                    portraitSay("Yes, the matter of my sister. You found some clues to her whereabouts?");
+                    partyMemberSay(caid, "I'm afraid the truth is very dark sir. Your sister fell into some bad company.");
+                    portraitSay("I suspected as much...");
+                    partyMemberSay(caid, "Very bad sir, we found her in a vampire den.");
+                    portraitSay("Vampires... that's... What became of her?", FacialExpression.afraid);
+                    partyMemberSay(caid, "She was beyond rescuing sir, she had become a vampire herself.");
+                    portraitSay("This saddens me greatly.");
+                    model.getLog().waitForAnimationToFinish();
+                    getPortraitSubView().setWeeping(WeepingAmount.aLittle);
+                    println(castle.getLordName() + " is clearly shaken by this news.");
+                    leaderSay("We did all we could.");
+                    partyMemberSay(caid, "I'm very sorry my lord. I know she was very dear to you.");
+                    portraitSay("She was indeed.");
+                    model.getLog().waitForAnimationToFinish();
+                    getPortraitSubView().setWeeping(WeepingAmount.none);
+                    portraitSay("It will take some time for me to deal with this. In the mean time, " +
+                            "I'm happy you have returned Caid.");
+                    partyMemberSay(caid, "Me too. But I've decided to join this group for a while.");
+                    portraitSay("I see. I will allow it.");
+                } else {
+                    portraitSay("Welcome back. Have you found Caid?");
+                    leaderSay("Yes. We have.");
+                    portraitSay("Was it kidnappers? Or something worse?");
+                    leaderSay("Rivalling gangs. Caid got caught in the middle, but we got him out.");
+                    portraitSay("Splendid. Where is he now?");
+                    leaderSay("Still on the mission you gave him. He wanted you to know that.");
+                    portraitSay("Thank you so much for your help.");
+                }
                 if (internalStep < COMPLETED) {
                     increaseStep(model);
                 }

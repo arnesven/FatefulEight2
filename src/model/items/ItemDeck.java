@@ -208,7 +208,7 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(
                 new Buckler(),
                 new LargeShield(),
-                new KiteShield(),
+                new KiteShield(), // FEATURE: Half-moon shield
                 new HeraldicShield(),
                 new SpikedShield(),
                 new TowerShield());
