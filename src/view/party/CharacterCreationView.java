@@ -17,6 +17,7 @@ import model.items.ItemDeck;
 import model.items.weapons.Weapon;
 import model.races.EasternHuman;
 import model.races.Race;
+import model.states.GameState;
 import util.Arithmetics;
 import util.MyRandom;
 import view.BorderFrame;
@@ -260,16 +261,16 @@ public class CharacterCreationView extends SelectableListMenu {
                 int midX = x + COLUMN_SKIP + 14;
                 int row = 17;
                 drawCharacterDetails(model, lastCharacter, midX, row);
-                drawChecksAndNotOk(model, x);
+                drawChecksAndNotOk(model, x, yStart);
             }
         });
     }
 
-    private void drawChecksAndNotOk(Model model, int x) {
-        model.getScreenHandler().put(x+COLUMN_SKIP+12, 6, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
-        model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
+    private void drawChecksAndNotOk(Model model, int x, int yStart) {
+        model.getScreenHandler().put(x+COLUMN_SKIP+12, yStart + 3, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+12, yStart + 5, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
 
-        model.getScreenHandler().put(x+COLUMN_SKIP-4, 33, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP-4, yStart + 30, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
     }
 
     private boolean selectedClassOk() {
@@ -326,6 +327,12 @@ public class CharacterCreationView extends SelectableListMenu {
         result.add(new InputFieldContent(xStart + COLUMN_SKIP, yPos++, 0));
         yPos++;
         result.add(new InputFieldContent(xStart + COLUMN_SKIP, yPos++, 1));
+        result.add(new SelectableListContent(xStart + 3, yPos, "Random Name") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                randomizeName();
+            }
+        });
         yPos++;
 
         result.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, gender ? "Female" : "Male") {
@@ -353,7 +360,12 @@ public class CharacterCreationView extends SelectableListMenu {
                 randomizeAppearance();
             }
         });
-        yPos++;
+        result.add(new SelectableListContent(xStart + 3, yPos++, "Reset Appearance") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                resetAppearance();
+            }
+        });
         result.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, "Eyes #" + (selectedEyes + 1)) {
             @Override
             public void turnLeft(Model model) {
@@ -565,7 +577,7 @@ public class CharacterCreationView extends SelectableListMenu {
             }
         });
         extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
-            final Point appearancePoint = new Point(47, 7);
+            final Point appearancePoint = new Point(47, yStart + 8);
 
             @Override
             public void turnLeft(Model model) {
@@ -771,6 +783,11 @@ public class CharacterCreationView extends SelectableListMenu {
         protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
     }
 
+    private void randomizeName() {
+        buffers.get(0).setText(GameState.randomFirstName(gender));
+        buffers.get(1).setText(GameState.randomLastName());
+    }
+
     private void randomizeAppearance() {
         selectedHairColor = MyRandom.randInt(hairColorSet.length);
         selectedDetailColor = MyRandom.randInt(detailColorSet.length);
@@ -791,6 +808,20 @@ public class CharacterCreationView extends SelectableListMenu {
         rebuildAppearance();
     }
 
+    private void resetAppearance() {
+        selectedHairColor = 1;
+        selectedDetailColor = 0;
+        selectedMouth = 0;
+        selectedLipColor = 0;
+        selectedNose = 0;
+        selectedEyes = 0;
+        selectedMascara = 0;
+        selectedHairStyle = 0;
+        selectedBeard = 0;
+        accessories.clear();
+        detailColors.clear();
+        rebuildAppearance();
+    }
 
     private static CharacterEyes[] makeEyeSet() {
         CharacterEyes[] result = new CharacterEyes[CharacterEyes.allEyes.length +

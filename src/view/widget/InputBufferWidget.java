@@ -10,12 +10,16 @@ public class InputBufferWidget {
 
     public InputBufferWidget(int inputLength) {
         this.inputMaxLength = inputLength;
+        startString = makeStartString();
+        buffer = new StringBuffer(startString);
+    }
+
+    private String makeStartString() {
         StringBuilder bldr = new StringBuilder();
-        for (int i = inputLength; i > 0; --i) {
+        for (int i = inputMaxLength; i > 0; --i) {
             bldr.append('þ');
         }
-        startString = bldr.toString();
-        buffer = new StringBuffer(startString);
+        return bldr.toString();
     }
 
     public String getText() {
@@ -48,5 +52,12 @@ public class InputBufferWidget {
 
     public String getRawText() {
         return buffer.toString();
+    }
+
+    public void setText(String s) {
+        buffer.delete(0, buffer.length());
+        buffer.insert(0, makeStartString());
+        buffer.replace(0, s.length(), s);
+        caretPos = s.length();
     }
 }
