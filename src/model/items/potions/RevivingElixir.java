@@ -2,6 +2,7 @@ package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.FacialExpression;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.GameState;
@@ -36,6 +37,7 @@ public class RevivingElixir extends Potion {
     public String useYourself(Model model, GameCharacter gc) {
         // FEATURE: Add animation (reverse of change class)
         gc.addToHP(2);
+        model.getParty().setFacialExpression(gc, FacialExpression.none, FacialExpression.PERMANENT);
         return gc.getName() + " has come back to life!";
     }
 
