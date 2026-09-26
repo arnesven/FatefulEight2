@@ -96,7 +96,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedHorseIndex = 0;
 
     public CharacterCreationView(GameView previous) {
-        super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-8);
+        super(previous, DrawingArea.WINDOW_COLUMNS-34, calcWindowHeight());
         for (int i = 0; i < 2; ++i) {
             buffers.add(new InputBufferWidget(12));
         }
@@ -108,6 +108,10 @@ public class CharacterCreationView extends SelectableListMenu {
             raceSet = Race.allRacesIncludingMinor;
         }
         weapons.add(0, null);
+    }
+
+    private static int calcWindowHeight() {
+        return FatefulEight.inDebugMode() ? (DrawingArea.WINDOW_ROWS-8) : (DrawingArea.WINDOW_ROWS-13);
     }
 
     @Override
@@ -259,7 +263,7 @@ public class CharacterCreationView extends SelectableListMenu {
                 }
 
                 int midX = x + COLUMN_SKIP + 14;
-                int row = 17;
+                int row = yStart + 12;
                 drawCharacterDetails(model, lastCharacter, midX, row);
                 drawChecksAndNotOk(model, x, yStart);
             }
@@ -552,98 +556,99 @@ public class CharacterCreationView extends SelectableListMenu {
         });
         yPos++;
 
-        List<ListContent> extraContent = new ArrayList<>();
-        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
-            @Override
-            public void turnLeft(Model model) {
-                selectedFacialExpression = FacialExpression.values()[Arithmetics.decrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
-            }
-
-            @Override
-            public void turnRight(Model model) {
-                selectedFacialExpression = FacialExpression.values()[Arithmetics.incrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
-            }
-        });
-        extraContent.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, (isVampire ? "Yes" : "No")) {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                isVampire = !isVampire;
-            }
-        });
-        extraContent.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, (eyesClosed ? "Closed" : "Open")) {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                eyesClosed = !eyesClosed;
-            }
-        });
-        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
-            final Point appearancePoint = new Point(47, yStart + 8);
-
-            @Override
-            public void turnLeft(Model model) {
-                currentWeepAmount = WeepingAmount.values()[Arithmetics.decrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
-                if (currentWeepAmount != WeepingAmount.none) {
-                    weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
-                } else {
-                    weepingAnimation = null;
-                }
-            }
-
-            @Override
-            public void turnRight(Model model) {
-                currentWeepAmount = WeepingAmount.values()[Arithmetics.incrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
-                if (currentWeepAmount != WeepingAmount.none) {
-                    weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
-                } else {
-                    weepingAnimation = null;
-                }
-            }
-        });
-        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
-                selectedWeaponIndex == 0 ? "None" : weapons.get(selectedWeaponIndex).getName()) {
-            @Override
-            public void turnLeft(Model model) {
-                selectedWeaponIndex = Arithmetics.decrementWithWrap(selectedWeaponIndex, weapons.size());
-                AnimationManager.synchAnimations();
-            }
-
-            @Override
-            public void turnRight(Model model) {
-                selectedWeaponIndex = Arithmetics.incrementWithWrap(selectedWeaponIndex, weapons.size());
-                AnimationManager.synchAnimations();
-            }
-        });
-        extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
-                selectedHorseIndex == 0 ? "None" : horses.get(selectedHorseIndex).getName()) {
-            @Override
-            public void turnLeft(Model model) {
-                selectedHorseIndex = Arithmetics.decrementWithWrap(selectedHorseIndex, horses.size());
-            }
-
-            @Override
-            public void turnRight(Model model) {
-                selectedHorseIndex = Arithmetics.incrementWithWrap(selectedHorseIndex, horses.size());
-            }
-        });
-        extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSkeleton ? "Hide" : "Show") + " Skeleton") {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                showSkeleton = !showSkeleton;
-                rebuildAppearance();
-            }
-        });
-        extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSwimsuit ? "Hide" : "Show") + " Swimsuit") {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                showSwimsuit = !showSwimsuit;
-                rebuildAppearance();
-            }
-        });
         if (FatefulEight.inDebugMode()) {
+            List<ListContent> extraContent = new ArrayList<>();
+            extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, FacialExpression.values()[selectedFacialExpression.ordinal()].name()) {
+                @Override
+                public void turnLeft(Model model) {
+                    selectedFacialExpression = FacialExpression.values()[Arithmetics.decrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
+                }
+
+                @Override
+                public void turnRight(Model model) {
+                    selectedFacialExpression = FacialExpression.values()[Arithmetics.incrementWithWrap(selectedFacialExpression.ordinal(), FacialExpression.values().length)];
+                }
+            });
+            extraContent.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, (isVampire ? "Yes" : "No")) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    isVampire = !isVampire;
+                }
+            });
+            extraContent.add(new SelectableListContent(xStart + COLUMN_SKIP, yPos++, (eyesClosed ? "Closed" : "Open")) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    eyesClosed = !eyesClosed;
+                }
+            });
+            extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++, WeepingAmount.values()[currentWeepAmount.ordinal()].name()) {
+                final Point appearancePoint = new Point(47, yStart + 8);
+
+                @Override
+                public void turnLeft(Model model) {
+                    currentWeepAmount = WeepingAmount.values()[Arithmetics.decrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
+                    if (currentWeepAmount != WeepingAmount.none) {
+                        weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
+                    } else {
+                        weepingAnimation = null;
+                    }
+                }
+
+                @Override
+                public void turnRight(Model model) {
+                    currentWeepAmount = WeepingAmount.values()[Arithmetics.incrementWithWrap(currentWeepAmount.ordinal(), WeepingAmount.values().length)];
+                    if (currentWeepAmount != WeepingAmount.none) {
+                        weepingAnimation = new WeepingAnimation(appearancePoint, currentWeepAmount);
+                    } else {
+                        weepingAnimation = null;
+                    }
+                }
+            });
+            extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
+                    selectedWeaponIndex == 0 ? "None" : weapons.get(selectedWeaponIndex).getName()) {
+                @Override
+                public void turnLeft(Model model) {
+                    selectedWeaponIndex = Arithmetics.decrementWithWrap(selectedWeaponIndex, weapons.size());
+                    AnimationManager.synchAnimations();
+                }
+
+                @Override
+                public void turnRight(Model model) {
+                    selectedWeaponIndex = Arithmetics.incrementWithWrap(selectedWeaponIndex, weapons.size());
+                    AnimationManager.synchAnimations();
+                }
+            });
+            extraContent.add(new CarouselListContent(xStart + COLUMN_SKIP, yPos++,
+                    selectedHorseIndex == 0 ? "None" : horses.get(selectedHorseIndex).getName()) {
+                @Override
+                public void turnLeft(Model model) {
+                    selectedHorseIndex = Arithmetics.decrementWithWrap(selectedHorseIndex, horses.size());
+                }
+
+                @Override
+                public void turnRight(Model model) {
+                    selectedHorseIndex = Arithmetics.incrementWithWrap(selectedHorseIndex, horses.size());
+                }
+            });
+            extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSkeleton ? "Hide" : "Show") + " Skeleton") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    showSkeleton = !showSkeleton;
+                    rebuildAppearance();
+                }
+            });
+            extraContent.add(new SelectableListContent(xStart + 3, yPos++, (showSwimsuit ? "Hide" : "Show") + " Swimsuit") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    showSwimsuit = !showSwimsuit;
+                    rebuildAppearance();
+                }
+            });
             result.addAll(extraContent);
+            yPos++;
+        } else {
+            yPos += 4;
         }
-        yPos++;
-        yPos++;
         result.add(new SelectableListContent(xStart + COLUMN_SKIP + 12, yPos++, "OK") {
                 @Override
                 public void performAction(Model model, int x, int y) {
