@@ -47,7 +47,9 @@ public class BanishDaemonRitualEvent extends RitualEvent {
         showExplicitPortrait(model, ritualists.get(0).getAppearance(), "Sorcerer");
         portraitSay("These miners here have been plagued for some time by a daemon. " +
                 "We've finally managed to trap it in the pit below, but to be rid of it once and for all " +
-                "we need to banish it from this world. We're a few mages short, and the dwarves know nothing but mining. " +
+                "we need to banish it from this world");
+        leaderSay("That's a considerable feat! Can " + iOrWe() + " be of assistance?");
+        portraitSay("We're a few mages short, and the dwarves know nothing but mining. " +
                 "Say, you seem like you could be skilled in magic... Would " +
                 "you lend us a hand?");
         return true;

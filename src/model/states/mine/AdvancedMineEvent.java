@@ -227,7 +227,7 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public void exitThroughDoor() {
-        print("Do you want to exit to the surface? (Y/N) ");
+        print("Do you want to exit to the surface? (Y/N) "); // TODO: Permanently abandon some party members if entered through caves
         if (yesNoInput()) {
             playerHasQuit = true;
             exitToSurface = true;
@@ -235,7 +235,7 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     public void exitThroughCaveOpening() {
-        print("Do you want to exit to the caves? (Y/N) ");
+        print("Do you want to exit to the caves? (Y/N) "); // TODO: Permanently abandon some party members if entered through surface
         if (yesNoInput()) {
             playerHasQuit = true;
             exitToSurface = false;

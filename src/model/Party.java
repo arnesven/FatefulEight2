@@ -663,7 +663,8 @@ public class Party implements Serializable {
     }
 
     public void randomPartyMemberSay(Model model, List<String> strings) {
-        partyMemberSay(model, MyRandom.sample(partyMembers), strings);
+        List<GameCharacter> nonBenchers = MyLists.filter(partyMembers, gc -> !getBench().contains(gc));
+        partyMemberSay(model, MyRandom.sample(nonBenchers), strings);
     }
 
     public synchronized int remove(GameCharacter gc, boolean transferEquipment, boolean payGold, int gold) {

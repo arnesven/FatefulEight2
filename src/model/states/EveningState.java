@@ -567,7 +567,7 @@ public class EveningState extends GameState {
             return false;
         }
         int twoDice = MyRandom.rollD10() + MyRandom.rollD10();
-        return (isUrbanLocation && twoDice <= 4) || // 6% chance
+        return (isUrbanLocation && twoDice <= 3) || // 3% chance
                 (isFarmLocation && twoDice <= 2);   // 1% chance
     }
 

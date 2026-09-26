@@ -61,7 +61,9 @@ public class TravelState extends GameState {
             spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().getSuitableHorseFor(model.getParty().getLeader()));
             model.getWorld().setAlternativeAvatar(spriteToUse);
         } else {
-            ClientSoundManager.playBackgroundMusic(BackgroundMusic.getMainSong(model));
+            if (!model.isInCaveSystem()) {
+                ClientSoundManager.playBackgroundMusic(BackgroundMusic.getMainSong(model));
+            }
             spriteToUse = model.getParty().getLeader().getAvatarSprite();
         }
 

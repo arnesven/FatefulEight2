@@ -80,7 +80,7 @@ public class CaveHex extends WorldHex {
     @Override
     public DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
-        if (roll == 2) {
+        if (roll == 2 && model.getParty().hasDog()) {
             return new DogEvent(model);
         } else if (roll >= 3) {
             List<DailyEventState> events = new ArrayList<>(List.of(
