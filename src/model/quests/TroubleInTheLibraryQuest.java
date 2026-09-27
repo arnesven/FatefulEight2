@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.achievements.Achievement;
 import model.classes.Skill;
+import model.combat.CombatAdvantage;
 import model.enemies.Enemy;
 import model.enemies.LibraryAutomatonEnemy;
 import model.quests.scenes.ArrowlessEdge;
@@ -312,13 +313,13 @@ public class TroubleInTheLibraryQuest extends MainQuest {
             @Override
             protected boolean preRunHook(Model model, QuestState state) {
                 if (hasEnemies()) {
-                    if (runCombat(model, state)) {
+                    if (runCombat(model, state, CombatAdvantage.Neither)) {
                         return true;
                     }
                 }
                 moveAllAutomatons(model, state);
                 if (hasEnemies()) {
-                    if (runCombat(model, state)) {
+                    if (runCombat(model, state, CombatAdvantage.Enemies)) {
                         return true;
                     }
                 }

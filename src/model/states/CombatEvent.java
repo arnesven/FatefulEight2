@@ -126,6 +126,10 @@ public class CombatEvent extends DailyEventState {
         model.setInCombat(true);
         if (advantage != CombatAdvantage.Enemies) {
             setFormation(model);
+        } else {
+            displaySplash("AMBUSH!");
+            print("You have been ambushed! Press enter to start combat.");
+            waitForReturn();
         }
         combatStats.startCombat(enemies, participants, allies);
         if (advantage != CombatAdvantage.Enemies) {

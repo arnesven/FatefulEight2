@@ -19,10 +19,12 @@ import model.map.*;
 import model.map.locations.RubiqPyramidLocation;
 import model.quests.*;
 import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.dailyaction.TownDailyActionState;
 import model.tasks.DestinationTask;
 import util.*;
 import view.LogView;
+import view.SimpleMessageView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -558,6 +560,12 @@ public class PartSixStoryPart extends StoryPart {
                 setCompleted(true);
                 MainQuest q = MainStory.getQuest(MindMachineQuest.QUEST_NAME);
                 model.getParty().getQuestHandler().offerQuest(model, q);
+                if (GameState.calculateAverageLevel(model) < 6.5) {
+                    model.transitionToDialog(new SimpleMessageView(model.getView(),
+                            "Warning. It is recommended that your party members " +
+                                    "are at least level 6 before doing the quest " +
+                                    "'Trouble in the Library'."));
+                }
             } else {
                 leaderSay("Not quite yet, there are still some things that need to be prepared.");
                 portraitSay("Okay. Return here when you are ready. But don't take too long. " +
