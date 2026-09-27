@@ -14,6 +14,7 @@ import model.quests.MainQuest;
 import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
 import model.races.AllRaces;
+import model.states.GameState;
 import model.states.dailyaction.TownDailyActionState;
 import util.MyLists;
 import view.SimpleMessageView;
@@ -210,9 +211,11 @@ public class PartFourStoryPart extends StoryPart {
                 portraitSay("Thank you.");
                 model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(OrcWarCampQuest.QUEST_NAME),
                         campPoint);
-                model.transitionToDialog(new SimpleMessageView(model.getView(),
-                        "Warning. It is recommended that your party members " +
-                                "are at least level 4 before taking on the orc camp."));
+                if (GameState.calculateAverageLevel(model) < 4.5) {
+                    model.transitionToDialog(new SimpleMessageView(model.getView(),
+                            "Warning. It is recommended that your party members " +
+                                    "are at least level 4 before taking on the orc camp."));
+                }
                 increaseStep(model);
             } else if (step == TRAVEL_STEP) {
                 showLord(model);
@@ -262,9 +265,11 @@ public class PartFourStoryPart extends StoryPart {
                 model.getMainStory().addStoryPart(new ZeppelinStoryPart(model.getMainStory().getXelbiPosition(), castle.getLordTitle()));
                 portraitSay("Now I wish you good luck. Please return once the Quad has been dealt with.");
                 leaderSay("We will");
-                model.transitionToDialog(new SimpleMessageView(model.getView(),
-                        "Warning. It is recommended that your party members " +
-                                "are at least level 5 before venturing to the Ancient Stronghold."));
+                if (GameState.calculateAverageLevel(model) < 5.5) {
+                    model.transitionToDialog(new SimpleMessageView(model.getView(),
+                            "Warning. It is recommended that your party members " +
+                                    "are at least level 5 before venturing to the Ancient Stronghold."));
+                }
                 MainQuest mq = MainStory.getQuest(AncientStrongholdQuest.QUEST_NAME);
                 prepareQuest(mq, model.getLordPortrait(castle), castle.getLordName());
                 model.getParty().getQuestHandler().offerQuest(model, mq,

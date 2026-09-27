@@ -244,10 +244,12 @@ public class PartThreeStoryPart extends StoryPart {
                 leaderSay("We can handle ourselves.");
                 increaseStep(model);
                 model.getParty().getQuestHandler().offerQuest(model, MainStory.getQuest(TroubleInTheLibraryQuest.QUEST_NAME));
-                model.transitionToDialog(new SimpleMessageView(model.getView(),
-                        "Warning. It is recommended that your party members " +
-                                "are at least level 3 before doing the quest " +
-                                "'Trouble in the Library'."));
+                if (GameState.calculateAverageLevel(model) < 3.5) {
+                    model.transitionToDialog(new SimpleMessageView(model.getView(),
+                            "Warning. It is recommended that your party members " +
+                                    "are at least level 3 before doing the quest " +
+                                    "'Trouble in the Library'."));
+                }
             } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Find me again when you've taken care of the automatons in the library.");
                 leaderSay("Okay!");
