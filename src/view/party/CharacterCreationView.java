@@ -122,6 +122,12 @@ public class CharacterCreationView extends SelectableListMenu {
     @Override
     public void transitionedFrom(Model model) {  }
 
+    @Override
+    public void transitionedTo(Model model) {
+        super.transitionedTo(model);
+        canceled = false;
+    }
+
     private CharacterAppearance makeAppearance() {
         AdvancedAppearance app = raceSet[selectedRace].makeAppearance(raceSet[selectedRace], gender,
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],

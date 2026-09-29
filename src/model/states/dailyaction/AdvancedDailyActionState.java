@@ -46,13 +46,23 @@ public abstract class AdvancedDailyActionState extends GameState {
         matrix.addElement(col, row, node);
     }
 
+    private boolean fitsInSlot(DailyActionNode node, SteppingMatrix<DailyActionNode> matrix,
+                                   int col, int row) {
+        for (int x = 0; x < node.getWidth(); ++x) {
+            if (matrix.getElementAt(col + x, row) != null || isPositionBlocked(col + x, row)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void addNodeInFreeSlot(DailyActionNode node, int seed) {
         if (!matrix.isFull()) {
             Random random = new Random(seed);
             for (int i = 0; i < 1000; i++) {
                 int col = random.nextInt(matrix.getColumns()-(node.getWidth()-1));
                 int row = random.nextInt(matrix.getRows());
-                if (matrix.getElementAt(col, row) == null) {
+                if (fitsInSlot(node, matrix, col, row)) {
                     matrix.addElement(col, row, node);
                     return;
                 }
