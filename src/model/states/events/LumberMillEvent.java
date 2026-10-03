@@ -9,6 +9,7 @@ import model.map.ResourcePrevalence;
 import model.races.Race;
 import util.MyRandom;
 import view.sprites.DieRollAnimation;
+import view.subviews.SubView;
 
 public class LumberMillEvent extends SimpleGeneralInteractionEvent {
 
@@ -41,12 +42,14 @@ public class LumberMillEvent extends SimpleGeneralInteractionEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        showEventCard("The lumberjack invites the party into his home for the night. A good earthy stew" +
+        showEventCard("The lumberjack invites the party into " + hisOrHer(getPortraitGender()) +
+                " home for the night. A good earthy stew" +
                 " awaits and good beer and bread. Stories are shared and the lumberjack tells of " +
                 "the many strange things that lay hidden in these parts of the forest.");
+        SubView sub = model.getSubView();
         print("The Lumberjack offers to train you in the ways of being a Forester, ");
         changeClassEvent.areYouInterested(model);
-        setCurrentTerrainSubview(model);
+        model.setSubView(sub);
         showExplicitPortrait(model, getPortrait(), "Lumberjack");
         print("You may also chop some lumber here in an attempt to gain materials. Do you want to? (Y/N) ");
         if (yesNoInput()) {
