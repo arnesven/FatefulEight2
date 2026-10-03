@@ -14,6 +14,11 @@ public abstract class RoamingMonsterEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     public String getDistantDescription() {
         return "a group of people or creatures, can't make out the details";
     }

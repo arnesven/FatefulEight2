@@ -18,6 +18,11 @@ public class GelatinousBlobEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         leaderSay("Hmm... how odd.");
         if (model.getParty().size() > 1) {

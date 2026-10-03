@@ -17,6 +17,11 @@ public class LostEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().size() > 1) {
             model.getParty().randomPartyMemberSay(model, List.of("This place looks familiar..."));

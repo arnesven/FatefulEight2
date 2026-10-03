@@ -18,6 +18,11 @@ public class BearEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Bear", "A large bear grunts at the party. It seems hungry.");
         print("Do you want to try and avoid fighting the bear? (Y/N) ");

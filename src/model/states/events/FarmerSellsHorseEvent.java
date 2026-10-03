@@ -11,6 +11,11 @@ public class FarmerSellsHorseEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a farmer with a horse";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("You meet a poor farmer who is selling a horse.");
         BuyHorseState buyHorse = new BuyHorseState(model, "Farmer");

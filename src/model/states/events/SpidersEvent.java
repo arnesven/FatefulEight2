@@ -20,6 +20,11 @@ public class SpidersEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("An unnerving chittering echoes around the party " +
                 "members. Giant spiders are surrounding them. These " +

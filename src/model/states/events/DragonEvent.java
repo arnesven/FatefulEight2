@@ -19,6 +19,11 @@ public class DragonEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Suddenly a powerful gust of wind catches the party off " +
                 "guard. Then, the horror...");

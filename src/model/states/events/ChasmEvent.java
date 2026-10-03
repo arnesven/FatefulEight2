@@ -24,6 +24,11 @@ public class ChasmEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Chasm"));
         showEventCard("Chasm", "A deep chasm lies in front of the party. There is a very " +

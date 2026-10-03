@@ -17,6 +17,11 @@ public class VipersEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Vipers", "The party stumbles into a nest of vipers.");
         if (model.getParty().size() == 1) {

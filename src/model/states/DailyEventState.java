@@ -493,4 +493,8 @@ public abstract class DailyEventState extends GameState {
     public boolean didUseEscapeSpell() {
         return usedEscape;
     }
+
+    public boolean blocksRiding() {
+        return false;
+    }
 }

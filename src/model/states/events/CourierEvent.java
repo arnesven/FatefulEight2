@@ -25,6 +25,11 @@ public class CourierEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     public String getDistantDescription() {
         return "a person traveling alone";
     }

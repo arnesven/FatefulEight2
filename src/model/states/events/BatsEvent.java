@@ -15,6 +15,11 @@ public class BatsEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         leaderSay("What's that fluttering sound?");
         model.getParty().randomPartyMemberSay(model, List.of("Bats!"));

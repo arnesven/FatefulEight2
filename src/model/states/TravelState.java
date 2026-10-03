@@ -2,16 +2,13 @@ package model.states;
 
 import model.Model;
 import model.classes.Looks;
-import model.horses.Horse;
-import model.horses.Pony;
 import model.items.Inventory;
 import model.items.Item;
 import model.items.special.MagicBroom;
 import model.items.special.StoryItem;
-import model.map.CaveHex;
 import model.map.Direction;
 import model.map.UrbanLocation;
-import model.races.Race;
+import model.states.events.NoEventState;
 import model.states.events.RiverEvent;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -72,6 +69,10 @@ public class TravelState extends GameState {
             return state;
         }
         if (riding || flying) {
+            GameState nextStateIfStopped = stopForEvent(model, riding);
+            if (nextStateIfStopped != null) {
+                return nextStateIfStopped;
+            }
             mapSubView = new MapSubView(model);
             CollapsingTransition.transition(model, mapSubView);
             state = travelOneStep(model, mapSubView, false, flying);
@@ -81,6 +82,28 @@ public class TravelState extends GameState {
             }
         }
         return nextState(model);
+    }
+
+    private GameState stopForEvent(Model model, boolean riding) {
+        GameState next = nextState(model);
+        if (!(next instanceof DailyEventState dailyEvent)) {
+            return next;
+        }
+        if (riding && dailyEvent.blocksRiding()) {
+            println("An event has interrupted your travel.");
+            return dailyEvent;
+        }
+        if (dailyEvent instanceof NoEventState || dailyEvent.getDistantDescription() == null) {
+            return null;
+        }
+        String description = dailyEvent.getDistantDescription();
+        description = description.replaceAll(" I ", " you ");
+        print("As you pass through the " + model.getCurrentHex().getTerrainName() +
+                " you spot " + description + ", do you want to stop and investigate? (Y/N) ");
+        if (yesNoInput()) {
+            return dailyEvent;
+        }
+        return null;
     }
 
     protected boolean checkForOverEncumberance(Model model) {

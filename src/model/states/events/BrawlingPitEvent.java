@@ -18,6 +18,11 @@ public class BrawlingPitEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a crowd of local farmers";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Brawling Pit", "The party walks through a small farmstead. The farmers have put up a wooden fence here, " +
                 "and the locals are hooting and cheering.");

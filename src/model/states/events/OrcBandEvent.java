@@ -24,6 +24,11 @@ public class OrcBandEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Orc Band", "The party is taking a little rest by the side of the road " +
                 "when they hear footsteps approaching, many footsteps. " +

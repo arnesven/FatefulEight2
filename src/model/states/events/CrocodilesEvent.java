@@ -23,6 +23,11 @@ public class CrocodilesEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Crocodiles", "As the party tries to cross a wetland by stepping on " +
                 "floating logs they soon realize, they are not logs at all! " +

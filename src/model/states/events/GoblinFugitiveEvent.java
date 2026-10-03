@@ -39,6 +39,11 @@ public class GoblinFugitiveEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().isSpecialCharacterMarked(goblinChar)) {
             new NoEventState(model).doEvent(model);

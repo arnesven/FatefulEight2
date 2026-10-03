@@ -32,6 +32,11 @@ public class CompanyEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         leaderSay("Hmm... That looks like a company of soldiers up ahead.");
         print("Do you get get off the road? (Y/N) ");

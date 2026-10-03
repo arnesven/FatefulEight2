@@ -33,6 +33,11 @@ public class GoblinsEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     public boolean haveFledCombat() {
         return fled || super.haveFledCombat();
     }

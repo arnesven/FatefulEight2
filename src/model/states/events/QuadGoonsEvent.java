@@ -15,6 +15,16 @@ public class QuadGoonsEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a group of people";
+    }
+
+    @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("Another group of Quad Goons have caught up to you. They attack!");
         List<Character> groups = new ArrayList<>(List.of('A', 'B', 'C', 'D', 'E', 'F'));

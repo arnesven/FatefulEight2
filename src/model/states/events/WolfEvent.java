@@ -26,6 +26,11 @@ public class WolfEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You suddenly hear something.");
         leaderSay("Is that howling? Maybe it's just the wind.");

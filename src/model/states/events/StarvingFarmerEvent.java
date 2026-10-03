@@ -27,7 +27,7 @@ public class StarvingFarmerEvent extends DailyEventState {
 
     @Override
     public String getDistantDescription() {
-        return "Two farmers";
+        return "two farmers";
     }
 
     @Override

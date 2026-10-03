@@ -18,6 +18,11 @@ public class BanditRaidEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.BANDIT, "Bandits");
         showEventCard("Bandit Raid", "This farmstead has been plagued by bandits for some time.");

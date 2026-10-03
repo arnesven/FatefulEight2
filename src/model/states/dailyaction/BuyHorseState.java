@@ -11,6 +11,7 @@ import view.subviews.SubView;
 
 public class BuyHorseState extends GameState {
 
+    private static final int PRICE_NOT_SET = -1;
     private final String seller;
     private int price;
     private Horse horse;
@@ -23,7 +24,7 @@ public class BuyHorseState extends GameState {
     }
 
     public BuyHorseState(Model model, String seller) {
-        this(model, seller, null, 0);
+        this(model, seller, null, PRICE_NOT_SET);
     }
 
     public void setPrice(int price) {
@@ -33,8 +34,10 @@ public class BuyHorseState extends GameState {
     @Override
     public GameState run(Model model) {
         if (this.horse == null) {
-            this.price = model.getParty().getHorseHandler().getAvailableHorse(model).getCost();
             this.horse = model.getParty().getHorseHandler().getAvailableHorse(model);
+            if (price == PRICE_NOT_SET) {
+                this.price = this.horse.getCost();
+            }
         }
         sellerSay(seller, "I have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.");
         model.getTutorial().horses(model);

@@ -19,6 +19,11 @@ public class ManticoreEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Is that a lion? No, it has wings! And what's that tail?"));
         randomSayIfPersonality(PersonalityTrait.anxious, new ArrayList<>(), "I don't think this will end well!");

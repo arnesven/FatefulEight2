@@ -26,7 +26,7 @@ public class FarmersHorseRaceEvent extends DailyEventState {
 
     @Override
     public String getDistantDescription() {
-        return "A farmer with a horse";
+        return "a farmer with a horse";
     }
 
     @Override

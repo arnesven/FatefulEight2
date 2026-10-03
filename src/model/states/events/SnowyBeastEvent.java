@@ -17,6 +17,11 @@ public class SnowyBeastEvent extends DailyEventState {
     }
 
     @Override
+    public boolean blocksRiding() {
+        return true;
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showEventCard("Snowy Beast", "This beast is covered in white fur. It has tusks, " +
                 "horns and a terrible temper. It is coming straight for the " +
