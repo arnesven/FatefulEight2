@@ -1,11 +1,18 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Classes;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.map.ResourcePrevalence;
 import model.races.Race;
+import util.MyRandom;
+import view.sprites.DieRollAnimation;
 
 public class LumberMillEvent extends SimpleGeneralInteractionEvent {
 
+    private static final int SCORE_QUOTIENT = 6;
     private final ChangeClassEvent changeClassEvent;
     private boolean freeLodge = false;
 
@@ -38,12 +45,38 @@ public class LumberMillEvent extends SimpleGeneralInteractionEvent {
                 " awaits and good beer and bread. Stories are shared and the lumberjack tells of " +
                 "the many strange things that lay hidden in these parts of the forest.");
         print("The Lumberjack offers to train you in the ways of being a Forester, ");
-        // FEATURE: Options: Cut some wood (gain materials)
         changeClassEvent.areYouInterested(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, getPortrait(), "Lumberjack");
+        print("You may also chop some lumber here in an attempt to gain materials. Do you want to? (Y/N) ");
+        if (yesNoInput()) {
+            chopWood(model);
+        }
         this.freeLodge = true;
         return true;
+    }
+
+    private void chopWood(Model model) {
+        DieRollAnimation.setAnimationBlocks(false);
+        Skill skillToUse = Skill.Labor;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            SkillCheckResult skill2Result = gc.testSkill(model, skillToUse);
+            int score = skill2Result.getModifiedRoll();
+            int resourcesFound = ResourcePrevalence.GOOD * (score / SCORE_QUOTIENT);
+            if (resourcesFound == 0) {
+                println(gc.getFirstName() + " didn't meaningfully contribute (" +
+                        skillToUse.getName() + " " + skill2Result.asString() + ")");
+            } else {
+                println(gc.getFirstName() + " gained " + resourcesFound +
+                        " resources " + skillToUse.getName()+ " " + skill2Result.asString() + ")");
+                model.getParty().getInventory().addToMaterials(resourcesFound);
+            }
+            if (gc.getSP() > 0 && MyRandom.rollD6() < 3) {
+                println(gc.getFirstName() + " lost 1 Stamina while chopping wood.");
+                gc.addToSP(-1);
+            }
+        }
+        DieRollAnimation.setAnimationBlocks(true);
     }
 
     @Override

@@ -90,6 +90,17 @@ public abstract class CombatAction {
     }
 
     public static List<CombatAction> getCombatActions(Model model, GameCharacter character, Combatant target, CombatEvent combatEvent) {
+        // TODO, order should be:
+        // Attack
+        // Ability
+        // Spell
+        // Item
+        // Auto
+        // Flee
+        // Pass
+        // Delay
+        // Back
+
         List<CombatAction> result = new ArrayList<>();
         if (character.canAttackInCombat() && target.canBeAttackedBy(character) && !combatEvent.isInQuickCast()) {
             result.add(new AttackCombatAction(!character.getEquipment().getWeapon().isRangedAttack()));
