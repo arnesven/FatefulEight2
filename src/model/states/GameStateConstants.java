@@ -45,9 +45,11 @@ public interface GameStateConstants {
             "Sinorin",
             "Steffi",
             "Saheila",
+            "Sophitia",
             "Tessa",
             "Urica",
-            "Visenna"
+            "Visenna",
+            "Xala"
     );
 
     List<String> COMMON_BOY_FIRST_NAMES = List.of(
@@ -88,6 +90,7 @@ public interface GameStateConstants {
             "Rastigan",
             "Roger",
             "Roy",
+            "Raoul",
             "Sammy",
             "Stanley",
             "Stig",
@@ -110,6 +113,7 @@ public interface GameStateConstants {
             "Blackmountain",
             "Black",
             "Braxgate",
+            "Bratsberg",
             "Cleareyes",
             "Clever",
             "Cotton",
@@ -166,6 +170,7 @@ public interface GameStateConstants {
             "Strong",
             "Stovious",
             "Tielt",
+            "Tornstrom",
             "Udrentide",
             "Vogel",
             "Wegestrom",
