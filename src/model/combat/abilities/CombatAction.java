@@ -90,61 +90,73 @@ public abstract class CombatAction {
     }
 
     public static List<CombatAction> getCombatActions(Model model, GameCharacter character, Combatant target, CombatEvent combatEvent) {
-        // TODO, order should be:
-        // Attack
-        // Ability
-        // Spell
-        // Item
-        // Auto
-        // Flee
-        // Pass
-        // Delay
-        // Back
-
         List<CombatAction> result = new ArrayList<>();
+        addAttack(result, combatEvent, character, target);
+        if (model.getParty().getPartyMembers().contains(character)) {
+            addAbility(result, combatEvent, character, model, target);
+            addSpell(result, model, target);
+            addItem(result, combatEvent, model, target);
+            addEquip(result, combatEvent, character, model, target);
+        }
+        result.add(new AutomaticCombatAction());
+        addFlee(result, combatEvent, character);
+        result.add(new PassCombatAction());
+        addDelay(result, combatEvent, character);
+
+        for (Condition cond : character.getConditions()) {
+            cond.manipulateCombatActions(result);
+        }
+        return result;
+    }
+
+    private static void addAttack(List<CombatAction> result, CombatEvent combatEvent, GameCharacter character, Combatant target) {
         if (character.canAttackInCombat() && target.canBeAttackedBy(character) && !combatEvent.isInQuickCast()) {
             result.add(new AttackCombatAction(!character.getEquipment().getWeapon().isRangedAttack()));
         }
-        if (character.isLeader() && !combatEvent.isInQuickCast()) {
-            result.add(new FleeCombatAction());
-        }
+    }
 
+    private static void addAbility(List<CombatAction> result, CombatEvent combatEvent, GameCharacter character, Model model, Combatant target) {
+        AbilityCombatAction abilities = new AbilityCombatAction(character, target);
+        if (!abilities.getInnerActions(model).isEmpty() && !combatEvent.isInQuickCast()) {
+            result.add(abilities);
+        }
+    }
+
+    private static void addSpell(List<CombatAction> result, Model model, Combatant target) {
+        List<CombatSpell> combatSpells = getCombatSpells(model.getParty().getSpells());
+        if (!combatSpells.isEmpty()) {
+            result.add(new SpellCombatAction(combatSpells, target));
+        }
+    }
+
+    private static void addItem(List<CombatAction> result, CombatEvent combatEvent, Model model, Combatant target) {
+        Set<UsableItem> usableItems = new HashSet<>();
+        usableItems.addAll(model.getParty().getInventory().getPotions());
+        usableItems.addAll(model.getParty().getInventory().getCombatScrolls());
+        if (!usableItems.isEmpty() && !combatEvent.isInQuickCast()) {
+            result.add(new ItemCombatAction(usableItems, target));
+        }
+    }
+
+    private static void addEquip(List<CombatAction> result, CombatEvent combatEvent, GameCharacter character, Model model, Combatant target) {
         if (character == target && !combatEvent.isInQuickCast()) {
             EquipItemCombatAction eqAction = new EquipItemCombatAction(model);
             if (eqAction.isValid()) {
                 result.add(eqAction);
             }
         }
+    }
 
-        if (model.getParty().getPartyMembers().contains(character)) {
-            Set<UsableItem> usableItems = new HashSet<>();
-            usableItems.addAll(model.getParty().getInventory().getPotions());
-            usableItems.addAll(model.getParty().getInventory().getCombatScrolls());
-            if (usableItems.size() > 0  && !combatEvent.isInQuickCast()) {
-                result.add(new ItemCombatAction(usableItems, target));
-            }
-
-            List<CombatSpell> combatSpells = getCombatSpells(model.getParty().getSpells());
-            if (!combatSpells.isEmpty()) {
-                result.add(new SpellCombatAction(combatSpells, target));
-            }
-
-            AbilityCombatAction abilities = new AbilityCombatAction(character, target);
-            if (abilities.getInnerActions(model).size() > 0  && !combatEvent.isInQuickCast()) {
-                result.add(abilities);
-            }
+    private static void addFlee(List<CombatAction> result, CombatEvent combatEvent, GameCharacter character) {
+        if (character.isLeader() && !combatEvent.isInQuickCast()) {
+            result.add(new FleeCombatAction());
         }
+    }
 
+    private static void addDelay(List<CombatAction> result, CombatEvent combatEvent, GameCharacter character) {
         if (combatEvent.canDelay(character)  && !combatEvent.isInQuickCast()) {
             result.add(new DelayCombatAction());
         }
-
-        result.add(new AutomaticCombatAction());
-        result.add(new PassCombatAction());
-        for (Condition cond : character.getConditions()) {
-            cond.manipulateCombatActions(result);
-        }
-        return result;
     }
 
     private static List<CombatSpell> getCombatSpells(List<Spell> spells) {
