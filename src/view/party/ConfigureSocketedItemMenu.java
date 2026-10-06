@@ -117,7 +117,7 @@ public class ConfigureSocketedItemMenu extends SelectableListMenu {
         private final int index;
 
         public SetItemMenu(GameView previous, SocketedItem sash, int index) {
-            super(previous, 20, 10);
+            super(previous, 24, 10);
             this.sash = sash;
             this.index = index;
         }
@@ -132,6 +132,10 @@ public class ConfigureSocketedItemMenu extends SelectableListMenu {
             return new ArrayList<>();
         }
 
+        private String truncate(String text) {
+            return text.substring(0, Math.min(text.length(), getWidth()-1));
+        }
+
         @Override
         protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
             List<ListContent> result = new ArrayList<>();
@@ -143,7 +147,7 @@ public class ConfigureSocketedItemMenu extends SelectableListMenu {
                 }
             });
             for (Item it : getAccessories()) {
-                result.add(new SelectableListContent(xStart+1, ++yStart, it.getName()) {
+                result.add(new SelectableListContent(xStart+1, ++yStart, truncate(it.getName())) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         set(model, it);

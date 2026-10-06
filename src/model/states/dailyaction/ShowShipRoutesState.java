@@ -14,6 +14,10 @@ public class ShowShipRoutesState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        if (!(model.getCurrentHex().getLocation() instanceof TownLocation)) {
+            println("The dock is empty.");
+            return null;
+        }
         println("There's a sign by the docks. It says: ");
         TownLocation urb = (TownLocation) model.getCurrentHex().getLocation();
         List<String> routes = urb.getSeaTravelRoutes();

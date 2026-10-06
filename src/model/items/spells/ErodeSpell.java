@@ -35,8 +35,12 @@ public class ErodeSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (((Enemy)target).getPhysicalDamageReduction() == 0 ||
-                ((Enemy) target).getMagicalDamageReduction() == 0 ||
+        if (!canBeCastOn(model, target)) {
+            return;
+        }
+        Enemy enemy = (Enemy) target;
+
+        if ((enemy.getPhysicalDamageReduction() == 0 && enemy.getMagicalDamageReduction() == 0) ||
                 target.hasCondition(ErodeCondition.class)) {
             combat.println(getName() + " has no effect on " + target.getName() + ".");
         } else {

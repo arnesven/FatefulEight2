@@ -5,6 +5,7 @@ import model.map.UrbanLocation;
 import model.map.locations.FishingVillageLocation;
 import model.states.GameState;
 import model.states.dailyaction.town.CharterBoatAtDocks;
+import sound.BackgroundMusic;
 
 public class FishingVillageActionState extends TownishDailyActionState {
     public FishingVillageActionState(Model model, FishingVillageLocation loc) {
@@ -18,6 +19,10 @@ public class FishingVillageActionState extends TownishDailyActionState {
         // No tavern here!
     }
 
+    @Override
+    protected BackgroundMusic getSound() {
+        return BackgroundMusic.wasteland;
+    }
 
     @Override
     protected void addTravelNodes(Model model, boolean hasWaterAccess, UrbanLocation urbanLocation) {

@@ -239,7 +239,7 @@ public class GameCharacter extends Combatant {
                 if (CombatProwessAbility.checkForMultiTargetAttack(this) && !combatEvent.getEnemies().isEmpty()) {
                     List<Enemy> others = MyLists.filter(combatEvent.getEnemies(), e -> e.canBeAttackedBy(this));
                     target = MyRandom.sample(others);
-                    combatEvent.println(getName() + " also attacks " + target.getName() + ".");
+                    combatEvent.println(getName() + " also attacks " + target.getName() + " (Combat Prowess).");
                 } else {
                     return;
                 }

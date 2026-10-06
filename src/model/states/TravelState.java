@@ -97,6 +97,7 @@ public class TravelState extends GameState {
             return null;
         }
         String description = dailyEvent.getDistantDescription();
+        description = description.replaceAll(". I ", ". You ");
         description = description.replaceAll(" I ", " you ");
         print("As you pass through the " + model.getCurrentHex().getTerrainName() +
                 " you spot " + description + ", do you want to stop and investigate? (Y/N) ");

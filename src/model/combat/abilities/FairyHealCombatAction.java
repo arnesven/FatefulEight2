@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
 import model.combat.abilities.SpecialAbilityCombatAction;
+import model.enemies.Enemy;
 import model.items.weapons.*;
 import model.states.CombatEvent;
 import view.help.HelpDialog;
@@ -53,6 +54,9 @@ public class FairyHealCombatAction extends SpecialAbilityCombatAction implements
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        if (!(target instanceof GameCharacter)) {
+            return false;
+        }
         if (performer == target) {
             return false;
         }
