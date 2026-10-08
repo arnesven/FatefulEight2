@@ -148,7 +148,7 @@ public class ConstableEvent extends DailyEventState {
     private boolean attemptPersuade(Model model, String lawMan, int sum) {
         model.getParty().randomPartyMemberSay(model, List.of("Hang on a second!",
                 "I think there's been some kind of misunderstanding.", "Wait just a minute.",
-                "Please, sir. Hear us out."));
+                "Please, sir. Hear " + meOrUs() + " out."));
         boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 6-sum);
         if (result) {
             println("You manage to convince the " + lawMan + " you are completely innocent.");

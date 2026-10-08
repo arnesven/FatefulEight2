@@ -37,7 +37,7 @@ public class RunnyCardGame extends CardGame {
 
     private static CardGamePlayer makeRunnyNPC(Race r) {
         boolean gender = MyRandom.flipCoin();
-        return new RunnyNPCPlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(MAXIMUM_BET, MAXIMUM_BET+20));
+        return new RunnyNPCPlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(MAXIMUM_BET, 3*MAXIMUM_BET));
     }
 
     @Override

@@ -17,6 +17,7 @@ import model.items.accessories.LeatherGloves;
 import model.items.clothing.Clothing;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.*;
+import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.map.WorldType;
 import model.races.Race;
@@ -54,7 +55,10 @@ public class FedUpAdventurerEvent extends GeneralInteractionEvent {
 
     public static DailyEventState generateEvent(Model model) {
         if (!model.getSettings().getMiscFlags().containsKey(GOT_THIS_EVENT) &&
-                WorldBuilder.isInStartingArea(model) && model.getDay() < 10 && MyRandom.rollD10() == 10) {
+                !(model.getCurrentHex().getLocation() instanceof UrbanLocation) &&
+                WorldBuilder.isInStartingArea(model) &&
+                model.getDay() < 10 &&
+                MyRandom.rollD10() == 10) {
             return new FedUpAdventurerEvent(model);
         }
         return null;

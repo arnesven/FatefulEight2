@@ -11,18 +11,46 @@ import java.util.List;
 
 public class RunnyNPCPlayer extends RunnyCardGamePlayer {
     private static final int UNLOCKED_CARD_WEIGHT = 6;
-    private static final int UNLOCKED_PAIR_WEIGHT = 2;
+    private static final int UNLOCKED_PAIR_WEIGHT = 3;
+    private static final int MAX_HAND_STRENGTH = UNLOCKED_CARD_WEIGHT * 6;
+
+    /**
+     * This parameter determines how strong a player thinks
+     * a hand should be to call or raise.
+     */
     private final int benchmarkThreshold;
+
+    /**
+     * This parameter determines how "nervous" the player is.
+     * It affects how strong the player thinks a hand should be
+     * given how long the game has been going.
+     */
     private final int benchmarkRoundFactor;
+
+    /**
+     * This parameter determines how willing the player is to
+     * call even if his hand is below the benchmark.
+     * A higher value will mean the player can accept to call
+     * when his own hand is relatively weak.
+     */
     private final int weakHandAcceptance;
+
+    /**
+     * This parameter determines how often the player will bluff.
+     * 1 => every time, 2 => every other time.
+     */
     private final int invertedBluffRatio;
 
     public RunnyNPCPlayer(String name, boolean gender, Race race, int obols) {
         super(name, gender, race, obols, true);
         benchmarkThreshold = MyRandom.randInt(8, 14);
-        benchmarkRoundFactor = MyRandom.randInt(2, 5);
+        benchmarkRoundFactor = MyRandom.randInt(2, 4);
         weakHandAcceptance = MyRandom.randInt(2, RunnyCardGame.MAXIMUM_BET/2);
-        invertedBluffRatio = MyRandom.randInt(3, 50);
+        invertedBluffRatio = MyRandom.randInt(2, 10);
+        log("Benchmark Threshold: " + benchmarkThreshold);
+        log("Benchmark Round Factor: " + benchmarkRoundFactor);
+        log("Weak Hand Acceptance: " + weakHandAcceptance);
+        log("Inverted Bluff Ratio " + invertedBluffRatio);
     }
 
     @Override
@@ -36,10 +64,18 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
 
     protected boolean callOrFold(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         log("considering whether to fold or call.");
-        int handStrength = calcHandStrength();
-        log("Hand strength is " + handStrength);
         int benchMark = calcRoundStrengthBenchMark(runnyCardGame);
         log("Benchmark is " + benchMark);
+        int handStrength = calcHandStrength();
+        log("Hand strength is " + handStrength);
+        if (runnyCardGame.getCurrentBet() - benchMark > runnyCardGame.getMaximumBet() / 3) {
+            log("suspects a bluff...");
+            if (handStrength > benchMark || MyRandom.flipCoin()) {
+                log("calls");
+                new CallCardGameObject().doAction(model, state, runnyCardGame, this);
+                return false;
+            }
+        }
         int bet = calculateSuitableBet(handStrength, runnyCardGame);
         log("Suitable bet for hand is " + bet);
         log("Current bet is " + runnyCardGame.getCurrentBet());
@@ -100,34 +136,62 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
     @Override
     protected void raiseOrPass(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         int handStrength = calcHandStrength();
+        log("is considering raise or pass");
         log("Hand strength is " + handStrength);
+        boolean bluffing = false;
         if (MyRandom.randInt(invertedBluffRatio) == 0) {
-            handStrength += MyRandom.randInt(UNLOCKED_CARD_WEIGHT*6);
-            log(" is bluffing... (on in " + invertedBluffRatio + ") fake hand strength of " + handStrength);
+            handStrength = MyRandom.randInt(handStrength, MAX_HAND_STRENGTH);
+            log(" is bluffing... (on 1 in " + invertedBluffRatio + "), fake hand strength of " + handStrength);
+            bluffing = true;
         }
         int benchMark = calcRoundStrengthBenchMark(runnyCardGame);
         log("Benchmark is " + benchMark);
-        int max = runnyCardGame.getMaximumBet() - runnyCardGame.getCurrentBet();
-        if (handStrength > benchMark && max > 0) {
-            int bet = calculateSuitableBet(handStrength, runnyCardGame) - runnyCardGame.getCurrentBet();
-            if (bet > 0) {
-                RaiseCardGameObject raise = new RaiseCardGameObject(bet);
-                raise.doAction(model, state, runnyCardGame, this);
+        boolean maxReached = runnyCardGame.getMaximumBet() == runnyCardGame.getCurrentBet();
+        if (handStrength > benchMark && !maxReached) {
+            if (!bluffing) {
+                if ((runnyCardGame.getRound() == 1 && MyRandom.flipCoin())) {
+                    log(" is underplaying hand (round 1).");
+                    return;
+                }
+                if (MyRandom.randInt(invertedBluffRatio) == 0) {
+                    log(" is underplaying hand (bluff).");
+                    return;
+                }
+            }
+
+            int raise = calculateSuitableBet(handStrength, runnyCardGame) - runnyCardGame.getCurrentBet();
+            if (raise > 0) {
+                RaiseCardGameObject raiseAction = new RaiseCardGameObject(raise);
+                raiseAction.doAction(model, state, runnyCardGame, this);
             }
         }
     }
 
     private int calculateSuitableBet(int handStrength, RunnyCardGame runnyCardGame) {
-        int max = runnyCardGame.getMaximumBet() - runnyCardGame.getCurrentBet();
-        int diff = handStrength - calcRoundStrengthBenchMark(runnyCardGame);
-        int bet = (int)(diff * (runnyCardGame.getMaximumBet() / 60.0));
-        return Math.min(bet, max);
+        int max = runnyCardGame.getMaximumBet();
+        double diff = handStrength - calcRoundStrengthBenchMark(runnyCardGame);
+        double strengthModifiedByBenchmark = handStrength + diff / 3.0;
+        double bet = (strengthModifiedByBenchmark / (double) MAX_HAND_STRENGTH) * runnyCardGame.getMaximumBet();
+        return (int)Math.min(Math.ceil(bet), max);
     }
 
+    /**
+     * Calculates the player's current benchmark. I.e. how good
+     * the player thinks a hand should be this far into the game.
+     * @return the benchmark.
+     */
     private int calcRoundStrengthBenchMark(RunnyCardGame runnyCardGame) {
         return runnyCardGame.getRound() * benchmarkRoundFactor + benchmarkThreshold;
     }
 
+    /**
+     * Calculates the strength of the hand.
+     * A hand with all cards locked is worth 6 x UNLOCKED_CARD_WEIGHT points.
+     * Each unlocked card removes points from this total.
+     * An unlocked card which is part of a pair removes UNLOCKED_PAIR_WEIGHT points or more.
+     * Other unlocked cards remove UNLOCKED_CARD_WEIGHT points.
+     * @return the calculated strength
+     */
     private int calcHandStrength() {
         MyPair<List<CardGameCard>, List<CardGameCard>> partitioning = partitionHand();
         int strength = partitioning.first.size() * UNLOCKED_CARD_WEIGHT;
@@ -148,7 +212,7 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
                 }
             }
         }
-        return (UNLOCKED_CARD_WEIGHT * 6) - strength;
+        return MAX_HAND_STRENGTH - strength;
     }
 
     private boolean valueExistsInLockedPartOfHand(CardGameCard card1, CardGameCard card2) {

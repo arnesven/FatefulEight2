@@ -75,6 +75,9 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
         return lockedCards;
     }
 
+    /**
+     * @return a pair of lists, [all singles, all pairs]
+     */
     public MyPair<List<CardGameCard>, List<CardGameCard>> partitionHand() {
         List<CardGameCard> handCards = new ArrayList<>();
         for (int i = 0; i < numberOfCardsInHand(); ++i) {
