@@ -73,6 +73,13 @@ public class TravelState extends GameState {
             if (nextStateIfStopped != null) {
                 return nextStateIfStopped;
             }
+            if (!flying && !model.getParty().isOnRoad() && model.getCurrentHex().hasRoad()) {
+                print("Do you want to get on the road? (Y/N) ");
+                if (yesNoInput()) {
+                    model.getParty().setOnRoad(true);
+                }
+            }
+
             mapSubView = new MapSubView(model);
             CollapsingTransition.transition(model, mapSubView);
             state = travelOneStep(model, mapSubView, false, flying);
