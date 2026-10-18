@@ -153,7 +153,7 @@ public class MyLists {
         return result;
     }
 
-    public static <E> String commaAndJoin(List<E> list, MyStringFunction<E> fun) {
+    public static <E> String internalCommaJoin(List<E> list, MyStringFunction<E> fun, String conjunction) {
         if (list.isEmpty()) {
             return "";
         }
@@ -167,15 +167,31 @@ public class MyLists {
                 buf.append(", ");
             }
         }
-        buf.append(" and ");
+        buf.append(" ").append(conjunction).append(" ");
         buf.append(fun.getString(list.get(list.size()-1)));
         return buf.toString();
+    }
+
+    public static <E> String commaAndJoin(List<E> list, MyStringFunction<E> fun) {
+        return internalCommaJoin(list, fun, "and");
+    }
+
+    public static <E> String commaOrJoin(List<E> list, MyStringFunction<E> fun) {
+        return internalCommaJoin(list, fun, "or");
     }
 
     public static <E> List<E> generate(int length, MyGeneratorFunction<E> fun) {
         List<E> result = new ArrayList<>();
         for (int i = 0; i < length; ++i) {
             result.add(fun.generate());
+        }
+        return result;
+    }
+
+    public static <E> List<E> generateByIndex(int length, MyGeneratorFunctionWithIndex<E> fun) {
+        List<E> result = new ArrayList<>();
+        for (int i = 0; i < length; ++i) {
+            result.add(fun.generate(i));
         }
         return result;
     }

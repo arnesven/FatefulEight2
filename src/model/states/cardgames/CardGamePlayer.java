@@ -2,6 +2,7 @@ package model.states.cardgames;
 
 import model.Model;
 import model.races.Race;
+import model.states.GameState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +36,10 @@ public abstract class CardGamePlayer {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String s) {
+        this.name = s;
     }
 
     public void giveCard(CardGameCard card, CardGame cardGame) {
@@ -105,4 +110,16 @@ public abstract class CardGamePlayer {
     }
 
     public abstract void runStartOfGameHook(Model model, CardGameState cardGameState, CardGame cardGame);
+
+    public void sayLine(GameState state, String line) {
+        if (isNPC()) {
+            state.printQuote(getName(), line);
+        } else {
+            state.leaderSay(line);
+        }
+    }
+
+    public List<CardGameCard> getCards() {
+        return cards;
+    }
 }

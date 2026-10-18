@@ -81,8 +81,8 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
         colorsToUse.addAll(Arrays.asList(CARD_SUITS));
         colorsToUse.addAll(Arrays.asList(OTHER_COLORS));
         for (MyColors suit : colorsToUse) {
-            Sprite[] sprites = new Sprite[MAX_VALUE+1];
-            for (int i = 0; i < MAX_VALUE+1; ++i) {
+            Sprite[] sprites = new Sprite[MAX_VALUE+4];
+            for (int i = 0; i < MAX_VALUE+4; ++i) {
                 sprites[i] = new Sprite16x16("cardgamecard"+suit.name()+i, "cardgame.png", i,
                         MyColors.BLACK, MyColors.WHITE, suit, MyColors.BEIGE);
             }

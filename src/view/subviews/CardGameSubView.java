@@ -7,9 +7,9 @@ import view.BorderFrame;
 import view.MyColors;
 import view.sprites.*;
 
+import java.util.List;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 
 public class CardGameSubView extends SubView {
 
@@ -83,7 +83,7 @@ public class CardGameSubView extends SubView {
         }
     }
 
-    private void drawPlayerArea(Model model) {
+    protected void drawPlayerArea(Model model) {
         String name = cardGame.getCharacterPlayer().getName();
         BorderFrame.drawString(model.getScreenHandler(), name, X_OFFSET + 16 - name.length(), Y_MAX-1, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), cardGame.getCharacterPlayer().getObols() + "",
@@ -91,10 +91,15 @@ public class CardGameSubView extends SubView {
         drawBet(model, cardGame.getCharacterPlayer().getBet(), X_OFFSET+18, Y_MAX-10);
         int col = X_OFFSET + 8;
         int increment = cardGame.getCharacterPlayer().getPlayArea().size() > 7 ? 1 : 2;
-        for (CardGameCard card : cardGame.getCharacterPlayer().getPlayArea()) {
+        drawCardsAt(model, cardGame.getCharacterPlayer().getPlayArea(), col, Y_MAX - 5, increment);
+    }
+
+    protected void drawCardsAt(Model model, List<CardGameCard> cards, int x, int y, int spacing) {
+        int col = x;
+        for (CardGameCard card : cards) {
             Sprite spr = card.getSprite();
-            Point position = new Point(col, Y_MAX - 5);
-            col += increment;
+            Point position = new Point(col, y);
+            col += spacing;
             model.getScreenHandler().register(spr.getName(), position, spr);
         }
     }
@@ -142,7 +147,7 @@ public class CardGameSubView extends SubView {
         }
     }
 
-    private void drawNPCTop(Model model, CardGamePlayer npc) {
+    protected void drawNPCTop(Model model, CardGamePlayer npc) {
         for (int i = 0; i < 3; ++i) {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 180);
             model.getScreenHandler().register(arm.getName(), new Point(X_OFFSET+17-i*2, Y_OFFSET+1), arm);
@@ -162,7 +167,7 @@ public class CardGameSubView extends SubView {
         }
     }
 
-    private void drawBet(Model model, int bet, int x, int y) {
+    protected void drawBet(Model model, int bet, int x, int y) {
         if (bet == 0) {
             return;
         }
@@ -181,7 +186,7 @@ public class CardGameSubView extends SubView {
                 x, y+2, MyColors.LIGHT_GRAY, MyColors.BROWN);
     }
 
-    private void drawNPCToLeft(Model model, CardGamePlayer npc, int firstNPCY) {
+    protected void drawNPCToLeft(Model model, CardGamePlayer npc, int firstNPCY) {
         for (int i = 0; i < 3; ++i) {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 90);
             model.getScreenHandler().register(arm.getName(), new Point(X_OFFSET+1, Y_OFFSET + firstNPCY + i*2), arm);
@@ -201,7 +206,7 @@ public class CardGameSubView extends SubView {
         }
     }
 
-    private void drawNPCToRight(Model model, CardGamePlayer npc, int firstNPCY) {
+    protected void drawNPCToRight(Model model, CardGamePlayer npc, int firstNPCY) {
         for (int i = 0; i < 3; ++i) {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 270);
             model.getScreenHandler().register(arm.getName(), new Point(X_MAX-3, Y_OFFSET + firstNPCY - i*2 + 3), arm);
@@ -246,7 +251,7 @@ public class CardGameSubView extends SubView {
         this.handAnimation = new HandAnimation(cardIn, cardOut, coin, currentPlayer, rotationAndOffset);
     }
 
-    private TableSeating getRotationAndOffsetForHandAnimation(CardGamePlayer currentPlayer) {
+    protected TableSeating getRotationAndOffsetForHandAnimation(CardGamePlayer currentPlayer) {
         if (currentPlayer == cardGame.getCharacterPlayer()) {
             return BOTTOM_POSITION;
         }
@@ -375,64 +380,4 @@ public class CardGameSubView extends SubView {
         }
     }
 
-    private static class CardAnimation implements Animation {
-        private static final Sprite[] SPRITES = makeSprites();
-        private final Point2D.Double dxdy;
-        private final Point2D.Double currentPos;
-        private final int animationSteps;
-        private int step;
-
-        public CardAnimation(TableSeating seating) {
-            Point cardPos = seating.getHandPosition();
-            Point center = new Point(X_OFFSET + (X_MAX - X_OFFSET)/2 - 2, Y_OFFSET + (Y_MAX - Y_OFFSET)/2 - 2);
-            double distance = cardPos.distance(center);
-            this.animationSteps = (int)Math.round(distance);
-            this.dxdy = new Point2D.Double((cardPos.x - center.x) / (double)animationSteps,
-                                    (cardPos.y - center.y) / (double)animationSteps);
-            currentPos = new Point2D.Double(center.x, center.y);
-            this.step = 0;
-            AnimationManager.register(this);
-        }
-
-        @Override
-        public void stepAnimation(long elapsedTimeMs, Model model) {
-            if (step < animationSteps) {
-                currentPos.x += dxdy.x;
-                currentPos.y += dxdy.y;
-                step++;
-            }
-        }
-
-        @Override
-        public void synch() { }
-
-        public void drawYourself(Model model) {
-            Point totalPosition = new Point((int)(Math.round(currentPos.x * 8)), (int)(Math.round(currentPos.y * 8)));
-            Point wholePosition = new Point(totalPosition.x / 8, totalPosition.y / 8);
-            Point shift = new Point(totalPosition.x % 8, totalPosition.y % 8);
-            Sprite spriteToUse = SPRITES[(step / 3) % 4];
-            model.getScreenHandler().register(spriteToUse.getName(), wholePosition, spriteToUse, 2, shift.x, shift.y);
-        }
-
-        public boolean checkForDone() {
-            if (step == animationSteps) {
-                AnimationManager.unregister(this);
-            }
-            return step >= animationSteps;
-        }
-
-        private static Sprite[] makeSprites() {
-            Sprite[] sprites = new Sprite[]{new Sprite32x32("dealcard1", "cardgame.png", 0x15,
-                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN),
-                                            new Sprite32x32("dealcard2", "cardgame.png", 0x16,
-                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN),
-                                            new Sprite32x32("dealcard3", "cardgame.png", 0x15,
-                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN),
-                                            new Sprite32x32("dealcard4", "cardgame.png", 0x16,
-                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN)};
-            sprites[2].setRotation(90);
-            sprites[3].setRotation(90);
-            return sprites;
-        }
-    }
 }

@@ -27,7 +27,7 @@ public class KnockOutCharacterPlayer extends KnockOutCardGamePlayer {
     @Override
     protected MyPair<CardGamePlayer, Integer> pickPlayerForGuess(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         state.println("Who do you want to target with the Cudgel?");
-        CardGamePlayer pickedPlayer = state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this), knockOutCardGame);
+        CardGamePlayer pickedPlayer = state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this));
         int cardValuePicked = knockOutCardGame.selectCardGuess(model, state);
         return new MyPair<>(pickedPlayer, cardValuePicked);
     }
@@ -35,25 +35,25 @@ public class KnockOutCharacterPlayer extends KnockOutCardGamePlayer {
     @Override
     protected CardGamePlayer pickPlayerForLooking(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         state.println("Who do you want to target with the Spyglass?");
-        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this), knockOutCardGame);
+        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this));
     }
 
     @Override
     protected CardGamePlayer pickPlayerForComparing(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         state.println("Who do you want to target with the Rapier?");
-        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this), knockOutCardGame);
+        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this));
     }
 
     @Override
     protected CardGamePlayer pickPlayerToForceDiscard(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         state.println("Who do you want to target with the Crossbow?");
-        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(true, this), knockOutCardGame);
+        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(true, this));
     }
 
     @Override
     protected CardGamePlayer pickPlayerForSwitch(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         state.println("Who do you want to target with the Magic Mirror?");
-        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this), knockOutCardGame);
+        return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this));
     }
 
     @Override

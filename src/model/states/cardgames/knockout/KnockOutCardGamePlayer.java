@@ -112,14 +112,6 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
         }
     }
 
-    private void sayLine(GameState state, String line) {
-        if (isNPC()) {
-            state.printQuote(getName(), line);
-        } else {
-            state.leaderSay(line);
-        }
-    }
-
     public void forcePlayerToDiscard(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         if (knockOutCardGame.getTargetablePlayers(true, this).isEmpty()) {
             return;

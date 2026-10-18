@@ -30,8 +30,8 @@ public class KnockOutCardGame extends CardGame {
 
     public KnockOutCardGame(int stakes) {
         super(prefixForStake(stakes) + " Knock-Out",
-                makePlayers(stakes, CardGame.makeRandomRaces(MAX_NUMBER_OF_PLAYERS-1)),
-                new KnockOutCardGameDeck());
+                fixDuplicateNames(makePlayers(stakes, CardGame.makeRandomRaces(2, MAX_NUMBER_OF_PLAYERS-1))),
+                new KnockOutCardGameDeck(), true);
         this.maximimBet = stakes * 15 + 10;
     }
 

@@ -3,6 +3,7 @@ package model.states.cardgames;
 import model.GameStatistics;
 import model.Model;
 import model.states.GameState;
+import model.states.cardgames.cabal.CabalCardGame;
 import model.states.cardgames.knockout.KnockOutCardGame;
 import model.states.cardgames.runny.RunnyCardGame;
 import util.MyLists;
@@ -20,15 +21,16 @@ public class CardGameState extends GameState {
 
     public CardGameState(Model model, CardGame cardGame) {
         super(model);
-        this.subView = new CardGameSubView();
+        this.subView = cardGame.makeSubView();
         this.cardGame = cardGame;
         subView.setGame(cardGame);
     }
 
     public CardGameState(Model model) {
-        this(model, MyRandom.flipCoin()
+        this(model, new CabalCardGame(MyRandom.randInt(5, 6)));
+       /* this(model, MyRandom.flipCoin()
                 ? new RunnyCardGame()
-                : new KnockOutCardGame(MyRandom.randInt(0, 2)));
+                : new KnockOutCardGame(MyRandom.randInt(0, 2)));*/
     }
 
     @Override
@@ -65,11 +67,15 @@ public class CardGameState extends GameState {
                 break;
             }
             cardGame.setup(this);
+            synchObols(model, cardGame.getPlayerObols());
             MyLists.forEach(cardGame.getPlayers(), cardGamePlayer -> cardGamePlayer.runStartOfGameHook(model, this, cardGame));
             waitForReturn();
             GameStatistics.incrementCardGamesPlayed();
             cardGame.playRound(model, this);
             synchObols(model, cardGame.getPlayerObols());
+            if (!cardGame.allowsMultipleRounds()) {
+                break;
+            }
             if (notEnoughObols(model)) {
                 println("You do not have the minimum amount of obols required (" + cardGame.getMaximumBet() + ") to play another round.");
                 print("Press enter to continue.");
@@ -82,6 +88,9 @@ public class CardGameState extends GameState {
         synchObols(model, cardGame.getPlayerObols());
         cardGame.removePlayer();
         println("You leave the card game.");
+        while (getNumberOfPlayers() > 0) {
+            cardGame.getPlayers().remove(cardGame.getNPC(0));
+        }
     }
 
     private void synchObols(Model model, int playerObols) {
@@ -111,7 +120,7 @@ public class CardGameState extends GameState {
         return cardGame.getPlayers().size();
     }
 
-    public CardGamePlayer selectPlayer(Model model, List<CardGamePlayer> targetablePlayers, CardGame card) {
+    public CardGamePlayer selectPlayer(Model model, List<CardGamePlayer> targetablePlayers) {
         int count = multipleOptionArrowMenu(model, 4, 24, MyLists.transform(targetablePlayers, CardGamePlayer::getName));
         return targetablePlayers.get(count);
     }

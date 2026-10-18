@@ -23,8 +23,8 @@ public class RunnyCardGame extends CardGame {
     private int currentRound = 0;
 
     public RunnyCardGame() {
-        super("Runny", makePlayers(CardGame.makeRandomRaces(MAX_NUMBER_OF_PLAYERS-1)),
-                new CardGameDeck());
+        super("Runny", fixDuplicateNames(makePlayers(CardGame.makeRandomRaces(2, MAX_NUMBER_OF_PLAYERS-1))),
+                new CardGameDeck(), true);
     }
 
     private static List<CardGamePlayer> makePlayers(List<Race> npcRaces) {
@@ -76,7 +76,7 @@ public class RunnyCardGame extends CardGame {
         }
         if (winner.isNPC()) {
             winner.clearCards();
-            state.printQuote(winner.getName(),
+            winner.sayLine(state,
                     MyRandom.sample(List.of("I'm good at this",
                     "I knew I had it in me.",
                     "Hah! Losers!",
@@ -102,7 +102,7 @@ public class RunnyCardGame extends CardGame {
             removeCardsFromArea(player);
         }
         player.clearCards();
-        state.printQuote(player.getName(),
+        player.sayLine(state,
                 MyRandom.sample(List.of("Too expensive for me",
                         "I'm out.", "Nah, it's not worth it.",
                         "I fold.", "I give in.", "My cards are rubbish.",

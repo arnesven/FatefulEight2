@@ -4,8 +4,11 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.races.Race;
+import model.states.GameState;
 import model.states.cardgames.runny.RunnyCardGame;
+import util.MyLists;
 import util.MyRandom;
+import view.subviews.CardGameSubView;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.List;
 
 public abstract class CardGame {
     private final List<CardGamePlayer> players;
+    private final boolean multipleRounds;
     private CardGamePlayer characterPlayer;
     private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 17);
     private final String name;
@@ -22,16 +26,17 @@ public abstract class CardGame {
     private CardPile discardPile;
     private int currentBet = 0;
 
-    public CardGame(String name, List<CardGamePlayer> npcPlayers, CardGameDeck deck) {
+    public CardGame(String name, List<CardGamePlayer> npcPlayers, CardGameDeck deck, boolean multipleRounds) {
         this.name = name;
         this.players = new ArrayList<>(npcPlayers);
         setDeck(deck);
         setDiscard(new CardPile());
+        this.multipleRounds = multipleRounds;
     }
 
-    protected static List<Race> makeRandomRaces(int number) {
+    protected static List<Race> makeRandomRaces(int from, int to) {
         List<Race> result = new ArrayList<>();
-        int count = MyRandom.randInt(2, number);
+        int count = MyRandom.randInt(from, to);
         for (int i = 0; i < count; ++i) {
             result.add(Race.randomRace());
         }
@@ -258,4 +263,27 @@ public abstract class CardGame {
     }
 
     public abstract void triggerTutorial(Model model);
+
+    public CardGameSubView makeSubView() {
+        return new CardGameSubView();
+    }
+
+    protected static List<CardGamePlayer> fixDuplicateNames(List<CardGamePlayer> npcs) {
+        for (int i = 1; i < npcs.size(); ++i) {
+            CardGamePlayer subject = npcs.get(i);
+            do {
+                CardGamePlayer duplicate = MyLists.find(npcs.subList(0, i),
+                        cardGamePlayer -> cardGamePlayer.getName().equals(subject.getName()));
+                if (duplicate == null) {
+                    break;
+                }
+                subject.setName(GameState.randomFirstName(subject.getGender()));
+            } while (true);
+        }
+        return npcs;
+    }
+
+    public boolean allowsMultipleRounds() {
+        return multipleRounds;
+    }
 }

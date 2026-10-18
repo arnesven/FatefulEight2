@@ -161,7 +161,9 @@ public class SoundJLayer extends PlaybackListener implements Runnable
     private boolean setVolume(float gain) throws VolumeChangerException {
         Class<JavaSoundAudioDevice> clazz = JavaSoundAudioDevice.class;
         Field[] fields = clazz.getDeclaredFields();
-
+        if (device == null) {
+            System.err.println("Device is null...");
+        }
         try {
             SourceDataLine source = null;
             for (Field field : fields) {
