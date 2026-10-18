@@ -43,7 +43,7 @@ public class StarCabalCard extends CabalCard {
                 performer.sayLine(state, MyRandom.sample(List.of("Bah.", "Shoot!", "Darn it.", "Doh!")));
             } else {
                 performer.sayLine(state, MyRandom.sample(List.of("Yes!", "Alright!", "Good!", "Great!",
-                        "Ah, a star!", "Finally.")));
+                        "Ah, a star!")));
                     if (target instanceof CabalNPC && ((CabalNPC)target).getSuspicionFor(target) < 5.0) {
                         target.sayLine(state, MyRandom.sample(List.of("See?", "Good on my word.", "Thanks for trusting me.")));
                     }

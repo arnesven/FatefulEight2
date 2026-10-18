@@ -22,11 +22,24 @@ public class CabalNPC extends CabalCardGamePlayer {
     @Override
     public void takeTurn(Model model, CardGameState state, CardGame cardGame) {
         state.print("It's " + getName() + "'s turn. ");
-        int delaySeconds = MyRandom.randInt(3);
+        int delaySeconds = MyRandom.randInt(4);
         if (delaySeconds > 0) {
             state.println(getName() + " is thinking...");
             model.getLog().waitForAnimationToFinish();
             state.delay(1000 * (delaySeconds + 1));
+            if (delaySeconds == 1) {
+                List<CabalCardGamePlayer> yellers = MyLists.filter(((CabalCardGame)cardGame).getCabalPlayers(),
+                        ccp -> ccp.hasClaim() && ccp.getClaimedStars() > 1 && ccp.getClaimedDaggers() == 0);
+                if (!yellers.isEmpty() && MyRandom.flipCoin()) {
+                    MyRandom.sample(yellers).sayLine(state, MyRandom.sample(
+                            List.of("Pick me!",
+                                    getName() + ", you can trust me.",
+                                    "Come over here!",
+                                    "I've got stars!")));
+                }
+                model.getLog().waitForAnimationToFinish();
+                state.delay(1000);
+            }
         } else {
             state.println("");
         }
@@ -117,14 +130,19 @@ public class CabalNPC extends CabalCardGamePlayer {
     public void updateSuspicionsForStartOfTurnClaim(CardGameState state, CabalCardGame game) {
         giveSusForDaggerClinches(game, state, false);
         giveSusForStarOverflow(game, state, false);
-        giveSusForStarUnderflow(game);
+        giveSusForStarUnderflow(game, state);
     }
 
-    private void giveSusForStarUnderflow(CabalCardGame game) {
+    private void giveSusForStarUnderflow(CabalCardGame game, CardGameState state) {
         List<CabalCardGamePlayer> starClaimers = MyLists.filter(game.getCabalPlayers(),
                 ccp -> ccp.hasClaim() && ccp.getClaimedStars() > 0);
         int starsClaimed = MyLists.intAccumulate(starClaimers, CabalCardGamePlayer::getClaimedStars);
         if (starsClaimed < game.getTotalStars() - game.getStarsPicked()) {
+            if (game.getPickPlayer() == this) {
+                int extra = game.getTotalStars() - game.getStarsPicked() - starsClaimed;
+                sayLine(state, "Only " + MyStrings.numberWord(starsClaimed) + " stars claimed. " +
+                        "We're missing " + MyStrings.numberWord(extra) + ". Who's hiding them?");
+            }
             List<CabalCardGamePlayer> targets = MyLists.filter(game.getCabalPlayers(),
                     ccp -> !ccp.hasClaim() || (ccp.getClaimedStars() == 0 && ccp.getClaimedDaggers() == 0));
             System.out.println(getName() + " gave " + MyLists.commaAndJoin(targets, CardGamePlayer::getName) + " " +
@@ -139,6 +157,12 @@ public class CabalNPC extends CabalCardGamePlayer {
                 ccp -> ccp.hasClaim() && ccp.getClaimedStars() > 0);
         int starsClaimed = MyLists.intAccumulate(starClaimers, CabalCardGamePlayer::getClaimedStars);
         if (starsClaimed > game.getTotalStars() - game.getStarsPicked()) {
+            if (game.getPickPlayer() == this && !extraForHardClinch) {
+                int extra = starsClaimed - game.getTotalStars() + game.getStarsPicked();
+                sayLine(state, MyStrings.capitalize(MyStrings.numberWord(starsClaimed)) + " claimed stars? That's " +
+                        MyStrings.numberWord(extra) + " too many. Who's lying?");
+            }
+
             System.out.println(getName() + " gave " + MyLists.commaAndJoin(starClaimers, CardGamePlayer::getName) +
                     " " + CabalSuspicions.STAR_OVERFLOW + " sus for star overflow.");
             addNormalized(starClaimers, CabalSuspicions.STAR_OVERFLOW);
@@ -165,6 +189,9 @@ public class CabalNPC extends CabalCardGamePlayer {
                     System.out.println(getName() + " gave " + MyLists.commaAndJoin(starClaimers, CardGamePlayer::getName) +
                             " " + CabalSuspicions.TRUTH_TELLER_IN_MY_EYES + " for telling the truth.");
                     addNormalized(starClaimers, CabalSuspicions.TRUTH_TELLER_IN_MY_EYES);
+                    if (starClaimers.size() == 1) {
+                        sayLine(state, starClaimers.getFirst().getName() + " is a liar!");
+                    }
                 }
             }
 
@@ -184,7 +211,7 @@ public class CabalNPC extends CabalCardGamePlayer {
                 daggerClaimers.remove(this);
                 MyPair<Integer, Integer> starsAndDaggers = CabalAI.countStarsAndDaggers(this);
                 if (starsAndDaggers.second == getClaimedDaggers()) { // Not lying
-                    int daggersLeftAfterMine = (2 - game.getDaggersPicked()) - starsAndDaggers.first;
+                    int daggersLeftAfterMine = (2 - game.getDaggersPicked()) - starsAndDaggers.second;
                     if (daggersLeftAfterMine == 0) {
                         System.out.println(getName() + " gave " + MyLists.commaAndJoin(daggerClaimers, CardGamePlayer::getName) +
                                 " " + CabalSuspicions.LIAR_IN_MY_EYES + " for being a liar.");
@@ -197,6 +224,9 @@ public class CabalNPC extends CabalCardGamePlayer {
                     System.out.println(getName() + " gave " + MyLists.commaAndJoin(daggerClaimers, CardGamePlayer::getName) +
                             " " + CabalSuspicions.TRUTH_TELLER_IN_MY_EYES + " for telling the truth.");
                     addNormalized(daggerClaimers, CabalSuspicions.TRUTH_TELLER_IN_MY_EYES);
+                    if (daggerClaimers.size() == 1) {
+                        sayLine(state, daggerClaimers.getFirst().getName() + " is a liar!");
+                    }
                 }
             }
         }
@@ -218,7 +248,7 @@ public class CabalNPC extends CabalCardGamePlayer {
         giveSusForDaggerClinches(game, state, true);
         giveTrustForDaggerReveals(game);
         giveSusForStarOverflow(game, state, true);
-        giveSusForStarUnderflow(game);
+        giveSusForStarUnderflow(game, state);
 
         // Find hidden daggers:
         List<CabalCardGamePlayer> daggerClaimers = MyLists.filter(game.getCabalPlayers(),
