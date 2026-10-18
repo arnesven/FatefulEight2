@@ -721,6 +721,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void cardGameCabal(Model model) {
+        runOnce("cardgamecabal", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCardGameCabal(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

@@ -250,7 +250,7 @@ public class CabalCardGame extends CardGame {
 
     @Override
     public void triggerTutorial(Model model) {
-
+        model.getTutorial().cardGameCabal(model);
     }
 
     private static CardGamePlayer makeCabalNPC(Race r) {

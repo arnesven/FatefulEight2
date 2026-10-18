@@ -22,8 +22,15 @@ public class CabalNPC extends CabalCardGamePlayer {
     @Override
     public void takeTurn(Model model, CardGameState state, CardGame cardGame) {
         state.print("It's " + getName() + "'s turn. ");
+        int delaySeconds = MyRandom.randInt(3);
+        if (delaySeconds > 0) {
+            state.println(getName() + " is thinking...");
+            model.getLog().waitForAnimationToFinish();
+            state.delay(1000 * (delaySeconds + 1));
+        } else {
+            state.println("");
+        }
         CabalCardGame cabal = (CabalCardGame)cardGame;
-        state.waitForReturn(); // TODO: Remove
         List<CabalCardGamePlayer> candidates = super.getEligiblePlayers(cabal);
         CabalCardGamePlayer nextPick = cabalAI.findBestPick((CabalCardGame) cardGame, this, candidates, suspicions);
         sayLine(state, MyRandom.sample(List.of(
@@ -33,7 +40,6 @@ public class CabalNPC extends CabalCardGamePlayer {
                 nextPick.getName() + ", one of yours.")));
         cabal.pickRandomCardFromPlayer(state, this, nextPick);
         model.getLog().waitForAnimationToFinish();
-        state.waitForReturn(); // TODO: Remove
     }
 
     @Override

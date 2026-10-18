@@ -15,6 +15,7 @@ public class CardGameHelpChapter extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
+                new TutorialCardGameCabal(view),
                 new TutorialCardGameKnockOut(view),
                 new TutorialCardGameRunny(view));
     }

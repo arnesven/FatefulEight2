@@ -19,8 +19,18 @@ public class StarCabalCard extends CabalCard {
             target.sayLine(state, "I had my reasons.");
             game.addSuspicionForAll(target, CabalSuspicions.STAR_UNDERFLOW * game.getTurn());
         } else if (target.getClaimedStars() == 0) {
-            performer.sayLine(state, MyRandom.sample(List.of("Hey, I thought you didn't have any!", "Oh, a star?")));
-            target.sayLine(state, "Oh right... that one.");
+            if (target instanceof CabalNPC && ((CabalNPC)target).getSuspicionFor(target) > 45 &&
+                    game.getStarsPicked() == game.getTotalStars() - 1) {
+                if (((CabalNPC)target).getSuspicionFor(performer) > 45) {
+                    target.sayLine(state, MyRandom.sample(List.of("You block head!", "What were you thinking!",
+                            "Oh, you nincompoop.")));
+                } else {
+                    target.sayLine(state, MyRandom.sample(List.of("Grrr...", "Ah, you got me.", "Darn it.")));
+                }
+            } else {
+                performer.sayLine(state, MyRandom.sample(List.of("Hey, I thought you didn't have any!", "Oh, a star?")));
+                target.sayLine(state, "Oh right... that one.");
+            }
             game.addSuspicionForAll(target, (CabalSuspicions.UNCLAIMED_STAR_PICKED * game.getTurn())/2.0);
         } else if (target.getClaimedDaggers() > 0) {
             if (target instanceof CabalNPC && ((CabalNPC)target).getSuspicionFor(target) > 45) {
@@ -33,7 +43,7 @@ public class StarCabalCard extends CabalCard {
                 performer.sayLine(state, MyRandom.sample(List.of("Bah.", "Shoot!", "Darn it.", "Doh!")));
             } else {
                 performer.sayLine(state, MyRandom.sample(List.of("Yes!", "Alright!", "Good!", "Great!",
-                        "Ah, ah star!", "Finally.")));
+                        "Ah, a star!", "Finally.")));
                     if (target instanceof CabalNPC && ((CabalNPC)target).getSuspicionFor(target) < 5.0) {
                         target.sayLine(state, MyRandom.sample(List.of("See?", "Good on my word.", "Thanks for trusting me.")));
                     }
