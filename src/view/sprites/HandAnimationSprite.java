@@ -21,8 +21,8 @@ public class HandAnimationSprite extends Sprite implements Animation {
     private int animationSpeed = 3;
     public static final int MAX_FRAMES = 15;
 
-    public HandAnimationSprite(MyColors skinColor, CardGameSleeve sleeve, TableSeating rotationAndOffset) {
-        super("handanimation", "cardgame.png", 0, 1, SLICE_WIDTH * MAX_FRAMES, SLICE_HEIGHT,
+    public HandAnimationSprite(MyColors skinColor, CardGameSleeve sleeve, boolean isBig, TableSeating rotationAndOffset) {
+        super("handanimation", "cardgame.png", 0, isBig ? 2 : 1, SLICE_WIDTH * MAX_FRAMES, SLICE_HEIGHT,
                 List.of(sleeve.getSprite()));
         setColor2(skinColor);
         this.seating = rotationAndOffset;

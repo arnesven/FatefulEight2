@@ -18,7 +18,7 @@ public abstract class CardGameSleeve {
     private final Sprite sprite;
 
     public CardGameSleeve(MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
-        this.sprite = new Sprite("handanioverlay", "cardgame.png", 0, 2,
+        this.sprite = new Sprite("handanioverlay", "cardgame.png", 0, 3,
                 SLICE_WIDTH*MAX_FRAMES, SLICE_HEIGHT);
         sprite.setColor1(color1);
         sprite.setColor2(color2);

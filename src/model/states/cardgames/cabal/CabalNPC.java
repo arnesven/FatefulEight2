@@ -23,7 +23,7 @@ public class CabalNPC extends CabalCardGamePlayer {
     @Override
     public void takeTurn(Model model, CardGameState state, CardGame cardGame) {
         state.print("It's " + getName() + "'s turn. ");
-        int delaySeconds = MyRandom.randInt(4);
+        int delaySeconds = MyRandom.randInt(3);
         if (delaySeconds > 0) {
             state.println(getName() + " is thinking...");
             model.getLog().waitForAnimationToFinish();

@@ -27,10 +27,16 @@ public class CardGameState extends GameState {
     }
 
     public CardGameState(Model model) {
-        this(model, new CabalCardGame(MyRandom.randInt(5, 6)));
-       /* this(model, MyRandom.flipCoin()
-                ? new RunnyCardGame()
-                : new KnockOutCardGame(MyRandom.randInt(0, 2)));*/
+        this(model, makeRandomGame());
+    }
+
+    private static CardGame makeRandomGame() {
+        int i = MyRandom.randInt(3);
+        return switch (i) {
+            case 0 -> new CabalCardGame(MyRandom.randInt(5, 6));
+            case 1 -> new RunnyCardGame();
+            default -> new KnockOutCardGame(MyRandom.randInt(0, 2));
+        };
     }
 
     @Override

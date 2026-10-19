@@ -2,6 +2,8 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.races.Dwarf;
+import model.races.Race;
 import model.states.cardgames.*;
 import view.BorderFrame;
 import view.MyColors;
@@ -343,7 +345,10 @@ public class CardGameSubView extends SubView {
             this.cardOut = cardOut;
             this.coin = coin;
             this.sprite = new HandAnimationSprite(currentPlayer.getRace().getColor(),
-                    currentPlayer.getCardGameSleeve(), rotationAndOffset);
+                    currentPlayer.getCardGameSleeve(),
+                    currentPlayer.getRace().id() == Race.DWARF.id() ||
+                            currentPlayer.getRace().id() == Race.HALF_ORC.id(),
+                    rotationAndOffset);
             this.rotationAndOffset = rotationAndOffset;
             this.cardSprite = new Sprite32x32("handanicard", "cardgame.png", 0x15,
                     MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN);
