@@ -12,6 +12,8 @@ import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.Scepter;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -20,6 +22,8 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class BardClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.PURPLE;
+
     public BardClass() {
         super("Bard", "BRD", 6, 5, false, 16,
                 new WeightedSkill[]{
@@ -43,11 +47,16 @@ public class BardClass extends CharacterClass {
         if (characterAppearance.getGender()) {
             MyColors skinColor = Looks.getSkinColorToUse(characterAppearance);
             MyColors detailColor = skinColor == MyColors.PINK ? MyColors.LIGHT_GRAY : MyColors.PINK;
-            Looks.putOnFancyDress(characterAppearance, MyColors.PURPLE, detailColor);
+            Looks.putOnFancyDress(characterAppearance, ROBE_COLOR, detailColor);
         } else {
-            Looks.putOnLooseShirt(characterAppearance, MyColors.PURPLE);
+            Looks.putOnLooseShirt(characterAppearance, ROBE_COLOR);
         }
         Looks.putOnFancyHat(characterAppearance, MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.BEIGE);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, MyColors.LIGHT_GRAY);
     }
 
     @Override

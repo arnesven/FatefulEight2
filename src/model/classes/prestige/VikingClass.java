@@ -12,6 +12,8 @@ import model.items.accessories.GreatHelm;
 import model.items.accessories.LargeShield;
 import model.items.weapons.RaidersAxe;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyLists;
 import util.MyTriplet;
 import view.MyColors;
@@ -29,6 +31,8 @@ public class VikingClass extends PrestigeClass {
             DruidClass.class,
             ForesterClass.class,
             MinerClass.class);
+
+    private static final MyColors TUNIC_COLOR = MyColors.DARK_RED;
 
     private final String descriptionClasses;
 
@@ -58,9 +62,14 @@ public class VikingClass extends PrestigeClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_RED);
+        Looks.putOnTunic(characterAppearance, TUNIC_COLOR);
         CaptainClass.putOnHalfHelm(characterAppearance);
         putOnHorns(characterAppearance, MyColors.GOLD);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(TUNIC_COLOR);
     }
 
     public static void putOnHorns(CharacterAppearance characterAppearance, MyColors hornsColor) {

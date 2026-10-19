@@ -12,6 +12,8 @@ import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.items.weapons.ThrowingKnives;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -48,6 +50,11 @@ public class AssassinClass extends CharacterClass {
         Looks.putOnTunic(characterAppearance, clothingColor);
         Looks.putOnHood(characterAppearance, clothingColor);
         Looks.putOnMask(characterAppearance, clothingColor);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(clothingColor);
     }
 
     @Override

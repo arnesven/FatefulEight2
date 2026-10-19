@@ -12,6 +12,8 @@ import model.items.spells.TelekinesisSpell;
 import model.items.weapons.ClaspedOrb;
 import model.items.weapons.OldWand;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyPair;
 import util.MyTriplet;
 import view.MyColors;
@@ -20,6 +22,9 @@ import view.sprites.*;
 import java.util.List;
 
 public class MagicianClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.DARK_PURPLE;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.DARK_RED;
+
     public MagicianClass() {
         super("Magician", "MAG", 7, 5, false, 24,
                 new WeightedSkill[]{
@@ -40,11 +45,16 @@ public class MagicianClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         if (characterAppearance.getGender()) {
-            Looks.putOnFancyDress(characterAppearance, MyColors.DARK_PURPLE, MyColors.DARK_RED);
+            Looks.putOnFancyDress(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         } else {
-            Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_PURPLE, MyColors.DARK_RED);
+            Looks.putOnFancyRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         }
         putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_PURPLE);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     public static void putOnTopHat(CharacterAppearance characterAppearance, MyColors color1, MyColors color2, MyColors color4) {

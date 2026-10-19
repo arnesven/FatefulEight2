@@ -7,6 +7,7 @@ import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGameCard;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
 
-    public KnockOutCardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
-        super(firstName, gender, race, obols, isNPC);
+    public KnockOutCardGamePlayer(String firstName, boolean gender, Race race, CardGameSleeve sleeve, int obols, boolean isNPC) {
+        super(firstName, gender, race, sleeve, obols, isNPC);
     }
 
     @Override

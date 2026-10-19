@@ -14,6 +14,8 @@ import model.items.clothing.PlateMailArmor;
 import model.items.weapons.Katana;
 import model.items.weapons.Wakizashi;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyLists;
 import util.MyTriplet;
 import view.MyColors;
@@ -73,6 +75,11 @@ public class SamuraiClass extends PrestigeClass {
         Looks.putOnTunic(characterAppearance, secondaryColor);
         Looks.putOnLightArmor(characterAppearance, armorColor, secondaryColor);
         putOnSamuraiHelm(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(secondaryColor, helmetDetail);
     }
 
     @Override

@@ -3,6 +3,7 @@ package model.states.cardgames.runny;
 import model.Model;
 import model.races.Race;
 import model.states.cardgames.*;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.MyPair;
 import view.MyColors;
 
@@ -12,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class RunnyCardGamePlayer extends CardGamePlayer {
-    public RunnyCardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
-        super(firstName, gender, race, obols, isNPC);
+    public RunnyCardGamePlayer(String firstName, boolean gender, Race race, CardGameSleeve sleeve, int obols, boolean isNPC) {
+        super(firstName, gender, race, sleeve, obols, isNPC);
     }
 
     @Override

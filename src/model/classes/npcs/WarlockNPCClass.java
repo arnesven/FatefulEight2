@@ -4,6 +4,8 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.EvilStaffDetail;
 import model.classes.Looks;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.Sprite8x8;
 
@@ -43,6 +45,11 @@ public class WarlockNPCClass extends NPCClass {
             staff.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());
         }
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(ROBE_COLOR);
     }
 
     @Override

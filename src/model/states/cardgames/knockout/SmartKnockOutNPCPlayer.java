@@ -6,6 +6,7 @@ import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGameCard;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -17,7 +18,7 @@ public class SmartKnockOutNPCPlayer extends KnockOutCardGamePlayer {
     private HashMap<CardGamePlayer, Integer> opponentCards;
 
     public SmartKnockOutNPCPlayer(String name, boolean gender, Race r) {
-        super(name, gender, r, MyRandom.randInt(60, 140), true);
+        super(name, gender, r, CardGameSleeve.makeRandomSleeve(), MyRandom.randInt(60, 140), true);
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CabalCharacterPlayer extends CabalCardGamePlayer {
     public CabalCharacterPlayer(GameCharacter gc, int obols) {
-        super(gc.getFirstName(), gc.getGender(), gc.getRace(), obols, false);
+        super(gc.getFirstName(), gc.getGender(), gc.getRace(), gc.getCharClass().makeCardGameSleeve(), obols, false);
     }
 
     @Override

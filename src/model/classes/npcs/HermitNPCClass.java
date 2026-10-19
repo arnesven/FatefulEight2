@@ -3,6 +3,8 @@ package model.classes.npcs;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.ShortSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -14,6 +16,11 @@ public class HermitNPCClass extends NPCClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnLooseShirt(characterAppearance, MyColors.BEIGE);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new ShortSleeve(MyColors.BEIGE);
     }
 
     @Override

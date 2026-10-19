@@ -10,6 +10,8 @@ import model.items.Equipment;
 import model.items.Item;
 import model.items.weapons.*;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyLists;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -54,6 +56,11 @@ public class NinjaClass extends PrestigeClass {
         Looks.putOnHood(characterAppearance, clothingColor);
         Looks.putOnMask(characterAppearance, clothingColor);
         ThiefClass.putOnThiefsMask(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(clothingColor);
     }
 
     @Override

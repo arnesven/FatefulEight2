@@ -7,10 +7,15 @@ import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.weapons.ShortSword;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import view.MyColors;
 import view.sprites.*;
 
 public class SwordMasterClass extends SpecialCharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.DARK_GRAY;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.GRAY;
+
     public SwordMasterClass() {
         super("Sword Master", "SWM", 8, 5, true, 0, new WeightedSkill[]{
                 new WeightedSkill(Skill.Acrobatics, 5),
@@ -26,8 +31,13 @@ public class SwordMasterClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_GRAY, MyColors.GRAY);
+        Looks.putOnFancyRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         addSwordInBack(characterAppearance, MyColors.DARK_GRAY, MyColors.GRAY);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     private void addSwordInBack(CharacterAppearance app, MyColors robeColor, MyColors robeDetailColor) {

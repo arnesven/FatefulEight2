@@ -9,12 +9,17 @@ import model.classes.normal.WeightedSkillPlus;
 import model.items.Equipment;
 import model.items.weapons.Dirk;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyPair;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
 
 public class BrigandClass extends SpecialCharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.DARK_RED;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.DARK_RED;
+
     public BrigandClass() {
         super("Brigand", "BRI", 10, 6, false, 28,
                 new WeightedSkill[]{
@@ -33,9 +38,14 @@ public class BrigandClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_RED, MyColors.DARK_RED);
+        Looks.putOnFancyRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         putOnLargeHat(characterAppearance, MyColors.DARK_RED);
         putOnMask(characterAppearance, MyColors.DARK_RED);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     private void putOnMask(CharacterAppearance characterAppearance, MyColors fill) {

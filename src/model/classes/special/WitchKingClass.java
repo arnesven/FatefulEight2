@@ -10,10 +10,14 @@ import model.items.accessories.Crown;
 import model.items.clothing.MesmersRobes;
 import model.items.weapons.OldStaff;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
 public class WitchKingClass extends SpecialCharacterClass {
+    private static final MyColors TUNIC_COLOR = MyColors.DARK_RED;
+
     public WitchKingClass() {
         super("Witch King", "WKN", 8, 3, false, 0, new WeightedSkill[] {
                 new WeightedSkill(Skill.Blades, 4),
@@ -31,8 +35,13 @@ public class WitchKingClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_RED);
+        Looks.putOnTunic(characterAppearance, TUNIC_COLOR);
         NobleClass.putOnCrown(characterAppearance, MyColors.GOLD, MyColors.GOLD);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(TUNIC_COLOR, MyColors.GOLD);
     }
 
     @Override

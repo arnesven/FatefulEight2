@@ -14,6 +14,8 @@ import model.items.clothing.PrimitiveArmor;
 import model.items.weapons.GrandMaul;
 import model.items.weapons.Hatchet;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.NoSleeveAtAll;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -43,6 +45,11 @@ public class BarbarianClass extends CharacterClass {
             clothing = MyColors.GOLD;
         }
         Looks.putOnHideRight(characterAppearance, clothing);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new NoSleeveAtAll();
     }
 
     @Override

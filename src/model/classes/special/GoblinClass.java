@@ -9,6 +9,8 @@ import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.Glaive;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.NoSleeveAtAll;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.LimitedAvatarSprite;
@@ -32,6 +34,11 @@ public class GoblinClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) { }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new NoSleeveAtAll();
+    }
 
     @Override
     public boolean showFacialHair() {

@@ -12,6 +12,8 @@ import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.items.weapons.LightCrossbow;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyPair;
 import util.MyTriplet;
 import view.MyColors;
@@ -22,6 +24,8 @@ import view.sprites.Sprite8x8;
 import java.util.List;
 
 public class SpyClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.DARK_BLUE;
+
     public SpyClass() {
         super("Spy", "SPY", 6, 5, false, 16,
                 new WeightedSkill[]{
@@ -42,12 +46,17 @@ public class SpyClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         if (characterAppearance.getGender()) {
-            Looks.putOnFancyDress(characterAppearance, MyColors.DARK_BLUE, MyColors.DARK_GRAY);
+            Looks.putOnFancyDress(characterAppearance, ROBE_COLOR, MyColors.DARK_GRAY);
         } else {
-            Looks.putOnTunic(characterAppearance, MyColors.DARK_BLUE);
+            Looks.putOnTunic(characterAppearance, ROBE_COLOR);
             putOnFakeMustache(characterAppearance, MyColors.BLACK);
         }
         Looks.putOnBowlersHat(characterAppearance, MyColors.DARK_GRAY);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(ROBE_COLOR);
     }
 
     public static void putOnFakeMustache(CharacterAppearance characterAppearance, MyColors hairColor) {

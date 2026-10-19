@@ -5,6 +5,7 @@ import model.races.Race;
 import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CabalNPC extends CabalCardGamePlayer {
     private final CabalSuspicions suspicions = new CabalSuspicions();
 
     public CabalNPC(String name, boolean gender, Race r) {
-        super(name, gender, r, MyRandom.randInt(CabalCardGame.MAX_BET, 90), true);
+        super(name, gender, r, CardGameSleeve.makeRandomSleeve(), MyRandom.randInt(CabalCardGame.MAX_BET, 90), true);
         this.cabalAI = new CabalFriendAI();
     }
 

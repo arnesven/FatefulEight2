@@ -2,6 +2,8 @@ package model.classes.npcs;
 
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 
 public class GardenerNPCClass extends NPCClass {
@@ -17,5 +19,10 @@ public class GardenerNPCClass extends NPCClass {
         Looks.putOnTunic(characterAppearance,
                 characterAppearance.getRace().getColor() == SHIRT_COLOR ? MyColors.BROWN : SHIRT_COLOR);
         Looks.putOnApron(characterAppearance, COVERALLS_COLOR, SHIRT_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(SHIRT_COLOR);
     }
 }

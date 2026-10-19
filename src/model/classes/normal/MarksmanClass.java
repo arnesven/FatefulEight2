@@ -14,6 +14,8 @@ import model.items.weapons.LightCrossbow;
 import model.items.weapons.LongBow;
 import model.items.weapons.TrainingBow;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class MarksmanClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.BROWN;
+    private static final MyColors TUNIC_COLOR = MyColors.DARK_GRAY;
     private final BowInHandDetail bow;
 
     public MarksmanClass() {
@@ -45,9 +48,14 @@ public class MarksmanClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_GRAY);
+        Looks.putOnTunic(characterAppearance, TUNIC_COLOR);
         Looks.putOnLightArmor(characterAppearance, ARMOR_COLOR, MyColors.DARK_GRAY);
         putOnLeatherCap(characterAppearance, ARMOR_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(TUNIC_COLOR);
     }
 
     @Override

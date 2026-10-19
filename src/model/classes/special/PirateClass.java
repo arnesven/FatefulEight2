@@ -6,6 +6,8 @@ import model.classes.Skill;
 import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.races.Race;
+import model.states.cardgames.sleeves.BraceletSleeve;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;
@@ -37,6 +39,11 @@ public class PirateClass extends SpecialCharacterClass {
         Looks.putOnLightArmor(characterAppearance, shirtAndHatColor, skinColor);
         characterAppearance.setSprite(3, 6, new ClothesSprite(characterAppearance.isFemale() ? 0xAD : 0xAC,
                 shirtAndHatColor, skinColor));
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new BraceletSleeve(MyColors.DARK_BLUE);
     }
 
     private void putOnScarfHat(CharacterAppearance appearance, MyColors fillColor) {

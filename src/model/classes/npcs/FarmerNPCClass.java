@@ -6,6 +6,8 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.PitchForkInHandDetail;
 import model.classes.Looks;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.ShortSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -23,6 +25,11 @@ public class FarmerNPCClass extends NPCClass {
                 characterAppearance.getRace().getColor() == MyColors.BEIGE ?
                         MyColors.DARK_GREEN : MyColors.BEIGE);
         Looks.putOnFarmersHat(characterAppearance, MyColors.BROWN);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new ShortSleeve(MyColors.BEIGE);
     }
 
     @Override

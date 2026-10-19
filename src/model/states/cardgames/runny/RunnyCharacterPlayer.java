@@ -1,13 +1,16 @@
 package model.states.cardgames.runny;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.classes.CharacterClass;
 import model.races.Race;
 import model.states.cardgames.CardGameState;
 import model.states.cardgames.*;
 
 public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
-    public RunnyCharacterPlayer(String name, boolean gender, Race race, int obols) {
-        super(name, gender, race, obols, false);
+    public RunnyCharacterPlayer(GameCharacter character, int obols) {
+        super(character.getFirstName(), character.getGender(),
+                character.getRace(), character.getCharClass().makeCardGameSleeve(), obols, false);
     }
 
     @Override

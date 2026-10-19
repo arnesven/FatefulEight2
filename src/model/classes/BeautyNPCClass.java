@@ -3,6 +3,8 @@ package model.classes;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.npcs.NPCClass;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.NoSleeveAtAll;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -26,5 +28,10 @@ public class BeautyNPCClass extends NPCClass {
         } else {
             Looks.putOnLooseShirt(characterAppearance, MyColors.DARK_RED);
         }
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new NoSleeveAtAll();
     }
 }

@@ -12,6 +12,8 @@ import model.items.clothing.StuddedTunic;
 import model.items.weapons.Hatchet;
 import model.items.weapons.Longsword;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -53,6 +55,11 @@ public class ArtisanClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, SHIRT_COLOR);
         Looks.putOnApron(characterAppearance, APRON_COLOR, SHIRT_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(SHIRT_COLOR);
     }
 
     @Override

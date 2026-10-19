@@ -6,6 +6,7 @@ import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGameCard;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.MyPair;
 import util.MyRandom;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class KnockOutNPCPlayer extends KnockOutCardGamePlayer {
     public KnockOutNPCPlayer(String name, boolean gender, Race r) {
-        super(name, gender, r, MyRandom.randInt(40, 100), true);
+        super(name, gender, r, CardGameSleeve.makeRandomSleeve(), MyRandom.randInt(40, 100), true);
     }
 
     @Override

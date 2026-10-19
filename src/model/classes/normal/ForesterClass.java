@@ -11,6 +11,8 @@ import model.items.weapons.BattleAxe;
 import model.items.weapons.Hatchet;
 import model.items.weapons.LongBow;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ForesterClass extends CharacterClass {
+    private static final MyColors TUNIC_COLOR = MyColors.RED;
+
     public ForesterClass() {
         super("Forester", "F", 10, 4, false, 12,
                 new WeightedSkill[]{
@@ -39,8 +43,13 @@ public class ForesterClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnLooseShirt(characterAppearance, MyColors.RED);
+        Looks.putOnLooseShirt(characterAppearance, TUNIC_COLOR);
         Looks.putOnCap(characterAppearance, MyColors.DARK_GREEN);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(TUNIC_COLOR);
     }
 
     @Override

@@ -12,6 +12,8 @@ import model.items.weapons.CommonPickaxe;
 import model.items.weapons.Hatchet;
 import model.items.weapons.Pickaxe;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinerClass extends CharacterClass {
+    private static final MyColors SHIRT_COLOR = MyColors.DARK_GRAY;
+
     public MinerClass() {
         super("Miner", "MIN", 12, 2, true, 5,
                 new WeightedSkill[]{
@@ -39,8 +43,13 @@ public class MinerClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_GRAY);
+        Looks.putOnTunic(characterAppearance, SHIRT_COLOR);
         putOnLampHelmet(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(SHIRT_COLOR);
     }
 
     public static void putOnLampHelmet(CharacterAppearance characterAppearance) {

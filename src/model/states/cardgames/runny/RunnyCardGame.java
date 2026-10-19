@@ -111,7 +111,7 @@ public class RunnyCardGame extends CardGame {
 
     @Override
     protected CardGamePlayer makeCharacterPlayer(GameCharacter leader, int obols) {
-        return new RunnyCharacterPlayer(leader.getFirstName(), leader.getGender(), leader.getRace(), obols);
+        return new RunnyCharacterPlayer(leader, obols);
     }
 
     private boolean checkForWin(Model model, CardGameState state) {

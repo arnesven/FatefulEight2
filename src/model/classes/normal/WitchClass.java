@@ -12,6 +12,8 @@ import model.items.spells.TransfigurationSpell;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
@@ -19,6 +21,8 @@ import view.sprites.*;
 import java.util.List;
 
 public class WitchClass extends CharacterClass {
+    private static final MyColors TUNIC_COLOR = MyColors.DARK_GRAY;
+
     public WitchClass() {
         super("Witch", "WIT", 6, 5, false, 18,
                 new WeightedSkill[]{
@@ -39,7 +43,12 @@ public class WitchClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnPointyHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.GOLD);
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_GRAY);
+        Looks.putOnTunic(characterAppearance, TUNIC_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(TUNIC_COLOR);
     }
 
 

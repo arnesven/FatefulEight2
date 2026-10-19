@@ -8,6 +8,8 @@ import model.items.Equipment;
 import model.items.clothing.EnchantressDress;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.races.Race;
+import model.states.cardgames.sleeves.BraceletSleeve;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -40,6 +42,11 @@ public class EnchantressClass extends SpecialCharacterClass {
         } else {
             Looks.putOnRobe(characterAppearance, MyColors.DARK_GREEN, MyColors.GREEN);
         }
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new BraceletSleeve(MyColors.YELLOW);
     }
 
     @Override

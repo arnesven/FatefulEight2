@@ -14,6 +14,8 @@ import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.items.weapons.TwinDaggers;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ItemSprite;
@@ -48,6 +50,11 @@ public class ThiefClass extends CharacterClass {
         Looks.putOnTunic(characterAppearance, CLOTHING_COLOR);
         Looks.putOnHood(characterAppearance, CLOTHING_COLOR);
         putOnThiefsMask(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(CLOTHING_COLOR);
     }
 
     public static void putOnThiefsMask(CharacterAppearance characterAppearance) {

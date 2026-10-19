@@ -3,10 +3,14 @@ package model.classes;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.npcs.NPCClass;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.ShortSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
 public class TravellerNPCClass extends NPCClass {
+    private static final MyColors TUNIC_COLOR = MyColors.DARK_RED;
+
     protected TravellerNPCClass() {
         super("Traveller");
     }
@@ -14,7 +18,12 @@ public class TravellerNPCClass extends NPCClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnFarmersHat(characterAppearance, MyColors.BROWN);
-        Looks.putOnTunic(characterAppearance, MyColors.DARK_RED);
+        Looks.putOnTunic(characterAppearance, TUNIC_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new ShortSleeve(TUNIC_COLOR);
     }
 
     @Override

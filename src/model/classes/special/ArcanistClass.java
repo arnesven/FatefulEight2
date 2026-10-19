@@ -7,10 +7,15 @@ import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.weapons.OldWand;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
 public class ArcanistClass extends SpecialCharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.LIGHT_PINK;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.PINK;
+
     public ArcanistClass() {
         super("Arcanist", "ARC", 6, 2, false, 0,
                 new WeightedSkill[]{
@@ -29,7 +34,12 @@ public class ArcanistClass extends SpecialCharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnRobe(characterAppearance, MyColors.LIGHT_PINK, MyColors.PINK);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     @Override

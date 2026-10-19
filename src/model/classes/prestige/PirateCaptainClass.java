@@ -10,6 +10,8 @@ import model.items.clothing.FancyJerkin;
 import model.items.weapons.Cutlass;
 import model.items.weapons.Dirk;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyLists;
 import util.MyTriplet;
 import view.MyColors;
@@ -34,6 +36,8 @@ public class PirateCaptainClass extends PrestigeClass {
 
     private static final MyColors HAT_COLOR_BASE = MyColors.DARK_BROWN;
     private static final MyColors HAT_HIGH_LIGHT = MyColors.GOLD;
+    private static final MyColors ROBE_COLOR = MyColors.DARK_RED;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.DARK_BLUE;
     private final String descriptionClasses;
 
     public PirateCaptainClass() {
@@ -64,8 +68,13 @@ public class PirateCaptainClass extends PrestigeClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_RED, MyColors.DARK_BLUE);
+        Looks.putOnFancyRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         putOnPirateCaptainHat(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     @Override

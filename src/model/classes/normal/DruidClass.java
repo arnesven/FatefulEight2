@@ -14,6 +14,9 @@ import model.items.spells.HarmonizeSpell;
 import model.items.spells.SummonFamiliarSpell;
 import model.items.weapons.Club;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ItemSprite;
@@ -23,6 +26,7 @@ import java.util.List;
 
 public class DruidClass extends CharacterClass {
     private static final MyColors ROBE_COLOR = MyColors.DARK_GREEN;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.GREEN;
     private final GnarledStaffDetail staff;
 
     public DruidClass() {
@@ -44,8 +48,13 @@ public class DruidClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnRobe(characterAppearance, ROBE_COLOR, MyColors.GREEN);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         Looks.putOnHood(characterAppearance, ROBE_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     @Override

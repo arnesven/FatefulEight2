@@ -3,6 +3,7 @@ package model.states.cardgames.runny;
 import model.Model;
 import model.races.Race;
 import model.states.cardgames.*;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.MyPair;
 import util.MyRandom;
 
@@ -42,7 +43,7 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
     private final int invertedBluffRatio;
 
     public RunnyNPCPlayer(String name, boolean gender, Race race, int obols) {
-        super(name, gender, race, obols, true);
+        super(name, gender, race, CardGameSleeve.makeRandomSleeve(), obols, true);
         benchmarkThreshold = MyRandom.randInt(8, 14);
         benchmarkRoundFactor = MyRandom.randInt(2, 4);
         weakHandAcceptance = MyRandom.randInt(2, RunnyCardGame.MAXIMUM_BET/2);

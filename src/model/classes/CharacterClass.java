@@ -7,6 +7,7 @@ import model.items.Equipment;
 import model.items.HorseStartingItem;
 import model.items.Item;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import view.MyColors;
 import view.sprites.*;
 
@@ -58,6 +59,8 @@ public abstract class CharacterClass implements Serializable {
     }
 
     public abstract void putClothesOn(CharacterAppearance characterAppearance);
+
+    public abstract CardGameSleeve makeCardGameSleeve();
 
     public void addForegroundObject(CharacterAppearance characterAppearance) {}
 

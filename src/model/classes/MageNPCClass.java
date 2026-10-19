@@ -5,10 +5,14 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SpiralStaffDetail;
 import model.classes.npcs.NPCClass;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
 public class MageNPCClass extends NPCClass {
+    private static final MyColors ROBE_COLOR = MyColors.RED;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.LIGHT_RED;
     private final SpiralStaffDetail staff;
 
     protected MageNPCClass() {
@@ -26,11 +30,16 @@ public class MageNPCClass extends NPCClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnPointyHat(characterAppearance, MyColors.RED, MyColors.DARK_RED, MyColors.DARK_RED);
-        Looks.putOnRobe(characterAppearance, MyColors.RED, MyColors.LIGHT_RED);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
         if (characterAppearance instanceof AdvancedAppearance) {
             staff.applyYourself((AdvancedAppearance) characterAppearance,
                     characterAppearance.getRace());
         }
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     @Override

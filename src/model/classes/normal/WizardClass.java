@@ -12,6 +12,8 @@ import model.items.Item;
 import model.items.spells.*;
 import model.items.weapons.OldWand;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -20,6 +22,8 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class WizardClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.BLUE;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.LIGHT_BLUE;
     private final SpiralStaffDetail staff;
 
     public WizardClass() {
@@ -44,7 +48,12 @@ public class WizardClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnPointyHat(characterAppearance, MyColors.BLUE, MyColors.DARK_BLUE, MyColors.DARK_BLUE);
-        Looks.putOnRobe(characterAppearance, MyColors.BLUE, MyColors.LIGHT_BLUE);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     @Override

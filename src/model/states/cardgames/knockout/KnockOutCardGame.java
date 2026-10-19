@@ -160,7 +160,7 @@ public class KnockOutCardGame extends CardGame {
 
     @Override
     protected CardGamePlayer makeCharacterPlayer(GameCharacter leader, int obols) {
-        return new KnockOutCharacterPlayer(leader.getFirstName(), leader.getGender(), leader.getRace(), obols);
+        return new KnockOutCharacterPlayer(leader, obols);
     }
 
     @Override

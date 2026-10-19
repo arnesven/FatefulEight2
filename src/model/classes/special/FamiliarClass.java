@@ -5,6 +5,8 @@ import model.classes.Skill;
 import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.NoSleeveAtAll;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.LimitedAvatarSprite;
@@ -19,6 +21,11 @@ public class FamiliarClass extends SpecialCharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
 
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new NoSleeveAtAll();
     }
 
     @Override

@@ -5,6 +5,8 @@ import model.classes.Classes;
 import model.classes.Looks;
 import model.classes.normal.NobleClass;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -25,5 +27,10 @@ public class VampireNPCClass extends NPCClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         return Classes.NOB.getAvatar(race, appearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(CLOTHES_COLOR, DETAIL_COLOR);
     }
 }

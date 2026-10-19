@@ -1,6 +1,7 @@
 package view.sprites;
 
 import model.Model;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import model.states.cardgames.TableSeating;
 import view.MyColors;
 
@@ -9,18 +10,20 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 public class HandAnimationSprite extends Sprite implements Animation {
-    private static final int SLICE_WIDTH = 16;
-    private static final int SLICE_HEIGHT = 64;
+    public static final int SLICE_WIDTH = 16;
+    public static final int SLICE_HEIGHT = 64;
     private final TableSeating seating;
     private int count = 0;
     private int currentFrame = 0;
     private int animationSpeed = 3;
-    private static final int MAX_FRAMES = 15;
+    public static final int MAX_FRAMES = 15;
 
-    public HandAnimationSprite(MyColors skinColor, TableSeating rotationAndOffset) {
-        super("handanimation", "cardgame.png", 0, 1, SLICE_WIDTH * MAX_FRAMES, SLICE_HEIGHT);
+    public HandAnimationSprite(MyColors skinColor, CardGameSleeve sleeve, TableSeating rotationAndOffset) {
+        super("handanimation", "cardgame.png", 0, 1, SLICE_WIDTH * MAX_FRAMES, SLICE_HEIGHT,
+                List.of(sleeve.getSprite()));
         setColor2(skinColor);
         this.seating = rotationAndOffset;
         AnimationManager.registerPausable(this);

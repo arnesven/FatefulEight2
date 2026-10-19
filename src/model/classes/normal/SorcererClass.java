@@ -14,6 +14,8 @@ import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.MagesStaff;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -23,6 +25,8 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class SorcererClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.DARK_GRAY;
+    private static final MyColors ROBE_DETAIL = MyColors.RED;
     private final EvilStaffDetail staff;
 
     public SorcererClass() {
@@ -42,8 +46,13 @@ public class SorcererClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnRobe(characterAppearance, MyColors.DARK_GRAY, MyColors.RED);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL);
         putOnHelm(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL);
     }
 
     @Override

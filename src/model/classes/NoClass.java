@@ -4,6 +4,8 @@ import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.items.Item;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -26,6 +28,11 @@ public class NoClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnLooseShirt(characterAppearance, shirtColor);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(shirtColor);
     }
 
     @Override

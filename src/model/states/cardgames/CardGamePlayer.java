@@ -3,6 +3,7 @@ package model.states.cardgames;
 import model.Model;
 import model.races.Race;
 import model.states.GameState;
+import model.states.cardgames.sleeves.CardGameSleeve;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public abstract class CardGamePlayer {
     private final boolean isNPC;
+    private final CardGameSleeve sleeve;
     private String name;
     private boolean gender;
     private Race race;
@@ -18,15 +20,20 @@ public abstract class CardGamePlayer {
     private List<CardGameCard> playArea = new ArrayList<>();
     private int currentBet = 0;
 
-    public CardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
+    public CardGamePlayer(String firstName, boolean gender, Race race, CardGameSleeve sleeve, int obols, boolean isNPC) {
         this.name = firstName;
         this.gender = gender;
         this.race = race;
         this.obols = obols;
         this.isNPC = isNPC;
+        this.sleeve = sleeve;
     }
 
     public abstract void takeTurn(Model model, CardGameState state, CardGame cardGame);
+
+    public CardGameSleeve getCardGameSleeve() {
+        return sleeve;
+    }
 
     public Race getRace() {
         return race;

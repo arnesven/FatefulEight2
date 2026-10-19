@@ -11,6 +11,8 @@ import model.items.RedKnightsHelm;
 import model.items.clothing.RedKnightsArmor;
 import model.items.weapons.BastardSword;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
@@ -42,6 +44,11 @@ public class RedKnightClass extends SpecialCharacterClass {
                 characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x35 + 0x10 * y + x, MyColors.DARK_RED, MyColors.RED));
             }
         }
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(MyColors.RED);
     }
 
     @Override

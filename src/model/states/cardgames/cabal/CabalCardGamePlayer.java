@@ -4,6 +4,7 @@ import model.races.Race;
 import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import util.MyLists;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public abstract class CabalCardGamePlayer extends CardGamePlayer {
     private Claim originalClaim = null;
     private Claim claim = null;
 
-    public CabalCardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
-        super(firstName, gender, race, obols, isNPC);
+    public CabalCardGamePlayer(String firstName, boolean gender, Race race, CardGameSleeve sleeve, int obols, boolean isNPC) {
+        super(firstName, gender, race, sleeve, obols, isNPC);
     }
 
     public abstract void makeStartOfTurnClaim(CardGameState state, CabalCardGame cabalCardGame, int turn);

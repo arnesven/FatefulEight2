@@ -15,6 +15,8 @@ import model.items.weapons.Javelins;
 import model.items.weapons.Weapon;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
+import model.states.cardgames.sleeves.BraceletSleeve;
+import model.states.cardgames.sleeves.CardGameSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -66,6 +68,11 @@ public class AmazonClass extends CharacterClass {
         }
         Looks.putOnHideRight(characterAppearance, clothing);
         Looks.putOnHideLeft(characterAppearance, clothing);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new BraceletSleeve(MyColors.DARK_BROWN);
     }
 
     @Override

@@ -1,13 +1,15 @@
 package model.states.cardgames.knockout;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.cardgames.*;
 import util.MyPair;
 
 public class KnockOutCharacterPlayer extends KnockOutCardGamePlayer {
-    public KnockOutCharacterPlayer(String firstName, boolean gender, Race race, int obols) {
-        super(firstName, gender, race, obols, false);
+    public KnockOutCharacterPlayer(GameCharacter character, int obols) {
+        super(character.getFirstName(), character.getGender(), character.getRace(),
+                character.getCharClass().makeCardGameSleeve(), obols, false);
     }
 
     @Override

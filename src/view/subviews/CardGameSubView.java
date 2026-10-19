@@ -342,7 +342,8 @@ public class CardGameSubView extends SubView {
             this.cardIn = cardIn;
             this.cardOut = cardOut;
             this.coin = coin;
-            this.sprite = new HandAnimationSprite(currentPlayer.getRace().getColor(), rotationAndOffset);
+            this.sprite = new HandAnimationSprite(currentPlayer.getRace().getColor(),
+                    currentPlayer.getCardGameSleeve(), rotationAndOffset);
             this.rotationAndOffset = rotationAndOffset;
             this.cardSprite = new Sprite32x32("handanicard", "cardgame.png", 0x15,
                     MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN);

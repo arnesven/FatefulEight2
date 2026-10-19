@@ -14,6 +14,8 @@ import model.items.weapons.Mace;
 import model.items.weapons.Scepter;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.*;
@@ -41,6 +43,11 @@ public class BlackKnightClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnArmor(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GREEN);
         putOnKnightsHelm(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GREEN);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(MyColors.DARK_GREEN);
     }
 
 

@@ -12,6 +12,8 @@ import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.Warhammer;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -39,6 +41,11 @@ public class PaladinClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnArmor(characterAppearance, ARMOR_COLOR, UNDERSHIRT_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(UNDERSHIRT_COLOR);
     }
 
     @Override

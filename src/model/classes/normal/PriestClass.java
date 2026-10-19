@@ -14,12 +14,16 @@ import model.items.spells.HealingWordSpell;
 import model.items.Equipment;
 import model.items.weapons.LongStaff;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
 import java.util.List;
 
 public class PriestClass extends CharacterClass {
+    private static final MyColors ROBE_COLOR = MyColors.LIGHT_YELLOW;
+    private static final MyColors ROBE_DETAIL_COLOR = MyColors.YELLOW;
     private final CrossInHandDetail cross;
 
     public PriestClass() {
@@ -42,7 +46,12 @@ public class PriestClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnRobe(characterAppearance, MyColors.LIGHT_YELLOW, MyColors.YELLOW);
+        Looks.putOnRobe(characterAppearance, ROBE_COLOR, ROBE_DETAIL_COLOR);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(ROBE_COLOR, ROBE_DETAIL_COLOR);
     }
 
     @Override

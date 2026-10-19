@@ -12,6 +12,8 @@ import model.items.accessories.Crown;
 import model.items.weapons.Rapier;
 import model.items.weapons.TrainingBow;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.FancyLongSleeve;
 import util.MyPair;
 import util.MyTriplet;
 import view.MyColors;
@@ -48,6 +50,11 @@ public class NobleClass extends CharacterClass {
             Looks.putOnFancyRobe(characterAppearance, CLOTHES_COLOR, DETAIL_COLOR);
         }
         putOnCrown(characterAppearance, MyColors.LIGHT_GRAY, MyColors.LIGHT_GRAY);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new FancyLongSleeve(CLOTHES_COLOR, DETAIL_COLOR);
     }
 
     public static void putOnCrown(CharacterAppearance characterAppearance, MyColors crownColor, MyColors gemstoneColor) {

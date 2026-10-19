@@ -12,6 +12,8 @@ import model.items.clothing.RustyRingMail;
 import model.items.weapons.Broadsword;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
+import model.states.cardgames.sleeves.CardGameSleeve;
+import model.states.cardgames.sleeves.PlainLongSleeve;
 import util.MyTriplet;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -50,6 +52,11 @@ public class CaptainClass extends CharacterClass {
         Looks.putOnTunic(characterAppearance, SECONDARY_COLOR);
         Looks.putOnLightArmor(characterAppearance, ARMOR_COLOR, SECONDARY_COLOR);
         putOnHalfHelm(characterAppearance);
+    }
+
+    @Override
+    public CardGameSleeve makeCardGameSleeve() {
+        return new PlainLongSleeve(SECONDARY_COLOR);
     }
 
     public static void putOnHalfHelm(CharacterAppearance characterAppearance) {
