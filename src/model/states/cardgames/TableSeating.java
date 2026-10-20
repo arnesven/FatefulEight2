@@ -31,8 +31,8 @@ public class TableSeating {
                 dxdy = new Point(0, 1);
                 break;
             default:
-                handPosition = new Point(SubView.X_MAX-8, SubView.Y_OFFSET + offset);
-                cardPos = new Point(SubView.X_MAX-2, SubView.Y_OFFSET + offset);
+                handPosition = new Point(SubView.X_MAX-8, SubView.Y_OFFSET + offset+2);
+                cardPos = new Point(SubView.X_MAX-2, SubView.Y_OFFSET + offset+2);
                 dxdy = new Point(-1, 0);
                 break;
         }

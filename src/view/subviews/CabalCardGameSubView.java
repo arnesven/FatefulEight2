@@ -70,7 +70,7 @@ public class CabalCardGameSubView extends CardGameSubView {
 
     private void drawBigPot(Model model) {
         int x = X_OFFSET + 4;
-        int y = Y_OFFSET + 1;
+        int y = Y_MAX - 6;
         model.getScreenHandler().register(BIG_POT_SPRITE.getName(),
                 new Point(x, y), BIG_POT_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", game.getPotSize()),
@@ -152,15 +152,15 @@ public class CabalCardGameSubView extends CardGameSubView {
     }
 
     @Override
-    protected void drawNPCTop(Model model, CardGamePlayer npc) {
-        super.drawNPCTop(model, npc);
-        drawClaimAndStone(model, (CabalCardGamePlayer) npc, new Point(X_OFFSET + 20, Y_OFFSET),
+    protected void drawNPCTop(Model model, CardGamePlayer npc, int firstNPCX) {
+        super.drawNPCTop(model, npc, firstNPCX);
+        drawClaimAndStone(model, (CabalCardGamePlayer) npc, new Point(X_OFFSET + firstNPCX + 3, Y_OFFSET),
                 new Point(X_OFFSET+13, Y_OFFSET + 2));
         if (cheatsOn) {
-            drawCardsAt(model, npc.getCards(), X_OFFSET + 16, Y_OFFSET - 2, 1);
-            drawStoneAt(model, (CabalCardGamePlayer) npc, new Point(X_OFFSET + 18, Y_OFFSET + 1));
+            drawCardsAt(model, npc.getCards(), X_OFFSET + firstNPCX-1, Y_OFFSET - 2, 1);
+            drawStoneAt(model, (CabalCardGamePlayer) npc, new Point(X_OFFSET + firstNPCX + 1, Y_OFFSET + 1));
             BorderFrame.drawString(model.getScreenHandler(), game.getCurrentSuspicionFor(npc),
-                    X_OFFSET + 9, Y_OFFSET,
+                    X_OFFSET + firstNPCX-8, Y_OFFSET,
                     MyColors.WHITE, MyColors.DARK_RED);
         }
     }

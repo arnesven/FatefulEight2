@@ -33,9 +33,9 @@ public class CardGameState extends GameState {
     private static CardGame makeRandomGame() {
         int i = MyRandom.randInt(3);
         return switch (i) {
-         /*   case 0 -> new KnockOutCardGame(MyRandom.randInt(0, 2));
-            case 1 -> new RunnyCardGame();*/
-            default ->  new CabalCardGame(MyRandom.randInt(5, 6));
+            case 0 -> new KnockOutCardGame(MyRandom.randInt(0, 2));
+            case 1 -> new RunnyCardGame();
+            default ->  new CabalCardGame(MyRandom.randInt(5, 7));
         };
     }
 

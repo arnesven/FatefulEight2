@@ -8,13 +8,17 @@ public class TutorialCardGameCabal extends SubChapterHelpDialog {
             "pick the Star cards from their hands of cards. However, some of the players are actually " +
             "Traitors and are secretly working against the Friends. At the start of the game, each player " +
             "draws a stone from a bag. If you draw a white stone you are a Friend, if you draw one of " +
-            "the two black stones you are a Traitor.\n\n" +
-            "A Cabal Deck consists of a number of Star cards equal to one more than the number of players. " +
-            "The objective of the Friends is to draw out all of the Star cards before the end of the game. " +
-            "If they fail, the Traitors win. There are also two Dagger cards in the deck, if both Daggers are drawn, " +
+            "the black stones you are a Traitor.\n\n" +
+            "The objective of the Friends is to draw out all of the Star cards in the deck, before the end of the game. " +
+            "If they fail, the Traitors win. The deck also has two Dagger cards. If both Daggers are drawn, " +
             "the Traitors immediately win. The rest of the cards in the deck are Junk cards, and have no effect.\n\n" +
-            "The game is played over four turns. At the start of each turn cards are dealt out to each player, " +
-            "five cards in the first turn, four in the next, three on the third turn and two cards each on the " +
+            " Players  Traitors  Stars Cards\n" +
+            "    5         2          6\n" +
+            "    6         2          7\n" +
+            "    7         3          7\n\n" +
+            "The game is played over four turns. At the start of each turn, all cards are dealt out to the players. " +
+            "Five cards are dealt to each player in the first turn, four in the next, " +
+            "three on the third turn and two cards each on the " +
             "last turn.",
 
             "Play proceeds by player picking from each others' hands until a number of cards have been " +

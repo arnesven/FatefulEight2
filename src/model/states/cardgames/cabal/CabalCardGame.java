@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CabalCardGame extends CardGame {
 
-    public static final int MAX_BET = 30;
+    public static final int MAX_BET = 24;
     private final CabalCardGameSubView subView;
     private List<Boolean> bag;
     private CabalCardGamePlayer pickPlayer;
@@ -61,11 +61,14 @@ public class CabalCardGame extends CardGame {
     }
 
     private void setUpBag(GameState state) {
-        this.bag = MyLists.generate(getPlayers().size() - 2, () -> false);
+        int numberOfBlack = getPlayers().size() == 7 ? 3 : 2;
+        this.bag = MyLists.generate(getPlayers().size() - numberOfBlack, () -> false);
         state.println(MyStrings.capitalize(MyStrings.numberWord(bag.size())) +
-                " white stones and two black stones are added to the bag.");
-        this.bag.add(true);
-        this.bag.add(true);
+                " white stones and " + MyStrings.numberWord(numberOfBlack) +
+                " black stones are added to the bag.");
+        for (int i = 0; i < numberOfBlack; i++) {
+            this.bag.add(true);
+        }
 
         for (boolean b : bag) {
             subView.addFallingStoneAnimation(b);
@@ -318,7 +321,7 @@ public class CabalCardGame extends CardGame {
     }
 
     public int getTotalStars() {
-        return getPlayers().size() + 1;
+        return 6 + getPlayers().size() > 5 ? 1 : 0;
     }
 
     public void addSuspicionForAll(CardGamePlayer target, double suspicionToAdd) {

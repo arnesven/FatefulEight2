@@ -142,7 +142,7 @@ public class CabalNPC extends CabalCardGamePlayer {
             if (game.getPickPlayer() == this) {
                 int extra = game.getTotalStars() - game.getStarsPicked() - starsClaimed;
                 sayLine(state, "Only " + MyStrings.numberWord(starsClaimed) + " stars claimed. " +
-                        "We're missing " + MyStrings.numberWord(extra) + ". Who's hiding them?");
+                        "We're missing " + MyStrings.numberWord(extra) + ". Who's hiding " + (extra>1?"them":"it")+ "?");
             }
             List<CabalCardGamePlayer> targets = MyLists.filter(game.getCabalPlayers(),
                     ccp -> !ccp.hasClaim() || (ccp.getClaimedStars() == 0 && ccp.getClaimedDaggers() == 0));

@@ -7,7 +7,10 @@ import java.util.Collections;
 public class CabalDeck extends CardGameDeck {
     public CabalDeck(int numberOfPlayers) {
         this.clear();
-        for (int i = 0; i < numberOfPlayers + 1; i++) {
+        for (int i = 0; i < 6; i++) {
+            add(new StarCabalCard());
+        }
+        if (numberOfPlayers > 5) {
             add(new StarCabalCard());
         }
         add(new DaggerCabalCard());

@@ -50,11 +50,6 @@ public abstract class CardGameSleeve {
 
 
     public static CardGameSleeve makeRandomSleeve() {
-        if (MyRandom.flipCoin()) {
-            return new BraceletSleeve(MyRandom.sample(DETAIL_COLORS));
-        }
-        return new FancyLongSleeve(MyRandom.sample(BASE_COLORS), MyRandom.sample(DETAIL_COLORS));
-        /*
         int dieRoll = MyRandom.rollD6();
         return switch (dieRoll) {
             case 1 -> new ShortSleeve(MyRandom.sample(BASE_COLORS));
@@ -63,7 +58,7 @@ public abstract class CardGameSleeve {
             case 4 -> new BraceletSleeve(MyRandom.sample(DETAIL_COLORS));
             case 5 -> new ShortSleeveWithBracelet(MyRandom.sample(BASE_COLORS), MyRandom.sample(DETAIL_COLORS));
             default -> new NoSleeveAtAll();
-        };*/
+        };
     }
 
     public Sprite getHandSprite(int rotation) {

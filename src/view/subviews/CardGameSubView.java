@@ -2,7 +2,6 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.races.Dwarf;
 import model.races.Race;
 import model.states.cardgames.*;
 import view.BorderFrame;
@@ -19,7 +18,8 @@ public class CardGameSubView extends SubView {
     private static final int PLAYER_CARDS_OFFSET = X_OFFSET + 2;
     private static final Sprite CURSOR = new CardGameCursor();
     private static final TableSeating BOTTOM_POSITION = new TableSeating(0, 20);
-    private static final TableSeating TOP_POSITION = new TableSeating(180, 10);
+    private static final TableSeating TOP_RIGHT_POSITION = new TableSeating(180, 17);
+    private static final TableSeating TOP_LEFT_POSITION = new TableSeating(180, 3);
     private static final TableSeating LOWER_LEFT_POSITION = new TableSeating(90, 28);
     private static final TableSeating UPPER_LEFT_POSITION = new TableSeating(90, 14);
     private static final TableSeating LOWER_RIGHT_POSITION = new TableSeating(270, 20);
@@ -125,43 +125,71 @@ public class CardGameSubView extends SubView {
         model.getScreenHandler().put(X_MAX-1, Y_MAX-3, blackBlock);
     }
 
+
+    /*
+    2 Players         3 Players         4 Players
+
+     NPC0                                   NPC1
+                   NPC0            NPC0
+        TABLE           TABLE           TABLE
+                             NPC1            NPC2
+        PLAYER          PLAYER          PLAYER
+
+
+       5 Players        6 Players       7 Players
+
+            NPC2              NPC2      NPC2 NPC3
+     NPC1              NPC1     NPC3  NPC1     NPC4
+         TABLE             TABLE          TABLE
+     NPC0     NPC3     NPC0     NPC4  NPC0     NPC5
+         PLAYER            PLAYER         PLAYER
+
+     */
+
     private void drawNPCs(Model model) {
         switch (cardGame.getNumberOfNPCs()) {
             case 0:
                 break;
             case 1:
-                drawNPCTop(model, cardGame.getNPC(0));
+                drawNPCTop(model, cardGame.getNPC(0), 8);
                 break;
             case 3:
-                drawNPCTop(model, cardGame.getNPC(1));
+                drawNPCTop(model, cardGame.getNPC(1), 23);
             case 2:
-                drawNPCToLeft(model, cardGame.getNPC(0), 6);
+                drawNPCToLeft(model, cardGame.getNPC(0), 8);
                 drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 26);
                 break;
             case 5:
                 drawNPCToRight(model, cardGame.getNPC(3), 12);
             case 4:
-                drawNPCToLeft(model, cardGame.getNPC(0), 20);
-                drawNPCToLeft(model, cardGame.getNPC(1), 6);
-                drawNPCTop(model, cardGame.getNPC(2));
+                drawNPCToLeft(model, cardGame.getNPC(0), 22);
+                drawNPCToLeft(model, cardGame.getNPC(1), 8);
+                drawNPCTop(model, cardGame.getNPC(2), 23);
                 drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 26);
                 break;
+            case 6:
+                drawNPCToLeft(model, cardGame.getNPC(0), 22);
+                drawNPCToLeft(model, cardGame.getNPC(1), 8);
+                drawNPCTop(model, cardGame.getNPC(2), 8);
+                drawNPCTop(model, cardGame.getNPC(3), 23);
+                drawNPCToRight(model, cardGame.getNPC(3), 12);
+                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 26);
         }
     }
 
-    protected void drawNPCTop(Model model, CardGamePlayer npc) {
+    protected void drawNPCTop(Model model, CardGamePlayer npc, int firstNPCX) {
         for (int i = 0; i < 3; ++i) {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 180);
-            model.getScreenHandler().register(arm.getName(), new Point(X_OFFSET+17-i*2, Y_OFFSET+1), arm);
+            model.getScreenHandler().register(arm.getName(), new Point(X_OFFSET+firstNPCX-i*2, Y_OFFSET+1), arm);
         }
         Sprite sleeve = npc.getCardGameSleeve().getHandSprite(180);
-        model.getScreenHandler().register(sleeve.getName(), new Point(X_OFFSET+15, Y_OFFSET+1), sleeve);
-        BorderFrame.drawString(model.getScreenHandler(), npc.getName(), X_OFFSET+19-npc.getName().length(),
+        model.getScreenHandler().register(sleeve.getName(), new Point(X_OFFSET+firstNPCX-2, Y_OFFSET+1), sleeve);
+        BorderFrame.drawString(model.getScreenHandler(), npc.getName(), X_OFFSET+firstNPCX+2-npc.getName().length(),
                 Y_OFFSET, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols()+"",
-                X_OFFSET+20, Y_OFFSET, MyColors.LIGHT_GRAY, MyColors.BROWN);
-        drawBet(model, npc.getBet(), X_OFFSET + 12, Y_OFFSET + 4);
-        int col = X_OFFSET+8;
+                X_OFFSET+firstNPCX+3, Y_OFFSET, MyColors.LIGHT_GRAY, MyColors.BROWN);
+        drawBet(model, npc.getBet(), X_OFFSET + firstNPCX-5, Y_OFFSET + 4);
+        int col = X_OFFSET+firstNPCX-9;
         int increment = npc.getPlayArea().size() > 7 ? 1 : 2;
         for (CardGameCard card : npc.getPlayArea()) {
             Sprite spr = card.getSprite();
@@ -224,7 +252,7 @@ public class CardGameSubView extends SubView {
         while (namePatched.length() < 6) { // To fill out with black for players on the right (cover arm).
             namePatched.append(" ");
         }
-        for (int i = 0; i < npc.getName().length(); ++i) {
+        for (int i = 0; i < namePatched.length(); ++i) {
             BorderFrame.drawString(model.getScreenHandler(), namePatched.substring(i, i+1), X_MAX-1,
                     Y_OFFSET + firstNPCY + i - 1, MyColors.WHITE, MyColors.BLACK);
         }
@@ -271,14 +299,14 @@ public class CardGameSubView extends SubView {
         if (currentPlayer == cardGame.getNPC(0)) {
             switch (cardGame.getNumberOfNPCs()) {
                 case 1:
-                    return TOP_POSITION;
+                    return TOP_LEFT_POSITION;
                 case 2:
                 case 3:
                     return UPPER_LEFT_POSITION;
                 case 4:
                 case 5:
+                case 6:
                     return LOWER_LEFT_POSITION;
-
             }
         }
         if (currentPlayer == cardGame.getNPC(1)) {
@@ -286,9 +314,10 @@ public class CardGameSubView extends SubView {
                 case 2:
                     return LOWER_RIGHT_POSITION;
                 case 3:
-                    return TOP_POSITION;
+                    return TOP_RIGHT_POSITION;
                 case 4:
                 case 5:
+                case 6:
                     return UPPER_LEFT_POSITION;
             }
         }
@@ -298,7 +327,9 @@ public class CardGameSubView extends SubView {
                     return LOWER_RIGHT_POSITION;
                 case 4:
                 case 5:
-                    return TOP_POSITION;
+                    return TOP_RIGHT_POSITION;
+                case 6:
+                    return TOP_LEFT_POSITION;
             }
         }
         if (currentPlayer == cardGame.getNPC(3)) {
@@ -306,6 +337,16 @@ public class CardGameSubView extends SubView {
                 case 4:
                     return LOWER_RIGHT_POSITION;
                 case 5:
+                    return UPPER_RIGHT_POSITION;
+                case 6:
+                    return TOP_RIGHT_POSITION;
+            }
+        }
+        if (currentPlayer == cardGame.getNPC(4)) {
+            switch (cardGame.getNumberOfNPCs()) {
+                case 5:
+                    return LOWER_RIGHT_POSITION;
+                case 6:
                     return UPPER_RIGHT_POSITION;
             }
         }
