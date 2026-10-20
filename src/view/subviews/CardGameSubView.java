@@ -154,6 +154,8 @@ public class CardGameSubView extends SubView {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 180);
             model.getScreenHandler().register(arm.getName(), new Point(X_OFFSET+17-i*2, Y_OFFSET+1), arm);
         }
+        Sprite sleeve = npc.getCardGameSleeve().getHandSprite(180);
+        model.getScreenHandler().register(sleeve.getName(), new Point(X_OFFSET+15, Y_OFFSET+1), sleeve);
         BorderFrame.drawString(model.getScreenHandler(), npc.getName(), X_OFFSET+19-npc.getName().length(),
                 Y_OFFSET, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols()+"",
@@ -193,6 +195,8 @@ public class CardGameSubView extends SubView {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 90);
             model.getScreenHandler().register(arm.getName(), new Point(X_OFFSET+1, Y_OFFSET + firstNPCY + i*2), arm);
         }
+        Sprite sleeve = npc.getCardGameSleeve().getHandSprite(90);
+        model.getScreenHandler().register(sleeve.getName(), new Point(X_OFFSET+1, Y_OFFSET + firstNPCY), sleeve);
         for (int i = 0; i < npc.getName().length(); ++i) {
             BorderFrame.drawString(model.getScreenHandler(), npc.getName().substring(i, i+1), X_OFFSET,
                     Y_OFFSET + firstNPCY + i, MyColors.WHITE, MyColors.BLACK);
@@ -213,6 +217,8 @@ public class CardGameSubView extends SubView {
             Sprite arm = cardHandSprites.getCardHandSprite(npc, i, 270);
             model.getScreenHandler().register(arm.getName(), new Point(X_MAX-3, Y_OFFSET + firstNPCY - i*2 + 3), arm);
         }
+        Sprite sleeve = npc.getCardGameSleeve().getHandSprite(270);
+        model.getScreenHandler().register(sleeve.getName(), new Point(X_MAX-5, Y_OFFSET + firstNPCY + 1), sleeve);
         for (int i = 0; i < npc.getName().length(); ++i) {
             BorderFrame.drawString(model.getScreenHandler(), npc.getName().substring(i, i+1), X_MAX-1,
                     Y_OFFSET + firstNPCY + i - 1, MyColors.WHITE, MyColors.BLACK);

@@ -67,6 +67,7 @@ public class CardHandSpriteSet {
                 }
                 break;
         }
+
         return get(npc.getRace(), num, rotation);
     }
 }
