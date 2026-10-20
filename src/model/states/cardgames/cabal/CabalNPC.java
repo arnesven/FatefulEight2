@@ -30,7 +30,8 @@ public class CabalNPC extends CabalCardGamePlayer {
             state.delay(1000 * (delaySeconds + 1));
             if (delaySeconds == 1) {
                 List<CabalCardGamePlayer> yellers = MyLists.filter(((CabalCardGame)cardGame).getCabalPlayers(),
-                        ccp -> ccp.hasClaim() && ccp.getClaimedStars() > 1 && ccp.getClaimedDaggers() == 0);
+                        ccp -> ccp != this && ccp.hasClaim() &&
+                                ccp.getClaimedStars() > 1 && ccp.getClaimedDaggers() == 0);
                 if (!yellers.isEmpty() && MyRandom.flipCoin()) {
                     MyRandom.sample(yellers).sayLine(state, MyRandom.sample(
                             List.of("Pick me!",
