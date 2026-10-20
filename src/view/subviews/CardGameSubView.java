@@ -219,8 +219,13 @@ public class CardGameSubView extends SubView {
         }
         Sprite sleeve = npc.getCardGameSleeve().getHandSprite(270);
         model.getScreenHandler().register(sleeve.getName(), new Point(X_MAX-5, Y_OFFSET + firstNPCY + 1), sleeve);
+
+        StringBuilder namePatched = new StringBuilder(npc.getName());
+        while (namePatched.length() < 6) { // To fill out with black for players on the right (cover arm).
+            namePatched.append(" ");
+        }
         for (int i = 0; i < npc.getName().length(); ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), npc.getName().substring(i, i+1), X_MAX-1,
+            BorderFrame.drawString(model.getScreenHandler(), namePatched.substring(i, i+1), X_MAX-1,
                     Y_OFFSET + firstNPCY + i - 1, MyColors.WHITE, MyColors.BLACK);
         }
         String obolsString = npc.getObols() + "";

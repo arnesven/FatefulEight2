@@ -13,6 +13,7 @@ public class CabalFriendAI extends CabalAI {
     private static final int INFLATE_DAGGER_RATIO_TURN_1 = 20;
     private static final int ERROR_RATE = 10;
     private static final int COVER_NOTHING_WITH_DAGGER_RATIO = 7;
+    private static final int FAKE_DAGGER_IN_FINAL_ROUND_RATIO = 4;
 
     @Override
     public MyPair<Integer, Integer> makeEarlyClaim(CabalNPC self, CabalCardGame game, int turn) {
@@ -20,8 +21,14 @@ public class CabalFriendAI extends CabalAI {
         int stars = starsAndDaggers.first;
         int daggers = starsAndDaggers.second;
 
-        if (game.getTurn() == 4 && daggers == 1 && stars == 1) {
-            return new MyPair<>(1, 1);
+        if (game.getTurn() == 4) {
+            if (daggers == 0 && stars == 0 && self.getSuspicionFor(game.getPickPlayer()) > 10.0 &&
+                    MyRandom.randInt(FAKE_DAGGER_IN_FINAL_ROUND_RATIO) == 0) {
+                return new MyPair<>(0, 1);
+            }
+            if (daggers == 1 && stars == 1) {
+                return new MyPair<>(1, 1);
+            }
         }
 
         if (daggers == 0 && stars == 0) {

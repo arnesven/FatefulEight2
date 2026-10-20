@@ -19,10 +19,6 @@ public class CabalTraitorAI extends CabalAI {
         int stars = starsAndDaggers.first;
         int daggers = starsAndDaggers.second;
 
-        if (game.getTurn() == 4 && daggers == 0 && stars == 0 && self.getSuspicionFor(game.getPickPlayer()) > 10.0) {
-            return new MyPair<>(0, 1);
-        }
-
         if (MyRandom.randInt(TELL_TRUTH_RATIO_BY_TURN[turn-1]) == 0) {
             var answer = new CabalFriendAI().makeEarlyClaim(self, game, turn);
             if (answer != null && !(stars > 2 && answer.first > 2)) {
