@@ -15,19 +15,28 @@ public class CardHandSpriteSet {
     private Map<Integer, Sprite16x16[][]> spriteMap;
 
     public CardHandSpriteSet(MyColors cardBackColor) {
-        spriteMap = new HashMap<>();
+        spriteMap = makeSpriteMap(cardBackColor);
+    }
+
+    private static Map<Integer, Sprite16x16[][]> makeSpriteMap(MyColors cardBackColor) {
+        Map<Integer, Sprite16x16[][]> result = new HashMap<>();
         for (Race race : Race.allRaces) {
             Sprite16x16[][] sprites = new Sprite16x16[4][NO_OF_HAND_SPRITES];
             for (int rotation = 0; rotation < 360; rotation+=90) {
                 for (int i = 0; i < NO_OF_HAND_SPRITES; ++i) {
-                    Sprite16x16 handSprite = new Sprite16x16("handsprite" + i + "rot"+rotation, "cardgame.png", 0x30 + i,
+                    int row = 0x30;
+                    if (race.id() == Race.HALF_ORC.id() || race.id() == Race.DWARF.id()) {
+                        row = 0x40;
+                    }
+                    Sprite16x16 handSprite = new Sprite16x16("handsprite" + i + "rot"+rotation, "cardgame.png", row + i,
                             MyColors.BLACK, race.getColor(), cardBackColor, MyColors.PINK);
                     handSprite.setRotation(rotation);
                     sprites[rotation/90][i] = handSprite;
                 }
             }
-            spriteMap.put(race.id(), sprites);
+            result.put(race.id(), sprites);
         }
+        return result;
     }
 
     public Sprite16x16 get(Race race, int num, int rotation) {
