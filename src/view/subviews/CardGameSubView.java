@@ -172,7 +172,7 @@ public class CardGameSubView extends SubView {
                 drawNPCToLeft(model, cardGame.getNPC(1), 8);
                 drawNPCTop(model, cardGame.getNPC(2), 8);
                 drawNPCTop(model, cardGame.getNPC(3), 23);
-                drawNPCToRight(model, cardGame.getNPC(3), 12);
+                drawNPCToRight(model, cardGame.getNPC(4), 12);
                 drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 26);
         }
     }

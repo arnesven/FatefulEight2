@@ -321,7 +321,10 @@ public class CabalCardGame extends CardGame {
     }
 
     public int getTotalStars() {
-        return 6 + getPlayers().size() > 5 ? 1 : 0;
+        if (getPlayers().size() == 5) {
+            return 6;
+        }
+        return 7;
     }
 
     public void addSuspicionForAll(CardGamePlayer target, double suspicionToAdd) {
