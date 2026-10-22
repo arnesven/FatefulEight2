@@ -106,6 +106,7 @@ public class LogicalMine {
             CombatEvent combatEvent = new CombatEvent(model, enemyObj.getEnemies(),
                     new CaveTheme(), CombatAdvantage.Neither);
             combatEvent.run(model);
+            getMatrix().remove(currentObj);
             return combatEvent;
         }
 
@@ -141,6 +142,7 @@ public class LogicalMine {
                                 new CaveTheme(), advantage);
                         combatEvent.run(model);
                         subView.removeMovementAnimation();
+                        getMatrix().remove(adjacentObj);
                         return combatEvent;
                     }
                 }

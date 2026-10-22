@@ -81,6 +81,7 @@ public class AdvancedMineEvent extends DailyEventState {
                 }
                 CombatEvent combat = mine.combatIsTriggered(model, this, mineSubView, previousPosition);
                 if (combat != null) {
+                    model.setSubView(mineSubView);
                     mineSubView.clearMoves();
                     if (model.getParty().isWipedOut()) {
                         return;
@@ -168,13 +169,14 @@ public class AdvancedMineEvent extends DailyEventState {
     }
 
     private LogicalMine makeRandomMine(boolean enteredFromSurface) {
+        return new GoblinInfestedMine(enteredFromSurface); /*
         int dieRoll = MyRandom.rollD6();
         return switch (dieRoll) {
             case 1 -> new GoblinInfestedMine(enteredFromSurface);
             case 2 -> new SpiderInfestedMine(enteredFromSurface);
             case 3, 4 -> new AbandonedMine(enteredFromSurface);
             default -> new ActiveMine(enteredFromSurface);
-        };
+        };*/
     }
 
     private boolean handleTiredPartyMembers(Model model) {
