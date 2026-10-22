@@ -15,6 +15,7 @@ import view.subviews.CollapsingTransition;
 import java.util.List;
 
 public class CardGameState extends GameState {
+    private static final String NO_MORE_TAVERN_CARDS_ON_DAY = "No_more_tavern_cards_on_day";
     private final CardGameSubView subView;
     private final CardGame cardGame;
     private int roundsPlayed = 0;
@@ -97,6 +98,7 @@ public class CardGameState extends GameState {
         while (getNumberOfPlayers() > 0) {
             cardGame.getPlayers().remove(cardGame.getNPC(0));
         }
+        model.getSettings().getMiscCounters().put(NO_MORE_TAVERN_CARDS_ON_DAY, model.getDay());
     }
 
     private void synchObols(Model model, int playerObols) {
@@ -129,5 +131,10 @@ public class CardGameState extends GameState {
     public CardGamePlayer selectPlayer(Model model, List<CardGamePlayer> targetablePlayers) {
         int count = multipleOptionArrowMenu(model, 4, 24, MyLists.transform(targetablePlayers, CardGamePlayer::getName));
         return targetablePlayers.get(count);
+    }
+
+    public static boolean alreadyPlayedCardsAtTavernToday(Model model) {
+        Integer noMoreCardsOnDay =  model.getSettings().getMiscCounters().get(NO_MORE_TAVERN_CARDS_ON_DAY);
+        return noMoreCardsOnDay != null && noMoreCardsOnDay == model.getDay();
     }
 }

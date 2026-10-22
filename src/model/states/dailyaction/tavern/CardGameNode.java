@@ -52,6 +52,10 @@ public class CardGameNode extends InsideDailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+        if (CardGameState.alreadyPlayedCardsAtTavernToday(model)) {
+            state.println("It seems like nobody is interested in playing any more.");
+            return false;
+        }
         if (cardGameState == null) {
             return true;
         }

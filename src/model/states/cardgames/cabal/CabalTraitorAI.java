@@ -70,6 +70,11 @@ public class CabalTraitorAI extends CabalAI {
         if (starsAndDaggers.second > 0 && !self.didDrawPickAtStartOfTurn()) {
             return starsAndDaggers; // Try to appear good by confessing about daggers
         }
+        if (self.hasClaim() && starsAndDaggers.first > self.getClaimedStars() && self.getClaimedDaggers() == 0) {
+            if (MyRandom.flipCoin()) { // Confess to inflation
+                return new MyPair<>(starsAndDaggers.first, 0);
+            }
+        }
         if (!self.hasClaim()) {
             return null;
         }
@@ -80,13 +85,17 @@ public class CabalTraitorAI extends CabalAI {
     public CabalCardGamePlayer findBestPick(CabalCardGame game, CabalNPC self, List<CabalCardGamePlayer> candidates, CabalSuspicions suspicions) {
         List<CabalCardGamePlayer> cabalCandidates = MyLists.transform(candidates, cp -> (CabalCardGamePlayer) cp);
         CabalHandRanker ranker;
+        System.out.println("Finding best pick for " + self.getName());
         if (suspicions.getFor(self) > CabalSuspicions.SOFT_REVEALED/2.0 || game.getTurn() == 4) {
+            System.out.println("Using obvious traitor pick ranker");
             ranker = new ObviousTraitorPickRanker(suspicions, game);
         } else if (suspicions.getFor(self) > 5.0 || game.getTurn() == 3 ||
                 (game.getTurn() == 2 && MyRandom.flipCoin()) ||
                 (game.getTurn() == 1 && MyRandom.randInt(7) == 1)) {
+            System.out.println("Using Dubious pick ranker");
             ranker = new DubiousPickRanker(suspicions, game);
         } else {
+            System.out.println("Using friend pick ranker");
             ranker = new CabalFriendPickRanker(suspicions, game);
         }
         cabalCandidates.sort(ranker);

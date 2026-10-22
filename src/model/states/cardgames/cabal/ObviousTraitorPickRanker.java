@@ -1,6 +1,5 @@
 package model.states.cardgames.cabal;
 
-import java.util.Comparator;
 
 public class ObviousTraitorPickRanker extends CabalHandRanker {
     private final CabalSuspicions suspicions;
@@ -21,8 +20,8 @@ public class ObviousTraitorPickRanker extends CabalHandRanker {
         int daggers = player.hasClaim() ? player.getClaimedDaggers() : 0;
         // Last pick of turn 3. Don't give it away now.
         if (sus > 20 && game.getTurn() == 3 && game.getPickedCards().size() == game.getPlayers().size() - 1) {
-            return 500;
+            return 10000;
         }
-        return -stars * 100 + daggers * 200 + (int)(sus * 50.0);
+        return -stars * 100 + daggers * 200 + (int)(sus * 10.0);
     }
 }

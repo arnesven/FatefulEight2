@@ -157,7 +157,7 @@ public class CabalCardGameSubView extends CardGameSubView {
         drawClaimAndStone(model, (CabalCardGamePlayer) npc, new Point(X_OFFSET + firstNPCX + 3, Y_OFFSET),
                 new Point(X_OFFSET+13, Y_OFFSET + 2));
         if (cheatsOn) {
-            drawCardsAt(model, npc.getCards(), X_OFFSET + firstNPCX-1, Y_OFFSET - 2, 1);
+            drawCardsAt(model, npc.getCards(), X_OFFSET + firstNPCX+4, Y_OFFSET - 2, 1);
             drawStoneAt(model, (CabalCardGamePlayer) npc, new Point(X_OFFSET + firstNPCX + 1, Y_OFFSET + 1));
             BorderFrame.drawString(model.getScreenHandler(), game.getCurrentSuspicionFor(npc),
                     X_OFFSET + firstNPCX-8, Y_OFFSET,
